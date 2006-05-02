@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  FormEntryArchive formEntryArchive;
+  formEntryArchive=(FormEntryArchive)session.get(FormEntryArchive.class,formEntryArchiveId);
+  return formEntryArchive;
+}

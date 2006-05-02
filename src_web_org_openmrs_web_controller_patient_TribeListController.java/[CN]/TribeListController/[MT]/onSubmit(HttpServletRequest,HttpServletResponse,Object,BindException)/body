@@ -1,0 +1,36 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Locale locale=request.getLocale();
+  String view=getFormView();
+  if (context != null && context.isAuthenticated()) {
+    String[] tribeList=request.getParameterValues("tribeId");
+    AdministrationService as=context.getAdministrationService();
+    PatientService ps=context.getPatientService();
+    String action="";
+    if (request.getParameter("retire") != null)     action="retire";
+ else     if (request.getParameter("unretire") != null)     action="unretire";
+    String success="";
+    String error="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String changed=msa.getMessage("general.changed");
+    String notChanged=msa.getMessage("general.cannot.change");
+    for (    String t : tribeList) {
+      try {
+        if (action.equals("retire"))         as.retireTribe(ps.getTribe(Integer.valueOf(t)));
+        if (action.equals("unretire"))         as.unretireTribe(ps.getTribe(Integer.valueOf(t)));
+        if (!success.equals(""))         success+="<br>";
+        success+=t + " " + changed;
+      }
+ catch (      APIException e) {
+        log.warn(e);
+        if (!error.equals(""))         error+="<br>";
+        error+=t + " " + notChanged;
+      }
+    }
+    view=getSuccessView();
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

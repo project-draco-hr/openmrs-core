@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<Privilege> privileges=session.createQuery("from Privilege p order by p.privilege").list();
+  return privileges;
+}

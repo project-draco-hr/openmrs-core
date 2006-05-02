@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  EncounterType encounterType=null;
+  if (context != null && context.isAuthenticated()) {
+    EncounterService os=context.getEncounterService();
+    String encounterTypeId=request.getParameter("encounterTypeId");
+    if (encounterTypeId != null)     encounterType=os.getEncounterType(Integer.valueOf(encounterTypeId));
+  }
+  if (encounterType == null)   encounterType=new EncounterType();
+  return encounterType;
+}

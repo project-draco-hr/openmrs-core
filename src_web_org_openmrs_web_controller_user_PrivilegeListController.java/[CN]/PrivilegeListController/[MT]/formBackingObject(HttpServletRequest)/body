@@ -1,0 +1,13 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Map<Privilege,Boolean> privilegeList=new LinkedHashMap<Privilege,Boolean>();
+  if (context != null && context.isAuthenticated()) {
+    UserService us=context.getUserService();
+    for (    Privilege p : us.getPrivileges()) {
+      if (OpenmrsConstants.CORE_PRIVILEGES().contains(p.getPrivilege()))       privilegeList.put(p,true);
+ else       privilegeList.put(p,false);
+    }
+  }
+  return privilegeList;
+}

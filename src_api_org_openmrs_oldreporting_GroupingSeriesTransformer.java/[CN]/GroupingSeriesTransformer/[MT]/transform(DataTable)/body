@@ -1,0 +1,28 @@
+{
+  Map<Object,List<DataRow>> map=new HashMap<Object,List<DataRow>>();
+  for (  DataRow row : input.getRows()) {
+    Object classification=classifier.classify(row);
+    List<DataRow> temp=map.get(classification);
+    if (temp == null) {
+      temp=new ArrayList<DataRow>();
+      map.put(classification,temp);
+    }
+    temp.add(row);
+  }
+  boolean canSort=true;
+  for (  Object o : map.keySet()) {
+    if (!(o instanceof Comparable)) {
+      canSort=false;
+      break;
+    }
+  }
+  Map ret=canSort ? new TreeMap() : new HashMap();
+  for (  Map.Entry<Object,List<DataRow>> e : map.entrySet()) {
+    List<DataRow> rows=e.getValue();
+    Object o=aggregation.aggregate(rows);
+    ret.put(e.getKey(),o);
+  }
+  DataSeries series=new DataSeries(keyTitle,valueTitle);
+  series.setData(ret);
+  return series;
+}

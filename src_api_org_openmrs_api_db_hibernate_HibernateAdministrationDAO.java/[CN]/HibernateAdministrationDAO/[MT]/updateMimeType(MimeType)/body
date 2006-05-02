@@ -1,0 +1,15 @@
+{
+  if (mimeType.getMimeTypeId() == null)   createMimeType(mimeType);
+ else {
+    try {
+      Session session=HibernateUtil.currentSession();
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(mimeType);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

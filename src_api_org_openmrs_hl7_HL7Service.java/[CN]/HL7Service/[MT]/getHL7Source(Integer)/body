@@ -1,0 +1,4 @@
+{
+  if (!context.hasPrivilege(HL7Constants.PRIV_VIEW_HL7_SOURCE))   throw new APIAuthenticationException("Insufficient privilege to view an HL7 source");
+  return dao().getHL7Source(hl7SourceId);
+}

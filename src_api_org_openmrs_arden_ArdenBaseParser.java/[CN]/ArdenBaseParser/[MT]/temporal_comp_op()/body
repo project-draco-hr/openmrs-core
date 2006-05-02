@@ -1,0 +1,42 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST temporal_comp_op_AST=null;
+  try {
+    match(LITERAL_within);
+{
+switch (LA(1)) {
+case THE:
+{
+          the();
+          break;
+        }
+case PAST:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+AST tmp319_AST=null;
+tmp319_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp319_AST);
+match(PAST);
+expr_string();
+astFactory.addASTChild(currentAST,returnAST);
+temporal_comp_op_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_42);
+}
+ else {
+throw ex;
+}
+}
+returnAST=temporal_comp_op_AST;
+}

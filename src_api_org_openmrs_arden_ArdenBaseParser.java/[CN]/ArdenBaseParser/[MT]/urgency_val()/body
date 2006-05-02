@@ -1,0 +1,37 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST urgency_val_AST=null;
+  try {
+switch (LA(1)) {
+case INTLIT:
+{
+        AST tmp426_AST=null;
+        tmp426_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp426_AST);
+        match(INTLIT);
+        urgency_val_AST=(AST)currentAST.root;
+        break;
+      }
+case ENDBLOCK:
+{
+      urgency_val_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_25);
+}
+ else {
+throw ex;
+}
+}
+returnAST=urgency_val_AST;
+}

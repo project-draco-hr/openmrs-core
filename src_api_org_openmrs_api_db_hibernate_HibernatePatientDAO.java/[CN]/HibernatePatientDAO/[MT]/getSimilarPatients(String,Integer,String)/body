@@ -1,0 +1,28 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Set<Patient> patients=new LinkedHashSet<Patient>();
+  name.replace(", "," ");
+  String[] names=name.split(" ");
+  Criteria criteria=session.createCriteria(Patient.class).createAlias("names","name");
+  for (  String n : names) {
+    if (n != null && n.length() > 0) {
+      criteria.add(Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("name.givenName",n,MatchMode.START))));
+    }
+  }
+  LogicalExpression birthdayMatch=Expression.or(Expression.sql("year(birthdate) = " + birthyear),Expression.isNull("birthdate"));
+  SimpleExpression genderMatch=Expression.eq("gender",gender);
+  if (birthyear != null && gender != null) {
+    criteria.add(Expression.and(birthdayMatch,genderMatch));
+  }
+ else   if (birthyear != null) {
+    criteria.add(birthdayMatch);
+  }
+ else   if (gender != null) {
+    criteria.add(genderMatch);
+  }
+  criteria.addOrder(Order.asc("name.givenName"));
+  criteria.addOrder(Order.asc("name.middleName"));
+  criteria.addOrder(Order.asc("name.familyName"));
+  patients.addAll(criteria.list());
+  return patients;
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List fieldTypes=session.createCriteria(FieldType.class).list();
+  return fieldTypes;
+}

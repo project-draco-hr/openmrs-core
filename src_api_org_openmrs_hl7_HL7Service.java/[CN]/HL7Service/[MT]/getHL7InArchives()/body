@@ -1,0 +1,4 @@
+{
+  if (!context.hasPrivilege(HL7Constants.PRIV_VIEW_HL7_IN_ARCHIVE))   throw new APIAuthenticationException("Insufficient privilege to view an HL7 inbound archive entry");
+  return dao().getHL7InArchives();
+}

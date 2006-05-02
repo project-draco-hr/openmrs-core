@@ -1,0 +1,14 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Patient patient=null;
+  if (context != null && context.isAuthenticated()) {
+    FormEntryService ps=context.getFormEntryService();
+    String patientId=request.getParameter("patientId");
+    if (patientId != null) {
+      patient=ps.getPatient(Integer.valueOf(patientId));
+    }
+  }
+  if (patient == null)   patient=new Patient();
+  return patient;
+}

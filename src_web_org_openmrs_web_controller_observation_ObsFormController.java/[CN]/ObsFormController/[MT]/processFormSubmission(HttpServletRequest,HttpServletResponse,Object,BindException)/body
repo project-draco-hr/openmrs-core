@@ -1,0 +1,9 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Obs obs=(Obs)obj;
+  obs=setObjects(obs,request);
+  String reason=request.getParameter("editReason");
+  if (obs.getObsId() != null && (reason == null || reason.length() == 0))   errors.reject("editReason","Obs.edit.reason.empty");
+  return super.processFormSubmission(request,reponse,obs,errors);
+}

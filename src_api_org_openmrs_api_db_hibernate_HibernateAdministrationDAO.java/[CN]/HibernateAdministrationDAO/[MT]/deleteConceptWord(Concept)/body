@@ -1,0 +1,10 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Criteria crit=session.createCriteria(ConceptWord.class);
+  crit.add(Expression.eq("concept",concept));
+  List<ConceptWord> words=crit.list();
+  log.debug(authUserId + "|ConceptWord|" + words);
+  HibernateUtil.beginTransaction();
+  session.createQuery("delete from ConceptWord where concept_id = :c").setInteger("c",concept.getConceptId()).executeUpdate();
+  HibernateUtil.commitTransaction();
+}

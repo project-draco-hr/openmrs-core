@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  PatientIdentifierType identifierType=null;
+  if (context != null && context.isAuthenticated()) {
+    PatientService ps=context.getPatientService();
+    String identifierTypeId=request.getParameter("patientIdentifierTypeId");
+    if (identifierTypeId != null)     identifierType=ps.getPatientIdentifierType(Integer.valueOf(identifierTypeId));
+  }
+  if (identifierType == null)   identifierType=new PatientIdentifierType();
+  return identifierType;
+}

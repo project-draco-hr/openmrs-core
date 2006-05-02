@@ -1,0 +1,36 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_AST=null;
+  try {
+    expr_sort();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop246:       do {
+        if ((LA(1) == COMMA)) {
+          AST tmp417_AST=null;
+          tmp417_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp417_AST);
+          match(COMMA);
+          expr_sort();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop246;
+        }
+      }
+ while (true);
+    }
+    expr_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_59);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=expr_AST;
+}

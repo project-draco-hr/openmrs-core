@@ -1,0 +1,7 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Criteria criteria=session.createCriteria(Field.class);
+  criteria.add(Expression.eq("concept",concept));
+  criteria.addOrder(Order.asc("name"));
+  return criteria.list();
+}

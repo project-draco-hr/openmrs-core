@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  MimeType mimeType=null;
+  if (context != null && context.isAuthenticated()) {
+    ObsService os=context.getObsService();
+    String mimeTypeId=request.getParameter("mimeTypeId");
+    if (mimeTypeId != null)     mimeType=os.getMimeType(Integer.valueOf(mimeTypeId));
+  }
+  if (mimeType == null)   mimeType=new MimeType();
+  return mimeType;
+}

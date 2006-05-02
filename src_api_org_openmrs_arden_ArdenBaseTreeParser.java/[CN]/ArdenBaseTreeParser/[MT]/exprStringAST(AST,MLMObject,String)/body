@@ -1,0 +1,89 @@
+{
+  String s="";
+  AST exprStringAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST ift=null;
+  AST val=null;
+  String a, b;
+  try {
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case ID:
+{
+          AST __t352=_t;
+          ift=_t == ASTNULL ? null : (AST)_t;
+          match(_t,ID);
+          _t=_t.getFirstChild();
+          a=ift.getText();
+          System.err.println("IF text = " + a);
+          if (instr.equals(""))           obj.AddToEvaluateList(a);
+          obj.RetrieveConcept(a);
+          s=a;
+          _t=__t352;
+          _t=_t.getNextSibling();
+          break;
+        }
+case TRUE:
+case FALSE:
+{
+{
+          if (_t == null)           _t=ASTNULL;
+switch (_t.getType()) {
+case TRUE:
+{
+              AST __t354=_t;
+              AST tmp51_AST_in=(AST)_t;
+              match(_t,TRUE);
+              _t=_t.getFirstChild();
+              obj.SetAnswer("true",instr);
+              _t=__t354;
+              _t=_t.getNextSibling();
+              break;
+            }
+case FALSE:
+{
+            AST __t355=_t;
+            AST tmp52_AST_in=(AST)_t;
+            match(_t,FALSE);
+            _t=_t.getFirstChild();
+            obj.SetAnswer("false",instr);
+            _t=__t355;
+            _t=_t.getNextSibling();
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(_t);
+        }
+    }
+  }
+  break;
+}
+case INTLIT:
+{
+{
+  val=(AST)_t;
+  match(_t,INTLIT);
+  _t=_t.getNextSibling();
+  b=val.getText();
+  Integer i=Integer.parseInt(b);
+  obj.SetAnswer(i,instr);
+}
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

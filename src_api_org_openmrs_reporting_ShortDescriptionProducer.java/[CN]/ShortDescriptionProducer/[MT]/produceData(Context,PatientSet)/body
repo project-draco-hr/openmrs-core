@@ -1,0 +1,8 @@
+{
+  Map<Integer,String> temp=context.getPatientSetService().getShortPatientDescriptions(patients);
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  for (  Map.Entry<Integer,String> e : temp.entrySet()) {
+    ret.put(e.getKey(),e.getValue());
+  }
+  return ret;
+}

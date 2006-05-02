@@ -1,0 +1,6 @@
+{
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_ADD_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_CONCEPTS);
+  String authUserId=context.getAuthenticatedUser().getUserId().toString();
+  log.info(authUserId + "|" + concept.getConceptId().toString()+ "|numeric");
+  getConceptDAO().createConcept(concept);
+}

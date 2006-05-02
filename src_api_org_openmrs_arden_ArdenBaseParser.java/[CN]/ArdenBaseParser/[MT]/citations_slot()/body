@@ -1,0 +1,45 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST citations_slot_AST=null;
+  try {
+    if ((LA(1) == LITERAL_knowledge || LA(1) == LITERAL_links)) {
+      citations_slot_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == LITERAL_knowledge || LA(1) == LITERAL_links)) {
+      citations_slot_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == LITERAL_citations)) {
+      AST tmp116_AST=null;
+      tmp116_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp116_AST);
+      match(LITERAL_citations);
+      AST tmp117_AST=null;
+      tmp117_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp117_AST);
+      match(COLON);
+{
+        citations_list();
+        astFactory.addASTChild(currentAST,returnAST);
+      }
+      AST tmp118_AST=null;
+      tmp118_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp118_AST);
+      match(ENDBLOCK);
+      citations_slot_AST=(AST)currentAST.root;
+    }
+ else {
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_16);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=citations_slot_AST;
+}

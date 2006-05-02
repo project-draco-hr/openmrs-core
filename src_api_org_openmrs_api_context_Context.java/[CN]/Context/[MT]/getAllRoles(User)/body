@@ -1,0 +1,17 @@
+{
+  Set<Role> roles=new HashSet<Role>();
+  Role role=getUserService().getRole(OpenmrsConstants.ANONYMOUS_ROLE);
+  if (role == null) {
+    throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.ANONYMOUS_ROLE + " role does not exist");
+  }
+  roles.add(role);
+  if (this.user != null && this.user.equals(user)) {
+    roles.addAll(user.getAllRoles());
+    Role authRole=getUserService().getRole(OpenmrsConstants.AUTHENTICATED_ROLE);
+    if (authRole == null) {
+      throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.AUTHENTICATED_ROLE + " role does not exist");
+    }
+    roles.add(authRole);
+  }
+  return roles;
+}

@@ -1,0 +1,8 @@
+{
+  if (form.getCreator() == null) {
+    form.setCreator(context.getAuthenticatedUser());
+    form.setDateCreated(new Date());
+  }
+  form.setChangedBy(context.getAuthenticatedUser());
+  form.setDateChanged(new Date());
+}

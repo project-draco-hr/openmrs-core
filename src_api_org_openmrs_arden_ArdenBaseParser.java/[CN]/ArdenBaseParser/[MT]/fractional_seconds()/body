@@ -1,0 +1,45 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST fractional_seconds_AST=null;
+  try {
+switch (LA(1)) {
+case 98:
+{
+        AST tmp234_AST=null;
+        tmp234_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp234_AST);
+        match(98);
+        AST tmp235_AST=null;
+        tmp235_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp235_AST);
+        match(DIGIT);
+        fractional_seconds_AST=(AST)currentAST.root;
+        break;
+      }
+case ENDBLOCK:
+case 99:
+case 100:
+case LITERAL_Z:
+case LITERAL_z:
+{
+      fractional_seconds_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_29);
+}
+ else {
+throw ex;
+}
+}
+returnAST=fractional_seconds_AST;
+}

@@ -1,0 +1,10 @@
+{
+  String val=p.getProperty("obscure_patients",null);
+  if (val != null && "true".equalsIgnoreCase(val))   OpenmrsConstants.OBSCURE_PATIENTS=true;
+  val=p.getProperty("obscure_patients.family_name",null);
+  if (val != null)   OpenmrsConstants.OBSCURE_PATIENTS_FAMILY_NAME=val;
+  val=p.getProperty("obscure_patients.given_name",null);
+  if (val != null)   OpenmrsConstants.OBSCURE_PATIENTS_GIVEN_NAME=val;
+  val=p.getProperty("obscure_patients.middle_name",null);
+  if (val != null)   OpenmrsConstants.OBSCURE_PATIENTS_MIDDLE_NAME=val;
+}

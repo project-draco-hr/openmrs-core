@@ -1,0 +1,55 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Locale locale=context.getLocale();
+  Map<String,Object> map=new HashMap<String,Object>();
+  String defaultVerbose="false";
+  if (context != null) {
+    ConceptService cs=context.getConceptService();
+    String conceptId=request.getParameter("conceptId");
+    ConceptName conceptName=new ConceptName();
+    Collection<ConceptSynonym> conceptSynonyms=new Vector<ConceptSynonym>();
+    Map<Double,Object[]> conceptSets=new TreeMap<Double,Object[]>();
+    Map<String,String> conceptAnswers=new TreeMap<String,String>();
+    Collection<Form> forms=new Vector<Form>();
+    if (conceptId != null) {
+      Concept concept=cs.getConcept(Integer.valueOf(conceptId));
+      if (concept != null) {
+        conceptName=concept.getName(locale);
+        if (conceptName == null)         conceptName=new ConceptName();
+        conceptSynonyms=concept.getSynonyms(locale);
+        for (        ConceptSet set : concept.getConceptSets()) {
+          Object[] arr={set.getConcept().getConceptId().toString(),set.getConcept().getName(locale)};
+          conceptSets.put(set.getSortWeight(),arr);
+        }
+        for (        ConceptAnswer answer : concept.getAnswers(true)) {
+          log.debug("getting answers");
+          String key=answer.getAnswerConcept().getConceptId().toString();
+          ConceptName cn=answer.getAnswerConcept().getName(locale);
+          String name="";
+          if (cn != null)           name=cn.toString();
+          if (answer.getAnswerDrug() != null) {
+            key=key + "^" + answer.getAnswerDrug().getDrugId();
+            name=answer.getAnswerDrug().getFullName(locale);
+          }
+          if (answer.getAnswerConcept().isRetired())           name="<span class='retired'>" + name + "</span>";
+          conceptAnswers.put(key,name);
+        }
+        map.put("previousConcept",cs.getPrevConcept(concept));
+        map.put("nextConcept",cs.getNextConcept(concept));
+        forms=context.getFormService().getForms(concept);
+      }
+      if (context.isAuthenticated())       defaultVerbose=context.getAuthenticatedUser().getProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+    }
+    map.put("conceptName",conceptName);
+    map.put("conceptSynonyms",conceptSynonyms);
+    map.put("conceptSets",conceptSets);
+    map.put("conceptAnswers",conceptAnswers);
+    map.put("formsInUse",forms);
+    map.put("classes",cs.getConceptClasses());
+    map.put("datatypes",cs.getConceptDatatypes());
+    map.put("locale",locale.getLanguage().substring(0,2));
+  }
+  map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
+  return map;
+}

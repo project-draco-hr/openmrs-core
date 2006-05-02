@@ -1,0 +1,14 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Drug drug=null;
+  if (context != null && context.isAuthenticated()) {
+    ConceptService cs=context.getConceptService();
+    String id=request.getParameter("drugId");
+    if (id != null) {
+      drug=cs.getDrug(Integer.valueOf(id));
+    }
+  }
+  if (drug == null)   drug=new Drug();
+  return drug;
+}

@@ -1,0 +1,15 @@
+{
+  if (fieldType.getFieldTypeId() == null)   createFieldType(fieldType);
+ else {
+    try {
+      Session session=HibernateUtil.currentSession();
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(fieldType);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  HibernateUtil.startup();
+  Context context=ContextFactory.getContext();
+  context.authenticate("admin","test");
+  Form form=context.getFormService().getForm(17);
+  String payload=new FormSchemaBuilder(context,form).getSchema();
+  System.out.println(payload);
+  HibernateUtil.shutdown();
+}

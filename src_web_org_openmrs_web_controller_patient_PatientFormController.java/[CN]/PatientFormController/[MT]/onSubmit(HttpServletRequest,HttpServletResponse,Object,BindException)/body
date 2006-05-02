@@ -1,0 +1,31 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Patient patient=(Patient)obj;
+  if (context != null && context.isAuthenticated()) {
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String action=request.getParameter("action");
+    PatientService ps=context.getPatientService();
+    if (action.equals(msa.getMessage("Patient.delete"))) {
+      try {
+        ps.deletePatient(patient);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.deleted");
+        return new ModelAndView(new RedirectView("index.htm"));
+      }
+ catch (      APIException e) {
+        log.error(e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Patient.cannot.delete");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?patientId=" + patient.getPatientId().toString()));
+      }
+    }
+ else {
+      boolean isNew=(patient.getPatientId() == null);
+      context.getFormEntryService().updatePatient(patient);
+      String view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.saved");
+      view=view + "?patientId=" + patient.getPatientId();
+      return new ModelAndView(new RedirectView(view));
+    }
+  }
+  return new ModelAndView(new RedirectView(getFormView()));
+}

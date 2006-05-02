@@ -1,0 +1,23 @@
+{
+  try {
+    DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+    DocumentBuilder db=dbf.newDocumentBuilder();
+    Document doc=db.parse(file);
+    Element elem=getSingleElement(doc,tag);
+    if (elem == null) {
+      log.warn("Could not locate " + tag + " element in "+ file.getName());
+      return;
+    }
+    elem.setAttribute("xmlns:openmrs",namespace);
+    writeXml(doc,file.getAbsolutePath());
+  }
+ catch (  ParserConfigurationException e) {
+    log.error("Error parsing form data",e);
+  }
+catch (  SAXException e) {
+    log.error("Error parsing form data",e);
+  }
+catch (  IOException e) {
+    log.error("Error parsing form data",e);
+  }
+}

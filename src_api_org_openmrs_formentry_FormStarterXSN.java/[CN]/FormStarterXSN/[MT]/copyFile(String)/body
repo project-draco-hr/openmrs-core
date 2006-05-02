@@ -1,0 +1,20 @@
+{
+  File xsnFolder=new File(xsnFolderPath);
+  if (!xsnFolder.exists())   return null;
+  File tempDir=FormEntryUtil.createTempDirectory("XSN");
+  if (tempDir == null)   throw new IOException("Failed to create temporary directory");
+  for (  File f : xsnFolder.listFiles()) {
+    File newFile=new File(tempDir,f.getName());
+    FileChannel in=null, out=null;
+    try {
+      in=new FileInputStream(f).getChannel();
+      out=new FileOutputStream(newFile).getChannel();
+      in.transferTo(0,in.size(),out);
+    }
+  finally {
+      if (in != null)       in.close();
+      if (out != null)       out.close();
+    }
+  }
+  return tempDir;
+}

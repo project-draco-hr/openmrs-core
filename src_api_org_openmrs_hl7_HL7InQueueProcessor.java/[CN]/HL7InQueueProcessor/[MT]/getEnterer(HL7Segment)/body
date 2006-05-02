@@ -1,0 +1,20 @@
+{
+  String hl7EntererId=orc.getComponent(10,1);
+  Integer entererId=null;
+  User enterer;
+  try {
+    entererId=Integer.parseInt(hl7EntererId);
+  }
+ catch (  NumberFormatException e) {
+    throw new HL7Exception("Invalid enterer ID '" + hl7EntererId + "'");
+  }
+  if (entererId == null || entererId == 0)   throw new HL7Exception("Unable to parse enterer ID '" + hl7EntererId + "'");
+  try {
+    enterer=context.getUserService().getUser(entererId);
+  }
+ catch (  Exception e) {
+    throw new HL7Exception("Error retrieving enterer " + entererId,e);
+  }
+  if (enterer == null || enterer.getUserId() == null)   throw new HL7Exception("Could not find enterer (User) " + entererId);
+  return enterer;
+}

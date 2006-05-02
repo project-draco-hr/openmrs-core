@@ -1,0 +1,31 @@
+{
+  user=null;
+  String errorMsg="Invalid username and/or password";
+  Session session=HibernateUtil.currentSession();
+  String loginWithoutDash=login;
+  if (login.length() >= 3 && login.charAt(login.length() - 2) == '-')   loginWithoutDash=login.substring(0,login.length() - 2) + login.charAt(login.length() - 1);
+  User candidateUser=null;
+  try {
+    candidateUser=(User)session.createQuery("from User u where (u.username = ? or u.systemId = ? or u.systemId = ?) and u.voided = 0").setString(0,login).setString(1,login).setString(2,loginWithoutDash).uniqueResult();
+  }
+ catch (  HibernateException he) {
+    log.error("Got hibernate exception");
+    log.error(he);
+  }
+catch (  Exception e) {
+    log.error("Got regular exception");
+    log.error(e);
+  }
+  if (candidateUser == null) {
+    throw new ContextAuthenticationException("User not found: " + login);
+  }
+  String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+  String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+  String hashedPassword=Security.encodeString(password + saltOnRecord);
+  if (hashedPassword != null && hashedPassword.equals(passwordOnRecord))   user=candidateUser;
+  if (user == null) {
+    log.info("Failed login attempt (login=" + login + ") - "+ errorMsg);
+    throw new ContextAuthenticationException(errorMsg);
+  }
+  return user;
+}

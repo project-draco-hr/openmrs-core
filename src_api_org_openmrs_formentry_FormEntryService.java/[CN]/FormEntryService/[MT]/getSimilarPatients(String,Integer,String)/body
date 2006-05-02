@@ -1,0 +1,11 @@
+{
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  Set<Patient> p;
+  try {
+    p=getPatientService().getSimilarPatients(name,birthyear,gender);
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  }
+  return p;
+}

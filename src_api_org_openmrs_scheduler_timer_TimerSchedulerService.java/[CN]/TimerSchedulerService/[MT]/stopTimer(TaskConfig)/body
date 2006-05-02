@@ -1,0 +1,10 @@
+{
+  log.debug("Stopping timer for task " + task.getId());
+  Timer timer=scheduledTaskMap.get(task.getId());
+  if (timer != null) {
+    timer.cancel();
+    timer=null;
+  }
+  task.setStarted(false);
+  updateTask(task);
+}

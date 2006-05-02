@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Tribe tribe=(Tribe)session.get(Tribe.class,tribeId);
+  return tribe;
+}

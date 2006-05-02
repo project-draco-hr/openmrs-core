@@ -1,0 +1,17 @@
+{
+  if (encounter != null) {
+    encounterId=encounter.getEncounterId();
+    encounterDateTime=encounter.getEncounterDatetime();
+    PatientName pn=encounter.getPatient().getPatientName();
+    if (pn != null) {
+      patientName="";
+      if (pn.getGivenName() != null)       patientName+=pn.getGivenName();
+      if (pn.getMiddleName() != null)       patientName+=" " + pn.getMiddleName();
+      if (pn.getFamilyName() != null)       patientName+=" " + pn.getFamilyName();
+    }
+    if (encounter.getProvider() != null)     providerName=encounter.getProvider().getFirstName() + " " + encounter.getProvider().getLastName();
+    if (encounter.getLocation() != null)     location=encounter.getLocation().getName();
+    if (encounter.getEncounterType() != null)     encounterType=encounter.getEncounterType().getName();
+    if (encounter.getForm() != null)     formName=encounter.getForm().getName();
+  }
+}

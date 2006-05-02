@@ -1,0 +1,28 @@
+{
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Locale locale=context.getLocale();
+  List<Object> objects=new Vector<Object>();
+  if (context != null) {
+    Concept concept=null;
+    try {
+      Integer i=Integer.valueOf(txt);
+      concept=context.getConceptService().getConcept(i);
+    }
+ catch (    NumberFormatException e) {
+    }
+    if (concept != null) {
+      objects.add(new ConceptListItem(concept,locale));
+      for (      Field field : context.getFormService().findFields(concept))       objects.add(new FieldListItem(field));
+    }
+    List<ConceptWord> conceptWords=context.getConceptService().findConcepts(txt,locale,false);
+    for (    ConceptWord word : conceptWords) {
+      objects.add(new ConceptListItem(word));
+      for (      Field field : context.getFormService().findFields(word.getConcept()))       objects.add(new FieldListItem(field));
+    }
+    for (    Field field : context.getFormService().findFields(txt)) {
+      FieldListItem fi=new FieldListItem(field);
+      if (!objects.contains(fi))       objects.add(fi);
+    }
+  }
+  return objects;
+}

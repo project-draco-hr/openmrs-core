@@ -1,0 +1,15 @@
+{
+  Session session=HibernateUtil.currentSession();
+  formField.setCreator(context.getAuthenticatedUser());
+  formField.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.clear();
+    session.save(formField);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

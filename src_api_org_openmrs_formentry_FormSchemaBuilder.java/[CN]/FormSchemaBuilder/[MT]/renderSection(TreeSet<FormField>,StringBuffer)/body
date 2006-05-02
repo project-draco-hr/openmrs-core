@@ -1,0 +1,49 @@
+{
+  TreeSet<FormField> subSectionList=null;
+  for (  FormField sectionFormField : section) {
+    String sectionName=FormUtil.getXmlToken(sectionFormField.getField().getName());
+    if (sectionName.equals("other"))     continue;
+    TreeSet<FormField> sectionFormFieldList=formStructure.get(sectionFormField.getFormFieldId());
+    s.append("<xs:complexType name=\"" + sectionName + "_type\">\n");
+    s.append("  <xs:sequence>\n");
+    if (sectionFormFieldList != null) {
+      for (      FormField subSectionFormField : sectionFormFieldList) {
+        String elemTag=FormUtil.getNewTag(FormUtil.getXmlToken(subSectionFormField.getField().getName()),tagList);
+        String elemTypeTag=getNewTypeTag(subSectionFormField);
+        if (formStructure.containsKey(subSectionFormField.getFormFieldId())) {
+          if (subSectionList == null)           subSectionList=new TreeSet<FormField>();
+          subSectionList.add(subSectionFormField);
+        }
+        if (subSectionFormField.getField().getFieldType().getFieldTypeId().equals(FormEntryConstants.FIELD_TYPE_DATABASE)) {
+          s.append("    <xs:element name=\"" + elemTag + "\" ");
+          if (subSectionFormField.getMinOccurs() != null)           s.append("minOccurs=\"" + subSectionFormField.getMinOccurs() + "\" ");
+          if (subSectionFormField.getMaxOccurs() != null)           s.append("maxOccurs=\"" + subSectionFormField.getMaxOccurs() + "\" ");
+          s.append("nillable=\"" + (subSectionFormField.isRequired() ? "0" : "1") + "\">\n");
+          s.append("      <xs:complexType>\n");
+          s.append("        <xs:simpleContent>\n");
+          s.append("          <xs:extension base=\"" + elemTypeTag + "\">\n");
+          s.append("            <xs:attribute name=\"openmrs_table\" type=\"xs:string\" use=\"required\" fixed=\"" + subSectionFormField.getField().getTableName() + "\" />\n");
+          s.append("            <xs:attribute name=\"openmrs_attribute\" type=\"xs:string\" use=\"required\" fixed=\"" + subSectionFormField.getField().getAttributeName() + "\" />\n");
+          s.append("          </xs:extension>\n");
+          s.append("        </xs:simpleContent>\n");
+          s.append("      </xs:complexType>\n");
+          s.append("    </xs:element>\n");
+        }
+ else {
+          s.append("    <xs:element name=\"" + elemTag + "\" type=\""+ elemTypeTag+ "\" ");
+          if (subSectionFormField.getMinOccurs() != null)           s.append("minOccurs=\"" + subSectionFormField.getMinOccurs() + "\" ");
+          if (subSectionFormField.getMaxOccurs() != null)           s.append("maxOccurs=\"" + maxOccursValue(subSectionFormField.getMaxOccurs()) + "\" ");
+          s.append("nillable=\"" + (subSectionFormField.isRequired() ? "0" : "1") + "\" />\n");
+        }
+      }
+    }
+    s.append("  </xs:sequence>\n");
+    if (sectionFormField.getField().getFieldType().getFieldTypeId().equals(FormEntryConstants.FIELD_TYPE_CONCEPT)) {
+      Concept concept=sectionFormField.getField().getConcept();
+      s.append("  <xs:attribute name=\"openmrs_concept\" type=\"xs:string\" use=\"required\" fixed=\"" + FormUtil.conceptToString(concept,context.getLocale()) + "\" />\n");
+      s.append("  <xs:attribute name=\"openmrs_datatype\" type=\"xs:string\" use=\"required\" fixed=\"" + concept.getDatatype().getHl7Abbreviation() + "\" />\n");
+    }
+    s.append("</xs:complexType>\n\n");
+  }
+  return subSectionList;
+}

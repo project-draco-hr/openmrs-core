@@ -1,0 +1,16 @@
+{
+  if (concept != null) {
+    conceptId=concept.getConceptId();
+    ConceptName cn=concept.getName(locale);
+    name=shortName=description="";
+    if (cn != null) {
+      name=escape(cn.getName());
+      shortName=escape(cn.getShortName());
+      description=escape(cn.getDescription());
+    }
+    synonym="";
+    retired=concept.isRetired();
+    hl7Abbreviation=concept.getDatatype().getHl7Abbreviation();
+    className=concept.getConceptClass().getName();
+  }
+}

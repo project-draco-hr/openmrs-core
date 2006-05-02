@@ -1,0 +1,16 @@
+{
+  if (sessionFactory != null) {
+    log.debug("Closing any open sessions");
+    closeSession();
+    log.debug("Shutting down threadLocalSession factory");
+    sessionFactory.close();
+    log.debug("The threadLocalSession has been closed");
+    log.debug("Setting static variables to null");
+    sessionFactory=null;
+  }
+ else   log.error("SessionFactory is null");
+  threadLocalSession.remove();
+  threadLocalTransaction.remove();
+  threadLocalSession=null;
+  threadLocalTransaction=null;
+}

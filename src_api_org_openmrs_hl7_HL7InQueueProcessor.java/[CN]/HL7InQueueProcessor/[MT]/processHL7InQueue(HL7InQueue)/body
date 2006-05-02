@@ -1,0 +1,22 @@
+{
+  HL7Message hl7Message;
+  String hl7Data=hl7InQueue.getHL7Data();
+  try {
+    hl7Message=new HL7Message(hl7Data);
+  }
+ catch (  HL7Exception e) {
+    setFatalError(hl7InQueue,"Error parsing HL7 message",e);
+    return;
+  }
+  if (!hl7Message.getVersion().equals("2.5")) {
+    setFatalError(hl7InQueue,"Unsupported version (2.5 only)",null);
+    return;
+  }
+  String messageType=hl7Message.getMessageType();
+  if (messageType.equals("ORU"))   processORU(hl7InQueue,hl7Message);
+ else {
+    setFatalError(hl7InQueue,"Message type not supported: \"" + messageType + "\"",null);
+    return;
+  }
+  context.getHL7Service().garbageCollect();
+}

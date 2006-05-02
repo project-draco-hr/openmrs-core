@@ -1,0 +1,13 @@
+{
+  log.debug("Loading override properties into hibernate configuration");
+  Configuration cfg=new Configuration();
+  log.debug("Setting properties");
+  for (  Object key : properties.keySet()) {
+    String prop=(String)key;
+    String value=(String)properties.get(key);
+    log.debug("Setting property: " + prop + ":"+ value);
+    cfg.setProperty(prop,value);
+    if (!prop.startsWith("hibernate"))     cfg.setProperty("hibernate." + prop,value);
+  }
+  startupWithConfig(cfg);
+}

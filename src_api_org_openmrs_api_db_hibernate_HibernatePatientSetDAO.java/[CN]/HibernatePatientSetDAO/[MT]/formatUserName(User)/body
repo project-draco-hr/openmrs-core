@@ -1,0 +1,32 @@
+{
+  StringBuilder sb=new StringBuilder();
+  boolean any=false;
+  if (u.getFirstName() != null) {
+    if (any) {
+      sb.append(" ");
+    }
+ else {
+      any=true;
+    }
+    sb.append(u.getFirstName());
+  }
+  if (u.getMiddleName() != null) {
+    if (any) {
+      sb.append(" ");
+    }
+ else {
+      any=true;
+    }
+    sb.append(u.getMiddleName());
+  }
+  if (u.getLastName() != null) {
+    if (any) {
+      sb.append(" ");
+    }
+ else {
+      any=true;
+    }
+    sb.append(u.getLastName());
+  }
+  return sb.toString();
+}

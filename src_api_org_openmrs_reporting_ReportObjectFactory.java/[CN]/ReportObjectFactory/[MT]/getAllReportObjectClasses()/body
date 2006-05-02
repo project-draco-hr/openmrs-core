@@ -1,0 +1,13 @@
+{
+  if (modules != null) {
+    Set<String> uniqueClasses=new HashSet<String>();
+    for (int i=0; i < modules.size(); i++) {
+      ReportObjectFactoryModule mod=modules.get(i);
+      boolean isAdded=uniqueClasses.add(mod.getClassName());
+    }
+    return uniqueClasses;
+  }
+ else {
+    return new HashSet<String>();
+  }
+}

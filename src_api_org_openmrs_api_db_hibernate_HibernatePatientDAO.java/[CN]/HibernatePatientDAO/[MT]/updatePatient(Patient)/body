@@ -1,0 +1,17 @@
+{
+  if (patient.getPatientId() == null)   createPatient(patient);
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      setCollectionProperties(patient);
+      patient=(Patient)session.merge(patient);
+      session.saveOrUpdate(patient);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

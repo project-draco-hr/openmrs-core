@@ -1,0 +1,8 @@
+{
+  log.debug("Sending message to role " + role);
+  log.debug("Dao Context == null : " + daoContext == null);
+  log.debug("User Dao : " + daoContext.getUserDAO());
+  Collection<User> users=daoContext.getUserDAO().getUsersByRole(role);
+  log.debug("Sending message " + message + " to "+ users);
+  send(message,users);
+}

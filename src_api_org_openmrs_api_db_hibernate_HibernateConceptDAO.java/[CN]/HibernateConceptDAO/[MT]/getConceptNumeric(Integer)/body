@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  ConceptNumeric cn=new ConceptNumeric();
+  cn=(ConceptNumeric)session.get(ConceptNumeric.class,i);
+  return cn;
+}

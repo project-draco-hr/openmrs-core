@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  if (conceptProposal.getCreator() == null)   conceptProposal.setCreator(conceptProposal.getEncounter().getCreator());
+  if (conceptProposal.getDateCreated() == null)   conceptProposal.setDateCreated(conceptProposal.getEncounter().getDateCreated());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(conceptProposal);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new APIException(e);
+  }
+}

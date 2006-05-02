@@ -1,0 +1,25 @@
+{
+  new ArdenReadNode();
+  try {
+    ArdenLexer lexer=new ArdenLexer(s);
+    ArdenParser parser=new ArdenParser(lexer);
+    parser.startRule();
+    AST t=parser.getAST();
+    DumpASTVisitor visitor=new DumpASTVisitor();
+    visitor.visit(t);
+    System.err.println(t.toStringTree());
+    ArdenBaseTreeParser treeParser=new ArdenBaseTreeParser();
+    MLMObject ardObj=new MLMObject();
+    treeParser.data(t,ardObj);
+    System.err.println(t.getNextSibling().toStringTree());
+    String logicstr=treeParser.logic(t.getNextSibling(),ardObj);
+    String actionstr=treeParser.action(t.getNextSibling().getNextSibling());
+    System.err.println(actionstr);
+    System.err.println(logicstr);
+    ardObj.PrintConceptMap();
+  }
+ catch (  Exception e) {
+    System.err.println("parser exception: " + e);
+    e.printStackTrace();
+  }
+}

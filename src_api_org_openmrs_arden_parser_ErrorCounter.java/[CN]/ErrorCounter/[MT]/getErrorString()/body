@@ -1,0 +1,8 @@
+{
+  StringBuffer buf=new StringBuffer();
+  for (Iterator iterator=errorList.iterator(); iterator.hasNext(); ) {
+    buf.append((String)iterator.next());
+    if (iterator.hasNext())     buf.append("\n");
+  }
+  return buf.toString();
+}

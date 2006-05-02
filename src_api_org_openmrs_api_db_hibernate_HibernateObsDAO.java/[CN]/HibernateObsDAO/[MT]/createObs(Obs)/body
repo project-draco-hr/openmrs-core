@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  if (obs.getCreator() == null)   obs.setCreator(context.getAuthenticatedUser());
+  if (obs.getDateCreated() == null)   obs.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.persist(obs);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

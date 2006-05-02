@@ -1,0 +1,11 @@
+{
+  input=runFilters(context,input);
+  if (patientClassifier == null) {
+    Map<String,PatientSet> ret=new HashMap<String,PatientSet>();
+    ret.put("",input);
+    return ret;
+  }
+ else {
+    return patientClassifier.partition(context,input);
+  }
+}

@@ -1,0 +1,8 @@
+{
+  log.debug("voiding order #" + order.getOrderId());
+  order.setVoided(true);
+  order.setVoidedBy(context.getAuthenticatedUser());
+  order.setDateVoided(new Date());
+  order.setVoidReason(reason);
+  updateOrder(order);
+}

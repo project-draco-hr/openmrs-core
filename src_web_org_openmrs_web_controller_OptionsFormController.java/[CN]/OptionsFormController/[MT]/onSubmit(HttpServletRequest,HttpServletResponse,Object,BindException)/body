@@ -1,0 +1,67 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  String view=getFormView();
+  if (context == null || !context.isAuthenticated()) {
+    errors.reject("auth.session.expired");
+    return super.processFormSubmission(request,response,obj,errors);
+  }
+  if (!errors.hasErrors()) {
+    User user=context.getAuthenticatedUser();
+    UserService us=context.getUserService();
+    OptionsForm opts=(OptionsForm)obj;
+    Map<String,String> properties=user.getProperties();
+    properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,opts.getDefaultLocation());
+    properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE,opts.getDefaultLocale());
+    properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_RETIRED,opts.getShowRetiredMessage().toString());
+    properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE,opts.getVerbose().toString());
+    properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION,opts.getNotification().toString());
+    properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS,opts.getNotificationAddress().toString());
+    if (!opts.getOldPassword().equals("")) {
+      try {
+        String password=opts.getNewPassword();
+        if (password.length() > 0) {
+          if (password.length() < 6)           errors.reject("error.password.length");
+          if (StringUtils.isAlpha(password))           errors.reject("error.password.characters");
+          if (password.equals(user.getUsername()) || password.equals(user.getSystemId()))           errors.reject("error.password.weak");
+          if (password.equals(opts.getOldPassword()) && !errors.hasErrors())           errors.reject("error.password.different");
+        }
+        if (!errors.hasErrors()) {
+          us.changePassword(opts.getOldPassword(),password);
+          if (properties.containsKey(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD))           properties.remove(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+        }
+      }
+ catch (      APIException e) {
+        errors.rejectValue("oldPassword","error.password.match");
+      }
+    }
+    if (!opts.getSecretQuestionPassword().equals("") && !errors.hasErrors()) {
+      try {
+        user.setSecretQuestion(opts.getSecretQuestionNew());
+        us.changeQuestionAnswer(opts.getSecretQuestionPassword(),opts.getSecretQuestionNew(),opts.getSecretAnswerNew());
+      }
+ catch (      APIException e) {
+        errors.rejectValue("secretQuestionPassword","error.password.match");
+      }
+    }
+    if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
+      context.addProxyPrivilege("View Users");
+      if (us.hasDuplicateUsername(user)) {
+        errors.rejectValue("username","error.username.taken");
+      }
+    }
+    if (!errors.hasErrors()) {
+      user.setUsername(opts.getUsername());
+      user.setProperties(properties);
+      context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      us.updateUser(user);
+      context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
+    }
+ else {
+      return super.processFormSubmission(request,response,opts,errors);
+    }
+    view=getSuccessView();
+  }
+  return new ModelAndView(new RedirectView(view));
+}

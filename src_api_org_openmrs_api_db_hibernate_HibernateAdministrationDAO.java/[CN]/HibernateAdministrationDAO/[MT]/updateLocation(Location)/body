@@ -1,0 +1,15 @@
+{
+  if (location.getLocationId() == null)   createLocation(location);
+ else {
+    try {
+      Session session=HibernateUtil.currentSession();
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(location);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

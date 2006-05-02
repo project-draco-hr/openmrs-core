@@ -1,0 +1,40 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  if (context == null) {
+    objectList.add("Your session has expired.");
+    objectList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
+  }
+ else {
+    try {
+      EncounterService es=context.getEncounterService();
+      List<Encounter> encs=new Vector<Encounter>();
+      if (phrase.matches("\\d+")) {
+        Encounter e=es.getEncounter(Integer.valueOf(phrase));
+        if (e != null) {
+          encs.add(e);
+        }
+      }
+      if (phrase == null || phrase.equals("")) {
+      }
+ else {
+        encs.addAll(es.getEncountersByPatientIdentifier(phrase,includeRetired));
+      }
+      if (encs.size() == 0) {
+        objectList.add("No matches found for <b>" + phrase + "</b>");
+      }
+ else {
+        objectList=new Vector<Object>(encs.size());
+        for (        Encounter e : encs) {
+          objectList.add(new EncounterListItem(e));
+        }
+      }
+    }
+ catch (    Exception e) {
+      log.error(e);
+      objectList.add("Error while attempting to find encounter - " + e.getMessage());
+    }
+  }
+  return objectList;
+}

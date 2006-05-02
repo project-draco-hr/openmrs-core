@@ -1,0 +1,22 @@
+{
+  for (  P p : dataSet.getRowKeys()) {
+    dataSet.setValue(p,"patient",p);
+    dataSet.setValue(p,"patient_id",p.getPatientId());
+{
+      Set<PatientName> names=p.getNames();
+      PatientName pn=names.iterator().next();
+      String name=pn.getGivenName() + " " + pn.getMiddleName()+ " "+ pn.getFamilyName()+ " "+ pn.getFamilyName2();
+      dataSet.setValue(p,"name",name);
+    }
+{
+      Date birth=p.getBirthdate();
+      if (birth != null) {
+        dataSet.setValue(p,"birthdate",birth);
+      }
+ else {
+        dataSet.setValue(p,"birthdate",null);
+      }
+    }
+  }
+  return null;
+}

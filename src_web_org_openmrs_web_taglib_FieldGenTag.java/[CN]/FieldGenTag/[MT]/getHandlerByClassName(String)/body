@@ -1,0 +1,32 @@
+{
+  String handlerClassName=null;
+  FieldGenHandlerFactory factory=null;
+  try {
+    ApplicationContext context=new FileSystemXmlApplicationContext("file:/**/WEB-INF/openmrs-servlet.xml");
+    factory=(FieldGenHandlerFactory)context.getBean("fieldGenHandlerFactory");
+  }
+ catch (  Exception e) {
+    factory=null;
+    e.printStackTrace();
+  }
+  if (factory != null) {
+    handlerClassName=factory.getHandlerByClassName(className);
+    if (handlerClassName != null) {
+      try {
+        Class cls=Class.forName(handlerClassName);
+        Constructor ct=cls.getConstructor();
+        FieldGenHandler handler=(FieldGenHandler)ct.newInstance();
+        return handler;
+      }
+ catch (      Exception e) {
+        return null;
+      }
+    }
+ else {
+      return null;
+    }
+  }
+ else {
+    return null;
+  }
+}

@@ -1,0 +1,9 @@
+{
+  if (user.getCreator() == null) {
+    user.setDateCreated(new Date());
+    user.setCreator(context.getAuthenticatedUser());
+  }
+  user.setChangedBy(context.getAuthenticatedUser());
+  user.setDateChanged(new Date());
+  return user;
+}

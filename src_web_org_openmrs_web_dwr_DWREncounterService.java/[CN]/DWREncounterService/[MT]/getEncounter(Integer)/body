@@ -1,0 +1,6 @@
+{
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  EncounterService es=context.getEncounterService();
+  Encounter e=es.getEncounter(conceptId);
+  return e == null ? null : new EncounterListItem(e);
+}

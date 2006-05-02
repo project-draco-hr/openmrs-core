@@ -1,0 +1,39 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST endblock_AST=null;
+  try {
+switch (LA(1)) {
+case ENDBLOCK:
+{
+        AST tmp321_AST=null;
+        tmp321_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp321_AST);
+        match(ENDBLOCK);
+        endblock_AST=(AST)currentAST.root;
+        break;
+      }
+case EOF:
+{
+{
+      }
+      endblock_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_0);
+}
+ else {
+throw ex;
+}
+}
+returnAST=endblock_AST;
+}

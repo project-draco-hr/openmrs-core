@@ -1,0 +1,22 @@
+{
+  Session session=HibernateUtil.currentSession();
+  if (hasDuplicateUsername(user))   throw new DAOException("Username currently in use by '" + user.getFirstName() + " "+ user.getLastName()+ "'");
+  try {
+    HibernateUtil.beginTransaction();
+    String systemId=generateSystemId();
+    Integer checkDigit=Helper.getCheckDigit(systemId);
+    user.setSystemId(systemId + "-" + checkDigit);
+    user=updateProperties(user);
+    session.save(user);
+    HibernateUtil.commitTransaction();
+    HibernateUtil.beginTransaction();
+    String salt=Security.getRandomToken();
+    String hashedPassword=Security.encodeString(password + salt);
+    session.createQuery("update User set password = :pw, salt = :salt where user_id = :username").setParameter("pw",hashedPassword).setParameter("salt",salt).setParameter("username",user.getUserId()).executeUpdate();
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  User user=null;
+  if (context != null && context.isAuthenticated()) {
+    UserService us=context.getUserService();
+    String userId=request.getParameter("userId");
+    if (userId != null)     user=us.getUser(Integer.valueOf(userId));
+  }
+  if (user == null)   user=new User();
+  return user;
+}

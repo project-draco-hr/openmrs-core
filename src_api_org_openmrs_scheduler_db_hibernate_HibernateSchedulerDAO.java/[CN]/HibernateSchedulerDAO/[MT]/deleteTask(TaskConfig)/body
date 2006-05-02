@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  HibernateUtil.beginTransaction();
+  session.delete(taskConfig);
+  HibernateUtil.commitTransaction();
+}

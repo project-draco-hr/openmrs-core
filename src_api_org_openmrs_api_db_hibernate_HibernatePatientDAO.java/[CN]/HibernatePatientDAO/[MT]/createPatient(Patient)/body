@@ -1,0 +1,13 @@
+{
+  Session session=HibernateUtil.currentSession();
+  try {
+    HibernateUtil.beginTransaction();
+    setCollectionProperties(patient);
+    session.saveOrUpdate(patient);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  patientIdentifierType.setCreator(context.getAuthenticatedUser());
+  patientIdentifierType.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(patientIdentifierType);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

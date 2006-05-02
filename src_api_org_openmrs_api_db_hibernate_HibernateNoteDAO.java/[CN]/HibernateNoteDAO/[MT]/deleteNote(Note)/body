@@ -1,0 +1,13 @@
+{
+  log.debug("Deleting existing note");
+  Session session=HibernateUtil.currentSession();
+  try {
+    HibernateUtil.beginTransaction();
+    session.delete(note);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    log.error(e);
+    HibernateUtil.rollbackTransaction();
+  }
+}

@@ -1,0 +1,16 @@
+{
+  List<AlertListItem> alerts=new Vector<AlertListItem>();
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context != null) {
+    try {
+      AlertService as=context.getAlertService();
+      for (      Alert a : as.getAlerts()) {
+        alerts.add(new AlertListItem(a));
+      }
+    }
+ catch (    Exception e) {
+      log.error(e);
+    }
+  }
+  return alerts;
+}

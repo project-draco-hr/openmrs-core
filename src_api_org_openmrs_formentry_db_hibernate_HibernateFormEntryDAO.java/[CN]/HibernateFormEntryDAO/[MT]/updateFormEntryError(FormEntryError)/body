@@ -1,0 +1,15 @@
+{
+  if (formEntryError.getFormEntryErrorId() == 0)   createFormEntryError(formEntryError);
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(formEntryError);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  updateFormProperties(form);
+  try {
+    HibernateUtil.beginTransaction();
+    session.clear();
+    session.merge(form);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

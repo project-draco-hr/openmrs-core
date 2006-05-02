@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Location location=null;
+  if (context != null && context.isAuthenticated()) {
+    EncounterService os=context.getEncounterService();
+    String locationId=request.getParameter("locationId");
+    if (locationId != null)     location=os.getLocation(Integer.valueOf(locationId));
+  }
+  if (location == null)   location=new Location();
+  return location;
+}

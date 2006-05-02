@@ -1,0 +1,6 @@
+{
+  log.debug("getting orderType #" + orderTypeId);
+  Session session=HibernateUtil.currentSession();
+  OrderType orderType=(OrderType)session.get(OrderType.class,orderTypeId);
+  return orderType;
+}

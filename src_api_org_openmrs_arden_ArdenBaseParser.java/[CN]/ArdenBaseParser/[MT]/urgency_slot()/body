@@ -1,0 +1,47 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST urgency_slot_AST=null;
+  try {
+switch (LA(1)) {
+case LITERAL_end:
+{
+        urgency_slot_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_urgency:
+{
+      AST tmp144_AST=null;
+      tmp144_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp144_AST);
+      match(LITERAL_urgency);
+      AST tmp145_AST=null;
+      tmp145_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp145_AST);
+      match(COLON);
+      urgency_val();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp146_AST=null;
+      tmp146_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp146_AST);
+      match(ENDBLOCK);
+      urgency_slot_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_3);
+}
+ else {
+throw ex;
+}
+}
+returnAST=urgency_slot_AST;
+}

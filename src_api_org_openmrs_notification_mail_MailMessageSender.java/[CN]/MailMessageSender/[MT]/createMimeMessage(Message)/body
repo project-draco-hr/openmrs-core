@@ -1,0 +1,10 @@
+{
+  if (message.getRecipients() == null)   throw new MessageException("Message must contain at least one recipient");
+  MimeMessage mimeMessage=new MimeMessage(session);
+  if (message.getSender() != null)   mimeMessage.setSender(new InternetAddress(message.getSender()));
+  mimeMessage.setRecipients(javax.mail.Message.RecipientType.TO,InternetAddress.parse(message.getRecipients(),false));
+  mimeMessage.setSubject(message.getSubject());
+  log.debug("Message content type : " + OpenmrsConstants.DEFAULT_CONTENT_TYPE);
+  mimeMessage.setContent(message.getContent(),OpenmrsConstants.DEFAULT_CONTENT_TYPE);
+  return mimeMessage;
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Role role=(Role)session.get(Role.class,r);
+  return role;
+}

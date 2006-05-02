@@ -1,0 +1,14 @@
+{
+  super.initBinder(request,binder);
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  binder.registerCustomEditor(Integer.class,new CustomNumberEditor(Integer.class,true));
+  binder.registerCustomEditor(Long.class,new CustomNumberEditor(Long.class,true));
+  binder.registerCustomEditor(Float.class,new CustomNumberEditor(Float.class,true));
+  binder.registerCustomEditor(Double.class,new CustomNumberEditor(Double.class,true));
+  binder.registerCustomEditor(Boolean.class,new CustomBooleanEditor("t","f",true));
+  binder.registerCustomEditor(Character.class,new CharacterEditor(true));
+  binder.registerCustomEditor(Date.class,new CustomDateEditor(new SimpleDateFormat("dd/MM/yyyy"),true));
+  binder.registerCustomEditor(Concept.class,new ConceptEditor(context));
+  binder.registerCustomEditor(User.class,new UserEditor(context));
+}

@@ -1,0 +1,11 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  List<Alert> alertList=new Vector<Alert>();
+  if (context != null && context.isAuthenticated()) {
+    AlertService as=context.getAlertService();
+    boolean b=new Boolean(request.getParameter("includeExpired"));
+    alertList=as.getAllAlerts(b);
+  }
+  return alertList;
+}

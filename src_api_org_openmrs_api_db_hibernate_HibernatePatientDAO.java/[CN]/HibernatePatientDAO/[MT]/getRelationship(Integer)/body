@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Relationship relationship=(Relationship)session.get(Relationship.class,relationshipId);
+  return relationship;
+}

@@ -1,0 +1,27 @@
+{
+  HttpSession httpSession=pageContext.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context == null) {
+    return SKIP_BODY;
+  }
+  boolean hasPrivilege=false;
+  if (privilege.contains(",")) {
+    String[] privs=privilege.split(",");
+    for (    String p : privs) {
+      if (context.hasPrivilege(p)) {
+        hasPrivilege=true;
+        break;
+      }
+    }
+  }
+ else {
+    hasPrivilege=context.hasPrivilege(privilege);
+  }
+  if (hasPrivilege) {
+    pageContext.setAttribute("authenticatedUser",context.getAuthenticatedUser());
+    return EVAL_BODY_INCLUDE;
+  }
+ else {
+    return SKIP_BODY;
+  }
+}

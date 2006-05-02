@@ -1,0 +1,17 @@
+{
+  if (concept.getConceptId() == null)   createConcept(concept);
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      modifyCollections(concept);
+      session.merge(concept);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new APIException(e);
+    }
+    context.getAdministrationService().updateConceptWord(concept);
+  }
+}

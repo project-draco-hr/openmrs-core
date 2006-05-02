@@ -1,0 +1,16 @@
+{
+  ByteArrayOutputStream arr=new ByteArrayOutputStream();
+  XMLEncoder enc=new XMLEncoder(new BufferedOutputStream(arr));
+  for (  Field f : this.objectToEncode.getClass().getDeclaredFields()) {
+    if (f.getType().isEnum()) {
+      try {
+        enc.setPersistenceDelegate(f.getType(),new EnumDelegate());
+      }
+ catch (      Exception e) {
+      }
+    }
+  }
+  enc.writeObject(this.objectToEncode);
+  enc.close();
+  return arr.toString();
+}

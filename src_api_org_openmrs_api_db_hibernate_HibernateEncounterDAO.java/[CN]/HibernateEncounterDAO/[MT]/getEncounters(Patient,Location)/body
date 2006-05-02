@@ -1,0 +1,7 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Criteria crit=session.createCriteria(Encounter.class).add(Expression.eq("patient",who)).add(Expression.eq("location",where));
+  Set<Encounter> encounters=new HashSet<Encounter>();
+  encounters.addAll(crit.list());
+  return encounters;
+}

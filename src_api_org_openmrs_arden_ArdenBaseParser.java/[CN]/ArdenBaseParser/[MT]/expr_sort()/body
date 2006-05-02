@@ -1,0 +1,105 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_sort_AST=null;
+  try {
+    expr_where();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop252:       do {
+        if ((LA(1) == LITERAL_MERGE || LA(1) == LITERAL_SORT)) {
+{
+switch (LA(1)) {
+case LITERAL_MERGE:
+{
+                AST tmp427_AST=null;
+                tmp427_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp427_AST);
+                match(LITERAL_MERGE);
+                break;
+              }
+case LITERAL_SORT:
+{
+{
+                AST tmp428_AST=null;
+                tmp428_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp428_AST);
+                match(LITERAL_SORT);
+{
+switch (LA(1)) {
+case LITERAL_TIME:
+case LITERAL_DATA:
+{
+                      sort_option();
+                      astFactory.addASTChild(currentAST,returnAST);
+                      break;
+                    }
+case THE:
+case AT:
+case LET:
+case NOW:
+case IF:
+case THEN:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case INTLIT:
+case SEMI:
+case ID:
+case RPAREN:
+case COMMA:
+case ACTION_OP:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case STRING_LITERAL:
+{
+                    break;
+                  }
+default :
+{
+                  throw new NoViableAltException(LT(1),getFilename());
+                }
+            }
+          }
+        }
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+expr_where();
+astFactory.addASTChild(currentAST,returnAST);
+}
+ else {
+break _loop252;
+}
+}
+ while (true);
+}
+expr_sort_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_60);
+}
+ else {
+throw ex;
+}
+}
+returnAST=expr_sort_AST;
+}

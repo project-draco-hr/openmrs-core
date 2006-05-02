@@ -1,0 +1,4 @@
+{
+  if (required && xsType.equals("xs:string"))   xsType="_requiredString";
+  return "<xs:complexType name=\"" + token + "\">\n"+ "  <xs:sequence>\n"+ "    <xs:element name=\"date\" type=\"xs:date\" nillable=\"true\" minOccurs=\"0\" />\n"+ "    <xs:element name=\"time\" type=\"xs:time\" nillable=\"true\" minOccurs=\"0\" />\n"+ "    <xs:element name=\"value\" type=\""+ xsType+ "\" nillable=\""+ (required ? "0" : "1")+ "\" />\n"+ "  </xs:sequence>\n"+ "  <xs:attribute name=\"openmrs_concept\" type=\"xs:string\" use=\"required\" fixed=\""+ FormUtil.conceptToString(concept,locale)+ "\" />\n"+ "  <xs:attribute name=\"openmrs_datatype\" type=\"xs:string\" use=\"required\" fixed=\""+ concept.getDatatype().getHl7Abbreviation()+ "\" />\n"+ "</xs:complexType>\n\n";
+}

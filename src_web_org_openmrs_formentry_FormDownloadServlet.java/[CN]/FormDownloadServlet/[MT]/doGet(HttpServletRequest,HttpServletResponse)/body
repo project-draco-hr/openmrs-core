@@ -1,0 +1,63 @@
+{
+  Integer formId=null;
+  String target=request.getParameter("target");
+  HttpSession httpSession=request.getSession();
+  Context context=getContext(httpSession);
+  if (context == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
+    response.sendRedirect(request.getContextPath() + "/logout");
+    return;
+  }
+  try {
+    formId=Integer.parseInt(request.getParameter("formId"));
+  }
+ catch (  NumberFormatException e) {
+    log.warn("Invalid formId parameter: \"" + request.getParameter("formId") + "\"",e);
+    return;
+  }
+  if (target.equals("formEntry")) {
+    doFormEntryGet(request,response,context,httpSession);
+  }
+ else {
+    response.setHeader("Content-Type","application/ms-infopath.xml");
+    Form form=context.getFormEntryService().getForm(formId);
+    String url=FormUtil.getFormAbsoluteUrl(form);
+    String payload=null;
+    if ("schema".equalsIgnoreCase(target)) {
+      payload=new FormSchemaBuilder(context,form).getSchema();
+      setFilename(response,FormEntryConstants.FORMENTRY_DEFAULT_SCHEMA_NAME);
+    }
+ else     if ("template".equalsIgnoreCase(target)) {
+      payload=new FormXmlTemplateBuilder(context,form,url).getXmlTemplate((Patient)null);
+      payload=payload.replaceAll("@SESSION@","");
+      setFilename(response,FormEntryConstants.FORMENTRY_DEFAULT_TEMPLATE_NAME);
+    }
+ else     if ("xsn".equalsIgnoreCase(target)) {
+      String filename=form.getUri();
+      log.debug("Download of XSN for form #" + form.getFormId() + " ("+ filename+ ") requested");
+      if (filename == null || filename.equals("")) {
+        filename="";
+        if (form.getEncounterType() != null)         filename=form.getEncounterType().getName() + "-";
+        if (form.getVersion() != null)         filename+=form.getVersion();
+        if (form.getBuild() != null)         filename+="-" + form.getBuild();
+        if (!filename.equals(""))         filename+=".xsn";
+ else         filename="starter_template.xsn";
+      }
+      setFilename(response,filename);
+      String formDir=FormEntryConstants.FORMENTRY_INFOPATH_OUTPUT_DIR;
+      String formFilePath=formDir + (formDir.endsWith(File.separator) ? "" : File.separator) + form.getUri();
+      FileInputStream formStream=getCurrentXSN(context,form,formFilePath);
+      if (formStream != null)       Helper.copyFile(formStream,response.getOutputStream());
+ else {
+        log.debug("Xsn not found, returning starter xsn");
+        FormStarterXSN starter=new FormStarterXSN(context,form,url);
+        starter.copyXSNToStream(response.getOutputStream());
+      }
+    }
+ else {
+      log.warn("Invalid target parameter: \"" + target + "\"");
+      return;
+    }
+    if (payload != null)     response.getOutputStream().print(payload);
+  }
+}

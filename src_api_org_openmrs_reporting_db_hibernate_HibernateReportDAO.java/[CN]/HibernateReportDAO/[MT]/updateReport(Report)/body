@@ -1,0 +1,15 @@
+{
+  if (report.getCreator() == null)   createReport(report);
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(report);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

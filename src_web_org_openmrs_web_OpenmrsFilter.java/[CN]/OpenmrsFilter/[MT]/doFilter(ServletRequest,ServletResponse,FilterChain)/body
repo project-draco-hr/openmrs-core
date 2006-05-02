@@ -1,0 +1,35 @@
+{
+  HttpServletRequest httpRequest=(HttpServletRequest)request;
+  HttpSession httpSession=httpRequest.getSession();
+  Context context=null;
+  boolean initialRequest=false;
+  Object val=httpRequest.getAttribute(INIT_REQ_ATTR_NAME);
+  initialRequest=(val == null);
+  httpRequest.setAttribute(INIT_REQ_ATTR_NAME,INIT_REQ_ATTR_NAME);
+  context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (initialRequest == true) {
+    if (context == null) {
+      log.debug("setting context in httpSession");
+      context=ContextFactory.getContext();
+      httpSession.setAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR,context);
+    }
+ else {
+      context.endTransaction();
+    }
+  }
+  log.debug("before doFilter");
+  try {
+    chain.doFilter(request,response);
+  }
+ catch (  Exception e) {
+    log.error(e.getMessage());
+    throw new ServletException(e);
+  }
+ finally {
+    if (initialRequest == true) {
+      log.debug("ending transaction - file: " + httpRequest.getRequestURI());
+      context.endTransaction();
+    }
+  }
+  log.debug("after doFilter");
+}

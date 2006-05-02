@@ -1,0 +1,15 @@
+{
+  if (tribe.getTribeId() == null)   createTribe(tribe);
+ else {
+    try {
+      Session session=HibernateUtil.currentSession();
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(tribe);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST action_slot_AST=null;
+  try {
+    AST tmp140_AST=null;
+    tmp140_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp140_AST);
+    match(ACTION);
+    match(COLON);
+{
+      _loop232:       do {
+        if ((LA(1) == WRITE)) {
+          action_statement();
+          astFactory.addASTChild(currentAST,returnAST);
+          match(SEMI);
+        }
+ else {
+          break _loop232;
+        }
+      }
+ while (true);
+    }
+    AST tmp143_AST=null;
+    tmp143_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp143_AST);
+    match(ENDBLOCK);
+    action_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_24);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=action_slot_AST;
+}

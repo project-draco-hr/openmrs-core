@@ -1,0 +1,13 @@
+{
+  super.initBinder(request,binder);
+  Context context=(Context)request.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  NumberFormat nf=NumberFormat.getInstance(context.getLocale());
+  Locale locale=RequestContextUtils.getLocale(request);
+  binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,nf,true));
+  binder.registerCustomEditor(java.lang.Double.class,new CustomNumberEditor(java.lang.Double.class,nf,true));
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT,context.getLocale()),true));
+  binder.registerCustomEditor(org.openmrs.ConceptClass.class,new ConceptClassEditor(context));
+  binder.registerCustomEditor(org.openmrs.ConceptDatatype.class,new ConceptDatatypeEditor(context));
+  binder.registerCustomEditor(java.util.Collection.class,"conceptSets",new ConceptSetsEditor(context));
+  binder.registerCustomEditor(java.util.Collection.class,"answers",new ConceptAnswersEditor(context));
+}

@@ -1,0 +1,5 @@
+{
+  log.debug("Starting scheduler service ...");
+  Collection<TaskConfig> tasks=daoContext.getSchedulerDAO().getTasks();
+  startTasks(tasks);
+}

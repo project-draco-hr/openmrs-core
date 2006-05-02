@@ -1,0 +1,7 @@
+{
+  Session session=HibernateUtil.currentSession();
+  HibernateUtil.beginTransaction();
+  Patient patient=(Patient)session.get(Patient.class,patientId);
+  HibernateUtil.commitTransaction();
+  return patient;
+}

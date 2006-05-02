@@ -1,0 +1,10 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  List<FormEntryQueue> queueList=new Vector<FormEntryQueue>();
+  if (context != null && context.isAuthenticated()) {
+    FormEntryService fs=context.getFormEntryService();
+    return fs.getFormEntryQueues();
+  }
+  return queueList;
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<Relationship> relationships=session.createQuery("from Relationship r order by r.relationshipId asc").list();
+  return relationships;
+}

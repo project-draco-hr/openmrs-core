@@ -1,0 +1,39 @@
+{
+  if (reportObj != null && initialValues != null) {
+    for (Iterator<String> i=initialValues.keySet().iterator(); i.hasNext(); ) {
+      String key=i.next();
+      Object val=initialValues.get(key);
+      Class valClass=val.getClass();
+      String methodName="set" + key.substring(0,1).toUpperCase() + key.substring(1);
+      Class[] setterParamClasses=new Class[1];
+      setterParamClasses[0]=valClass;
+      Object[] setterParams=new Object[1];
+      setterParams[0]=val;
+      Method m=null;
+      try {
+        m=reportObj.getClass().getMethod(methodName,setterParamClasses);
+      }
+ catch (      NoSuchMethodException nsme) {
+        Class[] setterParamSupers=new Class[1];
+        setterParamSupers[0]=valClass.getSuperclass();
+        try {
+          m=reportObj.getClass().getMethod(methodName,setterParamSupers);
+        }
+ catch (        Exception e) {
+          m=null;
+        }
+      }
+catch (      Exception e) {
+        m=null;
+      }
+      if (m != null) {
+        try {
+          Object fieldObj=m.invoke(reportObj,setterParams);
+        }
+ catch (        Exception e) {
+        }
+      }
+    }
+  }
+  return reportObj;
+}

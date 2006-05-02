@@ -1,0 +1,12 @@
+{
+  if (answer == null || answer.equals(""))   return false;
+  Session session=HibernateUtil.currentSession();
+  String answerOnRecord="";
+  try {
+    answerOnRecord=(String)session.createSQLQuery("select secret_answer from users where user_id = ?").addScalar("secret_answer",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
+  }
+ catch (  Exception e) {
+    return false;
+  }
+  return (answerOnRecord.equals(answer));
+}

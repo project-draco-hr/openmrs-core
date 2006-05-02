@@ -1,0 +1,37 @@
+{
+  if (s == null || s.length() < 1)   return "_blank";
+  String letters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
+  String nameChars=letters + "0123456789.-";
+  Hashtable<String,String> swapChars=new Hashtable<String,String>();
+  swapChars.put("!","bang");
+  swapChars.put("#","pound");
+  swapChars.put("\\*","star");
+  swapChars.put("'","apos");
+  swapChars.put("\"","quote");
+  swapChars.put("%","percent");
+  swapChars.put("<","lt");
+  swapChars.put(">","gt");
+  swapChars.put("=","eq");
+  swapChars.put("/","slash");
+  swapChars.put("\\\\","backslash");
+  s=s.replaceAll("^\\s+","").replaceAll("\\s+$","").replaceAll("\\s+","_").toLowerCase();
+  Set<Entry<String,String>> swaps=swapChars.entrySet();
+  for (  Entry<String,String> entry : swaps) {
+    if (entry.getValue() != null)     s=s.replaceAll(entry.getKey(),"_" + entry.getValue() + "_");
+ else     s=s.replaceAll(String.valueOf(entry.getKey()),"");
+  }
+  String token="";
+  boolean underscoreFlag=false;
+  for (int i=0; i < s.length(); i++) {
+    if (nameChars.indexOf(s.charAt(i)) != -1) {
+      if (s.charAt(i) != '_' || !underscoreFlag) {
+        token+=s.charAt(i);
+        underscoreFlag=(s.charAt(i) == '_');
+      }
+    }
+  }
+  token=token.replaceAll("_+","_");
+  token=token.replaceAll("_+$","");
+  if (letters.indexOf(token.charAt(0)) == -1 || token.startsWith("xml"))   token="_" + token;
+  return token;
+}

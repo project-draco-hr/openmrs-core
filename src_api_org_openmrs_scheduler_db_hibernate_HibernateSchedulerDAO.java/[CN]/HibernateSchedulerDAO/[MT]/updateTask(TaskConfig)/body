@@ -1,0 +1,13 @@
+{
+  Session session=HibernateUtil.currentSession();
+  try {
+    HibernateUtil.beginTransaction();
+    session.merge(task);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    log.error("Rolling back transaction",e);
+    HibernateUtil.rollbackTransaction();
+    throw new APIException(e);
+  }
+}

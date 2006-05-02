@@ -1,0 +1,11 @@
+{
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  List<Tribe> t;
+  try {
+    t=getPatientService().getTribes();
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  }
+  return t;
+}

@@ -1,0 +1,26 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context != null && context.isAuthenticated()) {
+    String view=getSuccessView();
+    PatientService ps=context.getPatientService();
+    String patient1Id=request.getParameter("patient1");
+    String patient2Id=request.getParameter("patient2");
+    String preferredId=request.getParameter("preferred");
+    Patient preferred=null;
+    Patient notPreferred=null;
+    if (patient1Id.equals(preferredId)) {
+      preferred=ps.getPatient(Integer.valueOf(patient1Id));
+      notPreferred=ps.getPatient(Integer.valueOf(patient2Id));
+    }
+ else {
+      notPreferred=ps.getPatient(Integer.valueOf(patient1Id));
+      preferred=ps.getPatient(Integer.valueOf(patient2Id));
+    }
+    ps.mergePatients(preferred,notPreferred);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.merged");
+    view+="?patientId=" + preferred.getPatientId() + "&patientId="+ notPreferred.getPatientId();
+    return new ModelAndView(new RedirectView(view));
+  }
+  return new ModelAndView(new RedirectView(getFormView()));
+}

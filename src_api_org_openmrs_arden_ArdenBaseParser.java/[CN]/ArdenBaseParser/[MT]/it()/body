@@ -1,0 +1,36 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST it_AST=null;
+  try {
+{
+switch (LA(1)) {
+case IT:
+{
+          match(IT);
+          break;
+        }
+case THEY:
+{
+        match(THEY);
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+it_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_40);
+}
+ else {
+throw ex;
+}
+}
+returnAST=it_AST;
+}

@@ -1,0 +1,15 @@
+{
+  Session session=HibernateUtil.currentSession();
+  if (obs.getObsId() == null)   createObs(obs);
+ else {
+    try {
+      HibernateUtil.beginTransaction();
+      obs=(Obs)session.merge(obs);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

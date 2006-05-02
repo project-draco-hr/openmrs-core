@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Obs obs=new Obs();
+  obs=(Obs)session.get(Obs.class,obsId);
+  return obs;
+}

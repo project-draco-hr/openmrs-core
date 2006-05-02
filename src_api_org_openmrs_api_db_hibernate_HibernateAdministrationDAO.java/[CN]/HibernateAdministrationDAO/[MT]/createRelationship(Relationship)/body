@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  relationship.setCreator(context.getAuthenticatedUser());
+  relationship.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(relationship);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

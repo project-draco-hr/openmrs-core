@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  HL7InQueue hl7InQueue;
+  hl7InQueue=(HL7InQueue)session.get(HL7InQueue.class,hl7InQueueId);
+  return hl7InQueue;
+}

@@ -1,0 +1,9 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<User> users=session.createQuery("from User u where u.voided = 0 and (u.username = ? or u.systemId = ?)").setString(0,username).setString(1,username).list();
+  if (users == null || users.size() == 0) {
+    log.warn("request for username '" + username + "' not found");
+    return null;
+  }
+  return users.get(0);
+}

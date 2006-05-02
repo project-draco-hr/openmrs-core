@@ -1,0 +1,8 @@
+{
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  Locale locale=Util.getLocale(request);
+  ConceptService cs=context.getConceptService();
+  Concept c=cs.getConcept(conceptId);
+  return c == null ? null : new ConceptListItem(c,locale);
+}

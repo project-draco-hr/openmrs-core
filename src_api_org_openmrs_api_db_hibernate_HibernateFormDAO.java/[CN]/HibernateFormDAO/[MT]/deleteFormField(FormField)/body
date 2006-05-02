@@ -1,0 +1,13 @@
+{
+  Session session=HibernateUtil.currentSession();
+  try {
+    HibernateUtil.beginTransaction();
+    session.clear();
+    session.delete(formField);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

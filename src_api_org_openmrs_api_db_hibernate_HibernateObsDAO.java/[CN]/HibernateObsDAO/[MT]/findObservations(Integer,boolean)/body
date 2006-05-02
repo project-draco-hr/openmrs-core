@@ -1,0 +1,9 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<Obs> obs=new Vector<Obs>();
+  Criteria criteria=session.createCriteria(Obs.class).createAlias("patient","p").createAlias("encounter","e").add(Expression.or(Expression.eq("p.patientId",id),Expression.like("e.encounterId",id)));
+  if (includeVoided == false) {
+    criteria.add(Expression.eq("voided",new Boolean(false)));
+  }
+  return criteria.list();
+}

@@ -1,0 +1,22 @@
+{
+  alerts=null;
+  Context context=(Context)pageContext.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  try {
+    AlertService as=context.getAlertService();
+    if (user == null) {
+      List<Alert> alertList=as.getAlerts();
+      log.debug("alertList.size: " + alertList.size());
+      alerts=alertList.iterator();
+    }
+ else {
+      List<Alert> alertList=as.getAlerts(user,includeRead,includeExpired);
+      log.debug("alertList.size: " + alertList.size());
+      alerts=alertList.iterator();
+    }
+    setVar("alert");
+    setVarStatus("varStatus");
+  }
+ catch (  Exception e) {
+    log.error(e);
+  }
+}

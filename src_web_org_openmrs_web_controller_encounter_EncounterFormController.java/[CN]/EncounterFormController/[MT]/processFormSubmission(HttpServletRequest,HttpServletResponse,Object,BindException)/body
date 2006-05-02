@@ -1,0 +1,18 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Encounter encounter=(Encounter)obj;
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  try {
+    if (context != null && context.isAuthenticated()) {
+      if (request.getParameter("patientId") != null)       encounter.setPatient(context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
+      if (request.getParameter("providerId") != null)       encounter.setProvider(context.getUserService().getUser(Integer.valueOf(request.getParameter("providerId"))));
+    }
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  }
+  return super.processFormSubmission(request,reponse,encounter,errors);
+}

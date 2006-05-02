@@ -1,0 +1,11 @@
+{
+  File xsnFile=new File(xsnFilePath);
+  if (!xsnFile.exists())   return null;
+  File tempDir=createTempDirectory("XSN");
+  if (tempDir == null)   throw new IOException("Failed to create temporary directory");
+  String cmd="expand -F:* \"" + xsnFilePath + "\" \""+ tempDir.getAbsolutePath()+ "\"";
+  log.debug("executing command: " + cmd);
+  String output=execCmd(cmd);
+  log.debug("expandXsn output: " + output);
+  return tempDir;
+}

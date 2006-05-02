@@ -1,0 +1,28 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST event_list_AST=null;
+  try {
+    event_or();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      AST tmp387_AST=null;
+      tmp387_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp387_AST);
+      match(COMMA);
+      event_or();
+      astFactory.addASTChild(currentAST,returnAST);
+    }
+    event_list_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_53);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=event_list_AST;
+}

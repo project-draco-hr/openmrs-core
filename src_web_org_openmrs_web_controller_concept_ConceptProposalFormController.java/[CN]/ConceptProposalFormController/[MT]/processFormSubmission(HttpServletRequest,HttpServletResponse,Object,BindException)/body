@@ -1,0 +1,26 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  ConceptProposal cp=(ConceptProposal)obj;
+  String action=request.getParameter("action");
+  if (context != null) {
+    Concept c=null;
+    if (StringUtils.hasText(request.getParameter("conceptId")))     c=context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId")));
+    cp.setMappedConcept(c);
+  }
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  if (!action.equals(msa.getMessage("ConceptProposal.update"))) {
+    if (cp.getMappedConcept() == null)     errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
+ else {
+      if (action.equals(msa.getMessage("ConceptProposal.saveAsConcept"))) {
+        cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_CONCEPT);
+      }
+      if (action.equals(msa.getMessage("ConceptProposal.saveAsSynonym"))) {
+        if (cp.getMappedConcept() == null)         errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
+        if (!StringUtils.hasText(cp.getFinalText()))         errors.rejectValue("finalText","error.null");
+        cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM);
+      }
+    }
+  }
+  return super.processFormSubmission(request,response,cp,errors);
+}

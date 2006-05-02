@@ -1,0 +1,15 @@
+{
+  if (encounterType.getEncounterTypeId() == null)   createEncounterType(encounterType);
+ else {
+    try {
+      Session session=HibernateUtil.currentSession();
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(encounterType);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

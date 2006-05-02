@@ -1,0 +1,8 @@
+{
+  if (this.getConcept() == null || this.getName() == null || this.getLocale() == null)   return super.hashCode();
+  int hash=3;
+  hash=hash + 31 * this.getConcept().hashCode();
+  hash=hash + 31 * this.getName().hashCode();
+  hash=hash + 31 * this.getLocale().hashCode();
+  return hash;
+}

@@ -1,0 +1,9 @@
+{
+  Session session=HibernateUtil.currentSession();
+  User user=(User)session.get(User.class,userId);
+  if (user == null) {
+    log.warn("request or user '" + userId + "' not found");
+    throw new ObjectRetrievalFailureException(User.class,userId);
+  }
+  return user;
+}

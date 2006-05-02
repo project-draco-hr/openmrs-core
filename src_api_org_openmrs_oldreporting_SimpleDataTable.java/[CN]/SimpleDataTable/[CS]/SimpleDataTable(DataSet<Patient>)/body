@@ -1,0 +1,10 @@
+{
+  rows=new ArrayList<DataRow>();
+  columnNames=new HashSet<String>(patientDataSet.getColumnNames());
+  for (  Patient patient : patientDataSet.getRowKeys()) {
+    DataRow row=patientDataSet.getRow(patient);
+    row.set("patient",patient);
+    rows.add(row);
+  }
+  columnNames.add("patient");
+}

@@ -1,0 +1,30 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  AbstractReportObject reportObject=null;
+  ReportService rs=context.getReportService();
+  if (context != null && context.isAuthenticated()) {
+    int reportObjectId=RequestUtils.getIntParameter(request,"reportObjectId",0);
+    if (reportObjectId > 0)     reportObject=rs.getReportObject(Integer.valueOf(reportObjectId));
+  }
+  if (reportObject == null)   reportObject=new EmptyReportObject();
+  String presetType=RequestUtils.getStringParameter(request,"type","");
+  if (presetType.length() > 0)   reportObject.setType(presetType);
+  String presetSubType=RequestUtils.getStringParameter(request,"subType","");
+  if (presetSubType.length() > 0 && rs.getReportObjectFactory().isSubTypeOfType(presetType,presetSubType)) {
+    reportObject.setSubType(presetSubType);
+    String className=rs.getReportObjectClassBySubType(presetSubType);
+    if (className.length() > 0) {
+      try {
+        Class cls=Class.forName(className);
+        Constructor ct=cls.getConstructor();
+        reportObject=(AbstractReportObject)ct.newInstance();
+        reportObject.setType(presetType);
+        reportObject.setSubType(presetSubType);
+      }
+ catch (      Throwable e) {
+      }
+    }
+  }
+  return reportObject;
+}

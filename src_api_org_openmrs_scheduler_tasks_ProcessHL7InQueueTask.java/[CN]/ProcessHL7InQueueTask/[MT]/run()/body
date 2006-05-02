@@ -1,0 +1,9 @@
+{
+  try {
+    log.debug("Processing HL7 queue ... ");
+    processor.processHL7InQueue();
+  }
+ catch (  HL7Exception e) {
+    log.error(e);
+  }
+}

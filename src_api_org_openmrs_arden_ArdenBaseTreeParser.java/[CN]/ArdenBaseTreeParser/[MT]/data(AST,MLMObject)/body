@@ -1,0 +1,53 @@
+{
+  String s="";
+  AST data_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+    AST __t302=_t;
+    AST tmp1_AST_in=(AST)_t;
+    match(_t,DATA);
+    _t=_t.getFirstChild();
+    System.err.println("\n");
+    System.err.println("-------Starting Data--------");
+{
+      _loop304:       do {
+        if (_t == null)         _t=ASTNULL;
+        if ((_tokenSet_0.member(_t.getType()))) {
+          System.err.println("-----------Starting Read -------");
+          s=readAST(_t,obj);
+          _t=_retTree;
+          System.err.println("\n");
+          System.err.println("-----------End Read -------");
+        }
+ else         if ((_t.getType() == EVENT || _t.getType() == ID)) {
+          System.err.println("----------------Starting Event-------");
+          eventAST(_t);
+          _t=_retTree;
+          System.err.println("\n");
+          System.err.println("-----------End Event -------");
+        }
+ else {
+          break _loop304;
+        }
+      }
+ while (true);
+    }
+{
+      AST tmp2_AST_in=(AST)_t;
+      match(_t,ENDBLOCK);
+      _t=_t.getNextSibling();
+    }
+    System.err.println("\n");
+    System.err.println("-----------End Data -------");
+    _t=__t302;
+    _t=_t.getNextSibling();
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

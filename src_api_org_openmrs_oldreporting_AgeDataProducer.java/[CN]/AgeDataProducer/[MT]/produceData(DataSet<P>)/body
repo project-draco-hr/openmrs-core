@@ -1,0 +1,18 @@
+{
+  long now=System.currentTimeMillis();
+  for (  P p : dataSet.getRowKeys()) {
+    Date birth=p.getBirthdate();
+    if (birth != null) {
+      long ageInMillis=now - birth.getTime();
+      dataSet.setValue(p,"birthdate",birth);
+      dataSet.setValue(p,"age_in_years",new Integer((int)(ageInMillis / MS_PER_YEAR)));
+      dataSet.setValue(p,"age_in_months",new Integer((int)(ageInMillis / MS_PER_MONTH)));
+    }
+ else {
+      dataSet.setValue(p,"birthdate",null);
+      dataSet.setValue(p,"age_in_years",null);
+      dataSet.setValue(p,"age_in_months",null);
+    }
+  }
+  return dataSet;
+}

@@ -1,0 +1,11 @@
+{
+  System.out.println("Concepts are - ");
+  Set<String> keys=conceptMap.keySet();
+  for (  String key : keys) {
+    System.out.println(key);
+  }
+  Collection<MLMObjectElement> collection=conceptMap.values();
+  for (  MLMObjectElement mo : collection) {
+    System.out.println(mo.getConceptName() + " = " + mo.getObsVal(locale)+ " Answer = "+ mo.getAnswer()+ " Operator = "+ mo.getCompOp());
+  }
+}

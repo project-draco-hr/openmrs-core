@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Query query=session.createQuery("from HL7InQueue as hiq where hiq.HL7InQueueId = (select min(HL7InQueueId) from HL7InQueue)");
+  if (query == null)   return null;
+  return (HL7InQueue)query.uniqueResult();
+}

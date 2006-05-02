@@ -1,0 +1,36 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_not_AST=null;
+  try {
+    expr_comparison();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop268:       do {
+        if ((LA(1) == NOT)) {
+          AST tmp435_AST=null;
+          tmp435_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp435_AST);
+          match(NOT);
+          expr_comparison();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop268;
+        }
+      }
+ while (true);
+    }
+    expr_not_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_66);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=expr_not_AST;
+}

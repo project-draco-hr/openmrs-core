@@ -1,0 +1,7 @@
+{
+  Map<T,Object> ret=new HashMap<T,Object>();
+  for (  Map.Entry<T,DataRow> e : rows.entrySet()) {
+    ret.put(e.getKey(),e.getValue().get(columnName));
+  }
+  return ret;
+}

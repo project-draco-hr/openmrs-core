@@ -1,0 +1,11 @@
+{
+  log.info("Getting tasks");
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Collection<TaskConfig> taskList=new ArrayList<TaskConfig>();
+  if (context != null && context.isAuthenticated()) {
+    taskList=context.getSchedulerService().getTasks();
+  }
+  log.info("Returning " + taskList.size() + " tasks");
+  return taskList;
+}

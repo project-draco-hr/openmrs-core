@@ -1,0 +1,34 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST evoke_slot_AST=null;
+  try {
+    AST tmp133_AST=null;
+    tmp133_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp133_AST);
+    match(LITERAL_evoke);
+    AST tmp134_AST=null;
+    tmp134_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp134_AST);
+    match(COLON);
+{
+      evoke_statement();
+      astFactory.addASTChild(currentAST,returnAST);
+    }
+    AST tmp135_AST=null;
+    tmp135_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp135_AST);
+    match(ENDBLOCK);
+    evoke_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_21);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=evoke_slot_AST;
+}

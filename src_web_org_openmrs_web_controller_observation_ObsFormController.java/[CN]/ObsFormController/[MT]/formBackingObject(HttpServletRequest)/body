@@ -1,0 +1,22 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Obs obs=null;
+  if (context != null && context.isAuthenticated()) {
+    ObsService os=context.getObsService();
+    EncounterService es=context.getEncounterService();
+    String obsId=request.getParameter("obsId");
+    String encounterId=request.getParameter("encounterId");
+    if (obsId != null)     obs=os.getObs(Integer.valueOf(obsId));
+ else     if (encounterId != null) {
+      Encounter e=es.getEncounter(Integer.valueOf(encounterId));
+      obs=new Obs();
+      obs.setEncounter(e);
+      obs.setPatient(e.getPatient());
+      obs.setLocation(e.getLocation());
+      obs.setObsDatetime(e.getEncounterDatetime());
+    }
+  }
+  if (obs == null)   obs=new Obs();
+  return obs;
+}

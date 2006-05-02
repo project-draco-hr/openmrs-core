@@ -1,0 +1,19 @@
+{
+  String url="http://www.google.com:80/index.html";
+  try {
+    URLConnection connection=new URL(url).openConnection();
+    connection.connect();
+  }
+ catch (  IOException ioe) {
+    try {
+      Alert alert=new Alert();
+      alert.setText("At " + new Date() + " there was an error reported connecting to the internet address "+ url+ ": "+ ioe);
+      alert.setRole(context.getUserService().getRole("System Developer"));
+      alert.setCreator(context.getUserService().getUserByUsername("admin"));
+      context.getAlertService().createAlert(alert);
+    }
+ catch (    Exception e) {
+      log.error(e);
+    }
+  }
+}

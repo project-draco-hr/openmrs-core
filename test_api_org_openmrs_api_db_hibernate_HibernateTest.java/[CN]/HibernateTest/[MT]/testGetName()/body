@@ -1,0 +1,11 @@
+{
+  Context context=ContextFactory.getContext();
+  context.authenticate("USER-1","test");
+  UserService us=context.getUserService();
+  User u=us.getUserByUsername("USER-1");
+  System.out.println("last name: " + u.getLastName());
+  u.setLastName(u.getLastName() + "1");
+  us.updateUser(u);
+  User u2=us.getUserByUsername("USER-1");
+  System.out.println("last name (post): " + u.getLastName());
+}

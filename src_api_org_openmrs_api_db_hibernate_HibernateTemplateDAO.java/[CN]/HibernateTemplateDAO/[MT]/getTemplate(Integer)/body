@@ -1,0 +1,17 @@
+{
+  log.info("Get template " + id);
+  Template template=new Template();
+  Session session=HibernateUtil.currentSession();
+  try {
+    HibernateUtil.beginTransaction();
+    template=(Template)session.get(Template.class,id);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    log.error("Exception getting template by id " + id,e);
+  }
+ finally {
+    session.close();
+  }
+  return template;
+}

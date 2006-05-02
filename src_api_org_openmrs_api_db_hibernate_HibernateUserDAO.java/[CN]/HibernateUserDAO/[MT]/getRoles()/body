@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<Role> roles=session.createQuery("from Role r order by r.role").list();
+  return roles;
+}

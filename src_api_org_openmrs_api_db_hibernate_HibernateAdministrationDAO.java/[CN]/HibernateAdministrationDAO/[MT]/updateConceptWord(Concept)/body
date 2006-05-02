@@ -1,0 +1,25 @@
+{
+  Session session=HibernateUtil.currentSession();
+  deleteConceptWord(concept);
+  Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);
+  log.debug("words: " + words);
+  try {
+    HibernateUtil.beginTransaction();
+    for (    ConceptWord word : words) {
+      try {
+        session.save(word);
+      }
+ catch (      NonUniqueObjectException e) {
+        ConceptWord tmp=(ConceptWord)session.merge(word);
+        session.evict(tmp);
+        session.save(word);
+      }
+    }
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    log.error(e);
+    throw new DAOException(e);
+  }
+}

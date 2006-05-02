@@ -1,0 +1,21 @@
+{
+  if (template.getId() == null) {
+    createTemplate(template);
+  }
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      template=(Template)session.merge(template);
+      session.saveOrUpdate(template);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e.getMessage());
+    }
+ finally {
+      session.close();
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  if (schema != null)   return schema;
+  StringBuffer s=new StringBuffer();
+  s.append(FormSchemaFragment.header(form.getSchemaNamespace()));
+  s.append(FormSchemaFragment.startForm());
+  formStructure=FormUtil.getFormStructure(context,form);
+  for (  FormField section : formStructure.get(0)) {
+    String sectionName=FormUtil.getXmlToken(section.getField().getName());
+    String sectionTag=FormUtil.getNewTag(sectionName,tagList);
+    String sectionTypeTag=FormUtil.getNewTag(sectionName + "_type",tagList);
+    s.append("      <xs:element name=\"" + sectionTag + "\" type=\""+ sectionTypeTag+ "\" />\n");
+  }
+  s.append("      <xs:element name=\"other\" type=\"_other_type\" />\n");
+  s.append(FormSchemaFragment.closeForm(form.getFormId(),form.getName(),form.getVersion()));
+  s.append(FormSchemaFragment.predefinedTypes());
+  TreeSet<FormField> section=formStructure.get(0);
+  while (section != null) {
+    section=renderSection(section,s);
+  }
+  for (Enumeration<ComplexType> i=complexTypes.keys(); i.hasMoreElements(); ) {
+    ComplexType complexType=i.nextElement();
+    String token=complexTypes.get(complexType);
+    Field field=complexType.field;
+    boolean required=complexType.required;
+    if (field.getFieldType().getFieldTypeId().equals(FormEntryConstants.FIELD_TYPE_CONCEPT)) {
+      Concept concept=field.getConcept();
+      ConceptDatatype datatype=concept.getDatatype();
+      if (FormEntryConstants.simpleDatatypes.containsKey(datatype.getHl7Abbreviation()))       s.append(FormSchemaFragment.simpleConcept(token,concept,FormEntryConstants.simpleDatatypes.get(datatype.getHl7Abbreviation()),required,context.getLocale()));
+ else       if (datatype.getHl7Abbreviation().equals(FormEntryConstants.HL7_NUMERIC)) {
+        ConceptNumeric conceptNumeric=context.getConceptService().getConceptNumeric(concept.getConceptId());
+        s.append(FormSchemaFragment.numericConcept(token,concept,required,conceptNumeric.getLowAbsolute(),conceptNumeric.getHiAbsolute(),conceptNumeric.getPrecise(),context.getLocale()));
+      }
+ else       if (datatype.getHl7Abbreviation().equals(FormEntryConstants.HL7_CODED) || datatype.getHl7Abbreviation().equals(FormEntryConstants.HL7_CODED_WITH_EXCEPTIONS)) {
+        Collection<ConceptAnswer> answers=field.getConcept().getAnswers();
+        if (field.getSelectMultiple())         s.append(FormSchemaFragment.selectMultiple(token,concept,answers,context.getLocale()));
+ else         s.append(FormSchemaFragment.selectSingle(token,concept,answers,required,context.getLocale()));
+      }
+    }
+  }
+  s.append(FormSchemaFragment.footer());
+  schema=s.toString();
+  return schema;
+}

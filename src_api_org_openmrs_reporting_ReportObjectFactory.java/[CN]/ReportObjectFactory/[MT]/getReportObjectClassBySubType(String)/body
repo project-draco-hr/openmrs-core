@@ -1,0 +1,15 @@
+{
+  if (modules != null && subType != null) {
+    String className="";
+    for (int i=0; i < modules.size(); i++) {
+      ReportObjectFactoryModule mod=modules.get(i);
+      if (subType.equals(mod.getDisplayName())) {
+        className=mod.getClassName();
+      }
+    }
+    return className;
+  }
+ else {
+    return "";
+  }
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<FormField> formFields=session.createCriteria(FormField.class,"ff").add(Expression.eq("ff.form",form)).list();
+  return formFields;
+}

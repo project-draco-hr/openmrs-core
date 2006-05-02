@@ -1,0 +1,7 @@
+{
+  PatientSet ret=input;
+  for (  PatientFilter pf : patientFilters.values()) {
+    ret=pf.filter(context,ret);
+  }
+  return ret;
+}

@@ -1,0 +1,12 @@
+{
+  super.initBinder(request,binder);
+  Context context=(Context)request.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(context.getLocale().toString().toLowerCase()),context.getLocale());
+  NumberFormat nf=NumberFormat.getInstance(context.getLocale());
+  binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,nf,true));
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(dateFormat,true,10));
+  binder.registerCustomEditor(Tribe.class,new TribeEditor(context));
+  binder.registerCustomEditor(PatientIdentifierType.class,new PatientIdentifierTypeEditor(context));
+  binder.registerCustomEditor(Location.class,new LocationEditor(context));
+  binder.registerCustomEditor(Concept.class,"civilStatus",new ConceptEditor(context));
+}

@@ -1,0 +1,31 @@
+{
+  try {
+    List<ShortcutSpec> ret=new ArrayList<ShortcutSpec>();
+    for (StringTokenizer st=new StringTokenizer(shortcuts); st.hasMoreTokens(); ) {
+      String s=st.nextToken();
+      String[] temp=s.split("!");
+      String shortcutLabel=temp[0];
+      String[] opts=temp[1].split(",");
+      ShortcutSpec shortcut=new ShortcutSpec(shortcutLabel);
+      for (      String opt : opts) {
+        temp=opt.split(":");
+        String optLabel=temp[0];
+        String optFilter=temp.length > 1 ? temp[1] : null;
+        if ("*".equals(optFilter)) {
+          optFilter=null;
+        }
+        ShortcutOptionSpec spec=null;
+        spec=new ShortcutOptionSpec();
+        spec.setValue(optFilter);
+        shortcut.options.put(optLabel,spec);
+      }
+      ret.add(shortcut);
+    }
+    return ret;
+  }
+ catch (  Exception ex) {
+    log.warn("Exception trying to parse ShortcutSpec");
+    log.warn(ex);
+    throw new IllegalArgumentException("Bad shortcut spec string: " + shortcuts);
+  }
+}

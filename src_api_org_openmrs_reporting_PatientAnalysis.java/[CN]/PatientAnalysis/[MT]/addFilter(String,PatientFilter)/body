@@ -1,0 +1,13 @@
+{
+  if (patientFilters.values().contains(pf)) {
+    return null;
+  }
+  if (name == null) {
+    do {
+      name="" + System.currentTimeMillis() + ""+ Math.random();
+    }
+ while (patientFilters.containsKey(name));
+  }
+  patientFilters.put(name,pf);
+  return name;
+}

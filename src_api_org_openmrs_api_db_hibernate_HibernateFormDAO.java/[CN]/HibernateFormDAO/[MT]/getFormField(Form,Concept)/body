@@ -1,0 +1,11 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Criteria crit=session.createCriteria(FormField.class).createAlias("field","field").add(Expression.eq("field.concept",concept)).add(Expression.eq("form",form));
+  if (crit.list().size() < 1) {
+    String err="FormField warning.  No FormField matching concept " + concept.getConceptId() + " for form "+ form.getFormId();
+    log.warn(err);
+    return null;
+  }
+  FormField ff=(FormField)crit.list().get(0);
+  return ff;
+}

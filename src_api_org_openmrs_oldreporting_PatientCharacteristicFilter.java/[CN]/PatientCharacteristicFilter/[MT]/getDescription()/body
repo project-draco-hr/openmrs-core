@@ -1,0 +1,26 @@
+{
+  StringBuffer ret=new StringBuffer();
+  if (gender != null) {
+    if ("m".equals(gender) || "M".equals(gender)) {
+      ret.append("Male");
+    }
+ else {
+      ret.append("Female");
+    }
+  }
+  ret.append(" patients ");
+  if (minAge != null) {
+    if (maxAge != null) {
+      ret.append(" between " + minAge + " and "+ maxAge);
+    }
+ else {
+      ret.append(" older than " + minAge);
+    }
+  }
+ else {
+    if (maxAge != null) {
+      ret.append(" younger than " + maxAge);
+    }
+  }
+  return ret.toString();
+}

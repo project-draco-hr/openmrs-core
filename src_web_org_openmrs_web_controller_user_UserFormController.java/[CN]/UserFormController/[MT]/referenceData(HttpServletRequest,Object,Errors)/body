@@ -1,0 +1,21 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Map<String,Object> map=new HashMap<String,Object>();
+  User user=(User)obj;
+  List<Role> roles=context.getUserService().getRoles();
+  if (roles == null)   roles=new Vector<Role>();
+  for (  String s : OpenmrsConstants.AUTO_ROLES()) {
+    Role r=new Role(s);
+    roles.remove(r);
+  }
+  if (context != null && context.isAuthenticated()) {
+    map.put("roles",roles);
+    if (user.getUserId() == null || context.hasPrivilege("Edit Passwords"))     map.put("modifyPasswords",true);
+    map.put("changePasswordName",OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    String s="";
+    if (user.getProperties() != null)     if (user.getProperties().containsKey(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD))     s=user.getProperties().get(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    map.put("changePassword",new Boolean(s).booleanValue());
+  }
+  return map;
+}

@@ -1,0 +1,12 @@
+{
+  if (o == null) {
+    return false;
+  }
+  if (o instanceof PatientCharacteristicFilter) {
+    PatientCharacteristicFilter other=(PatientCharacteristicFilter)o;
+    return equals(gender,other.gender) && equals(minBirthdate,other.minBirthdate) && equals(maxBirthdate,other.maxBirthdate);
+  }
+ else {
+    return false;
+  }
+}

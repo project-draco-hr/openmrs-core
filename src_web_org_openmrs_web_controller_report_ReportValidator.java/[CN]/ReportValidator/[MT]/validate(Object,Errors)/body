@@ -1,0 +1,9 @@
+{
+  Report report=(Report)obj;
+  if (report == null) {
+    errors.rejectValue("report","error.general");
+  }
+ else {
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
+  }
+}

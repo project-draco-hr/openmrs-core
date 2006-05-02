@@ -1,0 +1,549 @@
+{
+  String s="";
+  AST readAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST k=null;
+  AST x=null;
+  AST y=null;
+  AST z=null;
+  AST j=null;
+  AST m=null;
+  AST n=null;
+  AST i=null;
+  String a, b, ret_val="";
+  try {
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case READ:
+{
+          AST __t308=_t;
+          AST tmp3_AST_in=(AST)_t;
+          match(_t,READ);
+          _t=_t.getFirstChild();
+          a=readAST(_t,obj);
+          _t=_retTree;
+          b=readAST(_t,obj);
+          _t=_retTree;
+          _t=__t308;
+          _t=_t.getNextSibling();
+          s+=ret_val;
+          break;
+        }
+case LAST:
+case LATEST:
+{
+{
+{
+            if (_t == null)             _t=ASTNULL;
+switch (_t.getType()) {
+case LAST:
+{
+                AST tmp4_AST_in=(AST)_t;
+                match(_t,LAST);
+                _t=_t.getNextSibling();
+                break;
+              }
+case LATEST:
+{
+              AST tmp5_AST_in=(AST)_t;
+              match(_t,LATEST);
+              _t=_t.getNextSibling();
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(_t);
+          }
+      }
+    }
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case INTLIT:
+{
+          k=(AST)_t;
+          match(_t,INTLIT);
+          _t=_t.getNextSibling();
+          AST tmp6_AST_in=(AST)_t;
+          match(_t,FROM);
+          _t=_t.getNextSibling();
+          break;
+        }
+case COUNT:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(_t);
+    }
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+if (k != null) {
+System.err.println("ReadType = Last " + "How many? " + k.getText());
+}
+ else {
+System.err.println("ReadType = Last " + "How many? 1");
+}
+break;
+}
+case FIRST:
+case EARLIEST:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case FIRST:
+{
+  AST tmp7_AST_in=(AST)_t;
+  match(_t,FIRST);
+  _t=_t.getNextSibling();
+  break;
+}
+case EARLIEST:
+{
+AST tmp8_AST_in=(AST)_t;
+match(_t,EARLIEST);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case INTLIT:
+{
+x=(AST)_t;
+match(_t,INTLIT);
+_t=_t.getNextSibling();
+AST tmp9_AST_in=(AST)_t;
+match(_t,FROM);
+_t=_t.getNextSibling();
+break;
+}
+case COUNT:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+if (x != null) {
+System.err.println("ReadType = First " + "How many? " + x.getText());
+}
+ else {
+System.err.println("ReadType = First " + "How many? 1");
+}
+break;
+}
+case MAXIMUM:
+case MAX:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case MAXIMUM:
+{
+AST tmp10_AST_in=(AST)_t;
+match(_t,MAXIMUM);
+_t=_t.getNextSibling();
+break;
+}
+case MAX:
+{
+AST tmp11_AST_in=(AST)_t;
+match(_t,MAX);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case INTLIT:
+{
+y=(AST)_t;
+match(_t,INTLIT);
+_t=_t.getNextSibling();
+AST tmp12_AST_in=(AST)_t;
+match(_t,FROM);
+_t=_t.getNextSibling();
+break;
+}
+case COUNT:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+if (y != null) {
+System.err.println("ReadType = Maximum " + "How many? " + y.getText());
+}
+ else {
+System.err.println("ReadType = Maximum " + "How many? 1");
+}
+break;
+}
+case MINIMUM:
+case MIN:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case MINIMUM:
+{
+AST tmp13_AST_in=(AST)_t;
+match(_t,MINIMUM);
+_t=_t.getNextSibling();
+break;
+}
+case MIN:
+{
+AST tmp14_AST_in=(AST)_t;
+match(_t,MIN);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case INTLIT:
+{
+z=(AST)_t;
+match(_t,INTLIT);
+_t=_t.getNextSibling();
+AST tmp15_AST_in=(AST)_t;
+match(_t,FROM);
+_t=_t.getNextSibling();
+break;
+}
+case COUNT:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+if (z != null) {
+System.err.println("ReadType = Minimum " + "How many? " + z.getText());
+}
+ else {
+System.err.println("ReadType = Min " + "How many? 1");
+}
+break;
+}
+case EXIST:
+case EXISTS:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case EXIST:
+{
+AST tmp16_AST_in=(AST)_t;
+match(_t,EXIST);
+_t=_t.getNextSibling();
+break;
+}
+case EXISTS:
+{
+AST tmp17_AST_in=(AST)_t;
+match(_t,EXISTS);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+System.err.println("ReadType = Exist");
+break;
+}
+case AVG:
+case AVERAGE:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case AVERAGE:
+{
+AST tmp18_AST_in=(AST)_t;
+match(_t,AVERAGE);
+_t=_t.getNextSibling();
+break;
+}
+case AVG:
+{
+AST tmp19_AST_in=(AST)_t;
+match(_t,AVG);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+System.err.println("ReadType = Average");
+break;
+}
+case COUNT:
+{
+{
+AST tmp20_AST_in=(AST)_t;
+match(_t,COUNT);
+_t=_t.getNextSibling();
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+System.err.println("ReadType = Count");
+break;
+}
+case SUM:
+{
+{
+AST tmp21_AST_in=(AST)_t;
+match(_t,SUM);
+_t=_t.getNextSibling();
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+System.err.println("ReadType = Sum");
+break;
+}
+case MEDIAN:
+{
+{
+AST tmp22_AST_in=(AST)_t;
+match(_t,MEDIAN);
+_t=_t.getNextSibling();
+b=readAST(_t,obj);
+_t=_retTree;
+}
+s+=b;
+System.err.println("ReadType = Median");
+break;
+}
+case ARDEN_CURLY_BRACKETS:
+{
+{
+{
+j=(AST)_t;
+match(_t,ARDEN_CURLY_BRACKETS);
+_t=_t.getNextSibling();
+}
+System.err.println("Fetch this data - " + j.getText());
+s=j.getText();
+obj.AddConcept(s);
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case WHERE:
+{
+{
+AST tmp23_AST_in=(AST)_t;
+match(_t,WHERE);
+_t=_t.getNextSibling();
+AST tmp24_AST_in=(AST)_t;
+match(_t,PAST);
+_t=_t.getNextSibling();
+}
+System.err.println("Where=TRUE");
+{
+m=(AST)_t;
+match(_t,INTLIT);
+_t=_t.getNextSibling();
+n=_t == ASTNULL ? null : (AST)_t;
+duration_op(_t);
+_t=_retTree;
+}
+System.err.println("Duration Clause - " + m.getText() + " "+ n.getText());
+break;
+}
+case 3:
+case COUNT:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ENDBLOCK:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+break;
+}
+case ID:
+{
+i=(AST)_t;
+match(_t,ID);
+_t=_t.getNextSibling();
+System.err.println("Variable = " + i.getText());
+a=i.getText();
+obj.SetConceptVar(a);
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

@@ -1,0 +1,34 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  String view=getFormView();
+  Locale locale=context.getLocale();
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String code="ConceptProposal.alertMappedTo";
+  if (context != null && context.isAuthenticated()) {
+    ConceptProposal cp=(ConceptProposal)obj;
+    String finalText=cp.getFinalText();
+    ConceptService cs=context.getConceptService();
+    AdministrationService as=context.getAdministrationService();
+    AlertService alertService=context.getAlertService();
+    Concept c=null;
+    if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
+    List<ConceptProposal> allProposals=cs.findMatchingConceptProposals(cp.getOriginalText());
+    Set<User> uniqueProposers=new HashSet<User>();
+    for (    ConceptProposal conceptProposal : allProposals) {
+      uniqueProposers.add(conceptProposal.getCreator());
+      conceptProposal.setFinalText(finalText);
+      conceptProposal.setState(cp.getState());
+      as.mapConceptProposalToConcept(conceptProposal,c);
+    }
+    String mappedName=c.getName(locale).getName();
+    String[] args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
+    String msg=msa.getMessage(code,args,locale);
+    for (    User proposer : uniqueProposers) {
+      alertService.createAlert(msg,proposer);
+    }
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptProposal.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

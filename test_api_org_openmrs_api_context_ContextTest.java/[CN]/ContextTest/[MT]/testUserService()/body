@@ -1,0 +1,7 @@
+{
+  UserService us=ContextFactory.getContext().getUserService();
+  String username="USER-1";
+  User user=us.getUserByUsername(username);
+  assertNotNull("user " + username,user);
+  System.out.println("Successfully found user: " + user.getFirstName() + " "+ user.getLastName()+ " ("+ username+ ")");
+}

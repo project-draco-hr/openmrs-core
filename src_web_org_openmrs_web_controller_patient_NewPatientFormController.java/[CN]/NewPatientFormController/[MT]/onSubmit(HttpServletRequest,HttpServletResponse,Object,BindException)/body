@@ -1,0 +1,65 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context != null && context.isAuthenticated()) {
+    FormEntryService ps=context.getFormEntryService();
+    PatientListItem p=(PatientListItem)obj;
+    String view=getSuccessView();
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    if (request.getParameter("action") != null && request.getParameter("action").equals(msa.getMessage("general.cancel"))) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"general.canceled");
+      return new ModelAndView(new RedirectView("addPatient.htm"));
+    }
+    Patient patient=new Patient();
+    if (p.getPatientId() != null)     patient=ps.getPatient(p.getPatientId());
+    boolean duplicate=false;
+    for (    PatientName pn : patient.getNames()) {
+      if (pn.getGivenName().equals(p.getGivenName()) && pn.getMiddleName().equals(p.getMiddleName()) && pn.getFamilyName().equals(p.getFamilyName()))       duplicate=true;
+    }
+    if (!duplicate)     patient.addName(new PatientName(p.getGivenName(),p.getMiddleName(),p.getFamilyName()));
+    if (p.getAddress1() != "" && p.getAddress2() != "") {
+      duplicate=false;
+      for (      PatientAddress pa : patient.getAddresses()) {
+        if (pa.getAddress1() == p.getAddress1() && pa.getAddress2() == p.getAddress2())         duplicate=true;
+      }
+      if (!duplicate) {
+        PatientAddress pa=new PatientAddress();
+        pa.setAddress1(p.getAddress1());
+        pa.setAddress2(p.getAddress2());
+        patient.addAddress(pa);
+      }
+    }
+    String[] identifiers=request.getParameterValues("newIdentifier");
+    String[] types=request.getParameterValues("newIdentifierType");
+    String[] locs=request.getParameterValues("newLocation");
+    for (int i=0; i < identifiers.length; i++) {
+      String identifier=identifiers[i].trim();
+      PatientIdentifierType type=null;
+      Location loc=null;
+      if (identifier.length() > 0) {
+        if (types[i] != null && types[i].length() > 0) {
+          type=ps.getPatientIdentifierType(Integer.valueOf(types[i]));
+        }
+        if (locs[i] != null && locs[i].length() > 0) {
+          loc=ps.getLocation(Integer.valueOf(locs[i]));
+        }
+        if (identifier != null && type != null) {
+          patient.addIdentifier(new PatientIdentifier(identifier,type,loc));
+        }
+      }
+    }
+    patient.setBirthdate(p.getBirthdate());
+    patient.setBirthdateEstimated(p.getBirthdateEstimated());
+    patient.setGender(p.getGender());
+    patient.setMothersName(p.getMothersName());
+    if (p.getTribe() == "")     patient.setTribe(null);
+ else {
+      Tribe t=ps.getTribe(Integer.valueOf(p.getTribe()));
+      patient.setTribe(t);
+    }
+    ps.updatePatient(patient);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.saved");
+    return new ModelAndView(new RedirectView(view + "?patientId=" + patient.getPatientId()));
+  }
+  return new ModelAndView(new RedirectView(getFormView()));
+}

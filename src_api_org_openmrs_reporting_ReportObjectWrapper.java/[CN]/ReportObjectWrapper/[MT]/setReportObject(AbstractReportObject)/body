@@ -1,0 +1,17 @@
+{
+  this.setReportObjectId(obj.getReportObjectId());
+  this.setName(obj.getName());
+  this.setDescription(obj.getDescription());
+  this.setType(obj.getType());
+  this.setSubType(obj.getSubType());
+  this.setCreator(obj.getCreator());
+  this.setDateCreated(obj.getDateCreated());
+  this.setChangedBy(obj.getChangedBy());
+  this.setDateChanged(obj.getDateChanged());
+  this.setVoided(obj.getVoided());
+  this.setVoidedBy(obj.getVoidedBy());
+  this.setDateVoided(obj.getDateVoided());
+  this.setVoidReason(obj.getVoidReason());
+  ReportObjectXMLEncoder roxe=new ReportObjectXMLEncoder(obj);
+  this.xml=roxe.toXmlString();
+}

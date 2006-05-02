@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<RelationshipType> relationshipTypes;
+  relationshipTypes=session.createQuery("from RelationshipType r order by r.name").list();
+  return relationshipTypes;
+}

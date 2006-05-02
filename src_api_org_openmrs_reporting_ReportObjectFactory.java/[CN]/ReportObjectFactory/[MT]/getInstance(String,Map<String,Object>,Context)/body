@@ -1,0 +1,14 @@
+{
+  ReportObjectFactory rof=context.getReportService().getReportObjectFactory();
+  String className=rof.getReportObjectClassByName(reportObjectName);
+  AbstractReportObject reportObj=null;
+  if (className != null) {
+    try {
+      Class cls=Class.forName(className);
+      reportObj=ReportObjectFactory.getInstance(cls,initialValues);
+    }
+ catch (    Throwable t) {
+    }
+  }
+  return reportObj;
+}

@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  modifyCollections(concept);
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(concept);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new APIException(e);
+  }
+  context.getAdministrationService().updateConceptWord(concept);
+}

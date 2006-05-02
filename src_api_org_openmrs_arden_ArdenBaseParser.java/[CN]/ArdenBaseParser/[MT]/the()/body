@@ -1,0 +1,22 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST the_AST=null;
+  try {
+    AST tmp376_AST=null;
+    tmp376_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp376_AST);
+    match(THE);
+    the_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_48);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=the_AST;
+}

@@ -1,0 +1,22 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST knowledge_category_AST=null;
+  try {
+    match(LITERAL_knowledge);
+    match(COLON);
+    knowledge_body();
+    astFactory.addASTChild(currentAST,returnAST);
+    knowledge_category_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_3);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=knowledge_category_AST;
+}

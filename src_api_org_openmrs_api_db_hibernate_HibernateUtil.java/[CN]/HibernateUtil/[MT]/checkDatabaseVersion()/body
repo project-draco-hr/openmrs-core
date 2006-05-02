@@ -1,0 +1,12 @@
+{
+  String sql="SELECT property_value FROM global_property WHERE property = 'database_version'";
+  try {
+    ResultSet result=currentSession().connection().prepareStatement(sql).executeQuery();
+    while (result.next()) {
+      OpenmrsConstants.DATABASE_VERSION=result.getString(1);
+    }
+  }
+ catch (  SQLException e) {
+    log.error(e);
+  }
+}

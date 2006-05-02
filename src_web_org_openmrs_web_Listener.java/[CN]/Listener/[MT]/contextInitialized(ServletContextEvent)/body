@@ -1,0 +1,58 @@
+{
+  Log log=LogFactory.getLog(this.getClass());
+  try {
+    FileInputStream propertyStream=null;
+    String webapp="@WEBAPP.NAME@";
+    webapp=webapp.toUpperCase();
+    String env=webapp + "_RUNTIME_PROPERTIES_FILE";
+    String filepath=System.getenv(env);
+    if (filepath == null)     throw new IOException("Env " + env + " not found");
+    log.debug("Loading runtime properties from: " + filepath);
+    propertyStream=new FileInputStream(filepath);
+    Properties props=new Properties();
+    props.load(propertyStream);
+    propertyStream.close();
+    HibernateUtil.startup(props);
+    Helper.startup(props);
+    FormEntryUtil.startup(props);
+    SchedulerUtil.startup(props);
+    Map<String,String> custom=new HashMap<String,String>();
+    custom.put("custom.template.dir","/WEB-INF/template");
+    custom.put("custom.style.css.file","/style.css");
+    custom.put("custom.index.jsp.file","/WEB-INF/view/index.jsp");
+    custom.put("custom.images.dir","/images");
+    String realPath=event.getServletContext().getRealPath("");
+    for (    String prop : custom.keySet()) {
+      String webappPath=custom.get(prop);
+      String userOverridePath=props.getProperty(prop);
+      if (userOverridePath != null) {
+        String absolutePath=realPath + webappPath;
+        File file=new File(userOverridePath);
+        if (file.exists()) {
+          log.debug("Overriding file: " + absolutePath);
+          log.debug("Overriding file with: " + userOverridePath);
+          if (file.isDirectory()) {
+            for (            File f : file.listFiles()) {
+              userOverridePath=f.getAbsolutePath();
+              String tmpAbsolutePath=absolutePath + "/" + f.getName();
+              FileInputStream inputStream=new FileInputStream(userOverridePath);
+              FileOutputStream outputStream=new FileOutputStream(tmpAbsolutePath);
+              Helper.copyFile(inputStream,outputStream);
+            }
+          }
+ else {
+            FileInputStream inputStream=new FileInputStream(userOverridePath);
+            FileOutputStream outputStream=new FileOutputStream(absolutePath);
+            Helper.copyFile(inputStream,outputStream);
+          }
+        }
+      }
+    }
+  }
+ catch (  IOException e) {
+    log.warn("Unable to load properties file",e);
+    HibernateUtil.startup();
+    FormEntryUtil.startup();
+    SchedulerUtil.startup();
+  }
+}

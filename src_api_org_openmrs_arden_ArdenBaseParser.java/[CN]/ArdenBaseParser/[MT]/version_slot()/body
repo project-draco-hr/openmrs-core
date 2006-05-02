@@ -1,0 +1,42 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST version_slot_AST=null;
+  try {
+    AST tmp85_AST=null;
+    tmp85_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp85_AST);
+    match(LITERAL_version);
+    AST tmp86_AST=null;
+    tmp86_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp86_AST);
+    match(COLON);
+    AST tmp87_AST=null;
+    tmp87_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp87_AST);
+    match(INTLIT);
+    AST tmp88_AST=null;
+    tmp88_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp88_AST);
+    match(DOT);
+    AST tmp89_AST=null;
+    tmp89_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp89_AST);
+    match(INTLIT);
+    AST tmp90_AST=null;
+    tmp90_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp90_AST);
+    match(ENDBLOCK);
+    version_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_8);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=version_slot_AST;
+}

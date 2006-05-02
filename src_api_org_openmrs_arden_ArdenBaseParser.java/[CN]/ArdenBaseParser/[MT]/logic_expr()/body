@@ -1,0 +1,124 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST logic_expr_AST=null;
+  try {
+{
+switch (LA(1)) {
+case THE:
+{
+          the();
+          astFactory.addASTChild(currentAST,returnAST);
+          break;
+        }
+case NOW:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case TRUE:
+case FALSE:
+case INTLIT:
+case ID:
+case STRING_LITERAL:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+from_of_func_op();
+astFactory.addASTChild(currentAST,returnAST);
+expr_factor();
+astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case IS:
+case ARE:
+case WAS:
+case WERE:
+{
+    is();
+    astFactory.addASTChild(currentAST,returnAST);
+    break;
+  }
+case IN:
+case LESS:
+case LITERAL_GREATER:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+binary_comp_op();
+astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case THE:
+{
+the();
+astFactory.addASTChild(currentAST,returnAST);
+break;
+}
+case NOW:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case TRUE:
+case FALSE:
+case INTLIT:
+case ID:
+case STRING_LITERAL:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+{
+if ((_tokenSet_55.member(LA(1)))) {
+expr_factor();
+astFactory.addASTChild(currentAST,returnAST);
+}
+ else if ((_tokenSet_56.member(LA(1)))) {
+from_of_func_op();
+astFactory.addASTChild(currentAST,returnAST);
+expr_factor();
+astFactory.addASTChild(currentAST,returnAST);
+}
+ else {
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+logic_expr_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_0);
+}
+ else {
+throw ex;
+}
+}
+returnAST=logic_expr_AST;
+}

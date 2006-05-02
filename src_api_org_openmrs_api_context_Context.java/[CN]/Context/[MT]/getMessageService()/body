@@ -1,0 +1,15 @@
+{
+  if (messageService == null) {
+    try {
+      MessagePreparator preparator=getMessagePreparator();
+      MessageSender sender=getMessageSender();
+      messageService=new MessageServiceImpl(getDaoContext());
+      messageService.setMessageSender(sender);
+      messageService.setMessagePreparator(preparator);
+    }
+ catch (    Exception e) {
+      log.error("Unable to create message service due to : " + e.getMessage(),e);
+    }
+  }
+  return messageService;
+}

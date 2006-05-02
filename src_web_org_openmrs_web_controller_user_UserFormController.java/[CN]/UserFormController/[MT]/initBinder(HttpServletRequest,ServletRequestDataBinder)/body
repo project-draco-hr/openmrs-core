@@ -1,0 +1,6 @@
+{
+  super.initBinder(request,binder);
+  Context context=(Context)request.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,true));
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT,context.getLocale()),true));
+}

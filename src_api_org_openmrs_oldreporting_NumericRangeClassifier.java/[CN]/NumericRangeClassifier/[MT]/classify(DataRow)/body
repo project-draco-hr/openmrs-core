@@ -1,0 +1,12 @@
+{
+  Number val=(Number)row.get(dataItemName);
+  DoubleRange foundKey=null;
+  if (val != null) {
+    for (    DoubleRange range : ranges) {
+      if (range.contains(val.doubleValue())) {
+        foundKey=range;
+      }
+    }
+  }
+  return foundKey;
+}

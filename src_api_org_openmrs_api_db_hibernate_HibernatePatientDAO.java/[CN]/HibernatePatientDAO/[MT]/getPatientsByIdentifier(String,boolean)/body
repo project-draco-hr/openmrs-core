@@ -1,0 +1,19 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Query query;
+  String sql="select patient from Patient patient, PatientName name where patient.identifiers.identifier = :id and patient = name.patient";
+  String order=" order by name.givenName asc, name.middleName asc, name.familyName asc";
+  if (includeVoided) {
+    query=session.createQuery(sql + order);
+    query.setString("id",identifier);
+  }
+ else {
+    query=session.createQuery(sql + " and patient.voided = :void" + order);
+    query.setString("id",identifier);
+    query.setBoolean("void",includeVoided);
+  }
+  List<Patient> patients=query.list();
+  Set<Patient> returnSet=new LinkedHashSet<Patient>();
+  returnSet.addAll(patients);
+  return returnSet;
+}

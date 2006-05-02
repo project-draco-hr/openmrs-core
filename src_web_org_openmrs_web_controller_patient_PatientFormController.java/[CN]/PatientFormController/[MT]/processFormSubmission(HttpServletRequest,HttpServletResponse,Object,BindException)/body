@@ -1,0 +1,83 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Patient patient=(Patient)object;
+  if (context != null && context.isAuthenticated()) {
+    FormEntryService ps=context.getFormEntryService();
+    Object[] objs=null;
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String action=request.getParameter("action");
+    if (!action.equals(msa.getMessage("Patient.delete"))) {
+      objs=patient.getIdentifiers().toArray();
+      for (int i=0; i < objs.length; i++) {
+        if (request.getParameter("identifiers[" + i + "].identifier") == null)         patient.removeIdentifier((PatientIdentifier)objs[i]);
+      }
+      String[] ids=request.getParameterValues("identifier");
+      String[] idTypes=request.getParameterValues("identifierType");
+      String[] locs=request.getParameterValues("location");
+      if (ids != null) {
+        for (int i=0; i < ids.length; i++) {
+          String id=ids[i].trim();
+          if (!id.equals("") && !idTypes.equals("")) {
+            PatientIdentifier pi=new PatientIdentifier();
+            pi.setIdentifier(id);
+            pi.setIdentifierType(ps.getPatientIdentifierType(Integer.valueOf(idTypes[i])));
+            pi.setLocation(ps.getLocation(Integer.valueOf(locs[i])));
+            patient.addIdentifier(pi);
+          }
+        }
+      }
+      String[] add1s=request.getParameterValues("address1");
+      String[] add2s=request.getParameterValues("address2");
+      String[] cities=request.getParameterValues("cityVillage");
+      String[] states=request.getParameterValues("stateProvince");
+      String[] countries=request.getParameterValues("country");
+      String[] lats=request.getParameterValues("latitude");
+      String[] longs=request.getParameterValues("longitude");
+      if (add1s != null) {
+        for (int i=0; i < add1s.length; i++) {
+          if (add1s[i] != "") {
+            PatientAddress pa=new PatientAddress();
+            pa.setAddress1(add1s[i]);
+            pa.setAddress2(add2s[i]);
+            pa.setCityVillage(cities[i]);
+            pa.setStateProvince(states[i]);
+            pa.setCountry(countries[i]);
+            pa.setLatitude(lats[i]);
+            pa.setLongitude(longs[i]);
+            patient.addAddress(pa);
+          }
+        }
+      }
+      objs=patient.getNames().toArray();
+      for (int i=0; i < objs.length; i++) {
+        if (request.getParameter("names[" + i + "].givenName") == null)         patient.removeName((PatientName)objs[i]);
+      }
+      String[] gNames=request.getParameterValues("givenName");
+      String[] mNames=request.getParameterValues("middleName");
+      String[] fNamePrefixes=request.getParameterValues("familyNamePrefix");
+      String[] fNames=request.getParameterValues("familyName");
+      String[] fName2s=request.getParameterValues("familyName2");
+      String[] fNameSuffixes=request.getParameterValues("familyNameSuffix");
+      String[] degrees=request.getParameterValues("degree");
+      if (gNames != null) {
+        for (int i=0; i < gNames.length; i++) {
+          if (gNames[i] != "") {
+            PatientName pn=new PatientName();
+            pn.setPreferred(false);
+            pn.setGivenName(gNames[i]);
+            pn.setMiddleName(mNames[i]);
+            pn.setFamilyNamePrefix(fNamePrefixes[i]);
+            pn.setFamilyName(fNames[i]);
+            pn.setFamilyName2(fName2s[i]);
+            pn.setFamilyNameSuffix(fNameSuffixes[i]);
+            pn.setDegree(degrees[i]);
+            patient.addName(pn);
+          }
+        }
+      }
+      if (patient.getNames().size() < 1)       errors.rejectValue("patient.names","Patient.names.length");
+    }
+  }
+  return super.processFormSubmission(request,response,patient,errors);
+}

@@ -1,0 +1,12 @@
+{
+  for (  Integer id : scheduledTaskMap.keySet()) {
+    TaskConfig task=null;
+    try {
+      task=getTask(id);
+      stopTask(task);
+    }
+ catch (    SchedulerException e) {
+      log.error("Could not stop task for class " + task.getSchedulableClass(),e);
+    }
+  }
+}

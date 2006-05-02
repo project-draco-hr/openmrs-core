@@ -1,0 +1,16 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  String view=getFormView();
+  if (context != null && context.isAuthenticated()) {
+    TaskConfig task=(TaskConfig)command;
+    task.setStartTimePattern(DEFAULT_DATE_PATTERN);
+    log.info("task started? " + task.getStarted());
+    context.getSchedulerService().updateTask(task);
+    view=getSuccessView();
+    Object[] args=new Object[]{task.getId()};
+    String success=getMessageSourceAccessor().getMessage("Scheduler.taskForm.saved",args);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

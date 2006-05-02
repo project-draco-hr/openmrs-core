@@ -1,0 +1,14 @@
+{
+  Context context=ContextFactory.getContext();
+  context.authenticate("USER-1","test");
+  es=context.getEncounterService();
+  assertNotNull(es);
+  ps=context.getPatientService();
+  assertNotNull(ps);
+  us=context.getUserService();
+  assertNotNull(us);
+  obsService=context.getObsService();
+  assertNotNull(obsService);
+  conceptService=context.getConceptService();
+  assertNotNull(conceptService);
+}

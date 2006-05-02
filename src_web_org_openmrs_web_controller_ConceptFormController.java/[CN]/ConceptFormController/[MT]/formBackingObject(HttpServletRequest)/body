@@ -1,0 +1,14 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Concept concept=null;
+  if (context != null) {
+    ConceptService cs=context.getConceptService();
+    String conceptId=request.getParameter("conceptId");
+    if (conceptId != null) {
+      concept=cs.getConcept(Integer.valueOf(conceptId));
+    }
+  }
+  if (concept == null)   concept=new Concept();
+  return concept;
+}

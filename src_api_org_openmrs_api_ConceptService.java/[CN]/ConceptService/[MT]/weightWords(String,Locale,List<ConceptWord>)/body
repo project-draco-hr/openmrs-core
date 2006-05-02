@@ -1,0 +1,40 @@
+{
+  Map<Integer,ConceptWord> uniqueConcepts=new HashMap<Integer,ConceptWord>();
+  if (phrase == null)   phrase="";
+  List<String> searchedWords=ConceptWord.getUniqueWords(phrase);
+  Integer id=null;
+  Concept concept=null;
+  for (  ConceptWord tmpWord : conceptWords) {
+    concept=tmpWord.getConcept();
+    id=concept.getConceptId();
+    if (uniqueConcepts.containsKey(id)) {
+      ConceptWord initialWord=uniqueConcepts.get(id);
+      String toSplit=initialWord.getSynonym();
+      if (toSplit == null || toSplit.equals("")) {
+        ConceptName cn=initialWord.getConcept().getName(locale);
+        toSplit=cn.getName();
+      }
+      List<String> nameWords=ConceptWord.getUniqueWords(toSplit);
+      initialWord.increaseWeight(1.0);
+      if (!containsAll(nameWords,searchedWords)) {
+        tmpWord.setWeight(initialWord.getWeight());
+        uniqueConcepts.put(id,tmpWord);
+        log.debug("Using new conceptWord: " + tmpWord);
+      }
+    }
+ else {
+      tmpWord.setWeight(0.0);
+      uniqueConcepts.put(id,tmpWord);
+    }
+    if (tmpWord.getSynonym().length() == 0) {
+      uniqueConcepts.get(id).increaseWeight(2.0);
+    }
+ else {
+      uniqueConcepts.get(id).increaseWeight(5.0 * (1 / tmpWord.getSynonym().split(" ").length));
+    }
+  }
+  conceptWords=new Vector<ConceptWord>();
+  conceptWords.addAll(uniqueConcepts.values());
+  Collections.sort(conceptWords);
+  return conceptWords;
+}

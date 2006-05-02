@@ -1,0 +1,60 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST keyword_text_AST=null;
+  try {
+{
+      _loop76:       do {
+        if ((_tokenSet_4.member(LA(1)))) {
+          text();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop76;
+        }
+      }
+ while (true);
+    }
+{
+      _loop80:       do {
+        if ((LA(1) == SEMI)) {
+          AST tmp250_AST=null;
+          tmp250_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp250_AST);
+          match(SEMI);
+{
+            _loop79:             do {
+              if ((_tokenSet_4.member(LA(1)))) {
+                text();
+                astFactory.addASTChild(currentAST,returnAST);
+              }
+ else {
+                break _loop79;
+              }
+            }
+ while (true);
+          }
+        }
+ else {
+          break _loop80;
+        }
+      }
+ while (true);
+    }
+    AST tmp251_AST=null;
+    tmp251_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp251_AST);
+    match(ENDBLOCK);
+    keyword_text_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_15);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=keyword_text_AST;
+}

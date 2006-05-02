@@ -1,0 +1,13 @@
+{
+  log.debug("getting session");
+  Session s=(Session)threadLocalSession.get();
+  if (s == null) {
+    s=sessionFactory.openSession();
+    s.setFlushMode(FlushMode.COMMIT);
+    threadLocalSession.set(s);
+  }
+ else   if (!s.isOpen() || !s.isConnected()) {
+    s.reconnect(s.connection());
+  }
+  return s;
+}

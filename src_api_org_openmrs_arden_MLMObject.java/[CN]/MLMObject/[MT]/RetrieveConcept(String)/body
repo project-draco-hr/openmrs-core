@@ -1,0 +1,10 @@
+{
+  boolean retVal=false;
+  MLMObjectElement mObjElem=GetMLMObjectElement(key);
+  if (mObjElem != null) {
+    mObjElem.setServicesContext(context.getConceptService(),context.getObsService());
+    mObjElem.getConceptForPatient(locale,patient);
+    retVal=mObjElem.evaluateEquals(true);
+  }
+  return retVal;
+}

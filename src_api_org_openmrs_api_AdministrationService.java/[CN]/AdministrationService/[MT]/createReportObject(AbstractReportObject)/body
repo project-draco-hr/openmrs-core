@@ -1,0 +1,4 @@
+{
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_ADD_REPORT_OBJECTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_REPORT_OBJECTS);
+  getAdminDAO().createReportObject(reportObject);
+}

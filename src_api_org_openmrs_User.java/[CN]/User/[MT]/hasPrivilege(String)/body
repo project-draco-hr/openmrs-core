@@ -1,0 +1,11 @@
+{
+  if (privilege == null || privilege.equals(""))   return true;
+  if (isSuperUser())   return true;
+  Set<Role> tmproles=getAllRoles();
+  Role role;
+  for (Iterator i=tmproles.iterator(); i.hasNext(); ) {
+    role=(Role)i.next();
+    if (role.hasPrivilege(privilege))     return true;
+  }
+  return false;
+}

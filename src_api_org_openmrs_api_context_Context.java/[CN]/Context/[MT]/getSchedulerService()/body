@@ -1,0 +1,8 @@
+{
+  if (schedulerService == null) {
+    schedulerService=new TimerSchedulerService(this);
+    schedulerService.setDaoContext(getDaoContext());
+    schedulerService.startup();
+  }
+  return schedulerService;
+}

@@ -1,0 +1,51 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST datepart_AST=null;
+  try {
+{
+      AST tmp222_AST=null;
+      tmp222_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp222_AST);
+      match(INTLIT);
+{
+        int _cnt58=0;
+        _loop58:         do {
+          if ((LA(1) == MINUS)) {
+            AST tmp223_AST=null;
+            tmp223_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp223_AST);
+            match(MINUS);
+            AST tmp224_AST=null;
+            tmp224_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp224_AST);
+            match(INTLIT);
+          }
+ else {
+            if (_cnt58 >= 1) {
+              break _loop58;
+            }
+ else {
+              throw new NoViableAltException(LT(1),getFilename());
+            }
+          }
+          _cnt58++;
+        }
+ while (true);
+      }
+    }
+    timepart_opt();
+    astFactory.addASTChild(currentAST,returnAST);
+    datepart_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_26);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=datepart_AST;
+}

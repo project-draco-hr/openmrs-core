@@ -1,0 +1,12 @@
+{
+  MessageDigest md;
+  try {
+    md=MessageDigest.getInstance("SHA1");
+  }
+ catch (  NoSuchAlgorithmException e) {
+    log.error(e);
+    throw new APIException("System cannot find password encryption algorithm");
+  }
+  byte[] input=strToEncode.getBytes();
+  return hexString(md.digest(input));
+}

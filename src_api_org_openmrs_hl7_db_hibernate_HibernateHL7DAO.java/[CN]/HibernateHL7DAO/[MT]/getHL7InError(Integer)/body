@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  HL7InError hl7InError;
+  hl7InError=(HL7InError)session.get(HL7InError.class,hl7InErrorId);
+  return hl7InError;
+}

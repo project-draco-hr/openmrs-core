@@ -1,0 +1,4 @@
+{
+  Session session=HibernateUtil.currentSession();
+  return session.createQuery("from FormEntryArchive order by formEntryArchiveId").list();
+}

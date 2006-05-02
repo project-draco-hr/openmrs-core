@@ -1,0 +1,16 @@
+{
+  Report toDelete=null;
+  for (  Report r : reports) {
+    if (r.getReportId() == report.getReportId()) {
+      toDelete=r;
+      break;
+    }
+  }
+  if (toDelete != null) {
+    reports.remove(toDelete);
+    reports.add(report);
+  }
+ else {
+    throw new APIException("no report with id " + report.getReportId());
+  }
+}

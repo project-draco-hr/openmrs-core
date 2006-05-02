@@ -1,0 +1,27 @@
+{
+  Session session=HibernateUtil.currentSession();
+  log.debug("Getting alerts for user " + user + " read? "+ includeRead+ " expired? "+ includeExpired);
+  List<Alert> alerts=new Vector<Alert>();
+  if (userRoles == null)   userRoles=new HashSet<Role>();
+  if (user != null && (!userRoles.isEmpty() || user.getUserId() != null)) {
+    Criteria crit=session.createCriteria(Alert.class,"alert");
+    crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+    if (user != null) {
+      if (user.getUserId() == null) {
+        if (!userRoles.isEmpty())         crit.add(Expression.in("role",userRoles));
+      }
+ else {
+        if (userRoles.isEmpty())         crit.add(Expression.eq("user",user));
+ else         crit.add(Expression.or(Expression.eq("user",user),Expression.in("role",userRoles)));
+      }
+    }
+    if (includeExpired == false)     crit.add(Expression.or(Expression.isNull("dateToExpire"),Expression.gt("dateToExpire",new Date())));
+    if (includeRead == false && user.getUserId() != null) {
+      crit.createCriteria("readByUsers","readBy",JoinFragment.LEFT_OUTER_JOIN);
+      crit.add(Expression.or(Expression.isNull("readBy.userId"),Expression.ne("readBy.userId",user.getUserId())));
+    }
+    crit.addOrder(Order.desc("dateChanged"));
+    alerts=crit.list();
+  }
+  return alerts;
+}

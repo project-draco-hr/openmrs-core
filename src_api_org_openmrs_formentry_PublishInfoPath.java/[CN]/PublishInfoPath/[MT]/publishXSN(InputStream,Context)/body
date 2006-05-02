@@ -1,0 +1,8 @@
+{
+  File tempDir=FormEntryUtil.createTempDirectory("UPLOADEDXSN");
+  log.debug("Temp publish dir: " + tempDir.getAbsolutePath());
+  File filesystemXSN=File.createTempFile("upload",".xsn",tempDir);
+  Helper.copyFile(inputStream,new FileOutputStream(filesystemXSN));
+  publishXSN(filesystemXSN.getAbsolutePath(),context);
+  deleteDirectory(tempDir);
+}

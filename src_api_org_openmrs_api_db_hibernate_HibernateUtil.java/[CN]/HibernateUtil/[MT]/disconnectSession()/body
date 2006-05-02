@@ -1,0 +1,7 @@
+{
+  Session s=(Session)threadLocalSession.get();
+  if (s != null) {
+    log.debug("disconnecting threadLocalSession");
+    s.disconnect();
+  }
+}

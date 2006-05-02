@@ -1,0 +1,16 @@
+{
+  if (reportObj.getCreator() == null)   createReportObject(reportObj);
+ else {
+    Session session=HibernateUtil.currentSession();
+    ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
+    try {
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(wrappedReportObject);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

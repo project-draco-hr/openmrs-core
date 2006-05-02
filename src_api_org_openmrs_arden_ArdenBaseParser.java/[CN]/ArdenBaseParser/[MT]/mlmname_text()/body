@@ -1,0 +1,24 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST mlmname_text_AST=null;
+  try {
+    text();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      mlmname_text_rest();
+      astFactory.addASTChild(currentAST,returnAST);
+    }
+    mlmname_text_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_6);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=mlmname_text_AST;
+}

@@ -1,0 +1,11 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context != null && context.isAuthenticated()) {
+    String conceptId=request.getParameter("conceptId");
+    if (conceptId != null && conceptId.length() > 0)     field.setConcept(context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
+ else     field.setConcept(null);
+    field.setFieldType(context.getFormService().getFieldType(Integer.valueOf(request.getParameter("fieldTypeId"))));
+  }
+  return field;
+}

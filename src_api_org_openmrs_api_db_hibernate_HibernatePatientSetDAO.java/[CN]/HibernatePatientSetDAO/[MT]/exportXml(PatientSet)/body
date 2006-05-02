@@ -1,0 +1,8 @@
+{
+  StringBuffer ret=new StringBuffer("<patientset>");
+  for (  Integer patientId : ps.getPatientIds()) {
+    ret.append(exportXml(patientId));
+  }
+  ret.append("</patientset>");
+  return ret.toString();
+}

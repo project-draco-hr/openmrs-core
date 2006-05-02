@@ -1,0 +1,136 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_power_AST=null;
+  try {
+    expr_duration();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop287:       do {
+        if (((LA(1) >= FROM && LA(1) <= AFTER))) {
+{
+switch (LA(1)) {
+case BEFORE:
+{
+                AST tmp440_AST=null;
+                tmp440_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp440_AST);
+                match(BEFORE);
+                break;
+              }
+case AFTER:
+{
+              AST tmp441_AST=null;
+              tmp441_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp441_AST);
+              match(AFTER);
+              break;
+            }
+case FROM:
+{
+            AST tmp442_AST=null;
+            tmp442_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp442_AST);
+            match(FROM);
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+    }
+  }
+  expr_duration();
+  astFactory.addASTChild(currentAST,returnAST);
+}
+ else {
+  break _loop287;
+}
+}
+ while (true);
+}
+{
+switch (LA(1)) {
+case AGO:
+{
+  AST tmp443_AST=null;
+  tmp443_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp443_AST);
+  match(AGO);
+  break;
+}
+case EOF:
+case AND:
+case IS:
+case ARE:
+case WAS:
+case WERE:
+case AT:
+case LET:
+case NOW:
+case IF:
+case NOT:
+case OR:
+case THEN:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case WHERE:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case SEMI:
+case ID:
+case LPAREN:
+case RPAREN:
+case 99:
+case 100:
+case COMMA:
+case ARDEN_CURLY_BRACKETS:
+case EQUALS:
+case LITERAL_EQ:
+case LT:
+case LITERAL_LT:
+case GT:
+case LITERAL_GT:
+case LTE:
+case LITERAL_LE:
+case GTE:
+case LITERAL_GE:
+case NE:
+case LITERAL_NE:
+case ACTION_OP:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case LITERAL_SEQTO:
+case 169:
+case 170:
+case 171:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+expr_power_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_68);
+}
+ else {
+throw ex;
+}
+}
+returnAST=expr_power_AST;
+}

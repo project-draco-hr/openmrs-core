@@ -1,0 +1,16 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Locale locale=RequestContextUtils.getLocale(request);
+  Map<String,Object> map=new HashMap<String,Object>();
+  if (context != null && context.isAuthenticated()) {
+    PatientService ps=context.getPatientService();
+    map.put("locations",ps.getLocations());
+    map.put("languages",OpenmrsConstants.OPENMRS_LOCALES());
+    String resetPassword=(String)httpSession.getAttribute("resetPassword");
+    if (resetPassword == null)     resetPassword="";
+ else     httpSession.removeAttribute("resetPassword");
+    map.put("resetPassword",resetPassword);
+  }
+  return map;
+}

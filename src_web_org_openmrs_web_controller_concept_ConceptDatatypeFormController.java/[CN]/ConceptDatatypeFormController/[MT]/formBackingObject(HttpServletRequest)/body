@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  ConceptDatatype cd=null;
+  if (context != null && context.isAuthenticated()) {
+    ConceptService ps=context.getConceptService();
+    String id=request.getParameter("conceptDatatypeId");
+    if (id != null)     cd=ps.getConceptDatatype(Integer.valueOf(id));
+  }
+  if (cd == null)   cd=new ConceptDatatype();
+  return cd;
+}

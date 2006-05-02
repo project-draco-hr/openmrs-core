@@ -1,0 +1,11 @@
+{
+  Form form;
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS);
+  try {
+    form=context.getFormService().getForm(formId);
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS);
+  }
+  return form;
+}

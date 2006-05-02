@@ -1,0 +1,13 @@
+{
+  if (mailSession == null) {
+    Properties props=OpenmrsConstants.MAIL_PROPERTIES;
+    Authenticator auth=new Authenticator(){
+      public PasswordAuthentication getPasswordAuthentication(){
+        return new PasswordAuthentication(OpenmrsConstants.MAIL_USER,OpenmrsConstants.MAIL_PASSWORD);
+      }
+    }
+;
+    mailSession=Session.getInstance(props,auth);
+  }
+  return mailSession;
+}

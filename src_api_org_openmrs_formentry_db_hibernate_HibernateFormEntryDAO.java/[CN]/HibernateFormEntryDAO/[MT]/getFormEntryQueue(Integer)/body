@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  FormEntryQueue feq;
+  feq=(FormEntryQueue)session.get(FormEntryQueue.class,formEntryQueueId);
+  return feq;
+}

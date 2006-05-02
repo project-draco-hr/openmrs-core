@@ -1,0 +1,15 @@
+{
+  Element elem=null;
+  if (elemList != null) {
+    if (elemList.getLength() > 0) {
+      for (Integer i=0; i < elemList.getLength(); i++) {
+        elem=(Element)elemList.item(0);
+        if (elem.getAttribute("name").equals(nameAttrValue))         break;
+      }
+    }
+ else {
+      elem=(Element)elemList.item(0);
+    }
+  }
+  return elem;
+}

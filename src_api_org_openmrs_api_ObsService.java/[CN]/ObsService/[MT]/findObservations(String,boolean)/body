@@ -1,0 +1,13 @@
+{
+  List<Obs> obs=new Vector<Obs>();
+  for (  Patient p : context.getPatientService().getPatientsByIdentifier(search,includeVoided)) {
+    obs.addAll(getObsDAO().findObservations(p.getPatientId(),includeVoided));
+  }
+  try {
+    Integer i=Integer.valueOf(search);
+    if (i != null)     obs.addAll(getObsDAO().findObservations(i,includeVoided));
+  }
+ catch (  Exception e) {
+  }
+  return obs;
+}

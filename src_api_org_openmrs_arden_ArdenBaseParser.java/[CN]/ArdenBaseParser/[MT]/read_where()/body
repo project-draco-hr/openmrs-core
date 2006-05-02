@@ -1,0 +1,163 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST read_where_AST=null;
+  try {
+{
+switch (LA(1)) {
+case ARDEN_CURLY_BRACKETS:
+{
+          mapping_factor();
+          astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case NOT:
+case WHERE:
+case LITERAL_within:
+{
+{
+switch (LA(1)) {
+case WHERE:
+{
+                      where();
+                      astFactory.addASTChild(currentAST,returnAST);
+                      it();
+                      astFactory.addASTChild(currentAST,returnAST);
+                      occur();
+                      astFactory.addASTChild(currentAST,returnAST);
+                      break;
+                    }
+case NOT:
+case LITERAL_within:
+{
+                    break;
+                  }
+default :
+{
+                  throw new NoViableAltException(LT(1),getFilename());
+                }
+            }
+          }
+{
+switch (LA(1)) {
+case LITERAL_within:
+{
+                temporal_comp_op();
+                astFactory.addASTChild(currentAST,returnAST);
+                break;
+              }
+case NOT:
+{
+              AST tmp334_AST=null;
+              tmp334_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp334_AST);
+              match(NOT);
+              temporal_comp_op();
+              astFactory.addASTChild(currentAST,returnAST);
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(LT(1),getFilename());
+          }
+      }
+    }
+    break;
+  }
+case EOF:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case LPAREN:
+case ARDEN_CURLY_BRACKETS:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+break;
+}
+case LPAREN:
+{
+match(LPAREN);
+{
+mapping_factor();
+astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case WHERE:
+{
+where();
+astFactory.addASTChild(currentAST,returnAST);
+it();
+astFactory.addASTChild(currentAST,returnAST);
+occur();
+astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case LITERAL_within:
+{
+    temporal_comp_op();
+    astFactory.addASTChild(currentAST,returnAST);
+    break;
+  }
+case NOT:
+{
+  AST tmp336_AST=null;
+  tmp336_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp336_AST);
+  match(NOT);
+  temporal_comp_op();
+  astFactory.addASTChild(currentAST,returnAST);
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+break;
+}
+case RPAREN:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+}
+match(RPAREN);
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+read_where_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_44);
+}
+ else {
+throw ex;
+}
+}
+returnAST=read_where_AST;
+}

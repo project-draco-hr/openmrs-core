@@ -1,0 +1,22 @@
+{
+  System.err.println("handleIdentifierError...");
+  if (token instanceof ArdenToken) {
+    ArdenToken ArdenToken=(ArdenToken)token;
+    System.err.println(ArdenToken.toString());
+    if (ArdenToken.isPossibleID() && (ex instanceof MismatchedTokenException)) {
+      MismatchedTokenException mte=(MismatchedTokenException)ex;
+      System.err.println("Inside-1 - handleIdentifierError..." + mte.expecting);
+      if (mte.expecting == ArdenBaseParserTokenTypes.ID) {
+        System.err.println("Inside-2 - handleIdentifierError...");
+        reportWarning("using keyword  '" + token.getText() + "' as an identifier due to: "+ mte.getMessage());
+        ASTPair currentAST=new ASTPair();
+        token.setType(ArdenBaseParserTokenTypes.WEIRD_IDENT);
+        astFactory.addASTChild(currentAST,astFactory.create(token));
+        consume();
+        AST identifierAST=currentAST.root;
+        return identifierAST;
+      }
+    }
+  }
+  return super.handleIdentifierError(token,ex);
+}

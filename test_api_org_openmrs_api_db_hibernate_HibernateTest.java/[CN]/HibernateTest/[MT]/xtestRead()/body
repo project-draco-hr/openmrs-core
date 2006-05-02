@@ -1,0 +1,16 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Transaction tx=session.beginTransaction();
+  User user=(User)session.get(User.class,1);
+  System.out.println("User = " + user.getFirstName() + " "+ user.getLastName());
+  Set<Role> roles=user.getRoles();
+  for (  Role role : roles) {
+    System.out.println("  " + role.getRole());
+  }
+  System.out.println("middle name (pre) = " + user.getMiddleName());
+  user.setMiddleName("Williams");
+  User user2=(User)session.get(User.class,1);
+  System.out.println("middle name (post) = " + user2.getMiddleName());
+  tx.commit();
+  HibernateUtil.closeSession();
+}

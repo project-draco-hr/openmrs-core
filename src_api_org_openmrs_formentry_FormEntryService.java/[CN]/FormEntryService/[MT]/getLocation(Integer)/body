@@ -1,0 +1,11 @@
+{
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  Location t;
+  try {
+    t=getPatientService().getLocation(locationId);
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  }
+  return t;
+}

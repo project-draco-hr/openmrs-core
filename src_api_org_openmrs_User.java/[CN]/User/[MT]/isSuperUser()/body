@@ -1,0 +1,6 @@
+{
+  Set<Role> tmproles=getAllRoles();
+  Role role=new Role(OpenmrsConstants.SUPERUSER_ROLE);
+  if (tmproles.contains(role))   return true;
+  return false;
+}

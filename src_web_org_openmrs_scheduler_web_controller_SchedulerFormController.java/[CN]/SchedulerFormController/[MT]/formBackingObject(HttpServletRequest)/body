@@ -1,0 +1,13 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  TaskConfig task=new TaskConfig();
+  if (context != null && context.isAuthenticated()) {
+    String taskId=request.getParameter("taskId");
+    if (taskId != null) {
+      task=context.getSchedulerService().getTask(Integer.valueOf(taskId));
+    }
+  }
+  if (task.getStartTimePattern() == null)   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
+  return task;
+}

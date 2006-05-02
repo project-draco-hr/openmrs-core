@@ -1,0 +1,80 @@
+{
+  String s="";
+  AST logic_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+    AST __t338=_t;
+    AST tmp40_AST_in=(AST)_t;
+    match(_t,LOGIC);
+    _t=_t.getFirstChild();
+    System.err.println("\n");
+    System.err.println("-------Starting LOGIC--------");
+{
+      _loop340:       do {
+        if (_t == null)         _t=ASTNULL;
+switch (_t.getType()) {
+case IF:
+{
+            System.err.println("-----------Starting IF -------");
+            a=ifAST(_t,obj);
+            _t=_retTree;
+            System.err.println("\n");
+            System.err.println("-----------End IF -------");
+            break;
+          }
+case CONCLUDE:
+{
+          System.err.println("-----------Starting CONCLUDE -------");
+          concludeAST(_t,obj);
+          _t=_retTree;
+          System.err.println("\n");
+          System.err.println("-----------End CONCLUDE -------");
+          break;
+        }
+case ACTION_OP:
+{
+        System.err.println("-----------Starting Logic Assignment -------");
+        logicAssignmentAST(_t,obj);
+        _t=_retTree;
+        System.err.println("\n");
+        System.err.println("-----------End logic assignment -------");
+        break;
+      }
+case ELSE:
+case ELSEIF:
+case ENDIF:
+{
+      System.err.println("-----------Starting ELSE - ELSEIF -------");
+      logic_elseifAST(_t);
+      _t=_retTree;
+      System.err.println("\n");
+      System.err.println("-----------End ELSE- ELSEIF -------");
+      break;
+    }
+default :
+{
+    break _loop340;
+  }
+}
+}
+ while (true);
+}
+{
+AST tmp41_AST_in=(AST)_t;
+match(_t,ENDBLOCK);
+_t=_t.getNextSibling();
+}
+System.err.println("\n");
+System.err.println("-----------End Action -------");
+_t=__t338;
+_t=_t.getNextSibling();
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

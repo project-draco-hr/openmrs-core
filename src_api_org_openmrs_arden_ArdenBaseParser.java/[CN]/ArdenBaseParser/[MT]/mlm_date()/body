@@ -1,0 +1,20 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST mlm_date_AST=null;
+  try {
+    iso_date_time();
+    astFactory.addASTChild(currentAST,returnAST);
+    mlm_date_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_25);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=mlm_date_AST;
+}

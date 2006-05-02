@@ -1,0 +1,10 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  List<PatientIdentifierType> identifierTypeList=new Vector<PatientIdentifierType>();
+  if (context != null && context.isAuthenticated()) {
+    PatientService ps=context.getPatientService();
+    identifierTypeList=ps.getPatientIdentifierTypes();
+  }
+  return identifierTypeList;
+}

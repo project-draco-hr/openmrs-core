@@ -1,0 +1,58 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST logic_statement_AST=null;
+  try {
+{
+      _loop203:       do {
+switch (LA(1)) {
+case IF:
+{
+            if_statement();
+            astFactory.addASTChild(currentAST,returnAST);
+            break;
+          }
+case CONCLUDE:
+{
+          conclude_statement();
+          astFactory.addASTChild(currentAST,returnAST);
+          break;
+        }
+case LET:
+case NOW:
+case ID:
+case ACTION_OP:
+{
+        logic_assignment();
+        astFactory.addASTChild(currentAST,returnAST);
+        break;
+      }
+case ELSE:
+case ELSEIF:
+case ENDIF:
+{
+      logic_elseif();
+      astFactory.addASTChild(currentAST,returnAST);
+      break;
+    }
+default :
+{
+    break _loop203;
+  }
+}
+}
+ while (true);
+}
+logic_statement_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_34);
+}
+ else {
+throw ex;
+}
+}
+returnAST=logic_statement_AST;
+}

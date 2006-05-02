@@ -1,0 +1,10 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  List<FieldType> fieldTypeList=new Vector<FieldType>();
+  if (context != null && context.isAuthenticated()) {
+    FormService fs=context.getFormService();
+    fieldTypeList=fs.getFieldTypes();
+  }
+  return fieldTypeList;
+}

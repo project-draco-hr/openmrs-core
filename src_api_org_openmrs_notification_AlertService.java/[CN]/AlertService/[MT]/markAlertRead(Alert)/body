@@ -1,0 +1,8 @@
+{
+  log.debug("Marking alert as read " + alert);
+  User authUser=context.getAuthenticatedUser();
+  if (authUser != null) {
+    alert.addReadByUser(authUser);
+    dao().updateAlert(alert);
+  }
+}

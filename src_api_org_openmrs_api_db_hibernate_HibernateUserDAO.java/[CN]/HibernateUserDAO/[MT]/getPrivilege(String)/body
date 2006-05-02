@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Privilege privilege=(Privilege)session.get(Privilege.class,p);
+  return privilege;
+}

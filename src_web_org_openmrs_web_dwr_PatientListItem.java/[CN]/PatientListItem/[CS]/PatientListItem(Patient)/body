@@ -1,0 +1,34 @@
+{
+  if (patient != null) {
+    patientId=patient.getPatientId();
+    boolean first=true;
+    for (    PatientIdentifier pi : patient.getIdentifiers()) {
+      if (first) {
+        identifier=pi.getIdentifier();
+        identifierCheckDigit=pi.getIdentifierType().hasCheckDigit();
+        first=false;
+      }
+ else {
+        otherIdentifiers+=" " + pi.getIdentifier();
+      }
+    }
+    first=true;
+    for (    PatientName pn : patient.getNames()) {
+      if (first) {
+        familyName=pn.getFamilyName();
+        middleName=pn.getMiddleName();
+        givenName=pn.getGivenName();
+        first=false;
+      }
+ else {
+        otherNames+=" " + pn.getGivenName() + " "+ pn.getMiddleName()+ " "+ pn.getFamilyName();
+      }
+    }
+    gender=patient.getGender();
+    if (patient.getTribe() != null)     tribe=patient.getTribe().getName();
+    birthdate=patient.getBirthdate();
+    birthdateEstimated=patient.isBirthdateEstimated();
+    mothersName=patient.getMothersName();
+    voided=patient.isVoided();
+  }
+}

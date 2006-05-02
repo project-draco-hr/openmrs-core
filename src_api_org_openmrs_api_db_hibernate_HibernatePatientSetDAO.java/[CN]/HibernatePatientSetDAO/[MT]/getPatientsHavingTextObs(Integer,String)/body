@@ -1,0 +1,26 @@
+{
+  Session session=HibernateUtil.currentSession();
+  HibernateUtil.beginTransaction();
+  Query query;
+  StringBuffer sb=new StringBuffer();
+  sb.append("select patient_id from obs o " + "where concept_id = :concept_id ");
+  boolean useVal=false;
+  if (value != null) {
+    sb.append("and value_text = :value ");
+    useVal=true;
+  }
+ else {
+    sb.append("and value_text is not null ");
+  }
+  sb.append("group by patient_id ");
+  query=session.createSQLQuery(sb.toString());
+  query.setInteger("concept_id",conceptId);
+  if (useVal) {
+    query.setString("value",value);
+  }
+  PatientSet ret=new PatientSet();
+  List patientIds=query.list();
+  ret.setPatientIds(new HashSet<Integer>(patientIds));
+  HibernateUtil.commitTransaction();
+  return ret;
+}

@@ -1,0 +1,10 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  List<ConceptClass> conceptClassList=new Vector<ConceptClass>();
+  if (context != null && context.isAuthenticated()) {
+    ConceptService cs=context.getConceptService();
+    conceptClassList=cs.getConceptClasses();
+  }
+  return conceptClassList;
+}

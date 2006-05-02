@@ -1,0 +1,8 @@
+{
+  if (!isAuthenticated()) {
+    log.warn("unauthorized access to report service");
+    return null;
+  }
+  if (reportService == null)   reportService=new ReportService(this,getDaoContext(),(ReportObjectFactory)applicationContext.getBean("reportObjectFactory"));
+  return reportService;
+}

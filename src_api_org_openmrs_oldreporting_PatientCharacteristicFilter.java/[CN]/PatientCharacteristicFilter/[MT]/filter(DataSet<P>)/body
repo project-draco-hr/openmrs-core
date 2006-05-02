@@ -1,0 +1,20 @@
+{
+  DataSet<Patient> toReturn=new SimpleDataSet<Patient>();
+  boolean checkGender=gender != null;
+  boolean checkAge=minAge != null || maxAge != null;
+  int minAgeInt=minAge == null ? -1 : minAge.intValue();
+  int maxAgeInt=maxAge == null ? Integer.MAX_VALUE : maxAge.intValue();
+  for (  P patient : input.getRowKeys()) {
+    if (checkGender && !gender.equals(patient.getGender())) {
+      continue;
+    }
+    if (checkAge) {
+      int age=(int)((System.currentTimeMillis() - patient.getBirthdate().getTime()) / ms_per_year);
+      if (age < minAgeInt || age > maxAgeInt) {
+        continue;
+      }
+    }
+    toReturn.setRow(patient,input.getRow(patient));
+  }
+  return toReturn;
+}

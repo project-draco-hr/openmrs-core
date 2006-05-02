@@ -1,0 +1,31 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  User user=(User)obj;
+  String view=getFormView();
+  if (context != null && context.isAuthenticated()) {
+    UserService us=context.getUserService();
+    String password=request.getParameter("password");
+    Map<String,String> properties=user.getProperties();
+    if (properties == null)     properties=new HashMap<String,String>();
+    Boolean newChangePassword=false;
+    String chk=request.getParameter(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    if (chk != null)     newChangePassword=true;
+    if (!newChangePassword.booleanValue() && properties.containsKey(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD)) {
+      properties.remove(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    }
+    if (newChangePassword.booleanValue()) {
+      properties.put(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD,newChangePassword.toString());
+    }
+    user.setProperties(properties);
+    if ((context.getAuthenticatedUser().isSuperUser() && password != null) && !password.equals("")) {
+      log.debug("calling changePassword");
+      us.changePassword(user,password);
+    }
+    if (user.getUserId() == null)     us.createUser(user,password);
+ else     us.updateUser(user);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.saved");
+    view=getSuccessView();
+  }
+  return new ModelAndView(new RedirectView(view));
+}

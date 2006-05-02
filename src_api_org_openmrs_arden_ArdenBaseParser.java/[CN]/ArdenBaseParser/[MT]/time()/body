@@ -1,0 +1,41 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST time_AST=null;
+  try {
+switch (LA(1)) {
+case LITERAL_T:
+{
+        AST tmp232_AST=null;
+        tmp232_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp232_AST);
+        match(LITERAL_T);
+        time_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_t:
+{
+      AST tmp233_AST=null;
+      tmp233_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp233_AST);
+      match(LITERAL_t);
+      time_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_28);
+}
+ else {
+throw ex;
+}
+}
+returnAST=time_AST;
+}

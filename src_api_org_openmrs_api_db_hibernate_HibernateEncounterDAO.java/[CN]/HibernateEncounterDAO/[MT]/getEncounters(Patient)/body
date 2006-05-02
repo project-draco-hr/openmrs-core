@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Set<Encounter> encounters=new HashSet<Encounter>();
+  encounters.addAll(getEncountersByPatientId(who.getPatientId(),true));
+  return encounters;
+}

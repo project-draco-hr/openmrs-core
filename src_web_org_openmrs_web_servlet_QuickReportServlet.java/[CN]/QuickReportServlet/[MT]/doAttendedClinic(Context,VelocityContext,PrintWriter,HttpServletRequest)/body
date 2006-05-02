@@ -1,0 +1,51 @@
+{
+  EncounterService es=context.getEncounterService();
+  Locale locale=context.getLocale();
+  DateFormat dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(locale.toString().toLowerCase()),locale);
+  velocityContext.put("date",dateFormat);
+  Calendar cal=Calendar.getInstance();
+  Date start=new Date();
+  Date end=new Date();
+  String startDate=request.getParameter("startDate");
+  String endDate=request.getParameter("endDate");
+  String location=request.getParameter("location");
+  if (startDate != null && startDate.length() != 0) {
+    try {
+      cal.setTime(dateFormat.parse(startDate));
+    }
+ catch (    ParseException e) {
+      throw new ServletException("Error parsing 'Start Date'",e);
+    }
+  }
+ else   cal.setTime(new Date());
+  if (endDate == null || endDate.equals("")) {
+    while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+      cal.add(Calendar.DAY_OF_MONTH,-1);
+    }
+    start=cal.getTime();
+    cal.add(Calendar.DAY_OF_MONTH,7);
+    end=cal.getTime();
+  }
+ else {
+    start=cal.getTime();
+    try {
+      cal.setTime(dateFormat.parse(endDate));
+    }
+ catch (    ParseException e) {
+      throw new ServletException("Error parsing 'End Date'",e);
+    }
+    end=cal.getTime();
+  }
+  Collection<Encounter> encounters=null;
+  if (location == null || location.equals(""))   encounters=es.getEncounters(start,end);
+ else {
+    Location locationObj=es.getLocation(Integer.valueOf(location));
+    encounters=es.getEncounters(locationObj,start,end);
+  }
+  if (encounters != null) {
+    velocityContext.put("encounters",encounters);
+  }
+ else {
+    report.append("No Encounters found");
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_DELETE_OBS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_DELETE_OBS);
+  getObsDAO().deleteObs(obs);
+}

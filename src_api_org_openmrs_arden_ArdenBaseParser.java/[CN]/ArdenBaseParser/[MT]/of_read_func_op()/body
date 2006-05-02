@@ -1,0 +1,88 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST of_read_func_op_AST=null;
+  try {
+switch (LA(1)) {
+case AVERAGE:
+{
+        AST tmp290_AST=null;
+        tmp290_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp290_AST);
+        match(AVERAGE);
+        of_read_func_op_AST=(AST)currentAST.root;
+        break;
+      }
+case AVG:
+{
+      AST tmp291_AST=null;
+      tmp291_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp291_AST);
+      match(AVG);
+      of_read_func_op_AST=(AST)currentAST.root;
+      break;
+    }
+case COUNT:
+{
+    AST tmp292_AST=null;
+    tmp292_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp292_AST);
+    match(COUNT);
+    of_read_func_op_AST=(AST)currentAST.root;
+    break;
+  }
+case EXIST:
+{
+{
+    AST tmp293_AST=null;
+    tmp293_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp293_AST);
+    match(EXIST);
+  }
+  of_read_func_op_AST=(AST)currentAST.root;
+  break;
+}
+case EXISTS:
+{
+AST tmp294_AST=null;
+tmp294_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp294_AST);
+match(EXISTS);
+of_read_func_op_AST=(AST)currentAST.root;
+break;
+}
+case SUM:
+{
+AST tmp295_AST=null;
+tmp295_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp295_AST);
+match(SUM);
+of_read_func_op_AST=(AST)currentAST.root;
+break;
+}
+case MEDIAN:
+{
+AST tmp296_AST=null;
+tmp296_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp296_AST);
+match(MEDIAN);
+of_read_func_op_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_36);
+}
+ else {
+throw ex;
+}
+}
+returnAST=of_read_func_op_AST;
+}

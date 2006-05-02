@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Report report=new Report();
+  report=(Report)session.get(Report.class,reportId);
+  return report;
+}

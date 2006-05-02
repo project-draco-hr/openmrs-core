@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  OrderType orderType=null;
+  if (context != null && context.isAuthenticated()) {
+    OrderService os=context.getOrderService();
+    String orderTypeId=request.getParameter("orderTypeId");
+    if (orderTypeId != null)     orderType=os.getOrderType(Integer.valueOf(orderTypeId));
+  }
+  if (orderType == null)   orderType=new OrderType();
+  return orderType;
+}

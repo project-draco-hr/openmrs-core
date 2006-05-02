@@ -1,0 +1,13 @@
+{
+  if (obs != null) {
+    obsId=obs.getObsId();
+    if (obs.getEncounter() != null)     encounter=obs.getEncounter().getEncounterId().toString();
+    patientName=obs.getPatient().getPatientName().getFamilyName();
+    patientName+=", " + obs.getPatient().getPatientName().getGivenName();
+    conceptName=obs.getConcept().getName(locale).getName();
+    if (obs.getOrder() != null)     order=obs.getOrder().getOrderId().toString();
+    location=obs.getLocation().getName();
+    datetime=obs.getObsDatetime();
+    voided=obs.isVoided();
+  }
+}

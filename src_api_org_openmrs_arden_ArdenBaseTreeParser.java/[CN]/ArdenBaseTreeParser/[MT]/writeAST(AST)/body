@@ -1,0 +1,28 @@
+{
+  String s="";
+  AST writeAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST i=null;
+  String a, b;
+  try {
+{
+      AST __t382=_t;
+      AST tmp61_AST_in=(AST)_t;
+      match(_t,WRITE);
+      _t=_t.getFirstChild();
+      i=(AST)_t;
+      match(_t,STRING_LITERAL);
+      _t=_t.getNextSibling();
+      _t=__t382;
+      _t=_t.getNextSibling();
+      System.err.println("Action text = " + i.getText());
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

@@ -1,0 +1,4 @@
+{
+  Session session=HibernateUtil.currentSession();
+  return (FormEntryQueue)session.createQuery("from FormEntryQueue f1 where f1.formEntryQueueId = (select min(formEntryQueueId) from FormEntryQueue)").uniqueResult();
+}

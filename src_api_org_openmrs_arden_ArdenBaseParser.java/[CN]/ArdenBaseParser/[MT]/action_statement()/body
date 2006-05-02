@@ -1,0 +1,112 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST action_statement_AST=null;
+  try {
+{
+      AST tmp420_AST=null;
+      tmp420_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp420_AST);
+      match(WRITE);
+    }
+{
+switch (LA(1)) {
+case THE:
+case AT:
+case NOW:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case TRUE:
+case FALSE:
+case INTLIT:
+case SEMI:
+case ID:
+case COMMA:
+case ACTION_OP:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case STRING_LITERAL:
+{
+          expr();
+          astFactory.addASTChild(currentAST,returnAST);
+          break;
+        }
+case LPAREN:
+{
+{
+          match(LPAREN);
+        }
+        expr();
+        astFactory.addASTChild(currentAST,returnAST);
+{
+          match(RPAREN);
+        }
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+{
+_loop239: do {
+  if ((LA(1) == ACTION_OP)) {
+    AST tmp423_AST=null;
+    tmp423_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp423_AST);
+    match(ACTION_OP);
+    expr_factor();
+    astFactory.addASTChild(currentAST,returnAST);
+  }
+ else {
+    break _loop239;
+  }
+}
+ while (true);
+}
+{
+switch (LA(1)) {
+case AT:
+{
+{
+      AST tmp424_AST=null;
+      tmp424_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp424_AST);
+      match(AT);
+    }
+    AST tmp425_AST=null;
+    tmp425_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp425_AST);
+    match(ID);
+    break;
+  }
+case SEMI:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+action_statement_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_34);
+}
+ else {
+throw ex;
+}
+}
+returnAST=action_statement_AST;
+}

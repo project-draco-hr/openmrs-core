@@ -1,0 +1,17 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=getContext(httpSession);
+  if (context == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
+    response.sendRedirect(request.getContextPath() + "/logout");
+    return;
+  }
+  ServletOutputStream out=response.getOutputStream();
+  try {
+    getHL7InQueueProcessor(context).processHL7InQueue();
+    out.print("HL7 inbound queue processor has started");
+  }
+ catch (  HL7Exception e) {
+    out.print("Unable to start HL7 inbound queue processor. Perhaps it is already going?");
+  }
+}

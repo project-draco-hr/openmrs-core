@@ -1,0 +1,6 @@
+{
+  log.debug("Formatting date: " + date + " with locale "+ locale);
+  String pattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(locale.toString().toLowerCase());
+  if (pattern == null)   pattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Locale.UK.toString().toLowerCase());
+  return date == null ? "" : new SimpleDateFormat(pattern).format(date);
+}

@@ -1,0 +1,30 @@
+{
+  StringBuffer ret=new StringBuffer();
+  if (gender != null) {
+    if ("m".equals(gender) || "M".equals(gender)) {
+      ret.append("Male");
+    }
+ else {
+      ret.append("Female");
+    }
+  }
+  ret.append(" patients ");
+  DateFormat df=null;
+  if (minBirthdate != null || maxBirthdate != null) {
+    df=DateFormat.getDateInstance(DateFormat.SHORT);
+  }
+  if (minBirthdate != null) {
+    if (maxBirthdate != null) {
+      ret.append(" born between " + df.format(minBirthdate) + " and "+ df.format(maxBirthdate));
+    }
+ else {
+      ret.append(" born after " + df.format(minBirthdate));
+    }
+  }
+ else {
+    if (maxBirthdate != null) {
+      ret.append(" born before " + df.format(maxBirthdate));
+    }
+  }
+  return ret.toString();
+}

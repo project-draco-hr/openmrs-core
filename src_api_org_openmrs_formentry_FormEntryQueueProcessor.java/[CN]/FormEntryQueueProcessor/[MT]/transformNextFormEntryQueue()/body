@@ -1,0 +1,10 @@
+{
+  boolean transformOccurred=false;
+  FormEntryService fes=context.getFormEntryService();
+  FormEntryQueue feq;
+  if ((feq=fes.getNextFormEntryQueue()) != null) {
+    transformFormEntryQueue(feq);
+    transformOccurred=true;
+  }
+  return transformOccurred;
+}

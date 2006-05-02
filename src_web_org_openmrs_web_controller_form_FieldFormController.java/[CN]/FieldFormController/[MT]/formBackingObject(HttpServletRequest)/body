@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Field field=null;
+  if (context != null && context.isAuthenticated()) {
+    FormService fs=context.getFormService();
+    String fieldId=request.getParameter("fieldId");
+    if (fieldId != null)     field=fs.getField(Integer.valueOf(fieldId));
+  }
+  if (field == null)   field=new Field();
+  return field;
+}

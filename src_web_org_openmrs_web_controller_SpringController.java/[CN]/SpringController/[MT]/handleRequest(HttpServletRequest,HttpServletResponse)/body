@@ -1,0 +1,7 @@
+{
+  String path=request.getServletPath();
+  if (path.endsWith("htm"))   path=path.replace(".htm","");
+ else   if (path.endsWith("jsp"))   path=path.replace(".jsp","");
+  int qmark=path.indexOf("?");
+  return new ModelAndView(path);
+}

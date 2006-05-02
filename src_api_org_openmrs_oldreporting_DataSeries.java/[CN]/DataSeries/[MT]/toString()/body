@@ -1,0 +1,9 @@
+{
+  StringBuffer ret=new StringBuffer();
+  ret.append("<table><tr><td>" + keyTitle + "</td><td>"+ valueTitle+ "</td></tr>");
+  for (  Map.Entry<K,V> e : data.entrySet()) {
+    ret.append("<tr><td>" + e.getKey() + "</td><td>"+ e.getValue()+ "</td></tr>");
+  }
+  ret.append("</table>");
+  return ret.toString();
+}

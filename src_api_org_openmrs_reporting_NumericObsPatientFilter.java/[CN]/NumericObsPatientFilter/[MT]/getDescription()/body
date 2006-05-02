@@ -1,0 +1,8 @@
+{
+  StringBuffer ret=new StringBuffer();
+  ret.append("Patients with (concept #" + concept + ")");
+  if (value != null && modifier != PatientSetService.Modifier.EXISTS) {
+    ret.append(" " + modifier.getSqlRepresentation() + " "+ value);
+  }
+  return ret.toString();
+}

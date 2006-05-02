@@ -1,0 +1,9 @@
+{
+  Tribe tribe=(Tribe)obj;
+  if (tribe == null) {
+    errors.rejectValue("tribe","error.general");
+  }
+ else {
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
+  }
+}

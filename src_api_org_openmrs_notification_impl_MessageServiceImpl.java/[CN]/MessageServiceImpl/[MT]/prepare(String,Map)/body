@@ -1,0 +1,10 @@
+{
+  try {
+    Template template=(Template)getTemplatesByName(templateName).get(0);
+    template.setData(data);
+    return prepare(template);
+  }
+ catch (  Exception e) {
+    throw new MessageException("Could not prepare message with template " + templateName,e);
+  }
+}

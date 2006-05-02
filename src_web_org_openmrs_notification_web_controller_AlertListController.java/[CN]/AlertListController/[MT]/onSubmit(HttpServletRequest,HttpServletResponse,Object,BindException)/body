@@ -1,0 +1,20 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Locale locale=context.getLocale();
+  if (context != null && context.isAuthenticated()) {
+    AlertService as=context.getAlertService();
+    String[] alertIds=request.getParameterValues("alertId");
+    for (    String alertIdString : alertIds) {
+      Integer alertId=Integer.parseInt(alertIdString);
+      Alert a=as.getAlert(alertId);
+      a.setDateToExpire(new Date());
+      as.updateAlert(a);
+    }
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String msg=msa.getMessage("Alert.expired",new Object[]{alertIds.length},locale);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,msg);
+    return new ModelAndView(new RedirectView(getSuccessView()));
+  }
+  return showForm(request,response,errors);
+}

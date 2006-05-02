@@ -1,0 +1,68 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST author_slot_AST=null;
+  try {
+    AST tmp94_AST=null;
+    tmp94_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp94_AST);
+    match(LITERAL_author);
+    AST tmp95_AST=null;
+    tmp95_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp95_AST);
+    match(COLON);
+{
+      _loop35:       do {
+        if ((_tokenSet_4.member(LA(1)))) {
+          text();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop35;
+        }
+      }
+ while (true);
+    }
+{
+      _loop39:       do {
+        if ((LA(1) == SEMI)) {
+          AST tmp96_AST=null;
+          tmp96_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp96_AST);
+          match(SEMI);
+{
+            _loop38:             do {
+              if ((_tokenSet_4.member(LA(1)))) {
+                text();
+                astFactory.addASTChild(currentAST,returnAST);
+              }
+ else {
+                break _loop38;
+              }
+            }
+ while (true);
+          }
+        }
+ else {
+          break _loop39;
+        }
+      }
+ while (true);
+    }
+    AST tmp97_AST=null;
+    tmp97_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp97_AST);
+    match(ENDBLOCK);
+    author_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_10);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=author_slot_AST;
+}

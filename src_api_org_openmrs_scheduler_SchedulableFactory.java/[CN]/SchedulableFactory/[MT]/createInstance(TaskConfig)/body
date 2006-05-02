@@ -1,0 +1,12 @@
+{
+  try {
+    Class schedulableClass=Class.forName(taskConfig.getSchedulableClass());
+    Schedulable schedulable=(Schedulable)schedulableClass.newInstance();
+    schedulable.initialize(taskConfig);
+    return schedulable;
+  }
+ catch (  Exception e) {
+    log.error("Error creating new task for class " + taskConfig.getSchedulableClass(),e);
+    throw new SchedulerException(e);
+  }
+}

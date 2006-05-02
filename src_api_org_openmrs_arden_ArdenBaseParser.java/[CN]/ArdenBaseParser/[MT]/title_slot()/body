@@ -1,0 +1,44 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST title_slot_AST=null;
+  try {
+{
+      AST tmp70_AST=null;
+      tmp70_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp70_AST);
+      match(LITERAL_title);
+      AST tmp71_AST=null;
+      tmp71_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp71_AST);
+      match(COLON);
+{
+        _loop12:         do {
+          if ((_tokenSet_4.member(LA(1)))) {
+            text();
+            astFactory.addASTChild(currentAST,returnAST);
+          }
+ else {
+            break _loop12;
+          }
+        }
+ while (true);
+      }
+      AST tmp72_AST=null;
+      tmp72_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp72_AST);
+      match(ENDBLOCK);
+    }
+    title_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_5);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=title_slot_AST;
+}

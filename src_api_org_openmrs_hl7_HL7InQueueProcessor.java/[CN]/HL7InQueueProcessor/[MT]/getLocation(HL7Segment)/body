@@ -1,0 +1,20 @@
+{
+  String hl7LocationId=pv1.getComponent(3,1);
+  Integer locationId=null;
+  Location location;
+  try {
+    locationId=Integer.parseInt(pv1.getComponent(3,1));
+  }
+ catch (  NumberFormatException e) {
+    throw new HL7Exception("Invalid location ID '" + hl7LocationId + "'");
+  }
+  if (locationId == null || locationId == 0)   throw new HL7Exception("Unable to parse location ID '" + hl7LocationId + "'");
+  try {
+    location=context.getEncounterService().getLocation(locationId);
+  }
+ catch (  Exception e) {
+    throw new HL7Exception("Error retrieving location " + locationId,e);
+  }
+  if (location == null || location.getLocationId() == null)   throw new HL7Exception("Could not find location " + locationId);
+  return location;
+}

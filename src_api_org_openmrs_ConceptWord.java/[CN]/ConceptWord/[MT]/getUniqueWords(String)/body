@@ -1,0 +1,15 @@
+{
+  if (phrase.length() > 2) {
+    phrase=phrase.replaceAll(OpenmrsConstants.REGEX_LARGE," ");
+  }
+ else {
+    phrase=phrase.replaceAll(OpenmrsConstants.REGEX_SMALL," ");
+  }
+  String[] parts=phrase.trim().replace('\n',' ').split(" ");
+  List<String> uniqueParts=new Vector<String>();
+  for (  String part : parts) {
+    String p=part.trim();
+    if (!p.equals("") && !OpenmrsConstants.STOP_WORDS().contains(p) && !uniqueParts.contains(p))     uniqueParts.add(p);
+  }
+  return uniqueParts;
+}

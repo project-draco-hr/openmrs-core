@@ -1,0 +1,15 @@
+{
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_FORM_ENTRY))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_FORM_ENTRY);
+  List<Form> forms=new Vector<Form>();
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS);
+  try {
+    forms=context.getFormService().getForms(true);
+  }
+ catch (  Exception e) {
+    log.error(e);
+  }
+ finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS);
+  }
+  return forms;
+}

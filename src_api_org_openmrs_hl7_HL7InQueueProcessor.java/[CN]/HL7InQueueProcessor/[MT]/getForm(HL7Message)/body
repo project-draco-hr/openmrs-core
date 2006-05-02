@@ -1,0 +1,22 @@
+{
+  String hl7FormId=hl7Message.getProfileId().split("\\" + hl7Message.getComponentSeparator())[0];
+  Integer formId=null;
+  Form form=null;
+  try {
+    formId=Integer.parseInt(hl7FormId);
+  }
+ catch (  NumberFormatException e) {
+    throw new HL7Exception("Invalid form ID '" + hl7FormId + "'");
+  }
+  if (formId == null || formId == 0) {
+    throw new HL7Exception("Unable to parse OpenMRS form ID '" + hl7FormId + "'");
+  }
+  try {
+    form=context.getFormService().getForm(formId);
+  }
+ catch (  Exception e) {
+    throw new HL7Exception("Error retrieving OpenMRS form " + formId,e);
+  }
+  if (form == null || form.getFormId() == null)   throw new HL7Exception("Could not find OpenMRS form " + formId);
+  return form;
+}

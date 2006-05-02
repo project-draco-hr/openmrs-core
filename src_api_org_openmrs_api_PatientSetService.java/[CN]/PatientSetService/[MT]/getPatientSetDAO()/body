@@ -1,0 +1,6 @@
+{
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_SETS)) {
+    throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENT_SETS);
+  }
+  return daoContext.getPatientSetDAO();
+}

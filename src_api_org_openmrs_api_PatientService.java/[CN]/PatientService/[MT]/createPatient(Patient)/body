@@ -1,0 +1,10 @@
+{
+  if (log.isDebugEnabled()) {
+    String s=patient.getPatientId().toString();
+    if (patient.getIdentifiers() != null)     s+="|" + patient.getIdentifiers();
+    log.debug(s);
+  }
+  if (!context.hasPrivilege(OpenmrsConstants.PRIV_ADD_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_PATIENTS);
+  checkPatientIdentifiers(patient);
+  getPatientDAO().createPatient(patient);
+}

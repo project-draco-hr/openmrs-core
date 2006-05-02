@@ -1,0 +1,21 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Alert alert=(Alert)obj;
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  try {
+    if (context != null && context.isAuthenticated()) {
+      String userId=request.getParameter("userId");
+      if (userId != null && !userId.equals(""))       alert.setUser(context.getUserService().getUser(Integer.valueOf(userId)));
+      String role=request.getParameter("roleStr");
+      if (role != null && !role.equals(""))       alert.setRole(context.getUserService().getRole(role));
+      if (alert.getRole() == null && alert.getUser() == null) {
+        errors.rejectValue("user","Alert.userOrRoleRequired");
+      }
+    }
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  }
+  return super.processFormSubmission(request,reponse,alert,errors);
+}

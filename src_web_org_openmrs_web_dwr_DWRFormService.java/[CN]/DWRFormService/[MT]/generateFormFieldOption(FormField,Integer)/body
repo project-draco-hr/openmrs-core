@@ -1,0 +1,21 @@
+{
+  String indent="";
+  for (int i=0; i < level; i++)   indent+="&nbsp; ";
+  String opt=indent;
+  if (ff.getFieldNumber() != null)   opt+=ff.getFieldNumber() + ". ";
+  if (ff.getFieldPart() != null)   opt+=ff.getFieldPart() + ". ";
+  opt+=ff.getField().getName();
+  String s="";
+  if (opt.length() > 42) {
+    s="<option value='" + ff.getFormFieldId() + "' title='"+ opt+ "'>";
+    opt=opt.substring(0,42) + "...";
+    s+=opt;
+    s+="</option>";
+  }
+ else {
+    s="<option value='" + ff.getFormFieldId() + "'>";
+    s+=opt;
+    s+="</option>";
+  }
+  return s;
+}

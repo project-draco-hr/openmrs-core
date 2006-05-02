@@ -1,0 +1,113 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST unary_comp_op_AST=null;
+  try {
+switch (LA(1)) {
+case LITERAL_PRESENT:
+{
+        AST tmp339_AST=null;
+        tmp339_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp339_AST);
+        match(LITERAL_PRESENT);
+        unary_comp_op_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_NULL:
+{
+      AST tmp340_AST=null;
+      tmp340_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp340_AST);
+      match(LITERAL_NULL);
+      unary_comp_op_AST=(AST)currentAST.root;
+      break;
+    }
+case LITERAL_BOOLEAN:
+{
+    AST tmp341_AST=null;
+    tmp341_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp341_AST);
+    match(LITERAL_BOOLEAN);
+    unary_comp_op_AST=(AST)currentAST.root;
+    break;
+  }
+case LITERAL_NUMBER:
+{
+  AST tmp342_AST=null;
+  tmp342_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp342_AST);
+  match(LITERAL_NUMBER);
+  unary_comp_op_AST=(AST)currentAST.root;
+  break;
+}
+case LITERAL_TIME:
+{
+AST tmp343_AST=null;
+tmp343_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp343_AST);
+match(LITERAL_TIME);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_DURATION:
+{
+AST tmp344_AST=null;
+tmp344_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp344_AST);
+match(LITERAL_DURATION);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_STRING:
+{
+AST tmp345_AST=null;
+tmp345_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp345_AST);
+match(LITERAL_STRING);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_LIST:
+{
+AST tmp346_AST=null;
+tmp346_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp346_AST);
+match(LITERAL_LIST);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_OBJECT:
+{
+AST tmp347_AST=null;
+tmp347_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp347_AST);
+match(LITERAL_OBJECT);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case ID:
+{
+AST tmp348_AST=null;
+tmp348_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp348_AST);
+match(ID);
+unary_comp_op_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_0);
+}
+ else {
+throw ex;
+}
+}
+returnAST=unary_comp_op_AST;
+}

@@ -1,0 +1,15 @@
+{
+  String s="";
+  if (formFields.containsKey(current)) {
+    TreeSet<FormField> set=formFields.get(current);
+    for (    FormField ff : set) {
+      s+=generateFormFieldHTML(ff);
+      if (formFields.containsKey(ff.getFormFieldId())) {
+        s+="<div class='indent'>";
+        s+=generateHTMLTree(formFields,ff.getFormFieldId());
+        s+="</div>";
+      }
+    }
+  }
+  return s;
+}

@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<EncounterType> encounterTypes;
+  encounterTypes=session.createQuery("from EncounterType et order by et.name").list();
+  return encounterTypes;
+}

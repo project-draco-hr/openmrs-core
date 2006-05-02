@@ -1,0 +1,15 @@
+{
+  if (tagList == null)   tagList=new Vector<String>();
+  String token=getXmlToken(s);
+  if (tagList.contains(token)) {
+    int i=1;
+    while (tagList.contains(token + "_" + i))     i++;
+    String tagName=token + "_" + i;
+    tagList.add(tagName);
+    return tagName;
+  }
+ else {
+    tagList.add(token);
+    return token;
+  }
+}

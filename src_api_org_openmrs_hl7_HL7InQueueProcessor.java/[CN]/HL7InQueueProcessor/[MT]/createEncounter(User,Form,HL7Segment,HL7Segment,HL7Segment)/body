@@ -1,0 +1,22 @@
+{
+  Encounter encounter=new Encounter();
+  Date encounterDate=HL7Util.parseHL7Date(pv1.getField(44));
+  Date dateEntered=HL7Util.parseHL7Timestamp(orc.getField(9));
+  EncounterType encounterType=form.getEncounterType();
+  Location location=getLocation(pv1);
+  Patient patient=getPatient(pid);
+  User provider=getProvider(pv1);
+  encounter.setEncounterDatetime(encounterDate);
+  encounter.setEncounterType(encounterType);
+  encounter.setForm(form);
+  encounter.setLocation(location);
+  encounter.setPatient(patient);
+  encounter.setProvider(provider);
+  encounter.setCreator(enterer);
+  encounter.setDateCreated(dateEntered);
+  context.getEncounterService().createEncounter(encounter);
+  if (encounter == null || encounter.getEncounterId() == null || encounter.getEncounterId() == 0) {
+    throw new HL7Exception("Invalid encounter");
+  }
+  return encounter;
+}

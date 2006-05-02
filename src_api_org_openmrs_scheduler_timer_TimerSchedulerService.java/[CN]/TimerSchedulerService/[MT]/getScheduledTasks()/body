@@ -1,0 +1,10 @@
+{
+  List<TaskConfig> scheduledTasks=new ArrayList<TaskConfig>();
+  for (  Integer taskId : scheduledTaskMap.keySet()) {
+    TaskConfig task=getTask(taskId);
+    if (scheduledTaskMap.get(task) != null) {
+      scheduledTasks.add(task);
+    }
+  }
+  return scheduledTasks;
+}

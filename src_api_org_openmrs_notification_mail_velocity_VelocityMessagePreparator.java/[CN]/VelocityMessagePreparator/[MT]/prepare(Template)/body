@@ -1,0 +1,17 @@
+{
+  VelocityContext context=new VelocityContext(template.getData());
+  StringWriter writer=new StringWriter();
+  try {
+    engine.evaluate(context,writer,"template",template.getTemplate());
+  }
+ catch (  Exception e) {
+    log.error("Failed to prepare message using template " + e.getMessage(),e);
+    throw new MessageException(e);
+  }
+  Message message=new Message();
+  message.setSubject(template.getSubject());
+  message.setRecipients(template.getRecipients());
+  message.setSender(template.getSender());
+  message.setContent(writer.toString());
+  return message;
+}

@@ -1,0 +1,19 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
+    response.sendRedirect(request.getContextPath() + "/logout");
+    return null;
+  }
+  PatientAnalysis analysis=(PatientAnalysis)httpSession.getAttribute(ON_THE_FLY_ANALYSIS_ATTR);
+  if (analysis != null) {
+    String keyToRemove=request.getParameter("patient_filter_key");
+    log.debug("removing filter " + keyToRemove);
+    if (keyToRemove != null) {
+      PatientFilter pf=analysis.removeFilter(keyToRemove);
+      log.debug("returns " + pf);
+    }
+  }
+  return new ModelAndView(new RedirectView("analysis.list"));
+}

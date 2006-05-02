@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Integer size=(Integer)session.createQuery("select count(*) from FormEntryError").uniqueResult();
+  return size;
+}

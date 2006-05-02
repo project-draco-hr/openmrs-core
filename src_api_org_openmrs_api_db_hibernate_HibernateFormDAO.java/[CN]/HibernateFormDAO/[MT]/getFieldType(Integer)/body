@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  FieldType fieldType=new FieldType();
+  fieldType=(FieldType)session.get(FieldType.class,fieldTypeId);
+  return fieldType;
+}

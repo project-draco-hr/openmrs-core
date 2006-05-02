@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Concept concept=new Concept();
+  concept=(Concept)session.get(Concept.class,conceptId);
+  return concept;
+}

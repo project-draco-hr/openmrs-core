@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  report.setCreator(context.getAuthenticatedUser());
+  report.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(report);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

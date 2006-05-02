@@ -1,0 +1,13 @@
+{
+  Set<Role> baseRoles=new HashSet<Role>();
+  Set<Role> totalRoles=new HashSet<Role>();
+  if (getRoles() != null) {
+    baseRoles.addAll(getRoles());
+    totalRoles.addAll(getRoles());
+  }
+  log.debug("User's base roles: " + baseRoles);
+  for (  Role r : baseRoles) {
+    totalRoles.addAll(r.getAllParentRoles());
+  }
+  return totalRoles;
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  PatientIdentifierType patientIdentifierType=(PatientIdentifierType)session.get(PatientIdentifierType.class,patientIdentifierTypeId);
+  return patientIdentifierType;
+}

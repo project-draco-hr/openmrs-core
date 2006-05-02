@@ -1,0 +1,87 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST arden_version_slot_AST=null;
+  try {
+switch (LA(1)) {
+case LITERAL_arden:
+{
+        AST tmp77_AST=null;
+        tmp77_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp77_AST);
+        match(LITERAL_arden);
+        AST tmp78_AST=null;
+        tmp78_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp78_AST);
+        match(COLON);
+{
+switch (LA(1)) {
+case 78:
+{
+{
+                AST tmp79_AST=null;
+                tmp79_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp79_AST);
+                match(78);
+                AST tmp80_AST=null;
+                tmp80_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp80_AST);
+                match(INTLIT);
+                AST tmp81_AST=null;
+                tmp81_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp81_AST);
+                match(MINUS);
+                AST tmp82_AST=null;
+                tmp82_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp82_AST);
+                match(INTLIT);
+              }
+              break;
+            }
+case LITERAL_version:
+{
+{
+              AST tmp83_AST=null;
+              tmp83_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp83_AST);
+              match(LITERAL_version);
+              version_num();
+              astFactory.addASTChild(currentAST,returnAST);
+            }
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+    }
+  }
+  AST tmp84_AST=null;
+  tmp84_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp84_AST);
+  match(ENDBLOCK);
+  arden_version_slot_AST=(AST)currentAST.root;
+  break;
+}
+case LITERAL_version:
+{
+arden_version_slot_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_7);
+}
+ else {
+throw ex;
+}
+}
+returnAST=arden_version_slot_AST;
+}

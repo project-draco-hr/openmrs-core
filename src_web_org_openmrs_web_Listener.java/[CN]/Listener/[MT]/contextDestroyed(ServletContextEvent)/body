@@ -1,0 +1,23 @@
+{
+  try {
+    Enumeration drivers=DriverManager.getDrivers();
+    while (drivers.hasMoreElements()) {
+      Driver o=(Driver)drivers.nextElement();
+      if (doesClassLoaderMatch(o)) {
+        try {
+          DriverManager.deregisterDriver(o);
+        }
+ catch (        SQLException e) {
+          throw new RuntimeException(e);
+        }
+      }
+ else {
+      }
+    }
+  }
+ catch (  Throwable e) {
+  }
+  LogFactory.releaseAll();
+  SchedulerUtil.shutdown();
+  HibernateUtil.shutdown();
+}

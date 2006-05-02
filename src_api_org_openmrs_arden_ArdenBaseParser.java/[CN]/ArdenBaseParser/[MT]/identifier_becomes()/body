@@ -1,0 +1,107 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST identifier_becomes_AST=null;
+  try {
+switch (LA(1)) {
+case ID:
+{
+        identifier_or_object_ref();
+        astFactory.addASTChild(currentAST,returnAST);
+        match(BECOMES);
+        identifier_becomes_AST=(AST)currentAST.root;
+        break;
+      }
+case LET:
+{
+      match(LET);
+{
+switch (LA(1)) {
+case LPAREN:
+{
+            match(LPAREN);
+            break;
+          }
+case ID:
+{
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(LT(1),getFilename());
+      }
+  }
+}
+AST tmp283_AST=null;
+tmp283_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp283_AST);
+match(ID);
+{
+  _loop140:   do {
+    if ((LA(1) == COMMA)) {
+      AST tmp284_AST=null;
+      tmp284_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp284_AST);
+      match(COMMA);
+      AST tmp285_AST=null;
+      tmp285_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp285_AST);
+      match(ID);
+    }
+ else {
+      break _loop140;
+    }
+  }
+ while (true);
+}
+{
+switch (LA(1)) {
+case RPAREN:
+{
+      match(RPAREN);
+      break;
+    }
+case BE:
+{
+    break;
+  }
+default :
+{
+  throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+match(BE);
+identifier_becomes_AST=(AST)currentAST.root;
+break;
+}
+case NOW:
+{
+AST tmp288_AST=null;
+tmp288_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp288_AST);
+match(NOW);
+AST tmp289_AST=null;
+tmp289_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp289_AST);
+match(BECOMES);
+identifier_becomes_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_35);
+}
+ else {
+throw ex;
+}
+}
+returnAST=identifier_becomes_AST;
+}

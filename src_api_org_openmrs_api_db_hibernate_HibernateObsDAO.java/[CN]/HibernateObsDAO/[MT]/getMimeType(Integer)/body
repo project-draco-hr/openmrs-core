@@ -1,0 +1,6 @@
+{
+  Session session=HibernateUtil.currentSession();
+  MimeType mimeType=new MimeType();
+  mimeType=(MimeType)session.get(MimeType.class,mimeTypeId);
+  return mimeType;
+}

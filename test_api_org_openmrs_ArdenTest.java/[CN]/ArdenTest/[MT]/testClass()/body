@@ -1,0 +1,11 @@
+{
+  HibernateUtil.startup();
+  Context context=ContextFactory.getContext();
+  context.authenticate("vibha","chicachica");
+  Locale locale=context.getLocale();
+  Patient patient=new Patient();
+  patient.setPatientId(1);
+  MLMObject ardObj=new MLMObject(context,locale,patient);
+  RunTest("test/arden test/HiRiskLeadScreen.mlm",ardObj);
+  HibernateUtil.shutdown();
+}

@@ -1,0 +1,22 @@
+{
+  Map addedData=new HashMap();
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  ReportService rs=context.getReportService();
+  Set<String> availableTypes=rs.getReportObjectTypes();
+  addedData.put("availableTypes",availableTypes.iterator());
+  String selectedType=RequestUtils.getStringParameter(request,"type","");
+  if (selectedType.length() > 0) {
+    Set<String> availableSubTypes=rs.getReportObjectSubTypes(selectedType);
+    addedData.put("availableSubTypes",availableSubTypes.iterator());
+  }
+  Map extendedObjectInfo=new HashMap();
+  for (  Field field : obj.getClass().getDeclaredFields()) {
+    String fieldName=field.getName();
+    Method m=obj.getClass().getMethod("get" + fieldName.substring(0,1).toUpperCase() + fieldName.substring(1),null);
+    Object fieldObj=m.invoke(obj,null);
+    extendedObjectInfo.put(fieldName,fieldObj);
+  }
+  addedData.put("extendedObjectInfo",extendedObjectInfo);
+  return addedData;
+}

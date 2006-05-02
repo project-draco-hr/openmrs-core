@@ -1,0 +1,10 @@
+{
+  Session session=HibernateUtil.currentSession();
+  try {
+    if (user != null)     user=(User)session.merge(user);
+  }
+ catch (  Exception e) {
+    log.debug("Possible attempted locking of user to double open session or: " + e.getMessage());
+  }
+  return user;
+}

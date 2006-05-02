@@ -1,0 +1,18 @@
+{
+  if (field.getFieldId() == null)   createField(field);
+ else {
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      field.setChangedBy(context.getAuthenticatedUser());
+      field.setDateChanged(new Date());
+      session.clear();
+      session.merge(field);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
+    }
+  }
+}

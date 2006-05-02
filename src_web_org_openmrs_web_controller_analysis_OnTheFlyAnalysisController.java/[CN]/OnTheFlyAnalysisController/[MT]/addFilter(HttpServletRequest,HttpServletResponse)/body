@@ -1,0 +1,72 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
+    response.sendRedirect(request.getContextPath() + "/logout");
+    return null;
+  }
+  log.debug("Entering addFilter()...");
+  ReportService reportService=context.getReportService();
+  PatientAnalysis analysis=(PatientAnalysis)httpSession.getAttribute(ON_THE_FLY_ANALYSIS_ATTR);
+  if (analysis == null) {
+    log.debug("creating new PatientAnalysis");
+    analysis=new PatientAnalysis();
+    httpSession.setAttribute(ON_THE_FLY_ANALYSIS_ATTR,analysis);
+  }
+  String[] idsToAdd=request.getParameterValues("patient_filter_id");
+  if (idsToAdd != null) {
+    for (    String patientFilterId : idsToAdd) {
+      log.debug("trying to add anonymous filter " + patientFilterId);
+      try {
+        PatientFilter pf=reportService.getPatientFilterById(new Integer(patientFilterId));
+        analysis.addFilter(null,pf);
+        log.debug("added");
+      }
+ catch (      NumberFormatException ex) {
+      }
+    }
+  }
+  String nameToAdd=request.getParameter("patient_filter_name");
+  if (nameToAdd != null) {
+    String addAsKey=request.getParameter("patient_filter_key");
+    ShortcutOptionSpec opt=new ShortcutOptionSpec();
+    if (request.getParameter("filter_spec") != null) {
+      opt.setValue(request.getParameter("filter_spec"));
+    }
+ else {
+      opt.setValue(nameToAdd);
+    }
+    log.debug("trying to add filter " + opt + " as key "+ addAsKey);
+    PatientFilter pf=null;
+    if (!opt.isConcrete()) {
+      try {
+        Class filterClass=Class.forName(opt.getClassName());
+        log.debug("about to call newInstance on " + filterClass);
+        PatientFilter filterInstance=(PatientFilter)filterClass.newInstance();
+        log.debug("result is " + filterInstance);
+        for (        String argName : opt.getAllArgs()) {
+          String argVal=request.getParameter(argName);
+          log.debug("about to set " + argName + " to "+ argVal);
+          PropertyDescriptor pd=new PropertyDescriptor(argName,filterClass);
+          pd.getWriteMethod().invoke(filterInstance,argVal);
+        }
+        pf=filterInstance;
+      }
+ catch (      Exception ex) {
+        log.error(ex);
+      }
+    }
+ else {
+      pf=reportService.getPatientFilterByName(nameToAdd);
+    }
+    if (pf != null) {
+      log.debug("adding filter " + pf + " to analysis");
+      analysis.addFilter(addAsKey,pf);
+    }
+ else {
+      log.warn("Can't find filter by that name: " + nameToAdd);
+    }
+  }
+  return new ModelAndView(new RedirectView("analysis.list"));
+}

@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Tribe tribe=null;
+  if (context != null && context.isAuthenticated()) {
+    PatientService ps=context.getPatientService();
+    String tribeId=request.getParameter("tribeId");
+    if (tribeId != null)     tribe=ps.getTribe(Integer.valueOf(tribeId));
+  }
+  if (tribe == null)   tribe=new Tribe();
+  return tribe;
+}

@@ -1,0 +1,26 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Role role=(Role)obj;
+  if (context != null && context.isAuthenticated()) {
+    log.debug("Editing Role: " + role.getRole());
+    String[] inheritedRoles=request.getParameterValues("inheritedRoles");
+    Set<Role> inheritedRoleObjs=new HashSet<Role>();
+    if (inheritedRoles != null) {
+      for (      String r : inheritedRoles) {
+        Role tmprole=context.getUserService().getRole(r);
+        inheritedRoleObjs.add(tmprole);
+      }
+    }
+    role.setInheritedRoles(inheritedRoleObjs);
+    String[] privs=request.getParameterValues("privileges");
+    Set<Privilege> privObjs=new HashSet<Privilege>();
+    if (privs != null) {
+      for (      String p : privs) {
+        privObjs.add(new Privilege(p));
+      }
+    }
+    role.setPrivileges(privObjs);
+  }
+  return super.processFormSubmission(request,response,role,errors);
+}

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List<TaskConfig> tasks=session.createCriteria(TaskConfig.class).list();
+  return tasks;
+}

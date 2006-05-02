@@ -1,0 +1,14 @@
+{
+  Session session=HibernateUtil.currentSession();
+  cd.setCreator(context.getAuthenticatedUser());
+  cd.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(cd);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

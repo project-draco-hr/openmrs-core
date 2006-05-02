@@ -1,0 +1,9 @@
+{
+  PatientSetService patientSetService=context.getPatientSetService();
+  Map<Integer,List<Obs>> temp=patientSetService.getObservations(patients,concept);
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  for (  Map.Entry<Integer,List<Obs>> e : temp.entrySet()) {
+    ret.put(e.getKey(),e.getValue());
+  }
+  return ret;
+}

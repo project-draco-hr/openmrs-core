@@ -1,0 +1,16 @@
+{
+  if (context != null) {
+    FormService ps=context.getFormService();
+    if (StringUtils.hasText(text)) {
+      try {
+        setValue(ps.getForm(Integer.valueOf(text)));
+      }
+ catch (      Exception ex) {
+        throw new IllegalArgumentException("Form not found: " + ex.getMessage());
+      }
+    }
+ else {
+      setValue(null);
+    }
+  }
+}

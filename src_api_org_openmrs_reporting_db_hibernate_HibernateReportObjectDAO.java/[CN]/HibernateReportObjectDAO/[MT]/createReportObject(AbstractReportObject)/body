@@ -1,0 +1,15 @@
+{
+  Session session=HibernateUtil.currentSession();
+  reportObj.setCreator(context.getAuthenticatedUser());
+  reportObj.setDateCreated(new Date());
+  ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(wrappedReportObject);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

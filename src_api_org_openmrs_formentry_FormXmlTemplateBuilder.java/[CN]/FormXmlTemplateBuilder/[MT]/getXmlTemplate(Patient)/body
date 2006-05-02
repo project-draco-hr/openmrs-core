@@ -1,0 +1,30 @@
+{
+  if (xmlTemplate != null)   return xmlTemplate;
+  try {
+    Velocity.init();
+  }
+ catch (  Exception e) {
+    log.error("Error initializing Velocity engine",e);
+  }
+  VelocityContext velocityContext=new VelocityContext();
+  if (patient != null) {
+    velocityContext.put("patient",patient);
+    velocityContext.put("timestamp",new SimpleDateFormat("yyyyMMdd'T'HH:mm:ss.SSSZ"));
+    velocityContext.put("date",new SimpleDateFormat("yyyyMMdd"));
+    velocityContext.put("time",new SimpleDateFormat("HH:mm:ss"));
+  }
+  StringBuffer xml=new StringBuffer();
+  xml.append(FormXmlTemplateFragment.header(form.getName(),form.getInfoPathSolutionVersion(),url));
+  User user=null;
+  Date date=null;
+  if (patient != null) {
+    user=context.getAuthenticatedUser();
+    date=new Date();
+  }
+  xml.append(FormXmlTemplateFragment.openForm(form.getFormId(),form.getName(),form.getVersion(),form.getSchemaNamespace(),user,date));
+  TreeMap<Integer,TreeSet<FormField>> formStructure=FormUtil.getFormStructure(context,form);
+  renderStructure(xml,formStructure,velocityContext,0,2);
+  xml.append(FormXmlTemplateFragment.closeForm());
+  xmlTemplate=xml.toString();
+  return xmlTemplate;
+}

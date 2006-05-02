@@ -1,0 +1,13 @@
+{
+  Session session=HibernateUtil.currentSession();
+  hl7InArchive.setDateCreated(new Date());
+  try {
+    HibernateUtil.beginTransaction();
+    session.save(hl7InArchive);
+    HibernateUtil.commitTransaction();
+  }
+ catch (  Exception e) {
+    HibernateUtil.rollbackTransaction();
+    throw new DAOException(e);
+  }
+}

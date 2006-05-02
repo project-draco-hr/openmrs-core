@@ -1,0 +1,8 @@
+{
+  boolean hasA=context.hasPrivilege(privilegeA);
+  boolean hasB=context.hasPrivilege(privilegeB);
+  if (!hasA && !hasB) {
+    if (!hasA)     throw new APIAuthenticationException("Privilege required: " + privilegeA);
+ else     throw new APIAuthenticationException("Privilege required: " + privilegeB);
+  }
+}

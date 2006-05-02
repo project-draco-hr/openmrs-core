@@ -1,0 +1,13 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Map<Role,Boolean> roleList=new LinkedHashMap<Role,Boolean>();
+  if (context != null && context.isAuthenticated()) {
+    UserService us=context.getUserService();
+    for (    Role r : us.getRoles()) {
+      if (OpenmrsConstants.CORE_ROLES().contains(r.getRole()))       roleList.put(r,true);
+ else       roleList.put(r,false);
+    }
+  }
+  return roleList;
+}

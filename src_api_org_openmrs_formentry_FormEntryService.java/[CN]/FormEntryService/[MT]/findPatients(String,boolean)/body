@@ -1,0 +1,11 @@
+{
+  List<Patient> patients;
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  try {
+    patients=getPatientService().findPatients(query,includeVoided);
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  }
+  return patients;
+}

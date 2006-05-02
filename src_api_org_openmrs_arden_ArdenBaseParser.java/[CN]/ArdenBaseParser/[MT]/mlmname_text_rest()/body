@@ -1,0 +1,113 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST mlmname_text_rest_AST=null;
+  try {
+switch (LA(1)) {
+case LITERAL_arden:
+case LITERAL_version:
+{
+        mlmname_text_rest_AST=(AST)currentAST.root;
+        break;
+      }
+case DOT:
+{
+      AST tmp153_AST=null;
+      tmp153_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp153_AST);
+      match(DOT);
+{
+        _loop18:         do {
+          if ((_tokenSet_4.member(LA(1)))) {
+            text();
+            astFactory.addASTChild(currentAST,returnAST);
+          }
+ else {
+            break _loop18;
+          }
+        }
+ while (true);
+      }
+      AST tmp154_AST=null;
+      tmp154_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp154_AST);
+      match(ENDBLOCK);
+      mlmname_text_rest_AST=(AST)currentAST.root;
+      break;
+    }
+case MINUS:
+{
+    AST tmp155_AST=null;
+    tmp155_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp155_AST);
+    match(MINUS);
+{
+      _loop20:       do {
+        if ((_tokenSet_4.member(LA(1)))) {
+          text();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop20;
+        }
+      }
+ while (true);
+    }
+    AST tmp156_AST=null;
+    tmp156_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp156_AST);
+    match(ENDBLOCK);
+    mlmname_text_rest_AST=(AST)currentAST.root;
+    break;
+  }
+case UNDERSCORE:
+{
+  AST tmp157_AST=null;
+  tmp157_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp157_AST);
+  match(UNDERSCORE);
+{
+    _loop22:     do {
+      if ((_tokenSet_4.member(LA(1)))) {
+        text();
+        astFactory.addASTChild(currentAST,returnAST);
+      }
+ else {
+        break _loop22;
+      }
+    }
+ while (true);
+  }
+  AST tmp158_AST=null;
+  tmp158_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp158_AST);
+  match(ENDBLOCK);
+  mlmname_text_rest_AST=(AST)currentAST.root;
+  break;
+}
+case ENDBLOCK:
+{
+AST tmp159_AST=null;
+tmp159_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp159_AST);
+match(ENDBLOCK);
+mlmname_text_rest_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_6);
+}
+ else {
+throw ex;
+}
+}
+returnAST=mlmname_text_rest_AST;
+}

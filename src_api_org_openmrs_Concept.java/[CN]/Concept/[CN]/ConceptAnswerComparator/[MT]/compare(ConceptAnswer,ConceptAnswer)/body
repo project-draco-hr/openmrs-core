@@ -1,0 +1,7 @@
+{
+  String n1=a1.getConcept().getName(locale).getName();
+  String n2=a2.getConcept().getName(locale).getName();
+  int c=n1.compareTo(n2);
+  if (c == 0)   c=a1.getConcept().getConceptId().compareTo(a2.getConcept().getConceptId());
+  return c;
+}

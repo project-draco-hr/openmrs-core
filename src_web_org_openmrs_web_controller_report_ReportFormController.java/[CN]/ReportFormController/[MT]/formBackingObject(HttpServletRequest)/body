@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Report report=null;
+  if (context != null && context.isAuthenticated()) {
+    ReportService rs=context.getReportService();
+    String reportId=request.getParameter("reportId");
+    if (reportId != null)     report=rs.getReport(Integer.valueOf(reportId));
+  }
+  if (report == null)   report=new Report();
+  return report;
+}

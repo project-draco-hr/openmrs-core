@@ -1,0 +1,7 @@
+{
+  if (this.role.equals(OpenmrsConstants.SUPERUSER_ROLE))   return true;
+  for (  Privilege p : privileges) {
+    if (p.getPrivilege().equals(s))     return true;
+  }
+  return false;
+}

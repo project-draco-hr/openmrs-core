@@ -1,0 +1,30 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST keywords_slot_AST=null;
+  try {
+    AST tmp114_AST=null;
+    tmp114_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp114_AST);
+    match(LITERAL_keywords);
+    AST tmp115_AST=null;
+    tmp115_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp115_AST);
+    match(COLON);
+{
+      keyword_text();
+      astFactory.addASTChild(currentAST,returnAST);
+    }
+    keywords_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_15);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=keywords_slot_AST;
+}

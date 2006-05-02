@@ -1,0 +1,10 @@
+{
+  if (xml != null) {
+    ReportObjectXMLDecoder roxd=new ReportObjectXMLDecoder(this.xml);
+    AbstractReportObject reportObj=(AbstractReportObject)roxd.toAbstractReportObject();
+    return reportObj;
+  }
+ else {
+    return null;
+  }
+}

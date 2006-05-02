@@ -1,0 +1,14 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  String view=getFormView();
+  if (context != null && context.isAuthenticated()) {
+    Field field=(Field)obj;
+    field=setObjects(field,request);
+    context.getFormService().updateField(field);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Field.saved");
+    view=view + "?phrase=" + request.getParameter("phrase");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

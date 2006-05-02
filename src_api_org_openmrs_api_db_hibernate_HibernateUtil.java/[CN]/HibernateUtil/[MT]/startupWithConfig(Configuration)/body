@@ -1,0 +1,26 @@
+{
+  try {
+    log.debug("Loading /hibernate.default.properties");
+    InputStream propertyStream=ConfigHelper.getResourceAsStream("/hibernate.default.properties");
+    Properties props=new Properties();
+    props.load(propertyStream);
+    propertyStream.close();
+    cfg.mergeProperties(props);
+    cfg.configure();
+    if (log.isDebugEnabled()) {
+      Properties ps=cfg.getProperties();
+      for (      Object key : ps.keySet()) {
+        String prop=(String)key;
+        String value=(String)ps.get(key);
+        log.debug("hibernate properties: " + prop + ":"+ value);
+      }
+    }
+    log.debug("Creating sessionFactory");
+    sessionFactory=cfg.buildSessionFactory();
+  }
+ catch (  Throwable ex) {
+    log.error("Initial sessionFactory creation failed." + ex);
+    throw new ExceptionInInitializerError(ex);
+  }
+  checkDatabaseVersion();
+}
