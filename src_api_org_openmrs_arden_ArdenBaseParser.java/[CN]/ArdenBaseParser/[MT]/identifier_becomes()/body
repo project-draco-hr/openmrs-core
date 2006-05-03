@@ -32,20 +32,20 @@ default :
       }
   }
 }
-AST tmp283_AST=null;
-tmp283_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp283_AST);
+AST tmp284_AST=null;
+tmp284_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp284_AST);
 match(ID);
 {
   _loop140:   do {
     if ((LA(1) == COMMA)) {
-      AST tmp284_AST=null;
-      tmp284_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp284_AST);
-      match(COMMA);
       AST tmp285_AST=null;
       tmp285_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp285_AST);
+      match(COMMA);
+      AST tmp286_AST=null;
+      tmp286_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp286_AST);
       match(ID);
     }
  else {
@@ -77,13 +77,13 @@ break;
 }
 case NOW:
 {
-AST tmp288_AST=null;
-tmp288_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp288_AST);
-match(NOW);
 AST tmp289_AST=null;
 tmp289_AST=astFactory.create(LT(1));
 astFactory.addASTChild(currentAST,tmp289_AST);
+match(NOW);
+AST tmp290_AST=null;
+tmp290_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp290_AST);
 match(BECOMES);
 identifier_becomes_AST=(AST)currentAST.root;
 break;

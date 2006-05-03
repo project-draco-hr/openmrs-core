@@ -3,27 +3,27 @@
   ASTPair currentAST=new ASTPair();
   AST action_slot_AST=null;
   try {
-    AST tmp140_AST=null;
-    tmp140_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp140_AST);
+    AST tmp141_AST=null;
+    tmp141_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp141_AST);
     match(ACTION);
     match(COLON);
 {
-      _loop232:       do {
+      _loop233:       do {
         if ((LA(1) == WRITE)) {
           action_statement();
           astFactory.addASTChild(currentAST,returnAST);
           match(SEMI);
         }
  else {
-          break _loop232;
+          break _loop233;
         }
       }
  while (true);
     }
-    AST tmp143_AST=null;
-    tmp143_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp143_AST);
+    AST tmp144_AST=null;
+    tmp144_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp144_AST);
     match(ENDBLOCK);
     action_slot_AST=(AST)currentAST.root;
   }

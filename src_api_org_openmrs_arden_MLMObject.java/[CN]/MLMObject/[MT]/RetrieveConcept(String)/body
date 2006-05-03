@@ -3,8 +3,9 @@
   MLMObjectElement mObjElem=GetMLMObjectElement(key);
   if (mObjElem != null) {
     mObjElem.setServicesContext(context.getConceptService(),context.getObsService());
-    mObjElem.getConceptForPatient(locale,patient);
-    retVal=mObjElem.evaluateEquals(true);
+    if (mObjElem.getDBAccessRequired()) {
+      retVal=mObjElem.getConceptForPatient(locale,patient);
+    }
   }
   return retVal;
 }

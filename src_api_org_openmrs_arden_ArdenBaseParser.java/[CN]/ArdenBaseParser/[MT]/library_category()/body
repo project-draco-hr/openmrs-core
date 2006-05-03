@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST library_category_AST=null;
   try {
-    AST tmp66_AST=null;
-    tmp66_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp66_AST);
-    match(LITERAL_library);
     AST tmp67_AST=null;
     tmp67_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp67_AST);
+    match(LITERAL_library);
+    AST tmp68_AST=null;
+    tmp68_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp68_AST);
     match(COLON);
     library_body();
     astFactory.addASTChild(currentAST,returnAST);

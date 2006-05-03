@@ -11,19 +11,19 @@ case LITERAL_end:
       }
 case LITERAL_urgency:
 {
-      AST tmp144_AST=null;
-      tmp144_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp144_AST);
-      match(LITERAL_urgency);
       AST tmp145_AST=null;
       tmp145_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp145_AST);
-      match(COLON);
-      urgency_val();
-      astFactory.addASTChild(currentAST,returnAST);
+      match(LITERAL_urgency);
       AST tmp146_AST=null;
       tmp146_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp146_AST);
+      match(COLON);
+      urgency_val();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp147_AST=null;
+      tmp147_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp147_AST);
       match(ENDBLOCK);
       urgency_slot_AST=(AST)currentAST.root;
       break;

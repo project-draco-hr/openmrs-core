@@ -6,8 +6,8 @@
       MessageService messageService=context.getMessageService();
       String recipients=NotificationConstants.FEEDBACK_EMAIL_ADDRESS;
       if (subject == null || subject.equals(""))       subject=NotificationConstants.FEEDBACK_EMAIL_SUBJECT;
-      String referer=request.getHeader("referer");
-      String userName="an 'Anonymous User'";
+      String referer=request.getPathTranslated();
+      String userName="an Anonymous User";
       if (context.isAuthenticated())       userName=context.getAuthenticatedUser().getFirstName() + " " + context.getAuthenticatedUser().getLastName();
       content+="\n\n This email sent from: " + referer + " by: "+ userName;
       messageService.send(recipients,sender,subject,content);

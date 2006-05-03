@@ -1,7 +1,5 @@
 {
   Session session=HibernateUtil.currentSession();
-  formField.setCreator(context.getAuthenticatedUser());
-  formField.setDateCreated(new Date());
   try {
     HibernateUtil.beginTransaction();
     session.clear();

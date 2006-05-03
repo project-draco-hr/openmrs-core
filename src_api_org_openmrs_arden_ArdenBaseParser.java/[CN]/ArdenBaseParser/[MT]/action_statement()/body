@@ -4,9 +4,9 @@
   AST action_statement_AST=null;
   try {
 {
-      AST tmp420_AST=null;
-      tmp420_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp420_AST);
+      AST tmp423_AST=null;
+      tmp423_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp423_AST);
       match(WRITE);
     }
 {
@@ -56,17 +56,17 @@ default :
 }
 }
 {
-_loop239: do {
+_loop240: do {
   if ((LA(1) == ACTION_OP)) {
-    AST tmp423_AST=null;
-    tmp423_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp423_AST);
+    AST tmp426_AST=null;
+    tmp426_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp426_AST);
     match(ACTION_OP);
     expr_factor();
     astFactory.addASTChild(currentAST,returnAST);
   }
  else {
-    break _loop239;
+    break _loop240;
   }
 }
  while (true);
@@ -76,14 +76,14 @@ switch (LA(1)) {
 case AT:
 {
 {
-      AST tmp424_AST=null;
-      tmp424_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp424_AST);
+      AST tmp427_AST=null;
+      tmp427_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp427_AST);
       match(AT);
     }
-    AST tmp425_AST=null;
-    tmp425_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp425_AST);
+    AST tmp428_AST=null;
+    tmp428_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp428_AST);
     match(ID);
     break;
   }

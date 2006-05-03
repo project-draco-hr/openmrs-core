@@ -10,21 +10,21 @@
       priority_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LITERAL_priority)) {
-      AST tmp129_AST=null;
-      tmp129_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp129_AST);
-      match(LITERAL_priority);
       AST tmp130_AST=null;
       tmp130_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp130_AST);
-      match(COLON);
+      match(LITERAL_priority);
       AST tmp131_AST=null;
       tmp131_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp131_AST);
-      match(INTLIT);
+      match(COLON);
       AST tmp132_AST=null;
       tmp132_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp132_AST);
+      match(INTLIT);
+      AST tmp133_AST=null;
+      tmp133_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp133_AST);
       match(ENDBLOCK);
       priority_slot_AST=(AST)currentAST.root;
     }

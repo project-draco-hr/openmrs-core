@@ -1,0 +1,58 @@
+{
+  String s="";
+  AST concludeAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+{
+      AST __t372=_t;
+      AST tmp44_AST_in=(AST)_t;
+      match(_t,CONCLUDE);
+      _t=_t.getFirstChild();
+      if (key == "") {
+        a="tmp_conclude";
+        key=a;
+        obj.SetConceptVar(a);
+        obj.AddConcept(key);
+        obj.AddToEvaluateList(a);
+        obj.SetDBAccess(false,a);
+      }
+{
+        if (_t == null)         _t=ASTNULL;
+switch (_t.getType()) {
+case FALSE:
+{
+            AST tmp45_AST_in=(AST)_t;
+            match(_t,FALSE);
+            _t=_t.getNextSibling();
+            System.err.println("***CONCLUDE FALSE ");
+            obj.SetConcludeVal(false,key);
+            break;
+          }
+case TRUE:
+{
+          AST tmp46_AST_in=(AST)_t;
+          match(_t,TRUE);
+          _t=_t.getNextSibling();
+          System.err.println("***CONCLUDE TRUE ");
+          obj.SetConcludeVal(true,key);
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(_t);
+      }
+  }
+}
+_t=__t372;
+_t=_t.getNextSibling();
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

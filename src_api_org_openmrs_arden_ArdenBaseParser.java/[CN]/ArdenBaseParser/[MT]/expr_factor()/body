@@ -6,17 +6,17 @@
     expr_factor_atom();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop295:       do {
+      _loop296:       do {
         if ((LA(1) == DOT)) {
-          AST tmp398_AST=null;
-          tmp398_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp398_AST);
+          AST tmp401_AST=null;
+          tmp401_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp401_AST);
           match(DOT);
           expr_factor_atom();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop295;
+          break _loop296;
         }
       }
  while (true);
@@ -26,7 +26,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_57);
+      recover(ex,_tokenSet_56);
     }
  else {
       throw ex;

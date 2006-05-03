@@ -1,24 +1,15 @@
 {
-  if (form.isRetired() && form.getRetiredBy() == null) {
-    retireForm(form,form.getRetiredReason());
-  }
- else   if (!form.isRetired() && form.getRetiredBy() != null) {
-    unretireForm(form);
-  }
+  if (form.getFormId() == null)   createForm(form);
  else {
-    if (form.getFormId() == null)     createForm(form);
- else {
-      Session session=HibernateUtil.currentSession();
-      updateFormProperties(form);
-      try {
-        HibernateUtil.beginTransaction();
-        session.saveOrUpdate(form);
-        HibernateUtil.commitTransaction();
-      }
- catch (      Exception e) {
-        HibernateUtil.rollbackTransaction();
-        throw new DAOException(e);
-      }
+    Session session=HibernateUtil.currentSession();
+    try {
+      HibernateUtil.beginTransaction();
+      session.saveOrUpdate(form);
+      HibernateUtil.commitTransaction();
+    }
+ catch (    Exception e) {
+      HibernateUtil.rollbackTransaction();
+      throw new DAOException(e);
     }
   }
 }

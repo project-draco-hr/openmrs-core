@@ -4,8 +4,6 @@
     Session session=HibernateUtil.currentSession();
     try {
       HibernateUtil.beginTransaction();
-      field.setChangedBy(context.getAuthenticatedUser());
-      field.setDateChanged(new Date());
       session.clear();
       session.merge(field);
       HibernateUtil.commitTransaction();

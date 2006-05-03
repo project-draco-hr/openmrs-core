@@ -6,19 +6,19 @@
 switch (LA(1)) {
 case LITERAL_Any:
 {
-        AST tmp384_AST=null;
-        tmp384_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp384_AST);
-        match(LITERAL_Any);
         AST tmp385_AST=null;
         tmp385_AST=astFactory.create(LT(1));
         astFactory.addASTChild(currentAST,tmp385_AST);
-        match(LPAREN);
-        event_list();
-        astFactory.addASTChild(currentAST,returnAST);
+        match(LITERAL_Any);
         AST tmp386_AST=null;
         tmp386_AST=astFactory.create(LT(1));
         astFactory.addASTChild(currentAST,tmp386_AST);
+        match(LPAREN);
+        event_list();
+        astFactory.addASTChild(currentAST,returnAST);
+        AST tmp387_AST=null;
+        tmp387_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp387_AST);
         match(RPAREN);
         event_any_AST=(AST)currentAST.root;
         break;

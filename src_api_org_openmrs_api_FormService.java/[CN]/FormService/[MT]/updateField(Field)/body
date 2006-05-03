@@ -1,4 +1,5 @@
 {
   if (!context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_FORMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_FORMS);
+  updateFieldProperties(field);
   dao().updateField(field);
 }

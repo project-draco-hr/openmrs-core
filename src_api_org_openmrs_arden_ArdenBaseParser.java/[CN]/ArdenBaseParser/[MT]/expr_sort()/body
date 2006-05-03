@@ -6,24 +6,24 @@
     expr_where();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop252:       do {
+      _loop253:       do {
         if ((LA(1) == LITERAL_MERGE || LA(1) == LITERAL_SORT)) {
 {
 switch (LA(1)) {
 case LITERAL_MERGE:
 {
-                AST tmp427_AST=null;
-                tmp427_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp427_AST);
+                AST tmp430_AST=null;
+                tmp430_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp430_AST);
                 match(LITERAL_MERGE);
                 break;
               }
 case LITERAL_SORT:
 {
 {
-                AST tmp428_AST=null;
-                tmp428_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp428_AST);
+                AST tmp431_AST=null;
+                tmp431_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp431_AST);
                 match(LITERAL_SORT);
 {
 switch (LA(1)) {
@@ -36,7 +36,6 @@ case LITERAL_DATA:
                     }
 case THE:
 case AT:
-case LET:
 case NOW:
 case IF:
 case THEN:
@@ -85,7 +84,7 @@ expr_where();
 astFactory.addASTChild(currentAST,returnAST);
 }
  else {
-break _loop252;
+break _loop253;
 }
 }
  while (true);
@@ -95,7 +94,7 @@ expr_sort_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_60);
+recover(ex,_tokenSet_59);
 }
  else {
 throw ex;

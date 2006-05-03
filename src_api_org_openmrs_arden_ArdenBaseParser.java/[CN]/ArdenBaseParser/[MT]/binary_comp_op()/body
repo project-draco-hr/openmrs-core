@@ -4,69 +4,69 @@
   AST binary_comp_op_AST=null;
   try {
     if ((LA(1) == LESS)) {
-      AST tmp349_AST=null;
-      tmp349_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp349_AST);
-      match(LESS);
       AST tmp350_AST=null;
       tmp350_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp350_AST);
-      match(THAN);
-      binary_comp_op_AST=(AST)currentAST.root;
-    }
- else     if ((LA(1) == LITERAL_GREATER)) {
+      match(LESS);
       AST tmp351_AST=null;
       tmp351_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp351_AST);
-      match(LITERAL_GREATER);
-      AST tmp352_AST=null;
-      tmp352_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp352_AST);
       match(THAN);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LITERAL_GREATER)) {
+      AST tmp352_AST=null;
+      tmp352_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp352_AST);
+      match(LITERAL_GREATER);
       AST tmp353_AST=null;
       tmp353_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp353_AST);
-      match(LITERAL_GREATER);
+      match(THAN);
+      binary_comp_op_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == LITERAL_GREATER)) {
       AST tmp354_AST=null;
       tmp354_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp354_AST);
-      match(THAN);
+      match(LITERAL_GREATER);
       AST tmp355_AST=null;
       tmp355_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp355_AST);
-      match(OR);
+      match(THAN);
       AST tmp356_AST=null;
       tmp356_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp356_AST);
+      match(OR);
+      AST tmp357_AST=null;
+      tmp357_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp357_AST);
       match(LITERAL_EQUAL);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LESS)) {
-      AST tmp357_AST=null;
-      tmp357_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp357_AST);
-      match(LESS);
       AST tmp358_AST=null;
       tmp358_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp358_AST);
-      match(THAN);
+      match(LESS);
       AST tmp359_AST=null;
       tmp359_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp359_AST);
-      match(OR);
+      match(THAN);
       AST tmp360_AST=null;
       tmp360_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp360_AST);
+      match(OR);
+      AST tmp361_AST=null;
+      tmp361_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp361_AST);
       match(LITERAL_EQUAL);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == IN)) {
-      AST tmp361_AST=null;
-      tmp361_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp361_AST);
+      AST tmp362_AST=null;
+      tmp362_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp362_AST);
       match(IN);
       binary_comp_op_AST=(AST)currentAST.root;
     }

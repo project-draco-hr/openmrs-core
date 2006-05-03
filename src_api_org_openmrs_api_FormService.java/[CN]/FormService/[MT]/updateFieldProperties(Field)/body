@@ -1,0 +1,8 @@
+{
+  if (field.getCreator() == null) {
+    field.setCreator(context.getAuthenticatedUser());
+    field.setDateCreated(new Date());
+  }
+  field.setChangedBy(context.getAuthenticatedUser());
+  field.setDateChanged(new Date());
+}

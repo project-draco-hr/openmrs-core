@@ -11,20 +11,20 @@ case EOF:
       }
 case ID:
 {
-      AST tmp331_AST=null;
-      tmp331_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp331_AST);
+      AST tmp332_AST=null;
+      tmp332_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp332_AST);
       match(ID);
 {
         _loop150:         do {
           if ((LA(1) == COMMA)) {
-            AST tmp332_AST=null;
-            tmp332_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp332_AST);
-            match(COMMA);
             AST tmp333_AST=null;
             tmp333_AST=astFactory.create(LT(1));
             astFactory.addASTChild(currentAST,tmp333_AST);
+            match(COMMA);
+            AST tmp334_AST=null;
+            tmp334_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp334_AST);
             match(ID);
           }
  else {

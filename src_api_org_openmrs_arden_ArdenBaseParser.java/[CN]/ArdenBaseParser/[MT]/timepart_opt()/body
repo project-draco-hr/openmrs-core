@@ -17,8 +17,6 @@ case BEFORE:
 case AFTER:
 case AGO:
 case AT:
-case LET:
-case NOW:
 case YEAR:
 case YEARS:
 case IF:
@@ -91,9 +89,9 @@ case LITERAL_t:
         timepart();
         astFactory.addASTChild(currentAST,returnAST);
       }
-      AST tmp225_AST=null;
-      tmp225_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp225_AST);
+      AST tmp226_AST=null;
+      tmp226_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp226_AST);
       match(ENDBLOCK);
       timepart_opt_AST=(AST)currentAST.root;
       break;

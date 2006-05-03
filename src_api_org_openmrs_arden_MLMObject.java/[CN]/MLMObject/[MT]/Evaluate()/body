@@ -1,0 +1,15 @@
+{
+  boolean retVal=false;
+  String key;
+  ListIterator<String> thisList=ifList.listIterator(0);
+  while (thisList.hasNext()) {
+    key=thisList.next();
+    if (RetrieveConcept(key)) {
+      PrintConcept(key);
+      if (EvaluateConcept(key)) {
+        break;
+      }
+    }
+  }
+  return retVal;
+}

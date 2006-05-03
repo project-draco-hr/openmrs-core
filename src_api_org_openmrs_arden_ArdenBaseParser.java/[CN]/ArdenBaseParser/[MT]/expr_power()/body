@@ -6,31 +6,31 @@
     expr_duration();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop287:       do {
+      _loop288:       do {
         if (((LA(1) >= FROM && LA(1) <= AFTER))) {
 {
 switch (LA(1)) {
 case BEFORE:
 {
-                AST tmp440_AST=null;
-                tmp440_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp440_AST);
+                AST tmp443_AST=null;
+                tmp443_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp443_AST);
                 match(BEFORE);
                 break;
               }
 case AFTER:
 {
-              AST tmp441_AST=null;
-              tmp441_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp441_AST);
+              AST tmp444_AST=null;
+              tmp444_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp444_AST);
               match(AFTER);
               break;
             }
 case FROM:
 {
-            AST tmp442_AST=null;
-            tmp442_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp442_AST);
+            AST tmp445_AST=null;
+            tmp445_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp445_AST);
             match(FROM);
             break;
           }
@@ -44,7 +44,7 @@ default :
   astFactory.addASTChild(currentAST,returnAST);
 }
  else {
-  break _loop287;
+  break _loop288;
 }
 }
  while (true);
@@ -53,9 +53,9 @@ default :
 switch (LA(1)) {
 case AGO:
 {
-  AST tmp443_AST=null;
-  tmp443_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp443_AST);
+  AST tmp446_AST=null;
+  tmp446_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp446_AST);
   match(AGO);
   break;
 }
@@ -66,8 +66,6 @@ case ARE:
 case WAS:
 case WERE:
 case AT:
-case LET:
-case NOW:
 case IF:
 case NOT:
 case OR:
@@ -126,7 +124,7 @@ expr_power_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_68);
+recover(ex,_tokenSet_67);
 }
  else {
 throw ex;
