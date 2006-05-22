@@ -4,47 +4,47 @@
   AST link_body_AST=null;
   try {
 {
-      _loop104:       do {
+      _loop107:       do {
         if ((LA(1) == SINGLE_QUOTE)) {
-          AST tmp264_AST=null;
-          tmp264_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp264_AST);
+          AST tmp274_AST=null;
+          tmp274_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp274_AST);
           match(SINGLE_QUOTE);
 {
-            _loop102:             do {
+            _loop105:             do {
               if ((_tokenSet_4.member(LA(1)))) {
                 text();
                 astFactory.addASTChild(currentAST,returnAST);
               }
  else               if ((LA(1) == DOT)) {
-                AST tmp265_AST=null;
-                tmp265_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp265_AST);
+                AST tmp275_AST=null;
+                tmp275_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp275_AST);
                 match(DOT);
               }
  else               if ((LA(1) == INTLIT)) {
-                AST tmp266_AST=null;
-                tmp266_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp266_AST);
+                AST tmp276_AST=null;
+                tmp276_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp276_AST);
                 match(INTLIT);
               }
  else {
-                break _loop102;
+                break _loop105;
               }
             }
  while (true);
           }
-          AST tmp267_AST=null;
-          tmp267_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp267_AST);
+          AST tmp277_AST=null;
+          tmp277_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp277_AST);
           match(SINGLE_QUOTE);
 {
 switch (LA(1)) {
 case SEMI:
 {
-                AST tmp268_AST=null;
-                tmp268_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp268_AST);
+                AST tmp278_AST=null;
+                tmp278_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp278_AST);
                 match(SEMI);
                 break;
               }
@@ -61,7 +61,7 @@ default :
     }
   }
  else {
-    break _loop104;
+    break _loop107;
   }
 }
  while (true);

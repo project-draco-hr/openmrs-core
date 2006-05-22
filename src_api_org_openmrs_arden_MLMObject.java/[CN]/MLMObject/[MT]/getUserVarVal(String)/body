@@ -1,0 +1,10 @@
+{
+  String retVal="";
+  if (userVarMapFinal.containsKey(key)) {
+    retVal=userVarMapFinal.get(key);
+  }
+ else   if (key.equals("firstname")) {
+    retVal=patient.getPatientName().getGivenName();
+  }
+  return retVal;
+}

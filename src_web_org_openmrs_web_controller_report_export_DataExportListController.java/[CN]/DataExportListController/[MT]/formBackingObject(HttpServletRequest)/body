@@ -1,0 +1,10 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Set<AbstractReportObject> reportList=new HashSet<AbstractReportObject>();
+  if (context != null && context.isAuthenticated()) {
+    ReportService rs=context.getReportService();
+    reportList=rs.getReportObjectsByType(DataExportReportObject.TYPE_NAME);
+  }
+  return reportList;
+}

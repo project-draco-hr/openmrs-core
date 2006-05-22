@@ -2,7 +2,7 @@
   Log log=LogFactory.getLog(this.getClass());
   try {
     FileInputStream propertyStream=null;
-    String webapp="@WEBAPP.NAME@";
+    String webapp=WebConstants.OPENMRS_WEBAPP_NAME;
     webapp=webapp.toUpperCase();
     String env=webapp + "_RUNTIME_PROPERTIES_FILE";
     String filepath=System.getenv(env);

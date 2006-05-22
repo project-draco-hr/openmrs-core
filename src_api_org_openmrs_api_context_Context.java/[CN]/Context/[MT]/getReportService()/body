@@ -3,6 +3,32 @@
     log.warn("unauthorized access to report service");
     return null;
   }
-  if (reportService == null)   reportService=new ReportService(this,getDaoContext(),(ReportObjectFactory)applicationContext.getBean("reportObjectFactory"));
+  if (reportService == null) {
+    List<ReportObjectFactoryModule> modules=new Vector<ReportObjectFactoryModule>();
+    ReportObjectFactoryModule module=new ReportObjectFactoryModule();
+    module.setName("PatientCharacteristicFilter");
+    module.setDisplayName("Patient Characteristic Filter");
+    module.setClassName("org.openmrs.reporting.PatientCharacteristicFilter");
+    module.setType("Patient Filter");
+    module.setValidatorClass("org.openmrs.reporting.PatientCharacteristicFilterValidator");
+    modules.add(module);
+    module=new ReportObjectFactoryModule();
+    module.setName("NumericObsPatientFilter");
+    module.setDisplayName("Numeric Observation Patient Filter");
+    module.setClassName("org.openmrs.reporting.NumericObsPatientFilter");
+    module.setType("Patient Filter");
+    module.setValidatorClass("org.openmrs.reporting.NumericObsPatientFilterValidator");
+    modules.add(module);
+    module=new ReportObjectFactoryModule();
+    module.setName("ShortDescriptionProducer");
+    module.setDisplayName("Short Description Producer");
+    module.setClassName("org.openmrs.reporting.ShortDescriptionProducer");
+    module.setType("Patient Data Producer");
+    module.setValidatorClass("org.openmrs.reporting.ShortDescriptionProducerValidator");
+    modules.add(module);
+    ReportObjectFactory factory=new ReportObjectFactory();
+    factory.setModules(modules);
+    reportService=new ReportService(this,getDaoContext(),factory);
+  }
   return reportService;
 }

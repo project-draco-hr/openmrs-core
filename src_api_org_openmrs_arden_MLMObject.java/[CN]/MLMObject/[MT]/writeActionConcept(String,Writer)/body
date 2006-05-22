@@ -1,0 +1,9 @@
+{
+  boolean retVal=false;
+  MLMObjectElement mObjElem=GetMLMObjectElement(key);
+  if (mObjElem != null) {
+    retVal=mObjElem.writeAction(key,w);
+    w.flush();
+  }
+  return retVal;
+}

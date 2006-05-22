@@ -15,9 +15,9 @@ switch (LA(1)) {
 case READ:
 {
 {
-                AST tmp271_AST=null;
-                tmp271_AST=astFactory.create(LT(1));
-                astFactory.makeASTRoot(currentAST,tmp271_AST);
+                AST tmp281_AST=null;
+                tmp281_AST=astFactory.create(LT(1));
+                astFactory.makeASTRoot(currentAST,tmp281_AST);
                 match(READ);
               }
 {
@@ -36,13 +36,13 @@ case READ:
 switch (LA(1)) {
 case INTLIT:
 {
-                            AST tmp272_AST=null;
-                            tmp272_AST=astFactory.create(LT(1));
-                            astFactory.addASTChild(currentAST,tmp272_AST);
+                            AST tmp282_AST=null;
+                            tmp282_AST=astFactory.create(LT(1));
+                            astFactory.addASTChild(currentAST,tmp282_AST);
                             match(INTLIT);
-                            AST tmp273_AST=null;
-                            tmp273_AST=astFactory.create(LT(1));
-                            astFactory.addASTChild(currentAST,tmp273_AST);
+                            AST tmp283_AST=null;
+                            tmp283_AST=astFactory.create(LT(1));
+                            astFactory.addASTChild(currentAST,tmp283_AST);
                             match(FROM);
                             break;
                           }
@@ -108,9 +108,9 @@ case LITERAL_within:
                     }
 case NOT:
 {
-                    AST tmp274_AST=null;
-                    tmp274_AST=astFactory.create(LT(1));
-                    astFactory.addASTChild(currentAST,tmp274_AST);
+                    AST tmp284_AST=null;
+                    tmp284_AST=astFactory.create(LT(1));
+                    astFactory.addASTChild(currentAST,tmp284_AST);
                     match(NOT);
                     temporal_comp_op();
                     astFactory.addASTChild(currentAST,returnAST);
@@ -162,9 +162,9 @@ case LITERAL_within:
         }
 case NOT:
 {
-        AST tmp276_AST=null;
-        tmp276_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp276_AST);
+        AST tmp286_AST=null;
+        tmp286_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp286_AST);
         match(NOT);
         temporal_comp_op();
         astFactory.addASTChild(currentAST,returnAST);
@@ -204,12 +204,36 @@ break;
 case EVENT:
 {
 {
-AST tmp278_AST=null;
-tmp278_AST=astFactory.create(LT(1));
-astFactory.makeASTRoot(currentAST,tmp278_AST);
+AST tmp288_AST=null;
+tmp288_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp288_AST);
 match(EVENT);
 }
 mapping_factor();
+astFactory.addASTChild(currentAST,returnAST);
+break;
+}
+case THE:
+case NOW:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case TRUE:
+case FALSE:
+case INTLIT:
+case SEMI:
+case ID:
+case COMMA:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case STRING_LITERAL:
+{
+expr();
 astFactory.addASTChild(currentAST,returnAST);
 break;
 }

@@ -1,0 +1,11 @@
+{
+  Map<Integer,List<Obs>> patientIdObsMap;
+  if (conceptObsMap.containsKey(c)) {
+    patientIdObsMap=conceptObsMap.get(c);
+  }
+ else {
+    patientIdObsMap=context.getPatientSetService().getObservations(patientSet,c);
+    conceptObsMap.put(c,patientIdObsMap);
+  }
+  return patientIdObsMap.get(patientId);
+}

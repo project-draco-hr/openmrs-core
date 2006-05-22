@@ -1,0 +1,41 @@
+{
+  String s="";
+  AST library_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a="", b="";
+  try {
+{
+      AST __t415=_t;
+      AST tmp71_AST_in=(AST)_t;
+      match(_t,LIBRARY);
+      _t=_t.getFirstChild();
+{
+        _loop417:         do {
+          if (_t == null)           _t=ASTNULL;
+          if (((_t.getType() >= AND && _t.getType() <= STRING_LITERAL))) {
+            a=textAST(_t,obj);
+            _t=_retTree;
+            s+=a;
+            AST tmp72_AST_in=(AST)_t;
+            match(_t,ENDBLOCK);
+            _t=_t.getNextSibling();
+            s+="\n";
+          }
+ else {
+            break _loop417;
+          }
+        }
+ while (true);
+      }
+      _t=__t415;
+      _t=_t.getNextSibling();
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

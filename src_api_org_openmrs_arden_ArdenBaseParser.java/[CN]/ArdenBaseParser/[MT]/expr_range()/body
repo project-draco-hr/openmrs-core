@@ -6,17 +6,17 @@
     expr_or();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop260:       do {
+      _loop264:       do {
         if ((LA(1) == LITERAL_SEQTO)) {
-          AST tmp435_AST=null;
-          tmp435_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp435_AST);
+          AST tmp445_AST=null;
+          tmp445_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp445_AST);
           match(LITERAL_SEQTO);
           expr_or();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop260;
+          break _loop264;
         }
       }
  while (true);
@@ -26,7 +26,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_62);
+      recover(ex,_tokenSet_64);
     }
  else {
       throw ex;

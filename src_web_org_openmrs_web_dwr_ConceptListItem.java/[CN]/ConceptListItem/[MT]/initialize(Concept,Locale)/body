@@ -4,9 +4,9 @@
     ConceptName cn=concept.getName(locale);
     name=shortName=description="";
     if (cn != null) {
-      name=escape(cn.getName());
-      shortName=escape(cn.getShortName());
-      description=escape(cn.getDescription());
+      name=WebUtil.escapeHTML(cn.getName());
+      shortName=WebUtil.escapeHTML(cn.getShortName());
+      description=WebUtil.escapeHTML(cn.getDescription());
     }
     synonym="";
     retired=concept.isRetired();

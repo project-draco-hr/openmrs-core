@@ -2,7 +2,6 @@
   Session session=HibernateUtil.currentSession();
   List<Alert> alerts=new Vector<Alert>();
   Criteria crit=session.createCriteria(Alert.class,"alert");
-  crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
   if (includeExpired == false)   crit.add(Expression.or(Expression.isNull("dateToExpire"),Expression.gt("dateToExpire",new Date())));
   crit.addOrder(Order.desc("dateChanged"));
   alerts=crit.list();

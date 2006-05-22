@@ -1,6 +1,6 @@
 {
   Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(Encounter.class).createAlias("patient","p").add(Expression.eq("p.patientId",patientId));
+  Criteria crit=session.createCriteria(Encounter.class).createAlias("patient","p").add(Expression.eq("p.patientId",patientId)).addOrder(Order.desc("encounterDatetime"));
   if (!includeVoided)   crit.add(Expression.eq("p.voided",false));
   return crit.list();
 }

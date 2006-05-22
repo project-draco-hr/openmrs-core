@@ -1,0 +1,27 @@
+{
+  boolean retVal=false;
+  if (!hasConclude) {
+    String var="", val="";
+    Iterator iter=iterator();
+    while (iter.hasNext()) {
+      var=(String)iter.next();
+      val=getUserVarVal(var);
+      w.append("\t\t//" + var + " = \""+ val+ "\"\n");
+      w.append("\t\tuserVarMap.put(\"" + var + "\", \""+ val+ "\");");
+    }
+    retVal=true;
+  }
+ else {
+    if (concludeVal == true) {
+      w.append("\t\tretVal = true;\n");
+    }
+ else     if (concludeVal == false) {
+      w.append("\t\tretVal = false;\n");
+    }
+ else {
+    }
+    w.append("\t\treturn retVal;\n");
+    retVal=true;
+  }
+  return retVal;
+}

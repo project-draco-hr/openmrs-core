@@ -6,11 +6,10 @@
   }
  catch (  IOException ioe) {
     try {
-      Alert alert=new Alert();
-      alert.setText("At " + new Date() + " there was an error reported connecting to the internet address "+ url+ ": "+ ioe);
-      alert.setRole(context.getUserService().getRole("System Developer"));
-      alert.setCreator(context.getUserService().getUserByUsername("admin"));
-      context.getAlertService().createAlert(alert);
+      String text="At " + new Date() + " there was an error reported connecting to the internet address "+ url+ ": "+ ioe;
+      Role role=context.getUserService().getRole("System Developer");
+      Collection<User> users=context.getUserService().getUsersByRole(role);
+      context.getAlertService().createAlert(text,users);
     }
  catch (    Exception e) {
       log.error(e);

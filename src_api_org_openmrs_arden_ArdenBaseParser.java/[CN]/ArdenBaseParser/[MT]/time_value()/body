@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case NOW:
 {
-        AST tmp339_AST=null;
-        tmp339_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp339_AST);
+        AST tmp350_AST=null;
+        tmp350_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp350_AST);
         match(NOW);
         time_value_AST=(AST)currentAST.root;
         break;
@@ -29,7 +29,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_45);
+recover(ex,_tokenSet_46);
 }
  else {
 throw ex;

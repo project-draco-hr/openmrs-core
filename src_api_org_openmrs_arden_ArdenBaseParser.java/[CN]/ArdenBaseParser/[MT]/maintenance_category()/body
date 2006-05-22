@@ -4,13 +4,10 @@
   AST maintenance_category_AST=null;
   try {
 {
-      AST tmp65_AST=null;
-      tmp65_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp65_AST);
-      match(LITERAL_maintenance);
-      AST tmp66_AST=null;
-      tmp66_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp66_AST);
+      AST tmp75_AST=null;
+      tmp75_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp75_AST);
+      match(MAINTENANCE);
       match(COLON);
     }
     maintenance_body();

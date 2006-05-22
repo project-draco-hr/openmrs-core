@@ -1,0 +1,17 @@
+{
+  Session session=HibernateUtil.currentSession();
+  log.debug("Getting alerts for user " + user + " read? "+ includeRead+ " expired? "+ includeExpired);
+  List<Alert> alerts=new Vector<Alert>();
+  Criteria crit=session.createCriteria(Alert.class,"alert");
+  crit.createCriteria("recipients","recipient");
+  if (user != null && user.getUserId() != null)   crit.add(Expression.eq("recipient.recipient",user));
+ else   crit.add(Expression.isNull("recipient.recipient"));
+  if (includeExpired == false)   crit.add(Expression.or(Expression.isNull("dateToExpire"),Expression.gt("dateToExpire",new Date())));
+  if (includeRead == false && user.getUserId() != null) {
+    crit.add(Expression.eq("alertRead",false));
+    crit.add(Expression.eq("recipient.alertRead",false));
+  }
+  crit.addOrder(Order.desc("dateChanged"));
+  alerts=crit.list();
+  return alerts;
+}

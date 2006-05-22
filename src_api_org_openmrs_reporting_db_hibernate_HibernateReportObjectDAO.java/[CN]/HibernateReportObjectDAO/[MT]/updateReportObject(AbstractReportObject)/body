@@ -5,7 +5,8 @@
     ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
     try {
       HibernateUtil.beginTransaction();
-      session.saveOrUpdate(wrappedReportObject);
+      wrappedReportObject=(ReportObjectWrapper)session.merge(wrappedReportObject);
+      session.update(wrappedReportObject);
       HibernateUtil.commitTransaction();
     }
  catch (    Exception e) {

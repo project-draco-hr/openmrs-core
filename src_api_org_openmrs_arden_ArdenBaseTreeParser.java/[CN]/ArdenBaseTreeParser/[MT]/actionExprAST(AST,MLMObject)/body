@@ -1,0 +1,25 @@
+{
+  String s="";
+  AST actionExprAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST id=null;
+  String a, b;
+  try {
+{
+{
+        id=(AST)_t;
+        match(_t,ID);
+        _t=_t.getNextSibling();
+        a=id.getText();
+        s=obj.getUserVarVal(a);
+      }
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

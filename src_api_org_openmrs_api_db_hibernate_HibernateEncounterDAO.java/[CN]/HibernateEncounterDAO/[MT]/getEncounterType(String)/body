@@ -1,0 +1,7 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Criteria crit=session.createCriteria(EncounterType.class);
+  crit.add(Expression.eq("name",name));
+  EncounterType encounterType=(EncounterType)crit.uniqueResult();
+  return encounterType;
+}

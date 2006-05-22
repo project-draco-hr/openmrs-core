@@ -1,0 +1,24 @@
+{
+  StringBuilder sb=new StringBuilder();
+  if (columns.size() >= 1) {
+    sb.append(columns.get(0).getTemplateColumnName());
+    for (int i=1; i < columns.size(); i++) {
+      sb.append("$!{fn.getSeparator()}");
+      sb.append(columns.get(i).getTemplateColumnName());
+    }
+  }
+  sb.append("\n");
+  sb.append("$!{fn.setPatientSet($patientSet)}");
+  sb.append("#foreach($patientId in $patientSet.patientIds)\n");
+  sb.append("$!{fn.setPatientId($patientId)}");
+  if (columns.size() >= 1) {
+    sb.append(columns.get(0).toTemplateString());
+    for (int i=1; i < columns.size(); i++) {
+      sb.append("$!{fn.getSeparator()}");
+      sb.append(columns.get(i).toTemplateString());
+    }
+  }
+ else   log.warn("Report has column size less than 1");
+  sb.append("\n#end\n\n");
+  return sb.toString();
+}

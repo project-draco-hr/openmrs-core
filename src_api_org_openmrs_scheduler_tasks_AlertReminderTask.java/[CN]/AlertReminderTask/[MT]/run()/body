@@ -4,10 +4,11 @@
     Collection<User> users=new HashSet<User>();
     Message message=context.getMessageService().create("Alert Reminder","You have unread alerts.");
     for (    Alert alert : alerts) {
-      log.debug("Send emailing email to alert recipient(s) ...");
-      if (alert.getUser() != null)       users.add(alert.getUser());
-      if (alert.getRole() != null) {
-        context.getUserService().getUsersByRole(alert.getRole());
+      log.debug("Send email to alert recipient(s) ...");
+      if (alert.isAlertRead() == false && alert.getRecipients() != null) {
+        for (        AlertRecipient recipient : alert.getRecipients()) {
+          if (recipient.isAlertRead() == false && recipient.getRecipient() != null)           users.add(recipient.getRecipient());
+        }
       }
     }
     context.getMessageService().send(message,users);

@@ -1,7 +1,12 @@
 {
   Session session=HibernateUtil.currentSession();
-  Query query=session.createQuery("select concept from Concept concept where concept.names.name like '%' || ? || '%'");
+  Query query=session.createQuery("select concept from Concept concept where concept.names.name = ?");
   query.setString(0,name);
   List<Concept> concepts=query.list();
-  return concepts;
+  int size=concepts.size();
+  if (size > 0) {
+    if (size > 1)     log.warn("Multiple concepts found for '" + name + "'");
+    return concepts.get(0);
+  }
+  return null;
 }

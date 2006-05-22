@@ -10,9 +10,9 @@
           astFactory.addASTChild(currentAST,returnAST);
         }
  else         if ((LA(1) == INTLIT)) {
-          AST tmp258_AST=null;
-          tmp258_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp258_AST);
+          AST tmp269_AST=null;
+          tmp269_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp269_AST);
           match(INTLIT);
         }
  else {
@@ -22,55 +22,147 @@
  while (true);
     }
 {
-      _loop96:       do {
-switch (LA(1)) {
-case COLON:
+      _loop99:       do {
+        if ((LA(1) == COLON)) {
+          AST tmp270_AST=null;
+          tmp270_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp270_AST);
+          match(COLON);
 {
-            AST tmp259_AST=null;
-            tmp259_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp259_AST);
-            match(COLON);
-{
-              _loop94:               do {
-                if ((_tokenSet_4.member(LA(1)))) {
-                  text();
-                  astFactory.addASTChild(currentAST,returnAST);
-                }
- else {
-                  break _loop94;
-                }
+            _loop94:             do {
+              if ((_tokenSet_4.member(LA(1)))) {
+                text();
+                astFactory.addASTChild(currentAST,returnAST);
               }
- while (true);
+ else {
+                break _loop94;
+              }
             }
-            break;
+ while (true);
           }
+{
+switch (LA(1)) {
+case MINUS:
+{
+                AST tmp271_AST=null;
+                tmp271_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp271_AST);
+                match(MINUS);
+                AST tmp272_AST=null;
+                tmp272_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp272_AST);
+                match(INTLIT);
+                break;
+              }
+case AND:
+case IS:
+case ARE:
+case WAS:
+case WERE:
+case COUNT:
+case IN:
+case LESS:
+case THE:
+case THAN:
+case FROM:
+case BEFORE:
+case AFTER:
+case AGO:
+case WRITE:
+case AT:
+case LET:
+case BE:
+case YEAR:
+case YEARS:
+case IF:
+case IT:
+case THEY:
+case NOT:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case WHERE:
+case EXIST:
+case EXISTS:
+case PAST:
+case MONTH:
+case MONTHS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case DATA:
+case LOGIC:
+case ACTION:
+case COLON:
+case ENDBLOCK:
+case DOT:
 case INTLIT:
+case SEMI:
+case ID:
+case LPAREN:
 {
-{
-            AST tmp260_AST=null;
-            tmp260_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp260_AST);
-            match(INTLIT);
-            AST tmp261_AST=null;
-            tmp261_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp261_AST);
-            match(MINUS);
-            AST tmp262_AST=null;
-            tmp262_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp262_AST);
-            match(INTLIT);
-            AST tmp263_AST=null;
-            tmp263_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp263_AST);
-            match(DOT);
-          }
-          break;
-        }
+              break;
+            }
 default :
 {
-        break _loop96;
+            throw new NoViableAltException(LT(1),getFilename());
+          }
       }
-  }
+    }
+{
+      _loop97:       do {
+        if ((_tokenSet_4.member(LA(1)))) {
+          text();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop97;
+        }
+      }
+ while (true);
+    }
+{
+switch (LA(1)) {
+case DOT:
+{
+          AST tmp273_AST=null;
+          tmp273_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp273_AST);
+          match(DOT);
+          break;
+        }
+case COLON:
+case ENDBLOCK:
+case SEMI:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+}
+ else {
+break _loop99;
+}
 }
  while (true);
 }

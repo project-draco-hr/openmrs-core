@@ -1,0 +1,11 @@
+{
+  Alert alert=new Alert();
+  alert.setText(text);
+  for (  User user : users)   alert.addRecipient(user);
+  if (alert.getRecipients() != null) {
+    for (    AlertRecipient recipient : alert.getRecipients()) {
+      if (!alert.equals(recipient.getAlert()))       recipient.setAlert(alert);
+    }
+  }
+  createAlert(alert);
+}

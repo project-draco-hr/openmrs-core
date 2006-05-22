@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case ID:
 {
-        AST tmp148_AST=null;
-        tmp148_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp148_AST);
+        AST tmp158_AST=null;
+        tmp158_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp158_AST);
         match(ID);
         text_AST=(AST)currentAST.root;
         break;
@@ -28,6 +28,7 @@ case BEFORE:
 case AFTER:
 case AGO:
 case WRITE:
+case AT:
 case LET:
 case BE:
 case YEAR:
@@ -77,9 +78,9 @@ case ACTION:
     }
 case INTLIT:
 {
-    AST tmp149_AST=null;
-    tmp149_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp149_AST);
+    AST tmp159_AST=null;
+    tmp159_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp159_AST);
     match(INTLIT);
     text_AST=(AST)currentAST.root;
     break;
@@ -87,26 +88,26 @@ case INTLIT:
 case LPAREN:
 {
 {
-    AST tmp150_AST=null;
-    tmp150_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp150_AST);
+    AST tmp160_AST=null;
+    tmp160_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp160_AST);
     match(LPAREN);
 {
       _loop53:       do {
 switch (LA(1)) {
 case ID:
 {
-            AST tmp151_AST=null;
-            tmp151_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp151_AST);
+            AST tmp161_AST=null;
+            tmp161_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp161_AST);
             match(ID);
             break;
           }
 case INTLIT:
 {
-          AST tmp152_AST=null;
-          tmp152_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp152_AST);
+          AST tmp162_AST=null;
+          tmp162_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp162_AST);
           match(INTLIT);
           break;
         }
@@ -125,6 +126,7 @@ case BEFORE:
 case AFTER:
 case AGO:
 case WRITE:
+case AT:
 case LET:
 case BE:
 case YEAR:
@@ -179,9 +181,9 @@ default :
 }
  while (true);
 }
-AST tmp153_AST=null;
-tmp153_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp153_AST);
+AST tmp163_AST=null;
+tmp163_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp163_AST);
 match(RPAREN);
 }
 text_AST=(AST)currentAST.root;

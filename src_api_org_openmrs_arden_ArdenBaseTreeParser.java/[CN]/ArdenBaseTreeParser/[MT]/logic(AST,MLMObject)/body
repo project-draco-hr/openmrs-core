@@ -3,14 +3,14 @@
   AST logic_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
   try {
-    AST __t339=_t;
+    AST __t343=_t;
     AST tmp40_AST_in=(AST)_t;
     match(_t,LOGIC);
     _t=_t.getFirstChild();
     System.err.println("\n");
     System.err.println("-------Starting LOGIC--------");
 {
-      _loop345:       do {
+      _loop349:       do {
         if (_t == null)         _t=ASTNULL;
 switch (_t.getType()) {
 case IF:
@@ -96,6 +96,7 @@ case ENDIF:
 case CONCLUDE:
 {
         System.err.println("-----------Starting CONCLUDE -------");
+        obj.InitEvaluateList();
         concludeAST(_t,obj,"");
         _t=_retTree;
         System.err.println("\n");
@@ -104,7 +105,7 @@ case CONCLUDE:
       }
 default :
 {
-      break _loop345;
+      break _loop349;
     }
 }
 }
@@ -117,7 +118,7 @@ _t=_t.getNextSibling();
 }
 System.err.println("\n");
 System.err.println("-----------End Action -------");
-_t=__t339;
+_t=__t343;
 _t=_t.getNextSibling();
 }
  catch (RecognitionException ex) {

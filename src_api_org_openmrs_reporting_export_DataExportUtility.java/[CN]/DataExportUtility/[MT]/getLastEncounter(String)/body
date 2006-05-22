@@ -1,0 +1,8 @@
+{
+  if (patientEncounterMap.containsKey(encounterType))   return patientEncounterMap.get(encounterType).get(getPatientId());
+  EncounterType type=null;
+  if (!encounterType.equals(""))   type=context.getEncounterService().getEncounterType(encounterType);
+  Map<Integer,Encounter> encounterMap=patientSetService.getEncountersByType(getPatientSet(),type);
+  patientEncounterMap.put(encounterType,encounterMap);
+  return encounterMap.get(getPatientId());
+}

@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST explanation_slot_AST=null;
   try {
-    AST tmp111_AST=null;
-    tmp111_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp111_AST);
+    AST tmp121_AST=null;
+    tmp121_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp121_AST);
     match(LITERAL_explanation);
-    AST tmp112_AST=null;
-    tmp112_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp112_AST);
+    AST tmp122_AST=null;
+    tmp122_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp122_AST);
     match(COLON);
 {
       _loop71:       do {
@@ -18,9 +18,9 @@
           astFactory.addASTChild(currentAST,returnAST);
         }
  else         if ((LA(1) == INTLIT)) {
-          AST tmp113_AST=null;
-          tmp113_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp113_AST);
+          AST tmp123_AST=null;
+          tmp123_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp123_AST);
           match(INTLIT);
         }
  else {
@@ -29,9 +29,9 @@
       }
  while (true);
     }
-    AST tmp114_AST=null;
-    tmp114_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp114_AST);
+    AST tmp124_AST=null;
+    tmp124_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp124_AST);
     match(ENDBLOCK);
     explanation_slot_AST=(AST)currentAST.root;
   }

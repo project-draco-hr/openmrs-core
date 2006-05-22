@@ -9,10 +9,15 @@
     System.err.println(t.toStringTree());
     ArdenBaseTreeParser treeParser=new ArdenBaseTreeParser();
     MLMObject ardObj=new MLMObject();
-    treeParser.data(t,ardObj);
+    treeParser.maintenance(t,ardObj);
     System.err.println(t.getNextSibling().toStringTree());
-    String logicstr=treeParser.logic(t.getNextSibling(),ardObj);
-    String actionstr=treeParser.action(t.getNextSibling().getNextSibling());
+    treeParser.library(t.getNextSibling(),ardObj);
+    System.err.println(t.getNextSibling().getNextSibling().toStringTree());
+    treeParser.data(t.getNextSibling().getNextSibling(),ardObj);
+    System.err.println(t.getNextSibling().getNextSibling().getNextSibling().toStringTree());
+    String logicstr=treeParser.logic(t.getNextSibling().getNextSibling().getNextSibling(),ardObj);
+    System.err.println(t.getNextSibling().getNextSibling().getNextSibling().getNextSibling().toStringTree());
+    String actionstr=treeParser.action(t.getNextSibling().getNextSibling().getNextSibling().getNextSibling(),ardObj);
     System.err.println(actionstr);
     System.err.println(logicstr);
     ardObj.PrintConceptMap();

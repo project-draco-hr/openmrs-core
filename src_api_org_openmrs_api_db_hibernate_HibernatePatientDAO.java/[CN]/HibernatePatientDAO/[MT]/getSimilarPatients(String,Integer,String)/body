@@ -1,20 +1,23 @@
 {
   Session session=HibernateUtil.currentSession();
+  if (birthyear == null)   birthyear=0;
   Set<Patient> patients=new LinkedHashSet<Patient>();
   name.replace(", "," ");
   String[] names=name.split(" ");
   Criteria criteria=session.createCriteria(Patient.class).createAlias("names","name");
+  Disjunction disjunction=Expression.disjunction();
   for (  String n : names) {
     if (n != null && n.length() > 0) {
-      criteria.add(Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("name.givenName",n,MatchMode.START))));
+      disjunction.add(Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("name.givenName",n,MatchMode.START))));
     }
   }
-  LogicalExpression birthdayMatch=Expression.or(Expression.sql("year(birthdate) = " + birthyear),Expression.isNull("birthdate"));
+  criteria.add(disjunction);
+  LogicalExpression birthdayMatch=Expression.or(Expression.sql("year(birthdate) between " + (birthyear - 1) + " and "+ (birthyear + 1)),Expression.isNull("birthdate"));
   SimpleExpression genderMatch=Expression.eq("gender",gender);
-  if (birthyear != null && gender != null) {
+  if (birthyear != 0 && gender != null) {
     criteria.add(Expression.and(birthdayMatch,genderMatch));
   }
- else   if (birthyear != null) {
+ else   if (birthyear != 0) {
     criteria.add(birthdayMatch);
   }
  else   if (gender != null) {

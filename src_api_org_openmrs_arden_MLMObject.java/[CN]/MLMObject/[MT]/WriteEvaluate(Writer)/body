@@ -1,0 +1,56 @@
+{
+  try {
+    String key;
+    ListIterator<MLMEvaluateElement> thisList;
+    thisList=evaluateList.listIterator(0);
+    while (thisList.hasNext()) {
+      Iterator iter=thisList.next().iterator();
+      while (iter.hasNext()) {
+        key=(String)iter.next();
+        writeEvaluateConcept(key,w);
+      }
+    }
+    w.append("\n");
+    w.append("public boolean evaluate() {\n");
+    w.append("\tConcept concept;\n");
+    w.append("\tboolean retVal = false;\n");
+    w.append("\tObs obs;\n\n");
+    thisList=evaluateList.listIterator(0);
+    while (thisList.hasNext()) {
+      Iterator iter=thisList.next().iterator();
+      if (iter.hasNext()) {
+        key=(String)iter.next();
+        if (key.equals("tmp_conclude")) {
+          w.append("\n //conclude here\n");
+        }
+ else         if (key.equals("tmp_01")) {
+          w.append("\n\telse {");
+        }
+ else {
+          w.append("\n\tif(evaluate_" + key + "()) {\n");
+        }
+        writeActionConcept(key,w);
+        w.append("\n\t}");
+      }
+      while (iter.hasNext()) {
+        key=(String)iter.next();
+        if (key.equals("tmp_conclude")) {
+          w.append("\n\t//conclude here");
+        }
+ else         if (key.equals("tmp_01")) {
+          w.append("\n\telse {\n");
+        }
+ else {
+          w.append("\n\telse if(evaluate_" + key + "()) {\n");
+        }
+        writeActionConcept(key,w);
+        w.append("\n\t}");
+      }
+    }
+    w.append("\n");
+  }
+ catch (  Exception e) {
+    System.err.println("Write Evaluate: " + e);
+    e.printStackTrace();
+  }
+}

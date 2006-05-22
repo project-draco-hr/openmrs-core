@@ -1,0 +1,17 @@
+{
+  Session session=HibernateUtil.currentSession();
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  Set<Integer> ids=patients.getPatientIds();
+  Criteria criteria=session.createCriteria("org.openmrs." + className);
+  if (className.equals("Patient"))   criteria=session.createCriteria("org.openmrs." + className,"patient");
+  criteria.setProjection(Projections.projectionList().add(Projections.distinct(Projections.property("patient.patientId"))).add(Projections.property(property)));
+  criteria.add(Restrictions.in("patient.patientId",ids));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("dateCreated"));
+  List<Object[]> rows=criteria.list();
+  for (  Object[] row : rows) {
+    Integer ptId=(Integer)row[0];
+    Object columnValue=row[1];
+    ret.put(ptId,columnValue);
+  }
+  return ret;
+}

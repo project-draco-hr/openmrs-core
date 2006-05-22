@@ -13,9 +13,6 @@
       context=ContextFactory.getContext();
       httpSession.setAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR,context);
     }
- else {
-      context.endTransaction();
-    }
   }
   log.debug("before doFilter");
   try {

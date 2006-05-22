@@ -5,13 +5,10 @@
   Concept concept;
   Set<Obs> MyObs;
   Obs obs;
-  List<ConceptWord> conceptsWords;
   index=conceptName.indexOf("from");
   cn=conceptName.substring(1,index);
-  conceptsWords=cs.findConcepts(cn,locale,false);
-  if (!conceptsWords.isEmpty()) {
-    ConceptWord conceptWord=conceptsWords.get(0);
-    concept=conceptWord.getConcept();
+  concept=cs.getConceptByName(cn);
+{
     setConcept(concept);
     MyObs=os.getObservations(patient,conceptObj);
     Iterator iter=MyObs.iterator();

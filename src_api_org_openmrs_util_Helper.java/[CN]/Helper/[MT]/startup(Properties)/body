@@ -7,4 +7,21 @@
   if (val != null)   OpenmrsConstants.OBSCURE_PATIENTS_GIVEN_NAME=val;
   val=p.getProperty("obscure_patients.middle_name",null);
   if (val != null)   OpenmrsConstants.OBSCURE_PATIENTS_MIDDLE_NAME=val;
+  val=p.getProperty("connection.database_name",null);
+  if (val == null)   val=p.getProperty("connection.url",null);
+  if (val != null) {
+    try {
+      int endIndex=val.lastIndexOf("?");
+      if (endIndex == -1)       endIndex=val.length();
+      int startIndex=val.lastIndexOf("/",endIndex);
+      val=val.substring(startIndex + 1,endIndex);
+      OpenmrsConstants.DATABASE_NAME=val;
+    }
+ catch (    Exception e) {
+      log.fatal("Database name cannot be configured from 'connection.url' ." + "Either supply 'connection.database_name' or correct the url",e);
+    }
+  }
+  val=p.getProperty("connection.database_business_name",null);
+  if (val == null)   val=OpenmrsConstants.DATABASE_NAME;
+  OpenmrsConstants.DATABASE_BUSINESS_NAME=val;
 }

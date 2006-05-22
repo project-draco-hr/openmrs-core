@@ -4,30 +4,30 @@
   AST mlmname_slot_AST=null;
   try {
 switch (LA(1)) {
-case LITERAL_mlmname:
+case MLMNAME:
 {
-        AST tmp74_AST=null;
-        tmp74_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp74_AST);
-        match(LITERAL_mlmname);
-        AST tmp75_AST=null;
-        tmp75_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp75_AST);
+        AST tmp84_AST=null;
+        tmp84_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp84_AST);
+        match(MLMNAME);
+        AST tmp85_AST=null;
+        tmp85_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp85_AST);
         match(COLON);
         mlmname_text();
         astFactory.addASTChild(currentAST,returnAST);
         mlmname_slot_AST=(AST)currentAST.root;
         break;
       }
-case LITERAL_filename:
+case FILENAME:
 {
-      AST tmp76_AST=null;
-      tmp76_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp76_AST);
-      match(LITERAL_filename);
-      AST tmp77_AST=null;
-      tmp77_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp77_AST);
+      AST tmp86_AST=null;
+      tmp86_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp86_AST);
+      match(FILENAME);
+      AST tmp87_AST=null;
+      tmp87_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp87_AST);
       match(COLON);
       mlmname_text();
       astFactory.addASTChild(currentAST,returnAST);

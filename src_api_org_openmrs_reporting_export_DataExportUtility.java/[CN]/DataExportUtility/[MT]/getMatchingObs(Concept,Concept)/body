@@ -1,0 +1,7 @@
+{
+  Collection<Obs> returnList=new Vector<Obs>();
+  for (  Obs o : getObs(concept)) {
+    if (concept.getConceptId().equals(o.getConcept().getConceptId()) && valueCoded.equals(o.getValueCoded()))     returnList.add(o);
+  }
+  return returnList;
+}

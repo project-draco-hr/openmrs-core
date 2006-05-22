@@ -1,0 +1,7 @@
+{
+  HibernateUtil.startup();
+  Context context=ContextFactory.getContext();
+  context.authenticate("vibha","chicachica");
+  context.getArdenService().compileFile("test/arden test/HiRiskLeadScreen.mlm");
+  HibernateUtil.shutdown();
+}

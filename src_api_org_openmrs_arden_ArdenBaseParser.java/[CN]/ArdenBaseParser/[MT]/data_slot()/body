@@ -3,27 +3,27 @@
   ASTPair currentAST=new ASTPair();
   AST data_slot_AST=null;
   try {
-    AST tmp126_AST=null;
-    tmp126_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp126_AST);
+    AST tmp136_AST=null;
+    tmp136_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp136_AST);
     match(DATA);
     match(COLON);
 {
-      _loop109:       do {
+      _loop112:       do {
         if ((_tokenSet_18.member(LA(1)))) {
           data_assignment();
           astFactory.addASTChild(currentAST,returnAST);
           match(SEMI);
         }
  else {
-          break _loop109;
+          break _loop112;
         }
       }
  while (true);
     }
-    AST tmp129_AST=null;
-    tmp129_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp129_AST);
+    AST tmp139_AST=null;
+    tmp139_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp139_AST);
     match(ENDBLOCK);
     data_slot_AST=(AST)currentAST.root;
   }

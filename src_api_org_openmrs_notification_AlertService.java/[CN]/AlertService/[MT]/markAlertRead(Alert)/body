@@ -2,7 +2,9 @@
   log.debug("Marking alert as read " + alert);
   User authUser=context.getAuthenticatedUser();
   if (authUser != null) {
-    alert.addReadByUser(authUser);
+    AlertRecipient ar=alert.getRecipient(authUser);
+    ar.setAlertRead(true);
+    if (alert.isSatisfiedByAny())     alert.setAlertRead(true);
     dao().updateAlert(alert);
   }
 }

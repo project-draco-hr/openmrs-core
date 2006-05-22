@@ -1,6 +1,0 @@
-{
-  for (  DataRow row : input.getRows()) {
-    row.set(columnNameForClassification,classifier.classify(row));
-  }
-  return groupBy(input,Collections.singletonList(columnNameForClassification),aggregator,columnNameForAggregation);
-}

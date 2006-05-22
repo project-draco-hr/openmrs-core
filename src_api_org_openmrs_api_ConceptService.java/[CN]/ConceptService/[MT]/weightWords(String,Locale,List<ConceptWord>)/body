@@ -15,22 +15,24 @@
         toSplit=cn.getName();
       }
       List<String> nameWords=ConceptWord.getUniqueWords(toSplit);
-      initialWord.increaseWeight(1.0);
       if (!containsAll(nameWords,searchedWords)) {
         tmpWord.setWeight(initialWord.getWeight());
         uniqueConcepts.put(id,tmpWord);
-        log.debug("Using new conceptWord: " + tmpWord);
       }
+ else       tmpWord=null;
     }
  else {
       tmpWord.setWeight(0.0);
       uniqueConcepts.put(id,tmpWord);
     }
-    if (tmpWord.getSynonym().length() == 0) {
-      uniqueConcepts.get(id).increaseWeight(2.0);
-    }
- else {
-      uniqueConcepts.get(id).increaseWeight(5.0 * (1 / tmpWord.getSynonym().split(" ").length));
+    if (tmpWord != null) {
+      String matchedString=tmpWord.getSynonym();
+      if (matchedString.length() == 0) {
+        tmpWord.increaseWeight(2.0);
+        matchedString=tmpWord.getConcept().getName(locale).getName();
+      }
+      Double percentMatched=getPercentMatched(searchedWords,matchedString);
+      tmpWord.increaseWeight(5.0 * percentMatched);
     }
   }
   conceptWords=new Vector<ConceptWord>();

@@ -4,7 +4,9 @@
   AST startRule_AST=null;
   try {
     maintenance_category();
+    astFactory.addASTChild(currentAST,returnAST);
     library_category();
+    astFactory.addASTChild(currentAST,returnAST);
     knowledge_category();
     astFactory.addASTChild(currentAST,returnAST);
     match(LITERAL_end);

@@ -1,0 +1,10 @@
+{
+  List<Obs> reverseObs=new Vector<Obs>();
+  reverseObs.addAll(getObs(concept));
+  Collections.reverse(reverseObs);
+  for (  Obs o : reverseObs) {
+    if (concept.getConceptId().equals(o.getConcept().getConceptId()))     return o;
+  }
+  log.info("Could not find an Obs with concept " + concept + " for patient "+ patientId);
+  return null;
+}
