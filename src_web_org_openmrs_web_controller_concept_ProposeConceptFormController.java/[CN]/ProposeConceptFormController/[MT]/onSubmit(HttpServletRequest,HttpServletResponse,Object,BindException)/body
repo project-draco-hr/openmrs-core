@@ -1,0 +1,15 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  String view=getFormView();
+  if (context != null && context.isAuthenticated()) {
+    ConceptProposal cp=(ConceptProposal)obj;
+    ConceptService cs=context.getConceptService();
+    cp.setCreator(context.getAuthenticatedUser());
+    cp.setDateCreated(new Date());
+    cs.proposeConcept(cp);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptProposal.proposed");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

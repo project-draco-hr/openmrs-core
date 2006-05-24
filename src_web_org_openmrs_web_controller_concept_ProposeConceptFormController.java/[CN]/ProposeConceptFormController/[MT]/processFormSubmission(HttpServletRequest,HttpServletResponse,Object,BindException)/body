@@ -1,0 +1,21 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  ConceptProposal cp=(ConceptProposal)obj;
+  if (context != null) {
+    Concept c=cp.getObsConcept();
+    String id=RequestUtils.getStringParameter(request,"conceptId",null);
+    if (c == null && id != null) {
+      c=context.getConceptService().getConcept(Integer.valueOf(id));
+      cp.setObsConcept(c);
+    }
+    Encounter e=cp.getEncounter();
+    id=RequestUtils.getStringParameter(request,"encounterId",null);
+    if (e == null && id != null) {
+      e=context.getEncounterService().getEncounter(Integer.valueOf(id));
+      cp.setEncounter(e);
+    }
+  }
+  if (cp.getOriginalText().equals(""))   errors.rejectValue("originalText","error.null");
+  return super.processFormSubmission(request,response,cp,errors);
+}
