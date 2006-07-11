@@ -1,5 +1,5 @@
 {
-  Vector patientList=new Vector();
+  Vector<Object> patientList=new Vector<Object>();
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
   Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   if (context == null) {
@@ -8,12 +8,13 @@
   }
  else {
     try {
-      Integer userId=context.getAuthenticatedUser().getUserId();
+      Integer userId=-1;
+      if (context.isAuthenticated())       userId=context.getAuthenticatedUser().getUserId();
       log.info(userId + "|" + searchValue);
       FormEntryService ps=context.getFormEntryService();
       List<Patient> patients;
       patients=ps.findPatients(searchValue,includeVoided);
-      patientList=new Vector(patients.size());
+      patientList=new Vector<Object>(patients.size());
       for (      Patient p : patients) {
         patientList.add(new PatientListItem(p));
       }

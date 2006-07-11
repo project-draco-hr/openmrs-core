@@ -1,20 +1,16 @@
 {
-  String hl7LocationId=pv1.getComponent(3,1);
+  String[] locationComponents=pv1.getComponents(3);
   Integer locationId=null;
-  Location location;
   try {
-    locationId=Integer.parseInt(pv1.getComponent(3,1));
+    locationId=context.getHL7Service().resolveLocationId(locationComponents);
   }
- catch (  NumberFormatException e) {
-    throw new HL7Exception("Invalid location ID '" + hl7LocationId + "'");
+ catch (  HL7Exception ex) {
+    throw new HL7Exception("Error retrieving Location from PV1.'Assigned Patient Location'",ex);
   }
-  if (locationId == null || locationId == 0)   throw new HL7Exception("Unable to parse location ID '" + hl7LocationId + "'");
-  try {
-    location=context.getEncounterService().getLocation(locationId);
+  if (locationId == null) {
+    throw new HL7Exception("Could not find Assigned Patient Location specified in PV1 segment");
   }
- catch (  Exception e) {
-    throw new HL7Exception("Error retrieving location " + locationId,e);
+ else {
+    return context.getEncounterService().getLocation(locationId);
   }
-  if (location == null || location.getLocationId() == null)   throw new HL7Exception("Could not find location " + locationId);
-  return location;
 }

@@ -3,7 +3,6 @@
   Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   OptionsForm opts=new OptionsForm();
   if (context != null && context.isAuthenticated()) {
-    UserService us=context.getUserService();
     User user=context.getAuthenticatedUser();
     Map<String,String> props=user.getProperties();
     opts.setDefaultLocation(props.get(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));

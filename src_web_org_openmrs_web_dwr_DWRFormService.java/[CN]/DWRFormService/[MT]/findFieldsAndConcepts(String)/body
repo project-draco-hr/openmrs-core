@@ -10,19 +10,40 @@
     }
  catch (    NumberFormatException e) {
     }
+    Map<Integer,Boolean> fieldForConceptAdded=new HashMap<Integer,Boolean>();
     if (concept != null) {
-      objects.add(new ConceptListItem(concept,locale));
-      for (      Field field : context.getFormService().findFields(concept))       objects.add(new FieldListItem(field));
+      for (      Field field : context.getFormService().findFields(concept)) {
+        FieldListItem fli=new FieldListItem(field,locale);
+        if (!objects.contains(fli))         objects.add(fli);
+        fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
+      if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
+        objects.add(new ConceptListItem(concept,locale));
+        fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
+    }
+    for (    Field field : context.getFormService().findFields(txt)) {
+      FieldListItem fi=new FieldListItem(field,locale);
+      if (!objects.contains(fi)) {
+        objects.add(fi);
+        concept=field.getConcept();
+        if (concept != null)         fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
     }
     List<ConceptWord> conceptWords=context.getConceptService().findConcepts(txt,locale,false);
     for (    ConceptWord word : conceptWords) {
-      objects.add(new ConceptListItem(word));
-      for (      Field field : context.getFormService().findFields(word.getConcept()))       objects.add(new FieldListItem(field));
+      concept=word.getConcept();
+      for (      Field field : context.getFormService().findFields(concept)) {
+        FieldListItem fli=new FieldListItem(field,locale);
+        if (!objects.contains(fli))         objects.add(fli);
+        fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
+      if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
+        objects.add(new ConceptListItem(word));
+        fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
     }
-    for (    Field field : context.getFormService().findFields(txt)) {
-      FieldListItem fi=new FieldListItem(field);
-      if (!objects.contains(fi))       objects.add(fi);
-    }
+    Collections.sort(objects,new FieldConceptSort<Object>(locale));
   }
   return objects;
 }

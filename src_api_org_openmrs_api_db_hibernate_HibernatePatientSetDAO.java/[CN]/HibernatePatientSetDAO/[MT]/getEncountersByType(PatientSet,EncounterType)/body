@@ -4,6 +4,7 @@
   Set<Integer> ids=patients.getPatientIds();
   Criteria criteria=session.createCriteria(Encounter.class);
   criteria.add(Restrictions.in("patient.patientId",ids));
+  criteria.add(Restrictions.eq("voided",false));
   if (encType != null)   criteria.add(Restrictions.eq("encounterType",encType));
   criteria.addOrder(org.hibernate.criterion.Order.desc("patient.patientId"));
   criteria.addOrder(org.hibernate.criterion.Order.desc("encounterDatetime"));

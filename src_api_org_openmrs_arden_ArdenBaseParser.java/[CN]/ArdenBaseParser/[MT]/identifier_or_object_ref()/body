@@ -3,24 +3,24 @@
   ASTPair currentAST=new ASTPair();
   AST identifier_or_object_ref_AST=null;
   try {
-    AST tmp334_AST=null;
-    tmp334_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp334_AST);
+    AST tmp346_AST=null;
+    tmp346_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp346_AST);
     match(ID);
 {
-      _loop147:       do {
+      _loop157:       do {
         if ((LA(1) == DOT)) {
-          AST tmp335_AST=null;
-          tmp335_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp335_AST);
+          AST tmp347_AST=null;
+          tmp347_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp347_AST);
           match(DOT);
-          AST tmp336_AST=null;
-          tmp336_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp336_AST);
+          AST tmp348_AST=null;
+          tmp348_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp348_AST);
           match(ID);
         }
  else {
-          break _loop147;
+          break _loop157;
         }
       }
  while (true);
@@ -30,7 +30,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_44);
+      recover(ex,_tokenSet_45);
     }
  else {
       throw ex;

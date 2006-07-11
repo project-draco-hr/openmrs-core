@@ -1,0 +1,39 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  Object uri=request.getAttribute("javax.servlet.include.servlet_path");
+  String portletPath="";
+  Map<String,Object> model=new HashMap<String,Object>();
+  if (uri != null) {
+    portletPath=uri.toString();
+    if (portletPath.endsWith("portlet"))     portletPath=portletPath.replace(".portlet","");
+ else     if (portletPath.endsWith("jsp"))     throw new ServletException("Illegal extension used for portlet: '.jsp'. Allowable extensions are '' (no extension) and '.portlet'");
+    log.debug("Loading portlet: " + portletPath);
+    String size=(String)request.getAttribute("org.openmrs.portlet.size");
+    Map<String,Object> params=(Map<String,Object>)request.getAttribute("org.openmrs.portlet.parameters");
+    model.put("size",size);
+    model.putAll(params);
+    if (context != null) {
+      model.put("authenticatedUser",context.getAuthenticatedUser());
+      model.put("locale",context.getLocale());
+      Object o=request.getAttribute("patientId");
+      if (o != null && !"".equals(o)) {
+        Patient p=context.getPatientService().getPatient(Integer.valueOf((String)o));
+        model.put("patient",p);
+        model.put("patientObs",context.getObsService().getObservations(p));
+      }
+      o=request.getAttribute("encounterId");
+      if (o != null && !"".equals(o)) {
+        Encounter e=context.getEncounterService().getEncounter(Integer.valueOf((String)o));
+        model.put("encounter",e);
+        model.put("encounterObs",context.getObsService().getObservations(e));
+      }
+      o=request.getAttribute("userId");
+      if (o != null && !"".equals(o)) {
+        User u=context.getUserService().getUser(Integer.valueOf((String)o));
+        model.put("user",u);
+      }
+    }
+  }
+  return new ModelAndView(portletPath,"model",model);
+}

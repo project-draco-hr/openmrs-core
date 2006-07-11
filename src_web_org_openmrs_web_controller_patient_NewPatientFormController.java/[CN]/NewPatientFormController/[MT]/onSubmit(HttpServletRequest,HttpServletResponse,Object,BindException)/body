@@ -14,7 +14,7 @@
     if (p.getPatientId() != null)     patient=ps.getPatient(p.getPatientId());
     boolean duplicate=false;
     for (    PatientName pn : patient.getNames()) {
-      if (pn.getGivenName().equals(p.getGivenName()) && pn.getMiddleName().equals(p.getMiddleName()) && pn.getFamilyName().equals(p.getFamilyName()))       duplicate=true;
+      if (((pn.getGivenName() == null && p.getGivenName() == null) || pn.getGivenName().equals(p.getGivenName())) && ((pn.getMiddleName() == null && p.getMiddleName() == null) || pn.getMiddleName().equals(p.getMiddleName())) && ((pn.getFamilyName() == null && p.getFamilyName() == null) || pn.getFamilyName().equals(p.getFamilyName())))       duplicate=true;
     }
     if (!duplicate)     patient.addName(new PatientName(p.getGivenName(),p.getMiddleName(),p.getFamilyName()));
     if (p.getAddress1() != "" && p.getAddress2() != "") {
@@ -29,25 +29,11 @@
         patient.addAddress(pa);
       }
     }
-    String[] identifiers=request.getParameterValues("newIdentifier");
-    String[] types=request.getParameterValues("newIdentifierType");
-    String[] locs=request.getParameterValues("newLocation");
-    for (int i=0; i < identifiers.length; i++) {
-      String identifier=identifiers[i].trim();
-      PatientIdentifierType type=null;
-      Location loc=null;
-      if (identifier.length() > 0) {
-        if (types[i] != null && types[i].length() > 0) {
-          type=ps.getPatientIdentifierType(Integer.valueOf(types[i]));
-        }
-        if (locs[i] != null && locs[i].length() > 0) {
-          loc=ps.getLocation(Integer.valueOf(locs[i]));
-        }
-        if (identifier != null && type != null) {
-          patient.addIdentifier(new PatientIdentifier(identifier,type,loc));
-        }
-      }
+    if (patient.getIdentifiers() == null)     patient.setIdentifiers(new HashSet<PatientIdentifier>());
+    for (    PatientIdentifier pi : patient.getIdentifiers()) {
+      pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
     }
+    patient.getIdentifiers().addAll(newIdentifiers);
     patient.setBirthdate(p.getBirthdate());
     patient.setBirthdateEstimated(p.getBirthdateEstimated());
     patient.setGender(p.getGender());

@@ -1,0 +1,12 @@
+{
+  String parent="''";
+  if (ff.getParent() != null)   parent=ff.getParent().getFormFieldId().toString();
+  Field field=ff.getField();
+  Concept concept=new Concept();
+  ConceptName conceptName=new ConceptName();
+  if (field.getConcept() != null) {
+    concept=field.getConcept();
+    conceptName=concept.getName(locale);
+  }
+  return "addNode(tree, {formFieldId: " + ff.getFormFieldId() + ", "+ "parent: "+ parent+ ", "+ "fieldId: "+ field.getFieldId()+ ", "+ "fieldName: \""+ WebUtil.escapeQuotes(field.getName())+ "\", "+ "description: \""+ WebUtil.escapeQuotes(field.getDescription())+ "\", "+ "fieldType: "+ field.getFieldType().getFieldTypeId()+ ", "+ "conceptId: "+ concept.getConceptId()+ ", "+ "conceptName: \""+ WebUtil.escapeQuotes(conceptName.getName())+ "\", "+ "tableName: \""+ field.getTableName()+ "\", "+ "attributeName: \""+ field.getAttributeName()+ "\", "+ "defaultValue: \""+ WebUtil.escapeQuotes(field.getDefaultValue())+ "\", "+ "selectMultiple: "+ field.getSelectMultiple()+ ", "+ "numForms: "+ field.getForms().size()+ ", "+ "fieldNumber: "+ ff.getFieldNumber()+ ", "+ "fieldPart: \""+ (ff.getFieldPart() == null ? "" : WebUtil.escapeQuotes(ff.getFieldPart()))+ "\", "+ "pageNumber: "+ ff.getPageNumber()+ ", "+ "minOccurs: "+ ff.getMinOccurs()+ ", "+ "maxOccurs: "+ ff.getMaxOccurs()+ ", "+ "isRequired: "+ ff.isRequired()+ "});";
+}

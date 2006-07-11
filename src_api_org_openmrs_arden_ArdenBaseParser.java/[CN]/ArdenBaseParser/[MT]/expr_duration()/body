@@ -37,6 +37,8 @@ case BEFORE:
 case AFTER:
 case AGO:
 case AT:
+case LET:
+case NOW:
 case IF:
 case NOT:
 case OR:
@@ -58,8 +60,8 @@ case SEMI:
 case ID:
 case LPAREN:
 case RPAREN:
-case 99:
-case 100:
+case 103:
+case 104:
 case COMMA:
 case ARDEN_CURLY_BRACKETS:
 case EQUALS:
@@ -78,8 +80,8 @@ case ACTION_OP:
 case LITERAL_MERGE:
 case LITERAL_SORT:
 case LITERAL_SEQTO:
-case 169:
-case 170:
+case 171:
+case 172:
 {
         break;
       }
@@ -94,7 +96,7 @@ expr_duration_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_48);
+recover(ex,_tokenSet_49);
 }
  else {
 throw ex;

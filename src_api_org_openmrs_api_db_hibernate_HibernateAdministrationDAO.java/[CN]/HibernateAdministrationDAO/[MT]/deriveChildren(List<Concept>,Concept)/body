@@ -1,5 +1,4 @@
 {
-  List<Concept> children=new Vector<Concept>();
   Set<ConceptSetDerived> updates=new HashSet<ConceptSetDerived>();
   ConceptSetDerived derivedSet=null;
   for (  ConceptSet childSet : current.getConceptSets()) {
@@ -11,7 +10,7 @@
       derivedSet=new ConceptSetDerived(parent,child,sort_weight++);
       updates.add(derivedSet);
     }
-    if (child.getConceptClass().isSet()) {
+    if (child.isSet()) {
       log.debug("Concept id: " + child.getConceptId() + " is a set");
       List<Concept> new_parents=new Vector<Concept>();
       new_parents.addAll(parents);

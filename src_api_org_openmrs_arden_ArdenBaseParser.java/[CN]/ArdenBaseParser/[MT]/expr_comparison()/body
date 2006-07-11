@@ -43,6 +43,8 @@ case WERE:
       }
 case AND:
 case AT:
+case LET:
+case NOW:
 case IF:
 case NOT:
 case OR:
@@ -74,7 +76,7 @@ expr_comparison_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_58);
+recover(ex,_tokenSet_59);
 }
  else {
 throw ex;

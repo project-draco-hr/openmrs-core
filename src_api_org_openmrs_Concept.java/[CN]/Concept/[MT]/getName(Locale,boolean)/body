@@ -10,6 +10,9 @@
     if (lang.equals(loc))     return name;
     if (lang.equals("en"))     defaultName=name;
   }
-  if (exact)   return null;
+  if (exact) {
+    log.warn("No concept name found for concept id " + conceptId + " for locale "+ loc);
+    return null;
+  }
   return defaultName;
 }

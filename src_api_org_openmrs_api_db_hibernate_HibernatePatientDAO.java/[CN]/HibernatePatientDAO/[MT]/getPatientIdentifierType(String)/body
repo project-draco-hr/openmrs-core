@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  PatientIdentifierType ret=(PatientIdentifierType)session.createQuery("from PatientIdentifierType t where t.name = :name").setString("name",name).uniqueResult();
+  return ret;
+}

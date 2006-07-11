@@ -1,0 +1,9 @@
+{
+  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context != null) {
+    Form form=context.getFormService().getForm(formId);
+    TreeMap<Integer,TreeSet<FormField>> formFields=FormUtil.getFormStructure(context,form);
+    return generateJSTree(formFields,0,context.getLocale());
+  }
+  return "";
+}

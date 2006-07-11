@@ -1,7 +1,7 @@
 {
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
   Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  Vector patientList=new Vector();
+  Vector<Object> patientList=new Vector<Object>();
   if (context == null) {
     patientList.add("Your session has expired.");
     patientList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");

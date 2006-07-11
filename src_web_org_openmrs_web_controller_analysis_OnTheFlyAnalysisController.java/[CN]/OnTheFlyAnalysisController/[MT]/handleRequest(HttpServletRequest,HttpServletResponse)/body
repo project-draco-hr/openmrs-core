@@ -13,12 +13,15 @@
   if (analysis == null) {
     analysis=new PatientAnalysis();
   }
+  List<LinkSpec> linkList=linkHelper();
   List<ShortcutSpec> shortcutList=shortcutHelper();
   if (reportService != null) {
     for (    ShortcutSpec s : shortcutList) {
       s.test(reportService);
       PatientFilter pf=analysis.getPatientFilters().get(s.getLabel());
+      log.debug("Looked at ShortcutSpec " + s + " to see if there's a currently-selected filter for label "+ s.getLabel()+ " (keyset = "+ analysis.getPatientFilters().keySet()+ "). Result: "+ pf);
       if (pf != null) {
+        log.debug("set current filter for " + s + " to "+ pf.getName());
         s.setCurrentFilter(((AbstractReportObject)pf).getName());
       }
     }
@@ -69,5 +72,7 @@
   myModel.put("analysis_results",resultsToDisplay);
   myModel.put("xml_debug",xmlToDisplay);
   myModel.put("shortcuts",shortcutList);
+  myModel.put("patient_set_for_links",result.toCommaSeparatedPatientIds());
+  myModel.put("links",linkList);
   return new ModelAndView("/analysis/on-the-fly-analysis","model",myModel);
 }

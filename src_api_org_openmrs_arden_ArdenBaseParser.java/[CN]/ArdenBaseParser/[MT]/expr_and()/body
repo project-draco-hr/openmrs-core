@@ -6,17 +6,17 @@
     expr_not();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop270:       do {
+      _loop280:       do {
         if ((LA(1) == AND)) {
-          AST tmp447_AST=null;
-          tmp447_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp447_AST);
+          AST tmp459_AST=null;
+          tmp459_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp459_AST);
           match(AND);
           expr_not();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop270;
+          break _loop280;
         }
       }
  while (true);
@@ -26,7 +26,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_66);
+      recover(ex,_tokenSet_68);
     }
  else {
       throw ex;

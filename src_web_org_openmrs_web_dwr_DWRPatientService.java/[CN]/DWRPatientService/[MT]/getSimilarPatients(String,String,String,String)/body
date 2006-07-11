@@ -1,5 +1,5 @@
 {
-  Vector patientList=new Vector();
+  Vector<Object> patientList=new Vector<Object>();
   Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
   if (context == null) {
@@ -23,7 +23,7 @@
     }
     if (gender.length() < 1)     gender=null;
     patients.addAll(ps.getSimilarPatients(name,d,gender));
-    patientList=new Vector(patients.size());
+    patientList=new Vector<Object>(patients.size());
     for (    Patient p : patients) {
       patientList.add(new PatientListItem(p));
     }

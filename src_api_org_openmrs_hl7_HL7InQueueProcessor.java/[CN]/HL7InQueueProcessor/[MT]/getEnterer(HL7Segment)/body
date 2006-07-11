@@ -1,20 +1,16 @@
 {
-  String hl7EntererId=orc.getComponent(10,1);
+  String[] entererComponents=orc.getComponents(10);
   Integer entererId=null;
-  User enterer;
   try {
-    entererId=Integer.parseInt(hl7EntererId);
+    entererId=context.getHL7Service().resolveUserId(entererComponents);
   }
- catch (  NumberFormatException e) {
-    throw new HL7Exception("Invalid enterer ID '" + hl7EntererId + "'");
+ catch (  HL7Exception ex) {
+    throw new HL7Exception("Error retrieving User from ORC.orderer");
   }
-  if (entererId == null || entererId == 0)   throw new HL7Exception("Unable to parse enterer ID '" + hl7EntererId + "'");
-  try {
-    enterer=context.getUserService().getUser(entererId);
+  if (entererId == null) {
+    throw new HL7Exception("Could not find enterer specified in ORC segment");
   }
- catch (  Exception e) {
-    throw new HL7Exception("Error retrieving enterer " + entererId,e);
+ else {
+    return context.getUserService().getUser(entererId);
   }
-  if (enterer == null || enterer.getUserId() == null)   throw new HL7Exception("Could not find enterer (User) " + entererId);
-  return enterer;
 }

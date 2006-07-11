@@ -4,20 +4,20 @@
   AST sort_option_AST=null;
   try {
 switch (LA(1)) {
-case LITERAL_TIME:
+case TIME:
 {
-        AST tmp443_AST=null;
-        tmp443_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp443_AST);
-        match(LITERAL_TIME);
+        AST tmp455_AST=null;
+        tmp455_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp455_AST);
+        match(TIME);
         sort_option_AST=(AST)currentAST.root;
         break;
       }
 case LITERAL_DATA:
 {
-      AST tmp444_AST=null;
-      tmp444_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp444_AST);
+      AST tmp456_AST=null;
+      tmp456_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp456_AST);
       match(LITERAL_DATA);
       sort_option_AST=(AST)currentAST.root;
       break;

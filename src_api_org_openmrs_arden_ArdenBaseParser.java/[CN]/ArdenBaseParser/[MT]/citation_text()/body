@@ -10,9 +10,9 @@
           astFactory.addASTChild(currentAST,returnAST);
         }
  else         if ((LA(1) == INTLIT)) {
-          AST tmp269_AST=null;
-          tmp269_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp269_AST);
+          AST tmp273_AST=null;
+          tmp273_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp273_AST);
           match(INTLIT);
         }
  else {
@@ -24,9 +24,9 @@
 {
       _loop99:       do {
         if ((LA(1) == COLON)) {
-          AST tmp270_AST=null;
-          tmp270_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp270_AST);
+          AST tmp274_AST=null;
+          tmp274_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp274_AST);
           match(COLON);
 {
             _loop94:             do {
@@ -44,13 +44,13 @@
 switch (LA(1)) {
 case MINUS:
 {
-                AST tmp271_AST=null;
-                tmp271_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp271_AST);
+                AST tmp275_AST=null;
+                tmp275_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp275_AST);
                 match(MINUS);
-                AST tmp272_AST=null;
-                tmp272_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp272_AST);
+                AST tmp276_AST=null;
+                tmp276_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp276_AST);
                 match(INTLIT);
                 break;
               }
@@ -109,11 +109,15 @@ case FALSE:
 case DATA:
 case LOGIC:
 case ACTION:
+case OF:
+case TIME:
+case WITHIN:
 case COLON:
 case ENDBLOCK:
 case DOT:
 case INTLIT:
 case SEMI:
+case TIMES:
 case ID:
 case LPAREN:
 {
@@ -141,9 +145,9 @@ default :
 switch (LA(1)) {
 case DOT:
 {
-          AST tmp273_AST=null;
-          tmp273_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp273_AST);
+          AST tmp277_AST=null;
+          tmp277_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp277_AST);
           match(DOT);
           break;
         }

@@ -19,8 +19,9 @@
     sessionFactory=cfg.buildSessionFactory();
   }
  catch (  Throwable ex) {
-    log.error("Initial sessionFactory creation failed." + ex);
+    log.error("Initial sessionFactory creation failed.",ex);
     throw new ExceptionInInitializerError(ex);
   }
   checkDatabaseVersion();
+  checkCoreDataSet();
 }

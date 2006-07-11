@@ -1,20 +1,16 @@
 {
-  String hl7ProviderId=pv1.getComponent(7,1);
+  String[] providerComponents=pv1.getComponents(7);
   Integer providerId=null;
-  User provider;
   try {
-    providerId=Integer.parseInt(hl7ProviderId);
+    providerId=context.getHL7Service().resolveUserId(providerComponents);
   }
- catch (  NumberFormatException e) {
-    throw new HL7Exception("Invalid provider ID '" + hl7ProviderId + "'");
+ catch (  HL7Exception ex) {
+    throw new HL7Exception("Error retrieving User from ORC.orderer");
   }
-  if (providerId == null || providerId == 0)   throw new HL7Exception("Unable to parse provider ID '" + hl7ProviderId + "'");
-  try {
-    provider=context.getUserService().getUser(providerId);
+  if (providerId == null) {
+    throw new HL7Exception("Could not find enterer specified in ORC segment");
   }
- catch (  Exception e) {
-    throw new HL7Exception("Error retrieving provider " + providerId,e);
+ else {
+    return context.getUserService().getUser(providerId);
   }
-  if (provider == null || provider.getUserId() == null)   throw new HL7Exception("Could not find provider (User) " + providerId);
-  return provider;
 }

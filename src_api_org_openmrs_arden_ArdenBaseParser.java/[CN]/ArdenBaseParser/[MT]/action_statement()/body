@@ -4,41 +4,58 @@
   AST action_statement_AST=null;
   try {
 {
-      AST tmp433_AST=null;
-      tmp433_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp433_AST);
+      AST tmp445_AST=null;
+      tmp445_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp445_AST);
       match(WRITE);
     }
 {
 {
-switch (LA(1)) {
-case LPAREN:
+        if ((LA(1) == LPAREN)) {
+          match(LPAREN);
+        }
+ else         if ((_tokenSet_60.member(LA(1)))) {
+        }
+ else {
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+      }
 {
-            match(LPAREN);
+        if ((_tokenSet_61.member(LA(1)))) {
+{
+            _loop253:             do {
+              if ((LA(1) == ACTION_OP)) {
+                AST tmp447_AST=null;
+                tmp447_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp447_AST);
+                match(ACTION_OP);
+                expr_factor();
+                astFactory.addASTChild(currentAST,returnAST);
+              }
+ else {
+                break _loop253;
+              }
+            }
+ while (true);
+          }
+        }
+ else         if ((_tokenSet_62.member(LA(1)))) {
+          expr();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+      }
+{
+switch (LA(1)) {
+case RPAREN:
+{
+            match(RPAREN);
             break;
           }
-case THE:
 case AT:
-case NOW:
-case MINIMUM:
-case MIN:
-case MAXIMUM:
-case MAX:
-case LAST:
-case FIRST:
-case EARLIEST:
-case LATEST:
-case TRUE:
-case FALSE:
-case INTLIT:
 case SEMI:
-case ID:
-case RPAREN:
-case COMMA:
-case ACTION_OP:
-case LITERAL_MERGE:
-case LITERAL_SORT:
-case STRING_LITERAL:
 {
           break;
         }
@@ -48,71 +65,26 @@ default :
       }
   }
 }
-{
-  if ((_tokenSet_59.member(LA(1)))) {
-{
-      _loop243:       do {
-        if ((LA(1) == ACTION_OP)) {
-          AST tmp435_AST=null;
-          tmp435_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp435_AST);
-          match(ACTION_OP);
-          expr_factor();
-          astFactory.addASTChild(currentAST,returnAST);
-        }
- else {
-          break _loop243;
-        }
-      }
- while (true);
-    }
-  }
- else   if ((_tokenSet_60.member(LA(1)))) {
-    expr();
-    astFactory.addASTChild(currentAST,returnAST);
-  }
- else {
-    throw new NoViableAltException(LT(1),getFilename());
-  }
 }
 {
 switch (LA(1)) {
-case RPAREN:
-{
-      match(RPAREN);
-      break;
-    }
 case AT:
-case SEMI:
 {
+{
+      AST tmp449_AST=null;
+      tmp449_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp449_AST);
+      match(AT);
+    }
+    AST tmp450_AST=null;
+    tmp450_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp450_AST);
+    match(ID);
     break;
   }
-default :
-{
-  throw new NoViableAltException(LT(1),getFilename());
-}
-}
-}
-}
-{
-switch (LA(1)) {
-case AT:
-{
-{
-AST tmp437_AST=null;
-tmp437_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp437_AST);
-match(AT);
-}
-AST tmp438_AST=null;
-tmp438_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp438_AST);
-match(ID);
-break;
-}
 case SEMI:
 {
-break;
+  break;
 }
 default :
 {
@@ -125,7 +97,7 @@ action_statement_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_34);
+recover(ex,_tokenSet_32);
 }
  else {
 throw ex;

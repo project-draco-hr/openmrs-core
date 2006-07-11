@@ -1,0 +1,11 @@
+{
+  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS);
+  List<Location> locs;
+  try {
+    locs=getEncounterService().findLocations(txt);
+  }
+  finally {
+    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS);
+  }
+  return locs;
+}

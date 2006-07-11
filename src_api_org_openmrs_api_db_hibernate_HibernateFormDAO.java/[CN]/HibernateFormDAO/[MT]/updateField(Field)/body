@@ -4,7 +4,6 @@
     Session session=HibernateUtil.currentSession();
     try {
       HibernateUtil.beginTransaction();
-      session.clear();
       session.merge(field);
       HibernateUtil.commitTransaction();
     }

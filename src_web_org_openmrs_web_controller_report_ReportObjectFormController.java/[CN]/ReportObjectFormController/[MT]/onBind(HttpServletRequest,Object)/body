@@ -31,6 +31,7 @@
       this.setValidator(v);
     }
  catch (    Throwable t) {
+      log.debug("Could not instantiate default validator \"" + currentClassName + "Validator\" for ReportObject class "+ currentClassName+ "; Using default validator: "+ rs.getDefaultReportObjectValidator());
       Class cls=Class.forName(rs.getDefaultReportObjectValidator());
       Constructor ct=cls.getConstructor();
       v=(Validator)ct.newInstance();

@@ -1,0 +1,18 @@
+{
+  Set<Obs> MyObs;
+  Obs obs=new Obs();
+{
+    MyObs=context.getObsService().getObservations(patient,concept);
+    Iterator iter=MyObs.iterator();
+    if (iter.hasNext()) {
+      while (iter.hasNext()) {
+        obs=(Obs)iter.next();
+        System.out.println(obs.getValueAsString(locale));
+      }
+      return obs;
+    }
+ else {
+      return null;
+    }
+  }
+}

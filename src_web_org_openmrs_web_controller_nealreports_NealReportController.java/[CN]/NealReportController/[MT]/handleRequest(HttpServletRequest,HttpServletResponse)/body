@@ -1,0 +1,115 @@
+{
+  HttpSession httpSession=request.getSession();
+  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  if (context == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
+    response.sendRedirect(request.getContextPath() + "/logout");
+  }
+  String reportType=request.getParameter("reportType");
+  ReportMaker maker=new ReportMaker();
+  maker.setParameter("report_type",reportType);
+  Locale locale=context.getLocale();
+  ConceptService cs=context.getConceptService();
+  PatientSetService pss=context.getPatientSetService();
+  String patientSetParameter=request.getParameter("patientSet");
+  PatientSet ps;
+  if (patientSetParameter != null && patientSetParameter.length() > 0) {
+    ps=PatientSet.parseCommaSeparatedPatientIds(patientSetParameter.trim());
+  }
+ else {
+    ps=pss.getAllPatients();
+  }
+  Map<Integer,Map<String,String>> patientDataHolder=new HashMap<Integer,Map<String,String>>();
+  List<String> attributesToGet=new ArrayList<String>();
+  Map<String,String> attributeNamesForReportMaker=new HashMap<String,String>();
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"Patient.patientId",General.ID);
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"PatientName.givenName",General.FIRST_NAME);
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"PatientName.familyName",General.LAST_NAME);
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"Patient.healthCenter",General.SITE);
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"Patient.birthdate",General.BIRTHDAY);
+  attributeHelper(attributesToGet,attributeNamesForReportMaker,"Patient.gender",General.SEX);
+  List<Concept> conceptsToGet=new ArrayList<Concept>();
+  Map<Concept,String> namesForReportMaker=new HashMap<Concept,String>();
+  conceptHelper(cs,conceptsToGet,namesForReportMaker,"ANTIRETROVIRAL TREATMENT GROUP",Hiv.TREATMENT_GROUP);
+  conceptHelper(cs,conceptsToGet,namesForReportMaker,"TUBERCULOSIS TREATMENT GROUP",TB.TB_GROUP);
+  conceptHelper(cs,conceptsToGet,namesForReportMaker,"CURRENT WHO HIV STAGE",Hiv.WHO_STAGE);
+  List<Concept> dynamicConceptsToGet=new ArrayList<Concept>();
+  Map<Concept,String> obsTypesForDynamicConcepts=new HashMap<Concept,String>();
+  dynamicConceptHelper(cs,dynamicConceptsToGet,obsTypesForDynamicConcepts,"WEIGHT (KG)","weight");
+  dynamicConceptHelper(cs,dynamicConceptsToGet,obsTypesForDynamicConcepts,"HEIGHT (CM)","height");
+  dynamicConceptHelper(cs,dynamicConceptsToGet,obsTypesForDynamicConcepts,"CD4 COUNT","cd4");
+  dynamicConceptHelper(cs,dynamicConceptsToGet,obsTypesForDynamicConcepts,"CD4%","cd4_percent");
+  for (  String attr : attributesToGet) {
+    String nameToUse=attributeNamesForReportMaker.get(attr);
+    Map<Integer,Object> temp=pss.getPatientAttributes(ps,attr,false);
+    for (    Map.Entry<Integer,Object> e : temp.entrySet()) {
+      Integer ptId=e.getKey();
+      Map<String,String> holder=(Map<String,String>)patientDataHolder.get(ptId);
+      if (holder == null) {
+        holder=new HashMap<String,String>();
+        patientDataHolder.put(ptId,holder);
+      }
+      if (e.getValue() != null) {
+        holder.put(nameToUse,e.getValue().toString());
+      }
+    }
+  }
+  for (  Concept c : conceptsToGet) {
+    String nameToUse=namesForReportMaker.get(c);
+    Map<Integer,List<Obs>> temp=pss.getObservations(ps,c);
+    for (    Map.Entry<Integer,List<Obs>> e : temp.entrySet()) {
+      Integer ptId=e.getKey();
+      Map<String,String> holder=(Map<String,String>)patientDataHolder.get(ptId);
+      if (holder == null) {
+        holder=new HashMap<String,String>();
+        patientDataHolder.put(ptId,holder);
+      }
+      holder.put(nameToUse,e.getValue().get(0).getValueAsString(locale));
+    }
+  }
+  for (  Concept c : dynamicConceptsToGet) {
+    String typeToUse=obsTypesForDynamicConcepts.get(c);
+    Map<Integer,List<Obs>> temp=pss.getObservations(ps,c);
+    for (    Map.Entry<Integer,List<Obs>> e : temp.entrySet()) {
+      Integer ptId=e.getKey();
+      List<Obs> obs=e.getValue();
+      for (      Obs o : obs) {
+        Map<String,String> holder=new HashMap<String,String>();
+        holder.put(General.ID,ptId.toString());
+        holder.put(Hiv.OBS_DATE,formatDate(o.getObsDatetime()));
+        holder.put(Hiv.RESULT,o.getValueAsString(locale));
+        holder.put(Hiv.OBS_TYPE,typeToUse);
+        maker.addDynamic(holder);
+      }
+    }
+  }
+  for (  Map<String,String> patient : patientDataHolder.values()) {
+    patient.put("BIRTH_YEAR","1978");
+    maker.addStatic(patient);
+  }
+  File dir=new File("NEAL_REPORT_DIR");
+  dir.mkdir();
+  String filename=maker.generateReport(dir.getAbsolutePath() + "/");
+  Map<String,Object> model=new HashMap<String,Object>();
+  model.put("dir",dir);
+  model.put("filename",filename);
+  AbstractView view=new AbstractView(){
+    protected void renderMergedOutputModel(    Map model,    HttpServletRequest request,    HttpServletResponse response) throws Exception {
+      File f=new File((File)model.get("dir"),(String)model.get("filename"));
+      response.setHeader("Content-Disposition","attachment; filename=" + f.getName());
+      response.setHeader("Pragma","no-cache");
+      response.setContentType("application/pdf");
+      response.setContentLength((int)f.length());
+      BufferedOutputStream out=new BufferedOutputStream(response.getOutputStream());
+      BufferedInputStream in=new BufferedInputStream(new FileInputStream(f));
+      for (int i=in.read(); i >= 0; i=in.read()) {
+        out.write(i);
+      }
+      in.close();
+      out.flush();
+      f.delete();
+    }
+  }
+;
+  return new ModelAndView(view,model);
+}

@@ -13,6 +13,8 @@
     }
   }
   map.put("datePattern",dateFormat.toLocalizedPattern().toLowerCase());
+  identifiers.addAll(newIdentifiers);
+  if (pref.length() > 0)   for (  PatientIdentifier pi : identifiers)   pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
   map.put("identifiers",identifiers);
   return map;
 }

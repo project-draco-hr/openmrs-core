@@ -2,7 +2,7 @@
   Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   List<FieldListItem> fields=new Vector<FieldListItem>();
   if (context != null) {
-    for (    Field field : context.getFormService().findFields(txt))     fields.add(new FieldListItem(field));
+    for (    Field field : context.getFormService().findFields(txt))     fields.add(new FieldListItem(field,context.getLocale()));
   }
   return fields;
 }

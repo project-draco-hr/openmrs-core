@@ -1,0 +1,10 @@
+{
+  try {
+    pageContext.getOut().print("</div>");
+  }
+ catch (  IOException e) {
+    log.error("Error while closing portlet tag",e);
+  }
+  resetValues();
+  return super.doEndTag();
+}

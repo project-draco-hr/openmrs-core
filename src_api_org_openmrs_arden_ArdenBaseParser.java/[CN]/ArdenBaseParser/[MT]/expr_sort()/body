@@ -6,86 +6,51 @@
     expr_where();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop257:       do {
+      _loop267:       do {
         if ((LA(1) == LITERAL_MERGE || LA(1) == LITERAL_SORT)) {
 {
 switch (LA(1)) {
 case LITERAL_MERGE:
 {
-                AST tmp440_AST=null;
-                tmp440_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp440_AST);
+                AST tmp452_AST=null;
+                tmp452_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp452_AST);
                 match(LITERAL_MERGE);
                 break;
               }
 case LITERAL_SORT:
 {
 {
-                AST tmp441_AST=null;
-                tmp441_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp441_AST);
+                AST tmp453_AST=null;
+                tmp453_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp453_AST);
                 match(LITERAL_SORT);
 {
-switch (LA(1)) {
-case LITERAL_TIME:
-case LITERAL_DATA:
-{
-                      sort_option();
-                      astFactory.addASTChild(currentAST,returnAST);
-                      break;
-                    }
-case THE:
-case AT:
-case NOW:
-case IF:
-case THEN:
-case MINIMUM:
-case MIN:
-case MAXIMUM:
-case MAX:
-case LAST:
-case FIRST:
-case EARLIEST:
-case LATEST:
-case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
-case TRUE:
-case FALSE:
-case INTLIT:
-case SEMI:
-case ID:
-case RPAREN:
-case COMMA:
-case ACTION_OP:
-case LITERAL_MERGE:
-case LITERAL_SORT:
-case STRING_LITERAL:
-{
-                    break;
+                  if ((LA(1) == TIME || LA(1) == LITERAL_DATA)) {
+                    sort_option();
+                    astFactory.addASTChild(currentAST,returnAST);
                   }
-default :
-{
-                  throw new NoViableAltException(LT(1),getFilename());
-                }
-            }
-          }
-        }
-        break;
-      }
-default :
-{
-      throw new NoViableAltException(LT(1),getFilename());
-    }
-}
-}
-expr_where();
-astFactory.addASTChild(currentAST,returnAST);
-}
+ else                   if ((_tokenSet_63.member(LA(1)))) {
+                  }
  else {
-break _loop257;
-}
+                    throw new NoViableAltException(LT(1),getFilename());
+                  }
+                }
+              }
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(LT(1),getFilename());
+          }
+      }
+    }
+    expr_where();
+    astFactory.addASTChild(currentAST,returnAST);
+  }
+ else {
+    break _loop267;
+  }
 }
  while (true);
 }
@@ -94,7 +59,7 @@ expr_sort_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_61);
+recover(ex,_tokenSet_64);
 }
  else {
 throw ex;

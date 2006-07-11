@@ -1,0 +1,37 @@
+{
+  String hl7PatientId=pid.getComponent(3,1);
+  String assigningAuthority=pid.getComponent(3,4);
+  if ("".equals(assigningAuthority)) {
+    assigningAuthority=null;
+  }
+  if (assigningAuthority == null) {
+    try {
+      Integer ptId=new Integer(hl7PatientId);
+      Patient patient=context.getPatientService().getPatient(ptId);
+      return patient.getPatientId();
+    }
+ catch (    Exception ex) {
+      log.error("Exception while treating PID.patient_id '" + hl7PatientId + "' as an internal identifier",ex);
+      return null;
+    }
+  }
+ else {
+    try {
+      PatientIdentifierType pit=context.getPatientService().getPatientIdentifierType(assigningAuthority);
+      if (pit == null) {
+        throw new HL7Exception("Can't find PatientIdentifierType named " + assigningAuthority);
+      }
+      List<PatientIdentifier> ids=context.getPatientService().getPatientIdentifiers(hl7PatientId,pit);
+      if (ids.size() == 1) {
+        return ids.get(0).getPatient().getPatientId();
+      }
+ else {
+        return null;
+      }
+    }
+ catch (    Exception ex) {
+      log.error("Exception while handling PID.patient_id '" + hl7PatientId + "' for assigning authority '"+ assigningAuthority+ "'",ex);
+      return null;
+    }
+  }
+}

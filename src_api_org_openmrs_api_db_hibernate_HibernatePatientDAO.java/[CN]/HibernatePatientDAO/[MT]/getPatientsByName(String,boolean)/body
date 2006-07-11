@@ -1,6 +1,7 @@
 {
   Session session=HibernateUtil.currentSession();
   Set<Patient> patients=new LinkedHashSet<Patient>();
+  name=name.replaceAll("  "," ");
   name=name.replace(", "," ");
   String[] names=name.split(" ");
   log.debug("name: " + name);

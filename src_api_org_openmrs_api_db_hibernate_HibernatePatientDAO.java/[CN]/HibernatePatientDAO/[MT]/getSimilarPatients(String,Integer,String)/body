@@ -2,6 +2,7 @@
   Session session=HibernateUtil.currentSession();
   if (birthyear == null)   birthyear=0;
   Set<Patient> patients=new LinkedHashSet<Patient>();
+  name=name.replaceAll("  "," ");
   name.replace(", "," ");
   String[] names=name.split(" ");
   String q="select p from Patient p where";

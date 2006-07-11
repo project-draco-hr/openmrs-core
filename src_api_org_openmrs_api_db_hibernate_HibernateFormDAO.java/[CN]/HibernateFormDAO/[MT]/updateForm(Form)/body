@@ -4,7 +4,7 @@
     Session session=HibernateUtil.currentSession();
     try {
       HibernateUtil.beginTransaction();
-      session.saveOrUpdate(form);
+      session.merge(form);
       HibernateUtil.commitTransaction();
     }
  catch (    Exception e) {

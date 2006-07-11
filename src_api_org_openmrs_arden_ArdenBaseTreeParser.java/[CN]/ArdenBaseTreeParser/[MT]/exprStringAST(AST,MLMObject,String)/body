@@ -13,7 +13,7 @@
 switch (_t.getType()) {
 case ID:
 {
-          AST __t360=_t;
+          AST __t375=_t;
           ift=_t == ASTNULL ? null : (AST)_t;
           match(_t,ID);
           _t=_t.getFirstChild();
@@ -27,7 +27,7 @@ case ID:
             obj.SetAnswer(a,instr);
           }
           s=a;
-          _t=__t360;
+          _t=__t375;
           _t=_t.getNextSibling();
           break;
         }
@@ -39,23 +39,23 @@ case FALSE:
 switch (_t.getType()) {
 case TRUE:
 {
-              AST __t362=_t;
+              AST __t377=_t;
               AST tmp51_AST_in=(AST)_t;
               match(_t,TRUE);
               _t=_t.getFirstChild();
               obj.SetAnswer(true,instr);
-              _t=__t362;
+              _t=__t377;
               _t=_t.getNextSibling();
               break;
             }
 case FALSE:
 {
-            AST __t363=_t;
+            AST __t378=_t;
             AST tmp52_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getFirstChild();
             obj.SetAnswer(false,instr);
-            _t=__t363;
+            _t=__t378;
             _t=_t.getNextSibling();
             break;
           }
@@ -92,7 +92,7 @@ break;
 }
 case ACTION_OP:
 {
-AST __t366=_t;
+AST __t381=_t;
 AST tmp53_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getFirstChild();
@@ -108,7 +108,7 @@ match(_t,STRING_LITERAL);
 _t=_t.getNextSibling();
 b=str.getText();
 obj.SetUserVarVal(a,b,instr);
-_t=__t366;
+_t=__t381;
 _t=_t.getNextSibling();
 break;
 }

@@ -4,7 +4,6 @@
  else {
     try {
       HibernateUtil.beginTransaction();
-      session.clear();
       session.merge(formField);
       HibernateUtil.commitTransaction();
     }
@@ -13,6 +12,5 @@
       throw new DAOException(e);
     }
   }
-  session.evict(formField);
   log.debug("formField cache mode: " + session.getCacheMode());
 }

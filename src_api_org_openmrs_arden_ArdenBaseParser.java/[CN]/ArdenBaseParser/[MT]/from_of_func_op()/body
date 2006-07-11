@@ -11,17 +11,17 @@ case MIN:
 switch (LA(1)) {
 case MINIMUM:
 {
-              AST tmp308_AST=null;
-              tmp308_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp308_AST);
+              AST tmp320_AST=null;
+              tmp320_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp320_AST);
               match(MINIMUM);
               break;
             }
 case MIN:
 {
-            AST tmp309_AST=null;
-            tmp309_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp309_AST);
+            AST tmp321_AST=null;
+            tmp321_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp321_AST);
             match(MIN);
             break;
           }
@@ -41,17 +41,17 @@ case MAX:
 switch (LA(1)) {
 case MAXIMUM:
 {
-      AST tmp310_AST=null;
-      tmp310_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp310_AST);
+      AST tmp322_AST=null;
+      tmp322_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp322_AST);
       match(MAXIMUM);
       break;
     }
 case MAX:
 {
-    AST tmp311_AST=null;
-    tmp311_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp311_AST);
+    AST tmp323_AST=null;
+    tmp323_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp323_AST);
     match(MAX);
     break;
   }
@@ -67,9 +67,9 @@ break;
 case LAST:
 {
 {
-AST tmp312_AST=null;
-tmp312_AST=astFactory.create(LT(1));
-astFactory.makeASTRoot(currentAST,tmp312_AST);
+AST tmp324_AST=null;
+tmp324_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp324_AST);
 match(LAST);
 }
 from_of_func_op_AST=(AST)currentAST.root;
@@ -78,9 +78,9 @@ break;
 case FIRST:
 {
 {
-AST tmp313_AST=null;
-tmp313_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp313_AST);
+AST tmp325_AST=null;
+tmp325_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp325_AST);
 match(FIRST);
 }
 from_of_func_op_AST=(AST)currentAST.root;
@@ -89,9 +89,9 @@ break;
 case EARLIEST:
 {
 {
-AST tmp314_AST=null;
-tmp314_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp314_AST);
+AST tmp326_AST=null;
+tmp326_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp326_AST);
 match(EARLIEST);
 }
 from_of_func_op_AST=(AST)currentAST.root;
@@ -100,9 +100,9 @@ break;
 case LATEST:
 {
 {
-AST tmp315_AST=null;
-tmp315_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp315_AST);
+AST tmp327_AST=null;
+tmp327_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp327_AST);
 match(LATEST);
 }
 from_of_func_op_AST=(AST)currentAST.root;
@@ -111,6 +111,7 @@ break;
 case NOW:
 case TRUE:
 case FALSE:
+case OF:
 case INTLIT:
 case ID:
 case LPAREN:
@@ -129,7 +130,7 @@ throw new NoViableAltException(LT(1),getFilename());
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_37);
+recover(ex,_tokenSet_39);
 }
  else {
 throw ex;

@@ -1,0 +1,5 @@
+{
+  Session session=HibernateUtil.currentSession();
+  List result=session.createCriteria(Location.class).add(Expression.like("name",name,MatchMode.START)).addOrder(Order.asc("name")).list();
+  return result;
+}

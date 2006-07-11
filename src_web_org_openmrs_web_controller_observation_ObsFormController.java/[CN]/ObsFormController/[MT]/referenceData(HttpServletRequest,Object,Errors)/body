@@ -5,7 +5,6 @@
   Map<String,Object> map=new HashMap<String,Object>();
   String defaultVerbose="false";
   if (context != null && context.isAuthenticated()) {
-    ObsService es=context.getObsService();
     map.put("forms",context.getFormService().getForms());
     if (obs.getConcept() != null)     map.put("conceptName",obs.getConcept().getName(request.getLocale()));
     defaultVerbose=context.getAuthenticatedUser().getProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);

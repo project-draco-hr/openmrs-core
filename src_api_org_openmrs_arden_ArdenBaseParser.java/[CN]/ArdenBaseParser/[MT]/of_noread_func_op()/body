@@ -1,0 +1,22 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST of_noread_func_op_AST=null;
+  try {
+    AST tmp477_AST=null;
+    tmp477_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp477_AST);
+    match(TIME);
+    of_noread_func_op_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_48);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=of_noread_func_op_AST;
+}

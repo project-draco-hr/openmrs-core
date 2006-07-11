@@ -3,25 +3,26 @@
   ASTPair currentAST=new ASTPair();
   AST logic_assignment_AST=null;
   try {
+    if ((LA(1) == ID || LA(1) == ACTION_OP)) {
 {
 switch (LA(1)) {
 case ACTION_OP:
 {
-          AST tmp405_AST=null;
-          tmp405_AST=astFactory.create(LT(1));
-          astFactory.makeASTRoot(currentAST,tmp405_AST);
-          match(ACTION_OP);
-          break;
-        }
+            AST tmp417_AST=null;
+            tmp417_AST=astFactory.create(LT(1));
+            astFactory.makeASTRoot(currentAST,tmp417_AST);
+            match(ACTION_OP);
+            break;
+          }
 case ID:
 {
-        break;
-      }
+          break;
+        }
 default :
 {
-      throw new NoViableAltException(LT(1),getFilename());
-    }
-}
+        throw new NoViableAltException(LT(1),getFilename());
+      }
+  }
 }
 identifier_or_object_ref();
 astFactory.addASTChild(currentAST,returnAST);
@@ -29,20 +30,20 @@ astFactory.addASTChild(currentAST,returnAST);
 switch (LA(1)) {
 case ACTION_OP:
 {
-    AST tmp406_AST=null;
-    tmp406_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp406_AST);
-    match(ACTION_OP);
-    break;
-  }
+      AST tmp418_AST=null;
+      tmp418_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp418_AST);
+      match(ACTION_OP);
+      break;
+    }
 case BECOMES:
 case EQUALS:
 {
-  break;
-}
+    break;
+  }
 default :
 {
-throw new NoViableAltException(LT(1),getFilename());
+  throw new NoViableAltException(LT(1),getFilename());
 }
 }
 }
@@ -67,6 +68,17 @@ throw new NoViableAltException(LT(1),getFilename());
 expr();
 astFactory.addASTChild(currentAST,returnAST);
 logic_assignment_AST=(AST)currentAST.root;
+}
+ else if ((LA(1) == LET || LA(1) == NOW || LA(1) == ID)) {
+identifier_becomes();
+astFactory.addASTChild(currentAST,returnAST);
+expr();
+astFactory.addASTChild(currentAST,returnAST);
+logic_assignment_AST=(AST)currentAST.root;
+}
+ else {
+throw new NoViableAltException(LT(1),getFilename());
+}
 }
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {

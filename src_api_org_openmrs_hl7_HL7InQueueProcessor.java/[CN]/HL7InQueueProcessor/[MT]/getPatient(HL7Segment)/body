@@ -1,20 +1,15 @@
 {
-  String hl7PatientId=pid.getComponent(3,1);
-  Integer patientId=null;
-  Patient patient=null;
+  Integer ptId;
   try {
-    patientId=Integer.parseInt(hl7PatientId);
+    ptId=context.getHL7Service().resolvePatientId(pid);
   }
- catch (  NumberFormatException e) {
-    throw new HL7Exception("Invalid patient ID '" + hl7PatientId + "'");
+ catch (  HL7Exception ex) {
+    throw new HL7Exception("Error retrieving patient from PID segment",ex);
   }
-  if (patientId == null || patientId == 0)   throw new HL7Exception("Unable to parse patient ID '" + hl7PatientId + "'");
-  try {
-    patient=context.getPatientService().getPatient(patientId);
+  if (ptId == null) {
+    throw new HL7Exception("Could not find patient specified in PID segment");
   }
- catch (  Exception e) {
-    throw new HL7Exception("Error retrieving patient " + patientId,e);
+ else {
+    return context.getPatientService().getPatient(ptId);
   }
-  if (patient == null || patient.getPatientId() == null)   throw new HL7Exception("Could not find patient " + patientId);
-  return patient;
 }

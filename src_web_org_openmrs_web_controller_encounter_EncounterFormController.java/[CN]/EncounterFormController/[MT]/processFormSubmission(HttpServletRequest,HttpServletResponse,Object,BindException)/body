@@ -8,6 +8,7 @@
     if (context != null && context.isAuthenticated()) {
       if (request.getParameter("patientId") != null)       encounter.setPatient(context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
       if (request.getParameter("providerId") != null)       encounter.setProvider(context.getUserService().getUser(Integer.valueOf(request.getParameter("providerId"))));
+      if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
     }
   }
   finally {

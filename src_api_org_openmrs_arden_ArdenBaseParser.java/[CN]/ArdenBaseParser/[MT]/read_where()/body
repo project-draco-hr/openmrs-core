@@ -11,9 +11,10 @@ case ARDEN_CURLY_BRACKETS:
           astFactory.addASTChild(currentAST,returnAST);
 {
 switch (LA(1)) {
+case AFTER:
 case NOT:
 case WHERE:
-case LITERAL_within:
+case WITHIN:
 {
 {
 switch (LA(1)) {
@@ -27,8 +28,9 @@ case WHERE:
                       astFactory.addASTChild(currentAST,returnAST);
                       break;
                     }
+case AFTER:
 case NOT:
-case LITERAL_within:
+case WITHIN:
 {
                     break;
                   }
@@ -40,7 +42,8 @@ default :
           }
 {
 switch (LA(1)) {
-case LITERAL_within:
+case AFTER:
+case WITHIN:
 {
                 temporal_comp_op();
                 astFactory.addASTChild(currentAST,returnAST);
@@ -48,9 +51,9 @@ case LITERAL_within:
               }
 case NOT:
 {
-              AST tmp346_AST=null;
-              tmp346_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp346_AST);
+              AST tmp358_AST=null;
+              tmp358_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp358_AST);
               match(NOT);
               temporal_comp_op();
               astFactory.addASTChild(currentAST,returnAST);
@@ -104,7 +107,8 @@ occur();
 astFactory.addASTChild(currentAST,returnAST);
 {
 switch (LA(1)) {
-case LITERAL_within:
+case AFTER:
+case WITHIN:
 {
     temporal_comp_op();
     astFactory.addASTChild(currentAST,returnAST);
@@ -112,9 +116,9 @@ case LITERAL_within:
   }
 case NOT:
 {
-  AST tmp348_AST=null;
-  tmp348_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp348_AST);
+  AST tmp360_AST=null;
+  tmp360_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp360_AST);
   match(NOT);
   temporal_comp_op();
   astFactory.addASTChild(currentAST,returnAST);
@@ -153,7 +157,7 @@ read_where_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_45);
+recover(ex,_tokenSet_46);
 }
  else {
 throw ex;

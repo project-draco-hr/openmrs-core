@@ -15,20 +15,20 @@ switch (LA(1)) {
 case READ:
 {
 {
-                AST tmp281_AST=null;
-                tmp281_AST=astFactory.create(LT(1));
-                astFactory.makeASTRoot(currentAST,tmp281_AST);
+                AST tmp286_AST=null;
+                tmp286_AST=astFactory.create(LT(1));
+                astFactory.makeASTRoot(currentAST,tmp286_AST);
                 match(READ);
               }
 {
 {
-                  if ((_tokenSet_32.member(LA(1)))) {
+                  if ((_tokenSet_33.member(LA(1)))) {
 {
                       of_read_func_op();
                       astFactory.addASTChild(currentAST,returnAST);
                     }
                   }
- else                   if ((_tokenSet_33.member(LA(1)))) {
+ else                   if ((_tokenSet_34.member(LA(1)))) {
 {
                       from_of_func_op();
                       astFactory.addASTChild(currentAST,returnAST);
@@ -36,13 +36,13 @@ case READ:
 switch (LA(1)) {
 case INTLIT:
 {
-                            AST tmp282_AST=null;
-                            tmp282_AST=astFactory.create(LT(1));
-                            astFactory.addASTChild(currentAST,tmp282_AST);
+                            AST tmp287_AST=null;
+                            tmp287_AST=astFactory.create(LT(1));
+                            astFactory.addASTChild(currentAST,tmp287_AST);
                             match(INTLIT);
-                            AST tmp283_AST=null;
-                            tmp283_AST=astFactory.create(LT(1));
-                            astFactory.addASTChild(currentAST,tmp283_AST);
+                            AST tmp288_AST=null;
+                            tmp288_AST=astFactory.create(LT(1));
+                            astFactory.addASTChild(currentAST,tmp288_AST);
                             match(FROM);
                             break;
                           }
@@ -73,9 +73,10 @@ case ARDEN_CURLY_BRACKETS:
                 astFactory.addASTChild(currentAST,returnAST);
 {
 switch (LA(1)) {
+case AFTER:
 case NOT:
 case WHERE:
-case LITERAL_within:
+case WITHIN:
 {
 {
 switch (LA(1)) {
@@ -87,8 +88,9 @@ case WHERE:
                             occur();
                             break;
                           }
+case AFTER:
 case NOT:
-case LITERAL_within:
+case WITHIN:
 {
                           break;
                         }
@@ -100,7 +102,8 @@ default :
                 }
 {
 switch (LA(1)) {
-case LITERAL_within:
+case AFTER:
+case WITHIN:
 {
                       temporal_comp_op();
                       astFactory.addASTChild(currentAST,returnAST);
@@ -108,9 +111,9 @@ case LITERAL_within:
                     }
 case NOT:
 {
-                    AST tmp284_AST=null;
-                    tmp284_AST=astFactory.create(LT(1));
-                    astFactory.addASTChild(currentAST,tmp284_AST);
+                    AST tmp289_AST=null;
+                    tmp289_AST=astFactory.create(LT(1));
+                    astFactory.addASTChild(currentAST,tmp289_AST);
                     match(NOT);
                     temporal_comp_op();
                     astFactory.addASTChild(currentAST,returnAST);
@@ -154,7 +157,8 @@ case WHERE:
     astFactory.addASTChild(currentAST,returnAST);
 {
 switch (LA(1)) {
-case LITERAL_within:
+case AFTER:
+case WITHIN:
 {
           temporal_comp_op();
           astFactory.addASTChild(currentAST,returnAST);
@@ -162,9 +166,9 @@ case LITERAL_within:
         }
 case NOT:
 {
-        AST tmp286_AST=null;
-        tmp286_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp286_AST);
+        AST tmp291_AST=null;
+        tmp291_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp291_AST);
         match(NOT);
         temporal_comp_op();
         astFactory.addASTChild(currentAST,returnAST);
@@ -204,15 +208,16 @@ break;
 case EVENT:
 {
 {
-AST tmp288_AST=null;
-tmp288_AST=astFactory.create(LT(1));
-astFactory.makeASTRoot(currentAST,tmp288_AST);
+AST tmp293_AST=null;
+tmp293_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp293_AST);
 match(EVENT);
 }
 mapping_factor();
 astFactory.addASTChild(currentAST,returnAST);
 break;
 }
+case COUNT:
 case THE:
 case NOW:
 case MINIMUM:
@@ -223,11 +228,20 @@ case LAST:
 case FIRST:
 case EARLIEST:
 case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
 case TRUE:
 case FALSE:
+case OF:
+case TIME:
 case INTLIT:
 case SEMI:
 case ID:
+case LPAREN:
 case COMMA:
 case LITERAL_MERGE:
 case LITERAL_SORT:
@@ -260,7 +274,7 @@ throw new NoViableAltException(LT(1),getFilename());
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_34);
+recover(ex,_tokenSet_32);
 }
  else {
 throw ex;

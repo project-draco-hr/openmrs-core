@@ -6,52 +6,61 @@
 switch (LA(1)) {
 case ID:
 {
-        AST tmp457_AST=null;
-        tmp457_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp457_AST);
+        AST tmp471_AST=null;
+        tmp471_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp471_AST);
         match(ID);
         expr_factor_atom_AST=(AST)currentAST.root;
         break;
       }
-case TRUE:
-case FALSE:
+case LPAREN:
 {
-      boolean_value();
+      match(LPAREN);
+      expr();
       astFactory.addASTChild(currentAST,returnAST);
+      match(RPAREN);
       expr_factor_atom_AST=(AST)currentAST.root;
       break;
     }
-case STRING_LITERAL:
+case TRUE:
+case FALSE:
 {
-    AST tmp458_AST=null;
-    tmp458_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp458_AST);
-    match(STRING_LITERAL);
+    boolean_value();
+    astFactory.addASTChild(currentAST,returnAST);
     expr_factor_atom_AST=(AST)currentAST.root;
     break;
   }
+case STRING_LITERAL:
+{
+  AST tmp474_AST=null;
+  tmp474_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp474_AST);
+  match(STRING_LITERAL);
+  expr_factor_atom_AST=(AST)currentAST.root;
+  break;
+}
 default :
 if ((LA(1) == INTLIT)) {
-  AST tmp459_AST=null;
-  tmp459_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp459_AST);
-  match(INTLIT);
-  expr_factor_atom_AST=(AST)currentAST.root;
+AST tmp475_AST=null;
+tmp475_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp475_AST);
+match(INTLIT);
+expr_factor_atom_AST=(AST)currentAST.root;
 }
  else if ((LA(1) == NOW || LA(1) == INTLIT)) {
-  time_value();
-  astFactory.addASTChild(currentAST,returnAST);
-  expr_factor_atom_AST=(AST)currentAST.root;
+time_value();
+astFactory.addASTChild(currentAST,returnAST);
+expr_factor_atom_AST=(AST)currentAST.root;
 }
  else {
-  throw new NoViableAltException(LT(1),getFilename());
+throw new NoViableAltException(LT(1),getFilename());
 }
 }
 }
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_46);
+recover(ex,_tokenSet_47);
 }
  else {
 throw ex;

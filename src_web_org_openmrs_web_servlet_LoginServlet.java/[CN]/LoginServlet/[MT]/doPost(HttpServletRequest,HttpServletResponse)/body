@@ -77,6 +77,9 @@
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.password.change");
           redirect=request.getContextPath() + "/options.form#Change Login Info";
         }
+        if (context.getLocale() == null) {
+          context.setLocale(OpenmrsConstants.GLOBAL_DEFAULT_LOCALE);
+        }
         response.sendRedirect(redirect);
         log.debug(request.getLocalAddr());
         httpSession.setAttribute(WebConstants.OPENMRS_CLIENT_IP_HTTPSESSION_ATTR,request.getLocalAddr());

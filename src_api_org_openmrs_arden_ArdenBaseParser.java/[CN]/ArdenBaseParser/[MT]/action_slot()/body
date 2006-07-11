@@ -9,14 +9,14 @@
     match(ACTION);
     match(COLON);
 {
-      _loop236:       do {
+      _loop246:       do {
         if ((LA(1) == WRITE)) {
           action_statement();
           astFactory.addASTChild(currentAST,returnAST);
           match(SEMI);
         }
  else {
-          break _loop236;
+          break _loop246;
         }
       }
  while (true);
