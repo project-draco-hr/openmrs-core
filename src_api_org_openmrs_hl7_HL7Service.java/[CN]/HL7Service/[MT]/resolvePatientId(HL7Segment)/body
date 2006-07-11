@@ -1,10 +1,17 @@
 {
+  Integer patientId=null;
   String hl7PatientId=pid.getComponent(3,1);
   String assigningAuthority=pid.getComponent(3,4);
   if ("".equals(assigningAuthority)) {
     assigningAuthority=null;
   }
-  if (assigningAuthority == null) {
+  try {
+    patientId=Integer.parseInt(hl7PatientId);
+  }
+ catch (  NumberFormatException e) {
+    log.warn("Invalid patient ID '" + hl7PatientId + "'");
+  }
+  if (assigningAuthority == null || patientId != null) {
     try {
       Integer ptId=new Integer(hl7PatientId);
       Patient patient=context.getPatientService().getPatient(ptId);
