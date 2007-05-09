@@ -1,0 +1,22 @@
+{
+  String[] ruleList={"NAME_RULE","LEAD RULE","HI RISK LEAD RULE","DIRECT TB CONTACT","INDIRECT TB CONTACT","DIRECT EXP HI RISK COUNTRY","INDIRECT EXP HI RISK COUNTRY"};
+  startup();
+  Context.authenticate("vibha","chicachica");
+  LogicService logic=Context.getLogicService();
+  registerRules(logic);
+  registerConcepts(logic);
+  Integer[] pidList=new Integer[]{1};
+  try {
+    for (    Integer patientId : pidList) {
+      Patient patient=Context.getPatientService().getPatient(patientId);
+      for (      String rule : ruleList) {
+        Result result=logic.eval(patient,rule);
+        System.out.println("\n" + result.toString());
+      }
+    }
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  shutdown();
+}

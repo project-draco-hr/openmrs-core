@@ -1,24 +1,36 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   User user=(User)obj;
-  UserService us=context.getUserService();
-  if (context != null && context.isAuthenticated()) {
-    if (us.hasDuplicateUsername(user)) {
-      errors.rejectValue("username","error.username.taken");
-    }
+  UserService us=Context.getUserService();
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String action=request.getParameter("action");
+  if (!Context.isAuthenticated()) {
+    errors.reject("auth.invalid");
+  }
+ else   if (msa.getMessage("User.assumeIdentity").equals(action)) {
+    Context.becomeUser(user.getSystemId());
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.assumeIdentity.success");
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ARGS,user.getPersonName());
+    return new ModelAndView(new RedirectView(request.getContextPath() + "/index.htm"));
+  }
+ else   if (msa.getMessage("User.delete").equals(action)) {
+    us.deleteUser(user);
+    return new ModelAndView(new RedirectView(getSuccessView()));
+  }
+ else {
+    if (us.hasDuplicateUsername(user))     errors.rejectValue("username","error.username.taken");
     String password=request.getParameter("password");
-    if (password == null)     password="";
+    if (password == null || password.equals("XXXXXXXXXXXXXXX"))     password="";
     String confirm=request.getParameter("confirm");
-    if (confirm == null)     confirm="";
+    if (confirm == null || confirm.equals("XXXXXXXXXXXXXXX"))     confirm="";
     if (!password.equals(confirm))     errors.reject("error.password.match");
-    if (password.length() == 0 && user.getUserId() == null)     errors.reject("error.password.weak");
+    if (password.length() == 0 && isNewUser(user))     errors.reject("error.password.weak");
     if (password.length() > 0) {
       if (password.length() < 6)       errors.reject("error.password.length");
       if (StringUtils.isAlpha(password))       errors.reject("error.password.characters");
       if (password.equals(user.getUsername()) || password.equals(user.getSystemId()))       errors.reject("error.password.weak");
     }
-    String[] roles=request.getParameterValues("roles");
+    String[] roles=request.getParameterValues("roleStrings");
     Set<Role> newRoles=new HashSet<Role>();
     if (roles != null) {
       for (      String r : roles) {
@@ -30,8 +42,5 @@
     if (user.getRoles() == null)     newRoles.clear();
  else     user.getRoles().retainAll(newRoles);
   }
- else {
-    errors.reject("auth.invalid");
-  }
-  return super.processFormSubmission(request,response,obj,errors);
+  return super.processFormSubmission(request,response,user,errors);
 }

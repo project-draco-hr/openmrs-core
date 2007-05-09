@@ -1,15 +1,4 @@
 {
   if (hl7InErr.getHL7InErrorId() == 0)   createHL7InError(hl7InErr);
- else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(hl7InErr);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().saveOrUpdate(hl7InErr);
 }

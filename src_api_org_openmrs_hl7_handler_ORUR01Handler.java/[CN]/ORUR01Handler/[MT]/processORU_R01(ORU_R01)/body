@@ -1,0 +1,77 @@
+{
+  validate(oru);
+  MSH msh=getMSH(oru);
+  PID pid=getPID(oru);
+  PV1 pv1=getPV1(oru);
+  ORC orc=getORC(oru);
+  String messageControlId=msh.getMessageControlID().getValue();
+  if (log.isDebugEnabled())   log.debug("Found HL7 message in inbound queue with control id = " + messageControlId);
+  HL7Service hl7Service=Context.getHL7Service();
+  Patient patient=getPatient(pid);
+  if (log.isDebugEnabled())   log.debug("Processing HL7 message for patient " + patient.getPatientId());
+  Encounter encounter=createEncounter(msh,patient,pv1,orc);
+  try {
+    updateHealthCenter(patient,pv1);
+  }
+ catch (  Exception e) {
+    log.error("Error while processing Discharge To Location (" + messageControlId + ")",e);
+  }
+  if (log.isDebugEnabled())   log.debug("Creating observations for message " + messageControlId + "...");
+  ORU_R01_PATIENT_RESULT patientResult=oru.getPATIENT_RESULT();
+  int numObr=patientResult.getORDER_OBSERVATIONReps();
+  for (int i=0; i < numObr; i++) {
+    if (log.isDebugEnabled())     log.debug("Processing OBR (" + i + " of "+ numObr+ ")");
+    ORU_R01_ORDER_OBSERVATION orderObs=patientResult.getORDER_OBSERVATION(i);
+    Hashtable<String,Vector<Obs>> obsGroups=null;
+    int numObs=orderObs.getOBSERVATIONReps();
+    for (int j=0; j < numObs; j++) {
+      if (log.isDebugEnabled())       log.debug("Processing OBS (" + j + " of "+ numObs+ ")");
+      OBX obx=orderObs.getOBSERVATION(j).getOBX();
+      try {
+        if (log.isDebugEnabled())         log.debug("Parsing observation");
+        Obs obs=parseObs(encounter,obx);
+        if (obs != null) {
+          if (log.isDebugEnabled())           log.debug("Obs is not null");
+          String subId=obx.getObservationSubID().getValue();
+          if (log.isDebugEnabled())           log.debug("Obs sub id = " + subId);
+          if (subId != null && subId.length() > 0) {
+            if (obsGroups == null)             obsGroups=new Hashtable<String,Vector<Obs>>();
+            if (log.isDebugEnabled())             log.debug("Adding obs to obs group");
+            addToObsGroup(obsGroups,subId,obs);
+          }
+ else {
+            if (log.isDebugEnabled())             log.debug("Creating obs via API call");
+            Context.getObsService().createObs(obs);
+          }
+          if (log.isDebugEnabled())           log.debug("Done with this obs");
+        }
+      }
+ catch (      HL7Exception e) {
+        log.warn("HL7Exception",e);
+        HL7InError hl7InError=new HL7InError();
+        hl7InError.setError(e.getMessage());
+        hl7InError.setErrorDetails(PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")));
+        hl7InError.setHL7SourceKey(messageControlId);
+        hl7Service.createHL7InError(hl7InError);
+      }
+    }
+    if (obsGroups != null && obsGroups.size() > 0) {
+      if (log.isDebugEnabled())       log.debug("Processing " + obsGroups.size() + " obs group(s)");
+      for (      Vector<Obs> group : obsGroups.values()) {
+        Obs[] groupArray=new Obs[group.size()];
+        group.toArray(groupArray);
+        if (groupArray.length == 1) {
+          if (log.isDebugEnabled())           log.debug("Creating obs (single entry within obs group)");
+          Context.getObsService().createObs(groupArray[0]);
+        }
+ else         if (groupArray.length > 1) {
+          if (log.isDebugEnabled())           log.debug("Creating obs group");
+          Context.getObsService().createObsGroup(groupArray);
+        }
+      }
+      if (log.isDebugEnabled())       log.debug("Finished creating obs group(s)");
+    }
+  }
+  if (log.isDebugEnabled())   log.debug("Finished creating observations");
+  return oru;
+}

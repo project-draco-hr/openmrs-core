@@ -1,0 +1,12 @@
+{
+  Map<Integer,List<DrugOrder>> patientIdDrugOrderMap;
+  if (drugOrderMap.containsKey(drugSetName)) {
+    patientIdDrugOrderMap=drugOrderMap.get(drugSetName);
+  }
+ else {
+    Concept drugSet=conceptService.getConceptByName(drugSetName);
+    patientIdDrugOrderMap=patientSetService.getCurrentDrugOrders(getPatientSet(),drugSet);
+    drugOrderMap.put(drugSetName,patientIdDrugOrderMap);
+  }
+  return patientIdDrugOrderMap.get(patientId);
+}

@@ -1,7 +1,6 @@
 {
-  Session session=HibernateUtil.currentSession();
   Integer i=c.getConceptId();
-  List<Concept> concepts=session.createCriteria(Concept.class).add(Expression.gt("conceptId",i)).addOrder(Order.asc("conceptId")).setFetchSize(1).list();
+  List<Concept> concepts=sessionFactory.getCurrentSession().createCriteria(Concept.class).add(Expression.gt("conceptId",i)).addOrder(Order.asc("conceptId")).setFetchSize(1).list();
   if (concepts.size() < 1)   return null;
   return concepts.get(0);
 }

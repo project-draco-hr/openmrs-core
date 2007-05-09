@@ -1,0 +1,17 @@
+{
+  log.info("Calling authorization advice before " + method.getName());
+  User user=Context.getAuthenticatedUser();
+  log.info("User " + user);
+  if (user != null)   log.info("has roles " + user.getAllRoles());
+  Attributes attributes=new AuthorizedAnnotationAttributes();
+  Collection<String> attrs=attributes.getAttributes(method);
+  if (attrs != null && attrs.size() > 0) {
+    for (    String privilege : attrs) {
+      if (privilege == null || privilege.length() < 1)       return;
+      log.info("User has privilege " + privilege + "? "+ Context.hasPrivilege(privilege));
+      if (Context.hasPrivilege(privilege))       return;
+    }
+    log.info("User " + user + " is not authorized to access "+ method.getName());
+    throw new APIAuthenticationException("Privilege required: " + attrs);
+  }
+}

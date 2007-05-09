@@ -1,0 +1,10 @@
+{
+  List<URL> urls=Arrays.asList(existingUrls);
+  List<URL> result=new LinkedList<URL>();
+  for (  URL url : getUrls(module)) {
+    if (!urls.contains(url)) {
+      result.add(url);
+    }
+  }
+  return result;
+}

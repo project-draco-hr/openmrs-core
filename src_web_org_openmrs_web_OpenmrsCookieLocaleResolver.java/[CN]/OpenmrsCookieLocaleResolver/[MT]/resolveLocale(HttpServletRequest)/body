@@ -1,10 +1,6 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Locale locale;
-  if (context != null) {
-    locale=context.getLocale();
-    if (locale != null)     return locale;
-  }
+  locale=Context.getLocale();
+  if (locale != null)   return locale;
   return super.resolveLocale(request);
 }

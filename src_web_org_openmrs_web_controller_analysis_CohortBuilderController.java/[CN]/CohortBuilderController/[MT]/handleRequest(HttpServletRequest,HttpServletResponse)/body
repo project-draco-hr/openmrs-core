@@ -1,0 +1,52 @@
+{
+  Map<String,Object> model=new HashMap<String,Object>();
+  if (Context.isAuthenticated()) {
+    List<PatientFilter> savedFilters=Context.getReportService().getAllPatientFilters();
+    if (savedFilters == null)     savedFilters=new ArrayList<PatientFilter>();
+    CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+    if (history == null) {
+      history=new CohortSearchHistory();
+      Context.setVolatileUserData("CohortBuilderSearchHistory",history);
+    }
+    List<Shortcut> shortcuts=new ArrayList<Shortcut>();
+    String shortcutProperty=Context.getAdministrationService().getGlobalProperty("cohort.cohortBuilder.shortcuts");
+    if (shortcutProperty != null && shortcutProperty.length() > 0) {
+      String[] shortcutSpecs=shortcutProperty.split(";");
+      for (int i=0; i < shortcutSpecs.length; ++i) {
+        try {
+          shortcuts.add(new Shortcut(shortcutSpecs[i]));
+        }
+ catch (        Exception ex) {
+          log.error("Exception trying to create filter from shortcut",ex);
+        }
+      }
+    }
+    ConceptService cs=Context.getConceptService();
+    List<Concept> orderStopReasons=new ArrayList<Concept>();
+{
+      Concept c=cs.getConceptByName("REASON ORDER STOPPED");
+      if (c != null)       orderStopReasons.addAll(cs.getConceptsInSet(c));
+      if (c != null && c.getAnswers() != null)       for (      ConceptAnswer ca : c.getAnswers())       orderStopReasons.add(ca.getAnswerConcept());
+    }
+    List<Concept> genericDrugs=new ArrayList<Concept>();
+    genericDrugs=Context.getConceptService().getConceptsWithDrugsInFormulary();
+    Collections.sort(genericDrugs,new Comparator<Concept>(){
+      public int compare(      Concept left,      Concept right){
+        return left.getName().getName().compareTo(right.getName().getName());
+      }
+    }
+);
+    model.put("savedFilters",savedFilters);
+    model.put("searchHistory",history);
+    model.put("links",linkHelper());
+    model.put("programs",Context.getProgramWorkflowService().getPrograms());
+    model.put("encounterTypes",Context.getEncounterService().getEncounterTypes());
+    model.put("locations",Context.getEncounterService().getLocations());
+    model.put("drugs",Context.getConceptService().getDrugs());
+    model.put("drugConcepts",genericDrugs);
+    model.put("orderStopReasons",orderStopReasons);
+    model.put("personAttributeTypes",Context.getPersonService().getPersonAttributeTypes());
+    model.put("shortcuts",shortcuts);
+  }
+  return new ModelAndView(formView,"model",model);
+}

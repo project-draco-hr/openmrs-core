@@ -1,0 +1,12 @@
+{
+  log.debug("about to save " + obj);
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    ConceptStateConversion c=(ConceptStateConversion)obj;
+    Context.getProgramWorkflowService().createConceptStateConversion(c);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Program.conversion.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

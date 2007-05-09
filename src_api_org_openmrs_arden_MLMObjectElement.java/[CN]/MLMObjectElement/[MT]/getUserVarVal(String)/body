@@ -1,7 +1,11 @@
 {
   String val="";
+  LinkedList<String> thisList;
   if (!userVarMap.isEmpty()) {
-    val=userVarMap.get(var);
+    thisList=userVarMap.get(var);
+    if (thisList != null) {
+      val=thisList.remove();
+    }
   }
   return val;
 }

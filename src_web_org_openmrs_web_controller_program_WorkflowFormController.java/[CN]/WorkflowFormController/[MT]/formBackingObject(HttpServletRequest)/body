@@ -1,0 +1,12 @@
+{
+  log.debug("called formBackingObject");
+  ProgramWorkflow wf=null;
+  if (Context.isAuthenticated()) {
+    ProgramWorkflowService ps=Context.getProgramWorkflowService();
+    String programWorkflowId=request.getParameter("programWorkflowId");
+    if (programWorkflowId != null)     wf=ps.getWorkflow(Integer.valueOf(programWorkflowId));
+    if (wf == null)     throw new IllegalArgumentException("Can't find workflow");
+  }
+  if (wf == null)   wf=new ProgramWorkflow();
+  return wf;
+}

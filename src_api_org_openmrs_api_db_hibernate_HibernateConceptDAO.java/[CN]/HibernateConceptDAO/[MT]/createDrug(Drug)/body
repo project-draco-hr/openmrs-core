@@ -1,14 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  if (drug.getCreator() == null)   drug.setCreator(context.getAuthenticatedUser());
+  if (drug.getCreator() == null)   drug.setCreator(Context.getAuthenticatedUser());
   if (drug.getDateCreated() == null)   drug.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(drug);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new APIException(e);
-  }
+  sessionFactory.getCurrentSession().save(drug);
 }

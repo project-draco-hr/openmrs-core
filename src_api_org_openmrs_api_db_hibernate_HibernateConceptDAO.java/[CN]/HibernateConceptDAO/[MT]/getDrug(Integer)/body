@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Drug drug=(Drug)session.get(Drug.class,drugId);
-  return drug;
+  return (Drug)sessionFactory.getCurrentSession().get(Drug.class,drugId);
 }

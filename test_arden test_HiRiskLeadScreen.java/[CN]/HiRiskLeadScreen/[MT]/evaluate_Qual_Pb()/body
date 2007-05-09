@@ -2,7 +2,7 @@
   Concept concept;
   boolean retVal=false;
   Obs obs;
-  concept=context.getConceptService().getConceptByName("Qualitative_Blood_Lead");
+  concept=Context.getConceptService().getConceptByName("Qualitative_Blood_Lead");
   obs=getObsForConceptForPatient(concept,locale,patient);
   if (obs != null) {
     boolean Qual_Pb=obs.getValueAsBoolean();

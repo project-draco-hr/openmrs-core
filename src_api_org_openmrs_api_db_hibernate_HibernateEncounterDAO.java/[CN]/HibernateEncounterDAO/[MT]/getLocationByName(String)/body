@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List result=session.createQuery("from Location l where l.name = :name").setString("name",name).list();
+  List result=sessionFactory.getCurrentSession().createQuery("from Location l where l.name = :name").setString("name",name).list();
   if (result.size() == 0) {
     return null;
   }

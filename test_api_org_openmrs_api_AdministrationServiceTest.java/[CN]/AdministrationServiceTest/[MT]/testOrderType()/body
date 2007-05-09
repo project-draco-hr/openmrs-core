@@ -1,0 +1,21 @@
+{
+  OrderType orderType=new OrderType();
+  orderType.setName("testing");
+  orderType.setDescription("desc");
+  OrderType newOrderType=orderService.getOrderType(orderType.getOrderTypeId());
+  assertNotNull(newOrderType);
+  List<OrderType> orderTypes=orderService.getOrderTypes();
+  assertNotNull(orderTypes);
+  boolean found=false;
+  for (Iterator i=orderTypes.iterator(); i.hasNext(); ) {
+    OrderType orderType2=(OrderType)i.next();
+    assertNotNull(orderType);
+    assertTrue(orderType.equals(orderType2) == (orderType.getOrderTypeId().equals(orderType2.getOrderTypeId())));
+    if (orderType.equals(orderType2))     found=true;
+  }
+  assertTrue(found);
+  newOrderType.setName("another test");
+  OrderType newerOrderType=orderService.getOrderType(newOrderType.getOrderTypeId());
+  assertTrue(newerOrderType.getName().equals(newOrderType.getName()));
+  assertNull(orderService.getOrderType(newOrderType.getOrderTypeId()));
+}

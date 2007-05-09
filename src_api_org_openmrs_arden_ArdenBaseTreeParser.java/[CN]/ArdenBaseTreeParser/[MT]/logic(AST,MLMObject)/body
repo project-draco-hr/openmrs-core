@@ -2,15 +2,16 @@
   String s="";
   AST logic_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
+  Integer i=1;
   try {
-    AST __t358=_t;
-    AST tmp40_AST_in=(AST)_t;
+    AST __t403=_t;
+    AST tmp66_AST_in=(AST)_t;
     match(_t,LOGIC);
     _t=_t.getFirstChild();
     System.err.println("\n");
     System.err.println("-------Starting LOGIC--------");
 {
-      _loop364:       do {
+      _loop412:       do {
         if (_t == null)         _t=ASTNULL;
 switch (_t.getType()) {
 case IF:
@@ -20,105 +21,189 @@ case IF:
             _t=_retTree;
 {
               if (_t == null)               _t=ASTNULL;
-              if ((_tokenSet_1.member(_t.getType()))) {
-                System.err.println("-----------Starting CONCLUDE -------");
+switch (_t.getType()) {
+case TRUE:
+case FALSE:
+case INTLIT:
+case ID:
+case ACTION_OP:
+case STRING_LITERAL:
+case TERM_LITERAL:
 {
-                  if (_t == null)                   _t=ASTNULL;
-                  if ((_t.getType() == CONCLUDE)) {
-                    concludeAST(_t,obj,a);
-                    _t=_retTree;
-                  }
- else                   if ((_tokenSet_1.member(_t.getType()))) {
-                  }
- else {
-                    throw new NoViableAltException(_t);
-                  }
+                  System.err.println("-----------Starting Logic Assignment -------");
+                  logicAssignmentAST(_t,obj,a);
+                  _t=_retTree;
+                  System.err.println("\n");
+                  System.err.println("-----------End logic assignment -------");
+                  break;
                 }
-                System.err.println("\n");
-                System.err.println("-----------End CONCLUDE -------");
-              }
- else               if ((_tokenSet_2.member(_t.getType()))) {
-                System.err.println("-----------Starting Logic Assignment -------");
-                logicAssignmentAST(_t,obj,a);
-                _t=_retTree;
-                System.err.println("\n");
-                System.err.println("-----------End logic assignment -------");
-              }
- else {
-                throw new NoViableAltException(_t);
-              }
-            }
-            System.err.println("\n");
-            System.err.println("-----------End IF -------");
-            break;
-          }
+case IF:
+case CONCLUDE:
 case ELSE:
 case ELSEIF:
 case ENDIF:
+case CALL:
+case ENDBLOCK:
 {
-          System.err.println("-----------Starting ELSE - ELSEIF -------");
-          a=logic_elseifAST(_t,obj);
-          _t=_retTree;
+                break;
+              }
+default :
+{
+              throw new NoViableAltException(_t);
+            }
+        }
+      }
+{
+        if (_t == null)         _t=ASTNULL;
+        if ((_tokenSet_6.member(_t.getType()))) {
+          System.err.println("-----------Starting CONCLUDE -------");
 {
             if (_t == null)             _t=ASTNULL;
-            if ((_tokenSet_1.member(_t.getType()))) {
-              System.err.println("-----------Starting CONCLUDE -------");
-{
-                if (_t == null)                 _t=ASTNULL;
-                if ((_t.getType() == CONCLUDE)) {
-                  concludeAST(_t,obj,a);
-                  _t=_retTree;
-                }
- else                 if ((_tokenSet_1.member(_t.getType()))) {
-                }
- else {
-                  throw new NoViableAltException(_t);
-                }
-              }
-              System.err.println("\n");
-              System.err.println("-----------End CONCLUDE -------");
-            }
- else             if ((_tokenSet_2.member(_t.getType()))) {
-              System.err.println("-----------Starting Logic Assignment -------");
-              logicAssignmentAST(_t,obj,a);
+            if ((_t.getType() == CONCLUDE)) {
+              concludeAST(_t,obj,a);
               _t=_retTree;
-              System.err.println("\n");
-              System.err.println("-----------End logic assignment -------");
+            }
+ else             if ((_tokenSet_6.member(_t.getType()))) {
             }
  else {
               throw new NoViableAltException(_t);
             }
           }
           System.err.println("\n");
-          System.err.println("-----------End ELSE- ELSEIF -------");
+          System.err.println("-----------End CONCLUDE -------");
+        }
+ else         if ((_tokenSet_6.member(_t.getType()))) {
+        }
+ else {
+          throw new NoViableAltException(_t);
+        }
+      }
+      System.err.println("\n");
+      System.err.println("-----------End IF -------");
+      break;
+    }
+case ELSE:
+case ELSEIF:
+{
+    System.err.println("-----------Starting ELSE - ELSEIF -------");
+    a=logic_elseifAST(_t,obj,i);
+    _t=_retTree;
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case TRUE:
+case FALSE:
+case INTLIT:
+case ID:
+case ACTION_OP:
+case STRING_LITERAL:
+case TERM_LITERAL:
+{
+          System.err.println("-----------Starting Logic Assignment -------");
+          logicAssignmentAST(_t,obj,a);
+          _t=_retTree;
+          System.err.println("\n");
+          System.err.println("-----------End logic assignment -------");
           break;
         }
+case IF:
 case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case CALL:
+case ENDBLOCK:
 {
-        System.err.println("-----------Starting CONCLUDE -------");
-        obj.InitEvaluateList();
-        concludeAST(_t,obj,"");
-        _t=_retTree;
-        System.err.println("\n");
-        System.err.println("-----------End CONCLUDE -------");
         break;
       }
 default :
 {
-      break _loop364;
+      throw new NoViableAltException(_t);
     }
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+if ((_tokenSet_6.member(_t.getType()))) {
+  System.err.println("-----------Starting CONCLUDE -------");
+{
+    if (_t == null)     _t=ASTNULL;
+    if ((_t.getType() == CONCLUDE)) {
+      concludeAST(_t,obj,a);
+      _t=_retTree;
+    }
+ else     if ((_tokenSet_6.member(_t.getType()))) {
+    }
+ else {
+      throw new NoViableAltException(_t);
+    }
+  }
+  System.err.println("\n");
+  System.err.println("-----------End CONCLUDE -------");
+}
+ else if ((_tokenSet_6.member(_t.getType()))) {
+}
+ else {
+  throw new NoViableAltException(_t);
+}
+}
+System.err.println("\n");
+System.err.println("-----------End ELSE- ELSEIF -------");
+break;
+}
+case ENDIF:
+{
+AST __t411=_t;
+AST tmp67_AST_in=(AST)_t;
+match(_t,ENDIF);
+_t=_t.getFirstChild();
+System.err.println("ENDIF FOUND");
+a="ENDIF";
+obj.AddToEvaluateList(a);
+obj.SetConceptVar(a);
+_t=__t411;
+_t=_t.getNextSibling();
+break;
+}
+case CONCLUDE:
+{
+System.err.println("-----------Starting CONCLUDE -------");
+obj.InitEvaluateList();
+a="Conclude_" + Integer.toString(i);
+concludeAST(_t,obj,a);
+_t=_retTree;
+System.err.println("\n");
+System.err.println("-----------End CONCLUDE -------");
+break;
+}
+case CALL:
+{
+System.err.println("-----------Starting CALL -------");
+obj.InitEvaluateList();
+a="";
+callAST(_t,obj,a);
+_t=_retTree;
+System.err.println("\n");
+System.err.println("-----------End CALL -------");
+i++;
+break;
+}
+default :
+{
+break _loop412;
+}
 }
 }
  while (true);
 }
 {
-AST tmp41_AST_in=(AST)_t;
+AST tmp68_AST_in=(AST)_t;
 match(_t,ENDBLOCK);
 _t=_t.getNextSibling();
 }
 System.err.println("\n");
-System.err.println("-----------End Action -------");
-_t=__t358;
+System.err.println("-----------End LOGIC -------");
+_t=__t403;
 _t=_t.getNextSibling();
 }
  catch (RecognitionException ex) {

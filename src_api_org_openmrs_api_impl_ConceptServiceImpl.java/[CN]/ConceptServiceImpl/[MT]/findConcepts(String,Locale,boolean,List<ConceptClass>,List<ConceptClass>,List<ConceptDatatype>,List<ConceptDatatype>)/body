@@ -1,0 +1,8 @@
+{
+  if (requireClasses == null)   requireClasses=new Vector<ConceptClass>();
+  if (excludeClasses == null)   excludeClasses=new Vector<ConceptClass>();
+  if (requireDatatypes == null)   requireDatatypes=new Vector<ConceptDatatype>();
+  if (excludeDatatypes == null)   excludeDatatypes=new Vector<ConceptDatatype>();
+  List<ConceptWord> conceptWords=getConceptDAO().findConcepts(phrase,locale,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes);
+  return weightWords(phrase,locale,conceptWords);
+}

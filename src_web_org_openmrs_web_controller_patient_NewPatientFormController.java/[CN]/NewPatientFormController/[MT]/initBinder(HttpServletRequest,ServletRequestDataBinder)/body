@@ -1,9 +1,10 @@
 {
   super.initBinder(request,binder);
-  Context context=(Context)request.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(context.getLocale().toString().toLowerCase()),context.getLocale());
-  NumberFormat nf=NumberFormat.getInstance(context.getLocale());
+  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale());
+  NumberFormat nf=NumberFormat.getInstance(Context.getLocale());
   binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,nf,true));
   binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(dateFormat,true,10));
-  binder.registerCustomEditor(Tribe.class,new TribeEditor(context));
+  binder.registerCustomEditor(Tribe.class,new TribeEditor());
+  binder.registerCustomEditor(Location.class,new LocationEditor());
+  binder.registerCustomEditor(Concept.class,"causeOfDeath",new ConceptEditor());
 }

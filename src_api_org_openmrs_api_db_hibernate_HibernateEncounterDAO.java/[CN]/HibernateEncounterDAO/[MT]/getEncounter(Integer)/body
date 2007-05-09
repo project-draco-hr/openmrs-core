@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Encounter encounter=new Encounter();
-  encounter=(Encounter)session.get(Encounter.class,encounterId);
-  return encounter;
+  return (Encounter)sessionFactory.getCurrentSession().get(Encounter.class,encounterId);
 }

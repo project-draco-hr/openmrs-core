@@ -1,0 +1,69 @@
+{
+  PreparedStatement psSelect;
+  PreparedStatement psInsert;
+  PreparedStatement psUpdate;
+  Map<String,String> map;
+  try {
+    Connection conn=sessionFactory.getCurrentSession().connection();
+    psSelect=conn.prepareStatement("SELECT * FROM role WHERE UPPER(role) = UPPER(?)");
+    psInsert=conn.prepareStatement("INSERT INTO role VALUES (?, ?)");
+    map=OpenmrsConstants.CORE_ROLES();
+    for (    String role : map.keySet()) {
+      psSelect.setString(1,role);
+      ResultSet result=psSelect.executeQuery();
+      if (!result.next()) {
+        psInsert.setString(1,role);
+        psInsert.setString(2,map.get(role));
+        psInsert.execute();
+      }
+    }
+    conn.commit();
+  }
+ catch (  Exception e) {
+    log.error("Error while setting core roles for openmrs system",e);
+  }
+  try {
+    Connection conn=sessionFactory.getCurrentSession().connection();
+    psSelect=conn.prepareStatement("SELECT * FROM privilege WHERE UPPER(privilege) = UPPER(?)");
+    psInsert=conn.prepareStatement("INSERT INTO privilege VALUES (?, ?)");
+    map=OpenmrsConstants.CORE_PRIVILEGES();
+    for (    String priv : map.keySet()) {
+      psSelect.setString(1,priv);
+      ResultSet result=psSelect.executeQuery();
+      if (!result.next()) {
+        psInsert.setString(1,priv);
+        psInsert.setString(2,map.get(priv));
+        psInsert.execute();
+      }
+    }
+    conn.commit();
+  }
+ catch (  SQLException e) {
+    log.error("Error while setting core privileges",e);
+  }
+  try {
+    Connection conn=sessionFactory.getCurrentSession().connection();
+    psSelect=conn.prepareStatement("SELECT * FROM global_property WHERE UPPER(property) = UPPER(?)");
+    psInsert=conn.prepareStatement("INSERT INTO global_property VALUES (?, ?, ?)");
+    psUpdate=conn.prepareStatement("UPDATE global_property SET description = ? WHERE UPPER(property) = UPPER(?) AND description IS null");
+    for (    GlobalProperty gp : OpenmrsConstants.CORE_GLOBAL_PROPERTIES()) {
+      psSelect.setString(1,gp.getProperty());
+      ResultSet result=psSelect.executeQuery();
+      if (!result.next()) {
+        psInsert.setString(1,gp.getProperty());
+        psInsert.setString(2,gp.getPropertyValue());
+        psInsert.setString(3,gp.getDescription());
+        psInsert.execute();
+      }
+ else {
+        psUpdate.setString(1,gp.getDescription());
+        psUpdate.setString(2,gp.getProperty());
+        psUpdate.execute();
+      }
+    }
+    conn.commit();
+  }
+ catch (  SQLException e) {
+    log.error("Error while setting core global properties",e);
+  }
+}

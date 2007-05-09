@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_MIME_TYPES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_MIME_TYPES);
+  getAdministrationDAO().createMimeType(mimeType);
+}

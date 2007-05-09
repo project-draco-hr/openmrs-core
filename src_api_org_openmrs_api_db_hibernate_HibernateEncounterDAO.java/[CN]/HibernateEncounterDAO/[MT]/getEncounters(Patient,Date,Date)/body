@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(Encounter.class).add(Expression.eq("patient",who)).add(Expression.between("encounterDatetime",fromDate,toDate)).add(Expression.eq("voided",false));
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class).add(Expression.eq("patient",who)).add(Expression.between("encounterDatetime",fromDate,toDate)).add(Expression.eq("voided",false));
   Set<Encounter> encounters=new HashSet<Encounter>();
   encounters.addAll(crit.list());
   return encounters;

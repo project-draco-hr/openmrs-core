@@ -1,0 +1,12 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_CONCEPTS);
+  Context.getConceptService().checkIfLocked();
+  int count=0;
+  for (  Concept concept : Context.getConceptService().getConceptsByName("")) {
+    updateConceptWord(concept);
+    if (count++ > 1000) {
+      Context.clearSession();
+      count=0;
+    }
+  }
+}

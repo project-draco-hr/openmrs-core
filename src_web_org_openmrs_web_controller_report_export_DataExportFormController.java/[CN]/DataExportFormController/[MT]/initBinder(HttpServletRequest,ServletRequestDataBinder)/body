@@ -1,7 +1,6 @@
 {
   super.initBinder(request,binder);
-  Context context=(Context)request.getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(context.getLocale().toString().toLowerCase()),context.getLocale());
+  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale());
   binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,true));
-  binder.registerCustomEditor(org.openmrs.Location.class,new LocationEditor(context));
+  binder.registerCustomEditor(org.openmrs.Location.class,new LocationEditor());
 }

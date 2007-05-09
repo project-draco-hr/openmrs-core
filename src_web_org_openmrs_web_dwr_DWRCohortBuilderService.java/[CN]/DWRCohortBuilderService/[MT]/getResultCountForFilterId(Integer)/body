@@ -1,0 +1,7 @@
+{
+  PatientFilter pf=Context.getReportService().getPatientFilterById(filterId);
+  if (pf == null)   return null;
+  PatientSet everyone=Context.getPatientSetService().getAllPatients();
+  PatientSet filtered=pf.filter(everyone);
+  return filtered.size();
+}

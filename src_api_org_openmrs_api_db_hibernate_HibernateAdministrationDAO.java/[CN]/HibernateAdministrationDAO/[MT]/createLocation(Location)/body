@@ -1,14 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  location.setCreator(context.getAuthenticatedUser());
+  location.setCreator(Context.getAuthenticatedUser());
   location.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(location);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(location);
 }

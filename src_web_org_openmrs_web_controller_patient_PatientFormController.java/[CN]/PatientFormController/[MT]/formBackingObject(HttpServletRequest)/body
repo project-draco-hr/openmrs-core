@@ -1,14 +1,41 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Patient patient=null;
-  if (context != null && context.isAuthenticated()) {
-    FormEntryService ps=context.getFormEntryService();
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
     String patientId=request.getParameter("patientId");
+    Integer id=null;
     if (patientId != null) {
-      patient=ps.getPatient(Integer.valueOf(patientId));
+      try {
+        id=Integer.valueOf(patientId);
+        patient=ps.getPatient(id);
+        if (patient == null)         throw new ObjectRetrievalFailureException(Patient.class,id);
+      }
+ catch (      NumberFormatException numberError) {
+        log.warn("Invalid userId supplied: '" + patientId + "'",numberError);
+      }
+catch (      ObjectRetrievalFailureException noPatientEx) {
+        try {
+          Person person=Context.getPersonService().getPerson(id);
+          patient=new Patient(person);
+        }
+ catch (        ObjectRetrievalFailureException noPersonEx) {
+          log.warn("There is no patient or person with id: '" + patientId + "'",noPersonEx);
+          throw new ServletException("There is no patient or person with id: '" + patientId + "'");
+        }
+      }
     }
   }
-  if (patient == null)   patient=new Patient();
+  if (patient == null) {
+    patient=new Patient();
+    String name=request.getParameter("name");
+    if (name != null) {
+      String gender=request.getParameter("gndr");
+      String date=request.getParameter("birthyear");
+      String age=request.getParameter("age");
+      getMiniPerson(patient,name,gender,date,age);
+    }
+  }
+  if (patient.getIdentifiers().size() < 1)   patient.addIdentifier(new PatientIdentifier());
+  super.setupFormBackingObject(patient);
   return patient;
 }

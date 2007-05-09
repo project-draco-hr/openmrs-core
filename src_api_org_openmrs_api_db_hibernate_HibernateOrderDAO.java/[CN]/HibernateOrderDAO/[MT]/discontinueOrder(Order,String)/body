@@ -1,8 +1,0 @@
-{
-  log.debug("discontinuing order #" + order.getOrderId());
-  order.setDiscontinued(true);
-  order.setDiscontinuedBy(context.getAuthenticatedUser());
-  order.setDiscontinuedDate(new Date());
-  order.setDiscontinuedReason(reason);
-  updateOrder(order);
-}

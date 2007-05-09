@@ -1,0 +1,31 @@
+{
+  Context.openSession();
+  try {
+    log.debug("Generating data exports...");
+    if (Context.isAuthenticated() == false)     authenticate();
+    authenticate();
+    if (idString != null && idString.length() > 0) {
+      idString=idString.replace(","," ");
+      String[] ids=idString.split(" ");
+      List<DataExportReportObject> reports=new Vector<DataExportReportObject>();
+      ReportService rs=Context.getReportService();
+      for (      String id : ids) {
+        if (id != null) {
+          id=id.trim();
+          if (id.length() > 0) {
+            DataExportReportObject report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(id));
+            reports.add(report);
+          }
+        }
+      }
+      DataExportUtil.generateExports(reports);
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error running generate data export queue task",e);
+    throw new APIException("Error running generate data export queue task",e);
+  }
+ finally {
+    Context.closeSession();
+  }
+}

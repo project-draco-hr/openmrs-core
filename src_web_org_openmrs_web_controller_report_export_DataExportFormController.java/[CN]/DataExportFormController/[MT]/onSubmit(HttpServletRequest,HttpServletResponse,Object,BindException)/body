@@ -1,14 +1,13 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     DataExportReportObject report=(DataExportReportObject)obj;
     String[] patientIds=request.getParameterValues("patientId");
     report.setPatientIds(new Vector<Integer>());
     if (patientIds != null)     for (    String patientId : patientIds)     if (patientId != null && !patientId.equals(""))     report.addPatientId(Integer.valueOf(patientId));
-    Integer location=RequestUtils.getIntParameter(request,"location",0);
-    if (location > 0)     report.setLocation(context.getPatientService().getLocation(location));
+    Integer location=ServletRequestUtils.getIntParameter(request,"location",0);
+    if (location > 0)     report.setLocation(Context.getEncounterService().getLocation(location));
     String[] columnIds=request.getParameterValues("columnId");
     report.setColumns(new Vector<ExportColumn>());
     if (columnIds != null) {
@@ -18,10 +17,21 @@
  else {
           columnName=request.getParameter("conceptColumnName_" + columnId);
           if (columnName != null) {
-            String modifier=request.getParameter("conceptModifier_" + columnId);
-            String conceptName=request.getParameter("conceptName_" + columnId);
+            String conceptId=request.getParameter("conceptId_" + columnId);
+            try {
+              Integer.valueOf(conceptId);
+            }
+ catch (            NumberFormatException e) {
+              Concept c=Context.getConceptService().getConceptByName(conceptId);
+              if (c == null)               throw new APIException("Concept name : + '" + conceptId + "' could not be found in the dictionary");
+              conceptId=c.getConceptId().toString();
+            }
             String[] extras=request.getParameterValues("conceptExtra_" + columnId);
-            report.addConceptColumn(columnName,modifier,conceptName,extras);
+            String modifier=request.getParameter("conceptModifier_" + columnId);
+            String modifierNumStr=request.getParameter("conceptModifierNum_" + columnId);
+            Integer modifierNum=null;
+            if (modifierNumStr.length() > 0)             modifierNum=Integer.valueOf(modifierNumStr);
+            report.addConceptColumn(columnName,modifier,modifierNum,conceptId,extras);
           }
  else {
             columnName=request.getParameter("calculatedName_" + columnId);
@@ -34,10 +44,10 @@
         }
       }
     }
-    String saveAsNew=RequestUtils.getStringParameter(request,"saveAsNew","");
+    String saveAsNew=ServletRequestUtils.getStringParameter(request,"saveAsNew","");
     if (!saveAsNew.equals(""))     report.setReportObjectId(null);
-    context.getReportService().updateReportObject(report);
-    String action=RequestUtils.getRequiredStringParameter(request,"action");
+    Context.getReportService().updateReportObject(report);
+    String action=ServletRequestUtils.getRequiredStringParameter(request,"action");
     MessageSourceAccessor msa=getMessageSourceAccessor();
     if (action.equals(msa.getMessage("DataExport.save"))) {
       view=getSuccessView();

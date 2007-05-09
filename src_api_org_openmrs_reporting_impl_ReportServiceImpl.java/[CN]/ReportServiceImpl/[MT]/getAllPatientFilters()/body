@@ -1,0 +1,10 @@
+{
+  ArrayList<PatientFilter> allPatientFilters=new ArrayList<PatientFilter>();
+  List<AbstractReportObject> allMatchingObjects=getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
+  if (allMatchingObjects != null) {
+    for (    AbstractReportObject aro : allMatchingObjects) {
+      allPatientFilters.add((PatientFilter)aro);
+    }
+  }
+  return allPatientFilters;
+}

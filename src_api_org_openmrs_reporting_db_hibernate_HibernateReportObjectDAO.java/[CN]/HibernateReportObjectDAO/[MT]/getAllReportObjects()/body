@@ -1,8 +1,7 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Set<AbstractReportObject> reportObjects=new HashSet<AbstractReportObject>();
-  Set<ReportObjectWrapper> wrappedObjects=new HashSet<ReportObjectWrapper>();
-  wrappedObjects.addAll((ArrayList<ReportObjectWrapper>)session.createQuery("from ReportObjectWrapper order by date_created, name").list());
+  List<AbstractReportObject> reportObjects=new Vector<AbstractReportObject>();
+  List<ReportObjectWrapper> wrappedObjects=new Vector<ReportObjectWrapper>();
+  wrappedObjects.addAll((ArrayList<ReportObjectWrapper>)sessionFactory.getCurrentSession().createQuery("from ReportObjectWrapper order by date_created, name").list());
   for (  ReportObjectWrapper wrappedObject : wrappedObjects) {
     AbstractReportObject reportObject=(AbstractReportObject)wrappedObject.getReportObject();
     if (reportObject.getReportObjectId() == null) {

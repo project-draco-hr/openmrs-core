@@ -1,65 +1,40 @@
 {
-  boolean retVal=false;
-  if (dbAccessRequired) {
+  boolean retVal=true;
+  if (conceptEvalWritten) {
+    return true;
+  }
+  if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
     String cn=getConcept();
-    w.append("public boolean evaluate_" + key + "(){\n");
-    w.append("\tConcept concept;\n");
-    w.append("\tboolean retVal = false;\n");
-    w.append("\tObs obs;\n\n");
-    w.append("\tconcept = context.getConceptService().getConceptByName(\"" + cn.trim() + "\");\n");
-    w.append("\tobs = getObsForConceptForPatient(concept,locale, patient);\n");
-    w.append("\tif(obs != null) {\n");
-    if (compOp != null) {
-switch (compOp) {
-case EQUALS:
-{
-switch (compOpType) {
-case 3:
-            w.append("\t\tboolean " + key + " = obs.getValueAsBoolean();\n");
-          w.append("\t\tif (" + key + " == "+ Boolean.toString(answerBool)+ ") {\n");
-        w.append("\t\tretVal = true;");
-      w.append("\n\t\t}\n");
-    break;
-case 2:
-  w.append("\t\tdouble " + key + " = obs.getValueNumeric();\n");
-w.append("\t\tif (" + key + " = "+ Integer.toString(answerInt)+ ") {\n");
-w.append("\t\tretVal = true;");
-w.append("\n\t\t}\n");
-break;
-case 1:
-w.append("\t\tString " + key + " = obs.getValueText();\n");
-w.append("\t\tif (" + key + ".equals(\""+ answerStr+ "\")) {\n");
-w.append("\t\tretVal = true;");
-w.append("\n\t\t}\n");
-break;
-}
-}
-break;
-case GTE:
-{
-switch (compOpType) {
-case 3:
-break;
-case 2:
-w.append("\t\tdouble " + key + " = obs.getValueNumeric();\n");
-w.append("\t\tif (" + key + " >= "+ Integer.toString(answerInt)+ ") {\n");
-w.append("\t\tretVal = true;");
-w.append("\n\t\t}\n");
-break;
-case 1:
-break;
-}
-}
-break;
-default :
-break;
-}
-}
-w.append("\t}\n\n");
-w.append("\treturn retVal;\n");
-w.append("}\n\n");
-}
+    concept=Context.getConceptService().getConceptByName(cn);
+    if (dbAccessRequired) {
+      if (concept != null) {
+        w.append("private Result " + key + "(){\n");
+        w.append("\tConcept c = new Concept();\n");
+        w.append("\tc.setConceptId(" + Integer.toString(concept.getConceptId()) + "); // "+ cn+ "\n");
+        if (hasWhere) {
+          w.append("\t return dataSource.eval(patient, Aggregation" + getReadType() + ", c, DateConstraint."+ whereType+ "(Duration."+ durationOp+ "("+ durationVal+ ")) );\n");
+        }
  else {
-}
-return retVal;
+          w.append("\t return dataSource.eval(patient, Aggregation" + getReadType() + ", c, null);\n");
+        }
+        w.append("}\n\n");
+      }
+ else {
+        System.out.println("Compiler error - No concept found in the dictionary: " + cn);
+        error="Compiler error - No concept found in the dictionary: " + cn;
+        retVal=false;
+      }
+      conceptEvalWritten=true;
+    }
+ else {
+      if (readType != null && readType.equals("call")) {
+      }
+ else {
+        w.append("\t\tString val = userVarMap.get( \"" + key + "\");\n");
+        w.append("\t\tif(val == \"false\") {retVal = false;}\n");
+        w.append("\t\tif(val == \"true\") {retVal = true;}\n");
+      }
+    }
+  }
+  return retVal;
 }

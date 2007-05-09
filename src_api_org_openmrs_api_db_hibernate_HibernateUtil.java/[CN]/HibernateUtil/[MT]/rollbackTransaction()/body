@@ -1,8 +1,0 @@
-{
-  log.debug("rolling back transaction");
-  Transaction tx=(Transaction)threadLocalTransaction.get();
-  if (tx != null && !tx.wasCommitted() && !tx.wasRolledBack()) {
-    tx.rollback();
-  }
-  threadLocalTransaction.set(null);
-}

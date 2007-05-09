@@ -1,5 +1,11 @@
 {
-  MLMObjectElement mObjElem=GetMLMObjectElement(key);
+  MLMObjectElement mObjElem;
+  if (key.equals("")) {
+    mObjElem=GetMLMObjectElement(ConceptVar);
+  }
+ else {
+    mObjElem=GetMLMObjectElement(key);
+  }
   if (mObjElem != null) {
     mObjElem.setDBAccessRequired(val);
   }

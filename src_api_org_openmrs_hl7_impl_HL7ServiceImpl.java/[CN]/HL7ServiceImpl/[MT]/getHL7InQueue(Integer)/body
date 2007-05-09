@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(HL7Constants.PRIV_VIEW_HL7_IN_QUEUE))   throw new APIAuthenticationException("Insufficient privilege to view an HL7 inbound queue entry");
+  return getHL7DAO().getHL7InQueue(hl7InQueueId);
+}

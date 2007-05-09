@@ -1,0 +1,16 @@
+{
+  TreeMap<Integer,TreeSet<FormField>> formStructure=new TreeMap<Integer,TreeSet<FormField>>();
+  Integer base=Integer.valueOf(0);
+  formStructure.put(base,new TreeSet<FormField>());
+  for (  FormField formField : form.getFormFields()) {
+    FormField parent=formField.getParent();
+    if (parent == null) {
+      formStructure.get(base).add(formField);
+    }
+ else {
+      if (!formStructure.containsKey(parent.getFormFieldId()))       formStructure.put(parent.getFormFieldId(),new TreeSet<FormField>());
+      formStructure.get(parent.getFormFieldId()).add(formField);
+    }
+  }
+  return formStructure;
+}

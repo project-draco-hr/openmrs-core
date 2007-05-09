@@ -1,0 +1,9 @@
+{
+  int ret=OpenmrsUtil.compareWithNullAsGreatest(getFamilyName(),other.getFamilyName());
+  if (ret == 0)   ret=OpenmrsUtil.compareWithNullAsGreatest(getFamilyName2(),other.getFamilyName2());
+  if (ret == 0)   ret=OpenmrsUtil.compareWithNullAsGreatest(getGivenName(),other.getGivenName());
+  if (ret == 0)   ret=OpenmrsUtil.compareWithNullAsGreatest(getMiddleName(),other.getMiddleName());
+  if (ret == 0)   ret=OpenmrsUtil.compareWithNullAsGreatest(getFamilyNamePrefix(),other.getFamilyNamePrefix());
+  if (ret == 0)   ret=OpenmrsUtil.compareWithNullAsGreatest(getFamilyNameSuffix(),other.getFamilyNameSuffix());
+  return ret;
+}

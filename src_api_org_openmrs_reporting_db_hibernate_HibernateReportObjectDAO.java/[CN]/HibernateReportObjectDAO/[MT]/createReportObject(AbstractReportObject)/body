@@ -1,15 +1,7 @@
 {
-  Session session=HibernateUtil.currentSession();
-  reportObj.setCreator(context.getAuthenticatedUser());
+  reportObj.setCreator(Context.getAuthenticatedUser());
   reportObj.setDateCreated(new Date());
+  log.debug("Saving: " + reportObj);
   ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(wrappedReportObject);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(wrappedReportObject);
 }

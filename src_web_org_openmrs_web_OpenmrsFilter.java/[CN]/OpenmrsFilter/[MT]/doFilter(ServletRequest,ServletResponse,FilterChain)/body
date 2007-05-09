@@ -1,32 +1,29 @@
 {
   HttpServletRequest httpRequest=(HttpServletRequest)request;
   HttpSession httpSession=httpRequest.getSession();
-  Context context=null;
+  UserContext userContext=null;
   boolean initialRequest=false;
-  Object val=httpRequest.getAttribute(INIT_REQ_ATTR_NAME);
+  Object val=httpRequest.getAttribute(WebConstants.INIT_REQ_UNIQUE_ID);
   initialRequest=(val == null);
-  httpRequest.setAttribute(INIT_REQ_ATTR_NAME,INIT_REQ_ATTR_NAME);
-  context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
+  log.debug("initial Request? " + initialRequest);
+  log.debug("requestURI" + httpRequest.getRequestURI());
+  log.debug("requestURL" + httpRequest.getRequestURL());
+  log.debug("request path info" + httpRequest.getPathInfo());
+  if (initialRequest)   httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(new Date().getTime()));
   if (initialRequest == true) {
-    if (context == null) {
-      log.debug("setting context in httpSession");
-      context=ContextFactory.getContext();
-      httpSession.setAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR,context);
+    userContext=(UserContext)httpSession.getAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR);
+    if (userContext == null) {
+      userContext=new UserContext();
+      httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
     }
+    log.info("Set user context " + userContext + " as attribute on session");
+    Context.setUserContext(userContext);
   }
   log.debug("before doFilter");
-  try {
-    chain.doFilter(request,response);
-  }
- catch (  Exception e) {
-    log.error(e.getMessage());
-    throw new ServletException(e);
-  }
- finally {
-    if (initialRequest == true) {
-      log.debug("ending transaction - file: " + httpRequest.getRequestURI());
-      context.endTransaction();
-    }
+  chain.doFilter(request,response);
+  httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
+  if (initialRequest == true) {
+    Context.clearUserContext();
   }
   log.debug("after doFilter");
 }

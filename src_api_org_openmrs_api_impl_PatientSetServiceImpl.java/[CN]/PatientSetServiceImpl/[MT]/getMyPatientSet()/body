@@ -1,0 +1,12 @@
+{
+  if (Context.isAuthenticated() == false)   return new PatientSet();
+  if (userPatientSets == null) {
+    userPatientSets=new HashMap<User,PatientSet>();
+  }
+  PatientSet mine=userPatientSets.get(Context.getAuthenticatedUser());
+  if (mine == null) {
+    mine=new PatientSet();
+    userPatientSets.put(Context.getAuthenticatedUser(),mine);
+  }
+  return mine;
+}

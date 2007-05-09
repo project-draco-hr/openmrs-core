@@ -1,25 +1,17 @@
 {
-  Session session=HibernateUtil.currentSession();
-  deleteConceptWord(concept);
-  Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);
-  log.debug("words: " + words);
-  try {
-    HibernateUtil.beginTransaction();
+  if (concept != null) {
+    deleteConceptWord(concept);
+    Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);
+    log.debug("words: " + words);
     for (    ConceptWord word : words) {
       try {
-        session.save(word);
+        sessionFactory.getCurrentSession().save(word);
       }
  catch (      NonUniqueObjectException e) {
-        ConceptWord tmp=(ConceptWord)session.merge(word);
-        session.evict(tmp);
-        session.save(word);
+        ConceptWord tmp=(ConceptWord)sessionFactory.getCurrentSession().merge(word);
+        sessionFactory.getCurrentSession().evict(tmp);
+        sessionFactory.getCurrentSession().save(word);
       }
     }
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    log.error(e);
-    throw new DAOException(e);
   }
 }

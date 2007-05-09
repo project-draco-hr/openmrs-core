@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(HL7Constants.PRIV_ADD_HL7_SOURCE))   throw new APIAuthenticationException("Insufficient privilege to create an HL7 source");
+  getHL7DAO().createHL7Source(hl7Source);
+}

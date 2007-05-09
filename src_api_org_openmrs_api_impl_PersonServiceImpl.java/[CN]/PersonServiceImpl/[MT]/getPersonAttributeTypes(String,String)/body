@@ -1,0 +1,49 @@
+{
+  List<String> VALID_PERSON_TYPES=new Vector<String>(Arrays.asList(new String[]{"","patient","user"}));
+  List<String> VALID_DISPLAY_TYPES=new Vector<String>(Arrays.asList(new String[]{"listing","viewing","all"}));
+  AdministrationService as=Context.getAdministrationService();
+  if (!VALID_PERSON_TYPES.contains(personType)) {
+    throw new APIException(personType + " is an invalid value for 'personType' attribute");
+  }
+  if (!VALID_DISPLAY_TYPES.contains(displayType)) {
+    throw new APIException(displayType + " is an invalid value for 'displayType' attribute");
+  }
+  String attrString="";
+  List<String> attrNames=new Vector<String>();
+  if ("listing".equals(displayType)) {
+    if ("patient".equals(personType))     attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES,"");
+ else     if ("user".equals(personType))     attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_LISTING_ATTRIBUTES,"");
+ else     if ("".equals(personType)) {
+      attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES,"");
+      attrString+="," + as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_LISTING_ATTRIBUTES,"");
+    }
+ else     log.fatal("Should not be here. 'personType' should be added to VALID_PERSON_TYPES");
+  }
+ else   if ("viewing".equals(displayType)) {
+    if ("patient".equals(personType))     attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES,"");
+ else     if ("user".equals(personType))     attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_VIEWING_ATTRIBUTES,"");
+ else     if ("".equals(personType)) {
+      attrString=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES,"");
+      attrString+="," + as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_VIEWING_ATTRIBUTES,"");
+    }
+ else     log.fatal("Should not be here. 'personType' should be added to VALID_PERSON_TYPES");
+  }
+ else   if ("all".equals(displayType)) {
+    return getPersonAttributeTypes();
+  }
+ else   log.fatal("Should not be here. `displayType` parameter value of '" + displayType + "' needs to be added to VALID_DISPLAY_TYPES");
+  if (attrString != null)   for (  String s : attrString.split(",")) {
+    if (s != null) {
+      s=s.trim();
+      if (s.length() > 0)       attrNames.add(s);
+    }
+  }
+  List<PersonAttributeType> attrObjects=new Vector<PersonAttributeType>();
+  if (attrNames.size() > 0) {
+    for (    String nameOrId : attrNames) {
+      if (nameOrId.matches("\\d"))       attrObjects.add(getPersonAttributeType(Integer.valueOf(nameOrId)));
+ else       attrObjects.add(getPersonAttributeType(nameOrId));
+    }
+  }
+  return attrObjects;
+}

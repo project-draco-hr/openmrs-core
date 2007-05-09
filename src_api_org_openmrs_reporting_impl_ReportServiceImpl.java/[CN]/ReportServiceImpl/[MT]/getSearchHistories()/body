@@ -1,0 +1,6 @@
+{
+  List<AbstractReportObject> temp=getReportObjectsByType("org.openmrs.cohort.CohortSearchHistory");
+  List<CohortSearchHistory> ret=new ArrayList<CohortSearchHistory>();
+  for (  AbstractReportObject o : temp)   ret.add((CohortSearchHistory)o);
+  return ret;
+}

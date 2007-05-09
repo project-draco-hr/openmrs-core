@@ -1,15 +1,4 @@
 {
   if (field.getFieldId() == null)   createField(field);
- else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.merge(field);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().merge(field);
 }

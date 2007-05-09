@@ -1,8 +1,7 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Set<AbstractReportObject> reportObjects=new HashSet<AbstractReportObject>();
-  Set<ReportObjectWrapper> wrappedObjects=new HashSet<ReportObjectWrapper>();
-  Query query=session.createQuery("from ReportObjectWrapper ro where ro.type=:type order by date_created, name");
+  List<AbstractReportObject> reportObjects=new Vector<AbstractReportObject>();
+  List<ReportObjectWrapper> wrappedObjects=new Vector<ReportObjectWrapper>();
+  Query query=sessionFactory.getCurrentSession().createQuery("from ReportObjectWrapper ro where ro.type=:type order by date_created, name");
   query.setString("type",reportObjectType);
   wrappedObjects.addAll((ArrayList<ReportObjectWrapper>)query.list());
   for (  ReportObjectWrapper wrappedObject : wrappedObjects) {

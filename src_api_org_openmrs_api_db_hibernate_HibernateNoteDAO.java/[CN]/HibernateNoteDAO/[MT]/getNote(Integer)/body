@@ -1,15 +1,4 @@
 {
   log.info("Get note " + id);
-  Note note=new Note();
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    note=(Note)session.get(Note.class,id);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    log.error(e);
-    HibernateUtil.rollbackTransaction();
-  }
-  return note;
+  return (Note)sessionFactory.getCurrentSession().get(Note.class,id);
 }

@@ -1,3 +1,9 @@
 {
-  ContextFactory.getContext().getSchedulerService().shutdown();
+  SchedulerService service=null;
+  try {
+    service=Context.getSchedulerService();
+  }
+ catch (  Throwable t) {
+  }
+  if (service != null)   service.shutdown();
 }

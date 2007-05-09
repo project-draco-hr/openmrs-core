@@ -6,26 +6,26 @@
 switch (LA(1)) {
 case INTLIT:
 {
-        AST tmp171_AST=null;
-        tmp171_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp171_AST);
+        AST tmp217_AST=null;
+        tmp217_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp217_AST);
         match(INTLIT);
         version_num_AST=(AST)currentAST.root;
         break;
       }
 case DIGIT:
 {
-      AST tmp172_AST=null;
-      tmp172_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp172_AST);
+      AST tmp218_AST=null;
+      tmp218_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp218_AST);
       match(DIGIT);
-      AST tmp173_AST=null;
-      tmp173_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp173_AST);
+      AST tmp219_AST=null;
+      tmp219_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp219_AST);
       match(DOT);
-      AST tmp174_AST=null;
-      tmp174_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp174_AST);
+      AST tmp220_AST=null;
+      tmp220_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp220_AST);
       match(DIGIT);
       version_num_AST=(AST)currentAST.root;
       break;
@@ -39,7 +39,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_25);
+recover(ex,_tokenSet_26);
 }
  else {
 throw ex;

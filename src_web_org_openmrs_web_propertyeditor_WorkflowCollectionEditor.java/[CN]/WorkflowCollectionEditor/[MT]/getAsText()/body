@@ -1,0 +1,24 @@
+{
+  Collection<ProgramWorkflow> pws=(Collection<ProgramWorkflow>)getValue();
+  if (pws == null || pws.size() == 0) {
+    return ":";
+  }
+ else {
+    Integer progId=null;
+    for (    ProgramWorkflow pw : pws) {
+      if (pw.getProgram() != null && pw.getProgram().getProgramId() != null) {
+        progId=pw.getProgram().getProgramId();
+        break;
+      }
+    }
+    StringBuilder ret=new StringBuilder();
+    if (progId != null) {
+      ret.append(progId);
+    }
+    ret.append(":");
+    for (    ProgramWorkflow pw : pws) {
+      ret.append(pw.getConcept().getConceptId()).append(" ");
+    }
+    return ret.toString().trim();
+  }
+}

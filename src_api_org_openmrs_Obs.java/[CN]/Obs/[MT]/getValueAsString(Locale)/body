@@ -8,7 +8,9 @@
  else       return getValueCoded().getName(locale).getName();
     }
  else     if (abbrev.equals("NM") || abbrev.equals("SN"))     return getValueNumeric().toString();
- else     if (abbrev.equals("DT") || abbrev.equals("TM") || abbrev.equals("TS"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale));
+ else     if (abbrev.equals("DT"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE));
+ else     if (abbrev.equals("TM"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIME));
+ else     if (abbrev.equals("TS"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIMESTAMP));
  else     if (abbrev.equals("ST"))     return getValueText();
   }
   if (getValueNumeric() != null)   return getValueNumeric().toString();
@@ -16,7 +18,7 @@
     if (getValueDrug() != null)     return getValueDrug().getFullName(locale);
  else     return getValueCoded().getName(locale).getName();
   }
- else   if (getValueDatetime() != null)   return Format.format(getValueDatetime(),locale);
+ else   if (getValueDatetime() != null)   return Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE);
  else   if (getValueText() != null)   return getValueText();
   return "";
 }

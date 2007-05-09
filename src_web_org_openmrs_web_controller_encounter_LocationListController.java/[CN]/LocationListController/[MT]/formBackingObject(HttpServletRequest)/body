@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   List<Location> locationList=new Vector<Location>();
-  if (context != null && context.isAuthenticated()) {
-    EncounterService os=context.getEncounterService();
+  if (Context.isAuthenticated()) {
+    EncounterService os=Context.getEncounterService();
     locationList=os.getLocations();
   }
   return locationList;

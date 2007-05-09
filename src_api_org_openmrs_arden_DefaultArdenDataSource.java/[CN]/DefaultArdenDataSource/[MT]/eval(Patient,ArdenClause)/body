@@ -1,0 +1,9 @@
+{
+  ArdenValue retVal=new ArdenValue(p,Context.getLocale());
+  List<Obs> obs;
+  if (c.getPredicate() == ArdenClause.Predicate.last) {
+    obs=getLastPatientObsForConcept(p,c.getConcept(),1);
+    retVal.addObs(obs);
+  }
+  return retVal;
+}

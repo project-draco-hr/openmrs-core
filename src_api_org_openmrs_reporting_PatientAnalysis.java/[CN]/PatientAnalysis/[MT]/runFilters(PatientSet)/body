@@ -1,0 +1,8 @@
+{
+  if (input == null)   input=Context.getPatientSetService().getAllPatients();
+  PatientSet ret=input;
+  for (  PatientFilter pf : patientFilters.values()) {
+    ret=pf.filter(ret);
+  }
+  return ret;
+}

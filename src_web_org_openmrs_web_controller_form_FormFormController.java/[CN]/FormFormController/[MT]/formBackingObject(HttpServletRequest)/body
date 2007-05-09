@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Form form=null;
-  if (context != null && context.isAuthenticated()) {
-    FormService fs=context.getFormService();
+  if (Context.isAuthenticated()) {
+    FormService fs=Context.getFormService();
     String formId=request.getParameter("formId");
     if (formId != null)     form=fs.getForm(Integer.valueOf(formId));
   }

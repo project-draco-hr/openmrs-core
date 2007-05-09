@@ -1,0 +1,8 @@
+{
+  if (serviceContext == null) {
+    log.error("serviceContext is null.  Creating new ServiceContext()");
+    serviceContext=ServiceContext.getInstance();
+  }
+  log.debug("serviceContext: " + serviceContext);
+  return ServiceContext.getInstance();
+}

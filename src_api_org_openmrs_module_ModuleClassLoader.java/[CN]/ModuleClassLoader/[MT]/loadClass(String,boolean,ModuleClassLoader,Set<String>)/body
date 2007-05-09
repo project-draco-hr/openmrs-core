@@ -1,0 +1,86 @@
+{
+  if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
+    return null;
+  }
+  if ((this != requestor) && !ModuleFactory.isModuleStarted(getModule())) {
+    String msg="can't load class " + name + ", module "+ getModule()+ " is not started yet";
+    log.warn(msg);
+    throw new ClassNotFoundException(msg);
+  }
+  Class result=null;
+synchronized (this) {
+    result=findLoadedClass(name);
+    if (result != null) {
+      if (log.isDebugEnabled() && name.contains("hello")) {
+        log.debug("loadClass(...): found loaded class, class=" + result + ", this="+ this+ ", requestor="+ requestor);
+      }
+      checkClassVisibility(result,requestor);
+      return result;
+    }
+    try {
+synchronized (getClass()) {
+        result=findClass(name);
+      }
+    }
+ catch (    LinkageError le) {
+      if (log.isDebugEnabled() && name.contains("hello")) {
+        log.debug("loadClass(...): class loading failed," + " name=" + name + ", this="+ this+ ", requestor="+ requestor,le);
+      }
+      throw le;
+    }
+catch (    ClassNotFoundException cnfe) {
+    }
+    if (result != null) {
+      if (log.isDebugEnabled() && name.contains("hello")) {
+        log.debug("loadClass(...): found class, class=" + result + ", this="+ this+ ", requestor="+ requestor);
+      }
+      checkClassVisibility(result,requestor);
+      if (resolve) {
+        resolveClass(result);
+      }
+      return result;
+    }
+  }
+  if (seenModules == null) {
+    seenModules=new HashSet<String>();
+  }
+  if (log.isDebugEnabled() && name.contains("hello")) {
+    log.debug("loadClass(...): class not found, name=" + name + ", this="+ this+ ", requestor="+ requestor);
+  }
+  seenModules.add(getModule().getModuleId());
+  for (  Module publicImport : publicImports) {
+    if (seenModules.contains(publicImport.getModuleId())) {
+      continue;
+    }
+    result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(publicImport)).loadClass(name,resolve,requestor,seenModules);
+    if (result != null) {
+      break;
+    }
+  }
+  if ((this == requestor) && (result == null)) {
+    for (    Module privateImport : privateImports) {
+      if (seenModules.contains(privateImport.getModuleId())) {
+        continue;
+      }
+      result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(privateImport)).loadClass(name,resolve,requestor,seenModules);
+      if (result != null) {
+        break;
+      }
+    }
+  }
+  if ((this == requestor) && (result == null)) {
+    for (    Module reverseLookup : reverseLookups) {
+      if (seenModules.contains(reverseLookup.getModuleId())) {
+        continue;
+      }
+      if (!ModuleFactory.isModuleStarted(reverseLookup)) {
+        continue;
+      }
+      result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(reverseLookup)).loadClass(name,resolve,requestor,seenModules);
+      if (result != null) {
+        break;
+      }
+    }
+  }
+  return result;
+}

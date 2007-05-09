@@ -1,16 +1,7 @@
 {
-  log.debug("updating order #" + order.getOrderId());
   if (order.getOrderId() == null)   createOrder(order);
  else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(order);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    log.debug("Updating existing order: " + order.getOrderId().toString());
+    sessionFactory.getCurrentSession().saveOrUpdate(order);
   }
 }

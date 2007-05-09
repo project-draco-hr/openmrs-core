@@ -1,0 +1,24 @@
+{
+  log.debug("expanding: " + name);
+  File file=new File(docBase,name);
+  FileOutputStream outStream=null;
+  BufferedOutputStream output=null;
+  try {
+    outStream=new FileOutputStream(file);
+    OpenmrsUtil.copyFile(input,outStream);
+  }
+  finally {
+    try {
+      if (outStream != null)       outStream.close();
+    }
+ catch (    IOException io) {
+      log.warn("Unable to close output stream",io);
+    }
+    try {
+      if (output != null)       output.close();
+    }
+ catch (    IOException io) {
+      log.warn("Unable to close output stream",io);
+    }
+  }
+}

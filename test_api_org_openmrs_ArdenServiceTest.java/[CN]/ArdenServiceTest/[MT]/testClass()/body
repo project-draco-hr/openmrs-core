@@ -1,7 +1,10 @@
 {
-  HibernateUtil.startup();
-  Context context=ContextFactory.getContext();
-  context.authenticate("vibha","chicachica");
-  context.getArdenService().compileFile("test/arden test/HiRiskLeadScreen.mlm");
-  HibernateUtil.shutdown();
+  String[] mlmNames={"leadspecpws2.mlm"};
+  String defaultPath="test/arden test/";
+  startup();
+  Context.authenticate("vibha","chicachica");
+  for (int i=0; i < mlmNames.length; i++) {
+    Context.getArdenService().compileFile(defaultPath + mlmNames[i]);
+  }
+  shutdown();
 }

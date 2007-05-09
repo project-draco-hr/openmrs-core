@@ -1,12 +1,10 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Map<String,Object> map=new HashMap<String,Object>();
   List<FieldType> fieldTypes=new Vector<FieldType>();
   List<EncounterType> encTypes=new Vector<EncounterType>();
-  if (context != null && context.isAuthenticated()) {
-    fieldTypes=context.getFormService().getFieldTypes();
-    encTypes=context.getEncounterService().getEncounterTypes();
+  if (Context.isAuthenticated()) {
+    fieldTypes=Context.getFormService().getFieldTypes();
+    encTypes=Context.getEncounterService().getEncounterTypes();
   }
   map.put("fieldTypes",fieldTypes);
   map.put("encounterTypes",encTypes);

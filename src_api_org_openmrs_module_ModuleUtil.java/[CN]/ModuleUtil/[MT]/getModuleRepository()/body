@@ -1,0 +1,15 @@
+{
+  AdministrationService as=Context.getAdministrationService();
+  String folderName=as.getGlobalProperty(ModuleConstants.PROPERTY_REPOSITORY_FOLDER,ModuleConstants.PROPERTY_REPOSITORY_FOLDER_DEFAULT);
+  String filepath=OpenmrsUtil.getApplicationDataDirectory() + folderName;
+  File folder=new File(filepath);
+  if (!folder.exists()) {
+    log.warn("Module repository doesn't exist: " + folder.getAbsolutePath());
+    if (!folder.exists()) {
+      log.warn(folder.getAbsolutePath() + " doesn't exist.  Creating directories now.");
+      folder.mkdirs();
+    }
+  }
+  if (!folder.isDirectory())   throw new ModuleException("Module repository is not a directory at: " + folder.getAbsolutePath());
+  return folder;
+}

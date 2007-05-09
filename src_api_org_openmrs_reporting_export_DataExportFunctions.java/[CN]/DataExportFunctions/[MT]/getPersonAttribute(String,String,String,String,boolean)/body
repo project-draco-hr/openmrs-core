@@ -1,0 +1,13 @@
+{
+  String key=attributeName + "." + joinClass+ "."+ joinProperty;
+  if (returnAll)   key+="--all";
+  Map<Integer,Object> personIdAttrMap;
+  if (personAttributeMap.containsKey(key)) {
+    personIdAttrMap=personAttributeMap.get(key);
+  }
+ else {
+    personIdAttrMap=patientSetService.getPersonAttributes(patientSet,attributeName,joinClass,joinProperty,outputColumn,returnAll);
+    personAttributeMap.put(key,personIdAttrMap);
+  }
+  return personIdAttrMap.get(patientId);
+}

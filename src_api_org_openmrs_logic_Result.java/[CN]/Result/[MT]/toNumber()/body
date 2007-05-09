@@ -1,0 +1,24 @@
+{
+  if (valueList != null) {
+    if (valueList.size() < 1)     return 0D;
+    Double sum=0D;
+    for (    Result r : valueList)     sum+=r.toNumber();
+    return sum / valueList.size();
+  }
+  if (valueNumeric != null)   return valueNumeric;
+switch (datatype) {
+case NUMERIC:
+    return 0D;
+case CODED:
+  return 0D;
+case BOOLEAN:
+if (valueBoolean != null && valueBoolean) return 1D;
+ else return 0D;
+case DATE:
+if (valueDate != null) return Double.valueOf(valueDate.getTime());
+ else return 0D;
+case TEXT:
+if (valueText != null) return Double.valueOf(valueText);
+}
+return 0D;
+}

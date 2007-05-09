@@ -1,0 +1,27 @@
+{
+  String classString=(String)params.get(0);
+  Object classInstance=params.get(1);
+  if (classString == null || classInstance == null) {
+    throw new APIException("Unable to find classString or classInstance in params");
+  }
+  Class cls=null;
+  try {
+    cls=OpenmrsClassLoader.getInstance().loadClass(classString);
+    try {
+      if (cls != null)       log.error("cls classloader: " + cls.getClass().getClassLoader() + " uid: "+ cls.getClass().getClassLoader().hashCode());
+    }
+ catch (    Exception e) {
+    }
+    try {
+      Class cls2=Class.forName(classString);
+      log.error("cls2 classloader: " + cls2.getClass().getClassLoader() + " uid: "+ cls.getClass().getClassLoader().hashCode());
+      log.error("cls==cls2: " + String.valueOf(cls == cls2));
+    }
+ catch (    Exception e) {
+    }
+  }
+ catch (  ClassNotFoundException e) {
+    throw new APIException("Unable to set module service: " + classString,e);
+  }
+  setService(cls,classInstance);
+}

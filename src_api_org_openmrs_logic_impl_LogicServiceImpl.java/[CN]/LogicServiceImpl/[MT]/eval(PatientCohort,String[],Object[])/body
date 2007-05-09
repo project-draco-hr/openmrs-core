@@ -1,0 +1,13 @@
+{
+  PatientCohortDataSource dataSource=new PatientCohortDataSource(cohort);
+  HashMap<Patient,HashMap<String,Result>> resultMap=new HashMap<Patient,HashMap<String,Result>>();
+  for (  Patient patient : cohort.getPatients()) {
+    HashMap<String,Result> m=new HashMap<String,Result>();
+    for (    String token : tokenList) {
+      Rule rule=getRule(token);
+      if (rule != null)       m.put(token,dataSource.eval(patient,rule,args));
+    }
+    resultMap.put(patient,m);
+  }
+  return resultMap;
+}

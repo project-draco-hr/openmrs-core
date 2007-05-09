@@ -1,7 +1,6 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  Locale locale=context.getLocale();
-  ConceptService cs=context.getConceptService();
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
   List<Concept> concepts=cs.findProposedConcepts(text);
   List<ConceptListItem> cli=new Vector<ConceptListItem>();
   for (  Concept c : concepts)   cli.add(new ConceptListItem(c,locale));

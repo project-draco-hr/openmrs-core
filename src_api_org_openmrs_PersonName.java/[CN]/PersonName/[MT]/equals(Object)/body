@@ -1,0 +1,10 @@
+{
+  if (obj instanceof PersonName) {
+    PersonName pname=(PersonName)obj;
+    if (this.personNameId != null && pname.getPersonNameId() != null)     return (this.personNameId.equals(pname.getPersonNameId()));
+ else {
+      return (person.equals(pname.getPerson()) && givenName.equals(pname.getGivenName()) && middleName.equals(pname.getMiddleName())&& familyName.equals(pname.getFamilyName()));
+    }
+  }
+  return false;
+}

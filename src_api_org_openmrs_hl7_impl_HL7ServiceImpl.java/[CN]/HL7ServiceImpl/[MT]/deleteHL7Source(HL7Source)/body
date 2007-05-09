@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(HL7Constants.PRIV_DELETE_HL7_SOURCE))   throw new APIAuthenticationException("Insufficient privilege to delete an HL7 source");
+  getHL7DAO().deleteHL7Source(hl7Source);
+}

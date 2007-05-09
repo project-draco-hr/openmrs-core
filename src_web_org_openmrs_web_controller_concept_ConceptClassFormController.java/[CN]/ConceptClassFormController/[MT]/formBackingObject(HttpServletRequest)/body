@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   ConceptClass identifierType=null;
-  if (context != null && context.isAuthenticated()) {
-    ConceptService cs=context.getConceptService();
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
     String identifierTypeId=request.getParameter("conceptClassId");
     if (identifierTypeId != null)     identifierType=cs.getConceptClass(Integer.valueOf(identifierTypeId));
   }

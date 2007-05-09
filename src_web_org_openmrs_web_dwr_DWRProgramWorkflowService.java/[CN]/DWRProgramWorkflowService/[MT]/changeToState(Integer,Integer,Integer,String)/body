@@ -1,0 +1,9 @@
+{
+  ProgramWorkflowService s=Context.getProgramWorkflowService();
+  PatientProgram pp=s.getPatientProgram(patientProgramId);
+  ProgramWorkflow wf=s.getWorkflow(programWorkflowId);
+  ProgramWorkflowState st=s.getState(programWorkflowStateId);
+  Date onDate=null;
+  if (onDateDMY != null && onDateDMY.length() > 0)   onDate=ymdDf.parse(onDateDMY);
+  s.changeToState(pp,wf,st,onDate);
+}

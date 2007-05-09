@@ -1,0 +1,4 @@
+{
+  RelationshipType ret=(RelationshipType)sessionFactory.getCurrentSession().createQuery("from RelationshipType t where CONCAT(t.aIsToB, CONCAT('/', t.bIsToA)) = :toString order by weight").setString("toString",relationshipTypeName).uniqueResult();
+  return ret;
+}

@@ -1,6 +1,6 @@
 {
   log.debug("Sending message to user with user id " + recipientId);
-  User user=daoContext.getUserDAO().getUser(recipientId);
-  message.addRecipient(user.getProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));
+  User user=Context.getUserService().getUser(recipientId);
+  message.addRecipient(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));
   send(message);
 }

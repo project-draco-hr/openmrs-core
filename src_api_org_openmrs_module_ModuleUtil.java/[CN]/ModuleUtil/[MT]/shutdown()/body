@@ -1,0 +1,9 @@
+{
+  List<Module> modules=new Vector<Module>();
+  modules.addAll(ModuleFactory.getStartedModules());
+  for (  Module mod : modules) {
+    log.debug("stopping module: " + mod.getModuleId());
+    ModuleFactory.stopModule(mod,true);
+  }
+  log.debug("done shutting down modules");
+}

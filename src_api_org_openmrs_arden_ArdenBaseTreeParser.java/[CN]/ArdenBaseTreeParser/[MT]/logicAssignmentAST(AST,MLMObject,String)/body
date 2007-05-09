@@ -1,17 +1,66 @@
 {
   String s="";
   AST logicAssignmentAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
-  String a, b;
+  AST thisstrlit=null;
+  AST str1=null;
+  String a="", b="";
   try {
-    exprStringAST(_t,obj,key);
+    a=exprStringAST(_t,obj,"CTX");
     _t=_retTree;
-  }
- catch (  RecognitionException ex) {
-    reportError(ex);
-    if (_t != null) {
-      _t=_t.getNextSibling();
+    obj.AddToEvaluateList("Logic_Assignment");
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case STRING_LITERAL:
+{
+          thisstrlit=(AST)_t;
+          match(_t,STRING_LITERAL);
+          _t=_t.getNextSibling();
+          b+=thisstrlit.getText();
+{
+            _loop425:             do {
+              if (_t == null)               _t=ASTNULL;
+              if ((_t.getType() == ACTION_OP)) {
+                AST tmp74_AST_in=(AST)_t;
+                match(_t,ACTION_OP);
+                _t=_t.getNextSibling();
+                str1=(AST)_t;
+                match(_t,STRING_LITERAL);
+                _t=_t.getNextSibling();
+                b+=str1.getText();
+              }
+ else {
+                break _loop425;
+              }
+            }
+ while (true);
+          }
+          obj.SetUserVarVal(a,b,key);
+          break;
+        }
+case IF:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case CALL:
+case ENDBLOCK:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(_t);
     }
-  }
-  _retTree=_t;
-  return s;
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
 }

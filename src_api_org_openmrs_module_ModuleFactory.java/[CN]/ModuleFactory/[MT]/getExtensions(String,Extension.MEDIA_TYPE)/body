@@ -1,0 +1,11 @@
+{
+  String key=pointId + "|" + type;
+  List<Extension> extensions=getExtensionMap().get(key);
+  if (extensions != null) {
+    log.debug("Getting extensions defined by : " + key);
+    return extensions;
+  }
+ else {
+    return getExtensions(pointId);
+  }
+}

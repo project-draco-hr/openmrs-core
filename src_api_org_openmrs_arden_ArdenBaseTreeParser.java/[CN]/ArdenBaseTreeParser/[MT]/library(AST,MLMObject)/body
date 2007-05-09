@@ -4,29 +4,29 @@
   String a="", b="";
   try {
 {
-      AST __t430=_t;
-      AST tmp71_AST_in=(AST)_t;
+      AST __t501=_t;
+      AST tmp117_AST_in=(AST)_t;
       match(_t,LIBRARY);
       _t=_t.getFirstChild();
 {
-        _loop432:         do {
+        _loop503:         do {
           if (_t == null)           _t=ASTNULL;
-          if (((_t.getType() >= AND && _t.getType() <= STRING_LITERAL))) {
+          if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
             a=textAST(_t,obj);
             _t=_retTree;
             s+=a;
-            AST tmp72_AST_in=(AST)_t;
+            AST tmp118_AST_in=(AST)_t;
             match(_t,ENDBLOCK);
             _t=_t.getNextSibling();
             s+="\n";
           }
  else {
-            break _loop432;
+            break _loop503;
           }
         }
  while (true);
       }
-      _t=__t430;
+      _t=__t501;
       _t=_t.getNextSibling();
     }
   }

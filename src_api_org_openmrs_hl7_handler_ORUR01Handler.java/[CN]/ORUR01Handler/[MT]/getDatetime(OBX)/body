@@ -1,0 +1,11 @@
+{
+  Date datetime=null;
+  TS ts=obx.getDateTimeOfTheObservation();
+  DTM value=ts.getTime();
+  try {
+    datetime=getDate(value.getYear(),value.getMonth(),value.getDay(),value.getHour(),value.getMinute(),value.getSecond());
+  }
+ catch (  DataTypeException e) {
+  }
+  return datetime;
+}

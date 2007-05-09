@@ -1,15 +1,6 @@
 {
   log.info("Getting all notes from the database");
   List<Note> notes=new ArrayList<Note>();
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    notes=session.createQuery("from Note").list();
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    log.error(e);
-    HibernateUtil.rollbackTransaction();
-  }
+  notes=sessionFactory.getCurrentSession().createQuery("from Note").list();
   return notes;
 }

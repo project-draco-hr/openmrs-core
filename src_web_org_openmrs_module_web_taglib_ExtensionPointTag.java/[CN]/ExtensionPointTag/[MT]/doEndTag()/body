@@ -1,0 +1,22 @@
+{
+  try {
+    if (getBodyContent() != null) {
+      log.debug("Ending tag: " + bodyContent.getString());
+      if (extensions != null)       getBodyContent().writeOut(bodyContent.getEnclosingWriter());
+      bodyContent.clearBody();
+    }
+ else {
+      while (extensions != null && extensions.hasNext()) {
+        Extension ext=extensions.next();
+        ext.initialize(parameterMap);
+        String overrideContent=ext.getOverrideContent("");
+        if (overrideContent != null)         pageContext.getOut().write(overrideContent);
+      }
+    }
+  }
+ catch (  java.io.IOException e) {
+    throw new JspTagException("IO Error while ending tag for point: " + pointId,e);
+  }
+  release();
+  return EVAL_PAGE;
+}

@@ -1,0 +1,13 @@
+{
+  for (  String reqModPackage : module.getRequiredModules()) {
+    boolean found=false;
+    for (    Module mod : getStartedModules()) {
+      if (mod.getPackageName().equals(reqModPackage)) {
+        found=true;
+        break;
+      }
+    }
+    if (!found)     return false;
+  }
+  return true;
+}

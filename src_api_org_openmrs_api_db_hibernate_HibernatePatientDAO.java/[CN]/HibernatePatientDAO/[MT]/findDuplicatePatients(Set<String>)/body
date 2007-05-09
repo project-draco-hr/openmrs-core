@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
   List<Patient> patients=new Vector<Patient>();
   if (attributes.size() > 0) {
     String select="select distinct p1 from Patient p1, Patient p2";
@@ -11,10 +10,16 @@
       patientFieldNames.add(f.getName());
       log.debug(f.getName());
     }
-    Class patientName=PatientName.class;
-    Set<String> patientNameFieldNames=new HashSet<String>(patientName.getDeclaredFields().length);
-    for (    Field f : patientName.getDeclaredFields()) {
-      patientNameFieldNames.add(f.getName());
+    Class person=Person.class;
+    Set<String> personFieldNames=new HashSet<String>(person.getDeclaredFields().length);
+    for (    Field f : person.getDeclaredFields()) {
+      personFieldNames.add(f.getName());
+      log.debug(f.getName());
+    }
+    Class personName=PersonName.class;
+    Set<String> personNameFieldNames=new HashSet<String>(personName.getDeclaredFields().length);
+    for (    Field f : personName.getDeclaredFields()) {
+      personNameFieldNames.add(f.getName());
       log.debug(f.getName());
     }
     Class identifier=PatientIdentifier.class;
@@ -29,10 +34,18 @@
         where+=" and p1." + s + " = p2."+ s;
         orderBy+="p1." + s + ", ";
       }
- else       if (patientNameFieldNames.contains(s)) {
-        if (!select.contains("PatientName")) {
-          select+=", PatientName pn1, PatientName pn2";
-          where+=" and p1 = pn1.patient and p2 = pn2.patient ";
+ else       if (personFieldNames.contains(s)) {
+        if (!select.contains("Person ")) {
+          select+=", Person person1, Person person2";
+          where+=" and p1.patientId = person1.personId and p2.patientId = person2.personId ";
+        }
+        where+=" and person1." + s + " = person2."+ s;
+        orderBy+="person1." + s + ", ";
+      }
+ else       if (personNameFieldNames.contains(s)) {
+        if (!select.contains("PersonName")) {
+          select+=", PersonName pn1, PersonName pn2";
+          where+=" and p1 = pn1.person and p2 = pn2.person ";
         }
         where+=" and pn1." + s + " = pn2."+ s;
         orderBy+="pn1." + s + ", ";
@@ -50,7 +63,7 @@
     int index=orderBy.lastIndexOf(", ");
     orderBy=orderBy.substring(0,index);
     select=select + where + orderBy;
-    Query query=session.createQuery(select);
+    Query query=sessionFactory.getCurrentSession().createQuery(select);
     patients=query.list();
   }
   return patients;

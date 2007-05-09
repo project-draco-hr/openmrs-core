@@ -1,4 +1,5 @@
 {
+  int i=super.doEndTag();
   try {
     pageContext.getOut().print("</div>");
   }
@@ -6,5 +7,5 @@
     log.error("Error while closing portlet tag",e);
   }
   resetValues();
-  return super.doEndTag();
+  return i;
 }

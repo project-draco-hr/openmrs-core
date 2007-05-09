@@ -1,7 +1,10 @@
 {
   if (!userVarMap.containsKey(var)) {
-    userVarMap.put(var,val);
+    LinkedList<String> thisList=new LinkedList<String>();
+    thisList.add(val);
+    userVarMap.put(var,thisList);
   }
  else {
+    userVarMap.get(var).add(val);
   }
 }

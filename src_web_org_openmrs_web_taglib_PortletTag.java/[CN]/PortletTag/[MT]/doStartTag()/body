@@ -5,10 +5,22 @@
     if (url.equals(""))     pageContext.getOut().print("Every portlet must be defined with a URI");
  else {
       if (!url.endsWith("portlet"))       url+=".portlet";
-      url="/portlets/" + url;
-      pageContext.getOut().print("<div class='portlet' id='" + id + "'>");
+      if (moduleId != null && moduleId.length() > 0) {
+        Module mod=ModuleFactory.getModuleById(moduleId);
+        if (mod == null)         log.warn("no module found with id: " + moduleId);
+ else         url="/module/" + moduleId + "/portlets/"+ url;
+      }
+ else       url="/portlets/" + url;
+      if (moduleId != null && moduleId.length() > 0)       pageContext.getOut().print("<div class='portlet' id='" + moduleId + "."+ id+ "'>");
+ else       pageContext.getOut().print("<div class='portlet' id='" + id + "'>");
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.id",id);
       pageContext.getRequest().setAttribute("org.openmrs.portlet.size",size);
-      pageContext.getRequest().setAttribute("org.openmrs.portlet.parameters",Helper.parseParameterList(parameters));
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.parameters",OpenmrsUtil.parseParameterList(parameters));
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.patientId",patientId);
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.encounterId",encounterId);
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.userId",userId);
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.patientIds",patientIds);
+      pageContext.getRequest().setAttribute("org.openmrs.portlet.parameterMap",parameterMap);
     }
   }
  catch (  IOException e) {

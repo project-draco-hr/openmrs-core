@@ -1,0 +1,9 @@
+{
+  if (c == null)   return "";
+  StringBuilder ret=new StringBuilder();
+  for (Iterator i=c.iterator(); i.hasNext(); ) {
+    ret.append(i.next());
+    if (i.hasNext())     ret.append(separator);
+  }
+  return ret.toString();
+}

@@ -21,16 +21,19 @@
         }
  catch (        Exception e) {
           m=null;
+          log.error("Could not instantiate setter method [" + methodName + "()] for field ["+ key+ "] in class ["+ reportObj.getClass().getName()+ "] while initializing report object fields.");
         }
       }
 catch (      Exception e) {
         m=null;
+        log.error("Could not instantiate setter method [" + methodName + "()] for field ["+ key+ "] in class ["+ reportObj.getClass().getName()+ "] while initializing report object fields.");
       }
       if (m != null) {
         try {
           Object fieldObj=m.invoke(reportObj,setterParams);
         }
  catch (        Exception e) {
+          log.error("Could not invoke setter method [" + methodName + "()] for field ["+ key+ "] in class ["+ reportObj.getClass().getName()+ "] while initializing report object fields.");
         }
       }
     }

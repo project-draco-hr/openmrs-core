@@ -1,16 +1,11 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  if (context == null || !context.isAuthenticated()) {
-    errors.reject("auth.session.expired");
-    return super.processFormSubmission(request,response,obj,errors);
-  }
   if (!errors.hasErrors()) {
-    User user=context.getAuthenticatedUser();
-    UserService us=context.getUserService();
+    User user=Context.getAuthenticatedUser();
+    UserService us=Context.getUserService();
     OptionsForm opts=(OptionsForm)obj;
-    Map<String,String> properties=user.getProperties();
+    Map<String,String> properties=user.getUserProperties();
     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,opts.getDefaultLocation());
     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE,opts.getDefaultLocale());
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_RETIRED,opts.getShowRetiredMessage().toString());
@@ -45,17 +40,17 @@
       }
     }
     if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
-      context.addProxyPrivilege("View Users");
+      Context.addProxyPrivilege("View Users");
       if (us.hasDuplicateUsername(user)) {
         errors.rejectValue("username","error.username.taken");
       }
     }
     if (!errors.hasErrors()) {
       user.setUsername(opts.getUsername());
-      user.setProperties(properties);
-      context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      user.setUserProperties(properties);
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
       us.updateUser(user);
-      context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
     }
  else {

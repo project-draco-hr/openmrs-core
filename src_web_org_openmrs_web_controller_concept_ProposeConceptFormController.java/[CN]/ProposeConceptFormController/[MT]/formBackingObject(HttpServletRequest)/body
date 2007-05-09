@@ -1,13 +1,11 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   ConceptProposal cp=new ConceptProposal();
-  if (context != null && context.isAuthenticated()) {
-    ConceptService cs=context.getConceptService();
-    EncounterService es=context.getEncounterService();
-    String id=RequestUtils.getStringParameter(request,"encounterId");
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
+    EncounterService es=Context.getEncounterService();
+    String id=ServletRequestUtils.getStringParameter(request,"encounterId");
     if (id != null)     cp.setEncounter(es.getEncounter(Integer.valueOf(id)));
-    id=RequestUtils.getStringParameter(request,"obsConceptId");
+    id=ServletRequestUtils.getStringParameter(request,"obsConceptId");
     if (id != null)     cp.setObsConcept(cs.getConcept(Integer.valueOf(id)));
   }
   return cp;

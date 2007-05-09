@@ -1,0 +1,14 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  List<Patient> patients=new Vector<Patient>();
+  PatientDAO dao=getPatientDAO();
+  if (query.length() < 3)   return patients;
+  if (query.matches(".*\\d+.*")) {
+    log.debug("[Identifier search] Query: " + query);
+    patients.addAll(dao.getPatientsByIdentifierPattern(query,includeVoided));
+  }
+ else {
+    patients.addAll(dao.getPatientsByName(query,includeVoided));
+  }
+  return patients;
+}

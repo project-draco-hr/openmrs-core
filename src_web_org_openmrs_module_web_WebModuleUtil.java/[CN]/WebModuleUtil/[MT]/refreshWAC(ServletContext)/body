@@ -1,0 +1,22 @@
+{
+  XmlWebApplicationContext wac=(XmlWebApplicationContext)WebApplicationContextUtils.getWebApplicationContext(servletContext);
+  log.debug("WAC class: " + wac.getClass().getName());
+  OpenmrsClassLoader.saveState();
+  ServiceContext.destroyInstance();
+  try {
+    wac.stop();
+    wac.close();
+  }
+ catch (  Exception e) {
+  }
+  OpenmrsClassLoader.destroyInstance();
+  wac.setClassLoader(OpenmrsClassLoader.getInstance());
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  ServiceContext.getInstance().startRefreshingContext();
+  wac.refresh();
+  ServiceContext.getInstance().doneRefreshingContext();
+  wac.setClassLoader(OpenmrsClassLoader.getInstance());
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  OpenmrsClassLoader.restoreState();
+  return wac;
+}

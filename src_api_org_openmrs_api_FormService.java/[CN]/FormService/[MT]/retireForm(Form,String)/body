@@ -1,8 +1,0 @@
-{
-  if (!context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_FORMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_FORMS);
-  form.setRetired(true);
-  form.setRetiredBy(context.getAuthenticatedUser());
-  form.setDateRetired(new Date());
-  form.setRetiredReason(reason);
-  updateForm(form);
-}

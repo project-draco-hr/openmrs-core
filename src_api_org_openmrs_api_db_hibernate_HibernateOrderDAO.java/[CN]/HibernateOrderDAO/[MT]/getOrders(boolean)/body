@@ -1,0 +1,5 @@
+{
+  log.debug("getting all orders, showVoided is " + showVoided);
+  String voided=showVoided ? "" : "where voided = 0 ";
+  return sessionFactory.getCurrentSession().createQuery("from Orders " + voided).list();
+}

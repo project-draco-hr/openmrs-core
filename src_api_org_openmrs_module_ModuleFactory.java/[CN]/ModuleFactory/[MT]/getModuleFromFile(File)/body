@@ -1,0 +1,11 @@
+{
+  Module module=null;
+  try {
+    module=new ModuleFileParser(moduleFile).parse();
+  }
+ catch (  ModuleException e) {
+    log.error("Error getting module object from file",e);
+    throw e;
+  }
+  return module;
+}

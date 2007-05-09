@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(ConceptProposal.class);
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptProposal.class);
   if (includeCompleted == false) {
     crit.add(Expression.eq("state",OpenmrsConstants.CONCEPT_PROPOSAL_UNMAPPED));
   }

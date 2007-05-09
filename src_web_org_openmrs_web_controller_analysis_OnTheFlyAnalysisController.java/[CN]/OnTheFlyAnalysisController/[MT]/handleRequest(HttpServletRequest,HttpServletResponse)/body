@@ -1,78 +1,70 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
-    response.sendRedirect(request.getContextPath() + "/logout");
-    return null;
-  }
-  Locale locale=context.getLocale();
-  ReportService reportService=context.getReportService();
-  PatientSetService patientSetService=context.getPatientSetService();
-  PatientAnalysis analysis=(PatientAnalysis)httpSession.getAttribute(ON_THE_FLY_ANALYSIS_ATTR);
-  if (analysis == null) {
-    analysis=new PatientAnalysis();
-  }
-  List<LinkSpec> linkList=linkHelper();
-  List<ShortcutSpec> shortcutList=shortcutHelper();
-  if (reportService != null) {
-    for (    ShortcutSpec s : shortcutList) {
-      s.test(reportService);
-      PatientFilter pf=analysis.getPatientFilters().get(s.getLabel());
-      log.debug("Looked at ShortcutSpec " + s + " to see if there's a currently-selected filter for label "+ s.getLabel()+ " (keyset = "+ analysis.getPatientFilters().keySet()+ "). Result: "+ pf);
-      if (pf != null) {
-        log.debug("set current filter for " + s + " to "+ pf.getName());
-        s.setCurrentFilter(((AbstractReportObject)pf).getName());
+  Map<String,Object> myModel=new HashMap<String,Object>();
+  if (Context.isAuthenticated()) {
+    ReportService reportService=Context.getReportService();
+    PatientAnalysis analysis=Context.getPatientSetService().getMyPatientAnalysis();
+    if ("true".equals(request.getParameter("remove_all_filters"))) {
+      analysis.getPatientFilters().clear();
+    }
+    List<ShortcutSpec> shortcutList=shortcutHelper();
+    if (reportService != null) {
+      for (      ShortcutSpec s : shortcutList) {
+        s.test(reportService);
+        PatientFilter pf=analysis.getPatientFilters().get(s.getLabel());
+        log.debug("Looked at ShortcutSpec " + s + " to see if there's a currently-selected filter for label "+ s.getLabel()+ " (keyset = "+ analysis.getPatientFilters().keySet()+ "). Result: "+ pf);
+        if (pf != null) {
+          log.debug("set current filter for " + s + " to "+ pf.getName());
+          s.setCurrentFilter((PatientFilter)pf);
+        }
       }
     }
-  }
-  String[] filterIds=request.getParameterValues("patient_filter_id");
-  if (filterIds != null) {
-    for (    String filterId : filterIds) {
-      try {
-        analysis.addFilter(null,reportService.getPatientFilterById(new Integer(filterId.trim())));
-      }
- catch (      Exception ex) {
+    String[] filterIds=request.getParameterValues("patient_filter_id");
+    if (filterIds != null) {
+      for (      String filterId : filterIds) {
+        try {
+          analysis.addFilter(null,reportService.getPatientFilterById(new Integer(filterId.trim())));
+        }
+ catch (        Exception ex) {
+        }
       }
     }
-  }
-  PatientSet everyone=patientSetService.getPatientsByCharacteristics(null,null,null);
-  PatientSet result=analysis.runFilters(context,everyone);
-  PatientDataSet pds=new PatientDataSet();
-  ShortDescriptionProducer sdp=new ShortDescriptionProducer();
-  pds.putDataSeries("description",sdp.produceData(context,result));
-  Object resultsToDisplay=pds;
-  Object xmlToDisplay=null;
-  String viewMethod=request.getParameter("view");
-  if ("cd4".equals(viewMethod)) {
-    log.debug("preparing cd4 view");
-    ObsListProducer olp=new ObsListProducer(context.getConceptService().getConcept(new Integer(5497)));
-    pds.putDataSeries("cd4s",olp.produceData(context,result));
-    PatientDataSetFormatter formatter=new ChronologicalObsFormatterHtml("cd4s");
-    resultsToDisplay=formatter.format(pds,locale);
-  }
- else   if ("xml".equals(viewMethod)) {
-    Set<Integer> temp=result.getPatientIds();
-    if (temp.size() > 0) {
-      Integer ptId=temp.iterator().next();
-      log.debug("preparing xml view of patient " + ptId);
-      xmlToDisplay=patientSetService.exportXml(ptId).replaceAll(">",">\n");
+    Map<String,PatientFilter> filters=analysis.getPatientFilters();
+    List availableFilters=new ArrayList<PatientFilter>(reportService.getAllPatientFilters());
+    for (    PatientFilter pf : filters.values()) {
+      availableFilters.remove(pf);
     }
+    Collections.sort(availableFilters,new Comparator(){
+      public int compare(      Object a,      Object b){
+        if (a.getClass().equals(b.getClass()) && a instanceof Comparable)         return ((Comparable)a).compareTo((Comparable)b);
+        AbstractReportObject left=(AbstractReportObject)a;
+        AbstractReportObject right=(AbstractReportObject)b;
+        int temp=left.getType().compareTo(right.getType());
+        if (temp == 0) {
+          temp=left.getSubType().compareTo(right.getSubType());
+        }
+        if (temp == 0) {
+          temp=left.getName().compareTo(right.getName());
+        }
+        if (temp == 0) {
+          temp=left.getDateCreated().compareTo(right.getDateCreated());
+        }
+        return temp;
+      }
+    }
+);
+    List<LinkSpec> linkList=linkHelper();
+    Map<String,Object> filterPortletParams=new HashMap<String,Object>();
+    filterPortletParams.put("patientAnalysis",analysis);
+    filterPortletParams.put("suggestedFilters",availableFilters);
+    filterPortletParams.put("deleteURL","analysis.form?method=removeFilter");
+    filterPortletParams.put("addURL","analysis.form?method=addFilter");
+    filterPortletParams.put("shortcuts",shortcutList);
+    myModel.put("active_filters",filters);
+    myModel.put("shortcuts",shortcutList);
+    myModel.put("filterPortletParams",filterPortletParams);
+    myModel.put("links",linkList);
+    String viewMethod=request.getParameter("viewMethod");
+    if (viewMethod != null && viewMethod.length() > 0)     myModel.put("viewMethod",viewMethod);
   }
-  Map<String,PatientFilter> filters=analysis.getPatientFilters();
-  List availableFilters=new ArrayList<PatientFilter>(reportService.getAllPatientFilters());
-  for (  PatientFilter pf : filters.values()) {
-    availableFilters.remove(pf);
-  }
-  Map myModel=new HashMap();
-  myModel.put("no_filters",new Boolean(filters.size() == 0));
-  myModel.put("active_filters",filters);
-  myModel.put("suggested_filters",availableFilters);
-  myModel.put("number_of_results",new Integer(result.size()));
-  myModel.put("analysis_results",resultsToDisplay);
-  myModel.put("xml_debug",xmlToDisplay);
-  myModel.put("shortcuts",shortcutList);
-  myModel.put("patient_set_for_links",result.toCommaSeparatedPatientIds());
-  myModel.put("links",linkList);
-  return new ModelAndView("/analysis/on-the-fly-analysis","model",myModel);
+  return new ModelAndView(formView,"model",myModel);
 }

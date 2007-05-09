@@ -1,0 +1,15 @@
+{
+  if (resultList.size() > 0) {
+    xml.append("    <results name=\"");
+    xml.append(name);
+    xml.append("\">\n");
+    for (    Result result : resultList) {
+      xml.append("      <value date=\"");
+      xml.append(formatDate(result.getDate()));
+      xml.append("\">");
+      xml.append(result.toString());
+      xml.append("</value>\n");
+    }
+    xml.append("    </results>\n");
+  }
+}

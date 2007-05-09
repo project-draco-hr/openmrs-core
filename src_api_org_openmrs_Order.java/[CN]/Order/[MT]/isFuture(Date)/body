@@ -1,0 +1,12 @@
+{
+  log.debug("Check if this is in the future");
+  if (checkDate == null) {
+    checkDate=new Date();
+  }
+  if (startDate != null && checkDate.before(startDate) && !voided && !discontinued) {
+    log.debug("Looks like this order IS in the future");
+    return true;
+  }
+  log.debug("Looks like this order is not in the future");
+  return false;
+}

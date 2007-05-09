@@ -1,9 +1,0 @@
-{
-  Session session=HibernateUtil.currentSession();
-  Query query=session.createQuery("from Person p where p.patient.patientId = :patId");
-  query=query.setInteger("patId",pat.getPatientId());
-  Object o=query.uniqueResult();
-  log.debug("o.class: " + o.getClass().toString());
-  Person person=(Person)o;
-  return person;
-}

@@ -1,0 +1,12 @@
+{
+  List<List<Obs>> ret=new Vector<List<Obs>>();
+  for (  Concept c : parent.getObsGroupConceptsWithObs()) {
+    List<Obs> list=new Vector<Obs>();
+    Integer id=c.getConceptId();
+    for (    Obs o : observations) {
+      if (id.equals(o.getConcept().getConceptId()))       list.add(o);
+    }
+    ret.add(list);
+  }
+  return ret;
+}

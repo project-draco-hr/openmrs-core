@@ -1,0 +1,10 @@
+{
+  List<Relationship> temp=getRelationships(toPerson);
+  List<Relationship> ret=new ArrayList<Relationship>();
+  for (  Relationship rel : temp) {
+    if (rel.getPersonB().equals(toPerson) && (relType == null || relType.equals(rel.getRelationshipType()))) {
+      ret.add(rel);
+    }
+  }
+  return ret;
+}

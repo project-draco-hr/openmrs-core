@@ -1,0 +1,24 @@
+{
+  Vector<Object> personList=new Vector<Object>();
+  Integer userId=Context.getAuthenticatedUser().getUserId();
+  log.info(userId + "|" + name+ "|"+ birthyear+ "|"+ age+ "|"+ gender);
+  PersonService ps=Context.getPersonService();
+  List<Person> persons=new Vector<Person>();
+  Integer d=null;
+  birthyear=birthyear.trim();
+  age=age.trim();
+  if (birthyear.length() > 3)   d=Integer.valueOf(birthyear);
+ else   if (age.length() > 0) {
+    Calendar c=Calendar.getInstance();
+    c.setTime(new Date());
+    d=c.get(Calendar.YEAR);
+    d=d - Integer.parseInt(age);
+  }
+  if (gender.length() < 1)   gender=null;
+  persons.addAll(ps.getSimilarPeople(name,d,gender));
+  personList=new Vector<Object>(persons.size());
+  for (  Person p : persons) {
+    personList.add(new PersonListItem(p));
+  }
+  return personList;
+}

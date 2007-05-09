@@ -1,0 +1,10 @@
+{
+  if (this.patientId != null) {
+    for (    Map<Integer,?> map : patientEncounterMap.values())     map.remove(this.patientId);
+    for (    Map<Integer,?> map : patientFirstEncounterMap.values())     map.remove(this.patientId);
+    for (    Map<Integer,Object> map : patientAttributeMap.values())     map.remove(this.patientId);
+  }
+  garbageCollect();
+  setPatient(null);
+  this.patientId=patientId;
+}

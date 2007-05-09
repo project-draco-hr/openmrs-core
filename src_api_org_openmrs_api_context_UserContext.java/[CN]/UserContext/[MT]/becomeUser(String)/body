@@ -1,0 +1,10 @@
+{
+  if (!Context.getAuthenticatedUser().isSuperUser())   throw new APIAuthenticationException("You must be a superuser to assume another user's identity");
+  User u=Context.getUserService().getUserByUsername(systemId);
+  if (u.getAllRoles() != null)   u.getAllRoles().size();
+  if (u.getUserProperties() != null)   u.getUserProperties().size();
+  if (u.getPrivileges() != null)   u.getPrivileges().size();
+  if (u == null)   throw new ContextAuthenticationException("SystemId not found: " + systemId);
+  this.user=u;
+  return u;
+}

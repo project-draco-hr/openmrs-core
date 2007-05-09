@@ -1,0 +1,15 @@
+{
+  log.debug("Starting tag for extension count: " + pointId);
+  log.debug("Getting extensions: " + pointId);
+  List<Extension> extensionList=ModuleFactory.getExtensions(pointId,Extension.MEDIA_TYPE.html);
+  log.debug("extensionList = " + extensionList);
+  int count=extensionList == null ? 0 : extensionList.size();
+  if (var == null)   try {
+    pageContext.getOut().print(count);
+  }
+ catch (  IOException ex) {
+    log.error("IOException printing count to pageContext.getOut()",ex);
+  }
+ else   pageContext.setAttribute(var,count);
+  return SKIP_BODY;
+}

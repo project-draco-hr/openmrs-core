@@ -1,0 +1,14 @@
+{
+  if (patient == null)   return;
+  if (patient.getIdentifiers() != null)   for (  PatientIdentifier pi : patient.getIdentifiers()) {
+    if (!pi.isVoided()) {
+      pi.setVoided(true);
+      pi.setVoidReason(reason);
+    }
+  }
+  patient.setVoided(true);
+  patient.setVoidedBy(Context.getAuthenticatedUser());
+  patient.setDateVoided(new Date());
+  patient.setVoidReason(reason);
+  updatePatient(patient);
+}

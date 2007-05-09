@@ -4,7 +4,7 @@
     w.append("\t\tuserVarMap.put(\"ActionStr\", \"" + str + "\");\n");
     w.write("}\n\n");
     w.flush();
-    w.write("public String action() {\n");
+    w.write("public String doAction() {\n");
     w.write("\tint index = 0, nindex = 0, endindex = 0, startindex = 0;\n");
     w.write("\tString tempstr, variable, outStr = \"\";\n");
     w.write("\tString inStr = userVarMap.get(\"ActionStr\");\n\n");
@@ -15,7 +15,7 @@
     w.write("\t\t\tnindex = tempstr.indexOf(\"||\", index+1);\n");
     w.write("\t\t\tstartindex = index + 2;\n");
     w.write("\t\t\tendindex = nindex;\n");
-    w.write("\t\t\tvariable = inStr.substring(startindex, endindex);\n");
+    w.write("\t\t\tvariable = inStr.substring(startindex, endindex).trim();\n");
     w.write("\t\t\toutStr += userVarMap.get(variable);\n");
     w.write("\t\t\tindex = tempstr.indexOf(\"||\", nindex+2);\n");
     w.write("\t\t}\n");
@@ -33,7 +33,7 @@
     w.write("\t\t\tnindex = tempstr.indexOf(\"||\", index+2);\n");
     w.write("\t\t\tstartindex = index + 2;\n");
     w.write("\t\t\tendindex = nindex;\n");
-    w.write("\t\t\tvariable = inStr.substring(startindex, endindex);\n");
+    w.write("\t\t\tvariable = inStr.substring(startindex, endindex).trim();\n");
     w.write("\t\t\toutStr += userVarMap.get(variable);\n");
     w.write("\t\t\tindex = tempstr.indexOf(\"||\", nindex+2);\n");
     w.write("\t\t}\n");

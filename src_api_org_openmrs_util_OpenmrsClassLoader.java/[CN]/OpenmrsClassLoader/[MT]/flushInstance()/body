@@ -1,0 +1,15 @@
+{
+  try {
+    SchedulerService service=null;
+    try {
+      Context.getSchedulerService();
+    }
+ catch (    APIException e2) {
+      log.warn("Unable to get scheduler service",e2);
+    }
+    if (service != null)     service.restartTasks();
+  }
+ catch (  Exception e) {
+    log.error("Unable to restart scheduler tasks",e);
+  }
+}

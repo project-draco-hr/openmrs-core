@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<Role> roles=session.createQuery("from Role r where :role in inheritedRoles order by r.role").setParameter("role",role).list();
-  return roles;
+  return sessionFactory.getCurrentSession().createQuery("from Role r where :role in inheritedRoles order by r.role").setParameter("role",role).list();
 }

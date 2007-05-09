@@ -1,15 +1,6 @@
 {
   if (cd.getConceptDatatypeId() == null)   createConceptDatatype(cd);
  else {
-    try {
-      Session session=HibernateUtil.currentSession();
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(cd);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    sessionFactory.getCurrentSession().saveOrUpdate(cd);
   }
 }

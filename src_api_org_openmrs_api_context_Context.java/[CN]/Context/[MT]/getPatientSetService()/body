@@ -1,6 +1,3 @@
 {
-  if (patientSetService == null) {
-    patientSetService=new PatientSetService(this,getDaoContext());
-  }
-  return patientSetService;
+  return getServiceContext().getPatientSetService();
 }

@@ -1,59 +1,78 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  PatientListItem pli=(PatientListItem)obj;
-  if (context != null && context.isAuthenticated()) {
-    FormEntryService ps=context.getFormEntryService();
+  ShortPatientModel shortPatient=(ShortPatientModel)obj;
+  log.debug("\nNOW GOING THROUGH PROCESSFORMSUBMISSION METHOD.......................................\n\n");
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
+    EncounterService es=Context.getEncounterService();
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    if (request.getParameter("action") == null || request.getParameter("action").equals(msa.getMessage("general.save"))) {
-      ValidationUtils.rejectIfEmptyOrWhitespace(errors,"familyName","error.name");
+    String action=request.getParameter("action");
+    if (action == null || action.equals(msa.getMessage("general.save"))) {
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name.familyName","error.name");
       String[] identifiers=request.getParameterValues("identifier");
       String[] types=request.getParameterValues("identifierType");
       String[] locs=request.getParameterValues("location");
       pref=request.getParameter("preferred");
       if (pref == null)       pref="";
-      log.debug("identifiers: " + identifiers);
-      for (      String s : identifiers)       log.debug(s);
-      log.debug("types: " + types);
-      for (      String s : types)       log.debug(s);
-      log.debug("locations: " + locs);
-      for (      String s : locs)       log.debug(s);
-      log.debug("preferred: " + pref);
-      for (int i=0; i < identifiers.length; i++) {
-        String[] args={identifiers[i]};
-        if (identifiers[i].length() > 0) {
-          PatientIdentifierType pit=null;
-          if (types[i] == null || types[i].equals(""))           errors.reject("Identifier.identifierType.null",args,"Identifier type for '" + identifiers[i] + "' cannot be null");
- else           pit=ps.getPatientIdentifierType(Integer.valueOf(types[i]));
-          Location loc=null;
-          if (locs[i] == null || locs[i].equals(""))           errors.reject("Identifier.location.null",args,"Location for '" + identifiers[i] + "' cannot be null");
- else           loc=ps.getLocation(Integer.valueOf(locs[i]));
-          PatientIdentifier pi=new PatientIdentifier(identifiers[i],pit,loc);
-          pi.setPreferred(pref.equals(identifiers[i] + types[i]));
-          newIdentifiers.add(pi);
-          log.debug("Creating patient identifier with identifier: " + identifiers[i]);
-          log.debug("and type: " + types[i]);
-          log.debug("and location: " + locs[i]);
-          try {
-            if (pit.hasCheckDigit() && !Helper.isValidCheckDigit(identifiers[i])) {
-              log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifiers[i]);
-              errors.rejectValue("identifier","error.checkdigits",args,"Invalid Checkdigit " + identifiers[i]);
+      if (log.isDebugEnabled()) {
+        log.debug("identifiers: " + identifiers);
+        for (        String s : identifiers)         log.debug(s);
+        log.debug("types: " + types);
+        for (        String s : types)         log.debug(s);
+        log.debug("locations: " + locs);
+        for (        String s : locs)         log.debug(s);
+        log.debug("preferred: " + pref);
+      }
+      if (identifiers != null) {
+        for (int i=0; i < identifiers.length; i++) {
+          String[] args={identifiers[i]};
+          if (identifiers[i].length() > 0) {
+            PatientIdentifierType pit=null;
+            if (types[i] == null || types[i].equals("")) {
+              String msg=getMessageSourceAccessor().getMessage("PatientIdentifier.identifierType.null",args);
+              errors.reject(msg);
             }
- else             if (pit.hasCheckDigit() == false && identifiers[i].contains("-")) {
-              log.error("hasn't CheckDigit and contains '-': " + pit.getName() + " "+ identifiers[i]);
-              String[] args2={"-",identifiers[i]};
-              errors.rejectValue("identifier","error.character.invalid",args2,"Invalid character '-' in " + identifiers[i]);
+ else             pit=ps.getPatientIdentifierType(Integer.valueOf(types[i]));
+            Location loc=null;
+            if (locs[i] == null || locs[i].equals("")) {
+              String msg=getMessageSourceAccessor().getMessage("PatientIdentifier.location.null",args);
+              errors.reject(msg);
             }
-          }
- catch (          Exception e) {
-            log.error("exception thrown with: " + pit.getName() + " "+ identifiers[i]);
-            log.error("Error while adding patient identifiers to savedIdentifier list",e);
-            errors.rejectValue("identifier","error.checkdigits",args,"Invalid Checkdigit " + identifiers[i]);
+ else             loc=es.getLocation(Integer.valueOf(locs[i]));
+            PatientIdentifier pi=new PatientIdentifier(identifiers[i],pit,loc);
+            pi.setPreferred(pref.equals(identifiers[i] + types[i]));
+            newIdentifiers.add(pi);
+            log.debug("Creating patient identifier with identifier: " + identifiers[i]);
+            log.debug("and type: " + types[i]);
+            log.debug("and location: " + locs[i]);
+            try {
+              if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifiers[i])) {
+                log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifiers[i]);
+                String msg=getMessageSourceAccessor().getMessage("error.checkdigits.verbose",args);
+                errors.rejectValue("identifier",msg);
+              }
+            }
+ catch (            Exception e) {
+              log.error("exception thrown with: " + pit.getName() + " "+ identifiers[i]);
+              log.error("Error while adding patient identifiers to savedIdentifier list",e);
+              String msg=getMessageSourceAccessor().getMessage("error.checkdigits",args);
+              errors.rejectValue("identifier",msg);
+            }
           }
         }
       }
     }
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"gender","error.null");
+    if (shortPatient.getBirthdate() != null) {
+      if (shortPatient.getBirthdate().after(new Date()))       errors.rejectValue("birthdate","error.date.future");
+ else {
+        Calendar c=Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.YEAR,-120);
+        if (shortPatient.getBirthdate().before(c.getTime())) {
+          errors.rejectValue("birthdate","error.date.nonsensical");
+        }
+      }
+    }
   }
-  return super.processFormSubmission(request,response,pli,errors);
+  return super.processFormSubmission(request,response,shortPatient,errors);
 }

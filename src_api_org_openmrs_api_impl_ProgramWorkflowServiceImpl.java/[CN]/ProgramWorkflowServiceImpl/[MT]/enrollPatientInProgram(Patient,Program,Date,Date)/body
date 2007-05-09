@@ -1,0 +1,9 @@
+{
+  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS);
+  if (isInProgram(patient,program,enrollmentDate,completionDate))   throw new IllegalArgumentException("patient is already in " + program + " sometime between "+ enrollmentDate+ " and "+ completionDate);
+  PatientProgram p=new PatientProgram();
+  p.setPatient(patient);
+  p.setProgram(program);
+  p.setDateEnrolled(enrollmentDate);
+  createPatientProgram(p);
+}

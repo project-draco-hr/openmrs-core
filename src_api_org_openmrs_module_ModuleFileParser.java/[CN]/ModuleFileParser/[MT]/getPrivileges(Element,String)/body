@@ -1,0 +1,25 @@
+{
+  List<Privilege> privileges=new Vector<Privilege>();
+  NodeList privNodes=root.getElementsByTagName("privilege");
+  if (privNodes.getLength() > 0) {
+    log.debug("# privileges: " + privNodes.getLength());
+    int i=0;
+    while (i < privNodes.getLength()) {
+      Node node=privNodes.item(i);
+      NodeList nodes=node.getChildNodes();
+      int x=0;
+      String name="", description="";
+      while (x < nodes.getLength()) {
+        Node childNode=nodes.item(x);
+        if ("name".equals(childNode.getNodeName()))         name=childNode.getTextContent();
+ else         if ("description".equals(childNode.getNodeName()))         description=childNode.getTextContent();
+        x++;
+      }
+      log.debug("name: " + name + " description: "+ description);
+      if (name.length() > 0 && description.length() > 0)       privileges.add(new Privilege(name,description));
+ else       log.warn("'name' and 'description' are required for privileges. Given '" + name + "' and '"+ description+ "'");
+      i++;
+    }
+  }
+  return privileges;
+}

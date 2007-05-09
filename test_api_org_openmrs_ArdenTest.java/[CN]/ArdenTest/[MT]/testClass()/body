@@ -1,9 +1,6 @@
 {
-  HibernateUtil.startup();
-  Context context=ContextFactory.getContext();
-  context.authenticate("vibha","chicachica");
-  Locale locale=context.getLocale();
-  HiRiskLeadScreen mlm=new HiRiskLeadScreen(context,1,locale);
-  mlm.run();
-  HibernateUtil.shutdown();
+  startup();
+  Context.authenticate("vibha","chicachica");
+  Locale locale=Context.getLocale();
+  shutdown();
 }

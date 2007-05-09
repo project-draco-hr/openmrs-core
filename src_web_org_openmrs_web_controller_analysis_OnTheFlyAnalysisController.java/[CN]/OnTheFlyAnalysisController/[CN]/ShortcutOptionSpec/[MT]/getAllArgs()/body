@@ -1,7 +1,7 @@
 {
   List<String> ret=new ArrayList<String>();
   if (args != null) {
-    ret.addAll(args);
+    for (    ShortcutArg arg : args)     if (!arg.isLabel())     ret.add(arg.getName());
   }
   if (hiddenArgNames != null) {
     ret.addAll(hiddenArgNames);

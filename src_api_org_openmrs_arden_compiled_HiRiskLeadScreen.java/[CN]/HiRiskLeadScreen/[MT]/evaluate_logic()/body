@@ -1,0 +1,41 @@
+{
+  boolean retVal=false;
+  ArdenValue val;
+  if ((val=Last_Pb()) != null) {
+    if (val.getValueNumeric() >= 14) {
+      userVarMap.put("LeadRisk","has lead level greater than 14 mg/dcl");
+      valueMap.put("Last_Pb",val);
+    }
+  }
+  if ((val=Qual_Pb()) != null) {
+    if (val.getValueCoded() == 24) {
+      retVal=false;
+      valueMap.put("Qual_Pb",val);
+      return retVal;
+    }
+  }
+  if ((val=EnvHx()) != null) {
+    if (val.getValueCoded() == 4) {
+      userVarMap.put("LeadRisk","lives in a house built before 1950");
+      valueMap.put("EnvHx",val);
+    }
+  }
+ else   if ((val=EnvHx()) != null) {
+    if (val.getValueCoded() == 55) {
+      userVarMap.put("LeadRisk","lives in a house built before 1950");
+      valueMap.put("EnvHx",val);
+    }
+  }
+ else   if ((val=EnvHx()) != null) {
+    if (val.getValueCoded() == 104) {
+      userVarMap.put("LeadRisk","lives in a house built before 1950");
+      valueMap.put("EnvHx",val);
+    }
+  }
+ else {
+    retVal=false;
+    return retVal;
+  }
+  retVal=true;
+  return retVal;
+}

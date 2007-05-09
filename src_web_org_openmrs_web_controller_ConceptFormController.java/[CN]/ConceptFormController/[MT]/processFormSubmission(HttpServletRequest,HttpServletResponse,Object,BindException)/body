@@ -1,17 +1,23 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Concept concept=(Concept)object;
-  Locale locale=RequestContextUtils.getLocale(request);
-  if (context != null && context.isAuthenticated()) {
+  ConceptService cs=Context.getConceptService();
+  String jumpAction=request.getParameter("jumpAction");
+  if (jumpAction != null) {
+    Concept newConcept=null;
+    if ("previous".equals(jumpAction))     newConcept=cs.getPrevConcept(concept);
+ else     if ("next".equals(jumpAction))     newConcept=cs.getNextConcept(concept);
+    if (newConcept != null)     return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + newConcept.getConceptId()));
+ else     return new ModelAndView(new RedirectView(getSuccessView()));
+  }
+  if (Context.isAuthenticated()) {
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (!action.equals(msa.getMessage("Concept.delete"))) {
-      String isSet=RequestUtils.getStringParameter(request,"conceptSet","");
+      String isSet=ServletRequestUtils.getStringParameter(request,"conceptSet","");
       if (isSet.equals(""))       concept.setSet(false);
  else       concept.setSet(true);
-      log.error("isSet: '" + isSet + "' ");
-      log.error("concept.set: '" + concept.isSet() + "'");
+      log.debug("isSet: '" + isSet + "' ");
+      log.debug("concept.set: '" + concept.isSet() + "'");
       Collection<ConceptSynonym> originalSyns=concept.getSynonyms();
       for (      Locale l : OPENMRS_CONCEPT_LOCALES()) {
         String localeName=l.toString();

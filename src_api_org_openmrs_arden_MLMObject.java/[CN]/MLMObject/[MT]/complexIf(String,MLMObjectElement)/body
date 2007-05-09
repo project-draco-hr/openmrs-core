@@ -1,0 +1,42 @@
+{
+  String tmpStr="";
+  try {
+    if (nextKey.equals("ELSE") || nextKey.startsWith("ELSE_")) {
+      if (InNestedIf > 0) {
+        tmpStr="\n\t}\n\telse {\n";
+      }
+ else {
+        tmpStr="\n\telse {\n";
+      }
+    }
+ else     if (nextKey.equals("ELSEIF")) {
+      if (InNestedIf > 0) {
+        tmpStr="\n\t}\n\telse if (";
+      }
+ else {
+        tmpStr="\n\telse if (";
+      }
+    }
+ else     if (nextKey.equals("IF")) {
+      if (InNestedIf > 0) {
+        tmpStr="\n\t}\n\tif (";
+      }
+ else {
+        tmpStr="\n\tif (";
+      }
+    }
+ else     if (!nextKey.equals("ENDIF")) {
+      tmpStr=" (val = " + nextKey + "()) != null ) {\n\t";
+      IsComplexIf=true;
+      if (mObjElem != null) {
+        tmpStr+="\tif (";
+        tmpStr+=mObjElem.getCompOpCode(nextKey,NOLIST);
+      }
+    }
+  }
+ catch (  Exception e) {
+    System.err.println("ComplexIf: " + e);
+    e.printStackTrace();
+  }
+  return tmpStr;
+}

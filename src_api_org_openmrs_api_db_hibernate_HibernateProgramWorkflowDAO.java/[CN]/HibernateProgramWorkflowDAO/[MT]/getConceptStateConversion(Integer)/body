@@ -1,0 +1,7 @@
+{
+  log.debug("In getCsc with id of " + id.toString());
+  ConceptStateConversion csc=(ConceptStateConversion)sessionFactory.getCurrentSession().get(ConceptStateConversion.class,id);
+  if (csc != null)   log.debug("Csc is " + csc);
+ else   log.debug("csc is null back from hibernate");
+  return csc;
+}

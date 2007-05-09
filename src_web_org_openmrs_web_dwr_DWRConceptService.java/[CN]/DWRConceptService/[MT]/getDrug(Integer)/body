@@ -1,7 +1,6 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  Locale locale=context.getLocale();
-  ConceptService cs=context.getConceptService();
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
   Drug d=cs.getDrug(drugId);
   return d == null ? null : new ConceptDrugListItem(d,locale);
 }

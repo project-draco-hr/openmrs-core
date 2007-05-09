@@ -1,5 +1,11 @@
 {
   FormField f=(FormField)obj;
+  if (getSortWeight() != null || f.getSortWeight() != null) {
+    if (getSortWeight() == null)     return -1;
+    if (f.getSortWeight() == null)     return 1;
+    int c=getSortWeight().compareTo(f.getSortWeight());
+    if (c != 0)     return c;
+  }
   if (getFieldNumber() != null || f.getFieldNumber() != null) {
     if (getFieldNumber() == null)     return -1;
     if (f.getFieldNumber() == null)     return 1;

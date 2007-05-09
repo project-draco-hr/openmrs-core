@@ -1,7 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null)   context.setLocale(locale);
+  Context.setLocale(locale);
   response.setLocale(locale);
   super.setLocale(request,response,locale);
+  HttpSession session=(HttpSession)request.getSession();
+  if (request.getParameter("lang") != null)   if (Context.isAuthenticated())   session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.localeChangeHint");
 }

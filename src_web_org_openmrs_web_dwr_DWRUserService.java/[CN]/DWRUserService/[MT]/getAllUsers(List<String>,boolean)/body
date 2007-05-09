@@ -1,24 +1,28 @@
 {
   Vector userList=new Vector();
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  Context context=(Context)request.getSession(false).getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
+  if (!Context.isAuthenticated()) {
     userList.add("Your session has expired.");
     userList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
   }
  else {
     try {
-      FormEntryService fs=context.getFormEntryService();
-      Set<User> users=new HashSet<User>();
-      if (roles == null)       roles=new Vector<String>();
-      users.addAll(fs.getAllUsers(roles,includeVoided));
+      UserService us=Context.getUserService();
+      Set<User> users=new TreeSet<User>(new UserComparator());
+      if (roleStrings == null)       roleStrings=new Vector<String>();
+      List<Role> roles=new Vector<Role>();
+      for (      String r : roleStrings) {
+        Role role=us.getRole(r);
+        if (role != null)         roles.add(role);
+      }
+      users.addAll(us.getAllUsers(roles,includeVoided));
       userList=new Vector(users.size());
       for (      User u : users) {
         userList.add(new UserListItem(u));
       }
     }
  catch (    Exception e) {
-      log.error(e);
+      log.error("Error while getting all users",e);
       userList.add("Error while attempting to get users - " + e.getMessage());
     }
   }

@@ -1,0 +1,15 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(" select pat.patient_id from person p inner join patient pat on pat.patient_id = p.person_id inner join person_attribute a on p.person_id = a.person_id ");
+  sb.append(" where a.voided = false ");
+  if (attribute != null)   sb.append(" and a.person_attribute_type_id = :typeId ");
+  if (value != null)   sb.append(" and a.value = :value ");
+  sb.append(" group by pat.patient_id ");
+  log.debug("query: " + sb);
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
+  if (attribute != null)   query.setInteger("typeId",attribute.getPersonAttributeTypeId());
+  if (value != null)   query.setString("value",value);
+  PatientSet ps=new PatientSet();
+  ps.copyPatientIds(query.list());
+  return ps;
+}

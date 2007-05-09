@@ -1,0 +1,21 @@
+{
+  String indent="";
+  for (int i=0; i < level; i++)   indent+=" ";
+  if (valueList != null) {
+    System.out.println(indent + "*** RESULT LIST ***");
+    for (    Result r : valueList)     r.debug(level + 2);
+  }
+  if (isNull()) {
+    System.out.println(indent + "*** NULL RESULT ***");
+    return;
+  }
+  System.out.println(indent + "*** SINGLE RESULT ***");
+  System.out.println(indent + "  concept = " + (concept == null ? "null" : concept.getName(Context.getLocale()) + " (" + concept.getConceptId()+ ")"));
+  System.out.println(indent + "  datetime = " + datetime);
+  System.out.println(indent + "  datatype = " + datatypeNames[datatype]);
+  System.out.println(indent + "  valueNumeric = " + valueNumeric);
+  System.out.println(indent + "  valueDate = " + valueDate);
+  System.out.println(indent + "  valueCoded = " + (valueCoded == null ? "null" : valueCoded.getName(Context.getLocale()) + " (" + valueCoded.getConceptId()+ ")"));
+  System.out.println(indent + "  valueText = " + valueText);
+  System.out.println(indent + "  valueBoolean = " + valueBoolean);
+}

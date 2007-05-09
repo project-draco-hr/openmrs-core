@@ -4,7 +4,6 @@
   if (message.getSender() != null)   mimeMessage.setSender(new InternetAddress(message.getSender()));
   mimeMessage.setRecipients(javax.mail.Message.RecipientType.TO,InternetAddress.parse(message.getRecipients(),false));
   mimeMessage.setSubject(message.getSubject());
-  log.debug("Message content type : " + OpenmrsConstants.DEFAULT_CONTENT_TYPE);
-  mimeMessage.setContent(message.getContent(),OpenmrsConstants.DEFAULT_CONTENT_TYPE);
+  mimeMessage.setContent(message.getContent(),"text/plain");
   return mimeMessage;
 }

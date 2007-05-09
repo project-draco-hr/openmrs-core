@@ -1,0 +1,28 @@
+{
+  log.debug("Configuring hibernate sessionFactory properties");
+  Properties properties=Context.getRuntimeProperties();
+  for (  Object key : properties.keySet()) {
+    String prop=(String)key;
+    String value=(String)properties.get(key);
+    log.debug("Setting property: " + prop + ":"+ value);
+    config.setProperty(prop,value);
+    if (!prop.startsWith("hibernate"))     config.setProperty("hibernate." + prop,value);
+  }
+  try {
+    InputStream propertyStream=ConfigHelper.getResourceAsStream("/hibernate.default.properties");
+    Properties props=new Properties();
+    props.load(propertyStream);
+    propertyStream.close();
+    config.mergeProperties(props);
+  }
+ catch (  IOException e) {
+    log.fatal("Unable to load default hibernate properties",e);
+  }
+  String driver=config.getProperty("hibernate.connection.driver_class");
+  String username=config.getProperty("hibernate.connection.username");
+  String password=config.getProperty("hibernate.connection.password");
+  String url=config.getProperty("hibernate.connection.url");
+  int check=checkDatabaseConnection(driver,username,password,url);
+  if (check == 0)   return config.buildSessionFactory();
+ else   throw new APIException("Error connecting to database");
+}

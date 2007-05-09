@@ -1,10 +1,9 @@
 {
-  HibernateUtil.startup();
-  Context context=ContextFactory.getContext();
-  context.authenticate("ben","");
-  Role r=context.getUserService().getRole("Lab Technician");
+  startup();
+  Context.authenticate("admin","test");
+  Role r=Context.getUserService().getRole("Lab Technician");
   System.out.println(r);
   System.out.println("all roles: " + r.getAllParentRoles());
   assertFalse(r.getAllParentRoles().contains(r));
-  HibernateUtil.shutdown();
+  shutdown();
 }

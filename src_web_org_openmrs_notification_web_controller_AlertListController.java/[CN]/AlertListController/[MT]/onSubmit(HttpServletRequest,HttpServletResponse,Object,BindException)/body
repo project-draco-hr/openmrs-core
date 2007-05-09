@@ -1,9 +1,8 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  Locale locale=context.getLocale();
-  if (context != null && context.isAuthenticated()) {
-    AlertService as=context.getAlertService();
+  Locale locale=Context.getLocale();
+  if (Context.isAuthenticated()) {
+    AlertService as=Context.getAlertService();
     String[] alertIds=request.getParameterValues("alertId");
     for (    String alertIdString : alertIds) {
       Integer alertId=Integer.parseInt(alertIdString);

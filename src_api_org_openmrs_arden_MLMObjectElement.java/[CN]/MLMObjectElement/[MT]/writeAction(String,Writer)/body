@@ -1,22 +1,26 @@
 {
   boolean retVal=false;
-  if (!hasConclude) {
+{
     String var="", val="";
     Iterator iter=iterator();
     while (iter.hasNext()) {
       var=(String)iter.next();
       val=getUserVarVal(var);
-      w.append("\t\t//" + var + " = \""+ val+ "\"\n");
-      w.append("\t\tuserVarMap.put(\"" + var + "\", \""+ val+ "\");");
+      w.append("\t\t//" + var + " = "+ val+ "\n");
+      w.append("\t\t\tuserVarMap.put(\"" + var + "\", \""+ val+ "\");\n");
     }
     retVal=true;
   }
- else {
+  if (hasConclude) {
     if (concludeVal == true) {
       w.append("\t\tretVal = true;\n");
+      if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
+      }
     }
  else     if (concludeVal == false) {
       w.append("\t\tretVal = false;\n");
+      if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
+      }
     }
  else {
     }

@@ -1,4 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  return session.createQuery("from HL7InError order by hL7InErrorId").list();
+  return sessionFactory.getCurrentSession().createQuery("from HL7InError order by hL7InErrorId").list();
 }

@@ -1,0 +1,5 @@
+{
+  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_MANAGE_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_PROGRAMS);
+  p.setVoided(true);
+  createOrUpdateProgram(p);
+}

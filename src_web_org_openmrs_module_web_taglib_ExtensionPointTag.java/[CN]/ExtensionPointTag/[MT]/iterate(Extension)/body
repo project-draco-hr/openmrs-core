@@ -1,0 +1,10 @@
+{
+  if (ext != null) {
+    ext.initialize(parameterMap);
+    log.debug("Adding ext: " + ext.getExtensionId() + " to pageContext class: "+ ext.getClass());
+    pageContext.setAttribute("extension",ext);
+  }
+ else {
+    pageContext.removeAttribute("extension");
+  }
+}

@@ -1,0 +1,8 @@
+{
+  List<URL> result=new LinkedList<URL>();
+  findResources(result,name,this,null);
+  for (  URL url : result) {
+    url=expandIfNecessary(url);
+  }
+  return Collections.enumeration(result);
+}

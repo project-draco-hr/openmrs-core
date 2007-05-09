@@ -1,0 +1,12 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_OBS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_OBS);
+  if (obs == null || obs.length < 1)   return;
+  getObsDAO().createObs(obs[0]);
+  Integer obsGroupId=obs[0].getObsId();
+  obs[0].setObsGroupId(obsGroupId);
+  getObsDAO().updateObs(obs[0]);
+  for (int i=1; i < obs.length; i++) {
+    obs[i].setObsGroupId(obsGroupId);
+    getObsDAO().createObs(obs[i]);
+  }
+}

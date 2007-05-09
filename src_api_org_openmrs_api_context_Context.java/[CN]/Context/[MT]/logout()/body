@@ -1,4 +1,5 @@
 {
-  user=null;
-  getDaoContext().logout();
+  log.info("Logging out : " + getAuthenticatedUser());
+  getUserContext().logout();
+  clearUserContext();
 }

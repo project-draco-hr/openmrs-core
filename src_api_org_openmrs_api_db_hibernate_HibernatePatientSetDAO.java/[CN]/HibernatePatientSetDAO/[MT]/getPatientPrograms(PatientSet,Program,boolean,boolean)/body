@@ -1,0 +1,20 @@
+{
+  Map<Integer,PatientProgram> ret=new HashMap<Integer,PatientProgram>();
+  Collection<Integer> ids=ps.getPatientIds();
+  if (ids.size() == 0)   return ret;
+  Date now=new Date();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientProgram.class);
+  criteria.setCacheMode(CacheMode.IGNORE);
+  criteria.add(Restrictions.in("patient.personId",ids));
+  criteria.add(Restrictions.eq("program",program));
+  if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
+  criteria.add(Restrictions.or(Restrictions.isNull("dateEnrolled"),Restrictions.le("dateEnrolled",now)));
+  if (!includePast)   criteria.add(Restrictions.or(Restrictions.isNull("dateCompleted"),Restrictions.ge("dateCompleted",now)));
+  log.debug("criteria: " + criteria);
+  List<PatientProgram> temp=criteria.list();
+  for (  PatientProgram prog : temp) {
+    Integer ptId=prog.getPatient().getPatientId();
+    ret.put(ptId,prog);
+  }
+  return ret;
+}

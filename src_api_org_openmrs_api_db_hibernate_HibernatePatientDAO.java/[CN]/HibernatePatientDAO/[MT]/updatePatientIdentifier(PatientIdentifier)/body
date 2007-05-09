@@ -1,13 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    log.debug("type: " + pi.getIdentifierType().getName());
-    session.createQuery("update PatientIdentifier p set p.identifierType = :pit where p.patient = :pat and p.identifier = :id and p.location = :loc").setParameter("pit",pi.getIdentifierType()).setParameter("pat",pi.getPatient()).setParameter("id",pi.getIdentifier()).setParameter("loc",pi.getLocation()).executeUpdate();
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  log.debug("type: " + pi.getIdentifierType().getName());
+  sessionFactory.getCurrentSession().createQuery("update PatientIdentifier p set p.identifierType = :pit where p.patient = :pat and p.identifier = :id and p.location = :loc").setParameter("pit",pi.getIdentifierType()).setParameter("pat",pi.getPatient()).setParameter("id",pi.getIdentifier()).setParameter("loc",pi.getLocation()).executeUpdate();
 }

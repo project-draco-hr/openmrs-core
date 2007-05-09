@@ -1,0 +1,10 @@
+{
+  List<Extension> extensions=getExtensionMap().get(pointId);
+  if (extensions != null) {
+    log.debug("Getting extensions defined by : " + pointId);
+    return extensions;
+  }
+ else {
+    return new Vector<Extension>();
+  }
+}

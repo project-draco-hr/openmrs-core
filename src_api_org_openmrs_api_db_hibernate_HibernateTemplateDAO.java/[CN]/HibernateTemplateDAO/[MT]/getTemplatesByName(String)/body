@@ -1,17 +1,4 @@
 {
   log.info("Get template " + name);
-  List<Template> templates=new ArrayList<Template>();
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    templates=session.createQuery("from Template as template where template.name = ?").setString(0,name).list();
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    log.error("Exception getting templates by name " + name,e);
-  }
- finally {
-    session.close();
-  }
-  return templates;
+  return sessionFactory.getCurrentSession().createQuery("from Template as template where template.name = ?").setString(0,name).list();
 }

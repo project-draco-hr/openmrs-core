@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String success=msa.getMessage("Order.list.saved");
+    view=getSuccessView();
+    if (ServletRequestUtils.getIntParameter(request,"patientId") != null)     view+="?patientId=" + ServletRequestUtils.getIntParameter(request,"patientId");
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

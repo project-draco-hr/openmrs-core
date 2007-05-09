@@ -1,0 +1,31 @@
+{
+  String s="";
+  AST callAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+{
+      AST __t416=_t;
+      AST tmp81_AST_in=(AST)_t;
+      match(_t,CALL);
+      _t=_t.getFirstChild();
+      b=exprStringAST(_t,obj,key);
+      _t=_retTree;
+      obj.SetConceptVar(b);
+      a=exprStringAST(_t,obj,b);
+      _t=_retTree;
+      obj.setReadType("call");
+      obj.AddConcept(a);
+      obj.SetDBAccess(false,b);
+      _t=__t416;
+      _t=_t.getNextSibling();
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

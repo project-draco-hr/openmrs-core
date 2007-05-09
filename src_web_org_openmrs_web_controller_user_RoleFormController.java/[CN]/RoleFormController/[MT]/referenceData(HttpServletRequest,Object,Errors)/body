@@ -1,22 +1,20 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
   Role role=(Role)object;
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null && context.isAuthenticated()) {
-    List<Role> allRoles=context.getUserService().getRoles();
+  if (Context.isAuthenticated()) {
+    List<Role> allRoles=Context.getUserService().getRoles();
     Set<Role> inheritingRoles=new HashSet<Role>();
     allRoles.remove(role);
     for (    Role r : allRoles) {
       if (r.getInheritedRoles().contains(role))       inheritingRoles.add(r);
     }
     for (    String s : OpenmrsConstants.AUTO_ROLES()) {
-      Role r=context.getUserService().getRole(s);
+      Role r=Context.getUserService().getRole(s);
       allRoles.remove(r);
     }
     map.put("allRoles",allRoles);
     map.put("inheritingRoles",inheritingRoles);
-    map.put("privileges",context.getUserService().getPrivileges());
+    map.put("privileges",Context.getUserService().getPrivileges());
     map.put("superuser",OpenmrsConstants.SUPERUSER_ROLE);
   }
   return map;

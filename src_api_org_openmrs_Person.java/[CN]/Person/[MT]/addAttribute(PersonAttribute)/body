@@ -1,0 +1,13 @@
+{
+  newAttribute.setPerson(this);
+  for (  PersonAttribute currentAttribute : getActiveAttributes()) {
+    if (currentAttribute.equals(newAttribute))     return;
+ else     if (currentAttribute.getAttributeType().equals(newAttribute.getAttributeType())) {
+      if (currentAttribute.getValue() != null && currentAttribute.getValue().equals(newAttribute.getValue()))       return;
+      if (currentAttribute.getCreator() != null)       currentAttribute.voidAttribute("New value: " + newAttribute.getValue());
+ else       removeAttribute(currentAttribute);
+    }
+  }
+  attributeMap=null;
+  attributes.add(newAttribute);
+}

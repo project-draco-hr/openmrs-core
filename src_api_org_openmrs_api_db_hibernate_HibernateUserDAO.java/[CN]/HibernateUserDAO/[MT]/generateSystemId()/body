@@ -1,7 +1,6 @@
 {
-  Session session=HibernateUtil.currentSession();
-  String sql="select max(user_id) as user_id from users";
-  Query query=session.createSQLQuery(sql);
-  Integer id=((Integer)query.uniqueResult()).intValue() + 1;
+  String sql="select count(user_id) as user_id from users";
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sql);
+  Integer id=((BigInteger)query.uniqueResult()).intValue() + 1;
   return id.toString();
 }

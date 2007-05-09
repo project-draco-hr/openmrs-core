@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   DataExportReportObject report=null;
-  if (context != null && context.isAuthenticated()) {
-    ReportService rs=context.getReportService();
+  if (Context.isAuthenticated()) {
+    ReportService rs=Context.getReportService();
     String reportId=request.getParameter("dataExportId");
     if (reportId != null)     report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(reportId));
   }

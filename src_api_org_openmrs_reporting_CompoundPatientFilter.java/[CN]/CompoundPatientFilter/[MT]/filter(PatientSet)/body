@@ -1,0 +1,19 @@
+{
+  if (operator == BooleanOperator.AND) {
+    PatientSet temp=input;
+    for (    PatientFilter pf : filters) {
+      temp=pf.filter(temp);
+    }
+    return temp;
+  }
+ else {
+    Set<Integer> ptIds=new HashSet<Integer>();
+    for (    PatientFilter pf : filters) {
+      ptIds.addAll(pf.filter(input).getPatientIds());
+      log.debug("or " + pf.getName() + " ("+ pf.toString()+ ")");
+    }
+    PatientSet ps=new PatientSet();
+    ps.copyPatientIds(ptIds);
+    return ps;
+  }
+}

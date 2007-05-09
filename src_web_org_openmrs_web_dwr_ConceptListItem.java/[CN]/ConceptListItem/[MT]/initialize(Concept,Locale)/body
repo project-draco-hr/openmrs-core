@@ -12,5 +12,17 @@
     retired=concept.isRetired();
     hl7Abbreviation=concept.getDatatype().getHl7Abbreviation();
     className=concept.getConceptClass().getName();
+    isSet=concept.isSet();
+    isNumeric=concept.isNumeric();
+    if (isNumeric) {
+      ConceptNumeric num=Context.getConceptService().getConceptNumeric(concept.getConceptId());
+      hiAbsolute=num.getHiAbsolute();
+      hiCritical=num.getHiCritical();
+      hiNormal=num.getHiNormal();
+      lowAbsolute=num.getLowAbsolute();
+      lowCritical=num.getLowCritical();
+      lowNormal=num.getLowNormal();
+      units=num.getUnits();
+    }
   }
 }

@@ -1,0 +1,13 @@
+{
+  Map<String,DataTable> ret=new HashMap<String,DataTable>();
+  for (  TableRow row : rows) {
+    String classification=trc.classify(row);
+    DataTable thisClass=ret.get(classification);
+    if (thisClass == null) {
+      thisClass=new DataTable();
+      ret.put(classification,thisClass);
+    }
+    thisClass.addRow(row);
+  }
+  return ret;
+}

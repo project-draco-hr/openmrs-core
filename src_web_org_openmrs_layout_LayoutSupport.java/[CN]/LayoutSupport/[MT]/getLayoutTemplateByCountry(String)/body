@@ -1,0 +1,18 @@
+{
+  if (this.layoutTemplates != null && templateName != null) {
+    T ret=null;
+    for (    T at : this.layoutTemplates) {
+      if (at != null) {
+        if (templateName.equalsIgnoreCase(at.getCountry())) {
+          ret=at;
+          log.debug("Found Layout Template named " + at.getDisplayName());
+        }
+      }
+    }
+    return ret;
+  }
+ else {
+    log.debug("No Layout Templates defined");
+    return null;
+  }
+}

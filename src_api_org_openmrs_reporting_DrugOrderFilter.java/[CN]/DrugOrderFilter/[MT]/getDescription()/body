@@ -1,0 +1,22 @@
+{
+  DateFormat df=DateFormat.getDateInstance(DateFormat.SHORT,Context.getLocale());
+  StringBuffer ret=new StringBuffer();
+  ret.append("Patients taking ");
+  if (getDrugList() == null || getDrugList().size() == 0) {
+    if (getAnyOrAll() == GroupMethod.NONE)     ret.append("no drugs");
+ else     ret.append("any drugs");
+  }
+ else {
+    ret.append(getAnyOrAll() + " of [");
+    for (Iterator<Drug> i=getDrugList().iterator(); i.hasNext(); ) {
+      ret.append(i.next().getName());
+      if (i.hasNext())       ret.append(" , ");
+    }
+    ret.append("]");
+  }
+  if (getWithinLastDays() != null)   ret.append(" WithinLastDays = " + getWithinLastDays());
+  if (getWithinLastMonths() != null)   ret.append(" WithinLastMonths = " + getWithinLastMonths());
+  if (getSinceDate() != null)   ret.append(" SinceDate = " + df.format(getSinceDate()));
+  if (getUntilDate() != null)   ret.append(" UntilDate = " + df.format(getUntilDate()));
+  return ret.toString();
+}

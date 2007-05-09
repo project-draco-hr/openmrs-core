@@ -1,0 +1,7 @@
+{
+  User u=getAuthenticatedUser();
+  if (u == null)   return null;
+  Map<String,Object> myData=volatileUserData.get(u);
+  if (myData == null)   return null;
+ else   return myData.get(key);
+}

@@ -1,13 +1,19 @@
 {
-  if (name.equals("gender")) {
-    Map.Entry<String,String> e=(Map.Entry<String,String>)obj;
-    e.setValue(e.getValue().toLowerCase());
-    obj=e;
+  if (obj != null) {
+    if (name.equals("gender")) {
+      Map.Entry<String,String> e=(Map.Entry<String,String>)obj;
+      e.setValue(e.getValue().toLowerCase());
+      obj=e;
+    }
+    pageContext.setAttribute("record",obj);
+    pageContext.setAttribute("selected",obj.equals(select) ? "selected" : "");
+    if (name.equals("civilStatus")) {
+      String str=obj.toString();
+      pageContext.setAttribute("selected",str.equals(select) ? "selected" : "");
+    }
   }
-  pageContext.setAttribute("record",obj);
-  pageContext.setAttribute("selected",obj.equals(select) ? "selected" : "");
-  if (name.equals("civilStatus")) {
-    String str=obj.toString();
-    pageContext.setAttribute("selected",str.equals(select) ? "selected" : "");
+ else {
+    pageContext.removeAttribute("record");
+    pageContext.removeAttribute("selected");
   }
 }

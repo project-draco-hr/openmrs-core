@@ -1,0 +1,56 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Person person=(Person)obj;
+    PersonService ps=Context.getPersonService();
+    PatientService patientService=Context.getPatientService();
+    String action=request.getParameter("action");
+    if (action == null)     action="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    if (action.equals(msa.getMessage("Relationship.save"))) {
+      String[] relTypes=request.getParameterValues("relationshipType");
+      String[] patients=request.getParameterValues("patientId");
+      log.debug("patients: ");
+      for (int x=0; x < patients.length; x++) {
+        log.debug("#" + patients[x]);
+      }
+      for (int x=0; x < relTypes.length; x++) {
+        Relationship r=new Relationship();
+        log.error("relType: " + relTypes[x]);
+        log.error("patient: " + patients[x + 1]);
+        if (relTypes[x].equals("") && !patients[x].equals("")) {
+          errors.reject("relationshipType","error.null");
+          return showForm(request,response,errors);
+        }
+ else         if (!relTypes[x].equals("") && !patients[x + 1].equals("")) {
+          r.setRelationshipType(ps.getRelationshipType(Integer.valueOf(relTypes[x])));
+          Patient patient=patientService.getPatient(Integer.valueOf(patients[x + 1]));
+          log.debug("patient: " + patient);
+          Person relative=null;
+          log.debug("relative: " + relative);
+          if (relative == null)           relative=ps.getPerson(patient);
+          log.debug("relative: " + relative);
+          if (relative == null)           relative=new Person();
+          log.debug("relative: " + relative);
+          r.setPersonB(relative);
+          r.setPersonA(person);
+          ps.updatePerson(person);
+          ps.createRelationship(r);
+        }
+      }
+    }
+ else     if (action.equals(msa.getMessage("Relationship.void"))) {
+    }
+ else     if (action.equals(msa.getMessage("Relationship.unvoid"))) {
+      String[] relIds=request.getParameterValues("relationshipId");
+      for (      String id : relIds) {
+        Relationship r=ps.getRelationship(Integer.valueOf(id));
+        ps.unvoidRelationship(r);
+      }
+    }
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,msa.getMessage("Relationship.saved"));
+  }
+  return new ModelAndView(new RedirectView(view));
+}

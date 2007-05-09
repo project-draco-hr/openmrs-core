@@ -1,0 +1,45 @@
+{
+  log.debug("about to save " + obj);
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    ProgramWorkflow wf=(ProgramWorkflow)obj;
+    String statesStr=request.getParameter("newStates");
+    Set<Integer> doneSoFar=new HashSet<Integer>();
+    for (StringTokenizer st=new StringTokenizer(statesStr,"|"); st.hasMoreTokens(); ) {
+      String str=st.nextToken();
+      String[] tmp=str.split(",");
+      Integer conceptId=Integer.valueOf(tmp[0]);
+      doneSoFar.add(conceptId);
+      ProgramWorkflowState pws=null;
+      for (      ProgramWorkflowState s : wf.getStates()) {
+        if (s.getConcept().getConceptId().equals(conceptId)) {
+          pws=s;
+          break;
+        }
+      }
+      if (pws == null) {
+        pws=new ProgramWorkflowState();
+        pws.setConcept(Context.getConceptService().getConcept(conceptId));
+        wf.addState(pws);
+      }
+ else {
+        if (pws.getVoided()) {
+          pws.setVoided(false);
+        }
+      }
+      pws.setInitial(Boolean.valueOf(tmp[1]));
+      pws.setTerminal(Boolean.valueOf(tmp[2]));
+      log.debug("pws: " + pws);
+    }
+    for (    ProgramWorkflowState s : wf.getStates()) {
+      if (!doneSoFar.contains(s.getConcept().getConceptId())) {
+        s.setVoided(true);
+      }
+    }
+    Context.getProgramWorkflowService().updateWorkflow(wf);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Workflow.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

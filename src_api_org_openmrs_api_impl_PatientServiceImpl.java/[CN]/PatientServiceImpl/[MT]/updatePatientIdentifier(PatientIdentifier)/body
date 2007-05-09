@@ -1,0 +1,12 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_PATIENTS);
+  Patient p=pi.getPatient();
+  Set<PatientIdentifier> identifiers=p.getIdentifiers();
+  for (  PatientIdentifier identifier : identifiers) {
+    if (identifier.getIdentifier().equals(pi.getIdentifier()) && identifier.getLocation().equals(pi.getLocation())) {
+      identifier.setIdentifierType(pi.getIdentifierType());
+      break;
+    }
+  }
+  this.updatePatient(p);
+}

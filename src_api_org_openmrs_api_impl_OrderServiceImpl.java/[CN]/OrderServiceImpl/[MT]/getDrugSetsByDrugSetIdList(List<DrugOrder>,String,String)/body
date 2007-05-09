@@ -1,0 +1,46 @@
+{
+  if (delimiter == null)   delimiter=",";
+  Map<String,List<DrugOrder>> ret=null;
+  if (drugSetIdList != null && orderList != null) {
+    List<Concept> drugSetConcepts=new ArrayList<Concept>();
+    boolean addOthers=false;
+    Map<Concept,String> idToConceptMappings=new HashMap<Concept,String>();
+    String[] drugSetIds=drugSetIdList.split(delimiter);
+    log.debug("starting with " + drugSetIds.length + " items in comma-delimited list, and "+ orderList.size()+ " orders that are "+ orderList);
+    for (    String drugSetId : drugSetIds) {
+      if ("*".equals(drugSetId)) {
+        addOthers=true;
+      }
+ else {
+        Concept drugSetConcept=OpenmrsUtil.getConceptByIdOrName(drugSetId);
+        if (drugSetConcept != null) {
+          drugSetConcepts.add(drugSetConcept);
+          idToConceptMappings.put(drugSetConcept,drugSetId);
+          log.debug("added concept " + drugSetConcept.getName(Context.getLocale()) + ", and mapping to id "+ drugSetId);
+        }
+      }
+    }
+    List<DrugOrder> otherOrders=null;
+    if (addOthers)     otherOrders=orderList;
+    Map<Concept,List<DrugOrder>> ordersByConcepts=getDrugSetsByConcepts(orderList,drugSetConcepts);
+    if (ordersByConcepts != null) {
+      log.debug("obc is size " + ordersByConcepts.size());
+      for (      Map.Entry<Concept,List<DrugOrder>> e : ordersByConcepts.entrySet()) {
+        Concept c=e.getKey();
+        List<DrugOrder> orders=e.getValue();
+        log.debug("found concept " + c.getName(Context.getLocale()) + ", and list is size "+ orders.size()+ " and list is "+ orders);
+        if (addOthers && otherOrders != null) {
+          otherOrders.removeAll(orders);
+        }
+        if (ret == null)         ret=new HashMap<String,List<DrugOrder>>();
+        log.debug("putting list of size " + orders.size() + " in string "+ idToConceptMappings.get(c));
+        ret.put(idToConceptMappings.get(c),orders);
+      }
+    }
+    if (addOthers && otherOrders != null) {
+      if (ret == null)       ret=new HashMap<String,List<DrugOrder>>();
+      ret.put("*",otherOrders);
+    }
+  }
+  return ret;
+}

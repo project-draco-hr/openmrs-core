@@ -1,19 +1,18 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Encounter encounter=(Encounter)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   List<Integer> editedObs=new Vector<Integer>();
-  Map<Obs,FormField> obsMap=new HashMap<Obs,FormField>();
+  Map<Integer,FormField> obsMap=new HashMap<Integer,FormField>();
   Map<Obs,FormField> obsMapTemp=new HashMap<Obs,FormField>();
   List<FormField> formFields=new Vector<FormField>();
+  Map<Integer,List<Obs>> obsGroups=new HashMap<Integer,List<Obs>>();
   List<Obs> observations=new Vector<Obs>();
   Form form=encounter.getForm();
-  if (context != null && context.isAuthenticated()) {
-    EncounterService es=context.getEncounterService();
-    FormService fs=context.getFormService();
+  if (Context.isAuthenticated()) {
+    EncounterService es=Context.getEncounterService();
+    FormService fs=Context.getFormService();
     map.put("encounterTypes",es.getEncounterTypes());
-    map.put("forms",context.getFormService().getForms());
+    map.put("forms",Context.getFormService().getForms());
     String reason="";
     if (encounter.getObs() != null && !encounter.getObs().isEmpty()) {
       for (      Obs o : encounter.getObs()) {
@@ -30,13 +29,40 @@
         }
         FormField ff=fs.getFormField(form,o.getConcept());
         if (ff == null)         ff=new FormField();
-        formFields.add(ff);
-        obsMap.put(o,ff);
-        obsMapTemp.put(o,ff);
+        FormField parent=ff.getParent();
+        Integer groupId=o.getObsGroupId();
+        if (groupId == null && parent != null) {
+          Concept fieldConcept=null;
+          if ((fieldConcept=parent.getField().getConcept()) != null && fieldConcept.isSet()) {
+            groupId=o.getObsId();
+            o.setObsGroupId(groupId);
+          }
+        }
+        if (groupId != null) {
+          if (!obsGroups.containsKey(groupId)) {
+            obsGroups.put(groupId,new Vector<Obs>());
+            if (parent == null)             log.error("Parent should not be null for obs with a group id obs id: " + o.getObsId() + " form field id: "+ ff.getFormFieldId());
+            formFields.add(parent);
+            obsMap.put(o.getObsId(),parent);
+            obsMapTemp.put(o,parent);
+          }
+          obsGroups.get(groupId).add(o);
+        }
+ else {
+          formFields.add(ff);
+          obsMap.put(o.getObsId(),ff);
+          obsMapTemp.put(o,ff);
+        }
       }
-      Collections.sort(formFields);
+      try {
+        Collections.sort(formFields,new FormFieldNameComparator());
+      }
+ catch (      Exception e) {
+        log.error("Error while sorting obs for encounter: " + encounter,e);
+      }
       for (      FormField f : formFields) {
-        observations.add(popObsFromMap(obsMapTemp,f));
+        Obs o=popObsFromMap(obsMapTemp,f);
+        if (o != null)         observations.add(o);
       }
     }
   }
@@ -44,11 +70,9 @@
   map.put("observations",observations);
   log.debug("setting obsMap in page context (size: " + obsMap.size() + ")");
   map.put("obsMap",obsMap);
-  log.debug("setting datePattern in page context");
   map.put("datePattern",dateFormat.toLocalizedPattern().toLowerCase());
-  log.debug("setting locale in page context: " + context.getLocale());
-  map.put("locale",context.getLocale());
-  log.debug("setting edited obs in page context: " + editedObs);
+  map.put("locale",Context.getLocale());
   map.put("editedObs",editedObs);
+  map.put("obsGroups",obsGroups);
   return map;
 }

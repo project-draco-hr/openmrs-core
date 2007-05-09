@@ -1,0 +1,27 @@
+{
+  FileInputStream inputStream=null;
+  FileOutputStream outputStream=null;
+  try {
+    inputStream=new FileInputStream(fromPath);
+    outputStream=new FileOutputStream(toPath);
+    OpenmrsUtil.copyFile(inputStream,outputStream);
+  }
+ catch (  IOException io) {
+    return false;
+  }
+ finally {
+    try {
+      if (inputStream != null)       inputStream.close();
+    }
+ catch (    IOException io) {
+      log.warn("Unable to close input stream",io);
+    }
+    try {
+      if (outputStream != null)       outputStream.close();
+    }
+ catch (    IOException io) {
+      log.warn("Unable to close input stream",io);
+    }
+  }
+  return true;
+}

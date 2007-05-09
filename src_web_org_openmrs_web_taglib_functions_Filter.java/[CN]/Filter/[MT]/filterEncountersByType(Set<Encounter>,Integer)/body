@@ -1,0 +1,13 @@
+{
+  log.debug("Filtering encounters for encounter type id: " + type);
+  Set<Encounter> ret=new HashSet<Encounter>();
+  if (encs != null) {
+    for (Iterator<Encounter> i=encs.iterator(); i.hasNext(); ) {
+      Encounter e=i.next();
+      if (e.getEncounterType().getEncounterTypeId().intValue() == type.intValue()) {
+        ret.add(e);
+      }
+    }
+  }
+  return ret;
+}

@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   List tribeList=new Vector();
-  if (context != null && context.isAuthenticated()) {
-    PatientService ps=context.getPatientService();
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
     tribeList=ps.getTribes();
   }
   return tribeList;

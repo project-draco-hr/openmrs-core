@@ -1,0 +1,25 @@
+{
+  ConceptService cs=Context.getConceptService();
+  c=cs.getConcept(conceptId);
+  if (c == null) {
+    log.warn("ConceptTag is unable to find a concept with conceptId '" + conceptId + "'");
+    return SKIP_BODY;
+  }
+  pageContext.setAttribute(var,c);
+  log.debug("Found concept with id " + conceptId + ", set to variable: "+ var);
+  Locale loc=Context.getLocale();
+  if (locale != null && !locale.equals("")) {
+    Locale[] locales=Locale.getAvailableLocales();
+    for (int i=0; i < locales.length; i++) {
+      if (locale.equals(locales[i].toString())) {
+        loc=locales[i];
+        break;
+      }
+    }
+  }
+  ConceptName cName=c.getName(loc);
+  pageContext.setAttribute(nameVar,cName);
+  log.debug("Retrieved name " + cName.getName() + ", set to variable: "+ nameVar);
+  pageContext.setAttribute(numericVar,cs.getConceptNumeric(conceptId));
+  return EVAL_BODY_BUFFERED;
+}

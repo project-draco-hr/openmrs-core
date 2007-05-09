@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Alert alert=(Alert)session.get(Alert.class,alertId);
-  return alert;
+  return (Alert)sessionFactory.getCurrentSession().get(Alert.class,alertId);
 }

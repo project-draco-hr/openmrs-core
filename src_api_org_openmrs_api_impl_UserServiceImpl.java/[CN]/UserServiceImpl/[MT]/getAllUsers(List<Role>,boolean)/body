@@ -1,0 +1,5 @@
+{
+  Role auth_role=getRole(OpenmrsConstants.AUTHENTICATED_ROLE);
+  if (roles.contains(auth_role))   return getUserDAO().getAllUsers(getRoles(),includeVoided);
+  return getUserDAO().getAllUsers(roles,includeVoided);
+}

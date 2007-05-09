@@ -1,0 +1,18 @@
+{
+  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS);
+  List<PatientState> states=patientProgram.statesInWorkflow(wf,false);
+  PatientState last=null;
+  PatientState nextToLast=null;
+  if (states.size() > 0)   last=states.get(states.size() - 1);
+  if (states.size() > 1)   nextToLast=states.get(states.size() - 2);
+  if (last != null) {
+    last.setVoided(true);
+    last.setVoidReason(voidReason);
+  }
+  if (nextToLast != null && nextToLast.getEndDate() != null) {
+    nextToLast.setEndDate(null);
+    nextToLast.setDateChanged(new Date());
+    nextToLast.setChangedBy(Context.getAuthenticatedUser());
+  }
+  updatePatientProgram(patientProgram);
+}

@@ -1,0 +1,27 @@
+{
+  if (extensions.size() != extensionNames.size()) {
+    for (    Map.Entry<String,String> entry : extensionNames.entrySet()) {
+      String point=entry.getKey();
+      String className=entry.getValue();
+      log.debug("expanding extension names: " + point + " : "+ className);
+      try {
+        Class cls=ModuleFactory.getModuleClassLoader(this).loadClass(className);
+        Extension ext=(Extension)cls.newInstance();
+        ext.setPointId(point);
+        ext.setModuleId(this.getModuleId());
+        extensions.add(ext);
+        log.debug("Added extension: " + ext.getExtensionId() + " : "+ ext.getClass());
+      }
+ catch (      ClassNotFoundException e) {
+        log.warn("Unable to load class for extension: " + point,e);
+      }
+catch (      IllegalAccessException e) {
+        log.warn("Unable to load class for extension: " + point,e);
+      }
+catch (      InstantiationException e) {
+        log.warn("Unable to load class for extension: " + point,e);
+      }
+    }
+  }
+  return extensions;
+}

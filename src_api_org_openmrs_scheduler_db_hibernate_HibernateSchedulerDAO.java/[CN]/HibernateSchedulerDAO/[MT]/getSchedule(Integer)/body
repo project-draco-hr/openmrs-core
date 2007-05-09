@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Schedule schedule=(Schedule)session.get(Schedule.class,scheduleId);
+  Schedule schedule=(Schedule)sessionFactory.getCurrentSession().get(Schedule.class,scheduleId);
   if (schedule == null) {
     log.error("Schedule '" + scheduleId + "' not found");
     throw new ObjectRetrievalFailureException(Schedule.class,scheduleId);

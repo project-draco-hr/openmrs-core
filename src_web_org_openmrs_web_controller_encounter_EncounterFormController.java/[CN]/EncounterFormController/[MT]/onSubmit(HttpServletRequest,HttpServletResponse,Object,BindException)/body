@@ -1,25 +1,24 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
   try {
-    if (context != null && context.isAuthenticated()) {
+    if (Context.isAuthenticated()) {
       Encounter encounter=(Encounter)obj;
-      if (request.getParameter("patientId") != null)       encounter.setPatient(context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
-      encounter.setProvider(context.getUserService().getUser(Integer.valueOf(request.getParameter("providerId"))));
-      if (encounter.isVoided() && encounter.getVoidedBy() == null)       context.getEncounterService().voidEncounter(encounter,encounter.getVoidReason());
- else       if (!encounter.isVoided() && encounter.getVoidedBy() != null)       context.getEncounterService().unvoidEncounter(encounter);
- else       context.getEncounterService().updateEncounter(encounter);
+      if (request.getParameter("patientId") != null)       encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
+      encounter.setProvider(Context.getUserService().getUser(Integer.valueOf(request.getParameter("providerId"))));
+      if (encounter.isVoided() && encounter.getVoidedBy() == null)       Context.getEncounterService().voidEncounter(encounter,encounter.getVoidReason());
+ else       if (!encounter.isVoided() && encounter.getVoidedBy() != null)       Context.getEncounterService().unvoidEncounter(encounter);
+ else       Context.getEncounterService().updateEncounter(encounter);
       view=getSuccessView();
       view=view + "?encounterId=" + encounter.getEncounterId();
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Encounter.saved");
     }
   }
   finally {
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
   }
   return new ModelAndView(new RedirectView(view));
 }

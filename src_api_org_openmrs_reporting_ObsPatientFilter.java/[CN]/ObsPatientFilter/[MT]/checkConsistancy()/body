@@ -1,0 +1,18 @@
+{
+  if (!isReadyToRun())   return false;
+  if (question == null)   return value != null && (value instanceof Concept);
+  if (question.getDatatype().getHl7Abbreviation().equals("NM")) {
+    return true;
+  }
+ else   if (question.getDatatype().getHl7Abbreviation().equals("ST")) {
+    TimeModifier tm=getTimeModifier();
+    return tm == TimeModifier.ANY || tm == TimeModifier.NO || tm == TimeModifier.FIRST || tm == TimeModifier.LAST;
+  }
+ else   if (question.getDatatype().getHl7Abbreviation().equals("CWE")) {
+    TimeModifier tm=getTimeModifier();
+    return tm == TimeModifier.ANY || tm == TimeModifier.NO || tm == TimeModifier.FIRST || tm == TimeModifier.LAST;
+  }
+ else {
+    return false;
+  }
+}

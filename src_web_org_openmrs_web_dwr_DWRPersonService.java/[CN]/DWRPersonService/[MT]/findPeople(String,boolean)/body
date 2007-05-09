@@ -1,0 +1,8 @@
+{
+  Vector<Object> personList=new Vector<Object>();
+  PersonService ps=Context.getPersonService();
+  for (  Person p : ps.findPeople(searchPhrase,includeVoided)) {
+    personList.add(new PersonListItem(p));
+  }
+  return personList;
+}

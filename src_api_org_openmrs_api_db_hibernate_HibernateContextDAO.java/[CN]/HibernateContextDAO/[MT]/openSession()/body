@@ -1,0 +1,13 @@
+{
+  log.debug("HibernateContext: Opening Hibernate Session");
+  if (TransactionSynchronizationManager.hasResource(sessionFactory)) {
+    if (log.isDebugEnabled())     log.debug("Participating in existing session (" + sessionFactory.hashCode() + ")");
+    participate=true;
+  }
+ else {
+    if (log.isDebugEnabled())     log.debug("Registering session with synchronization manager (" + sessionFactory.hashCode() + ")");
+    Session session=SessionFactoryUtils.getSession(sessionFactory,true);
+    session.setFlushMode(FlushMode.MANUAL);
+    TransactionSynchronizationManager.bindResource(sessionFactory,new SessionHolder(session));
+  }
+}

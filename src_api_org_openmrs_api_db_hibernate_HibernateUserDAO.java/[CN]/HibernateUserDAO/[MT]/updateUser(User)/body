@@ -1,24 +1,13 @@
 {
-  if (user.getCreator() == null)   createUser(user,"");
+  if (user.getUserId() == null)   createUser(user,"");
  else {
     if (log.isDebugEnabled()) {
       log.debug("update user id: " + user.getUserId());
     }
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      user=updateProperties(user);
-      try {
-        session.update(user);
-      }
- catch (      NonUniqueObjectException e) {
-        session.merge(user);
-      }
-      HibernateUtil.commitTransaction();
+    Object obj=sessionFactory.getCurrentSession().get(Person.class,user.getUserId());
+    if (!(obj instanceof User)) {
+      insertUserStub(user);
     }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    sessionFactory.getCurrentSession().merge(user);
   }
 }

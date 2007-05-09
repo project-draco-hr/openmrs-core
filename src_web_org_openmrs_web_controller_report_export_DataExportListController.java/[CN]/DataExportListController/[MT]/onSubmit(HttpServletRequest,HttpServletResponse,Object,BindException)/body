@@ -1,10 +1,10 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     String[] reportList=request.getParameterValues("dataExportId");
-    AdministrationService as=context.getAdministrationService();
+    String action=request.getParameter("action");
+    AdministrationService as=Context.getAdministrationService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
@@ -12,22 +12,48 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     String textDataExport=msa.getMessage("DataExport.dataExport");
     String noneDeleted=msa.getMessage("DataExport.nonedeleted");
-    if (reportList != null) {
-      for (      String p : reportList) {
-        try {
-          as.deleteReportObject(Integer.valueOf(p));
-          if (!success.equals(""))           success+="<br>";
-          success+=textDataExport + " " + p+ " "+ deleted;
-        }
- catch (        APIException e) {
-          log.warn(e);
-          if (!error.equals(""))           error+="<br>";
-          error+=textDataExport + " " + p+ " "+ notDeleted;
+    String generated=msa.getMessage("DataExport.generated");
+    String notGenerated=msa.getMessage("DataExport.notGenerated");
+    String noneGenerated=msa.getMessage("DataExport.noneGenerated");
+    if (msa.getMessage("DataExport.generate").equals(action)) {
+      if (reportList == null)       success=noneGenerated;
+ else {
+        ReportService rs=Context.getReportService();
+        for (        String id : reportList) {
+          DataExportReportObject report=null;
+          try {
+            report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(id));
+            DataExportUtil.generateExport(report,null);
+            if (!success.equals(""))             success+="<br>";
+            success+=textDataExport + " '" + report.getName()+ "' "+ generated;
+          }
+ catch (          Exception e) {
+            log.warn("Error generating report object",e);
+            if (!error.equals(""))             error+="<br>";
+            if (report == null)             error+=textDataExport + " #" + id+ " "+ notGenerated;
+ else             error+=textDataExport + " '" + report.getName()+ "' "+ notGenerated;
+          }
         }
       }
     }
+ else     if (msa.getMessage("DataExport.delete").equals(action)) {
+      if (reportList != null) {
+        for (        String p : reportList) {
+          try {
+            as.deleteReportObject(Integer.valueOf(p));
+            if (!success.equals(""))             success+="<br>";
+            success+=textDataExport + " " + p+ " "+ deleted;
+          }
+ catch (          APIException e) {
+            log.warn("Error deleting report object",e);
+            if (!error.equals(""))             error+="<br>";
+            error+=textDataExport + " " + p+ " "+ notDeleted;
+          }
+        }
+      }
  else {
-      success+=noneDeleted;
+        success+=noneDeleted;
+      }
     }
     view=getSuccessView();
     if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);

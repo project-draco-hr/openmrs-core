@@ -1,0 +1,11 @@
+{
+  patientProgramId=p.getPatientProgramId();
+  patientId=p.getPatient().getPatientId();
+  dateEnrolled=p.getDateEnrolled();
+  dateCompleted=p.getDateCompleted();
+  name=p.getProgram().getConcept().getName(Context.getLocale(),false).getName();
+  workflows=new HashMap<String,Integer>();
+  for (  ProgramWorkflow wf : p.getProgram().getWorkflows()) {
+    workflows.put(wf.getConcept().getName(Context.getLocale(),false).getName(),wf.getProgramWorkflowId());
+  }
+}

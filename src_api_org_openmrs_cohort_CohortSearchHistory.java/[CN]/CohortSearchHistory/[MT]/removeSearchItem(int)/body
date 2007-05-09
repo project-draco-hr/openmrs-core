@@ -1,0 +1,13 @@
+{
+  checkArrayLengths();
+  List<Integer> toDelete=new ArrayList<Integer>();
+  toDelete.add(i);
+  while (toDelete.size() > 0) {
+    int index=toDelete.remove(0);
+    List<Integer> toCascade=removeSearchItemHelper(index);
+    searchHistory.remove(index);
+    cachedResults.remove(index);
+    cachedResultDates.remove(index);
+    toDelete.addAll(toCascade);
+  }
+}

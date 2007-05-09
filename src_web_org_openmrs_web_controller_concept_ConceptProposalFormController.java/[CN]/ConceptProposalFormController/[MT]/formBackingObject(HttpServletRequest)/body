@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   ConceptProposal cp=null;
-  if (context != null && context.isAuthenticated()) {
-    ConceptService cs=context.getConceptService();
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
     String id=request.getParameter("conceptProposalId");
     if (id != null)     cp=cs.getConceptProposal(Integer.valueOf(id));
   }

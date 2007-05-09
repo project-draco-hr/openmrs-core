@@ -1,58 +1,99 @@
 {
-  Log log=LogFactory.getLog(this.getClass());
+  log.debug("Initializing OpenMRS");
+  ServletContext servletContext=event.getServletContext();
+  String realPath=event.getServletContext().getRealPath("");
+  Properties props=getRuntimeProperties();
+  Context.setRuntimeProperties(props);
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  String absPath=realPath + "/WEB-INF/dwr-modules.xml";
+  File dwrFile=new File(absPath.replace("/",File.separator));
+  if (dwrFile.exists()) {
+    try {
+      DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+      DocumentBuilder db=dbf.newDocumentBuilder();
+      db.setEntityResolver(new EntityResolver(){
+        public InputSource resolveEntity(        String publicId,        String systemId) throws SAXException, IOException {
+          return new InputSource(new StringReader(""));
+        }
+      }
+);
+      Document doc=db.parse(dwrFile);
+      Element elem=doc.getDocumentElement();
+      elem.setTextContent("");
+      OpenmrsUtil.saveDocument(doc,dwrFile);
+    }
+ catch (    IOException io) {
+      log.warn("Unable to parse the simple xml string",io);
+    }
+catch (    ParserConfigurationException parseError) {
+      log.warn("Unable to clear the dwr document",parseError);
+    }
+catch (    SAXException sax) {
+      log.warn("Unable to clear the dwr document",sax);
+    }
+catch (    Throwable t) {
+      log.debug("Error clearing dwr-modules.xml",t);
+    }
+  }
   try {
-    FileInputStream propertyStream=null;
-    String webapp=WebConstants.OPENMRS_WEBAPP_NAME;
-    webapp=webapp.toUpperCase();
-    String env=webapp + "_RUNTIME_PROPERTIES_FILE";
-    String filepath=System.getenv(env);
-    if (filepath == null)     throw new IOException("Env " + env + " not found");
-    log.debug("Loading runtime properties from: " + filepath);
-    propertyStream=new FileInputStream(filepath);
-    Properties props=new Properties();
-    props.load(propertyStream);
-    propertyStream.close();
-    HibernateUtil.startup(props);
-    Helper.startup(props);
-    FormEntryUtil.startup(props);
-    SchedulerUtil.startup(props);
-    Map<String,String> custom=new HashMap<String,String>();
-    custom.put("custom.template.dir","/WEB-INF/template");
-    custom.put("custom.style.css.file","/style.css");
-    custom.put("custom.index.jsp.file","/WEB-INF/view/index.jsp");
-    custom.put("custom.images.dir","/images");
-    String realPath=event.getServletContext().getRealPath("");
-    for (    String prop : custom.keySet()) {
-      String webappPath=custom.get(prop);
-      String userOverridePath=props.getProperty(prop);
-      if (userOverridePath != null) {
-        String absolutePath=realPath + webappPath;
-        File file=new File(userOverridePath);
-        if (file.exists()) {
-          log.debug("Overriding file: " + absolutePath);
-          log.debug("Overriding file with: " + userOverridePath);
-          if (file.isDirectory()) {
-            for (            File f : file.listFiles()) {
-              userOverridePath=f.getAbsolutePath();
+    super.contextInitialized(event);
+  }
+ catch (  CannotLoadBeanClassException e) {
+    log.warn("Error while initializing spring context.  More than likely caused by an improper shutdown that leaves 1 or more module contexts lying around");
+    log.warn("Stacktrace: ",e);
+    log.warn("Stopping all modules (most importantly, deleting the context files) and trying again: ");
+    servletContext.removeAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);
+    getContextLoader().initWebApplicationContext(servletContext);
+  }
+  Context.startup(props);
+  loadCoreModules(event.getServletContext());
+  for (  Module mod : ModuleFactory.getStartedModules()) {
+    try {
+      WebModuleUtil.startModule(mod,event.getServletContext());
+    }
+ catch (    Throwable t) {
+      mod.setStartupErrorMessage(t.getMessage());
+    }
+  }
+  Map<String,String> custom=new HashMap<String,String>();
+  custom.put("custom.template.dir","/WEB-INF/template");
+  custom.put("custom.index.jsp.file","/WEB-INF/view/index.jsp");
+  custom.put("custom.login.jsp.file","/WEB-INF/view/login.jsp");
+  custom.put("custom.patientDashboardForm.jsp.file","/WEB-INF/view/patientDashboardForm.jsp");
+  custom.put("custom.images.dir","/images");
+  custom.put("custom.style.css.file","/style.css");
+  custom.put("custom.messages","/WEB-INF/custom_messages.properties");
+  custom.put("custom.messages_fr","/WEB-INF/custom_messages_fr.properties");
+  custom.put("custom.messages_es","/WEB-INF/custom_messages_es.properties");
+  custom.put("custom.messages_de","/WEB-INF/custom_messages_de.properties");
+  for (  String prop : custom.keySet()) {
+    String webappPath=custom.get(prop);
+    String userOverridePath=props.getProperty(prop);
+    if (userOverridePath != null) {
+      String absolutePath=realPath + webappPath;
+      File file=new File(userOverridePath);
+      if (file.exists() && !userOverridePath.startsWith(".")) {
+        log.debug("Overriding file: " + absolutePath);
+        log.debug("Overriding file with: " + userOverridePath);
+        if (file.isDirectory()) {
+          for (          File f : file.listFiles()) {
+            userOverridePath=f.getAbsolutePath();
+            if (!f.getName().startsWith(".")) {
               String tmpAbsolutePath=absolutePath + "/" + f.getName();
-              FileInputStream inputStream=new FileInputStream(userOverridePath);
-              FileOutputStream outputStream=new FileOutputStream(tmpAbsolutePath);
-              Helper.copyFile(inputStream,outputStream);
+              if (!copyFile(userOverridePath,tmpAbsolutePath)) {
+                log.warn("Unable to copy file in folder defined by runtime property: " + prop);
+                log.warn("Your source directory (or a file in it) '" + userOverridePath + " cannot be loaded or destination '"+ tmpAbsolutePath+ "' cannot be found");
+              }
             }
           }
+        }
  else {
-            FileInputStream inputStream=new FileInputStream(userOverridePath);
-            FileOutputStream outputStream=new FileOutputStream(absolutePath);
-            Helper.copyFile(inputStream,outputStream);
+          if (!copyFile(userOverridePath,absolutePath)) {
+            log.warn("Unable to copy file defined by runtime property: " + prop);
+            log.warn("Your source file '" + userOverridePath + " cannot be loaded or destination '"+ absolutePath+ "' cannot be found");
           }
         }
       }
     }
-  }
- catch (  IOException e) {
-    log.warn("Unable to load properties file",e);
-    HibernateUtil.startup();
-    FormEntryUtil.startup();
-    SchedulerUtil.startup();
   }
 }

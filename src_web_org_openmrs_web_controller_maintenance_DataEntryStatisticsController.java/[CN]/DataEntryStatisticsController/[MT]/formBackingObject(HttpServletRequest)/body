@@ -1,0 +1,16 @@
+{
+  StatisticsCommand ret=new StatisticsCommand();
+  Calendar c=new GregorianCalendar();
+  c.set(Calendar.HOUR_OF_DAY,0);
+  c.set(Calendar.MINUTE,0);
+  c.set(Calendar.SECOND,0);
+  ret.setFromDate(c.getTime());
+  ret.setToDate(null);
+  Date toDateToUse=OpenmrsUtil.lastSecondOfDay(ret.getToDate());
+  String encUserColumn=ret.getEncUserColumn();
+  String orderUserColumn=ret.getOrderUserColumn();
+  List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(ret.getFromDate(),toDateToUse,encUserColumn,orderUserColumn,ret.getGroupBy());
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats);
+  ret.setTable(table);
+  return ret;
+}

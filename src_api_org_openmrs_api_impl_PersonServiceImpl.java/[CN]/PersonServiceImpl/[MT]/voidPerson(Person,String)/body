@@ -1,0 +1,21 @@
+{
+  for (  PersonName pn : person.getNames()) {
+    if (!pn.isVoided()) {
+      pn.setVoided(true);
+      pn.setVoidReason(reason);
+    }
+  }
+  for (  PersonAddress pa : person.getAddresses()) {
+    if (!pa.isVoided()) {
+      pa.setVoided(true);
+      pa.setVoidReason(reason);
+    }
+  }
+  person.setVoided(true);
+  person.setVoidedBy(Context.getAuthenticatedUser());
+  person.setDateVoided(new Date());
+  person.setVoidReason(reason);
+  updatePerson(person);
+  Context.getPatientService().voidPatient(Context.getPatientService().getPatient(person.getPersonId()),reason);
+  Context.getUserService().voidUser(Context.getUserService().getUser(person.getPersonId()),reason);
+}

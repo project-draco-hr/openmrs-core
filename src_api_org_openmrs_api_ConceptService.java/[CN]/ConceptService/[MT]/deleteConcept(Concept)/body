@@ -1,6 +1,0 @@
-{
-  if (!context.hasPrivilege(OpenmrsConstants.PRIV_DELETE_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_DELETE_CONCEPTS);
-  String authUserId=context.getAuthenticatedUser().getUserId().toString();
-  log.info(authUserId + "|" + concept.getConceptId().toString());
-  getConceptDAO().deleteConcept(concept);
-}

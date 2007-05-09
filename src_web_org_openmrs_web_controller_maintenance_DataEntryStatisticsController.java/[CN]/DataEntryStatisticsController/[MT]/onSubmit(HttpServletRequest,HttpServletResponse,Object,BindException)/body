@@ -1,0 +1,10 @@
+{
+  StatisticsCommand command=(StatisticsCommand)commandObj;
+  Date toDateToUse=OpenmrsUtil.lastSecondOfDay(command.getToDate());
+  String encUserColumn=command.getEncUserColumn();
+  String orderUserColumn=command.getOrderUserColumn();
+  List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(command.getFromDate(),toDateToUse,encUserColumn,orderUserColumn,command.getGroupBy());
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats);
+  command.setTable(table);
+  return showForm(request,response,errors);
+}

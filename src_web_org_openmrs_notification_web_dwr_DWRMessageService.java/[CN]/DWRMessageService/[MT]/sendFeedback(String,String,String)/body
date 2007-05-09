@@ -1,14 +1,13 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  if (context != null) {
+  if (!Context.isAuthenticated()) {
     try {
-      MessageService messageService=context.getMessageService();
+      MessageService messageService=Context.getMessageService();
       String recipients=NotificationConstants.FEEDBACK_EMAIL_ADDRESS;
       if (subject == null || subject.equals(""))       subject=NotificationConstants.FEEDBACK_EMAIL_SUBJECT;
       String referer=request.getPathTranslated();
       String userName="an Anonymous User";
-      if (context.isAuthenticated())       userName=context.getAuthenticatedUser().getFirstName() + " " + context.getAuthenticatedUser().getLastName();
+      if (Context.isAuthenticated())       userName=Context.getAuthenticatedUser().getPersonName().toString();
       content+="\n\n This email sent from: " + referer + " by: "+ userName;
       messageService.send(recipients,sender,subject,content);
       return true;

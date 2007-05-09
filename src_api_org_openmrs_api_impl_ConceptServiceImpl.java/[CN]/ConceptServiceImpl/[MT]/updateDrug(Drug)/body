@@ -1,0 +1,6 @@
+{
+  checkIfLocked();
+  String authUserId=Context.getAuthenticatedUser().getUserId().toString();
+  if (drug.getConcept() != null)   log.info("updating drug - " + authUserId + "|"+ drug.getConcept().toString());
+  getConceptDAO().updateDrug(drug);
+}

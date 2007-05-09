@@ -1,0 +1,30 @@
+{
+  log.debug("Entering formBackingObject()");
+  List<PersonListItem> personList=new Vector<PersonListItem>();
+  if (Context.isAuthenticated()) {
+    PersonService ps=Context.getPersonService();
+    Integer userId=Context.getAuthenticatedUser().getUserId();
+    getParametersFromRequest(request);
+    log.debug("name: " + name + " birthyear: "+ birthyear+ " age: "+ age+ " gender: "+ gender);
+    if (!name.equals("") || !birthyear.equals("") || !age.equals("")|| !gender.equals("")) {
+      log.info(userId + "|" + name+ "|"+ birthyear+ "|"+ age+ "|"+ gender);
+      Integer d=null;
+      birthyear=birthyear.trim();
+      age=age.trim();
+      if (birthyear.length() > 3)       d=Integer.valueOf(birthyear);
+ else       if (age.length() > 0) {
+        Calendar c=Calendar.getInstance();
+        c.setTime(new Date());
+        d=c.get(Calendar.YEAR);
+        d=d - Integer.parseInt(age);
+      }
+      if (gender.length() < 1)       gender=null;
+      personList=new Vector<PersonListItem>();
+      for (      Person p : ps.getSimilarPeople(name,d,gender)) {
+        personList.add(new PersonListItem(p));
+      }
+    }
+  }
+  log.debug("Returning personList of size: " + personList.size() + " from formBackingObject");
+  return personList;
+}

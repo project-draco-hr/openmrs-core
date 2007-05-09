@@ -1,0 +1,13 @@
+{
+  HttpServletRequest pageRequest=(HttpServletRequest)this.pageContext.getRequest();
+  Object attr=pageRequest.getAttribute(WebConstants.INIT_REQ_UNIQUE_ID);
+  if (attr != null) {
+    String uniqueId=(String)attr;
+    log.debug("Returning initial request: " + uniqueId);
+    return uniqueId;
+  }
+ else {
+    log.error("Could not find value for " + WebConstants.INIT_REQ_UNIQUE_ID + " in pageContext");
+    return "";
+  }
+}

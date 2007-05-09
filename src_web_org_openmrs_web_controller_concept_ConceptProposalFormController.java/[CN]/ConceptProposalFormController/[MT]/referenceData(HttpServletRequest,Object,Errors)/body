@@ -1,18 +1,16 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Map<String,Object> map=new HashMap<String,Object>();
   ConceptProposal cp=(ConceptProposal)object;
-  Locale locale=context.getLocale();
+  Locale locale=Context.getLocale();
   List<ConceptProposal> matchingProposals=new Vector<ConceptProposal>();
   List<ConceptListItem> possibleConceptsListItems=new Vector<ConceptListItem>();
   ConceptListItem listItem=null;
   if (cp.getObsConcept() != null)   listItem=new ConceptListItem(cp.getObsConcept(),locale);
   map.put("obsConcept",listItem);
   String defaultVerbose="false";
-  if (context != null && context.isAuthenticated() && cp.getConceptProposalId() != null) {
-    ConceptService cs=context.getConceptService();
-    defaultVerbose=context.getAuthenticatedUser().getProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+  if (Context.isAuthenticated() && cp.getConceptProposalId() != null) {
+    ConceptService cs=Context.getConceptService();
+    defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
     matchingProposals=cs.findMatchingConceptProposals(cp.getOriginalText());
     String phrase=cp.getOriginalText();
     if (phrase.length() > 3)     phrase=phrase.substring(0,3);

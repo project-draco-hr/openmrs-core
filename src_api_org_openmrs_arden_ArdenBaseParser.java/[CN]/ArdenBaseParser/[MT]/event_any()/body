@@ -4,21 +4,21 @@
   AST event_any_AST=null;
   try {
 switch (LA(1)) {
-case LITERAL_Any:
+case ANY:
 {
-        AST tmp408_AST=null;
-        tmp408_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp408_AST);
-        match(LITERAL_Any);
-        AST tmp409_AST=null;
-        tmp409_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp409_AST);
+        AST tmp458_AST=null;
+        tmp458_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp458_AST);
+        match(ANY);
+        AST tmp459_AST=null;
+        tmp459_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp459_AST);
         match(LPAREN);
         event_list();
         astFactory.addASTChild(currentAST,returnAST);
-        AST tmp410_AST=null;
-        tmp410_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp410_AST);
+        AST tmp460_AST=null;
+        tmp460_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp460_AST);
         match(RPAREN);
         event_any_AST=(AST)currentAST.root;
         break;

@@ -1,9 +1,8 @@
 {
   Map<Integer,Map<String,Object>> ret=new HashMap<Integer,Map<String,Object>>();
-  Session session=HibernateUtil.currentSession();
-  HibernateUtil.beginTransaction();
-  Set<Integer> ids=patients.getPatientIds();
-  Query query=session.createQuery("select patient.patientId, patient.gender, patient.birthdate from Patient patient");
+  Collection<Integer> ids=patients.getPatientIds();
+  Query query=sessionFactory.getCurrentSession().createQuery("select patient.personId, patient.gender, patient.birthdate from Patient patient");
+  query.setCacheMode(CacheMode.IGNORE);
   List<Object[]> temp=query.list();
   long now=System.currentTimeMillis();
   for (  Object[] results : temp) {
@@ -21,6 +20,5 @@
     }
     ret.put(patientId,holder);
   }
-  HibernateUtil.commitTransaction();
   return ret;
 }

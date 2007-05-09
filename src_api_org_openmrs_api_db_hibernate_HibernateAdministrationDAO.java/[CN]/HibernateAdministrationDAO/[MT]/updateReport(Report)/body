@@ -1,15 +1,6 @@
 {
   if (r.getReportId() == null)   createReport(r);
  else {
-    try {
-      Session session=HibernateUtil.currentSession();
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(r);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    sessionFactory.getCurrentSession().saveOrUpdate(r);
   }
 }

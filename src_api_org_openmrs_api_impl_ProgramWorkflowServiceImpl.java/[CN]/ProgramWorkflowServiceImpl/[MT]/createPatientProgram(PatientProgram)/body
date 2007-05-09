@@ -1,0 +1,13 @@
+{
+  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_PATIENT_PROGRAMS);
+  Date now=new Date();
+  if (p.getCreator() == null) {
+    p.setCreator(Context.getAuthenticatedUser());
+  }
+  p.setDateCreated(now);
+  for (  PatientState s : p.getStates()) {
+    if (s.getCreator() == null)     s.setCreator(Context.getAuthenticatedUser());
+    if (s.getDateCreated() == null)     s.setDateCreated(now);
+  }
+  getProgramWorkflowDAO().createPatientProgram(p);
+}

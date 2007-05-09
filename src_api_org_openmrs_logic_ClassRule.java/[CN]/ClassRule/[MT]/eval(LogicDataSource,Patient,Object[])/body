@@ -1,0 +1,19 @@
+{
+  Result result=Result.NULL_RESULT;
+  try {
+    result=(Result)getEvalMethod().invoke(clazz.newInstance(),new Object[]{dataSource,patient,args});
+  }
+ catch (  InstantiationException e) {
+    log.error("Unable to evaluate rule " + clazz.getName(),e);
+  }
+catch (  IllegalArgumentException e) {
+    log.error("Unable to evaluate rule " + clazz.getName(),e);
+  }
+catch (  IllegalAccessException e) {
+    log.error("Unable to evaluate rule " + clazz.getName(),e);
+  }
+catch (  InvocationTargetException e) {
+    log.error("Unable to evaluate rule " + clazz.getName(),e);
+  }
+  return result;
+}

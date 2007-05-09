@@ -1,8 +1,7 @@
 {
-  Session session=HibernateUtil.currentSession();
   log.debug("Getting alerts for user " + user + " read? "+ includeRead+ " expired? "+ includeExpired);
   List<Alert> alerts=new Vector<Alert>();
-  Criteria crit=session.createCriteria(Alert.class,"alert");
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Alert.class,"alert");
   crit.createCriteria("recipients","recipient");
   if (user != null && user.getUserId() != null)   crit.add(Expression.eq("recipient.recipient",user));
  else   crit.add(Expression.isNull("recipient.recipient"));

@@ -1,13 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    session.createQuery("delete from ConceptWord where concept_id = :c").setInteger("c",concept.getConceptId()).executeUpdate();
-    session.delete(concept);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new APIException(e);
-  }
+  sessionFactory.getCurrentSession().createQuery("delete from ConceptWord where concept_id = :c").setInteger("c",concept.getConceptId()).executeUpdate();
+  sessionFactory.getCurrentSession().delete(concept);
 }

@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<User> users=session.createQuery("from User u order by u.userId").list();
-  return users;
+  return sessionFactory.getCurrentSession().createQuery("from User u order by u.userId").list();
 }

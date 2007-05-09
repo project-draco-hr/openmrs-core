@@ -1,0 +1,9 @@
+{
+  String filepath;
+  if (OpenmrsConstants.OPERATING_SYSTEM_LINUX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM))   filepath=System.getProperty("user.home") + File.separator + ".OpenMRS";
+ else   filepath=System.getProperty("user.home") + File.separator + "Application Data"+ File.separator+ "OpenMRS";
+  filepath=filepath + File.separator;
+  File folder=new File(filepath);
+  if (!folder.exists())   folder.mkdirs();
+  return filepath;
+}

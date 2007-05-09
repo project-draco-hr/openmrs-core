@@ -1,0 +1,21 @@
+{
+  Message message;
+  try {
+    message=parser.parse(hl7);
+  }
+ catch (  EncodingNotSupportedException e) {
+    throw new HL7Exception("HL7 encoding not supported",e);
+  }
+catch (  ca.uhn.hl7v2.HL7Exception e) {
+    throw new HL7Exception("Error parsing message",e);
+  }
+  Message response;
+  try {
+    if (!router.canProcess(message))     throw new HL7Exception("No route for message");
+    response=router.processMessage(message);
+  }
+ catch (  ApplicationException e) {
+    throw new HL7Exception("Error routing HL7 message",e);
+  }
+  return response;
+}

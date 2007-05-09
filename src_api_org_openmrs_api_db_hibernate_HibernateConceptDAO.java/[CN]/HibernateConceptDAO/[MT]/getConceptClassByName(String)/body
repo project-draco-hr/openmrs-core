@@ -1,0 +1,8 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptClass.class).add(Expression.eq("name",name));
+  if (crit.list().size() < 1) {
+    log.warn("No concept class found with name: " + name);
+    return null;
+  }
+  return (ConceptClass)crit.list().get(0);
+}

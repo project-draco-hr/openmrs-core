@@ -1,0 +1,14 @@
+{
+  User user=Context.getUserService().getUser(userId);
+  try {
+    JspWriter w=pageContext.getOut();
+    w.print(user.getPersonName());
+    if ("full".equals(size)) {
+      w.print(" <i>(" + user.getUsername() + ")</i>");
+    }
+  }
+ catch (  IOException ex) {
+    log.error("Error while starting userWidget tag",ex);
+  }
+  return SKIP_BODY;
+}

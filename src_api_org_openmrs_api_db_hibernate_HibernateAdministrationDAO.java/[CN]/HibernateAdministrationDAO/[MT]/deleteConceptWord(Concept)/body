@@ -1,10 +1,11 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(ConceptWord.class);
-  crit.add(Expression.eq("concept",concept));
-  List<ConceptWord> words=crit.list();
-  log.debug(authUserId + "|ConceptWord|" + words);
-  HibernateUtil.beginTransaction();
-  session.createQuery("delete from ConceptWord where concept_id = :c").setInteger("c",concept.getConceptId()).executeUpdate();
-  HibernateUtil.commitTransaction();
+  if (concept != null) {
+    Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptWord.class);
+    crit.add(Expression.eq("concept",concept));
+    List<ConceptWord> words=crit.list();
+    Integer authUserId=null;
+    if (Context.isAuthenticated())     authUserId=Context.getAuthenticatedUser().getUserId();
+    log.debug(authUserId + "|ConceptWord|" + words);
+    sessionFactory.getCurrentSession().createQuery("delete from ConceptWord where concept_id = :c").setInteger("c",concept.getConceptId()).executeUpdate();
+  }
 }

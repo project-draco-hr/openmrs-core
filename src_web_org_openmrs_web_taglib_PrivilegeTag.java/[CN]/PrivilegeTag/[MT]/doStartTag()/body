@@ -1,24 +1,23 @@
 {
-  HttpSession httpSession=pageContext.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    return SKIP_BODY;
-  }
+  UserContext userContext=Context.getUserContext();
+  log.debug("Checking user " + userContext.getAuthenticatedUser() + " for privs "+ privilege);
   boolean hasPrivilege=false;
   if (privilege.contains(",")) {
     String[] privs=privilege.split(",");
     for (    String p : privs) {
-      if (context.hasPrivilege(p)) {
+      if (userContext.hasPrivilege(p)) {
         hasPrivilege=true;
         break;
       }
     }
   }
  else {
-    hasPrivilege=context.hasPrivilege(privilege);
+    hasPrivilege=userContext.hasPrivilege(privilege);
   }
-  if (hasPrivilege) {
-    pageContext.setAttribute("authenticatedUser",context.getAuthenticatedUser());
+  boolean isInverted=false;
+  if (inverse != null)   isInverted="true".equals(inverse.toLowerCase());
+  if ((hasPrivilege && !isInverted) || (!hasPrivilege && isInverted)) {
+    pageContext.setAttribute("authenticatedUser",userContext.getAuthenticatedUser());
     return EVAL_BODY_INCLUDE;
   }
  else {

@@ -1,0 +1,16 @@
+{
+  PatientSetService service=Context.getPatientSetService();
+  String locIdStr=location.getLocationId().toString();
+  if (method == Method.PATIENT_TABLE) {
+    List<Integer> ret=new ArrayList<Integer>();
+    Map<Integer,Object> temp=service.getPersonAttributes(input,"Health Center","Location","locationId","locationId",false);
+    for (    Map.Entry<Integer,Object> e : temp.entrySet()) {
+      if (e.getValue() == null)       continue;
+      if (locIdStr.equals(e.getValue().toString()))       ret.add(e.getKey());
+    }
+    return new PatientSet().copyPatientIds(ret);
+  }
+ else {
+    throw new IllegalArgumentException(method + " NOT YET IMPLEMENTED");
+  }
+}

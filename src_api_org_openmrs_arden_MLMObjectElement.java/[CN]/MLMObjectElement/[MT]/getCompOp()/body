@@ -1,5 +1,10 @@
 {
-  String s=Integer.toString(compOp);
-  System.err.println(s);
-  return s;
+  Integer intVal;
+  if (iterCompOp.hasNext()) {
+    intVal=compOp.remove();
+    return intVal;
+  }
+ else {
+    return null;
+  }
 }

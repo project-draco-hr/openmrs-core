@@ -1,0 +1,8 @@
+{
+  XCN hl7Provider=pv1.getAttendingDoctor(0);
+  Integer providerId=Context.getHL7Service().resolveUserId(hl7Provider);
+  if (providerId == null)   throw new HL7Exception("Could not resolve provider");
+  User provider=new User();
+  provider.setUserId(providerId);
+  return provider;
+}

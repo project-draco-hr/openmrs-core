@@ -1,6 +1,12 @@
 {
   log.debug("Gracefully shutting down scheduler service ...");
-  stop();
-  daoContext=null;
-  scheduledTaskMap=null;
+  try {
+    stopTasks();
+  }
+ catch (  SchedulerException e) {
+    log.warn("Unable to stop all tasks",e);
+  }
+catch (  APIException e) {
+  }
+  scheduledTasksMap=null;
 }

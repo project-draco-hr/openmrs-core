@@ -1,0 +1,9 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
+  getEncounterDAO().updateEncounter(encounter);
+  Patient p=encounter.getPatient();
+  for (  Obs obs : Context.getObsService().getObservations(encounter)) {
+    obs.setPerson(p);
+    Context.getObsService().updateObs(obs);
+  }
+}

@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<Drug> drugs=session.createQuery("from Drug").list();
-  return drugs;
+  return sessionFactory.getCurrentSession().createQuery("from Drug").list();
 }

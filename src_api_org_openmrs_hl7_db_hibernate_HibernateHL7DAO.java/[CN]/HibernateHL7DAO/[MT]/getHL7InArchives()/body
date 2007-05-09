@@ -1,4 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  return session.createQuery("from HL7InArchive order by hL7InArchiveId").list();
+  return sessionFactory.getCurrentSession().createQuery("from HL7InArchive order by hL7InArchiveId").list();
 }

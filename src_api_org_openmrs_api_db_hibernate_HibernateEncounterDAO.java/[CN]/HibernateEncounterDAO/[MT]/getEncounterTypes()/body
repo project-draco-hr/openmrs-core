@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<EncounterType> encounterTypes;
-  encounterTypes=session.createQuery("from EncounterType et order by et.name").list();
-  return encounterTypes;
+  return sessionFactory.getCurrentSession().createQuery("from EncounterType et order by et.name").list();
 }

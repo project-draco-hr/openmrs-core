@@ -1,15 +1,4 @@
 {
   if (patientIdentifierType.getPatientIdentifierTypeId() == null)   createPatientIdentifierType(patientIdentifierType);
- else {
-    try {
-      Session session=HibernateUtil.currentSession();
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(patientIdentifierType);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().saveOrUpdate(patientIdentifierType);
 }
