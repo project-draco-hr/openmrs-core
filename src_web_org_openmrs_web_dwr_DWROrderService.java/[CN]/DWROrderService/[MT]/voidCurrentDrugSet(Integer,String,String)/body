@@ -1,0 +1,5 @@
+{
+  log.debug("in voidDrugSet() method");
+  Patient p=Context.getPatientService().getPatient(patientId);
+  Context.getOrderService().voidDrugSet(p,drugSetId,voidReason,OrderService.SHOW_CURRENT);
+}

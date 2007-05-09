@@ -1,12 +1,8 @@
 {
-  Session session=HibernateUtil.currentSession();
   log.debug("Updating concept set derivisions for #" + concept.getConceptId().toString());
-  HibernateUtil.beginTransaction();
-  HibernateUtil.commitTransaction();
-  HibernateUtil.beginTransaction();
   List<Concept> parents=getParents(concept);
   for (  Concept parent : parents) {
-    session.createQuery("delete from ConceptSetDerived csd where csd.concept in (select cs.concept from ConceptSet cs where cs.conceptSet = :c) and csd.conceptSet = :parent)").setParameter("c",concept).setParameter("parent",parent).executeUpdate();
+    sessionFactory.getCurrentSession().createQuery("delete from ConceptSetDerived csd where csd.concept in (select cs.concept from ConceptSet cs where cs.conceptSet = :c) and csd.conceptSet = :parent)").setParameter("c",concept).setParameter("parent",parent).executeUpdate();
   }
   Set<ConceptSetDerived> updates=new HashSet<ConceptSetDerived>();
   ConceptSetDerived csd;
@@ -20,7 +16,6 @@
   }
   updates.addAll(deriveChildren(parents,concept));
   for (  ConceptSetDerived c : updates) {
-    session.saveOrUpdate(c);
+    sessionFactory.getCurrentSession().saveOrUpdate(c);
   }
-  HibernateUtil.commitTransaction();
 }

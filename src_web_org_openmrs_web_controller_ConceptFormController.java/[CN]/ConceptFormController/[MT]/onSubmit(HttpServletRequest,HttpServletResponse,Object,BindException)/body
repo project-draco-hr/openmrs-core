@@ -1,11 +1,10 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null && context.isAuthenticated()) {
+  ConceptService cs=Context.getConceptService();
+  if (Context.isAuthenticated()) {
+    Concept concept=(Concept)obj;
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
-    ConceptService cs=context.getConceptService();
-    Concept concept=(Concept)obj;
     if (action.equals(msa.getMessage("Concept.delete"))) {
       try {
         cs.deleteConcept(concept);
@@ -19,7 +18,7 @@
       }
     }
  else {
-      String isSet=RequestUtils.getStringParameter(request,"conceptSet","");
+      String isSet=ServletRequestUtils.getStringParameter(request,"conceptSet","");
       if (isSet.equals(""))       concept.setSet(false);
  else       concept.setSet(true);
       boolean isNew=false;
@@ -54,7 +53,7 @@
           return new ModelAndView(new RedirectView(getSuccessView()));
         }
       }
-      return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId().toString()));
+      return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
     }
   }
   return new ModelAndView(new RedirectView(getFormView()));

@@ -1,5 +1,5 @@
 {
   patientIdentifier.setPatient(this);
   if (identifiers == null)   identifiers=new HashSet<PatientIdentifier>();
-  if (!identifiers.contains(patientIdentifier) && patientIdentifier != null)   identifiers.add(patientIdentifier);
+  if (patientIdentifier != null && !identifiers.contains(patientIdentifier))   identifiers.add(patientIdentifier);
 }

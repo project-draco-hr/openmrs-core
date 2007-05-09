@@ -3,14 +3,14 @@
   AST action_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
   try {
-    AST __t400=_t;
-    AST tmp60_AST_in=(AST)_t;
+    AST __t474=_t;
+    AST tmp106_AST_in=(AST)_t;
     match(_t,ACTION);
     _t=_t.getFirstChild();
     System.err.println("\n");
     System.err.println("-------Starting Action--------");
 {
-      _loop402:       do {
+      _loop476:       do {
         if (_t == null)         _t=ASTNULL;
         if ((_t.getType() == WRITE)) {
           System.err.println("-----------Starting Write -------");
@@ -20,19 +20,19 @@
           System.err.println("-----------End Write -------");
         }
  else {
-          break _loop402;
+          break _loop476;
         }
       }
  while (true);
     }
 {
-      AST tmp61_AST_in=(AST)_t;
+      AST tmp107_AST_in=(AST)_t;
       match(_t,ENDBLOCK);
       _t=_t.getNextSibling();
     }
     System.err.println("\n");
     System.err.println("-----------End Action -------");
-    _t=__t400;
+    _t=__t474;
     _t=_t.getNextSibling();
   }
  catch (  RecognitionException ex) {

@@ -10,21 +10,21 @@
       citations_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LITERAL_citations)) {
-      AST tmp127_AST=null;
-      tmp127_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp127_AST);
+      AST tmp173_AST=null;
+      tmp173_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp173_AST);
       match(LITERAL_citations);
-      AST tmp128_AST=null;
-      tmp128_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp128_AST);
+      AST tmp174_AST=null;
+      tmp174_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp174_AST);
       match(COLON);
 {
         citations_list();
         astFactory.addASTChild(currentAST,returnAST);
       }
-      AST tmp129_AST=null;
-      tmp129_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp129_AST);
+      AST tmp175_AST=null;
+      tmp175_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp175_AST);
       match(ENDBLOCK);
       citations_slot_AST=(AST)currentAST.root;
     }

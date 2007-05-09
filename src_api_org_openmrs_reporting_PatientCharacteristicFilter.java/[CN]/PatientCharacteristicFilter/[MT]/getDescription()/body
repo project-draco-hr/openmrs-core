@@ -1,17 +1,18 @@
 {
+  if (gender == null && minBirthdate == null && maxBirthdate == null && minAge == null && maxAge == null && aliveOnly == null && deadOnly == null)   return "All Patients";
   StringBuffer ret=new StringBuffer();
   if (gender != null) {
-    if ("m".equals(gender) || "M".equals(gender)) {
+    if ("M".equals(gender)) {
       ret.append("Male");
     }
  else {
       ret.append("Female");
     }
   }
-  ret.append(" patients ");
+  ret.append(gender == null ? "Patients " : " patients ");
   DateFormat df=null;
   if (minBirthdate != null || maxBirthdate != null) {
-    df=DateFormat.getDateInstance(DateFormat.SHORT);
+    df=DateFormat.getDateInstance(DateFormat.SHORT,Context.getLocale());
   }
   if (minBirthdate != null) {
     if (maxBirthdate != null) {
@@ -25,6 +26,25 @@
     if (maxBirthdate != null) {
       ret.append(" born before " + df.format(maxBirthdate));
     }
+  }
+  if (minAge != null) {
+    if (maxAge != null) {
+      ret.append(" between the ages of " + minAge + " and "+ maxAge);
+    }
+ else {
+      ret.append(" at least " + minAge + " years old");
+    }
+  }
+ else {
+    if (maxAge != null) {
+      ret.append(" up to " + maxAge + " years old");
+    }
+  }
+  if (aliveOnly != null && aliveOnly) {
+    ret.append(" who are alive");
+  }
+  if (deadOnly != null && deadOnly) {
+    ret.append(" who are dead");
   }
   return ret.toString();
 }

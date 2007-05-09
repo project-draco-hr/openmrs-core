@@ -1,5 +1,4 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  ConceptNumeric conceptNumeric=context.getConceptService().getConceptNumeric(conceptId);
+  ConceptNumeric conceptNumeric=Context.getConceptService().getConceptNumeric(conceptId);
   return conceptNumeric.getUnits();
 }

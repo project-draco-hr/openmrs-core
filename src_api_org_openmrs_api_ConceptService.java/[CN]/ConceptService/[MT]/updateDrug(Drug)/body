@@ -1,6 +1,0 @@
-{
-  if (!context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_CONCEPTS);
-  String authUserId=context.getAuthenticatedUser().getUserId().toString();
-  if (drug.getConcept() != null)   log.info("updating drug - " + authUserId + "|"+ drug.getConcept().toString());
-  getConceptDAO().updateDrug(drug);
-}

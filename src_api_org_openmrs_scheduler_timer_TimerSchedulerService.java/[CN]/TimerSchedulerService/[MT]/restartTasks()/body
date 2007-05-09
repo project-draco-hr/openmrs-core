@@ -1,0 +1,11 @@
+{
+  for (  TaskConfig task : getScheduledTasks()) {
+    try {
+      stopTask(task);
+      startTask(task);
+    }
+ catch (    SchedulerException e) {
+      log.error("Error restarting task: " + task.getName(),e);
+    }
+  }
+}

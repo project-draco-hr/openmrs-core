@@ -1,17 +1,4 @@
 {
   log.info("Getting all templates from the database");
-  List<Template> templates=new ArrayList<Template>();
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    templates=session.createQuery("from Template").list();
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    log.error("Exception getting all templates",e);
-  }
- finally {
-    session.close();
-  }
-  return templates;
+  return sessionFactory.getCurrentSession().createQuery("from Template").list();
 }

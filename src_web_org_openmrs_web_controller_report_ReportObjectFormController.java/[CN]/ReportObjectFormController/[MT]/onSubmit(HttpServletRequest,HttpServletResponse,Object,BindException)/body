@@ -1,10 +1,9 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     AbstractReportObject reportObject=(AbstractReportObject)obj;
-    context.getAdministrationService().updateReportObject(reportObject);
+    Context.getAdministrationService().updateReportObject(reportObject);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ReportObject.saved");
   }

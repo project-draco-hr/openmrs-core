@@ -1,16 +1,14 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   String view=getFormView();
-  Locale locale=context.getLocale();
+  Locale locale=Context.getLocale();
   MessageSourceAccessor msa=getMessageSourceAccessor();
-  String code="ConceptProposal.alertMappedTo";
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     ConceptProposal cp=(ConceptProposal)obj;
     String finalText=cp.getFinalText();
-    ConceptService cs=context.getConceptService();
-    AdministrationService as=context.getAdministrationService();
-    AlertService alertService=context.getAlertService();
+    ConceptService cs=Context.getConceptService();
+    AdministrationService as=Context.getAdministrationService();
+    AlertService alertService=Context.getAlertService();
     Concept c=null;
     if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
     List<ConceptProposal> allProposals=cs.findMatchingConceptProposals(cp.getOriginalText());
@@ -21,12 +19,17 @@
       conceptProposal.setState(cp.getState());
       as.mapConceptProposalToConcept(conceptProposal,c);
     }
-    String mappedName=c.getName(locale).getName();
-    String[] args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
-    String msg=msa.getMessage(code,args,locale);
-    for (    User proposer : uniqueProposers) {
-      alertService.createAlert(msg,proposer);
+    String msg="";
+    if (c != null) {
+      String mappedName=c.getName(locale).getName();
+      String[] args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
+      msg=msa.getMessage("ConceptProposal.alert.mappedTo",args,locale);
     }
+ else {
+      String[] args=new String[]{cp.getOriginalText(),cp.getComments()};
+      msg=msa.getMessage("ConceptProposal.alert.ignored",args,locale);
+    }
+    alertService.createAlert(msg,uniqueProposers);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptProposal.saved");
   }

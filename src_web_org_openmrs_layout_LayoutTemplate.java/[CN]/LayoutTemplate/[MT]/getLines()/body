@@ -1,0 +1,16 @@
+{
+  List<List<Map<String,String>>> ret=null;
+  if (this.lineByLineFormat != null) {
+    for (    String line : this.lineByLineFormat) {
+      if (ret == null)       ret=new Vector<List<Map<String,String>>>();
+      String tokenizedLine=replaceTokens(line);
+      String[] nonTokens=tokenizedLine.split(this.LAYOUT_TOKEN);
+      List<Map<String,String>> lineTokens=convertToTokens(line,nonTokens);
+      ret.add(lineTokens);
+    }
+    return ret;
+  }
+ else {
+    return ret;
+  }
+}

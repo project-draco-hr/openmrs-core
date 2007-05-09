@@ -1,0 +1,30 @@
+{
+  if (obj == null || !(obj instanceof Result))   return false;
+  Result r=(Result)obj;
+  if (valueList != null) {
+    if (r.valueList == null)     return false;
+    if (valueList.size() != r.valueList.size())     return false;
+    for (int i=0; i < valueList.size(); i++) {
+      if (!valueList.get(i).equals(r.valueList.get(i)))       return false;
+    }
+    return true;
+  }
+switch (datatype) {
+case NUMERIC:
+    if (valueNumeric == null)     return (r.valueNumeric == null);
+  return (valueNumeric.equals(r.valueNumeric));
+case DATE:
+if (valueDate == null) return (r.valueDate == null);
+return (valueDate.equals(r.valueDate));
+case CODED:
+if (valueCoded == null) return (r.valueCoded == null);
+return (valueCoded.equals(r.valueCoded));
+case TEXT:
+if (valueText == null) return (r.valueText == null);
+return (valueText.equals(r.valueText));
+case BOOLEAN:
+if (valueBoolean == null) return (r.valueBoolean == null);
+return (valueBoolean.equals(r.valueBoolean));
+}
+return this == r;
+}

@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case ID:
 {
-        AST tmp471_AST=null;
-        tmp471_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp471_AST);
+        AST tmp522_AST=null;
+        tmp522_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp522_AST);
         match(ID);
         expr_factor_atom_AST=(AST)currentAST.root;
         break;
@@ -32,18 +32,27 @@ case FALSE:
   }
 case STRING_LITERAL:
 {
-  AST tmp474_AST=null;
-  tmp474_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp474_AST);
+  AST tmp525_AST=null;
+  tmp525_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp525_AST);
   match(STRING_LITERAL);
   expr_factor_atom_AST=(AST)currentAST.root;
   break;
 }
+case TERM_LITERAL:
+{
+AST tmp526_AST=null;
+tmp526_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp526_AST);
+match(TERM_LITERAL);
+expr_factor_atom_AST=(AST)currentAST.root;
+break;
+}
 default :
 if ((LA(1) == INTLIT)) {
-AST tmp475_AST=null;
-tmp475_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp475_AST);
+AST tmp527_AST=null;
+tmp527_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp527_AST);
 match(INTLIT);
 expr_factor_atom_AST=(AST)currentAST.root;
 }

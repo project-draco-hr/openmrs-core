@@ -1,0 +1,39 @@
+{
+  LayoutSupport layoutSupport=getLayoutSupportInstance();
+  LayoutTemplate layoutTemplate=layoutSupport.getDefaultLayoutTemplate();
+  if (layoutTemplate == null) {
+    log.debug("Could not get default LayoutTemplate from " + layoutSupport.getClass());
+  }
+  String templateName=(String)model.get("layoutTemplate");
+  if (templateName != null) {
+    if (layoutSupport.getLayoutTemplateByName(templateName) != null) {
+      layoutTemplate=layoutSupport.getLayoutTemplateByName(templateName);
+    }
+ else {
+      log.debug("unable to get template by the name of " + templateName + ", using default");
+    }
+  }
+  String customDefaults=Context.getAdministrationService().getGlobalProperty("layout.address.defaults");
+  if (customDefaults != null) {
+    String[] tokens=customDefaults.split(",");
+    Map<String,String> elementDefaults=layoutTemplate.getElementDefaults();
+    for (    String token : tokens) {
+      String[] pair=token.split("=");
+      if (pair.length == 2) {
+        String name=pair[0];
+        String val=pair[1];
+        if (elementDefaults == null)         elementDefaults=new HashMap<String,String>();
+        elementDefaults.put(name,val);
+      }
+ else {
+        log.debug("Found invalid token while parsing GlobalProperty address format defaults");
+      }
+    }
+    layoutTemplate.setElementDefaults(elementDefaults);
+  }
+  String divName=(String)model.get("portletDivId");
+  if (divName == null) {
+    model.put("portletDivId",getDefaultDivId());
+  }
+  model.put("layoutTemplate",layoutTemplate);
+}

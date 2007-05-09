@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
   Set<Report> reports=new HashSet<Report>();
-  reports.addAll((ArrayList<Report>)session.createQuery("from Report order by date_created, name").list());
+  reports.addAll((ArrayList<Report>)sessionFactory.getCurrentSession().createQuery("from Report order by date_created, name").list());
   return reports;
 }

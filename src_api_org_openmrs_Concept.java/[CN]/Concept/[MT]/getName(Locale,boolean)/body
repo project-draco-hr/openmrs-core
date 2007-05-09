@@ -14,5 +14,6 @@
     log.warn("No concept name found for concept id " + conceptId + " for locale "+ loc);
     return null;
   }
+  if (defaultName == null)   log.warn("No concept name found for default locale for concept id " + conceptId);
   return defaultName;
 }

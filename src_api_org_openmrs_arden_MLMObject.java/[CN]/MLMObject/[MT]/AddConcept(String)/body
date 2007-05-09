@@ -1,7 +1,41 @@
 {
-  if (IsVarAdded == true && !conceptMap.containsKey(ConceptVar)) {
-    conceptMap.put(ConceptVar,new MLMObjectElement(s,"",""));
-    IsVarAdded=false;
-    ConceptVar="";
+  int index=0, nindex=0, endindex=0, startindex=0, index2=0, nindex2=0, endindex2=0, startindex2=0;
+  String tempstr, variable, varVal;
+  String inStr=ConceptVar;
+  tempstr=inStr;
+  index=tempstr.indexOf(",",nindex);
+  index2=s.indexOf(",",nindex);
+  if (index != -1 && index2 != -1) {
+    while (index > 0 && index2 > 0) {
+      if (nindex == 0 && nindex2 == 0) {
+        startindex=nindex;
+        endindex=index;
+        startindex2=nindex2;
+        endindex2=index2;
+        variable=tempstr.substring(startindex,endindex);
+        varVal=s.substring(startindex2,endindex2);
+        ConceptVar=variable;
+        IsVarAdded=true;
+        CreateElement(varVal,readType,howMany);
+      }
+ else {
+        startindex=nindex + 1;
+        startindex2=nindex2 + 1;
+        endindex=index;
+        endindex2=index2;
+        variable=tempstr.substring(startindex,endindex);
+        varVal=s.substring(startindex2,endindex2);
+        ConceptVar=variable;
+        IsVarAdded=true;
+        CreateElement(varVal,readType,howMany);
+      }
+      nindex=index;
+      nindex2=index2;
+      index=tempstr.indexOf(",",nindex + 1);
+      index2=s.indexOf(",",nindex2 + 1);
+    }
+  }
+ else {
+    CreateElement(s,readType,howMany);
   }
 }

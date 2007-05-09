@@ -10,9 +10,9 @@
           astFactory.addASTChild(currentAST,returnAST);
         }
  else         if ((LA(1) == INTLIT)) {
-          AST tmp273_AST=null;
-          tmp273_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp273_AST);
+          AST tmp323_AST=null;
+          tmp323_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp323_AST);
           match(INTLIT);
         }
  else {
@@ -24,9 +24,9 @@
 {
       _loop99:       do {
         if ((LA(1) == COLON)) {
-          AST tmp274_AST=null;
-          tmp274_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp274_AST);
+          AST tmp324_AST=null;
+          tmp324_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp324_AST);
           match(COLON);
 {
             _loop94:             do {
@@ -44,13 +44,13 @@
 switch (LA(1)) {
 case MINUS:
 {
-                AST tmp275_AST=null;
-                tmp275_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp275_AST);
+                AST tmp325_AST=null;
+                tmp325_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp325_AST);
                 match(MINUS);
-                AST tmp276_AST=null;
-                tmp276_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp276_AST);
+                AST tmp326_AST=null;
+                tmp326_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp326_AST);
                 match(INTLIT);
                 break;
               }
@@ -112,6 +112,10 @@ case ACTION:
 case OF:
 case TIME:
 case WITHIN:
+case CALL:
+case WITH:
+case TO:
+case ANY:
 case COLON:
 case ENDBLOCK:
 case DOT:
@@ -145,9 +149,9 @@ default :
 switch (LA(1)) {
 case DOT:
 {
-          AST tmp277_AST=null;
-          tmp277_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp277_AST);
+          AST tmp327_AST=null;
+          tmp327_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp327_AST);
           match(DOT);
           break;
         }
@@ -175,7 +179,7 @@ citation_text_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_31);
+recover(ex,_tokenSet_32);
 }
  else {
 throw ex;

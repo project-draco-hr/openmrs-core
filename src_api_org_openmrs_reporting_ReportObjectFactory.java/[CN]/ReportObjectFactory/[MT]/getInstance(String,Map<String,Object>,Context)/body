@@ -1,5 +1,5 @@
 {
-  ReportObjectFactory rof=context.getReportService().getReportObjectFactory();
+  ReportObjectFactory rof=ReportObjectFactory.singleton;
   String className=rof.getReportObjectClassByName(reportObjectName);
   AbstractReportObject reportObj=null;
   if (className != null) {
@@ -8,6 +8,7 @@
       reportObj=ReportObjectFactory.getInstance(cls,initialValues);
     }
  catch (    Throwable t) {
+      log.error("Could not create class: " + className + " when trying to get report object from the factory");
     }
   }
   return reportObj;

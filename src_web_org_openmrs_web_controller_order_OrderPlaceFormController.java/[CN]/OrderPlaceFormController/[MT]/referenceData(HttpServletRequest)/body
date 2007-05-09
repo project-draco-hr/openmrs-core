@@ -1,0 +1,8 @@
+{
+  Map refData=new HashMap();
+  Integer patientId=ServletRequestUtils.getIntParameter(request,"patientId");
+  if (patientId != null) {
+    refData.put("patientId",patientId);
+  }
+  return refData;
+}

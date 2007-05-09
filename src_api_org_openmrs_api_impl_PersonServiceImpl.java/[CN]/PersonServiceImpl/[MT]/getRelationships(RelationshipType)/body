@@ -1,0 +1,17 @@
+{
+  List<Relationship> all=this.getRelationships();
+  Map<Person,List<Person>> ret=new HashMap<Person,List<Person>>();
+  if (all != null) {
+    for (    Relationship rel : all) {
+      if (relType == null || (relType != null && relType.equals(rel.getRelationshipType()))) {
+        Person from=rel.getPersonA();
+        Person to=rel.getPersonB();
+        List<Person> relList=ret.get(from);
+        if (relList == null)         relList=new ArrayList<Person>();
+        relList.add(to);
+        ret.put(from,relList);
+      }
+    }
+  }
+  return ret;
+}

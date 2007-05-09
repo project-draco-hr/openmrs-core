@@ -1,0 +1,14 @@
+{
+  List<List<Object>> obs=getObsWithValues(concept,attrs);
+  if (obs == null) {
+    List<Object> blankRow=new Vector<Object>();
+    for (    String attr : attrs)     blankRow.add("");
+    return blankRow;
+  }
+  for (int x=obs.size() - 1; x >= 0; x--) {
+    List<Object> o=obs.get(x);
+    return o;
+  }
+  log.info("Could not find an Obs with concept " + concept + " for patient "+ patientId);
+  return null;
+}

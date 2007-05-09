@@ -1,0 +1,21 @@
+{
+  log.debug("beginning method");
+  boolean ret=true;
+  Date discDate=null;
+  if (discontinueDate != null) {
+    String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
+    SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+    try {
+      discDate=sdf.parse(discontinueDate);
+    }
+ catch (    ParseException e) {
+      discDate=null;
+    }
+  }
+  Patient p=Context.getPatientService().getPatient(patientId);
+  List<DrugOrder> currentOrders=Context.getOrderService().getDrugOrdersByPatient(p,OrderService.SHOW_CURRENT);
+  for (  DrugOrder o : currentOrders) {
+    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConceptByIdOrName(discontinueReason),discDate);
+  }
+  return ret;
+}

@@ -3,20 +3,39 @@
   ASTPair currentAST=new ASTPair();
   AST of_noread_func_op_AST=null;
   try {
-    AST tmp477_AST=null;
-    tmp477_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp477_AST);
-    match(TIME);
-    of_noread_func_op_AST=(AST)currentAST.root;
-  }
- catch (  RecognitionException ex) {
-    if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_48);
+switch (LA(1)) {
+case TIME:
+{
+        AST tmp529_AST=null;
+        tmp529_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp529_AST);
+        match(TIME);
+        of_noread_func_op_AST=(AST)currentAST.root;
+        break;
+      }
+case ANY:
+{
+      AST tmp530_AST=null;
+      tmp530_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp530_AST);
+      match(ANY);
+      of_noread_func_op_AST=(AST)currentAST.root;
+      break;
     }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_72);
+}
  else {
-      throw ex;
-    }
-  }
-  returnAST=of_noread_func_op_AST;
+throw ex;
+}
+}
+returnAST=of_noread_func_op_AST;
 }

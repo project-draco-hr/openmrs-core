@@ -1,0 +1,44 @@
+{
+  expr=expr.trim();
+  log.debug("evaluate " + expr);
+  List<String> commands=new ArrayList<String>();
+{
+    StringBuilder command=new StringBuilder();
+    String[] lines=expr.split("\n");
+    for (    String line : lines) {
+      if (line.trim().startsWith("!")) {
+        if (command.length() > 0) {
+          commands.add(command.toString());
+          command=new StringBuilder();
+        }
+      }
+      command.append(line.trim());
+      command.append("\n");
+    }
+    if (command.length() > 0)     commands.add(command.toString());
+  }
+  boolean andMode=true;
+  List<Boolean> commandResults=new ArrayList<Boolean>();
+  for (  String s : commands) {
+    String command=(new StringTokenizer(s.toUpperCase())).nextToken();
+    if (command.equals("!AND")) {
+      andMode=true;
+    }
+ else     if (command.equals("!OR")) {
+      andMode=false;
+    }
+ else     if (command.equals("!OBSCHECK")) {
+      s=s.substring("!OBSCHECK".length()).trim();
+      commandResults.add(handleObsCheck(s));
+    }
+ else {
+      throw new RuntimeException("Don't know how to handle command " + command + "\n"+ s);
+    }
+  }
+  boolean ret=andMode ? true : false;
+  for (  Boolean b : commandResults) {
+    if (andMode)     ret&=b;
+ else     ret|=b;
+  }
+  return ret;
+}

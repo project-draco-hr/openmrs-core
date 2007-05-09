@@ -1,0 +1,24 @@
+{
+  InputStream in=null;
+  OutputStream out=null;
+  String output="";
+  try {
+    in=getURLStream(url);
+    if (in == null)     return "";
+    out=new ByteArrayOutputStream();
+    OpenmrsUtil.copyFile(in,out);
+    output=out.toString();
+  }
+ catch (  IOException io) {
+    log.warn("io while reading: " + url,io);
+  }
+ finally {
+    try {
+      in.close();
+      out.close();
+    }
+ catch (    Exception e) {
+    }
+  }
+  return output;
+}

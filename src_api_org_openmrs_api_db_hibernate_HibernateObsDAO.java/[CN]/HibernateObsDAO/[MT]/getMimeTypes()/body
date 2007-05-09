@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<MimeType> mimeTypes=session.createCriteria(MimeType.class).list();
+  List<MimeType> mimeTypes=sessionFactory.getCurrentSession().createCriteria(MimeType.class).list();
   return mimeTypes;
 }

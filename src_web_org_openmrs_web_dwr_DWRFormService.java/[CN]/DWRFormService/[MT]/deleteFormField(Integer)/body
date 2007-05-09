@@ -1,7 +1,5 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null && context.isAuthenticated()) {
-    context.getFormService().deleteFormField(context.getFormService().getFormField(id));
-    context.endTransaction();
+  if (Context.isAuthenticated()) {
+    Context.getFormService().deleteFormField(Context.getFormService().getFormField(id));
   }
 }

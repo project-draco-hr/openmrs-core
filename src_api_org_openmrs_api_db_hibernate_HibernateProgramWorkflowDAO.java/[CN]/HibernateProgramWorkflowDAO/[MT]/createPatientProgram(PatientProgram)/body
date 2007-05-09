@@ -1,0 +1,6 @@
+{
+  if (p.getPatient() == null || p.getPatient().getPatientId() == null || p.getProgram() == null || p.getProgram().getProgramId() == null) {
+    throw new DAOException("can't create a PatientProgram without already-persisted patient and program");
+  }
+  sessionFactory.getCurrentSession().save(p);
+}

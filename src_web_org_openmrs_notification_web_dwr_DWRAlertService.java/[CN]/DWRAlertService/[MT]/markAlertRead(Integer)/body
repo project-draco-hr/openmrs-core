@@ -1,13 +1,10 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null) {
-    try {
-      AlertService as=context.getAlertService();
-      Alert alert=as.getAlert(alertId);
-      as.markAlertRead(alert);
-    }
- catch (    Exception e) {
-      log.error(e);
-    }
+  try {
+    AlertService as=Context.getAlertService();
+    Alert alert=as.getAlert(alertId);
+    as.markAlertRead(alert);
+  }
+ catch (  Exception e) {
+    log.error("Error while marking alert '" + alertId + "' as read",e);
   }
 }

@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case ID:
 {
-        AST tmp158_AST=null;
-        tmp158_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp158_AST);
+        AST tmp204_AST=null;
+        tmp204_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp204_AST);
         match(ID);
         text_AST=(AST)currentAST.root;
         break;
@@ -71,6 +71,10 @@ case ACTION:
 case OF:
 case TIME:
 case WITHIN:
+case CALL:
+case WITH:
+case TO:
+case ANY:
 case TIMES:
 {
 {
@@ -82,9 +86,9 @@ case TIMES:
     }
 case INTLIT:
 {
-    AST tmp159_AST=null;
-    tmp159_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp159_AST);
+    AST tmp205_AST=null;
+    tmp205_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp205_AST);
     match(INTLIT);
     text_AST=(AST)currentAST.root;
     break;
@@ -92,26 +96,26 @@ case INTLIT:
 case LPAREN:
 {
 {
-    AST tmp160_AST=null;
-    tmp160_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp160_AST);
+    AST tmp206_AST=null;
+    tmp206_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp206_AST);
     match(LPAREN);
 {
       _loop53:       do {
 switch (LA(1)) {
 case ID:
 {
-            AST tmp161_AST=null;
-            tmp161_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp161_AST);
+            AST tmp207_AST=null;
+            tmp207_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp207_AST);
             match(ID);
             break;
           }
 case INTLIT:
 {
-          AST tmp162_AST=null;
-          tmp162_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp162_AST);
+          AST tmp208_AST=null;
+          tmp208_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp208_AST);
           match(INTLIT);
           break;
         }
@@ -173,6 +177,10 @@ case ACTION:
 case OF:
 case TIME:
 case WITHIN:
+case CALL:
+case WITH:
+case TO:
+case ANY:
 case TIMES:
 {
 {
@@ -189,9 +197,9 @@ default :
 }
  while (true);
 }
-AST tmp163_AST=null;
-tmp163_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp163_AST);
+AST tmp209_AST=null;
+tmp209_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp209_AST);
 match(RPAREN);
 }
 text_AST=(AST)currentAST.root;
@@ -205,7 +213,8 @@ throw new NoViableAltException(LT(1),getFilename());
 }
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
-text_AST=handleIdentifierError(LT(1),ex);
+reportError(ex);
+recover(ex,_tokenSet_25);
 }
  else {
 throw ex;

@@ -1,0 +1,12 @@
+{
+  String systemId=getUserDAO().generateSystemId();
+  Integer checkDigit;
+  try {
+    checkDigit=OpenmrsUtil.getCheckDigit(systemId);
+  }
+ catch (  Exception e) {
+    log.error("error getting check digit",e);
+    return systemId;
+  }
+  return systemId + "-" + checkDigit;
+}

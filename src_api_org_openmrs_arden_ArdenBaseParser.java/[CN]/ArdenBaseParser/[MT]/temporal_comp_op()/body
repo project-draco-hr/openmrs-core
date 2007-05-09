@@ -6,6 +6,9 @@
 switch (LA(1)) {
 case WITHIN:
 {
+        AST tmp390_AST=null;
+        tmp390_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp390_AST);
         match(WITHIN);
 {
 switch (LA(1)) {
@@ -24,9 +27,9 @@ default :
         }
     }
   }
-  AST tmp342_AST=null;
-  tmp342_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp342_AST);
+  AST tmp391_AST=null;
+  tmp391_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp391_AST);
   match(PAST);
   expr_string();
   astFactory.addASTChild(currentAST,returnAST);
@@ -35,9 +38,9 @@ default :
 }
 case AFTER:
 {
-AST tmp343_AST=null;
-tmp343_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp343_AST);
+AST tmp392_AST=null;
+tmp392_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp392_AST);
 match(AFTER);
 expr_string();
 astFactory.addASTChild(currentAST,returnAST);

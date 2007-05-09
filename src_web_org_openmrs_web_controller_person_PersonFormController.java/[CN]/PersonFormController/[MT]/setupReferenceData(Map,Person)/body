@@ -1,0 +1,11 @@
+{
+  String causeOfDeathOther="";
+  if (Context.isAuthenticated()) {
+    String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+    Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
+    log.warn("No concept death cause found");
+  }
+  map.put("causeOfDeathOther",causeOfDeathOther);
+  map.put("datePattern",Context.getDateFormat().toLocalizedPattern().toLowerCase());
+  return map;
+}

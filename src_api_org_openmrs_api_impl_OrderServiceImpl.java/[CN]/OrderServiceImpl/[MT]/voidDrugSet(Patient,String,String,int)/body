@@ -1,0 +1,15 @@
+{
+  log.debug("in voidDrugSet() method");
+  if (Context.isAuthenticated() && patient != null && drugSetId != null) {
+    List<DrugOrder> currentOrders=this.getDrugOrdersByPatient(patient,whatToVoid);
+    Map<String,List<DrugOrder>> ordersBySetId=this.getDrugSetsByDrugSetIdList(currentOrders,drugSetId,",");
+    if (ordersBySetId != null) {
+      List<DrugOrder> ordersToVoid=ordersBySetId.get(drugSetId);
+      if (ordersToVoid != null) {
+        for (        DrugOrder order : ordersToVoid) {
+          this.voidOrder(order,voidReason);
+        }
+      }
+    }
+  }
+}

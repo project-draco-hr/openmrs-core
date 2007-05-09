@@ -1,16 +1,15 @@
 {
-  if (context != null) {
-    PatientService ps=context.getPatientService();
-    if (StringUtils.hasText(text)) {
-      try {
-        setValue(ps.getTribe(Integer.valueOf(text)));
-      }
- catch (      Exception ex) {
-        throw new IllegalArgumentException("Tribe not found: " + ex.getMessage());
-      }
+  PatientService ps=Context.getPatientService();
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(ps.getTribe(Integer.valueOf(text)));
     }
+ catch (    Exception ex) {
+      log.error("Error setting text: " + text,ex);
+      throw new IllegalArgumentException("Tribe not found: " + ex.getMessage());
+    }
+  }
  else {
-      setValue(null);
-    }
+    setValue(null);
   }
 }

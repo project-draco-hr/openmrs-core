@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<PatientIdentifier> patientIdentifiers=session.createQuery("from PatientIdentifier p where p.identifierType = :pit and p.voided = false").setParameter("pit",pit).list();
+  List<PatientIdentifier> patientIdentifiers=sessionFactory.getCurrentSession().createQuery("from PatientIdentifier p where p.identifierType = :pit and p.voided = false").setParameter("pit",pit).list();
   return patientIdentifiers;
 }

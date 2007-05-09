@@ -1,0 +1,5 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ROLES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_ROLES);
+  if (OpenmrsConstants.CORE_ROLES().keySet().contains(role.getRole()))   throw new APIException("Cannot delete a core role");
+  getAdministrationDAO().deleteRole(role);
+}

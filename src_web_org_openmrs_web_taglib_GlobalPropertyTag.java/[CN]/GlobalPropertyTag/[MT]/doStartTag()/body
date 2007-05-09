@@ -1,0 +1,14 @@
+{
+  String value=defaultValue;
+  if (Context.isAuthenticated()) {
+    value=(String)Context.getAdministrationService().getGlobalProperty(key,defaultValue);
+  }
+  try {
+    if (var != null)     pageContext.setAttribute(var,value);
+ else     pageContext.getOut().write(value);
+  }
+ catch (  Exception e) {
+    log.error("error getting global property",e);
+  }
+  return SKIP_BODY;
+}

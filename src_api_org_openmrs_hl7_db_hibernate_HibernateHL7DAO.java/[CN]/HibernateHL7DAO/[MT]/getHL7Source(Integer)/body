@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  HL7Source hl7Source;
-  hl7Source=(HL7Source)session.get(HL7Source.class,hl7SourceId);
-  return hl7Source;
+  return (HL7Source)sessionFactory.getCurrentSession().get(HL7Source.class,hl7SourceId);
 }

@@ -1,0 +1,18 @@
+{
+  try {
+    ModuleClassLoader classLoader=ModuleFactory.getModuleClassLoader(this);
+    if (classLoader == null)     throw new ModuleException("The classloader is null",getModuleId());
+    Class c=classLoader.loadClass(getActivatorName());
+    setActivator((Activator)c.newInstance());
+  }
+ catch (  ClassNotFoundException e) {
+    throw new ModuleException("Unable to load/find activator: '" + getActivatorName() + "'",name,e);
+  }
+catch (  IllegalAccessException e) {
+    throw new ModuleException("Unable to load/access activator: '" + getActivatorName() + "'",name,e);
+  }
+catch (  InstantiationException e) {
+    throw new ModuleException("Unable to load/instantiate activator: '" + getActivatorName() + "'",name,e);
+  }
+  return activator;
+}

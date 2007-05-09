@@ -1,5 +1,14 @@
 {
   log.debug("Starting scheduler service ...");
-  Collection<TaskConfig> tasks=daoContext.getSchedulerDAO().getTasks();
-  startTasks(tasks);
+  Collection<TaskConfig> tasks=getSchedulerDAO().getTasks();
+  if (tasks != null) {
+    for (    TaskConfig task : tasks) {
+      try {
+        if (task.getStartOnStartup())         scheduleTask(task);
+      }
+ catch (      Exception e) {
+        log.error("Could not schedule task for class " + task.getSchedulableClass(),e);
+      }
+    }
+  }
 }

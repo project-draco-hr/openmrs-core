@@ -18,6 +18,7 @@ case MEDIAN:
         break;
       }
 case TIME:
+case ANY:
 {
       of_noread_func_op();
       astFactory.addASTChild(currentAST,returnAST);
@@ -33,7 +34,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_48);
+recover(ex,_tokenSet_72);
 }
  else {
 throw ex;

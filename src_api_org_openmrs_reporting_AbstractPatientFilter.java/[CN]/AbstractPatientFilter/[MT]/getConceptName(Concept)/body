@@ -1,0 +1,6 @@
+{
+  if (concept == null)   return "[CONCEPT]";
+  ConceptName conceptName=concept.getName();
+  if (conceptName == null)   conceptName=Context.getConceptService().getConcept(concept.getConceptId()).getName();
+  return conceptName.getName();
+}

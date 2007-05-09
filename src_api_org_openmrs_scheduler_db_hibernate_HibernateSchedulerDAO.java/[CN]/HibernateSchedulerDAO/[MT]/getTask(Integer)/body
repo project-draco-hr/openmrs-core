@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  TaskConfig task=(TaskConfig)session.get(TaskConfig.class,taskId);
+  TaskConfig task=(TaskConfig)sessionFactory.getCurrentSession().get(TaskConfig.class,taskId);
   if (task == null) {
     log.warn("Task '" + taskId + "' not found");
     throw new ObjectRetrievalFailureException(TaskConfig.class,taskId);

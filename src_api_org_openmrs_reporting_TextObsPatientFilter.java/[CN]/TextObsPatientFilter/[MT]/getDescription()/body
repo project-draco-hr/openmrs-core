@@ -1,8 +1,10 @@
 {
+  if (concept == null)   return "TextObsPatientFilter with no concept specified";
   StringBuffer ret=new StringBuffer();
-  ret.append("Patients with (concept #" + concept + ")");
+  Locale locale=OpenmrsConstants.OPENMRS_LOCALES().iterator().next();
+  ret.append("Patients with " + concept.getName(locale,false));
   if (value != null) {
-    ret.append(" == " + value);
+    ret.append(" of " + value);
   }
   return ret.toString();
 }

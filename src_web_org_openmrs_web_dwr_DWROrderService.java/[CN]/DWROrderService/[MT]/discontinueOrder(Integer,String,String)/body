@@ -1,0 +1,15 @@
+{
+  Date dDiscDate=null;
+  if (discontinueDate != null) {
+    String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
+    SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+    try {
+      dDiscDate=sdf.parse(discontinueDate);
+    }
+ catch (    ParseException e) {
+      dDiscDate=null;
+    }
+  }
+  Order o=Context.getOrderService().getOrder(orderId);
+  Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConceptByIdOrName(discontinueReason),dDiscDate);
+}

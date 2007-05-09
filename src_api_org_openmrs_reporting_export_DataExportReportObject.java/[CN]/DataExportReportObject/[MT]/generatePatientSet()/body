@@ -1,0 +1,19 @@
+{
+  PatientSetService pss=Context.getPatientSetService();
+  PatientSet patientSet=null;
+  if (getPatientIds() == null || getPatientIds().size() == 0)   patientSet=Context.getPatientSetService().getAllPatients();
+ else {
+    patientSet=new PatientSet();
+    for (    Integer p : patientIds)     patientSet.add(p);
+  }
+  if (location != null && !location.equals(""))   patientSet=patientSet.intersect(pss.getPatientsHavingLocation(getLocation()));
+  if (cohortId != null) {
+    Cohort cohort=Context.getCohortService().getCohort(cohortId);
+    if (cohort != null)     patientSet=patientSet.intersect(cohort.toPatientSet());
+  }
+  if (cohortDefinitionId != null) {
+    PatientFilter cohortDefinition=(PatientFilter)Context.getReportService().getReportObject(cohortDefinitionId);
+    if (cohortDefinition != null)     patientSet=cohortDefinition.filter(patientSet);
+  }
+  return patientSet;
+}

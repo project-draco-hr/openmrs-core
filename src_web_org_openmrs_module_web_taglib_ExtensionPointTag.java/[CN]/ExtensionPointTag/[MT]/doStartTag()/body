@@ -1,0 +1,32 @@
+{
+  log.debug("Starting tag for extension point: " + pointId);
+  extensions=null;
+  parameterMap=OpenmrsUtil.parseParameterList(parameters);
+  List<Extension> extensionList=null;
+  if (type != null && type.length() > 0) {
+    try {
+      Extension.MEDIA_TYPE mediaType=Enum.valueOf(Extension.MEDIA_TYPE.class,type);
+      log.debug("Getting extensions: " + pointId + " : "+ mediaType);
+      extensionList=ModuleFactory.getExtensions(pointId,mediaType);
+    }
+ catch (    IllegalArgumentException e) {
+      log.warn("extension point type: '" + type + "' is invalid. Must be enum of Extension.MEDIA_TYPE",e);
+    }
+  }
+ else {
+    log.debug("Getting extensions: " + pointId);
+    extensionList=ModuleFactory.getExtensions(pointId);
+  }
+  if (extensionList != null) {
+    log.debug("Found " + extensionList.size() + " extensions");
+    extensions=extensionList.iterator();
+  }
+  if (extensions == null || extensions.hasNext() == false) {
+    extensions=null;
+    return SKIP_BODY;
+  }
+ else {
+    firstIteration=true;
+    return EVAL_BODY_BUFFERED;
+  }
+}

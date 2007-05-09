@@ -1,17 +1,11 @@
 {
-  if (patient.getPatientId() == null)   createPatient(patient);
+  if (patient.getPatientId() == null)   return createPatient(patient);
  else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      setCollectionProperties(patient);
-      patient=(Patient)session.merge(patient);
-      session.saveOrUpdate(patient);
-      HibernateUtil.commitTransaction();
+    Object obj=sessionFactory.getCurrentSession().get(Patient.class,patient.getPatientId());
+    if (!(obj instanceof Patient)) {
+      insertPatientStub(patient);
     }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    patient=(Patient)sessionFactory.getCurrentSession().merge(patient);
+    return patient;
   }
 }

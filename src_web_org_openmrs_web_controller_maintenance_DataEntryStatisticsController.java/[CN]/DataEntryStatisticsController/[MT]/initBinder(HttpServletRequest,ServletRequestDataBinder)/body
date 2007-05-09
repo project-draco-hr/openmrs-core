@@ -1,0 +1,5 @@
+{
+  super.initBinder(request,binder);
+  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale());
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(dateFormat,true,10));
+}

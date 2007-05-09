@@ -1,0 +1,15 @@
+{
+  ConceptService es=Context.getConceptService();
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(es.getDrug(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      log.error("Error setting text: " + text,ex);
+      throw new IllegalArgumentException("Drug not found: " + ex.getMessage());
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

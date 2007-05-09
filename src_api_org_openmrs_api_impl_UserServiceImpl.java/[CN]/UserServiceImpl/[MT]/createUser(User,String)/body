@@ -1,0 +1,7 @@
+{
+  log.debug("Creating user");
+  checkPrivileges(user);
+  setCollectionProperties(user);
+  user.setSystemId(generateSystemId());
+  return getUserDAO().createUser(user,password);
+}

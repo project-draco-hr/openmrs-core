@@ -1,0 +1,10 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  List<RelationshipType> types=(List<RelationshipType>)command;
+  List<RelationshipType> preferredTypes=new Vector<RelationshipType>();
+  for (  RelationshipType type : types) {
+    if (type.isPreferred())     preferredTypes.add(type);
+  }
+  map.put("preferredTypes",preferredTypes);
+  return map;
+}

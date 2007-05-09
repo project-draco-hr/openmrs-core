@@ -152,12 +152,6 @@ mACTION_OP(true);
 theRetToken=_returnToken;
 break;
 }
-case '\'':
-{
-mSINGLE_QUOTE(true);
-theRetToken=_returnToken;
-break;
-}
 default :
 if ((LA(1) == '{') && ((LA(2) >= '\u0000' && LA(2) <= '\u00ff'))) {
 mARDEN_CURLY_BRACKETS(true);
@@ -207,6 +201,10 @@ theRetToken=_returnToken;
 mLPAREN(true);
 theRetToken=_returnToken;
 }
+ else if ((LA(1) == '\'') && (true)) {
+mTERM_LITERAL(true);
+theRetToken=_returnToken;
+}
  else if ((LA(1) == '.') && (true)) {
 mDOT(true);
 theRetToken=_returnToken;
@@ -229,6 +227,10 @@ theRetToken=_returnToken;
 }
  else if ((LA(1) == '>') && (true)) {
 mGT(true);
+theRetToken=_returnToken;
+}
+ else if ((LA(1) == '\'') && (true)) {
+mSINGLE_QUOTE(true);
 theRetToken=_returnToken;
 }
  else {

@@ -1,0 +1,12 @@
+{
+  checkArrayLengths();
+  List<CohortSearchHistoryItemHolder> ret=new ArrayList<CohortSearchHistoryItemHolder>();
+  for (int i=0; i < searchHistory.size(); ++i) {
+    CohortSearchHistoryItemHolder item=new CohortSearchHistoryItemHolder();
+    item.setFilter(searchHistory.get(i));
+    item.setCachedResult(cachedResults.get(i));
+    item.setCachedResultDate(cachedResultDates.get(i));
+    ret.add(item);
+  }
+  return ret;
+}

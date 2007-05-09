@@ -1,15 +1,4 @@
 {
   if (hl7InArchive.getHL7InArchiveId() == 0)   createHL7InArchive(hl7InArchive);
- else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(hl7InArchive);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().saveOrUpdate(hl7InArchive);
 }

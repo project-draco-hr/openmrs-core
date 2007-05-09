@@ -1,27 +1,3 @@
 {
-  Concept concept;
-  boolean retVal=false;
-  Obs obs;
-  if (evaluate_Last_Pb()) {
-    userVarMap.put("LeadRisk","has lead level greater than 14 mg/dcl");
-  }
-  if (evaluate_Qual_Pb()) {
-    retVal=false;
-    return retVal;
-  }
-  if (evaluate_HousePre50()) {
-    userVarMap.put("LeadRisk","lives in a house built before 1950");
-  }
- else   if (evaluate_RenovatedPre78()) {
-    userVarMap.put("LeadRisk","lives in a pre-1978 house undergoing renovation");
-  }
- else   if (evaluate_HiPbSibFriend()) {
-    userVarMap.put("LeadRisk","has a friend or sibling with elevated blood lead");
-  }
- else {
-    retVal=true;
-    return retVal;
-  }
-  retVal=true;
-  return retVal;
+  return evaluate_logic();
 }

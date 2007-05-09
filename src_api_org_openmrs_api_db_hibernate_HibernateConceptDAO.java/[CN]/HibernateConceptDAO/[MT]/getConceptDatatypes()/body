@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<ConceptDatatype> cds=session.createQuery("from ConceptDatatype cd order by cd.name").list();
-  return cds;
+  return sessionFactory.getCurrentSession().createQuery("from ConceptDatatype cd order by cd.name").list();
 }

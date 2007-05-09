@@ -1,0 +1,12 @@
+{
+  StringBuffer sb=new StringBuffer();
+  sb.append("select distinct(patient_id) from patient_identifier p ");
+  sb.append("where identifier in (:identifiers)");
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
+  query.setCacheMode(CacheMode.IGNORE);
+  query.setParameterList("identifiers",identifiers,new StringType());
+  PatientSet ret=new PatientSet();
+  List<Integer> patientIds=query.list();
+  ret.setPatientIds(new ArrayList<Integer>(patientIds));
+  return ret;
+}

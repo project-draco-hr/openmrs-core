@@ -1,0 +1,11 @@
+{
+  List<Integer> ret=new ArrayList<Integer>();
+  for (int j=i + 1; j < searchHistory.size(); ++j) {
+    PatientFilter pf=searchHistory.get(j);
+    if (pf instanceof CohortHistoryCompositionFilter) {
+      boolean removeMeToo=((CohortHistoryCompositionFilter)pf).removeFromHistoryNotify(i + 1);
+      if (removeMeToo)       ret.add(j - 1);
+    }
+  }
+  return ret;
+}

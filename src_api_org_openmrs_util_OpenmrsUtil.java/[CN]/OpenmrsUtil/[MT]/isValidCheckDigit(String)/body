@@ -1,0 +1,20 @@
+{
+  if (id.indexOf("-") < 0) {
+    throw new PatientIdentifierException("Cannot find check-digit in identifier");
+  }
+  String idWithoutCheckDigit=id.substring(0,id.indexOf("-"));
+  int computedCheckDigit=getCheckDigit(idWithoutCheckDigit);
+  String checkDigit=id.substring(id.indexOf("-") + 1,id.length());
+  if (checkDigit.equalsIgnoreCase("A"))   checkDigit="0";
+  if (checkDigit.equalsIgnoreCase("B"))   checkDigit="1";
+  if (checkDigit.equalsIgnoreCase("C"))   checkDigit="2";
+  if (checkDigit.equalsIgnoreCase("D"))   checkDigit="3";
+  if (checkDigit.equalsIgnoreCase("E"))   checkDigit="4";
+  if (checkDigit.equalsIgnoreCase("F"))   checkDigit="5";
+  if (checkDigit.equalsIgnoreCase("G"))   checkDigit="6";
+  if (checkDigit.equalsIgnoreCase("H"))   checkDigit="7";
+  if (checkDigit.equalsIgnoreCase("I"))   checkDigit="8";
+  if (checkDigit.equalsIgnoreCase("J"))   checkDigit="9";
+  int givenCheckDigit=Integer.valueOf(checkDigit);
+  return (computedCheckDigit == givenCheckDigit);
+}

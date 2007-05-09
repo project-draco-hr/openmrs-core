@@ -1,0 +1,8 @@
+{
+  if (obsList == null || obsList.size() < 1)   init(NULL_RESULT);
+ else   if (obsList.size() < 2)   init(obsList.get(0));
+ else {
+    valueList=new Vector<Result>();
+    for (    Obs o : obsList)     valueList.add(new Result((o)));
+  }
+}

@@ -1,20 +1,18 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     if (obs.getObsId() == null) {
-      if (StringUtils.hasText(request.getParameter("patientId")))       obs.setPatient(context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
- else       obs.setPatient(null);
-      if (StringUtils.hasText(request.getParameter("orderId")))       obs.setOrder(context.getOrderService().getOrder(Integer.valueOf(request.getParameter("orderId"))));
+      if (StringUtils.hasText(request.getParameter("personId")))       obs.setPerson(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("personId"))));
+ else       obs.setPerson(null);
+      if (StringUtils.hasText(request.getParameter("orderId")))       obs.setOrder(Context.getOrderService().getOrder(Integer.valueOf(request.getParameter("orderId"))));
  else       obs.setOrder(null);
-      if (StringUtils.hasText(request.getParameter("conceptId")))       obs.setConcept(context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
+      if (StringUtils.hasText(request.getParameter("conceptId")))       obs.setConcept(Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
  else       obs.setConcept(null);
-      if (StringUtils.hasText(request.getParameter("encounterId")))       obs.setEncounter(context.getEncounterService().getEncounter(Integer.valueOf(request.getParameter("encounterId"))));
+      if (StringUtils.hasText(request.getParameter("encounterId")))       obs.setEncounter(Context.getEncounterService().getEncounter(Integer.valueOf(request.getParameter("encounterId"))));
  else       obs.setEncounter(null);
     }
-    if (StringUtils.hasText(request.getParameter("valueCodedId")))     obs.setValueCoded(context.getConceptService().getConcept(Integer.valueOf(request.getParameter("valueCodedId"))));
+    if (StringUtils.hasText(request.getParameter("valueCodedId")))     obs.setValueCoded(Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("valueCodedId"))));
  else     obs.setValueCoded(null);
-    if (StringUtils.hasText(request.getParameter("valueDrugId")))     obs.setValueDrug(context.getConceptService().getDrug(Integer.valueOf(request.getParameter("valueDrugId"))));
+    if (StringUtils.hasText(request.getParameter("valueDrugId")))     obs.setValueDrug(Context.getConceptService().getDrug(Integer.valueOf(request.getParameter("valueDrugId"))));
  else     obs.setValueDrug(null);
   }
   return obs;

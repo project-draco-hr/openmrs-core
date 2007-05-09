@@ -1,0 +1,10 @@
+{
+  ProtectionDomain pd=cls.getProtectionDomain();
+  if (pd != null) {
+    CodeSource cs=pd.getCodeSource();
+    if (cs != null) {
+      return cs.getLocation();
+    }
+  }
+  return null;
+}

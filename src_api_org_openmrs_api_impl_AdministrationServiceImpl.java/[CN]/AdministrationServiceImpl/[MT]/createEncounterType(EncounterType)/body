@@ -1,0 +1,6 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ENCOUNTER_TYPES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_ENCOUNTER_TYPES);
+  encounterType.setCreator(Context.getAuthenticatedUser());
+  encounterType.setDateCreated(new Date());
+  getAdministrationDAO().createEncounterType(encounterType);
+}

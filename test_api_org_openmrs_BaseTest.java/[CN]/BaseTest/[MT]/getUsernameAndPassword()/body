@@ -1,0 +1,29 @@
+{
+  try {
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+  }
+ catch (  Exception e) {
+  }
+  JPanel panel=new JPanel(new GridBagLayout());
+  JLabel usernameLabel=new JLabel("Username");
+  usernameLabel.setFont(font);
+  usernameField=new JTextField(20);
+  usernameField.setFont(font);
+  JLabel passwordLabel=new JLabel("Password");
+  passwordLabel.setFont(font);
+  JPasswordField passwordField=new JPasswordField(20);
+  passwordField.setFont(font);
+  panel.add(usernameLabel,new GridBagConstraints(0,0,1,1,0,0,GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,new Insets(0,0,0,0),5,0));
+  panel.add(usernameField,new GridBagConstraints(1,0,1,1,0,0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(0,0,0,0),0,0));
+  panel.add(passwordLabel,new GridBagConstraints(0,1,1,1,0,0,GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,new Insets(0,0,0,0),5,0));
+  panel.add(passwordField,new GridBagConstraints(1,1,1,1,0,0,GridBagConstraints.WEST,GridBagConstraints.HORIZONTAL,new Insets(0,0,0,0),0,0));
+  TimerTask later=new TimerTask(){
+    public void run(){
+      usernameField.grabFocus();
+    }
+  }
+;
+  new Timer().schedule(later,500);
+  int response=JOptionPane.showConfirmDialog(null,panel,"Enter credentials...",JOptionPane.DEFAULT_OPTION);
+  return (response == -1 ? null : new String[]{usernameField.getText(),String.valueOf(passwordField.getPassword())});
+}

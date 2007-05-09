@@ -1,0 +1,56 @@
+{
+  String ret="";
+  if (identifier == null || identifier.length() == 0)   return "PatientIdentifier.error.general";
+  PatientService ps=Context.getPatientService();
+  EncounterService es=Context.getEncounterService();
+  Patient p=ps.getPatient(patientId);
+  PatientIdentifierType idType=ps.getPatientIdentifierType(identifierType);
+  Location location=es.getLocation(identifierLocationId);
+  log.debug("idType=" + identifierType + "->"+ idType+ " , location="+ identifierLocationId+ "->"+ location+ " identifier="+ identifier);
+  PatientIdentifier id=new PatientIdentifier();
+  id.setIdentifierType(idType);
+  id.setIdentifier(identifier);
+  id.setLocation(location);
+  for (  PatientIdentifier previousId : p.getActiveIdentifiers()) {
+    if (previousId.getIdentifierType().equals(idType) && previousId.getLocation().equals(location)) {
+      log.debug("Found equivalent ID: [" + idType + "]["+ location+ "]["+ previousId.getIdentifier()+ "], about to remove");
+      p.removeIdentifier(previousId);
+    }
+ else {
+      if (!previousId.getIdentifierType().equals(idType))       log.debug("Previous ID id type does not match: [" + previousId.getIdentifierType().getName() + "]["+ previousId.getIdentifier()+ "]");
+      if (!previousId.getLocation().equals(location)) {
+        log.debug("Previous ID location is: " + previousId.getLocation());
+        log.debug("New location is: " + location);
+      }
+    }
+  }
+  p.addIdentifier(id);
+  try {
+    ps.updatePatient(p);
+  }
+ catch (  InvalidIdentifierFormatException iife) {
+    log.error(iife);
+    ret="PatientIdentifier.error.formatInvalid";
+  }
+catch (  InvalidCheckDigitException icde) {
+    log.error(icde);
+    ret="PatientIdentifier.error.checkDigit";
+  }
+catch (  IdentifierNotUniqueException inue) {
+    log.error(inue);
+    ret="PatientIdentifier.error.notUnique";
+  }
+catch (  DuplicateIdentifierException die) {
+    log.error(die);
+    ret="PatientIdentifier.error.duplicate";
+  }
+catch (  InsufficientIdentifiersException iie) {
+    log.error(iie);
+    ret="PatientIdentifier.error.insufficientIdentifiers";
+  }
+catch (  PatientIdentifierException pie) {
+    log.error(pie);
+    ret="PatientIdentifier.error.general";
+  }
+  return ret;
+}

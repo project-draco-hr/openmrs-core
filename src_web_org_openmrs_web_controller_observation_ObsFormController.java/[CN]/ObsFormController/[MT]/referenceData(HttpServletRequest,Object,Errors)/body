@@ -1,13 +1,11 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Obs obs=(Obs)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   String defaultVerbose="false";
-  if (context != null && context.isAuthenticated()) {
-    map.put("forms",context.getFormService().getForms());
+  if (Context.isAuthenticated()) {
+    map.put("forms",Context.getFormService().getForms());
     if (obs.getConcept() != null)     map.put("conceptName",obs.getConcept().getName(request.getLocale()));
-    defaultVerbose=context.getAuthenticatedUser().getProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+    defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
   }
   map.put("datePattern",dateFormat.toLocalizedPattern().toLowerCase());
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);

@@ -1,20 +1,40 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Patient patient=(Patient)obj;
   List<Form> forms=new Vector<Form>();
   Map<String,Object> map=new HashMap<String,Object>();
   List<Encounter> encounters=new Vector<Encounter>();
-  if (context != null && context.isAuthenticated()) {
-    forms.addAll(context.getFormEntryService().getForms());
-    Set<Encounter> encs=context.getEncounterService().getEncounters(patient);
+  if (Context.isAuthenticated()) {
+    boolean onlyPublishedForms=true;
+    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_UNPUBLISHED_FORMS))     onlyPublishedForms=false;
+    forms.addAll(Context.getFormService().getForms(onlyPublishedForms));
+    Set<Encounter> encs=Context.getEncounterService().getEncounters(patient);
     if (encs != null && encs.size() > 0)     encounters.addAll(encs);
   }
+  String patientVariation="";
+  Concept reasonForExitConcept=Context.getConceptService().getConceptByIdOrName(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
+  if (reasonForExitConcept != null) {
+    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept);
+    if (patientExitObs != null) {
+      log.debug("Exit obs is size " + patientExitObs.size());
+      if (patientExitObs.size() == 1) {
+        Obs exitObs=patientExitObs.iterator().next();
+        Concept exitReason=exitObs.getValueCoded();
+        Date exitDate=exitObs.getObsDatetime();
+        if (exitReason != null && exitDate != null) {
+          patientVariation="Exited";
+        }
+      }
+ else {
+        log.error("Too many reasons for exit - not putting data into model");
+      }
+    }
+  }
+  map.put("patientVariation",patientVariation);
   map.put("forms",forms);
   map.put("emptyIdentifier",new PatientIdentifier());
-  map.put("emptyName",new PatientName());
-  map.put("emptyAddress",new PatientAddress());
+  map.put("emptyName",new PersonName());
+  map.put("emptyAddress",new PersonAddress());
   map.put("encounters",encounters);
-  map.put("datePattern",dateFormat.toLocalizedPattern().toLowerCase());
+  super.setupReferenceData(map,patient);
   return map;
 }

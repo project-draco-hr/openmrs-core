@@ -3,13 +3,29 @@
   String username=request.getParameter("uname");
   String password=request.getParameter("pw");
   String redirect=request.getParameter("redirect");
-  if (redirect == null || redirect.equals(""))   redirect=request.getParameter("referer");
-  if (redirect == null || redirect.equals(""))   redirect=request.getContextPath();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.session.expired");
-    response.sendRedirect(request.getContextPath() + "/logout");
-    return;
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getParameter("refererURL");
+    int index=redirect.indexOf(request.getContextPath(),9);
+    if (index != -1)     redirect=redirect.substring(index);
+  }
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getContextPath();
+  }
+  log.debug("4 redirect: '" + redirect + "'");
+  if (redirect != null) {
+    String s=redirect;
+    if (s.indexOf('/') >= 0) {
+      s=s.substring(s.lastIndexOf('/') + 1);
+    }
+    if (s.indexOf('.') >= 0) {
+      s=s.substring(0,s.indexOf('.'));
+    }
+    if (s.equals("login")) {
+      redirect=request.getContextPath();
+    }
+    if (!redirect.startsWith(request.getContextPath())) {
+      redirect=request.getContextPath();
+    }
   }
   Object attempts=httpSession.getAttribute("loginAttempts");
   Integer loginAttempts=0;
@@ -18,10 +34,10 @@
     String forgotPassword=request.getParameter("forgotPassword");
     String secretAnswer=request.getParameter("secretAnswer");
     if (forgotPassword != null && new Boolean(forgotPassword).booleanValue()) {
-      context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-      User user=context.getUserService().getUserByUsername(username);
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      User user=Context.getUserService().getUserByUsername(username);
       httpSession.setAttribute("loginAttempts",loginAttempts++);
-      if (user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
+      if (user != null && user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.question.empty");
         response.sendRedirect(request.getContextPath() + "/login.htm?username=" + username);
       }
@@ -31,19 +47,19 @@
       }
     }
  else     if (secretAnswer != null) {
-      context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-      User user=context.getUserService().getUserByUsername(username);
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      User user=Context.getUserService().getUserByUsername(username);
       httpSession.setAttribute("loginAttempts",loginAttempts++);
-      if (user.getSecretQuestion() != null && context.getUserService().isSecretAnswer(user,secretAnswer)) {
-        context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      if (user.getSecretQuestion() != null && Context.getUserService().isSecretAnswer(user,secretAnswer)) {
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
         String randomPassword="";
         for (int i=0; i < 8; i++) {
           randomPassword+=String.valueOf((Math.random() * (127 - 48) + 48));
         }
-        context.getUserService().changePassword(user,randomPassword);
+        Context.getUserService().changePassword(user,randomPassword);
         httpSession.setAttribute("resetPassword",randomPassword);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.password.reset");
-        context.authenticate(username,randomPassword);
+        Context.authenticate(username,randomPassword);
         response.sendRedirect(request.getContextPath() + "/options.form#Change Login Info");
       }
  else {
@@ -53,12 +69,12 @@
       }
     }
  else {
-      context.authenticate(username,password);
-      if (context.isAuthenticated()) {
-        User user=context.getAuthenticatedUser();
-        if (user.getProperties() != null) {
-          if (user.getProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
-            String localeString=user.getProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
+      Context.authenticate(username,password);
+      if (Context.isAuthenticated()) {
+        User user=Context.getAuthenticatedUser();
+        if (user.getUserProperties() != null) {
+          if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
+            String localeString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
             Locale locale=null;
             if (localeString.length() == 5) {
               String lang=localeString.substring(0,2);
@@ -72,14 +88,15 @@
             oclr.setLocale(request,response,locale);
           }
         }
-        Boolean forcePasswordChange=new Boolean(user.getProperties().get(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
+        Boolean forcePasswordChange=new Boolean(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
         if (forcePasswordChange) {
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.password.change");
           redirect=request.getContextPath() + "/options.form#Change Login Info";
         }
-        if (context.getLocale() == null) {
-          context.setLocale(OpenmrsConstants.GLOBAL_DEFAULT_LOCALE);
+        if (Context.getLocale() == null) {
+          Context.setLocale(OpenmrsConstants.GLOBAL_DEFAULT_LOCALE);
         }
+        log.debug("Redirecting after login to: " + redirect);
         response.sendRedirect(redirect);
         log.debug(request.getLocalAddr());
         httpSession.setAttribute(WebConstants.OPENMRS_CLIENT_IP_HTTPSESSION_ATTR,request.getLocalAddr());
@@ -94,7 +111,7 @@
     response.sendRedirect(request.getContextPath() + "/login.htm");
   }
  finally {
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
   }
 }

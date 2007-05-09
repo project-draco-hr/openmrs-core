@@ -1,7 +1,6 @@
 {
-  Session session=HibernateUtil.currentSession();
-  String q="select c from Concept c where c.answers.answerConcept.conceptId = :answerId";
-  Query query=session.createQuery(q);
-  query.setParameter("answerId",concept.getConceptId());
+  String q="select c from Concept c join c.answers ca where ca.answerConcept = :answer";
+  Query query=sessionFactory.getCurrentSession().createQuery(q);
+  query.setParameter("answer",concept);
   return query.list();
 }

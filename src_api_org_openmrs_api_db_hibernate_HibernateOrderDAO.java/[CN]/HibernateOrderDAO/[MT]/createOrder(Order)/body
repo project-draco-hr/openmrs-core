@@ -1,16 +1,7 @@
 {
-  log.debug("creating order");
-  Session session=HibernateUtil.currentSession();
-  HibernateUtil.beginTransaction();
-  order.setCreator(context.getAuthenticatedUser());
+  log.debug("In createOrder method");
+  order.setCreator(Context.getAuthenticatedUser());
   order.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(order);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(order);
+  log.debug("Ending createOrder method");
 }

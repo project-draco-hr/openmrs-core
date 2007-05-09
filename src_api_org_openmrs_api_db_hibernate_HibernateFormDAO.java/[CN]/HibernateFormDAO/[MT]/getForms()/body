@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List forms=session.createCriteria(Form.class).addOrder(Order.asc("name")).addOrder(Order.asc("formId")).list();
-  return forms;
+  return sessionFactory.getCurrentSession().createCriteria(Form.class).addOrder(Order.asc("name")).addOrder(Order.asc("formId")).list();
 }

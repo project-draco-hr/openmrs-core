@@ -1,9 +1,8 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   List<OrderType> orderTypeList=new Vector<OrderType>();
-  if (context != null && context.isAuthenticated()) {
-    OrderService os=context.getOrderService();
+  if (Context.isAuthenticated()) {
+    OrderService os=Context.getOrderService();
     orderTypeList=os.getOrderTypes();
   }
   return orderTypeList;

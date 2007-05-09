@@ -1,0 +1,20 @@
+{
+  CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+  try {
+    PatientFilter pf=history.getSearchHistory().get(indexInHistory);
+    if (pf == null)     return false;
+    if (pf instanceof CohortHistoryCompositionFilter)     pf=((CohortHistoryCompositionFilter)pf).toCohortDefinition();
+    AbstractReportObject aro=(AbstractReportObject)pf;
+    aro.setName(name);
+    aro.setDescription(description);
+    aro.setReportObjectId(null);
+    aro.setType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
+    aro.setSubType("CohortDefinition");
+    Context.getReportService().createReportObject(aro);
+    return true;
+  }
+ catch (  Exception ex) {
+    log.error("Exception",ex);
+    return false;
+  }
+}

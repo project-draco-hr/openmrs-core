@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<Tribe> tribes=session.createQuery("from Tribe t order by t.name asc").list();
+  List<Tribe> tribes=sessionFactory.getCurrentSession().createQuery("from Tribe t order by t.name asc").list();
   return tribes;
 }

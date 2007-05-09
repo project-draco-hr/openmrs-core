@@ -1,0 +1,5 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_CONCEPTS);
+  Context.getConceptService().checkIfLocked();
+  getAdministrationDAO().updateConceptSetDerived(concept);
+}

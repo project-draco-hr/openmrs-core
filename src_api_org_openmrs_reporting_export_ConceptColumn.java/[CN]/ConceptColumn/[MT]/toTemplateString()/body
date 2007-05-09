@@ -1,29 +1,54 @@
 {
   String s="";
-  if (DataExportReportObject.MODIFIER_ANY.equals(modifier)) {
-    s+="#set($o = $fn.getLastObs('" + conceptName + "')) ";
-    s+="$!{o.getValueAsString($locale)}";
-    s+=extrasToTemplateString();
-  }
- else   if (DataExportReportObject.MODIFIER_FIRST.equals(modifier)) {
-    s+="#set($o = $fn.getLastObs('" + conceptName + "')) ";
-    s+="$!{o.getValueAsString($locale)}";
-    s+=extrasToTemplateString();
-  }
- else   if (DataExportReportObject.MODIFIER_LAST.equals(modifier)) {
-    s+="#set($o = $fn.getLastObs('" + conceptName + "')) ";
-    s+="$!{o.getValueAsString($locale)}";
-    s+=extrasToTemplateString();
-  }
- else   if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier)) {
-    s+="#set($obs = $fn.getLastNObs(" + modifierNum + ", '"+ conceptName+ "'))";
-    s+="#foreach($o in $obs)";
+  if (extras == null)   extras=new String[]{};
+  if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier)) {
+    Integer num=modifierNum == null ? 1 : modifierNum;
+    s+="#set($arr = [";
+    for (Integer x=0; x < extras.length; x++) {
+      s+="'" + extras[x] + "'";
+      if (!x.equals(extras.length - 1))       s+=",";
+    }
+    s+="])";
+    s+="#set($obsValues = $fn.getLastNObsWithValues(" + num + ", '"+ getConceptIdOrName()+ "', $arr))";
+    s+="#foreach($vals in $obsValues)";
     s+="#if($velocityCount > 1)";
     s+="$!{fn.getSeparator()}";
     s+="#end";
-    s+="$!{o.getValueAsString($locale)}";
-    s+=extrasToTemplateString();
+    s+="#foreach($val in $vals)";
+    s+="#if($velocityCount > 1)";
+    s+="$!{fn.getSeparator()}";
+    s+="#end";
+    s+="$!{fn.getValueAsString($val)}";
+    s+="#end";
     s+="#end\n";
+  }
+ else {
+    String function=" ";
+    if (DataExportReportObject.MODIFIER_ANY.equals(modifier))     function+="$fn.getLastObs";
+ else     if (DataExportReportObject.MODIFIER_FIRST.equals(modifier))     function+="$fn.getFirstObs";
+ else     if (DataExportReportObject.MODIFIER_LAST.equals(modifier))     function+="$fn.getLastObs";
+ else     throw new APIException("Unknown modifier: " + modifier);
+    if (extras.length < 1) {
+      function="$!{fn.getValueAsString(" + function;
+      function+="('" + getConceptIdOrName() + "'))} ";
+      s+=function;
+    }
+ else {
+      s+="#set($arr = [";
+      for (Integer x=0; x < extras.length; x++) {
+        s+="'" + extras[x] + "'";
+        if (!x.equals(extras.length - 1))         s+=",";
+      }
+      s+="])";
+      function+="WithValues('" + getConceptIdOrName() + "', $arr)";
+      s+="#set($obsRow =" + function + ")";
+      s+="#foreach($val in $obsRow)";
+      s+="#if($velocityCount > 1)";
+      s+="$!{fn.getSeparator()}";
+      s+="#end";
+      s+="$!{fn.getValueAsString($val)}";
+      s+="#end\n";
+    }
   }
   return s;
 }

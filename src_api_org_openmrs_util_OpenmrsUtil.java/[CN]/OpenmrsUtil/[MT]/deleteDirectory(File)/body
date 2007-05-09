@@ -1,0 +1,14 @@
+{
+  if (!dir.exists() || !dir.isDirectory())   throw new IOException("Could not delete directory '" + dir.getAbsolutePath() + "' (not a directory)");
+  log.debug("Deleting directory " + dir.getAbsolutePath());
+  File[] fileList=dir.listFiles();
+  for (  File f : fileList) {
+    if (f.isDirectory())     deleteDirectory(f);
+    boolean success=f.delete();
+    log.debug("   deleting " + f.getName() + " : "+ (success ? "ok" : "failed"));
+  }
+  boolean success=dir.delete();
+  if (success)   log.debug("   ...and directory itself");
+ else   log.warn("   ...could not remove directory: " + dir.getAbsolutePath());
+  return success;
+}

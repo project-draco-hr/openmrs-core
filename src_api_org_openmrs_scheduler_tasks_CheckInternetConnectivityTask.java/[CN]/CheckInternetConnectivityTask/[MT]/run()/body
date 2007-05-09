@@ -6,10 +6,11 @@
   }
  catch (  IOException ioe) {
     try {
+      if (Context.isAuthenticated() == false)       authenticate();
       String text="At " + new Date() + " there was an error reported connecting to the internet address "+ url+ ": "+ ioe;
-      Role role=context.getUserService().getRole("System Developer");
-      Collection<User> users=context.getUserService().getUsersByRole(role);
-      context.getAlertService().createAlert(text,users);
+      Role role=Context.getUserService().getRole("System Developer");
+      Collection<User> users=Context.getUserService().getUsersByRole(role);
+      Context.getAlertService().createAlert(text,users);
     }
  catch (    Exception e) {
       log.error(e);

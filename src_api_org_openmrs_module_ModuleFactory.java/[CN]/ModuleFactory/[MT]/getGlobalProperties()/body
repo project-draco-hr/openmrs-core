@@ -1,0 +1,8 @@
+{
+  List<GlobalProperty> globalProperties=new Vector<GlobalProperty>();
+  for (  Module mod : getStartedModules()) {
+    globalProperties.addAll(mod.getGlobalProperties());
+  }
+  log.debug(globalProperties.size() + " new global properties");
+  return globalProperties;
+}

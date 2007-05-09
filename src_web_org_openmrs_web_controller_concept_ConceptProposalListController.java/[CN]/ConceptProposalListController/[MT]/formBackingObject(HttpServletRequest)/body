@@ -1,10 +1,8 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   List<ConceptProposal> cpList=new Vector<ConceptProposal>();
   Map<String,List<ConceptProposal>> origText=new HashMap<String,List<ConceptProposal>>();
-  if (context != null && context.isAuthenticated()) {
-    ConceptService cs=context.getConceptService();
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
     log.debug("tmp value: " + request.getParameter("includeCompleted"));
     boolean b=new Boolean(request.getParameter("includeCompleted"));
     log.debug("b value: " + b);

@@ -1,0 +1,5 @@
+{
+  ProgramWorkflow w=null;
+  w=(ProgramWorkflow)sessionFactory.getCurrentSession().createQuery("from ProgramWorkflow w where w.program.programid = :programId and w.concept.conceptId = :conceptId").setInteger("programId",programId).setInteger("conceptId",conceptId).uniqueResult();
+  return w;
+}

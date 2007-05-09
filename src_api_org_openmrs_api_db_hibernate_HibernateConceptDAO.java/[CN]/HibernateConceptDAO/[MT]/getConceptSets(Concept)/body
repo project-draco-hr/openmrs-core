@@ -1,5 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<ConceptSet> sets=session.createCriteria(ConceptSet.class).add(Restrictions.eq("set",concept)).addOrder(Order.asc("sortWeight")).list();
-  return sets;
+  return sessionFactory.getCurrentSession().createCriteria(ConceptSet.class).add(Restrictions.eq("conceptSet",concept)).addOrder(Order.asc("sortWeight")).list();
 }

@@ -1,0 +1,10 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_FORMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_FORMS);
+  for (  FormField formField : form.getFormFields()) {
+    formField.setFormFieldId(null);
+  }
+  form.setFormId(null);
+  Context.clearSession();
+  Form newForm=getFormDAO().createForm(form);
+  return newForm;
+}

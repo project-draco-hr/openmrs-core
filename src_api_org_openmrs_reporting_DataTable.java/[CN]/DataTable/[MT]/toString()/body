@@ -1,0 +1,22 @@
+{
+  if (rows.size() == 0)   return "DataTable with no rows";
+  List<String> columns;
+  if (columnOrder.size() > 0) {
+    columns=columnOrder;
+  }
+ else {
+    columns=new ArrayList<String>(rows.get(0).getColumnNames());
+    Collections.sort(columns);
+  }
+  StringBuilder sb=new StringBuilder();
+  for (  String colName : columns) {
+    sb.append(colName).append(",");
+  }
+  for (  TableRow row : rows) {
+    sb.append("\n");
+    for (    String colName : columns) {
+      sb.append(row.get(colName)).append(",");
+    }
+  }
+  return sb.toString();
+}

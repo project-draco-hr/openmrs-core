@@ -1,0 +1,8 @@
+{
+  super(urls.toArray(new URL[urls.size()]),parent,factory);
+  log.debug("URLs length: " + urls.size());
+  this.module=module;
+  collectImports();
+  collectFilters();
+  libraryCache=new WeakHashMap<URL,File>();
+}

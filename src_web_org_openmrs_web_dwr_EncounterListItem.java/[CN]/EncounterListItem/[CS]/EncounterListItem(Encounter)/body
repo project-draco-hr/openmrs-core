@@ -2,14 +2,15 @@
   if (encounter != null) {
     encounterId=encounter.getEncounterId();
     encounterDateTime=encounter.getEncounterDatetime();
-    PatientName pn=encounter.getPatient().getPatientName();
+    encounterDateString=Format.format(encounter.getEncounterDatetime());
+    PersonName pn=encounter.getPatient().getPersonName();
     if (pn != null) {
-      patientName="";
-      if (pn.getGivenName() != null)       patientName+=pn.getGivenName();
-      if (pn.getMiddleName() != null)       patientName+=" " + pn.getMiddleName();
-      if (pn.getFamilyName() != null)       patientName+=" " + pn.getFamilyName();
+      PersonName="";
+      if (pn.getGivenName() != null)       PersonName+=pn.getGivenName();
+      if (pn.getMiddleName() != null)       PersonName+=" " + pn.getMiddleName();
+      if (pn.getFamilyName() != null)       PersonName+=" " + pn.getFamilyName();
     }
-    if (encounter.getProvider() != null)     providerName=encounter.getProvider().getFirstName() + " " + encounter.getProvider().getLastName();
+    if (encounter.getProvider() != null)     providerName=encounter.getProvider().getPersonName().toString();
     if (encounter.getLocation() != null)     location=encounter.getLocation().getName();
     if (encounter.getEncounterType() != null)     encounterType=encounter.getEncounterType().getName();
     if (encounter.getForm() != null)     formName=encounter.getForm().getName();

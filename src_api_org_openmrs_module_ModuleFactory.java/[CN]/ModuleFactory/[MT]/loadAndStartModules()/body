@@ -1,0 +1,52 @@
+{
+  File modulesFolder=ModuleUtil.getModuleRepository();
+  log.debug("Loading modules from: " + modulesFolder.getAbsolutePath());
+  if (modulesFolder.isDirectory()) {
+    for (    File f : modulesFolder.listFiles()) {
+      if (!f.getName().startsWith(".")) {
+        Module mod=loadModule(f);
+        log.debug("Loaded module: " + mod + " successfully");
+      }
+    }
+  }
+ else   log.error("modules folder: '" + modulesFolder.getAbsolutePath() + "' is not a valid directory");
+  if (getLoadedModules().size() > 0) {
+    Context.addProxyPrivilege("");
+    AdministrationService as=Context.getAdministrationService();
+    List<Module> leftoverModules=new Vector<Module>();
+    for (    Module mod : getLoadedModules()) {
+      String key=mod.getModuleId() + ".started";
+      String prop=as.getGlobalProperty(key,"false");
+      if (prop.equals("true")) {
+        if (requiredModulesStarted(mod))         try {
+          log.debug("starting module: " + mod.getModuleId());
+          startModule(mod);
+        }
+ catch (        Exception e) {
+          log.error("Error while loading module: " + mod.getName(),e);
+        }
+ else         leftoverModules.add(mod);
+      }
+    }
+    Context.removeProxyPrivilege("");
+    boolean atLeastOneModuleLoaded=true;
+    while (leftoverModules.size() > 0 && atLeastOneModuleLoaded) {
+      atLeastOneModuleLoaded=false;
+      List<Module> modulesJustLoaded=new Vector<Module>();
+      for (      Module leftoverModule : leftoverModules) {
+        if (requiredModulesStarted(leftoverModule)) {
+          try {
+            startModule(leftoverModule);
+            atLeastOneModuleLoaded=true;
+            modulesJustLoaded.add(leftoverModule);
+          }
+ catch (          Exception e) {
+            log.error("Error while loading leftover module: " + leftoverModule.getName(),e);
+          }
+        }
+      }
+      leftoverModules.removeAll(modulesJustLoaded);
+    }
+    if (leftoverModules.size() > 0)     for (    Module leftoverModule : leftoverModules)     log.error("Unable to load module '" + leftoverModule.getName() + "'.  All required modules are not available");
+  }
+}

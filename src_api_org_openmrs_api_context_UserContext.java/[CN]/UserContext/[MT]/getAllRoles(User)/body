@@ -1,0 +1,9 @@
+{
+  Set<Role> roles=new HashSet<Role>();
+  roles.add(getAnonymousRole());
+  if (getAuthenticatedUser() != null && getAuthenticatedUser().equals(user)) {
+    roles.addAll(user.getAllRoles());
+    roles.add(getAuthenticatedRole());
+  }
+  return roles;
+}

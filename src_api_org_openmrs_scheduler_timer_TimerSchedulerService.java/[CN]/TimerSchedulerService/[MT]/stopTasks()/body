@@ -1,8 +1,6 @@
 {
-  for (  Integer id : scheduledTaskMap.keySet()) {
-    TaskConfig task=null;
+  for (  TaskConfig task : getScheduledTasks()) {
     try {
-      task=getTask(id);
       stopTask(task);
     }
  catch (    SchedulerException e) {

@@ -1,17 +1,9 @@
 {
+  log.debug("Updating encounter: " + encounter.getEncounterId());
   if (encounter.getCreator() == null)   createEncounter(encounter);
  else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      Encounter e=(Encounter)session.merge(encounter);
-      session.evict(e);
-      session.saveOrUpdate(encounter);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    Encounter e=(Encounter)sessionFactory.getCurrentSession().merge(encounter);
+    sessionFactory.getCurrentSession().evict(e);
+    sessionFactory.getCurrentSession().saveOrUpdate(encounter);
   }
 }

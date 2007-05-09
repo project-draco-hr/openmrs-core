@@ -1,0 +1,16 @@
+{
+  Vector<PatientListItem> ret=new Vector<PatientListItem>();
+  List<Integer> ptIds=new ArrayList<Integer>();
+  for (  String s : patientIds.split(",")) {
+    try {
+      ptIds.add(Integer.valueOf(s));
+    }
+ catch (    Exception ex) {
+    }
+  }
+  List<Patient> patients=Context.getPatientSetService().getPatients(ptIds);
+  for (  Patient patient : patients) {
+    ret.add(new PatientListItem(patient));
+  }
+  return ret;
+}

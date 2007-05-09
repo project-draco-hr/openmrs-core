@@ -1,0 +1,12 @@
+{
+  Map<Integer,PatientProgram> patientIdProgramMap;
+  if (programMap.containsKey(programName)) {
+    patientIdProgramMap=programMap.get(programName);
+  }
+ else {
+    Program program=Context.getProgramWorkflowService().getProgram(programName);
+    patientIdProgramMap=patientSetService.getPatientPrograms(getPatientSet(),program);
+    programMap.put(programName,patientIdProgramMap);
+  }
+  return patientIdProgramMap.get(patientId);
+}

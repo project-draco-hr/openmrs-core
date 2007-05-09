@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<PatientIdentifierType> patientIdentifierTypes=session.createQuery("from PatientIdentifierType p order by p.name").list();
+  List<PatientIdentifierType> patientIdentifierTypes=sessionFactory.getCurrentSession().createQuery("from PatientIdentifierType p order by p.name").list();
   return patientIdentifierTypes;
 }

@@ -6,9 +6,9 @@
 {
       _loop107:       do {
         if ((LA(1) == SINGLE_QUOTE)) {
-          AST tmp278_AST=null;
-          tmp278_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp278_AST);
+          AST tmp328_AST=null;
+          tmp328_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp328_AST);
           match(SINGLE_QUOTE);
 {
             _loop105:             do {
@@ -17,15 +17,15 @@
                 astFactory.addASTChild(currentAST,returnAST);
               }
  else               if ((LA(1) == DOT)) {
-                AST tmp279_AST=null;
-                tmp279_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp279_AST);
+                AST tmp329_AST=null;
+                tmp329_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp329_AST);
                 match(DOT);
               }
  else               if ((LA(1) == INTLIT)) {
-                AST tmp280_AST=null;
-                tmp280_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp280_AST);
+                AST tmp330_AST=null;
+                tmp330_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp330_AST);
                 match(INTLIT);
               }
  else {
@@ -34,17 +34,17 @@
             }
  while (true);
           }
-          AST tmp281_AST=null;
-          tmp281_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp281_AST);
+          AST tmp331_AST=null;
+          tmp331_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp331_AST);
           match(SINGLE_QUOTE);
 {
 switch (LA(1)) {
 case SEMI:
 {
-                AST tmp282_AST=null;
-                tmp282_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp282_AST);
+                AST tmp332_AST=null;
+                tmp332_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp332_AST);
                 match(SEMI);
                 break;
               }
@@ -71,7 +71,7 @@ link_body_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_25);
+recover(ex,_tokenSet_26);
 }
  else {
 throw ex;

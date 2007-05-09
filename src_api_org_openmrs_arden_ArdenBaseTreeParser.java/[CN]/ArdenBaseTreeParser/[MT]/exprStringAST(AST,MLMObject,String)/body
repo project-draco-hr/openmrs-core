@@ -4,30 +4,44 @@
   AST ift=null;
   AST val=null;
   AST strlit=null;
+  AST termlit=null;
   AST id=null;
   AST str=null;
-  String a, b;
+  String a="", b="";
   try {
 {
       if (_t == null)       _t=ASTNULL;
 switch (_t.getType()) {
 case ID:
 {
-          AST __t375=_t;
+          AST __t443=_t;
           ift=_t == ASTNULL ? null : (AST)_t;
           match(_t,ID);
           _t=_t.getFirstChild();
           a=ift.getText();
-          System.err.println("IF text = " + a);
+          System.err.println("text = " + a);
           if (instr.equals("")) {
             obj.AddToEvaluateList(a);
             obj.SetConceptVar(a);
+            s=a;
+          }
+ else           if (instr.equals("CTX")) {
+            s=a;
+          }
+ else           if (instr.equals("notnull")) {
+            obj.AddToEvaluateList(a);
+            if (obj.GetMLMObjectElement(a) == null) {
+              s="Func_1";
+            }
+ else {
+              s=a;
+            }
           }
  else {
             obj.SetAnswer(a,instr);
+            s=a;
           }
-          s=a;
-          _t=__t375;
+          _t=__t443;
           _t=_t.getNextSibling();
           break;
         }
@@ -39,23 +53,23 @@ case FALSE:
 switch (_t.getType()) {
 case TRUE:
 {
-              AST __t377=_t;
-              AST tmp51_AST_in=(AST)_t;
+              AST __t445=_t;
+              AST tmp82_AST_in=(AST)_t;
               match(_t,TRUE);
               _t=_t.getFirstChild();
               obj.SetAnswer(true,instr);
-              _t=__t377;
+              _t=__t445;
               _t=_t.getNextSibling();
               break;
             }
 case FALSE:
 {
-            AST __t378=_t;
-            AST tmp52_AST_in=(AST)_t;
+            AST __t446=_t;
+            AST tmp83_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getFirstChild();
             obj.SetAnswer(false,instr);
-            _t=__t378;
+            _t=__t446;
             _t=_t.getNextSibling();
             break;
           }
@@ -85,22 +99,33 @@ case STRING_LITERAL:
 strlit=(AST)_t;
 match(_t,STRING_LITERAL);
 _t=_t.getNextSibling();
-b=val.getText();
+b=strlit.getText();
+obj.SetAnswer(b,instr);
+}
+break;
+}
+case TERM_LITERAL:
+{
+{
+termlit=(AST)_t;
+match(_t,TERM_LITERAL);
+_t=_t.getNextSibling();
+b=termlit.getText();
 obj.SetAnswer(b,instr);
 }
 break;
 }
 case ACTION_OP:
 {
-AST __t381=_t;
-AST tmp53_AST_in=(AST)_t;
+AST __t450=_t;
+AST tmp84_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getFirstChild();
 id=(AST)_t;
 match(_t,ID);
 _t=_t.getNextSibling();
 a=id.getText();
-AST tmp54_AST_in=(AST)_t;
+AST tmp85_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getNextSibling();
 str=(AST)_t;
@@ -108,31 +133,8 @@ match(_t,STRING_LITERAL);
 _t=_t.getNextSibling();
 b=str.getText();
 obj.SetUserVarVal(a,b,instr);
-_t=__t381;
+_t=__t450;
 _t=_t.getNextSibling();
-break;
-}
-case 3:
-case IF:
-case THEN:
-case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
-case ENDBLOCK:
-case EQUALS:
-case LT:
-case GT:
-case LTE:
-case GTE:
-{
-{
-a="tmp_01";
-System.err.println("IF text = " + a);
-if (instr.equals("")) obj.AddToEvaluateList(a);
-obj.SetConceptVar(a);
-s=a;
-}
 break;
 }
 default :

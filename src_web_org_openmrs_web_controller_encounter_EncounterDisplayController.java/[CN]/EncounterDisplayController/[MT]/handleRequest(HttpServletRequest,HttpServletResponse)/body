@@ -1,0 +1,105 @@
+{
+  Map<String,Object> model=new HashMap<String,Object>();
+  if (Context.isAuthenticated()) {
+    String encounterId=request.getParameter("encounterId");
+    if (encounterId == null || encounterId.length() == 0)     throw new IllegalArgumentException("encounterId is a required parameter");
+    model.put("encounterId",Integer.valueOf(encounterId));
+    Encounter encounter=Context.getEncounterService().getEncounter(Integer.valueOf(encounterId));
+    model.put("encounter",encounter);
+    Form form=encounter.getForm();
+    List<FormField> fields=new ArrayList<FormField>();
+    SortedMap<FieldLabel,FieldHolder> data=new TreeMap<FieldLabel,FieldHolder>();
+    Map<Concept,FieldLabel> conceptToFieldLabel=new HashMap<Concept,FieldLabel>();
+    List<Obs> otherObs=new ArrayList<Obs>();
+    if (form != null) {
+      fields=new ArrayList<FormField>(form.getFormFields());
+      for (      FormField ff : fields) {
+        Concept c=ff.getField().getConcept();
+        if (c != null) {
+          Concept conceptInConstruct=null;
+          FormField parent;
+          if ((parent=ff.getParent()) != null) {
+            Concept fieldConcept;
+            if (parent.getParent() != null && (fieldConcept=parent.getField().getConcept()) != null && fieldConcept.isSet())             conceptInConstruct=c;
+          }
+          if (conceptInConstruct != null) {
+            while (ff.getFieldNumber() == null && ff.getParent() != null) {
+              ff=ff.getParent();
+            }
+          }
+          FieldLabel label=new FieldLabel(ff);
+          conceptToFieldLabel.put(c,label);
+          FieldHolder fh=data.get(label);
+          if (fh == null) {
+            fh=new FieldHolder();
+            log.debug("label: " + label + " uid: "+ label.uid());
+            fh.setLabel(label);
+            data.put(label,fh);
+          }
+          if (conceptInConstruct != null)           fh.addConceptInConstruct(conceptInConstruct);
+        }
+      }
+    }
+    for (    Obs o : encounter.getObs()) {
+      if (o.isVoided())       continue;
+      FieldLabel label=conceptToFieldLabel.get(o.getConcept());
+      if (label == null || !data.containsKey(label)) {
+        log.debug("obsGroupId: " + o.getObsGroupId());
+        otherObs.add(o);
+      }
+ else {
+        data.get(label).addObservation(o);
+      }
+    }
+    if (otherObs.size() > 0) {
+      FieldLabel label=new FieldLabel();
+      label.setPageNumber(999);
+      label.setFieldNumber(null);
+      FieldHolder holder=new FieldHolder();
+      log.debug("other obs label: " + label);
+      holder.setLabel(label);
+      for (      Obs obs : otherObs)       holder.addObservation(obs);
+      data.put(label,holder);
+    }
+    SortedSet<Integer> pageNumbers=new TreeSet<Integer>();
+    String usePages=Context.getAdministrationService().getGlobalProperty("dashboard.encounters.usePages","true").toLowerCase();
+    if (usePages.equals("smart")) {
+      int with=0;
+      int without=0;
+      for (      FieldLabel l : data.keySet()) {
+        if (l.getPageNumber() == null || l.getPageNumber() == 999)         ++without;
+ else         ++with;
+      }
+      usePages="" + (with > without);
+    }
+    boolean usePageNumbers=Boolean.valueOf(usePages);
+    if (usePageNumbers) {
+      for (      FieldLabel fl : data.keySet()) {
+        pageNumbers.add(fl.getPageNumber());
+      }
+    }
+ else {
+      pageNumbers.add(0);
+    }
+    Map<Integer,List<FieldHolder>> pages=new HashMap<Integer,List<FieldHolder>>();
+    for (    Map.Entry<FieldLabel,FieldHolder> e : data.entrySet()) {
+      Integer pageNumber=usePageNumbers ? e.getKey().getPageNumber() : 0;
+      List<FieldHolder> thisPage=pages.get(pageNumber);
+      if (thisPage == null) {
+        thisPage=new ArrayList<FieldHolder>();
+        pages.put(pageNumber,thisPage);
+      }
+      thisPage.add(e.getValue());
+    }
+    List<Order> orders=new ArrayList<Order>(encounter.getOrders());
+    model.put("showBlankFields","true".equals(request.getParameter("showBlankFields")));
+    model.put("usePages",usePageNumbers);
+    model.put("pageNumbers",pageNumbers);
+    model.put("form",form);
+    model.put("pages",pages);
+    model.put("otherObs",otherObs);
+    model.put("orders",orders);
+    model.put("locale",Context.getLocale());
+  }
+  return new ModelAndView("/encounters/encounterDisplay","model",model);
+}

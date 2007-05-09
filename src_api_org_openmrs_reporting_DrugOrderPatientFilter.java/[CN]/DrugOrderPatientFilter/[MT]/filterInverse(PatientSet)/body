@@ -1,0 +1,16 @@
+{
+  Set<Integer> drugIds=new HashSet<Integer>();
+  if (groupMethod != null && groupMethod == GroupMethod.NONE) {
+    drugIds=null;
+  }
+ else {
+    if (drugId != null)     drugIds.add(drugId);
+    if (drugConcept != null) {
+      List<Drug> drugs=Context.getConceptService().getDrugs();
+      for (      Drug drug : drugs)       if (drug.getConcept().equals(drugConcept))       drugIds.add(drug.getDrugId());
+    }
+  }
+  PatientSetService service=Context.getPatientSetService();
+  PatientSet temp=service.getPatientsHavingDrugOrder(input.getPatientIds(),drugIds,onDate);
+  return input.subtract(temp);
+}

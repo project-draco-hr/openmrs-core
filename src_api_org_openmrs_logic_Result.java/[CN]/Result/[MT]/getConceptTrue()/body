@@ -1,0 +1,7 @@
+{
+  if (CONCEPT_TRUE == null) {
+    String globalConceptTrue=Context.getAdministrationService().getGlobalProperty("concept.true");
+    CONCEPT_TRUE=(globalConceptTrue == null ? new Concept() : Context.getConceptService().getConcept(Integer.valueOf(globalConceptTrue)));
+  }
+  return CONCEPT_TRUE;
+}

@@ -1,0 +1,13 @@
+{
+  List<PatientState> ret=new ArrayList<PatientState>();
+  for (  PatientState st : getStates()) {
+    if (st.getState().getProgramWorkflow().equals(wf) && (includeVoided || !st.getVoided()))     ret.add(st);
+  }
+  Collections.sort(ret,new Comparator<PatientState>(){
+    public int compare(    PatientState left,    PatientState right){
+      return OpenmrsUtil.compareWithNullAsEarliest(left.getStartDate(),right.getStartDate());
+    }
+  }
+);
+  return ret;
+}

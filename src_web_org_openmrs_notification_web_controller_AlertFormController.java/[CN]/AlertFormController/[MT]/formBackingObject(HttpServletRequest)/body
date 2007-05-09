@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Alert alert=null;
-  if (context != null && context.isAuthenticated()) {
-    AlertService as=context.getAlertService();
+  if (Context.isAuthenticated()) {
+    AlertService as=Context.getAlertService();
     String a=request.getParameter("alertId");
     if (a != null)     alert=as.getAlert(Integer.valueOf(a));
   }

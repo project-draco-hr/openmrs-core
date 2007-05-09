@@ -1,12 +1,10 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Locale locale=request.getLocale();
   String view=getFormView();
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     String[] orderTypeList=request.getParameterValues("orderTypeId");
-    AdministrationService as=context.getAdministrationService();
-    OrderService os=context.getOrderService();
+    OrderService os=Context.getOrderService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
@@ -14,12 +12,12 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     for (    String p : orderTypeList) {
       try {
-        as.deleteOrderType(os.getOrderType(Integer.valueOf(p)));
+        os.deleteOrderType(os.getOrderType(Integer.valueOf(p)));
         if (!success.equals(""))         success+="<br>";
         success+=p + " " + deleted;
       }
  catch (      APIException e) {
-        log.warn(e);
+        log.warn("Error deleting order type",e);
         if (!error.equals(""))         error+="<br>";
         error+=p + " " + notDeleted;
       }

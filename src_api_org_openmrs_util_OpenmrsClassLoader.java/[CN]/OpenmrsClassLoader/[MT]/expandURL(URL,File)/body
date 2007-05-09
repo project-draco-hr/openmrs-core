@@ -1,0 +1,29 @@
+{
+  String extForm=result.toExternalForm();
+  if (OpenmrsConstants.OPERATING_SYSTEM_FREEBSD.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_LINUX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM))   extForm=extForm.replaceFirst("jar:file:","").replaceAll("%20"," ");
+ else   extForm=extForm.replaceFirst("jar:file:/","").replaceAll("%20"," ");
+  log.debug("url external form: " + extForm);
+  int i=extForm.indexOf("!");
+  String jarPath=extForm.substring(0,i);
+  String filePath=extForm.substring(i + 2);
+  log.debug("jarPath: " + jarPath);
+  log.debug("filePath: " + filePath);
+  File file=new File(folder,filePath);
+  log.debug("absolute path: " + file.getAbsolutePath());
+  try {
+    if (file.exists())     return file.toURL();
+ else {
+      File jarFile=new File(jarPath);
+      if (!jarFile.exists()) {
+        log.warn("Cannot find jar at: " + jarFile + " for url: "+ result);
+        return null;
+      }
+      ModuleUtil.expandJar(jarFile,folder,filePath,true);
+      return file.toURL();
+    }
+  }
+ catch (  IOException io) {
+    log.warn("Unable to expand url: " + result,io);
+    return null;
+  }
+}

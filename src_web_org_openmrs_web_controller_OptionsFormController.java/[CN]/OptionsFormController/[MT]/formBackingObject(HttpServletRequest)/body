@@ -1,10 +1,8 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   OptionsForm opts=new OptionsForm();
-  if (context != null && context.isAuthenticated()) {
-    User user=context.getAuthenticatedUser();
-    Map<String,String> props=user.getProperties();
+  if (Context.isAuthenticated()) {
+    User user=Context.getAuthenticatedUser();
+    Map<String,String> props=user.getUserProperties();
     opts.setDefaultLocation(props.get(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
     opts.setDefaultLocale(props.get(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE));
     opts.setShowRetiredMessage(new Boolean(props.get(OpenmrsConstants.USER_PROPERTY_SHOW_RETIRED)));

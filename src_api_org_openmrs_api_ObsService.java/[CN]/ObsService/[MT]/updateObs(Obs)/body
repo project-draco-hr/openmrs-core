@@ -1,9 +1,0 @@
-{
-  if (!context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_OBS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_OBS);
-  if (obs.isVoided() && obs.getVoidedBy() == null)   voidObs(obs,obs.getVoidReason());
- else   if (obs.isVoided() == false && obs.getVoidedBy() != null)   unvoidObs(obs);
- else {
-    log.debug("Date voided: " + obs.getDateVoided());
-    getObsDAO().updateObs(obs);
-  }
-}

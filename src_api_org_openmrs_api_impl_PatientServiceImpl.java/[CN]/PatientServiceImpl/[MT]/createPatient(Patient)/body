@@ -1,0 +1,10 @@
+{
+  if (log.isDebugEnabled()) {
+    String s="" + patient.getPatientId();
+    if (patient.getIdentifiers() != null)     s+="|" + patient.getIdentifiers();
+    log.debug(s);
+  }
+  setCollectionProperties(patient);
+  checkPatientIdentifiers(patient);
+  return getPatientDAO().createPatient(patient);
+}

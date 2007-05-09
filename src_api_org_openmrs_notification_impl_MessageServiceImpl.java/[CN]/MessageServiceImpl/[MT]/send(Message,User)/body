@@ -1,6 +1,6 @@
 {
   log.debug("Sending message to user " + user);
-  String address=user.getProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS);
+  String address=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS);
   if (address != null)   message.addRecipient(address);
   send(message);
 }

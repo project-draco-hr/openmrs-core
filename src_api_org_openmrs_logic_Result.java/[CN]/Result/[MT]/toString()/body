@@ -1,0 +1,21 @@
+{
+  if (valueList != null) {
+    StringBuffer s=new StringBuffer();
+    for (    Result r : valueList) {
+      if (s.length() > 0)       s.append(",");
+      s.append(r.toString());
+    }
+    return s.toString();
+  }
+switch (datatype) {
+case BOOLEAN:
+    return (valueBoolean == null ? "false" : valueBoolean.toString());
+case NUMERIC:
+  return (valueNumeric == null ? "" : String.valueOf(valueNumeric));
+case CODED:
+return (valueCoded == null ? "" : valueCoded.getName(Context.getLocale()).getName());
+case DATE:
+return (valueDate == null ? "" : DateFormat.getDateInstance(DateFormat.LONG,Context.getLocale()).format(valueDate));
+}
+return (valueText == null ? "" : valueText);
+}

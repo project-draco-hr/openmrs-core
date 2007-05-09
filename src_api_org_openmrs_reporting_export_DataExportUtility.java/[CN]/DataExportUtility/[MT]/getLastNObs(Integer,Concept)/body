@@ -1,9 +1,0 @@
-{
-  long t=new Date().getTime();
-  List<Obs> returnList=getObs(concept);
-  if (returnList == null)   returnList=new Vector<Obs>();
-  while (returnList.size() < n)   returnList.add(new Obs());
-  List<Obs> rList=returnList.subList(0,n);
-  log.debug("execution time: " + (new Date().getTime() - t));
-  return rList;
-}

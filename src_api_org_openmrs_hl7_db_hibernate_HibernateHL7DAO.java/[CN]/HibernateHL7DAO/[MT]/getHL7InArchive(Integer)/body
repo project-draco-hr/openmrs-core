@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  HL7InArchive hl7InArchive;
-  hl7InArchive=(HL7InArchive)session.get(HL7InArchive.class,hl7InArchiveId);
-  return hl7InArchive;
+  return (HL7InArchive)sessionFactory.getCurrentSession().get(HL7InArchive.class,hl7InArchiveId);
 }

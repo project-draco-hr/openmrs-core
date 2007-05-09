@@ -1,6 +1,0 @@
-{
-  if (!context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ROLES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_ROLES);
-  checkLooping(role);
-  checkPrivileges(role);
-  getAdminDAO().updateRole(role);
-}

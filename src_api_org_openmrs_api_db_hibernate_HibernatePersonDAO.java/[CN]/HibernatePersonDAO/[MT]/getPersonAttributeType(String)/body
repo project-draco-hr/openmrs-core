@@ -1,0 +1,5 @@
+{
+  Session session=sessionFactory.getCurrentSession();
+  Query q=session.createQuery("from PersonAttributeType t where t.name = :name").setString("name",typeName);
+  return (PersonAttributeType)q.uniqueResult();
+}

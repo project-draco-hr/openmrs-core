@@ -1,0 +1,8 @@
+{
+  List<DrugOrder> orderList=new Vector<DrugOrder>();
+  if (Context.isAuthenticated()) {
+    OrderService os=Context.getOrderService();
+    orderList=os.getDrugOrders();
+  }
+  return orderList;
+}

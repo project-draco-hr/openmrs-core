@@ -1,8 +1,0 @@
-{
-  if (!dir.exists() || !dir.isDirectory())   throw new IOException("Could not delete direcotry '" + dir.getAbsolutePath() + "' (not a directory)");
-  File[] fileList=dir.listFiles();
-  for (  File f : fileList) {
-    f.delete();
-  }
-  return dir.delete();
-}

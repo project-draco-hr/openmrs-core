@@ -1,0 +1,39 @@
+{
+  if (pi == null)   throw new BlankIdentifierException("Identifier cannot be null or blank",pi);
+ else   if (pi.getIdentifier() == null)   throw new BlankIdentifierException("Identifier cannot be null or blank",pi);
+ else   if (pi.getIdentifier().length() == 0)   throw new BlankIdentifierException("Identifier cannot be null or blank",pi);
+  Patient p=identifierInUse(pi);
+  if (p != null) {
+    throw new IdentifierNotUniqueException("Identifier " + pi.getIdentifier() + " already in use by patient #"+ p.getPatientId(),pi);
+  }
+  PatientIdentifierType pit=pi.getIdentifierType();
+  String identifier=pi.getIdentifier();
+  String regExp=pit.getFormat();
+  if (regExp != null) {
+    if (regExp.length() > 0) {
+      log.debug("Trying to match " + identifier + " and "+ regExp);
+      if (!identifier.matches(regExp)) {
+        log.debug("The two DO NOT match");
+        if (pit.getFormatDescription() != null) {
+          if (pit.getFormatDescription().length() > 0)           throw new InvalidIdentifierFormatException("Identifier [" + identifier + "] does not match required format: "+ pit.getFormatDescription(),pi);
+ else           throw new InvalidIdentifierFormatException("Identifier [" + identifier + "] does not match required format: "+ pit.getFormat(),pi);
+        }
+ else {
+          throw new InvalidIdentifierFormatException("Identifier [" + identifier + "] does not match required format: "+ pit.getFormat(),pi);
+        }
+      }
+ else {
+        log.debug("The two match!!");
+      }
+    }
+  }
+  try {
+    if (pit.hasCheckDigit())     if (!OpenmrsUtil.isValidCheckDigit(identifier)) {
+      log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifier);
+      throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier,pi);
+    }
+  }
+ catch (  Exception e) {
+    throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier,pi);
+  }
+}

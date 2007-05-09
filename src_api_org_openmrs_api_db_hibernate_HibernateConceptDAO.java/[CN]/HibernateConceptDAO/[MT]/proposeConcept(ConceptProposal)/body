@@ -1,12 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(conceptProposal);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new APIException(e);
-  }
+  sessionFactory.getCurrentSession().save(conceptProposal);
 }

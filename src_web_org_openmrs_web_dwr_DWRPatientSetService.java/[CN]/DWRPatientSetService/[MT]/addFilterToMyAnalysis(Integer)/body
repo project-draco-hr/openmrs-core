@@ -1,0 +1,5 @@
+{
+  PatientAnalysis analysis=Context.getPatientSetService().getMyPatientAnalysis();
+  PatientFilter pf=Context.getReportService().getPatientFilterById(patientFilterId);
+  analysis.addFilter(null,pf);
+}

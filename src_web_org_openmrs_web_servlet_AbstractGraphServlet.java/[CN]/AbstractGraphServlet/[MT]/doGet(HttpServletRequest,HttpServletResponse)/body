@@ -1,0 +1,42 @@
+{
+  try {
+    Integer width=new Integer(500);
+    Integer height=new Integer(300);
+    String mimeType=PNG_MIME_TYPE;
+    try {
+      width=Integer.parseInt(request.getParameter("width"));
+    }
+ catch (    Exception e) {
+    }
+    try {
+      height=Integer.parseInt(request.getParameter("height"));
+    }
+ catch (    Exception e) {
+    }
+    if (request.getParameter("mimeType") != null) {
+      mimeType=request.getParameter("mimeType");
+    }
+    JFreeChart chart=createChart(request,response);
+    response.setHeader("Pragma","No-cache");
+    response.setDateHeader("Expires",0);
+    response.setHeader("Cache-Control","no-cache");
+    try {
+      if (JPG_MIME_TYPE.equalsIgnoreCase(mimeType)) {
+        response.setContentType(JPG_MIME_TYPE);
+        ChartUtilities.writeChartAsJPEG(response.getOutputStream(),chart,width,height);
+      }
+ else       if (PNG_MIME_TYPE.equalsIgnoreCase(mimeType)) {
+        response.setContentType(PNG_MIME_TYPE);
+        ChartUtilities.writeChartAsPNG(response.getOutputStream(),chart,width,height);
+      }
+ else {
+      }
+    }
+ catch (    IOException e) {
+      log.error(e);
+    }
+  }
+ catch (  Exception e) {
+    log.error(e);
+  }
+}

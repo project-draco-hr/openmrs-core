@@ -1,0 +1,16 @@
+{
+  int hashCode=49867;
+switch (datatype) {
+case NUMERIC:
+    return (valueNumeric == null ? hashCode + datatype : hashCode + valueNumeric.hashCode());
+case DATE:
+  return (valueDate == null ? hashCode + datatype : hashCode + valueDate.hashCode());
+case CODED:
+return (valueCoded == null ? hashCode + datatype : hashCode + valueCoded.hashCode());
+case TEXT:
+return (valueText == null ? hashCode + datatype : hashCode + valueText.hashCode());
+case BOOLEAN:
+return (valueBoolean == null ? hashCode + datatype : hashCode + valueBoolean.hashCode());
+}
+return hashCode;
+}

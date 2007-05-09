@@ -1,0 +1,5 @@
+{
+  ProxyFactory factory=proxyFactories.get(cls);
+  if (factory == null)   throw new APIException("A proxy factory for: '" + cls + "' doesn't exist");
+  return factory;
+}

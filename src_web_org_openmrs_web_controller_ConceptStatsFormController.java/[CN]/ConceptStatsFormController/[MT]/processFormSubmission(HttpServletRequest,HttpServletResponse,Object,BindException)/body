@@ -1,0 +1,12 @@
+{
+  Concept concept=(Concept)object;
+  ConceptService cs=Context.getConceptService();
+  String jumpAction=request.getParameter("jumpAction");
+  if (jumpAction != null) {
+    Concept newConcept=null;
+    if ("previous".equals(jumpAction))     newConcept=cs.getPrevConcept(concept);
+ else     if ("next".equals(jumpAction))     newConcept=cs.getNextConcept(concept);
+    if (newConcept != null)     return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + newConcept.getConceptId()));
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

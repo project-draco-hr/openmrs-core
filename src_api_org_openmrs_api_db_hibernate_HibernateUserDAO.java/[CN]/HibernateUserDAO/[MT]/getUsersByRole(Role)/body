@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  List<User> users=session.createCriteria(User.class,"u").createCriteria("roles","r").add(Expression.like("r.role",role.getRole())).addOrder(Order.asc("u.username")).list();
+  List<User> users=sessionFactory.getCurrentSession().createCriteria(User.class,"u").createCriteria("roles","r").add(Expression.like("r.role",role.getRole())).addOrder(Order.asc("u.username")).list();
   return users;
 }

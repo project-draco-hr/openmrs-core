@@ -1,12 +1,10 @@
 {
-  Session session=HibernateUtil.currentSession();
   List<String> words=ConceptWord.getUniqueWords(phrase);
   List<Drug> conceptDrugs=new Vector<Drug>();
   if (words.size() > 0) {
-    Criteria searchCriteria=session.createCriteria(Drug.class,"drug");
+    Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
     if (includeRetired == false) {
-      searchCriteria.createAlias("concept","concept");
-      searchCriteria.add(Expression.eq("concept.retired",false));
+      searchCriteria.add(Expression.eq("drug.voided",false));
     }
     Iterator<String> word=words.iterator();
     searchCriteria.add(Expression.like("name",word.next(),MatchMode.ANYWHERE));

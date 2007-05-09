@@ -1,0 +1,24 @@
+{
+  Context.authenticate("USER-1","test");
+  this.createPatient();
+  Set patientList;
+  patientList=ps.getPatientsByIdentifier("???",true);
+  assertNotNull(patientList);
+  assertTrue(patientList.size() == 0);
+  patientList=ps.getPatientsByIdentifier("",true);
+  assertNotNull(patientList);
+  assertTrue(patientList.size() > 0);
+  Patient patient;
+  patient=ps.getPatient(-1);
+  assertNull(patient);
+  patient=(Patient)ps.getPatient(createdPatient.getPatientId());
+  assertNotNull(patient);
+  patient.setGender("female");
+  ps.updatePatient(patient);
+  Patient patient2=ps.getPatient(patient.getPatientId());
+  assertTrue(patient.equals(patient2));
+  PersonAddress pAddress=patient.getAddresses().iterator().next();
+  patient.removeAddress(pAddress);
+  PersonName pName=patient.getNames().iterator().next();
+  patient.removeName(pName);
+}

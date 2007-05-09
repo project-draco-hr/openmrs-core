@@ -4,9 +4,9 @@
   AST evoke_statement_AST=null;
   try {
 switch (LA(1)) {
+case ANY:
 case ID:
 case LPAREN:
-case LITERAL_Any:
 {
         event_or();
         astFactory.addASTChild(currentAST,returnAST);
@@ -15,9 +15,9 @@ case LITERAL_Any:
       }
 case LITERAL_CALL:
 {
-      AST tmp406_AST=null;
-      tmp406_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp406_AST);
+      AST tmp456_AST=null;
+      tmp456_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp456_AST);
       match(LITERAL_CALL);
       evoke_statement_AST=(AST)currentAST.root;
       break;
@@ -37,7 +37,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_25);
+recover(ex,_tokenSet_26);
 }
  else {
 throw ex;

@@ -1,8 +1,7 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     map.put("superuser",OpenmrsConstants.SUPERUSER_ROLE);
   }
   return map;

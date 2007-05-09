@@ -1,0 +1,45 @@
+{
+  log.debug("Started with: [" + personId + "] ["+ conceptId+ "] ["+ encounterId+ "]");
+  Vector<ObsListItem> ret=new Vector<ObsListItem>();
+  Integer pId=null;
+  try {
+    pId=new Integer(personId);
+  }
+ catch (  NumberFormatException nfe) {
+    pId=null;
+  }
+  Integer eId=null;
+  try {
+    eId=new Integer(encounterId);
+  }
+ catch (  NumberFormatException nfe) {
+    eId=null;
+  }
+  Person p=null;
+  Concept c=null;
+  Encounter e=null;
+  if (pId != null)   p=Context.getPersonService().getPerson(pId);
+  if (conceptId != null)   c=OpenmrsUtil.getConceptByIdOrName(conceptId);
+  if (eId != null)   e=Context.getEncounterService().getEncounter(eId);
+  Set<Obs> obss=null;
+  if (p != null && c != null) {
+    log.debug("Getting obss with patient and concept");
+    obss=Context.getObsService().getObservations(p,c);
+  }
+ else   if (e != null) {
+    log.debug("Getting obss with encounter");
+    obss=Context.getObsService().getObservations(e);
+  }
+ else   if (p != null) {
+    log.debug("Getting obss with just patient");
+    obss=Context.getObsService().getObservations(p);
+  }
+  if (obss != null) {
+    for (    Obs obs : obss) {
+      ObsListItem newItem=new ObsListItem(obs,Context.getLocale());
+      ret.add(newItem);
+    }
+    log.debug("obss was size " + obss.size());
+  }
+  return ret;
+}

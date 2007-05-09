@@ -1,0 +1,5 @@
+{
+  if (result == null || !"jar".equals(result.getProtocol()))   return result;
+  File tmpFolder=getLibCacheFolderForModule(module);
+  return OpenmrsClassLoader.expandURL(result,tmpFolder);
+}

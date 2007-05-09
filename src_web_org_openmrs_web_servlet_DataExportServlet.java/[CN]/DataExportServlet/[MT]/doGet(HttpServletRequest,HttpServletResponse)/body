@@ -1,56 +1,35 @@
 {
   String reportId=request.getParameter("dataExportId");
-  String[] patientIds=request.getParameterValues("patientId");
   HttpSession session=request.getSession();
-  Context context=(Context)session.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   if (reportId == null || reportId.length() == 0) {
     session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.null");
     return;
   }
-  if (context == null || !context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
     session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
     session.setAttribute(WebConstants.OPENMRS_LOGIN_REDIRECT_HTTPSESSION_ATTR,request.getRequestURI() + "?" + request.getQueryString());
     response.sendRedirect(request.getContextPath() + "/login.htm");
     return;
   }
-  try {
-    Velocity.init();
-  }
- catch (  Exception e) {
-    log.error("Error initializing Velocity engine",e);
-  }
-  ReportService rs=context.getReportService();
+  ReportService rs=Context.getReportService();
   DataExportReportObject dataExport=(DataExportReportObject)rs.getReportObject(Integer.valueOf(reportId));
+  File file=DataExportUtil.getGeneratedFile(dataExport);
+  if (!file.exists())   throw new ServletException("The data export: " + dataExport + " has not been generated yet");
   response.setContentType("application/vnd.ms-excel");
-  String s=new SimpleDateFormat("yyyyMMdd_Hm").format(new Date());
+  String s=new SimpleDateFormat("yyyyMMdd_Hm").format(new Date(file.lastModified()));
   String filename=dataExport.getName().replace(" ","_") + "-" + s+ ".xls";
   response.setHeader("Content-Disposition","attachment; filename=" + filename);
   response.setHeader("Pragma","no-cache");
-  VelocityContext velocityContext=new VelocityContext();
-  Writer report=new StringWriter();
-  Locale locale=context.getLocale();
-  velocityContext.put("locale",locale);
-  DataExportUtility functions=new DataExportUtility(context);
-  velocityContext.put("fn",functions);
-  report.append("Report: " + dataExport.getName() + "\n\n");
-  PatientSet patientSet=new PatientSet();
-  if (patientIds == null || patientIds.length == 0)   patientSet=dataExport.generatePatientSet(context);
- else {
-    for (    String id : patientIds)     patientSet.add(Integer.valueOf(id));
-  }
-  velocityContext.put("patientSet",patientSet);
-  String template=dataExport.generateTemplate();
-  if (log.isDebugEnabled())   log.debug("Template: " + template.substring(0,template.length() < 3500 ? template.length() : 3500) + "...");
+  InputStream inStream=null;
   try {
-    Velocity.evaluate(velocityContext,report,this.getClass().getName(),template);
+    inStream=new FileInputStream(file);
+    OpenmrsUtil.copyFile(inStream,response.getOutputStream());
   }
- catch (  Exception e) {
-    log.error("Error evaluating data export " + dataExport.getReportObjectId(),e);
-    log.error("Template: " + template.substring(0,template.length() < 3500 ? template.length() : 3500) + "...");
-    report.append("\n\nError: \n" + e.toString());
-  }
- finally {
-    context.endTransaction();
-    response.getWriter().write(report.toString());
+  finally {
+    if (inStream != null)     try {
+      inStream.close();
+    }
+ catch (    Exception e) {
+    }
   }
 }

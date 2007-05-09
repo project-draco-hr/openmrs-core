@@ -1,25 +1,21 @@
 {
   if (concept.getConceptId() == null)   createConcept(concept);
  else {
-    Session session=HibernateUtil.currentSession();
+    modifyCollections(concept);
     try {
-      HibernateUtil.beginTransaction();
-      modifyCollections(concept);
-      session.update(concept);
-      HibernateUtil.commitTransaction();
+      sessionFactory.getCurrentSession().update(concept);
+      sessionFactory.getCurrentSession().flush();
+      log.error("after updating concept");
     }
  catch (    StaleObjectStateException sose) {
-      HibernateUtil.beginTransaction();
-      Query query=session.createQuery("insert into ConceptNumeric (conceptId) select c.conceptId from Concept c where c.conceptId = :id)");
+      log.error("after error");
+      sessionFactory.getCurrentSession().clear();
+      Query query=sessionFactory.getCurrentSession().createQuery("insert into ConceptNumeric (conceptId) select c.conceptId from Concept c where c.conceptId = :id)");
       query.setInteger("id",concept.getConceptId());
       query.executeUpdate();
-      session.update(concept);
-      HibernateUtil.commitTransaction();
+      sessionFactory.getCurrentSession().merge(concept);
+      log.error("after error after updating concept");
     }
-catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new APIException(e);
-    }
-    context.getAdministrationService().updateConceptWord(concept);
+    Context.getAdministrationService().updateConceptWord(concept);
   }
 }

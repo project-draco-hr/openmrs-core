@@ -1,0 +1,9 @@
+{
+  if (user != null) {
+    if (!user.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USERS) && !user.equals(Context.getAuthenticatedUser()))     throw new APIException("You are not authorized to change " + user.getUserId() + "'s properties");
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+    user.setUserProperty(key,value);
+    updateUser(user);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+  }
+}

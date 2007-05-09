@@ -1,0 +1,18 @@
+{
+  if (checkDate == null) {
+    checkDate=new Date();
+  }
+  if (startDate == null || checkDate.before(startDate)) {
+    return false;
+  }
+  if (discontinuedDate != null && discontinuedDate.after(checkDate)) {
+    return false;
+  }
+  if (discontinuedDate == null) {
+    return false;
+  }
+  if (this.voided || !this.discontinued) {
+    return false;
+  }
+  return true;
+}

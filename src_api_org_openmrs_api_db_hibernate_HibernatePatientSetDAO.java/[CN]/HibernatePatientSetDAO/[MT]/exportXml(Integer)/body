@@ -1,9 +1,9 @@
 {
-  Locale locale=context.getLocale();
+  Locale locale=Context.getLocale();
   DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
   Document doc=null;
-  PatientService patientService=context.getPatientService();
-  EncounterService encounterService=context.getEncounterService();
+  PatientService patientService=Context.getPatientService();
+  EncounterService encounterService=Context.getEncounterService();
   Patient p=patientService.getPatient(patientId);
   List<Encounter> encounters=encounterService.getEncountersByPatientId(patientId,false);
   try {
@@ -15,7 +15,7 @@
     patientNode.setAttribute("patient_id",p.getPatientId().toString());
     boolean firstName=true;
     Element namesNode=doc.createElement("names");
-    for (    PatientName name : p.getNames()) {
+    for (    PersonName name : p.getNames()) {
       if (firstName) {
         if (name.getGivenName() != null) {
           patientNode.setAttribute("given_name",name.getGivenName());
@@ -48,42 +48,20 @@
     }
     patientNode.appendChild(namesNode);
     patientNode.setAttribute("gender",p.getGender());
-    if (p.getRace() != null) {
-      patientNode.setAttribute("race",p.getRace());
-    }
     if (p.getBirthdate() != null) {
       patientNode.setAttribute("birthdate",df.format(p.getBirthdate()));
     }
     if (p.getBirthdateEstimated() != null) {
       patientNode.setAttribute("birthdate_estimated",p.getBirthdateEstimated().toString());
     }
-    if (p.getBirthplace() != null) {
-      patientNode.setAttribute("birthplace",p.getBirthplace());
-    }
-    if (p.getCitizenship() != null) {
-      patientNode.setAttribute("citizenship",p.getCitizenship());
-    }
     if (p.getTribe() != null) {
       patientNode.setAttribute("tribe",p.getTribe().getName());
-    }
-    if (p.getMothersName() != null) {
-      patientNode.setAttribute("mothers_name",p.getMothersName());
-    }
-    if (p.getCivilStatus() != null) {
-      patientNode.setAttribute("civil_status",p.getCivilStatus().getName(locale,false).getName());
     }
     if (p.getDeathDate() != null) {
       patientNode.setAttribute("death_date",df.format(p.getDeathDate()));
     }
     if (p.getCauseOfDeath() != null) {
-      patientNode.setAttribute("cause_of_death",p.getCauseOfDeath());
-    }
-    if (p.getHealthDistrict() != null) {
-      patientNode.setAttribute("health_district",p.getHealthDistrict());
-    }
-    if (p.getHealthCenter() != null) {
-      patientNode.setAttribute("health_center",encounterService.getLocation(p.getHealthCenter()).getName());
-      patientNode.setAttribute("health_center_id",p.getHealthCenter().toString());
+      patientNode.setAttribute("cause_of_death",p.getCauseOfDeath().getName(locale,false).getName());
     }
     for (    Encounter e : encounters) {
       Element encounterNode=doc.createElement("encounter");
@@ -153,21 +131,21 @@
           if (order.getOrderer() != null) {
             orderNode.setAttribute("orderer",formatUser(order.getOrderer()));
           }
-          if (order.isDiscontinued() != null) {
-            orderNode.setAttribute("discontinued",order.isDiscontinued().toString());
+          if (order.getDiscontinued() != null) {
+            orderNode.setAttribute("discontinued",order.getDiscontinued().toString());
           }
           if (order.getDiscontinuedDate() != null) {
             orderNode.setAttribute("discontinued_date",df.format(order.getDiscontinuedDate()));
           }
           if (order.getDiscontinuedReason() != null) {
-            orderNode.setAttribute("discontinued_reason",order.getDiscontinuedReason());
+            orderNode.setAttribute("discontinued_reason",order.getDiscontinuedReason().getName(locale,false).getName());
           }
           ordersNode.appendChild(orderNode);
         }
       }
       patientNode.appendChild(encounterNode);
     }
-    ObsService obsService=context.getObsService();
+    ObsService obsService=Context.getObsService();
     Set<Obs> allObservations=obsService.getObservations(p);
     if (allObservations != null && allObservations.size() > 0) {
       log.debug("allObservations has " + allObservations.size() + " obs");

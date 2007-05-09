@@ -1,7 +1,6 @@
 {
-  Session session=HibernateUtil.currentSession();
   String sql="select min(concept_id+1) as concept_id from concept where (concept_id+1) not in (select concept_id from concept)";
-  Query query=session.createSQLQuery(sql);
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sql);
   BigInteger big=(BigInteger)query.uniqueResult();
   return new Integer(big.intValue());
 }

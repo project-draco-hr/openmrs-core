@@ -1,14 +1,13 @@
 {
   Vector<Object> objectList=new Vector<Object>();
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  if (context == null) {
+  if (!Context.isAuthenticated()) {
     objectList.add("Your session has expired.");
     objectList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
   }
  else {
     try {
-      MessageService messageService=context.getMessageService();
+      MessageService messageService=Context.getMessageService();
       messageService.send(recipients,sender,subject,content);
       objectList.add("Message has been sent successfully.");
     }

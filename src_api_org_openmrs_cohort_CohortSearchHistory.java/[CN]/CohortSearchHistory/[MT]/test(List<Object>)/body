@@ -1,0 +1,29 @@
+{
+  boolean anyNonOperator=false;
+  boolean anyOperator=false;
+  boolean lastIsNot=false;
+  boolean lastIsOperator=false;
+  boolean childrenOkay=true;
+  for (  Object o : list) {
+    if (o instanceof List) {
+      childrenOkay&=test((List<Object>)o);
+      anyNonOperator=true;
+    }
+ else     if (o instanceof BooleanOperator) {
+      if (lastIsOperator && (BooleanOperator)o != BooleanOperator.NOT)       return false;
+      anyOperator=true;
+    }
+ else     if (o instanceof Integer) {
+      anyNonOperator=true;
+    }
+ else {
+      throw new RuntimeException("Programming error! unexpected class " + o.getClass());
+    }
+    lastIsNot=((o instanceof BooleanOperator) && (((BooleanOperator)o) == BooleanOperator.NOT));
+    lastIsOperator=o instanceof BooleanOperator;
+  }
+  if (list.size() > 2 && !anyOperator)   return false;
+  if (lastIsNot)   return false;
+  if (!anyNonOperator)   return false;
+  return true;
+}

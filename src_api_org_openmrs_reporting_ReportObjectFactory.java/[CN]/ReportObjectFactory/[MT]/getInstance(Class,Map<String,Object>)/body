@@ -7,6 +7,7 @@
       reportObj=ReportObjectFactory.initInstance(reportObj,initialValues);
     }
  catch (    Throwable t) {
+      log.error("Could not instantiate class: " + reportObjectClass.getName() + " when trying to get report object from the factory");
     }
   }
   return reportObj;

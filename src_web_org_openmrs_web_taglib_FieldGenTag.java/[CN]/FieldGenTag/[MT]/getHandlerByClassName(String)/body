@@ -1,9 +1,7 @@
 {
   String handlerClassName=null;
-  FieldGenHandlerFactory factory=null;
   try {
-    ApplicationContext context=new FileSystemXmlApplicationContext("file:/**/WEB-INF/openmrs-servlet.xml");
-    factory=(FieldGenHandlerFactory)context.getBean("fieldGenHandlerFactory");
+    factory=FieldGenHandlerFactory.getSingletonInstance();
   }
  catch (  Exception e) {
     factory=null;
@@ -19,6 +17,7 @@
         return handler;
       }
  catch (      Exception e) {
+        log.error("Unable to handle type [" + className + "] with handler ["+ handlerClassName+ "].");
         return null;
       }
     }

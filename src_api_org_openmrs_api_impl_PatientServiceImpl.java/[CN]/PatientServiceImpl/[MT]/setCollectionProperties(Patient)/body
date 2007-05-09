@@ -1,0 +1,16 @@
+{
+  Context.getPersonService().setCollectionProperties(patient);
+  if (patient.getCreator() == null) {
+    patient.setCreator(Context.getAuthenticatedUser());
+    patient.setDateCreated(new Date());
+  }
+  patient.setChangedBy(Context.getAuthenticatedUser());
+  patient.setDateChanged(new Date());
+  if (patient.getIdentifiers() != null)   for (  PatientIdentifier pIdentifier : patient.getIdentifiers()) {
+    if (pIdentifier.getDateCreated() == null) {
+      pIdentifier.setDateCreated(new Date());
+      pIdentifier.setCreator(Context.getAuthenticatedUser());
+      pIdentifier.setPatient(patient);
+    }
+  }
+}

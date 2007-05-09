@@ -1,0 +1,12 @@
+{
+  if (sortProperty == null || sortProperty.equals("")) {
+    throw new IllegalArgumentException("sortProperty = " + sortProperty);
+  }
+  List<T> l=new ArrayList<T>(c);
+  Comparator comp=new BeanComparator(sortProperty,new ComparableComparator());
+  Collections.sort(l,comp);
+  if (reverseOrder) {
+    Collections.reverse(l);
+  }
+  return l;
+}

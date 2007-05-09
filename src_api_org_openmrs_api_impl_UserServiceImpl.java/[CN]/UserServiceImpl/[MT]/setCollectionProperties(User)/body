@@ -1,0 +1,9 @@
+{
+  Context.getPersonService().setCollectionProperties(user);
+  if (user.getCreator() == null) {
+    user.setCreator(Context.getAuthenticatedUser());
+    user.setDateCreated(new Date());
+  }
+  user.setChangedBy(Context.getAuthenticatedUser());
+  user.setDateChanged(new Date());
+}

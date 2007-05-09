@@ -1,0 +1,30 @@
+{
+  orderId=drugOrder.getOrderId();
+  if (drugOrder.getOrderType() != null)   orderTypeId=drugOrder.getOrderType().getOrderTypeId();
+  if (drugOrder.getConcept() != null)   conceptId=drugOrder.getConcept().getConceptId();
+  instructions=drugOrder.getInstructions();
+  String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
+  SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+  if (drugOrder.getStartDate() != null)   startDate=sdf.format(drugOrder.getStartDate());
+  if (drugOrder.getAutoExpireDate() != null)   autoExpireDate=sdf.format(drugOrder.getAutoExpireDate());
+  if (drugOrder.getEncounter() != null)   encounterId=drugOrder.getEncounter().getEncounterId();
+  if (drugOrder.getOrderer() != null)   ordererId=drugOrder.getOrderer().getUserId();
+  discontinued=drugOrder.getDiscontinued();
+  if (drugOrder.getDiscontinuedBy() != null)   discontinuerId=drugOrder.getDiscontinuedBy().getUserId();
+  if (drugOrder.getDiscontinuedDate() != null)   discontinuedDate=sdf.format(drugOrder.getDiscontinuedDate());
+  if (drugOrder.getDiscontinuedReason() != null)   discontinueReason=drugOrder.getDiscontinuedReason().getConceptId();
+  if (drugOrder.getDrug() != null)   drugId=drugOrder.getDrug().getDrugId();
+  if (drugOrder.getDrug() != null)   drugName=drugOrder.getDrug().getName();
+  dose=drugOrder.getDose();
+  units=drugOrder.getUnits();
+  frequency=drugOrder.getFrequency();
+  prn=drugOrder.getPrn();
+  complex=drugOrder.getComplex();
+  quantity=drugOrder.getQuantity();
+  voided=drugOrder.getVoided();
+  if (drugOrder.getVoidedBy() != null)   voiderId=drugOrder.getVoidedBy().getUserId();
+  if (drugOrder.getDateVoided() != null)   voidedDate=sdf.format(drugOrder.getDateVoided());
+  voidReason=drugOrder.getVoidReason();
+  if (drugOrder.getCreator() != null)   creatorId=drugOrder.getCreator().getUserId();
+  if (drugOrder.getDateCreated() != null)   createdDate=sdf.format(drugOrder.getDateCreated());
+}

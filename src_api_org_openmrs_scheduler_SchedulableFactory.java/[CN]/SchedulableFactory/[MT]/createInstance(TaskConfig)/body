@@ -1,12 +1,13 @@
 {
   try {
-    Class schedulableClass=Class.forName(taskConfig.getSchedulableClass());
+    Class schedulableClass=OpenmrsClassLoader.getInstance().loadClass(taskConfig.getSchedulableClass());
     Schedulable schedulable=(Schedulable)schedulableClass.newInstance();
+    log.debug("initializing " + schedulableClass.getName());
     schedulable.initialize(taskConfig);
     return schedulable;
   }
  catch (  Exception e) {
-    log.error("Error creating new task for class " + taskConfig.getSchedulableClass(),e);
+    log.debug("Error creating new task for class " + taskConfig.getSchedulableClass(),e);
     throw new SchedulerException(e);
   }
 }

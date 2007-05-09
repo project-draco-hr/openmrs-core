@@ -1,0 +1,30 @@
+{
+  String s="";
+  AST dataIfAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+{
+      AST __t331=_t;
+      AST tmp21_AST_in=(AST)_t;
+      match(_t,IF);
+      _t=_t.getFirstChild();
+      obj.ResetConceptVar();
+      obj.InitEvaluateList();
+      s=exprAST(_t,obj);
+      _t=_retTree;
+      AST tmp22_AST_in=(AST)_t;
+      match(_t,THEN);
+      _t=_t.getNextSibling();
+      _t=__t331;
+      _t=_t.getNextSibling();
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

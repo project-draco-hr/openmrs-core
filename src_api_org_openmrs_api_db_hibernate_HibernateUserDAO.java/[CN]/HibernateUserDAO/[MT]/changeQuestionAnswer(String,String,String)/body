@@ -1,8 +1,7 @@
 {
-  Session session=HibernateUtil.currentSession();
-  User u=context.getAuthenticatedUser();
-  String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
-  String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
+  User u=Context.getAuthenticatedUser();
+  String passwordOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
+  String saltOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
   try {
     String hashedPassword=Security.encodeString(pw + saltOnRecord);
     if (!passwordOnRecord.equals(hashedPassword)) {
@@ -13,7 +12,17 @@
     log.error(e);
     throw new DAOException(e);
   }
-  HibernateUtil.beginTransaction();
-  session.createQuery("update User set secret_question = :q, secret_answer = :a where user_id = :userid").setParameter("q",question).setParameter("a",answer).setParameter("userid",u.getUserId()).executeUpdate();
-  HibernateUtil.commitTransaction();
+  Connection connection=sessionFactory.getCurrentSession().connection();
+  try {
+    PreparedStatement ps=connection.prepareStatement("UPDATE `users` SET secret_question = ?, secret_answer = ?, date_changed = ?, changed_by = ? WHERE user_id = ?");
+    ps.setString(1,question);
+    ps.setString(2,answer);
+    ps.setDate(3,new java.sql.Date(new Date().getTime()));
+    ps.setInt(4,u.getUserId());
+    ps.setInt(5,u.getUserId());
+    ps.executeUpdate();
+  }
+ catch (  SQLException e) {
+    log.warn("SQL Exception while trying to update a user's password",e);
+  }
 }

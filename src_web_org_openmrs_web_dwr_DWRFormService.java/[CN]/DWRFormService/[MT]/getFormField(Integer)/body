@@ -1,9 +1,6 @@
 {
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   FormField f=new FormField();
-  if (context != null) {
-    FormService fs=context.getFormService();
-    f=fs.getFormField(formFieldId);
-  }
-  return new FormFieldListItem(f,context.getLocale());
+  FormService fs=Context.getFormService();
+  f=fs.getFormField(formFieldId);
+  return new FormFieldListItem(f,Context.getLocale());
 }

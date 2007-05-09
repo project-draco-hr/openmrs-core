@@ -1,14 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  hl7Source.setCreator(context.getAuthenticatedUser());
+  hl7Source.setCreator(Context.getAuthenticatedUser());
   hl7Source.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(hl7Source);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(hl7Source);
 }

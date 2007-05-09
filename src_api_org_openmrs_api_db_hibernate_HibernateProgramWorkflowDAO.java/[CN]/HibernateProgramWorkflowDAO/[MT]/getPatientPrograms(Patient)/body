@@ -1,0 +1,9 @@
+{
+  List<PatientProgram> patientPrograms=new ArrayList<PatientProgram>();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientProgram.class);
+  criteria.add(Restrictions.eq("patient",patient));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("dateEnrolled"));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("dateCompleted"));
+  patientPrograms.addAll(criteria.list());
+  return patientPrograms;
+}

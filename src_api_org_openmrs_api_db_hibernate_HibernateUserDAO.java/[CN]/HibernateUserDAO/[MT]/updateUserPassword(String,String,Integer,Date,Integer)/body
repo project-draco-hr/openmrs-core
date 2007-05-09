@@ -1,0 +1,16 @@
+{
+  Connection connection=sessionFactory.getCurrentSession().connection();
+  try {
+    PreparedStatement ps=connection.prepareStatement("UPDATE `users` SET `password` = ?, `salt` = ?, `changed_by` = ?, `date_changed` = ? WHERE `user_id` = ?");
+    ps.setString(1,newPassword);
+    ps.setString(2,salt);
+    ps.setInt(3,changedBy);
+    ps.setDate(4,new java.sql.Date(dateChanged.getTime()));
+    ps.setInt(5,userIdToChange);
+    ps.executeUpdate();
+  }
+ catch (  SQLException e) {
+    log.warn("SQL Exception while trying to create a patient stub",e);
+  }
+  sessionFactory.getCurrentSession().flush();
+}

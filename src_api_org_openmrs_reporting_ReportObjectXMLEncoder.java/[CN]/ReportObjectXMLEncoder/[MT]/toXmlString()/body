@@ -1,16 +1,32 @@
 {
   ByteArrayOutputStream arr=new ByteArrayOutputStream();
+  EnumDelegate enumDelegate=new EnumDelegate();
   XMLEncoder enc=new XMLEncoder(new BufferedOutputStream(arr));
+  Set<Class> alreadyAdded=new HashSet<Class>();
+{
+    List<Class> enumClasses=new ArrayList<Class>();
+    enumClasses.add(PatientSetService.Modifier.class);
+    enumClasses.add(PatientSetService.TimeModifier.class);
+    enumClasses.add(PatientSetService.BooleanOperator.class);
+    enumClasses.add(PatientSetService.GroupMethod.class);
+    for (    Class clz : enumClasses) {
+      enc.setPersistenceDelegate(clz,enumDelegate);
+      alreadyAdded.add(clz);
+    }
+  }
   for (  Field f : this.objectToEncode.getClass().getDeclaredFields()) {
-    if (f.getType().isEnum()) {
+    Class clz=f.getType();
+    if (clz.isEnum() && !alreadyAdded.contains(clz)) {
       try {
-        enc.setPersistenceDelegate(f.getType(),new EnumDelegate());
+        enc.setPersistenceDelegate(clz,enumDelegate);
+        alreadyAdded.add(clz);
       }
  catch (      Exception e) {
+        log.error("ReportObjectXMLEncoder failed to write enumeration " + f.getName(),e);
       }
     }
   }
-  log.error("objectToEncode.type: " + objectToEncode.getClass());
+  log.debug("objectToEncode.type: " + objectToEncode.getClass());
   enc.writeObject(this.objectToEncode);
   enc.close();
   return arr.toString();

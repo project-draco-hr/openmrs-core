@@ -1,17 +1,7 @@
 {
-  if (reportObj.getCreator() == null)   createReportObject(reportObj);
+  if (reportObj.getReportObjectId() == null)   createReportObject(reportObj);
  else {
-    Session session=HibernateUtil.currentSession();
     ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
-    try {
-      HibernateUtil.beginTransaction();
-      wrappedReportObject=(ReportObjectWrapper)session.merge(wrappedReportObject);
-      session.update(wrappedReportObject);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    sessionFactory.getCurrentSession().update(wrappedReportObject);
   }
 }

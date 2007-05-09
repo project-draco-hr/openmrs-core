@@ -1,0 +1,66 @@
+{
+  log.debug("Entering referenceData");
+  Patient patient=(Patient)obj;
+  log.debug("patient: '" + patient + "'");
+  List<Form> forms=new Vector<Form>();
+  Map<String,Object> map=new HashMap<String,Object>();
+  List<Encounter> encounters=new Vector<Encounter>();
+  String causeOfDeathOther="";
+  if (Context.isAuthenticated()) {
+    boolean onlyPublishedForms=true;
+    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_UNPUBLISHED_FORMS))     onlyPublishedForms=false;
+    forms.addAll(Context.getFormService().getForms(onlyPublishedForms));
+    Set<Encounter> encs=Context.getEncounterService().getEncounters(patient);
+    if (encs != null && encs.size() > 0)     encounters.addAll(encs);
+    String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+    Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
+    if (conceptCause != null) {
+      Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause);
+      if (obssDeath.size() == 1) {
+        Obs obsDeath=obssDeath.iterator().next();
+        causeOfDeathOther=obsDeath.getValueText();
+        if (causeOfDeathOther == null) {
+          log.debug("cod is null, so setting to empty string");
+          causeOfDeathOther="";
+        }
+ else {
+          log.debug("cod is valid: " + causeOfDeathOther);
+        }
+      }
+ else {
+        log.debug("obssDeath is wrong size: " + obssDeath.size());
+      }
+    }
+ else {
+      log.debug("No concept cause found");
+    }
+  }
+  String patientVariation="";
+  Concept reasonForExitConcept=Context.getConceptService().getConceptByIdOrName(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
+  if (reasonForExitConcept != null) {
+    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept);
+    if (patientExitObs != null) {
+      log.debug("Exit obs is size " + patientExitObs.size());
+      if (patientExitObs.size() == 1) {
+        Obs exitObs=patientExitObs.iterator().next();
+        Concept exitReason=exitObs.getValueCoded();
+        Date exitDate=exitObs.getObsDatetime();
+        if (exitReason != null && exitDate != null) {
+          patientVariation="Exited";
+        }
+      }
+ else {
+        log.error("Too many reasons for exit - not putting data into model");
+      }
+    }
+  }
+  map.put("patientVariation",patientVariation);
+  map.put("forms",forms);
+  map.put("emptyIdentifier",new PatientIdentifier());
+  map.put("emptyName",new PersonName());
+  map.put("emptyAddress",new PersonAddress());
+  map.put("encounters",encounters);
+  map.put("datePattern",Context.getDateFormat().toLocalizedPattern().toLowerCase());
+  map.put("causeOfDeathOther",causeOfDeathOther);
+  return map;
+}

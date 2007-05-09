@@ -4,8 +4,11 @@
     for (    String s : shortcuts) {
       String[] temp=s.split("!");
       String shortcutLabel=temp[0];
-      String[] opts=temp[1].split(",");
+      boolean allowMultiple=shortcutLabel.startsWith("+");
+      if (allowMultiple)       shortcutLabel=shortcutLabel.substring(1);
+      String[] opts=temp[1].split("\\|");
       ShortcutSpec shortcut=new ShortcutSpec(shortcutLabel);
+      shortcut.setAllowMultiple(allowMultiple);
       for (      String opt : opts) {
         temp=opt.split(":");
         String optLabel=temp[0];
@@ -23,8 +26,7 @@
     return ret;
   }
  catch (  Exception ex) {
-    log.warn("Exception trying to parse ShortcutSpec");
-    log.warn(ex);
+    log.warn("Exception trying to parse ShortcutSpec",ex);
     throw new IllegalArgumentException("Bad shortcut spec string: " + shortcuts);
   }
 }

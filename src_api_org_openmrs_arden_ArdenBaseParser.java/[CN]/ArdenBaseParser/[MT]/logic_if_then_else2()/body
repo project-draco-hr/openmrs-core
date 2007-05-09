@@ -4,27 +4,12 @@
   AST logic_if_then_else2_AST=null;
   try {
 {
-      if ((_tokenSet_35.member(LA(1)))) {
-        expr();
-        astFactory.addASTChild(currentAST,returnAST);
-      }
- else       if ((LA(1) == LPAREN)) {
-{
-          match(LPAREN);
-        }
-        expr();
-        astFactory.addASTChild(currentAST,returnAST);
-{
-          match(RPAREN);
-        }
-      }
- else {
-        throw new NoViableAltException(LT(1),getFilename());
-      }
+      expr();
+      astFactory.addASTChild(currentAST,returnAST);
     }
-    AST tmp442_AST=null;
-    tmp442_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp442_AST);
+    AST tmp491_AST=null;
+    tmp491_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp491_AST);
     match(THEN);
     logic_if_then_else2_AST=(AST)currentAST.root;
   }

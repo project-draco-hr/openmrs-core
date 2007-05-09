@@ -1,0 +1,12 @@
+{
+  int periodPos=subId.indexOf('.');
+  String subIdKey=(periodPos == -1 ? subId : subId.substring(0,periodPos));
+  if (obsGroups.containsKey(subIdKey)) {
+    obsGroups.get(subIdKey).add(obs);
+  }
+ else {
+    Vector<Obs> entry=new Vector<Obs>();
+    entry.add(obs);
+    obsGroups.put(subIdKey,entry);
+  }
+}

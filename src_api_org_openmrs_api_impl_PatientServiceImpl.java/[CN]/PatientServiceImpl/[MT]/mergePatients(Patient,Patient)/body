@@ -1,0 +1,80 @@
+{
+  log.debug("Merging patients: (preferred)" + preferred.getPatientId() + ", (notPreferred) "+ notPreferred.getPatientId());
+  EncounterService es=Context.getEncounterService();
+  for (  Encounter e : es.getEncounters(notPreferred)) {
+    e.setPatient(preferred);
+    log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
+    es.updateEncounter(e);
+  }
+  for (  PatientIdentifier pi : notPreferred.getIdentifiers()) {
+    PatientIdentifier tmpIdentifier=new PatientIdentifier();
+    tmpIdentifier.setIdentifier(pi.getIdentifier());
+    tmpIdentifier.setIdentifierType(null);
+    tmpIdentifier.setLocation(pi.getLocation());
+    tmpIdentifier.setPatient(preferred);
+    boolean found=false;
+    for (    PatientIdentifier preferredIdentifier : preferred.getIdentifiers()) {
+      if (preferredIdentifier.getIdentifier() != null && preferredIdentifier.getIdentifier().equals(tmpIdentifier.getIdentifier()) && preferredIdentifier.getIdentifierType() != null && preferredIdentifier.getIdentifierType().equals(tmpIdentifier.getIdentifierType()))       found=true;
+    }
+    if (!found) {
+      tmpIdentifier.setIdentifierType(pi.getIdentifierType());
+      tmpIdentifier.setCreator(Context.getAuthenticatedUser());
+      tmpIdentifier.setDateCreated(new Date());
+      tmpIdentifier.setVoided(false);
+      tmpIdentifier.setVoidedBy(null);
+      tmpIdentifier.setVoidReason(null);
+      preferred.addIdentifier(tmpIdentifier);
+      log.debug("Merging identifier " + tmpIdentifier.getIdentifier() + " to "+ preferred.getPatientId());
+    }
+  }
+  for (  PersonName newName : notPreferred.getNames()) {
+    boolean containsName=false;
+    for (    PersonName currentName : preferred.getNames()) {
+      String given=newName.getGivenName();
+      String middle=newName.getMiddleName();
+      String family=newName.getFamilyName();
+      if ((given != null && given.equals(currentName.getGivenName())) && (middle != null && middle.equals(currentName.getMiddleName())) && (family != null && family.equals(currentName.getFamilyName()))) {
+        containsName=true;
+      }
+    }
+    if (!containsName) {
+      PersonName tmpName=PersonName.newInstance(newName);
+      tmpName.setPersonNameId(null);
+      tmpName.setVoided(false);
+      tmpName.setVoidedBy(null);
+      tmpName.setVoidReason(null);
+      preferred.addName(tmpName);
+      log.debug("Merging name " + newName.getGivenName() + " to "+ preferred.getPatientId());
+    }
+  }
+  for (  PersonAddress newAddress : notPreferred.getAddresses()) {
+    boolean containsAddress=false;
+    for (    PersonAddress currentAddress : preferred.getAddresses()) {
+      String address1=currentAddress.getAddress1();
+      String address2=currentAddress.getAddress2();
+      String cityVillage=currentAddress.getCityVillage();
+      if ((address1 != null && address1.equals(newAddress.getAddress1())) || (address2 != null && address2.equals(newAddress.getAddress2())) || (cityVillage != null && cityVillage.equals(newAddress.getCityVillage()))) {
+        containsAddress=true;
+      }
+    }
+    if (!containsAddress) {
+      PersonAddress tmpAddress=(PersonAddress)newAddress.clone();
+      tmpAddress.setPersonAddressId(null);
+      tmpAddress.setVoided(false);
+      tmpAddress.setVoidedBy(null);
+      tmpAddress.setVoidReason(null);
+      preferred.addAddress(tmpAddress);
+      log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
+    }
+  }
+  if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());
+  if (preferred.getBirthdate() == null || preferred.getBirthdate().equals("") || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
+    preferred.setBirthdate(notPreferred.getBirthdate());
+    preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
+  }
+  if (preferred.getTribe() == null)   preferred.setTribe(notPreferred.getTribe());
+  if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
+  if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
+  voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
+  updatePatient(preferred);
+}

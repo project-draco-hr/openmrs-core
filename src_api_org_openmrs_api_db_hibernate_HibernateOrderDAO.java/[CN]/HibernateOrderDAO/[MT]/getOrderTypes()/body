@@ -1,6 +1,4 @@
 {
   log.debug("getting all order types");
-  Session session=HibernateUtil.currentSession();
-  List<OrderType> orderTypes=session.createCriteria(OrderType.class).list();
-  return orderTypes;
+  return sessionFactory.getCurrentSession().createCriteria(OrderType.class).list();
 }

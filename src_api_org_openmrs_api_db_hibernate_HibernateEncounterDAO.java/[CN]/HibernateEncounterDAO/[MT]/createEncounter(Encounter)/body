@@ -1,14 +1,6 @@
 {
-  Session session=HibernateUtil.currentSession();
-  if (encounter.getCreator() == null)   encounter.setCreator(context.getAuthenticatedUser());
+  log.debug("Creating encounter: " + encounter.getEncounterId());
+  if (encounter.getCreator() == null)   encounter.setCreator(Context.getAuthenticatedUser());
   if (encounter.getDateCreated() == null)   encounter.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(encounter);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(encounter);
 }

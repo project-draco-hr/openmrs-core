@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(Encounter.class).add(Expression.between("encounterDatetime",fromDate,toDate)).add(Expression.eq("voided",false)).addOrder(Order.asc("location")).addOrder(Order.asc("encounterDatetime"));
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class).add(Expression.between("encounterDatetime",fromDate,toDate)).add(Expression.eq("voided",false)).addOrder(Order.asc("location")).addOrder(Order.asc("encounterDatetime"));
   return crit.list();
 }

@@ -1,16 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
   if (formField.getFormFieldId() == null)   createFormField(formField);
- else {
-    try {
-      HibernateUtil.beginTransaction();
-      session.merge(formField);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
-  log.debug("formField cache mode: " + session.getCacheMode());
+ else   sessionFactory.getCurrentSession().merge(formField);
+  log.debug("formField cache mode: " + sessionFactory.getCurrentSession().getCacheMode());
 }

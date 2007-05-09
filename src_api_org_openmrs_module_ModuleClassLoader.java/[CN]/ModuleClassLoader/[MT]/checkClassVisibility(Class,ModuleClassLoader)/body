@@ -1,0 +1,18 @@
+{
+  if (this == requestor) {
+    return;
+  }
+  URL lib=getClassBaseUrl(cls);
+  if (lib == null) {
+    return;
+  }
+  ClassLoader loader=cls.getClassLoader();
+  if (!(loader instanceof ModuleClassLoader)) {
+    return;
+  }
+  if (loader != this) {
+    ((ModuleClassLoader)loader).checkClassVisibility(cls,requestor);
+  }
+ else {
+  }
+}

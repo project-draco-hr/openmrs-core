@@ -1,0 +1,33 @@
+{
+  log.debug("in triggerConversion with patient: " + patient + ", trigger "+ trigger+ ", and date: "+ dateConverted);
+  if (patient != null && trigger != null && dateConverted != null) {
+    List<PatientProgram> programs=(List<PatientProgram>)this.getPatientPrograms(patient);
+    if (programs != null) {
+      for (      PatientProgram program : programs) {
+        Set<ProgramWorkflow> workflows=this.getCurrentWorkflowsByPatientProgram(program);
+        if (workflows != null) {
+          for (          ProgramWorkflow workflow : workflows) {
+            ConceptStateConversion conversion=this.getConceptStateConversion(workflow,trigger);
+            if (conversion != null) {
+              log.debug("Found conversion: " + conversion);
+              ProgramWorkflowState resultingState=conversion.getProgramWorkflowState();
+              if (program.getActive(dateConverted) || !program.getCurrentState().getState().getTerminal()) {
+                log.debug("Changing patient " + patient + " to state "+ resultingState+ " in workflow "+ workflow);
+                this.changeToState(program,workflow,resultingState,dateConverted);
+              }
+ else {
+                if (!program.getActive(dateConverted))                 log.debug("was about to change state, but failed because program not active");
+                if (program.getCurrentState().getState().getTerminal())                 log.debug("was about to change state, but failed because current state is already terminal");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+ else {
+    if (patient == null)     throw new APIException("Attempting to convert state of an invalid patient");
+    if (trigger == null)     throw new APIException("Attempting to convert state for a patient without a valid trigger concept");
+    if (dateConverted == null)     throw new APIException("Invalid date for converting patient state");
+  }
+}

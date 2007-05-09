@@ -1,15 +1,4 @@
 {
   if (hl7Source.getHL7SourceId() == 0)   createHL7Source(hl7Source);
- else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(hl7Source);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().saveOrUpdate(hl7Source);
 }

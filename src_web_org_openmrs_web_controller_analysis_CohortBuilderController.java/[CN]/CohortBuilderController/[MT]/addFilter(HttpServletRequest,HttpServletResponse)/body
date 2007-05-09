@@ -1,0 +1,31 @@
+{
+  if (Context.isAuthenticated()) {
+    CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+    String temp=request.getParameter("filter_id");
+    if (temp != null) {
+      Integer filterId=new Integer(temp);
+      PatientFilter pf=Context.getReportService().getPatientFilterById(filterId);
+      if (pf != null)       history.addSearchItem(pf);
+ else       log.warn("addFilter(id) didn't find " + filterId);
+    }
+    temp=request.getParameter("filter_name");
+    if (temp != null)     history.addSearchItem(Context.getReportService().getPatientFilterByName(temp));
+    temp=request.getParameter("filter_xml");
+    if (temp != null) {
+      AbstractReportObject ro=(new ReportObjectXMLDecoder(temp)).toAbstractReportObject();
+      if (ro instanceof PatientFilter) {
+        history.addSearchItem((PatientFilter)ro);
+      }
+ else {
+        log.warn("addFilter(xml) found a report object that wasn't a PatientFilter: " + ro.getClass());
+      }
+    }
+    temp=request.getParameter("composition");
+    if (temp != null) {
+      PatientFilter pf=history.createCompositionFilter(temp);
+      if (pf != null)       history.addSearchItem(pf);
+ else       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Error building composition filter");
+    }
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

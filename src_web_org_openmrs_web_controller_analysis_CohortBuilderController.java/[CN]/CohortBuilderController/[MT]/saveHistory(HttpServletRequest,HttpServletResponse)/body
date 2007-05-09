@@ -1,0 +1,15 @@
+{
+  if (Context.isAuthenticated()) {
+    String name=request.getParameter("name");
+    String description=request.getParameter("description");
+    if ((name == null || "".equals(name)) && (description == null || "".equals(description))) {
+      throw new RuntimeException("Name and Description are required");
+    }
+    CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+    if (history.getReportObjectId() != null)     throw new RuntimeException("Re-saving histories is not yet implemented");
+    history.setName(name);
+    history.setDescription(description);
+    Context.getReportService().createSearchHistory(history);
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

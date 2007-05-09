@@ -1,0 +1,27 @@
+{
+  if (rows.size() == 0)   return "DataTable with no rows";
+  List<String> columns;
+  if (columnOrder.size() > 0) {
+    columns=columnOrder;
+  }
+ else {
+    columns=new ArrayList<String>(rows.get(0).getColumnNames());
+    Collections.sort(columns);
+  }
+  StringBuilder sb=new StringBuilder();
+  sb.append("<table border=\"1\" cellspacing=\"0\" cellpadding=\"2\">");
+  sb.append("<thead><tr>");
+  for (  String colName : columns) {
+    sb.append("<th>").append(colName).append("</th>");
+  }
+  sb.append("</tr></thead><tbody>");
+  for (  TableRow row : rows) {
+    sb.append("<tr>");
+    for (    String colName : columns) {
+      sb.append("<td>").append(row.get(colName)).append("</td>");
+    }
+    sb.append("</tr>");
+  }
+  sb.append("</tbody></table>");
+  return sb.toString();
+}

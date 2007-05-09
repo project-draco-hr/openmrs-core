@@ -1,0 +1,11 @@
+{
+  if (evalMethod == null) {
+    try {
+      evalMethod=clazz.getMethod("eval",new Class[]{LogicDataSource.class,Patient.class,Object[].class});
+    }
+ catch (    NoSuchMethodException e) {
+      log.error("Could not find eval method on rule",e);
+    }
+  }
+  return evalMethod;
+}

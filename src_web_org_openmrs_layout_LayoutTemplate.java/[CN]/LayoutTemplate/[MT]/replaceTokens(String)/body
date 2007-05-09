@@ -1,0 +1,8 @@
+{
+  LayoutSupport as=getLayoutSupportInstance();
+  List<String> specialTokens=as.getSpecialTokens();
+  for (  String token : specialTokens) {
+    line=line.replaceAll(token,this.LAYOUT_TOKEN);
+  }
+  return line;
+}

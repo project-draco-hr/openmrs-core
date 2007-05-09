@@ -1,0 +1,56 @@
+{
+  Concept concept=Context.getConceptService().getConcept(conceptId);
+  if (!concept.isNumeric()) {
+  }
+  StringBuffer sb=new StringBuffer();
+  boolean useValue=modifier != null && value != null;
+  boolean doSqlAggregation=timeModifier == TimeModifier.MIN || timeModifier == TimeModifier.MAX || timeModifier == TimeModifier.AVG;
+  String valueSql="o.value_numeric";
+  boolean doInvert=false;
+  String dateSql="";
+  if (fromDate != null)   dateSql+=" and o.obs_datetime >= :fromDate ";
+  if (toDate != null)   dateSql+=" and o.obs_datetime <= :toDate ";
+  if (timeModifier == TimeModifier.ANY || timeModifier == TimeModifier.NO) {
+    if (timeModifier == TimeModifier.NO)     doInvert=true;
+    sb.append("select o.person_id from obs o " + "where concept_id = :concept_id ");
+    sb.append(dateSql);
+  }
+ else   if (timeModifier == TimeModifier.FIRST || timeModifier == TimeModifier.LAST) {
+    boolean isFirst=timeModifier == PatientSetService.TimeModifier.FIRST;
+    sb.append("select o.person_id " + "from obs o inner join (" + "    select person_id, " + (isFirst ? "min" : "max") + "(obs_datetime) as obs_datetime"+ "    from obs"+ "    where concept_id = :concept_id "+ dateSql+ "    group by person_id"+ ") subq on o.person_id = subq.person_id and o.obs_datetime = subq.obs_datetime "+ "where o.concept_id = :concept_id ");
+  }
+ else   if (doSqlAggregation) {
+    String sqlAggregator=timeModifier.toString();
+    valueSql=sqlAggregator + "(o.value_numeric)";
+    sb.append("select o.person_id " + "from obs o where concept_id = :concept_id " + dateSql + "group by o.person_id ");
+  }
+ else {
+    throw new IllegalArgumentException("TimeModifier '" + timeModifier + "' not recognized");
+  }
+  if (useValue) {
+    sb.append(doSqlAggregation ? "having " : " and ");
+    sb.append(valueSql + " ");
+    sb.append(modifier.getSqlRepresentation() + " :value");
+  }
+  if (!doSqlAggregation)   sb.append(" group by o.person_id ");
+  log.debug("query: " + sb);
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
+  query.setCacheMode(CacheMode.IGNORE);
+  query.setInteger("concept_id",conceptId);
+  if (useValue) {
+    query.setDouble("value",value.doubleValue());
+  }
+  if (fromDate != null)   query.setDate("fromDate",fromDate);
+  if (toDate != null)   query.setDate("toDate",fromDate);
+  PatientSet ret;
+  if (doInvert) {
+    ret=getAllPatients();
+    ret.removeAllIds(query.list());
+  }
+ else {
+    ret=new PatientSet();
+    List patientIds=query.list();
+    ret.setPatientIds(new ArrayList<Integer>(patientIds));
+  }
+  return ret;
+}

@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria criteria=session.createCriteria(Field.class);
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Field.class);
   criteria.add(Restrictions.like("name",search,MatchMode.ANYWHERE));
   criteria.addOrder(Order.asc("name"));
   return criteria.list();

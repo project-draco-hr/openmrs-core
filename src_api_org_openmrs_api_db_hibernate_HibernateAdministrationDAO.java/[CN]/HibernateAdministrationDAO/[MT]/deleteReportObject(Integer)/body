@@ -1,14 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
   ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper();
-  wrappedReportObject=(ReportObjectWrapper)session.get(ReportObjectWrapper.class,reportObjectId);
-  try {
-    HibernateUtil.beginTransaction();
-    session.delete(wrappedReportObject);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  wrappedReportObject=(ReportObjectWrapper)sessionFactory.getCurrentSession().get(ReportObjectWrapper.class,reportObjectId);
+  sessionFactory.getCurrentSession().delete(wrappedReportObject);
 }

@@ -1,6 +1,7 @@
 {
-  String type=RequestUtils.getStringParameter(request,"type","");
-  String subType=RequestUtils.getStringParameter(request,"subType","");
-  String submitted=RequestUtils.getStringParameter(request,"submitted","");
-  return (type.length() == 0 || subType.length() == 0 || submitted.length() == 0);
+  String type=ServletRequestUtils.getStringParameter(request,"type","");
+  String subType=ServletRequestUtils.getStringParameter(request,"subType","");
+  String submitted=ServletRequestUtils.getStringParameter(request,"submitted","");
+  boolean isChange=(type.length() == 0 || subType.length() == 0 || submitted.length() == 0);
+  return isChange;
 }

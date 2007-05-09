@@ -12,13 +12,12 @@ case WAS:
 case WERE:
 case IN:
 case LESS:
+case GREATER:
 case FROM:
 case BEFORE:
 case AFTER:
 case AGO:
 case AT:
-case LET:
-case NOW:
 case YEAR:
 case YEARS:
 case IF:
@@ -50,11 +49,10 @@ case SEMI:
 case ID:
 case LPAREN:
 case RPAREN:
-case 103:
-case 104:
+case 108:
+case 109:
 case COMMA:
 case ARDEN_CURLY_BRACKETS:
-case LITERAL_GREATER:
 case LITERAL_hour:
 case LITERAL_hours:
 case LITERAL_minute:
@@ -77,8 +75,8 @@ case ACTION_OP:
 case LITERAL_MERGE:
 case LITERAL_SORT:
 case LITERAL_SEQTO:
-case 171:
-case 172:
+case 174:
+case 175:
 {
         timepart_opt_AST=(AST)currentAST.root;
         break;
@@ -90,9 +88,9 @@ case LITERAL_t:
         timepart();
         astFactory.addASTChild(currentAST,returnAST);
       }
-      AST tmp241_AST=null;
-      tmp241_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp241_AST);
+      AST tmp291_AST=null;
+      tmp291_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp291_AST);
       match(ENDBLOCK);
       timepart_opt_AST=(AST)currentAST.root;
       break;
@@ -106,7 +104,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_26);
+recover(ex,_tokenSet_27);
 }
  else {
 throw ex;

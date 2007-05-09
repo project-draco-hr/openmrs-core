@@ -1,0 +1,16 @@
+{
+  log.debug("setting all global properties");
+  for (  GlobalProperty gp : getGlobalProperties()) {
+    if (!props.contains(gp))     deleteGlobalProperty(gp.getProperty());
+  }
+  for (  GlobalProperty prop : props) {
+    if (prop.getProperty() != null && prop.getProperty().length() > 0) {
+      try {
+        sessionFactory.getCurrentSession().saveOrUpdate(prop);
+      }
+ catch (      HibernateException e) {
+        sessionFactory.getCurrentSession().merge(prop);
+      }
+    }
+  }
+}

@@ -1,11 +1,9 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Alert alert=(Alert)obj;
-  context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
   try {
-    UserService us=context.getUserService();
-    if (context != null && context.isAuthenticated()) {
+    UserService us=Context.getUserService();
+    if (Context.isAuthenticated()) {
       String[] userIdValues=request.getParameter("userIds").split(" ");
       List<Integer> userIds=new Vector<Integer>();
       String[] roleValues=request.getParameter("newRoles").split(",");
@@ -37,16 +35,16 @@
         }
       }
     }
-    if (alert.getRecipients() == null || alert.getRecipients().size() == 0) {
-      errors.rejectValue("user","Alert.recipientRequired");
+    if ((alert.getRecipients() == null || alert.getRecipients().size() == 0)) {
+      errors.rejectValue("users","Alert.recipientRequired");
     }
   }
  catch (  Exception e) {
-    log.error(e);
+    log.error("Error while processing alert form",e);
     errors.reject(e.getMessage());
   }
  finally {
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
   }
   return super.processFormSubmission(request,reponse,alert,errors);
 }

@@ -1,9 +1,8 @@
 {
-  HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Patient patient=(Patient)object;
-  if (context != null && context.isAuthenticated()) {
-    FormEntryService ps=context.getFormEntryService();
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
+    EncounterService es=Context.getEncounterService();
     Object[] objs=null;
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
@@ -22,48 +21,64 @@
             PatientIdentifier pi=new PatientIdentifier();
             pi.setIdentifier(id);
             pi.setIdentifierType(ps.getPatientIdentifierType(Integer.valueOf(idTypes[i])));
-            pi.setLocation(ps.getLocation(Integer.valueOf(locs[i])));
+            pi.setLocation(es.getLocation(Integer.valueOf(locs[i])));
             patient.addIdentifier(pi);
           }
         }
       }
-      String[] add1s=RequestUtils.getStringParameters(request,"address1");
-      String[] add2s=RequestUtils.getStringParameters(request,"address2");
-      String[] cities=RequestUtils.getStringParameters(request,"cityVillage");
-      String[] states=RequestUtils.getStringParameters(request,"stateProvince");
-      String[] countries=RequestUtils.getStringParameters(request,"country");
-      String[] lats=RequestUtils.getStringParameters(request,"latitude");
-      String[] longs=RequestUtils.getStringParameters(request,"longitude");
-      if (add1s != null) {
-        for (int i=0; i < add1s.length; i++) {
-          if (add1s[i] != "") {
-            PatientAddress pa=new PatientAddress();
-            if (add1s.length >= i + 1)             pa.setAddress1(add1s[i]);
-            if (add2s.length >= i + 1)             pa.setAddress2(add2s[i]);
-            if (cities.length >= i + 1)             pa.setCityVillage(cities[i]);
-            if (states.length >= i + 1)             pa.setStateProvince(states[i]);
-            if (countries.length >= i + 1)             pa.setCountry(countries[i]);
-            if (lats.length >= i + 1)             pa.setLatitude(lats[i]);
-            if (longs.length >= i + 1)             pa.setLongitude(longs[i]);
-            patient.addAddress(pa);
-          }
+      String[] add1s=ServletRequestUtils.getStringParameters(request,"address1");
+      String[] add2s=ServletRequestUtils.getStringParameters(request,"address2");
+      String[] cities=ServletRequestUtils.getStringParameters(request,"cityVillage");
+      String[] states=ServletRequestUtils.getStringParameters(request,"stateProvince");
+      String[] countries=ServletRequestUtils.getStringParameters(request,"country");
+      String[] lats=ServletRequestUtils.getStringParameters(request,"latitude");
+      String[] longs=ServletRequestUtils.getStringParameters(request,"longitude");
+      String[] pCodes=ServletRequestUtils.getStringParameters(request,"postalCode");
+      String[] counties=ServletRequestUtils.getStringParameters(request,"countyDistrict");
+      String[] cells=ServletRequestUtils.getStringParameters(request,"neighborhoodCell");
+      if (add1s != null || add2s != null || cities != null || states != null || countries != null || lats != null || longs != null || pCodes != null || counties != null || cells != null) {
+        int maxAddrs=0;
+        if (add1s != null)         if (add1s.length > maxAddrs)         maxAddrs=add1s.length;
+        if (add2s != null)         if (add2s.length > maxAddrs)         maxAddrs=add2s.length;
+        if (cities != null)         if (cities.length > maxAddrs)         maxAddrs=cities.length;
+        if (states != null)         if (states.length > maxAddrs)         maxAddrs=states.length;
+        if (countries != null)         if (countries.length > maxAddrs)         maxAddrs=countries.length;
+        if (lats != null)         if (lats.length > maxAddrs)         maxAddrs=lats.length;
+        if (longs != null)         if (longs.length > maxAddrs)         maxAddrs=longs.length;
+        if (pCodes != null)         if (pCodes.length > maxAddrs)         maxAddrs=pCodes.length;
+        if (counties != null)         if (counties.length > maxAddrs)         maxAddrs=counties.length;
+        if (cells != null)         if (cells.length > maxAddrs)         maxAddrs=cells.length;
+        log.debug("There appears to be " + maxAddrs + " addresses that need to be saved");
+        for (int i=0; i < maxAddrs; i++) {
+          PersonAddress pa=new PersonAddress();
+          if (add1s.length >= i + 1)           pa.setAddress1(add1s[i]);
+          if (add2s.length >= i + 1)           pa.setAddress2(add2s[i]);
+          if (cities.length >= i + 1)           pa.setCityVillage(cities[i]);
+          if (states.length >= i + 1)           pa.setStateProvince(states[i]);
+          if (countries.length >= i + 1)           pa.setCountry(countries[i]);
+          if (lats.length >= i + 1)           pa.setLatitude(lats[i]);
+          if (longs.length >= i + 1)           pa.setLongitude(longs[i]);
+          if (pCodes.length >= i + 1)           pa.setPostalCode(pCodes[i]);
+          if (counties.length >= i + 1)           pa.setCountyDistrict(counties[i]);
+          if (cells.length >= i + 1)           pa.setNeighborhoodCell(cells[i]);
+          patient.addAddress(pa);
         }
       }
       objs=patient.getNames().toArray();
       for (int i=0; i < objs.length; i++) {
-        if (request.getParameter("names[" + i + "].givenName") == null)         patient.removeName((PatientName)objs[i]);
+        if (request.getParameter("names[" + i + "].givenName") == null)         patient.removeName((PersonName)objs[i]);
       }
-      String[] gNames=RequestUtils.getStringParameters(request,"givenName");
-      String[] mNames=RequestUtils.getStringParameters(request,"middleName");
-      String[] fNamePrefixes=RequestUtils.getStringParameters(request,"familyNamePrefix");
-      String[] fNames=RequestUtils.getStringParameters(request,"familyName");
-      String[] fName2s=RequestUtils.getStringParameters(request,"familyName2");
-      String[] fNameSuffixes=RequestUtils.getStringParameters(request,"familyNameSuffix");
-      String[] degrees=RequestUtils.getStringParameters(request,"degree");
+      String[] gNames=ServletRequestUtils.getStringParameters(request,"givenName");
+      String[] mNames=ServletRequestUtils.getStringParameters(request,"middleName");
+      String[] fNamePrefixes=ServletRequestUtils.getStringParameters(request,"familyNamePrefix");
+      String[] fNames=ServletRequestUtils.getStringParameters(request,"familyName");
+      String[] fName2s=ServletRequestUtils.getStringParameters(request,"familyName2");
+      String[] fNameSuffixes=ServletRequestUtils.getStringParameters(request,"familyNameSuffix");
+      String[] degrees=ServletRequestUtils.getStringParameters(request,"degree");
       if (gNames != null) {
         for (int i=0; i < gNames.length; i++) {
           if (gNames[i] != "") {
-            PatientName pn=new PatientName();
+            PersonName pn=new PersonName();
             pn.setPreferred(false);
             if (gNames.length >= i + 1)             pn.setGivenName(gNames[i]);
             if (mNames.length >= i + 1)             pn.setMiddleName(mNames[i]);
@@ -76,9 +91,36 @@
           }
         }
       }
-      if (patient.getNames().size() < 1)       errors.rejectValue("patient.names","Patient.names.length");
-      if (patient.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
-      if (patient.isDead() && (patient.getCauseOfDeath() == null || patient.getCauseOfDeath().equals("")))       errors.rejectValue("causeOfDeath","Patient.dead.causeOfDeathNull");
+      for (      PatientIdentifier pi : patient.getIdentifiers()) {
+        if (pi.isVoided())         continue;
+        PatientIdentifierType pit=pi.getIdentifierType();
+        String identifier=pi.getIdentifier();
+        String format=pit.getFormat();
+        String formatDescription=pit.getFormatDescription();
+        String formatStr=format;
+        if (format == null)         formatStr="";
+        if (formatDescription != null)         if (formatDescription.length() > 0)         formatStr=formatDescription;
+        String[] args={identifier,formatStr};
+        try {
+          if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifier)) {
+            log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifier);
+            String msg=getMessageSourceAccessor().getMessage("error.checkdigits.verbose",args);
+            errors.rejectValue("identifiers",msg);
+          }
+ else           if (format != null)           if (format.length() > 0 && !identifier.matches(format)) {
+            log.error("Identifier format is not valid: (" + format + ") "+ identifier);
+            String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
+            errors.rejectValue("identifiers",msg);
+          }
+        }
+ catch (        Exception e) {
+          log.error("exception thrown with: " + pit.getName() + " "+ identifier);
+          log.error("Error while adding patient identifiers to savedIdentifier list",e);
+          String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
+          errors.rejectValue("identifiers",msg);
+        }
+        if (errors.hasErrors())         return showForm(request,response,errors);
+      }
     }
   }
   return super.processFormSubmission(request,response,patient,errors);

@@ -1,0 +1,13 @@
+{
+  NodeList mods=root.getElementsByTagName("require_modules");
+  List<String> requiredModules=new Vector<String>();
+  if (mods.getLength() > 0) {
+    int i=0;
+    while (i < mods.getLength()) {
+      Node n=mods.item(i);
+      if (n != null && "require_module".equals(n.getNodeName()))       requiredModules.add(n.getTextContent());
+      i++;
+    }
+  }
+  return requiredModules;
+}

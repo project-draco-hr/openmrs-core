@@ -1,0 +1,5 @@
+{
+  List<RelationshipType> relationshipTypes;
+  relationshipTypes=sessionFactory.getCurrentSession().createQuery("from RelationshipType t order by t.weight").list();
+  return relationshipTypes;
+}

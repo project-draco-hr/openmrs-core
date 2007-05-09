@@ -1,0 +1,4 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("select distinct concept from Drug where voided = false");
+  return query.list();
+}

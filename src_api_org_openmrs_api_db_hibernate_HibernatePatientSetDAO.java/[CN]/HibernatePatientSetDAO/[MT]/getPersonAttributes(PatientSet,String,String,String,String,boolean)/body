@@ -1,0 +1,50 @@
+{
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  Collection<Integer> ids=patients.getPatientIds();
+  if (ids.size() == 0)   return ret;
+  StringBuilder queryString=new StringBuilder();
+  queryString.append("select attr.person.personId, ");
+  if (joinClass != null && joinProperty != null && outputColumn != null) {
+    queryString.append("joinedClass.");
+    queryString.append(outputColumn);
+    queryString.append(" from PersonAttribute attr, PersonAttributeType t, ");
+    queryString.append(joinClass);
+    queryString.append(" joinedClass where t.personAttributeTypeId = attr.attributeType ");
+    queryString.append("and attr.value = joinedClass.");
+    queryString.append(joinProperty + " ");
+  }
+ else   queryString.append("attr.value from PersonAttribute attr, PersonAttributeType t where t.personAttributeTypeId = attr.attributeType ");
+  queryString.append("and attr.person.personId in (:ids) ");
+  queryString.append("and t.name = :typeName ");
+  queryString.append("order by attr.voided desc, attr.dateCreated desc");
+  Query query=sessionFactory.getCurrentSession().createQuery(queryString.toString());
+  query.setParameterList("ids",ids);
+  query.setString("typeName",attributeTypeName);
+  log.error("query: " + queryString);
+  List<Object[]> rows=query.list();
+  if (returnAll) {
+    for (    Object[] row : rows) {
+      Integer ptId=(Integer)row[0];
+      Object columnValue=row[1];
+      if (!ret.containsKey(ptId)) {
+        Object[] arr={columnValue};
+        ret.put(ptId,arr);
+      }
+ else {
+        Object[] oldArr=(Object[])ret.get(ptId);
+        Object[] newArr=new Object[oldArr.length + 1];
+        System.arraycopy(oldArr,0,newArr,0,oldArr.length);
+        newArr[oldArr.length]=columnValue;
+        ret.put(ptId,newArr);
+      }
+    }
+  }
+ else {
+    for (    Object[] row : rows) {
+      Integer ptId=(Integer)row[0];
+      Object columnValue=row[1];
+      if (!ret.containsKey(ptId))       ret.put(ptId,columnValue);
+    }
+  }
+  return ret;
+}

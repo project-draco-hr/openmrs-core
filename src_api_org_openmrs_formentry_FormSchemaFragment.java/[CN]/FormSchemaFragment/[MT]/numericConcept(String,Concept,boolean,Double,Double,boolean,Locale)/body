@@ -1,9 +1,0 @@
-{
-  boolean skipBounds=(minInclusive == null && maxInclusive == null);
-  String xml="";
-  if (!skipBounds) {
-    xml+="<xs:simpleType name=\"" + token + "_restricted_type\">\n"+ "  <xs:restriction base=\""+ (precise ? "xs:float" : "xs:int")+ "\">\n"+ (minInclusive == null ? "" : "    <xs:minInclusive value=\"" + numericToString(minInclusive,precise) + "\" />\n")+ (maxInclusive == null ? "" : "    <xs:maxInclusive value=\"" + numericToString(maxInclusive,precise) + "\" />\n")+ "  </xs:restriction>\n"+ "</xs:simpleType>\n";
-  }
-  xml+="<xs:complexType name=\"" + token + "\">\n"+ "  <xs:sequence>\n"+ "    <xs:element name=\"date\" type=\"xs:date\" nillable=\"true\" minOccurs=\"0\" />\n"+ "    <xs:element name=\"time\" type=\"xs:time\" nillable=\"true\" minOccurs=\"0\" />\n"+ (skipBounds ? "    <xs:element name=\"value\" type=\"" + (precise ? "xs:float" : "xs:int") + "\" nillable=\""+ (required ? "0" : "1")+ "\" />\n" : "    <xs:element name=\"value\" type=\"" + token + "_restricted_type\" nillable=\""+ (required ? "0" : "1")+ "\" />\n")+ "  </xs:sequence>\n"+ "  <xs:attribute name=\"openmrs_concept\" type=\"xs:string\" use=\"required\" fixed=\""+ FormUtil.conceptToString(concept,locale)+ "\" />\n"+ "  <xs:attribute name=\"openmrs_datatype\" type=\"xs:string\" use=\"required\" fixed=\""+ concept.getDatatype().getHl7Abbreviation()+ "\" />\n"+ "</xs:complexType>\n\n";
-  return xml;
-}

@@ -1,0 +1,16 @@
+{
+  if (d == null)   return "";
+  if ("long".equals(type)) {
+    return dateFormatLong.format(d);
+  }
+ else   if ("ymd".equals(type))   return dateFormatYmd.format(d);
+ else   if ("short".equals(type) || type == null)   return dateFormatShort.format(d);
+ else {
+    if (formats.containsKey(type))     return formats.get(type).format(d);
+ else {
+      DateFormat df=new SimpleDateFormat(type,locale);
+      formats.put(type,df);
+      return df.format(d);
+    }
+  }
+}

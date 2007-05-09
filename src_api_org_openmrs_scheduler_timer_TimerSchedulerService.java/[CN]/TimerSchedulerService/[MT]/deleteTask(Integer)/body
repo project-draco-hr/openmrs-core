@@ -1,3 +1,11 @@
 {
-  daoContext.getSchedulerDAO().deleteTask(id);
+  TaskConfig task=getTask(id);
+  if (task.getStarted()) {
+    try {
+      stopTask(task);
+    }
+ catch (    SchedulerException e) {
+    }
+  }
+  getSchedulerDAO().deleteTask(id);
 }

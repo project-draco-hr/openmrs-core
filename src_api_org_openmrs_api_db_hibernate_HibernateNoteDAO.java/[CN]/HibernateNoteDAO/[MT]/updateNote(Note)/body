@@ -1,13 +1,4 @@
 {
   log.debug("Updating existing note");
-  Session session=HibernateUtil.currentSession();
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(note);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    log.error(e);
-    HibernateUtil.rollbackTransaction();
-  }
+  sessionFactory.getCurrentSession().save(note);
 }

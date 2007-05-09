@@ -1,0 +1,6 @@
+{
+  if (Context.isAuthenticated()) {
+    Context.setVolatileUserData("CohortBuilderSearchHistory",null);
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

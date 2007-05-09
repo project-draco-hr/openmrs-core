@@ -1,0 +1,26 @@
+{
+  startup();
+  Context.authenticate("admin","test");
+  Integer[] pidList=new Integer[]{4};
+  LogicService logic=Context.getLogicService();
+  registerRules(logic);
+  registerConcepts(logic);
+  long startTime=new Date().getTime();
+  StringBuffer s=new StringBuffer();
+  for (  Integer patientId : pidList) {
+    Patient patient=Context.getPatientService().getPatient(patientId);
+    Result summary=logic.eval(patient,"CLINICAL SUMMARY");
+    s.append(summary);
+  }
+  try {
+    File f=new File("c:\\JoeSummaries.xml");
+    FileWriter out=new FileWriter(f);
+    IOUtils.write(s,out);
+    out.close();
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  long endTime=new Date().getTime();
+  shutdown();
+}

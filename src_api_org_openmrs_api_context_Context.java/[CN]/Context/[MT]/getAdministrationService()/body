@@ -1,8 +1,3 @@
 {
-  if (!isAuthenticated()) {
-    log.warn("unauthorized access to administration service");
-    return null;
-  }
-  if (administrationService == null)   administrationService=new AdministrationService(this,getDaoContext());
-  return administrationService;
+  return getServiceContext().getAdministrationService();
 }

@@ -1,0 +1,4 @@
+{
+  Result cd4=dataSource.eval(patient,null,"CD4, BY FACS",DateConstraint.withinPreceding(Duration.months(6)),args);
+  return new Result(cd4.exists());
+}

@@ -1,12 +1,11 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Locale locale=request.getLocale();
   String view=getFormView();
-  if (context != null && context.isAuthenticated()) {
+  if (Context.isAuthenticated()) {
     String[] roleList=request.getParameterValues("roleId");
-    AdministrationService as=context.getAdministrationService();
-    UserService us=context.getUserService();
+    AdministrationService as=Context.getAdministrationService();
+    UserService us=Context.getUserService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();

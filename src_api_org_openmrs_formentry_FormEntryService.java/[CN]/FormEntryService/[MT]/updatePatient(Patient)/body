@@ -1,9 +1,0 @@
-{
-  context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS);
-  try {
-    getPatientService().updatePatient(patient);
-  }
-  finally {
-    context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS);
-  }
-}

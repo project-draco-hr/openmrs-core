@@ -1,0 +1,9 @@
+{
+  log.debug("discontinuing order #" + order.getOrderId() + ", date is "+ discontinueDate);
+  order.setDiscontinued(new Boolean(true));
+  order.setDiscontinuedReason(discontinueReason);
+  order.setDiscontinuedDate(discontinueDate);
+  order.setDiscontinuedBy(Context.getAuthenticatedUser());
+  log.debug("discontinued is " + order.getDiscontinued());
+  sessionFactory.getCurrentSession().update(order);
+}

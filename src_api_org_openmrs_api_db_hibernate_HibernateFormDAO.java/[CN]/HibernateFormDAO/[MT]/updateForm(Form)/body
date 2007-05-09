@@ -1,15 +1,4 @@
 {
   if (form.getFormId() == null)   createForm(form);
- else {
-    Session session=HibernateUtil.currentSession();
-    try {
-      HibernateUtil.beginTransaction();
-      session.merge(form);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+ else   sessionFactory.getCurrentSession().merge(form);
 }

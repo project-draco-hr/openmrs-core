@@ -1,0 +1,22 @@
+{
+  log.debug("Entering formBackingObject");
+  if (!Context.isAuthenticated())   return new Patient();
+  String patientId=request.getParameter("patientId");
+  log.debug("patientId: " + patientId);
+  if (patientId == null)   throw new ServletException("Integer 'patientId' is a required parameter");
+  PatientService ps=Context.getPatientService();
+  Patient patient=null;
+  Integer id=null;
+  try {
+    id=Integer.valueOf(patientId);
+    patient=ps.getPatient(id);
+  }
+ catch (  NumberFormatException numberError) {
+    log.warn("Invalid userId supplied: '" + patientId + "'",numberError);
+  }
+catch (  ObjectRetrievalFailureException noPatientEx) {
+    log.warn("There is no patient with id: '" + patientId + "'",noPatientEx);
+  }
+  if (patient == null)   throw new ServletException("There is no patient with id: '" + patientId + "'");
+  return patient;
+}

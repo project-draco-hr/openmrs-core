@@ -1,0 +1,30 @@
+{
+  Person person=(Person)obj;
+  if (!Context.isAuthenticated()) {
+    errors.reject("auth.invalid");
+  }
+ else {
+    if (person.getPersonName().getGivenName() == "")     errors.rejectValue("names[0].givenName","Person.name.required");
+    if (person.getPersonName().getFamilyName() == "")     errors.rejectValue("names[0].familyName","Person.name.required");
+    if (person.getGender() == null || person.getGender().equals(""))     errors.rejectValue("gender","Person.gender.required");
+    for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes("","all")) {
+      String value=request.getParameter(type.getPersonAttributeTypeId().toString());
+      person.addAttribute(new PersonAttribute(type,value));
+    }
+    if (person.getBirthdate() != null) {
+      if (person.getBirthdate().after(new Date()))       errors.rejectValue("birthdate","error.date.future");
+ else {
+        Calendar c=Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.YEAR,-120);
+        if (person.getBirthdate().before(c.getTime())) {
+          errors.rejectValue("birthdate","error.date.nonsensical");
+        }
+      }
+    }
+    if (person.isVoided())     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+    if (person.isDead() && (person.getCauseOfDeath() == null))     errors.rejectValue("causeOfDeath","Patient.dead.causeOfDeathNull");
+  }
+  if (log.isDebugEnabled())   log.debug("Person Attributes: \n" + person.printAttributes());
+  return super.processFormSubmission(request,response,person,errors);
+}

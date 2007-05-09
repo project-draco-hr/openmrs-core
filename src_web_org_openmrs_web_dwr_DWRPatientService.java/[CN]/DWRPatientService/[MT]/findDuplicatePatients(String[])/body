@@ -1,23 +1,15 @@
 {
-  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Vector<Object> patientList=new Vector<Object>();
-  if (context == null) {
-    patientList.add("Your session has expired.");
-    patientList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
+  try {
+    Set<String> options=new HashSet<String>(searchOn.length);
+    for (    String s : searchOn)     options.add(s);
+    List<Patient> patients=Context.getPatientService().findDuplicatePatients(options);
+    if (patients.size() > 200)     patients.subList(0,200);
+    for (    Patient p : patients)     patientList.add(new PatientListItem(p));
   }
- else {
-    try {
-      Set<String> options=new HashSet<String>(searchOn.length);
-      for (      String s : searchOn)       options.add(s);
-      List<Patient> patients=context.getPatientService().findDuplicatePatients(options);
-      if (patients.size() > 200)       patients.subList(0,200);
-      for (      Patient p : patients)       patientList.add(new PatientListItem(p));
-    }
- catch (    Exception e) {
-      log.error(e);
-      patientList.add("Error while attempting to find duplicate patients - " + e.getMessage());
-    }
+ catch (  Exception e) {
+    log.error(e);
+    patientList.add("Error while attempting to find duplicate patients - " + e.getMessage());
   }
   return patientList;
 }

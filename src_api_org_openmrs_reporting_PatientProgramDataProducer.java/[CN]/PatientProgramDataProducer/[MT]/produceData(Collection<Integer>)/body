@@ -1,0 +1,11 @@
+{
+  PatientSet ps=new PatientSet();
+  ps.copyPatientIds(patientIds);
+  Map<Integer,PatientProgram> programs=Context.getPatientSetService().getPatientPrograms(ps,program);
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  DataTransformer trans=field.getTransformer();
+  for (  Map.Entry<Integer,PatientProgram> e : programs.entrySet()) {
+    ret.put(e.getKey(),trans.transform(e.getValue()));
+  }
+  return ret;
+}

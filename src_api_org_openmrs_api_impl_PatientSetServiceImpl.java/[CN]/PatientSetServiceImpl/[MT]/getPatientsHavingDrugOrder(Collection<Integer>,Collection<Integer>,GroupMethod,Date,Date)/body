@@ -1,0 +1,33 @@
+{
+  Map<Integer,Collection<Integer>> activeDrugs=getPatientSetDAO().getActiveDrugIds(patientIds,fromDate,toDate);
+  List<Integer> ret=new ArrayList<Integer>();
+  if (drugIds == null)   drugIds=new ArrayList();
+  if (drugIds.size() == 0) {
+    if (groupMethod == GroupMethod.NONE) {
+      if (patientIds == null) {
+        patientIds=getAllPatients().getPatientIds();
+      }
+      patientIds.removeAll(activeDrugs.keySet());
+      ret.addAll(patientIds);
+    }
+ else {
+      ret.addAll(activeDrugs.keySet());
+    }
+  }
+ else {
+    if (groupMethod == GroupMethod.NONE) {
+      ret.addAll(patientIds);
+      ret.removeAll(activeDrugs.keySet());
+      for (      Map.Entry<Integer,Collection<Integer>> e : activeDrugs.entrySet())       if (!OpenmrsUtil.containsAny(e.getValue(),drugIds))       ret.add(e.getKey());
+    }
+ else     if (groupMethod == GroupMethod.ALL) {
+      for (      Map.Entry<Integer,Collection<Integer>> e : activeDrugs.entrySet())       if (e.getValue().containsAll(drugIds))       ret.add(e.getKey());
+    }
+ else {
+      for (      Map.Entry<Integer,Collection<Integer>> e : activeDrugs.entrySet())       if (OpenmrsUtil.containsAny(e.getValue(),drugIds))       ret.add(e.getKey());
+    }
+  }
+  PatientSet ps=new PatientSet();
+  ps.setPatientIds(ret);
+  return ps;
+}

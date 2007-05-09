@@ -1,0 +1,3 @@
+{
+  return (Drug)sessionFactory.getCurrentSession().createQuery("from Drug d where d.name = :name").setString("name",drugName).uniqueResult();
+}

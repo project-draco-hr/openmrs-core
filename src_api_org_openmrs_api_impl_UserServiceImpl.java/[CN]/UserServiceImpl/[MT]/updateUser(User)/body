@@ -1,0 +1,6 @@
+{
+  checkPrivileges(user);
+  setCollectionProperties(user);
+  if (user.getSystemId() == null)   user.setSystemId(generateSystemId());
+  getUserDAO().updateUser(user);
+}

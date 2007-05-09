@@ -1,0 +1,13 @@
+{
+  if (log.isErrorEnabled()) {
+    if (instance != null && instance.proxyFactories != null) {
+      for (      Map.Entry<Class,ProxyFactory> entry : instance.proxyFactories.entrySet()) {
+        log.debug("Class:ProxyFactory - " + entry.getKey().getName() + ":"+ entry.getValue());
+      }
+      if (instance.proxyFactories != null)       instance.proxyFactories.clear();
+      instance.proxyFactories=null;
+    }
+    log.debug("Destroying ServiceContext instance: " + instance);
+  }
+  instance=null;
+}

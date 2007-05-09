@@ -1,5 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
   String sql="from Concept concept";
   try {
     Concept.class.getDeclaredField(sort);
@@ -16,7 +15,6 @@
   sql+=" order by concept." + sort;
   if (dir.equals("desc"))   sql+=" desc";
  else   sql+=" asc";
-  Query query=session.createQuery(sql);
-  List<Concept> concepts=query.list();
-  return concepts;
+  Query query=sessionFactory.getCurrentSession().createQuery(sql);
+  return query.list();
 }

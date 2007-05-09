@@ -1,13 +1,4 @@
 {
-  Session session=HibernateUtil.currentSession();
   hl7InQueue.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(hl7InQueue);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(hl7InQueue);
 }

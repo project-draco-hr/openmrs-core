@@ -1,0 +1,7 @@
+{
+  Location healthCenter=null;
+  if (healthCenter == null)   return new Result("UNKNOWN");
+  Result result=new Result(healthCenter.getName());
+  result.setValueNumeric(healthCenter.getLocationId());
+  return result;
+}

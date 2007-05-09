@@ -1,0 +1,8 @@
+{
+  log.debug("In getCsc with workflow: " + workflow + ", and triger of "+ trigger);
+  ConceptStateConversion csc=null;
+  if (workflow != null && trigger != null) {
+    csc=(ConceptStateConversion)sessionFactory.getCurrentSession().createQuery("from ConceptStateConversion c where c.programWorkflow.programWorkflowId = :workflowId and c.concept.conceptId = :conceptId").setInteger("workflowId",workflow.getProgramWorkflowId()).setInteger("conceptId",trigger.getConceptId()).uniqueResult();
+  }
+  return csc;
+}

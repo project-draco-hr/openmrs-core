@@ -1,0 +1,21 @@
+{
+  getParametersFromRequest(request);
+  if ("".equals(personId)) {
+    if ("view".equals(viewType) || "shortEdit".equals(viewType))     viewType="shortEdit";
+ else     viewType="edit";
+    return new ModelAndView(new RedirectView(getPersonURL("",personType,viewType,request)));
+  }
+ else {
+    if ("view".equals(viewType)) {
+      if ("patient".equals(personType)) {
+        try {
+          if (Context.getPatientService().getPatient(Integer.valueOf(personId)) == null)           viewType="shortEdit";
+        }
+ catch (        Exception noPatientEx) {
+          viewType="shortEdit";
+        }
+      }
+    }
+    return new ModelAndView(new RedirectView(getPersonURL(personId,personType,viewType,request)));
+  }
+}

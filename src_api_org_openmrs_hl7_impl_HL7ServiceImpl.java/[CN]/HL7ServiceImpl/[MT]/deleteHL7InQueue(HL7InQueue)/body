@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(HL7Constants.PRIV_DELETE_HL7_IN_QUEUE))   throw new APIAuthenticationException("Insufficient privilege to delete an HL7 inbound queue entry");
+  getHL7DAO().deleteHL7InQueue(hl7InQueue);
+}

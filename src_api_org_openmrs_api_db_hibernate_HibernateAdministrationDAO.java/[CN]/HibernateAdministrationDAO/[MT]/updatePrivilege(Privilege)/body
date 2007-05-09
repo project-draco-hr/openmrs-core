@@ -1,15 +1,6 @@
 {
   if (privilege.getPrivilege() == null)   createPrivilege(privilege);
  else {
-    try {
-      Session session=HibernateUtil.currentSession();
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(privilege);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
+    sessionFactory.getCurrentSession().saveOrUpdate(privilege);
   }
 }

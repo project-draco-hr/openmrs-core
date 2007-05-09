@@ -1,48 +1,29 @@
 {
   Vector<Object> patientList=new Vector<Object>();
-  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  Context context=(Context)WebContextFactory.get().getSession().getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    patientList.add("Your session has expired.");
-    patientList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
-  }
- else {
-    try {
-      Integer userId=-1;
-      if (context.isAuthenticated())       userId=context.getAuthenticatedUser().getUserId();
-      log.info(userId + "|" + searchValue);
-      FormEntryService ps=context.getFormEntryService();
-      List<Patient> patients;
-      patients=ps.findPatients(searchValue,includeVoided);
-      patientList=new Vector<Object>(patients.size());
-      for (      Patient p : patients) {
-        patientList.add(new PatientListItem(p));
-      }
-      if (patientList.size() < 3) {
-        String[] names=searchValue.split(" ");
-        String newSearch="";
-        for (        String name : names) {
-          if (name.length() > 3)           name=name.substring(0,4);
-          newSearch+=" " + name;
-        }
-        newSearch=newSearch.trim();
-        List<Patient> newPatients=ps.findPatients(newSearch,includeVoided);
-        newPatients.removeAll(patients);
-        if (newPatients.size() > 0) {
-          patientList.add("Minimal patients returned. Results for <b>" + newSearch + "</b>");
-          for (          Patient p : newPatients) {
-            PatientListItem pi=new PatientListItem(p);
-            patientList.add(pi);
-          }
-        }
-      }
+  Integer userId=-1;
+  if (Context.isAuthenticated())   userId=Context.getAuthenticatedUser().getUserId();
+  log.info(userId + "|" + searchValue);
+  PatientService ps=Context.getPatientService();
+  List<Patient> patients;
+  patients=ps.findPatients(searchValue,includeVoided);
+  patientList=new Vector<Object>(patients.size());
+  for (  Patient p : patients)   patientList.add(new PatientListItem(p));
+  if (patientList.size() < 3 && !searchValue.matches(".*\\d+.*")) {
+    String[] names=searchValue.split(" ");
+    String newSearch="";
+    for (    String name : names) {
+      if (name.length() > 3)       name=name.substring(0,4);
+      newSearch+=" " + name;
     }
- catch (    Exception e) {
-      StringWriter sw=new StringWriter();
-      PrintWriter pw=new PrintWriter(sw);
-      e.printStackTrace(pw);
-      log.error(e + " - " + sw.toString());
-      patientList.add("Error while attempting to find patient - " + e.getMessage());
+    newSearch=newSearch.trim();
+    List<Patient> newPatients=ps.findPatients(newSearch,includeVoided);
+    newPatients.removeAll(patients);
+    if (newPatients.size() > 0) {
+      patientList.add("Minimal patients returned. Results for <b>" + newSearch + "</b>");
+      for (      Patient p : newPatients) {
+        PatientListItem pi=new PatientListItem(p);
+        patientList.add(pi);
+      }
     }
   }
   return patientList;

@@ -1,9 +1,15 @@
 {
+  Context.openSession();
   try {
     log.debug("Processing HL7 queue ... ");
+    if (Context.isAuthenticated() == false)     authenticate();
     processor.processHL7InQueue();
   }
  catch (  HL7Exception e) {
-    log.error(e);
+    log.error("Error running hl7 in queue task",e);
+    throw new APIException("Error running hl7 error queue task",e);
+  }
+ finally {
+    Context.closeSession();
   }
 }

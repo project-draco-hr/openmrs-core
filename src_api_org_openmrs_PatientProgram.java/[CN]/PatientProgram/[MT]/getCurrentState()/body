@@ -1,0 +1,15 @@
+{
+  PatientState ret=null;
+  Set<PatientState> states=this.getStates();
+  if (states != null) {
+    for (    PatientState state : states) {
+      Date now=new Date();
+      boolean isEnded=(state.getEndDate() != null);
+      if (isEnded)       isEnded=state.getEndDate().before(now);
+      if (state.getActive() && !state.getVoided() && state.getStartDate().before(now)&& !isEnded) {
+        ret=state;
+      }
+    }
+  }
+  return ret;
+}

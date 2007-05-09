@@ -1,0 +1,66 @@
+{
+  boolean retVal=true;
+  try {
+    Date Today=new Date();
+    String cfn;
+    MLMObject ardObj=new MLMObject(Context.getLocale(),null);
+    ArdenBaseLexer lexer=new ArdenBaseLexer(s);
+    ArdenBaseParser parser=new ArdenBaseParser(lexer);
+    parser.startRule();
+    BaseAST t=(BaseAST)parser.getAST();
+    log.debug(t.toStringTree());
+    ArdenBaseTreeParser treeParser=new ArdenBaseTreeParser();
+    String maintenance=treeParser.maintenance(t,ardObj);
+    cfn=ardObj.getClassName();
+    OutputStream os=new FileOutputStream("src/api/org/openmrs/logic/rule/" + cfn + ".java");
+    Writer w=new OutputStreamWriter(os);
+    log.info("Writing to file - " + cfn + ".java");
+    w.write("/********************************************************************" + "\n Translated from - " + fn + " on "+ Today.toString()+ "\n\n");
+    w.write(maintenance);
+    log.debug(t.getNextSibling().toStringTree());
+    String library=treeParser.library(t.getNextSibling(),ardObj);
+    w.write(library);
+    w.write("\n********************************************************************/\n");
+    w.write("package org.openmrs.logic.rule;\n\n");
+    w.write("import java.util.HashMap;\n");
+    w.write("import org.openmrs.Concept;\nimport org.openmrs.Patient;\n");
+    w.write("import org.openmrs.logic.Constraint;\nimport org.openmrs.logic.DateConstraint;\n");
+    w.write("import org.openmrs.logic.Duration;\nimport org.openmrs.logic.LogicDataSource;\n");
+    w.write("import org.openmrs.logic.Result;\nimport org.openmrs.logic.Rule;\n");
+    w.write("import org.openmrs.logic.Aggregation;\n\n\n");
+    String classname=ardObj.getClassName();
+    w.write("public class " + classname + " extends Rule{\n\n");
+    w.write("private Patient patient;\nprivate String firstname;\n");
+    w.write("private LogicDataSource dataSource;\n");
+    w.write("private HashMap<String, String> userVarMap;\n\n\n\n");
+    w.flush();
+    log.debug(t.getNextSibling().getNextSibling().toStringTree());
+    System.out.println(t.getNextSibling().getNextSibling().toStringTree());
+    treeParser.data(t.getNextSibling().getNextSibling(),ardObj);
+    log.debug(t.getNextSibling().getNextSibling().getNextSibling().toStringTree());
+    System.out.println(t.getNextSibling().getNextSibling().getNextSibling().toStringTree());
+    String logicstr=treeParser.logic(t.getNextSibling().getNextSibling().getNextSibling(),ardObj);
+    ardObj.PrintConceptMap();
+    ardObj.PrintEvaluateList();
+    retVal=ardObj.WriteEvaluate(w,classname);
+    if (retVal) {
+      String actionstr=treeParser.action(t.getNextSibling().getNextSibling().getNextSibling().getNextSibling(),ardObj);
+      ardObj.WriteAction(actionstr,w);
+      w.append("}");
+      w.flush();
+      w.close();
+    }
+ else {
+      w.flush();
+      w.close();
+      boolean success=(new File("src/api/org/openmrs/logic/rule/" + cfn + ".java")).delete();
+      if (!success) {
+        System.out.println("Incomplete compiled file " + cfn + ".java cannot be deleted!");
+      }
+    }
+  }
+ catch (  Exception e) {
+    log.error(e.getStackTrace());
+  }
+  return retVal;
+}

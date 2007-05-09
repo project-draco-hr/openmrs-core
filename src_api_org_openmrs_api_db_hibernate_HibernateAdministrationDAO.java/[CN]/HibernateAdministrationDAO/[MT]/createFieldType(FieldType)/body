@@ -1,14 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  fieldType.setCreator(context.getAuthenticatedUser());
+  fieldType.setCreator(Context.getAuthenticatedUser());
   fieldType.setDateCreated(new Date());
-  try {
-    HibernateUtil.beginTransaction();
-    session.save(fieldType);
-    HibernateUtil.commitTransaction();
-  }
- catch (  Exception e) {
-    HibernateUtil.rollbackTransaction();
-    throw new DAOException(e);
-  }
+  sessionFactory.getCurrentSession().save(fieldType);
 }

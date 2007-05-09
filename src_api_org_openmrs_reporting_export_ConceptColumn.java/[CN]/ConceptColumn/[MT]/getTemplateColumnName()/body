@@ -2,7 +2,8 @@
   String s=columnName;
   s+=getExtrasTemplateColumnNames(false);
   if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier)) {
-    s+="#foreach($o in [1.." + (modifierNum - 1) + "]) ";
+    Integer num=modifierNum == null ? 1 : modifierNum;
+    s+="#foreach($o in [1.." + (num - 1) + "]) ";
     s+="$!{fn.getSeparator()}";
     s+=columnName + "_($velocityCount)";
     s+=getExtrasTemplateColumnNames(true);

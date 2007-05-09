@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  ConceptDatatype cd=new ConceptDatatype();
-  cd=(ConceptDatatype)session.get(ConceptDatatype.class,i);
-  return cd;
+  return (ConceptDatatype)sessionFactory.getCurrentSession().get(ConceptDatatype.class,i);
 }

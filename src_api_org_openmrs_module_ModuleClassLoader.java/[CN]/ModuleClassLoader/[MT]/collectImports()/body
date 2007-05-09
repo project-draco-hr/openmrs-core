@@ -1,0 +1,30 @@
+{
+  Map<String,Module> publicImportsMap=new WeakHashMap<String,Module>();
+  Map<String,Module> privateImportsMap=new WeakHashMap<String,Module>();
+  for (  String requiredId : getModule().getRequiredModules()) {
+    Module requiredModule=ModuleFactory.getModuleById(requiredId);
+    if (ModuleFactory.isModuleStarted(requiredModule)) {
+      publicImportsMap.put(requiredModule.getModuleId(),requiredModule);
+    }
+ else {
+      privateImportsMap.put(requiredModule.getModuleId(),requiredModule);
+    }
+  }
+  publicImports=(Module[])publicImportsMap.values().toArray(new Module[publicImportsMap.size()]);
+  privateImports=(Module[])privateImportsMap.values().toArray(new Module[privateImportsMap.size()]);
+  Map<String,Module> reverseLookupsMap=new WeakHashMap<String,Module>();
+  for (  Module module : ModuleFactory.getLoadedModules()) {
+    if (module.equals(getModule()) || publicImportsMap.containsKey(module.getModuleId()) || privateImportsMap.containsKey(module.getModuleId())) {
+      continue;
+    }
+    for (    String requiredModuleId : module.getRequiredModules()) {
+      Module requiredModule=ModuleFactory.getModuleById(requiredModuleId);
+      if (!requiredModule.equals(getModule())) {
+        continue;
+      }
+      reverseLookupsMap.put(module.getModuleId(),module);
+      break;
+    }
+  }
+  reverseLookups=(Module[])reverseLookupsMap.values().toArray(new Module[reverseLookupsMap.size()]);
+}

@@ -1,18 +1,3 @@
 {
-  if (isAuthenticated()) {
-    if (user.hasPrivilege(privilege))     return true;
-    Role authRole=getUserService().getRole(OpenmrsConstants.AUTHENTICATED_ROLE);
-    if (authRole == null) {
-      throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.AUTHENTICATED_ROLE + " role does not exist");
-    }
-    if (authRole.hasPrivilege(privilege))     return true;
-  }
-  log.debug("Checking '" + privilege + "' against proxes: "+ proxies);
-  for (  String s : proxies)   if (s.equals(privilege))   return true;
-  Role role=getUserService().getRole(OpenmrsConstants.ANONYMOUS_ROLE);
-  if (role == null) {
-    throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.ANONYMOUS_ROLE + " role does not exist");
-  }
-  if (role.hasPrivilege(privilege))   return true;
-  return false;
+  return getUserContext().hasPrivilege(privilege);
 }

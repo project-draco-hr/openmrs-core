@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_LOCATIONS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_LOCATIONS);
+  getAdministrationDAO().createLocation(location);
+}

@@ -1,9 +1,8 @@
 {
   HttpSession httpSession=request.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
   Set<Patient> patientList=new HashSet<Patient>();
-  if (context != null && context.isAuthenticated()) {
-    PatientService ps=context.getPatientService();
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
     patientList.addAll(ps.getPatientsByName(""));
   }
   return patientList;

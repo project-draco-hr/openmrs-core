@@ -1,6 +1,3 @@
 {
-  Session session=HibernateUtil.currentSession();
-  FormField formField=new FormField();
-  formField=(FormField)session.get(FormField.class,formFieldId);
-  return formField;
+  return (FormField)sessionFactory.getCurrentSession().get(FormField.class,formFieldId);
 }

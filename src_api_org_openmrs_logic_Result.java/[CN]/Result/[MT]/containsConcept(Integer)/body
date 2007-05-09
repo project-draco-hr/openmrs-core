@@ -1,0 +1,10 @@
+{
+  if (valueList != null) {
+    for (    Result r : valueList) {
+      if (r.containsConcept(conceptId))       return true;
+    }
+    return false;
+  }
+  if (valueCoded == null)   return false;
+  return (valueCoded.getConceptId().equals(conceptId));
+}

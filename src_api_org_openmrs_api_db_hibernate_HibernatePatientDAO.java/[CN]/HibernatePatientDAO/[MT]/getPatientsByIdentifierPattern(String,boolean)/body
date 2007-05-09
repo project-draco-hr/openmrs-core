@@ -1,21 +1,14 @@
 {
-  Session session=HibernateUtil.currentSession();
-  SQLQuery query;
   String regex=OpenmrsConstants.PATIENT_IDENTIFIER_REGEX;
-  String order="";
   regex=regex.replace("@SEARCH@",identifier);
-  String sql="select {pat.*} from patient {pat}, patient_identifier ident where ident.identifier regexp :regex and ident.patient_id = {pat}.patient_id";
-  if (includeVoided) {
-    query=session.createSQLQuery(sql + order);
-    query.setString("regex",regex);
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifier.class);
+  criteria.setProjection(Projections.property("patient"));
+  criteria.add(Restrictions.sqlRestriction("identifier regexp '" + regex + "'"));
+  if (includeVoided == false) {
+    criteria.createAlias("patient","pat");
+    criteria.add(Restrictions.eq("pat.voided",false));
   }
- else {
-    query=session.createSQLQuery(sql + " and {pat}.voided = :void" + order);
-    query.setString("regex",regex);
-    query.setBoolean("void",includeVoided);
-  }
-  query.addEntity("pat",Patient.class);
-  List<Patient> patients=query.list();
+  List<Patient> patients=criteria.list();
   Set<Patient> returnSet=new LinkedHashSet<Patient>();
   returnSet.addAll(patients);
   return returnSet;

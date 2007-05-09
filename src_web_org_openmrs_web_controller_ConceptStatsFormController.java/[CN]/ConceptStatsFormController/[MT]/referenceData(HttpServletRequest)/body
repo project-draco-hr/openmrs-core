@@ -1,0 +1,111 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  if (!Context.hasPrivilege("View Observations"))   return map;
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
+  String conceptId=request.getParameter("conceptId");
+  if (conceptId != null) {
+    Concept concept=cs.getConcept(Integer.valueOf(conceptId));
+    ObsService obsService=Context.getObsService();
+    if (concept != null) {
+      map.put("previousConcept",cs.getPrevConcept(concept));
+      map.put("nextConcept",cs.getNextConcept(concept));
+      if (ConceptDatatype.NUMERIC.equals(concept.getDatatype().getHl7Abbreviation())) {
+        map.put("displayType","numeric");
+        List<Object[]> numericAnswers=obsService.getNumericAnswersForConcept(concept,true,ObsService.PERSON);
+        if (numericAnswers.size() > 0) {
+          Double min=(Double)numericAnswers.get(0)[2];
+          Double max=(Double)numericAnswers.get(numericAnswers.size() - 1)[2];
+          Double median=(Double)numericAnswers.get(numericAnswers.size() / 2)[2];
+          Map<Double,Integer> counts=new HashMap<Double,Integer>();
+          Double total=0.0;
+          TimeSeries timeSeries=new TimeSeries(concept.getName().getName(),Day.class);
+          TimeSeriesCollection timeDataset=new TimeSeriesCollection();
+          Calendar calendar=Calendar.getInstance();
+          double[] obsNumerics=new double[(numericAnswers.size())];
+          Integer i=0;
+          for (          Object[] values : numericAnswers) {
+            Date date=(Date)values[1];
+            Double value=(Double)values[2];
+            total+=value;
+            obsNumerics[i++]=value;
+            Integer count=counts.get(value);
+            counts.put(value,count == null ? 1 : count + 1);
+            calendar.setTime(date);
+            Day day=new Day(calendar.get(Calendar.DAY_OF_MONTH),calendar.get(Calendar.MONTH) + 1,calendar.get(Calendar.YEAR) < 1900 ? 1900 : calendar.get(Calendar.YEAR));
+            timeSeries.addOrUpdate(day,value);
+          }
+          Double size=new Double(numericAnswers.size());
+          Double mean=total / size;
+          map.put("obsNumerics",numericAnswers);
+          map.put("min",min);
+          map.put("max",max);
+          map.put("mean",mean);
+          map.put("median",median);
+          HistogramDataset histDataset=new HistogramDataset();
+          histDataset.addSeries(concept.getName().getName(),obsNumerics,counts.size());
+          JFreeChart histogram=ChartFactory.createHistogram(concept.getName().getName(),msa.getMessage("Concept.stats.histogramDomainAxisTitle"),msa.getMessage("Concept.stats.histogramRangeAxisTitle"),histDataset,PlotOrientation.VERTICAL,false,true,false);
+          map.put("histogram",histogram);
+          Double x=0.98;
+          Integer xpercentile=(int)(x * size);
+          Object[] upperQuartile=numericAnswers.get(xpercentile);
+          Object[] lowerQuartile=numericAnswers.get((int)(size - xpercentile));
+          Double innerQuartile=(Double)upperQuartile[2] - (Double)lowerQuartile[2];
+          Double innerQuartileLimit=innerQuartile * 1.5;
+          Double upperQuartileLimit=(Double)upperQuartile[2] + innerQuartileLimit;
+          Double lowerQuartileLimit=(Double)lowerQuartile[2] - innerQuartileLimit;
+          List<Object[]> outliers=new Vector<Object[]>();
+          for (i=0; i < size - xpercentile; i++) {
+            Object[] possibleOutlier=numericAnswers.get(i);
+            if ((Double)(possibleOutlier[2]) >= lowerQuartileLimit)             break;
+            outliers.add(possibleOutlier);
+          }
+          for (i=size.intValue() - 1; i >= xpercentile; i--) {
+            Object[] possibleOutlier=numericAnswers.get(i);
+            if ((Double)(possibleOutlier[2]) <= upperQuartileLimit)             break;
+            outliers.add(possibleOutlier);
+          }
+          numericAnswers.removeAll(outliers);
+          double[] obsNumericsOutliers=new double[(numericAnswers.size())];
+          i=0;
+          counts.clear();
+          for (          Object[] values : numericAnswers) {
+            Double value=(Double)values[2];
+            obsNumericsOutliers[i++]=value;
+            Integer count=counts.get(value);
+            counts.put(value,count == null ? 1 : count + 1);
+          }
+          HistogramDataset outlierHistDataset=new HistogramDataset();
+          outlierHistDataset.addSeries(concept.getName().getName(),obsNumericsOutliers,counts.size());
+          JFreeChart histogramOutliers=ChartFactory.createHistogram(concept.getName().getName(),msa.getMessage("Concept.stats.histogramDomainAxisTitle"),msa.getMessage("Concept.stats.histogramRangeAxisTitle"),outlierHistDataset,PlotOrientation.VERTICAL,false,true,false);
+          map.put("histogramOutliers",histogramOutliers);
+          map.put("outliers",outliers);
+          timeDataset.addSeries(timeSeries);
+          JFreeChart lineChart=ChartFactory.createTimeSeriesChart(concept.getName().getName(),msa.getMessage("Concept.stats.lineChartDomainAxisLabel"),msa.getMessage("Concept.stats.histogramRangeAxisLabel"),timeDataset,false,true,false);
+          map.put("timeSeries",lineChart);
+        }
+      }
+ else       if (ConceptDatatype.BOOLEAN.equals(concept.getDatatype().getHl7Abbreviation())) {
+        map.put("displayType","boolean");
+      }
+ else       if (ConceptDatatype.CODED.equals(concept.getDatatype().getHl7Abbreviation())) {
+        map.put("displayType","coded");
+        List<Obs> obs=obsService.getObservations(concept,null,ObsService.PERSON);
+        DefaultPieDataset pieDataset=new DefaultPieDataset();
+        Map<String,Integer> counts=new HashMap<String,Integer>();
+        for (        Obs o : obs) {
+          Concept value=o.getValueCoded();
+          String name=value.getName().getName();
+          Integer count=counts.get(name);
+          counts.put(name,count == null ? 1 : count + 1);
+        }
+        for (        Map.Entry<String,Integer> entry : counts.entrySet())         pieDataset.setValue(entry.getKey(),entry.getValue());
+        JFreeChart pieChart=ChartFactory.createPieChart(concept.getName().getName(),pieDataset,true,true,false);
+        map.put("pieChart",pieChart);
+      }
+    }
+  }
+  map.put("locale",locale.getLanguage().substring(0,2));
+  return map;
+}

@@ -1,11 +1,5 @@
 {
-  HttpSession httpSession=pageContext.getSession();
-  Context context=(Context)httpSession.getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    pageContext.setAttribute("authenticatedUser",null);
-  }
- else {
-    pageContext.setAttribute("authenticatedUser",context.getAuthenticatedUser());
-  }
+  log.debug("setting authenticatedUser with value: " + Context.getAuthenticatedUser());
+  pageContext.setAttribute("authenticatedUser",Context.getAuthenticatedUser());
   return EVAL_BODY_INCLUDE;
 }

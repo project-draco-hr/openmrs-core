@@ -1,6 +1,5 @@
 {
-  Session session=HibernateUtil.currentSession();
-  Criteria crit=session.createCriteria(Tribe.class);
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Tribe.class);
   crit.add(Expression.like("name",s,MatchMode.START));
   crit.addOrder(Order.asc("name"));
   return crit.list();

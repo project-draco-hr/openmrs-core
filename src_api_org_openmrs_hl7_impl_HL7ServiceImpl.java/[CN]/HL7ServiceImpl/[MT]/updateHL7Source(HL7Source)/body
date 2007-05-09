@@ -1,0 +1,4 @@
+{
+  if (!Context.hasPrivilege(HL7Constants.PRIV_UPDATE_HL7_SOURCE))   throw new APIAuthenticationException("Insufficient privilege to update an HL7 source");
+  getHL7DAO().updateHL7Source(hl7Source);
+}

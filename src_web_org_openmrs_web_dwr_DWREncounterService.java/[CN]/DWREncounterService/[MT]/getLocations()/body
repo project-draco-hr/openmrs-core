@@ -1,24 +1,16 @@
 {
   Vector locationList=new Vector();
-  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
-  Context context=(Context)request.getSession(false).getAttribute(WebConstants.OPENMRS_CONTEXT_HTTPSESSION_ATTR);
-  if (context == null) {
-    locationList.add("Your session has expired.");
-    locationList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
+  try {
+    EncounterService es=Context.getEncounterService();
+    List<Location> locations=es.getLocations();
+    locationList=new Vector(locations.size());
+    for (    Location loc : locations) {
+      locationList.add(new LocationListItem(loc));
+    }
   }
- else {
-    try {
-      FormEntryService fs=context.getFormEntryService();
-      List<Location> locations=fs.getLocations();
-      locationList=new Vector(locations.size());
-      for (      Location loc : locations) {
-        locationList.add(new LocationListItem(loc));
-      }
-    }
- catch (    Exception e) {
-      log.error("Error while attempting to get locations",e);
-      locationList.add("Error while attempting to get locations - " + e.getMessage());
-    }
+ catch (  Exception e) {
+    log.error("Error while attempting to get locations",e);
+    locationList.add("Error while attempting to get locations - " + e.getMessage());
   }
   return locationList;
 }

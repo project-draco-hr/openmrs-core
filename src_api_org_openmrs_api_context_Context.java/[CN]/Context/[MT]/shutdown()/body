@@ -1,0 +1,29 @@
+{
+  log.debug("Shutting down the scheduler");
+  try {
+    SchedulerUtil.shutdown();
+  }
+ catch (  Exception e) {
+    log.warn("Error while shutting down scheduler service",e);
+  }
+  log.debug("Shutting down the modeules");
+  try {
+    ModuleUtil.shutdown();
+  }
+ catch (  Exception e) {
+    log.warn("Error while shutting down module system",e);
+  }
+  log.debug("Shutting down the context");
+  try {
+    ContextDAO dao=null;
+    try {
+      dao=getContextDAO();
+    }
+ catch (    APIException e) {
+    }
+    if (dao != null)     dao.shutdown();
+  }
+ catch (  Exception e) {
+    log.warn("Error while shutting down context dao",e);
+  }
+}

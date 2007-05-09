@@ -1,0 +1,11 @@
+{
+  Result lastMonth=dataSource.eval(patient,null,"OVERALL DRUG ADHERENCE IN LAST MONTH",DateConstraint.withinPreceding(Duration.years(1)),args);
+  if (lastMonth.containsConcept(1065))   return new Result("NO");
+  if (lastMonth.containsConcept(1085))   return new Result("NO");
+  Result lastWeek=dataSource.eval(patient,null,"ANTIRETROVIRAL ADHERENCE IN PAST WEEK",DateConstraint.withinPreceding(Duration.years(1)),null);
+  for (  Result r : lastWeek.getResultList()) {
+    if (!r.containsConcept(1163))     return new Result("NO");
+  }
+  if (lastMonth.isNull() & lastWeek.isNull())   return new Result("UNKNOWN");
+  return new Result("YES");
+}

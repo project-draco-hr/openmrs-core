@@ -1,15 +1,3 @@
 {
-  if (role.getRole() == null)   createRole(role);
- else {
-    try {
-      Session session=HibernateUtil.currentSession();
-      HibernateUtil.beginTransaction();
-      session.saveOrUpdate(role);
-      HibernateUtil.commitTransaction();
-    }
- catch (    Exception e) {
-      HibernateUtil.rollbackTransaction();
-      throw new DAOException(e);
-    }
-  }
+  sessionFactory.getCurrentSession().saveOrUpdate(role);
 }

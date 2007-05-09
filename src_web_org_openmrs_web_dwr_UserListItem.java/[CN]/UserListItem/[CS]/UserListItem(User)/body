@@ -1,13 +1,11 @@
 {
+  super(user);
   if (user != null) {
     userId=user.getUserId();
-    firstName=user.getFirstName();
-    lastName=user.getLastName();
     systemId=user.getSystemId();
     username=user.getUsername();
     int i=0;
     roles=new String[user.getRoles().size()];
-    i=0;
     for (    Role r : user.getRoles()) {
       roles[i++]=r.getRole();
     }
