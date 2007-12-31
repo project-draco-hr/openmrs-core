@@ -5,7 +5,7 @@
   }
  else {
     RelationshipType relType=Context.getPersonService().findRelationshipType(relationshipTypeName);
-    patientIdRelationshipMap=patientSetService.getRelationships(getPatientSet(),relType);
+    patientIdRelationshipMap=patientSetService.getRelationships(getPatientSetIfNotAllPatients(),relType);
     relationshipMap.put(relationshipTypeName,patientIdRelationshipMap);
   }
   return patientIdRelationshipMap.get(patientId);

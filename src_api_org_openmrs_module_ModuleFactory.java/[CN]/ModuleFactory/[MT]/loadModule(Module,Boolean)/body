@@ -1,5 +1,5 @@
 {
-  log.debug("Adding module " + module.getName() + " to the module queue");
+  if (log.isDebugEnabled())   log.debug("Adding module " + module.getName() + " to the module queue");
   Module oldModule=getLoadedModulesMap().get(module.getModuleId());
   if (oldModule != null) {
     if (replaceIfExists == true) {

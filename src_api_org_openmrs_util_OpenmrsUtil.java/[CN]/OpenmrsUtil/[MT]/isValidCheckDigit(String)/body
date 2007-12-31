@@ -1,5 +1,5 @@
 {
-  if (id.indexOf("-") < 0) {
+  if (id.indexOf("-") < 1) {
     throw new PatientIdentifierException("Cannot find check-digit in identifier");
   }
   String idWithoutCheckDigit=id.substring(0,id.indexOf("-"));

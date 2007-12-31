@@ -11,5 +11,5 @@
     }
   }
   PatientSetService service=Context.getPatientSetService();
-  return service.getPatientsHavingDrugOrder(input.getPatientIds(),drugIds,onDate);
+  return service.getPatientsHavingDrugOrder(input == null ? null : input.getPatientIds(),drugIds,onDate);
 }

@@ -3,8 +3,7 @@
   Patient p=Context.getPatientService().getPatient(patientId);
   Date discDate=null;
   if (discontinueDate != null) {
-    String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
-    SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
     try {
       discDate=sdf.parse(discontinueDate);
     }

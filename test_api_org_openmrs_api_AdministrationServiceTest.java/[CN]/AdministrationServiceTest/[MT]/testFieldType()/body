@@ -8,10 +8,11 @@
   assertNotNull(newFieldType);
   List<FieldType> fieldTypes=formService.getFieldTypes();
   assertNotNull(fieldTypes);
+  assertNotNull(fieldType);
   boolean found=false;
-  for (Iterator i=fieldTypes.iterator(); i.hasNext(); ) {
-    FieldType fieldType2=(FieldType)i.next();
-    assertNotNull(fieldType);
+  for (Iterator<FieldType> i=fieldTypes.iterator(); i.hasNext(); ) {
+    FieldType fieldType2=i.next();
+    assertNotNull(fieldType2);
     assertTrue(fieldType.equals(fieldType2) == (fieldType.getFieldTypeId().equals(fieldType2.getFieldTypeId())));
     if (fieldType.equals(fieldType2))     found=true;
   }

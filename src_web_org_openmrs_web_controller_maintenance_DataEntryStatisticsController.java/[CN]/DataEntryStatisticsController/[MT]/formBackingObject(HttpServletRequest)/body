@@ -10,7 +10,7 @@
   String encUserColumn=ret.getEncUserColumn();
   String orderUserColumn=ret.getOrderUserColumn();
   List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(ret.getFromDate(),toDateToUse,encUserColumn,orderUserColumn,ret.getGroupBy());
-  DataTable table=DataEntryStatistic.tableByUserAndType(stats);
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats,ret.getHideAverageObs());
   ret.setTable(table);
   return ret;
 }

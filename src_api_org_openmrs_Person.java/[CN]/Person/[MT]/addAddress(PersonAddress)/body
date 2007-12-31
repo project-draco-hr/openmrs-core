@@ -1,5 +1,7 @@
 {
-  address.setPerson(this);
-  if (addresses == null)   addresses=new HashSet<PersonAddress>();
-  if (!addresses.contains(address) && address != null)   addresses.add(address);
+  if (address != null) {
+    address.setPerson(this);
+    if (addresses == null)     addresses=new TreeSet<PersonAddress>();
+    if (!OpenmrsUtil.collectionContains(addresses,address))     addresses.add(address);
+  }
 }

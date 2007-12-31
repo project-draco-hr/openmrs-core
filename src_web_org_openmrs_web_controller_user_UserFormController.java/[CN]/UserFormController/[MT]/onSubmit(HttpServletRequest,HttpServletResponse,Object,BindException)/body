@@ -21,8 +21,8 @@
     if (isNewUser(user))     us.createUser(user,password);
  else {
       us.updateUser(user);
-      if (Context.getAuthenticatedUser().isSuperUser() && !password.equals("")) {
-        log.debug("calling changePassword");
+      if (!password.equals("") && Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS)) {
+        if (log.isDebugEnabled())         log.debug("calling changePassword for user " + user + " by user "+ Context.getAuthenticatedUser());
         us.changePassword(user,password);
       }
     }

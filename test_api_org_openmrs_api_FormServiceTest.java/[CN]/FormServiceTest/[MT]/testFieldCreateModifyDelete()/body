@@ -1,15 +1,14 @@
 {
+  executeDataSet(INITIAL_FIELDS_XML);
+  FormService formService=Context.getFormService();
+  ConceptService conceptService=Context.getConceptService();
   Concept concept1=conceptService.getConcept(1);
   String name1="name1";
   String descript1="descript1";
-  FieldType fieldtype1=formService.getFieldTypes().get(1);
+  FieldType fieldtype1=formService.getFieldTypes().get(0);
   String table1="table1";
   String attr1="attr1";
   Boolean multi1=true;
-  Set<FieldAnswer> answers1=new HashSet<FieldAnswer>();
-  FieldAnswer answer1=new FieldAnswer();
-  answer1.setConcept(conceptService.getConcept(10));
-  answers1.add(answer1);
   Field field1=new Field();
   field1.setConcept(concept1);
   field1.setName(name1);
@@ -18,16 +17,12 @@
   field1.setTableName(table1);
   field1.setAttributeName(attr1);
   field1.setSelectMultiple(multi1);
-  field1.addAnswer(answer1);
-  field1.setAnswers(answers1);
-  field1.removeAnswer(answer1);
-  field1.addAnswer(answer1);
   formService.updateField(field1);
   Field field2=formService.getField(field1.getFieldId());
   Concept concept2=conceptService.getConcept(2);
   String name2="name2";
   String descript2="descript2";
-  FieldType fieldtype2=formService.getFieldTypes().get(0);
+  FieldType fieldtype2=formService.getFieldTypes().get(1);
   String table2="table2";
   String attr2="attr2";
   Boolean multi2=false;
@@ -38,11 +33,6 @@
   field2.setTableName(table2);
   field2.setAttributeName(attr2);
   field2.setSelectMultiple(multi2);
-  assertTrue(field1.getAnswers().equals(field2.getAnswers()));
-  FieldAnswer answer2=new FieldAnswer();
-  answer2.setConcept(conceptService.getConcept(22));
-  field2.addAnswer(answer2);
-  field2.removeAnswer(answer1);
   formService.updateField(field2);
   Field field3=formService.getField(field2.getFieldId());
   assertTrue(field3.equals(field1));
@@ -53,7 +43,6 @@
   assertTrue(field1.getTableName().equals(table2));
   assertTrue(field1.getAttributeName().equals(attr2));
   assertTrue(field1.getSelectMultiple().equals(multi2));
-  assertTrue(field1.getAnswers().equals(field3.getAnswers()));
   formService.deleteField(field3);
   assertNull(formService.getField(field3.getFieldId()));
 }

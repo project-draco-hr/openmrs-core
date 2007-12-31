@@ -3,9 +3,11 @@
   PatientSet ret=null;
   if (useCache)   ret=cachedResults.get(i);
   if (ret == null) {
-    PatientFilter pf=searchHistory.get(i);
+    ensureCachedFilter(i);
+    PatientFilter pf=cachedFilters.get(i);
     PatientSet everyone=Context.getPatientSetService().getAllPatients();
     ret=pf.filter(everyone);
+    cachedFilters.set(i,pf);
     cachedResults.set(i,ret);
     cachedResultDates.set(i,new Date());
   }

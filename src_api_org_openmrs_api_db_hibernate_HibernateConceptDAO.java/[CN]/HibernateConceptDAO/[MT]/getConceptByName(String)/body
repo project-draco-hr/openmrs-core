@@ -1,5 +1,5 @@
 {
-  Query query=sessionFactory.getCurrentSession().createQuery("select concept from Concept concept where concept.names.name = ?");
+  Query query=sessionFactory.getCurrentSession().createQuery("from Concept c join c.names names where names.name = ?");
   query.setString(0,name);
   List<Concept> concepts=query.list();
   int size=concepts.size();

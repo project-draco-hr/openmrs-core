@@ -15,7 +15,7 @@
     if (type == null)     type=encounterService.getEncounterType(typeName);
     if (type != null)     encounterTypes.add(type);
   }
-  Map<Integer,Object> encounterMap=patientSetService.getEncounterAttrsByType(getPatientSet(),encounterTypes,attr);
+  Map<Integer,Object> encounterMap=patientSetService.getEncounterAttrsByType(getPatientSetIfNotAllPatients(),encounterTypes,attr);
   patientEncounterMap.put(key,encounterMap);
   return encounterMap.get(getPatientId());
 }

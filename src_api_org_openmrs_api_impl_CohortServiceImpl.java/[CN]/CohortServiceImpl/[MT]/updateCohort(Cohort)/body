@@ -1,0 +1,6 @@
+{
+  if (cohort.getCreator() == null)   cohort.setCreator(Context.getAuthenticatedUser());
+  if (cohort.getDateCreated() == null)   cohort.setDateCreated(new java.util.Date());
+  if (cohort.getName() == null)   throw new IllegalArgumentException("Missing Name");
+  getCohortDAO().updateCohort(cohort);
+}

@@ -1,7 +1,7 @@
 {
   Map<Integer,Map<String,Object>> ret=new HashMap<Integer,Map<String,Object>>();
   Collection<Integer> ids=patients.getPatientIds();
-  Query query=sessionFactory.getCurrentSession().createQuery("select patient.personId, patient.gender, patient.birthdate from Patient patient");
+  Query query=sessionFactory.getCurrentSession().createQuery("select patient.personId, patient.gender, patient.birthdate from Patient patient where patient.voided = false");
   query.setCacheMode(CacheMode.IGNORE);
   List<Object[]> temp=query.list();
   long now=System.currentTimeMillis();

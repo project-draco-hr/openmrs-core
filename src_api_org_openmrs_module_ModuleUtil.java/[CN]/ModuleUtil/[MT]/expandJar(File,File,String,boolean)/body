@@ -27,30 +27,22 @@
         foundName=true;
       }
     }
-    if (!foundName)     log.warn("Unable to find: " + name + " in file "+ fileToExpand.getAbsolutePath());
+    if (!foundName)     log.debug("Unable to find: " + name + " in file "+ fileToExpand.getAbsolutePath());
   }
  catch (  IOException e) {
     log.warn("Unable to delete tmpModuleFile on error",e);
     throw e;
   }
  finally {
-    if (input != null) {
-      try {
-        input.close();
-      }
- catch (      Throwable t) {
-        ;
-      }
-      input=null;
+    try {
+      input.close();
     }
-    if (jarFile != null) {
-      try {
-        jarFile.close();
-      }
- catch (      Throwable t) {
-        ;
-      }
-      jarFile=null;
+ catch (    Exception e) {
+    }
+    try {
+      jarFile.close();
+    }
+ catch (    Exception e) {
     }
   }
 }

@@ -1,0 +1,11 @@
+{
+  try {
+    PropertyDescriptor pd=new PropertyDescriptor("name",clz);
+    if (pd.getReadMethod() == null)     return false;
+    if (pd.getWriteMethod() == null)     return false;
+    return true;
+  }
+ catch (  Exception ex) {
+  }
+  return false;
+}

@@ -29,11 +29,13 @@
     sb.append(" group by e.patient_id ");
   }
  else {
-    sb.append(" select patient_id from Patient p, Person_Attribute attr, Person_Attribute_Type type ");
+    sb.append(" select patient_id from patient p, person_attribute attr, person_attribute_type type ");
     sb.append(" where type.name = 'Health Center' ");
     sb.append(" and type.person_attribute_type_id = attr.person_attribute_type_id ");
     sb.append(" and attr.value = :location_id ");
     sb.append(" and attr.person_id = p.patient_id ");
+    sb.append(" and attr.voided = false ");
+    sb.append(" and p.voided = false ");
   }
   log.debug("query: " + sb);
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());

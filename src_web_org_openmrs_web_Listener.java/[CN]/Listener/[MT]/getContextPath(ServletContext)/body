@@ -1,0 +1,13 @@
+{
+  String contextPath="";
+  try {
+    String path=servletContext.getResource("/").getPath();
+    contextPath=path.substring(0,path.lastIndexOf("/"));
+    contextPath=contextPath.substring(contextPath.lastIndexOf("/"));
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+  if (contextPath.indexOf("/") != -1)   contextPath=contextPath.substring(1);
+  return contextPath;
+}

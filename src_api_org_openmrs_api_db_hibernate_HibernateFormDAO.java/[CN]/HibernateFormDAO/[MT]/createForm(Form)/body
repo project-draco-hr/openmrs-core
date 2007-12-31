@@ -1,3 +1,4 @@
 {
-  return (Form)sessionFactory.getCurrentSession().merge(form);
+  sessionFactory.getCurrentSession().save(form);
+  return form;
 }

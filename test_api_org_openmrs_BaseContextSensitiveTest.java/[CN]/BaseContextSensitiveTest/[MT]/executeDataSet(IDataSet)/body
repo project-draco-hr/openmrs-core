@@ -1,0 +1,31 @@
+{
+  Connection connection=getConnection();
+  IDatabaseConnection dbUnitConn=new DatabaseConnection(connection);
+  if (useInMemoryDatabase()) {
+    DatabaseConfig config=dbUnitConn.getConfig();
+    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new HsqldbDataTypeFactory());
+    String sql="SET REFERENTIAL_INTEGRITY FALSE";
+    PreparedStatement ps=connection.prepareStatement(sql);
+    ps.execute();
+    ps.close();
+  }
+ else {
+    String sql="SET FOREIGN_KEY_CHECKS=0;";
+    PreparedStatement ps=connection.prepareStatement(sql);
+    ps.execute();
+    ps.close();
+  }
+  DatabaseOperation.REFRESH.execute(dbUnitConn,dataset);
+  if (useInMemoryDatabase()) {
+    String sql="SET REFERENTIAL_INTEGRITY TRUE";
+    PreparedStatement ps=connection.prepareStatement(sql);
+    ps.execute();
+    ps.close();
+  }
+ else {
+    String sql="SET FOREIGN_KEY_CHECKS=1;";
+    PreparedStatement ps=connection.prepareStatement(sql);
+    ps.execute();
+    ps.close();
+  }
+}

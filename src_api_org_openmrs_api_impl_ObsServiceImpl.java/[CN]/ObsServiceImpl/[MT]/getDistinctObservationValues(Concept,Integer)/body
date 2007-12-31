@@ -1,6 +1,6 @@
 {
   Locale l=Context.getLocale();
-  List<Obs> obs=getObservations(question,null,personType);
+  List<Obs> obs=getObservations(question,null,personType,false);
   SortedSet<String> set=new TreeSet<String>();
   for (  Obs o : obs) {
     set.add(o.getValueAsString(l));

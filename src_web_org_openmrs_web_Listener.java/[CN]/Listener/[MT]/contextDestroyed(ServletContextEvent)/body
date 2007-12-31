@@ -1,5 +1,10 @@
 {
-  Context.shutdown();
-  WebModuleUtil.shutdownModules(event.getServletContext());
+  try {
+    Context.shutdown();
+    WebModuleUtil.shutdownModules(event.getServletContext());
+  }
+ catch (  Exception e) {
+    log.warn("Error while shutting down openmrs",e);
+  }
   super.contextDestroyed(event);
 }

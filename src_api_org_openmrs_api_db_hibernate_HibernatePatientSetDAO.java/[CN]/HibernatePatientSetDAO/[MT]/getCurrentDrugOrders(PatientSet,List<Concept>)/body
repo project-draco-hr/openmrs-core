@@ -1,11 +1,9 @@
 {
   Map<Integer,List<DrugOrder>> ret=new HashMap<Integer,List<DrugOrder>>();
-  Collection<Integer> ids=ps.getPatientIds();
-  if (ids.size() == 0)   return ret;
   Date now=new Date();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
   criteria.setCacheMode(CacheMode.IGNORE);
-  criteria.createCriteria("encounter").add(Restrictions.in("patient.personId",ids));
+  if (ps != null)   criteria.add(Restrictions.in("patient.personId",ps.getPatientIds()));
   if (drugConcepts != null)   criteria.add(Restrictions.in("concept",drugConcepts));
   criteria.add(Restrictions.eq("voided",false));
   criteria.add(Restrictions.le("startDate",now));
@@ -14,7 +12,7 @@
   log.debug("criteria: " + criteria);
   List<DrugOrder> temp=criteria.list();
   for (  DrugOrder regimen : temp) {
-    Integer ptId=regimen.getEncounter().getPatientId();
+    Integer ptId=regimen.getPatient().getPatientId();
     List<DrugOrder> list=ret.get(ptId);
     if (list == null) {
       list=new ArrayList<DrugOrder>();

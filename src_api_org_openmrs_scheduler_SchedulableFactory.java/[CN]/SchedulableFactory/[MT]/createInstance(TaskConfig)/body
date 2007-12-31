@@ -2,12 +2,19 @@
   try {
     Class schedulableClass=OpenmrsClassLoader.getInstance().loadClass(taskConfig.getSchedulableClass());
     Schedulable schedulable=(Schedulable)schedulableClass.newInstance();
-    log.debug("initializing " + schedulableClass.getName());
+    if (log.isDebugEnabled())     log.debug("initializing " + schedulableClass.getName());
     schedulable.initialize(taskConfig);
     return schedulable;
   }
- catch (  Exception e) {
-    log.debug("Error creating new task for class " + taskConfig.getSchedulableClass(),e);
+ catch (  ClassNotFoundException cnfe) {
+    log.error("OpenmrsClassLoader could not load class: " + taskConfig.getSchedulableClass() + ".  Probably due to a module not being loaded");
+    if (log.isDebugEnabled())     log.debug("Full error trace of ClassNotFoundException",cnfe);
+    return null;
+  }
+catch (  Exception e) {
+    if (log.isDebugEnabled()) {
+      log.debug("Error creating new task for class " + taskConfig.getSchedulableClass(),e);
+    }
     throw new SchedulerException(e);
   }
 }

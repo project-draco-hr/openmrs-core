@@ -1,8 +1,0 @@
-{
-  ConceptService cs=Context.getConceptService();
-  for (  String conceptName : conceptList) {
-    Concept concept=cs.getConceptByName(conceptName);
-    if (concept != null)     logic.addToken(conceptName,concept);
- else     log.error("Missing concept: " + conceptName);
-  }
-}

@@ -1,4 +1,5 @@
 {
-  if (!getModuleClassLoaderMap().containsKey(mod))   throw new ModuleException("Module not found",mod.getName());
-  return getModuleClassLoaderMap().get(mod);
+  ModuleClassLoader mcl=getModuleClassLoaderMap().get(mod);
+  if (mcl == null)   throw new ModuleException("Module not found",mod.getName());
+  return mcl;
 }

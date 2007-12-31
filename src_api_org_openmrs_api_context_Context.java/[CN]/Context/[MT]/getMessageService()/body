@@ -1,16 +1,11 @@
 {
   MessageService ms=getServiceContext().getMessageService();
-  if (ms == null) {
-    try {
-      MessagePreparator preparator=getMessagePreparator();
-      MessageSender sender=getMessageSender();
-      ms=new MessageServiceImpl();
-      ms.setMessageSender(sender);
-      ms.setMessagePreparator(preparator);
-    }
- catch (    Exception e) {
-      log.error("Unable to create message service due to : " + e.getMessage(),e);
-    }
+  try {
+    if (ms.getMessagePreparator() == null)     ms.setMessagePreparator(getMessagePreparator());
+    if (ms.getMessageSender() == null)     ms.setMessageSender(getMessageSender());
+  }
+ catch (  Exception e) {
+    log.error("Unable to create message service due",e);
   }
   return ms;
 }

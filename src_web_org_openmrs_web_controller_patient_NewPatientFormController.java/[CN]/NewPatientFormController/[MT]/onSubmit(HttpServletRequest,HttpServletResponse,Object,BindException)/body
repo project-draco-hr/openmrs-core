@@ -28,7 +28,7 @@
     if (patient == null)     patient=new Patient();
     boolean duplicate=false;
     PersonName newName=shortPatient.getName();
-    log.error("newName: " + newName.toString());
+    if (log.isDebugEnabled())     log.debug("Checking new name: " + newName.toString());
     for (    PersonName pn : patient.getNames()) {
       if (((pn.getGivenName() == null && newName.getGivenName() == null) || OpenmrsUtil.nullSafeEquals(pn.getGivenName(),newName.getGivenName())) && ((pn.getMiddleName() == null && newName.getMiddleName() == null) || OpenmrsUtil.nullSafeEquals(pn.getMiddleName(),newName.getMiddleName())) && ((pn.getFamilyName() == null && newName.getFamilyName() == null) || OpenmrsUtil.nullSafeEquals(pn.getFamilyName(),newName.getFamilyName())))       duplicate=true;
     }
@@ -38,13 +38,13 @@
       newName.setPreferred(true);
       patient.addName(newName);
     }
-    log.debug("address: " + shortPatient.getAddress());
+    if (log.isDebugEnabled())     log.debug("The address to add/check: " + shortPatient.getAddress());
     if (shortPatient.getAddress() != null && !shortPatient.getAddress().isBlank()) {
       duplicate=false;
       for (      PersonAddress pa : patient.getAddresses()) {
         if (pa.toString().equals(shortPatient.getAddress().toString()))         duplicate=true;
       }
-      log.debug("duplicate:  " + duplicate);
+      if (log.isDebugEnabled())       log.debug("The duplicate address:  " + duplicate);
       if (!duplicate) {
         PersonAddress newAddress=shortPatient.getAddress();
         newAddress.setPersonAddressId(null);
@@ -52,7 +52,7 @@
         patient.addAddress(newAddress);
       }
     }
-    log.debug("patient addresses: " + patient.getAddresses());
+    if (log.isDebugEnabled())     log.debug("patient addresses: " + patient.getAddresses());
     if (patient.getIdentifiers() == null)     patient.setIdentifiers(new HashSet<PatientIdentifier>());
     for (    PatientIdentifier pi : patient.getIdentifiers()) {
       pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
@@ -159,7 +159,7 @@ catch (    PatientIdentifierException pie) {
         String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
         Concept causeOfDeath=Context.getConceptService().getConceptByIdOrName(codProp);
         if (causeOfDeath != null) {
-          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath);
+          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath,false);
           if (obssDeath != null) {
             if (obssDeath.size() > 1) {
               log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
@@ -223,7 +223,7 @@ catch (    PatientIdentifierException pie) {
       }
     }
     if (isError) {
-      log.error("REDIRECTING TO " + this.getFormView());
+      log.error("Had an error during processing. Redirecting to " + this.getFormView());
       return this.showForm(request,response,errors);
     }
  else {

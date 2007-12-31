@@ -3,8 +3,7 @@
   if (drugOrder.getOrderType() != null)   orderTypeId=drugOrder.getOrderType().getOrderTypeId();
   if (drugOrder.getConcept() != null)   conceptId=drugOrder.getConcept().getConceptId();
   instructions=drugOrder.getInstructions();
-  String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
-  SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+  SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
   if (drugOrder.getStartDate() != null)   startDate=sdf.format(drugOrder.getStartDate());
   if (drugOrder.getAutoExpireDate() != null)   autoExpireDate=sdf.format(drugOrder.getAutoExpireDate());
   if (drugOrder.getEncounter() != null)   encounterId=drugOrder.getEncounter().getEncounterId();

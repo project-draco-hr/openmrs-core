@@ -1,5 +1,14 @@
 {
-  if (inputStream == null || outputStream == null)   return;
+  if (inputStream == null || outputStream == null) {
+    if (outputStream != null) {
+      try {
+        outputStream.close();
+      }
+ catch (      Exception e) {
+      }
+    }
+    return;
+  }
   InputStream in=null;
   OutputStream out=null;
   try {

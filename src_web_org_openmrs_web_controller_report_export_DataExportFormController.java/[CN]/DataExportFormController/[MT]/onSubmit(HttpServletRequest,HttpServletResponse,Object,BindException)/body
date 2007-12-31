@@ -39,7 +39,36 @@
               String columnValue=request.getParameter("calculatedValue_" + columnId);
               report.addCalculatedColumn(columnName,columnValue);
             }
- else             log.warn("Cannot determine column type for column: " + columnId);
+ else {
+              columnName=request.getParameter("cohortName_" + columnId);
+              if (columnName != null) {
+                String cohortIdValue=request.getParameter("cohortIdValue_" + columnId);
+                String filterIdValue=request.getParameter("filterIdValue_" + columnId);
+                String searchIdValue=request.getParameter("patientSearchIdValue_" + columnId);
+                String valueIfTrue=request.getParameter("cohortIfTrue_" + columnId);
+                String valueIfFalse=request.getParameter("cohortIfFalse_" + columnId);
+                Integer cohortId=null;
+                Integer filterId=null;
+                Integer searchId=null;
+                try {
+                  cohortId=Integer.valueOf(cohortIdValue);
+                }
+ catch (                Exception ex) {
+                }
+                try {
+                  filterId=Integer.valueOf(filterIdValue);
+                }
+ catch (                Exception ex) {
+                }
+                try {
+                  searchId=Integer.valueOf(searchIdValue);
+                }
+ catch (                Exception ex) {
+                }
+                if (cohortId != null || filterId != null || searchId != null)                 report.addCohortColumn(columnName,cohortId,filterId,searchId,valueIfTrue,valueIfFalse);
+              }
+ else               log.warn("Cannot determine column type for column: " + columnId);
+            }
           }
         }
       }

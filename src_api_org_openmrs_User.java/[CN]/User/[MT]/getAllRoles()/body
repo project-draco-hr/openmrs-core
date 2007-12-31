@@ -5,7 +5,7 @@
     baseRoles.addAll(getRoles());
     totalRoles.addAll(getRoles());
   }
-  log.debug("User's base roles: " + baseRoles);
+  if (log.isDebugEnabled())   log.debug("User's base roles: " + baseRoles);
   try {
     for (    Role r : baseRoles) {
       totalRoles.addAll(r.getAllParentRoles());

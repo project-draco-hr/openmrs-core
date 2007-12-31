@@ -1,0 +1,7 @@
+{
+  PatientSet ret=new PatientSet();
+  Set<Integer> set=new HashSet<Integer>(this.patientIds);
+  set.addAll(other.patientIds);
+  ret.copyPatientIds(set);
+  return ret;
+}

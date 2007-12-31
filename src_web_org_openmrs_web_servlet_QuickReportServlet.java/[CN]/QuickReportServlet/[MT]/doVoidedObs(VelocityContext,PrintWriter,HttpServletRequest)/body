@@ -1,9 +1,7 @@
 {
   ObsService os=Context.getObsService();
-  Locale locale=Context.getLocale();
-  DateFormat dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(locale.toString().toLowerCase()),locale);
-  velocityContext.put("date",dateFormat);
-  velocityContext.put("locale",locale);
+  velocityContext.put("date",OpenmrsUtil.getDateFormat());
+  velocityContext.put("locale",Context.getLocale());
   List<Obs> obs=os.getVoidedObservations();
   if (obs != null) {
     velocityContext.put("observations",obs);

@@ -7,6 +7,9 @@
   if (lastState != null && lastState.getEndDate() != null) {
     throw new IllegalArgumentException("You can't change out of a state that has an end date already");
   }
+  if (lastState != null && lastState.getStartDate() != null && OpenmrsUtil.compare(lastState.getStartDate(),onDate) > 0) {
+    throw new IllegalArgumentException("You can't change out of a state before that state started");
+  }
   if (lastState != null)   lastState.setEndDate(onDate);
   PatientState newState=new PatientState();
   newState.setPatientProgram(patientProgram);

@@ -1,7 +1,10 @@
 {
   PatientSetService pss=Context.getPatientSetService();
   PatientSet patientSet=null;
-  if (getPatientIds() == null || getPatientIds().size() == 0)   patientSet=Context.getPatientSetService().getAllPatients();
+  if (getPatientIds() == null || getPatientIds().size() == 0) {
+    patientSet=Context.getPatientSetService().getAllPatients();
+    setAllPatients(true);
+  }
  else {
     patientSet=new PatientSet();
     for (    Integer p : patientIds)     patientSet.add(p);
@@ -14,6 +17,10 @@
   if (cohortDefinitionId != null) {
     PatientFilter cohortDefinition=(PatientFilter)Context.getReportService().getReportObject(cohortDefinitionId);
     if (cohortDefinition != null)     patientSet=cohortDefinition.filter(patientSet);
+  }
+  if (patientSearchId != null) {
+    PatientSearchReportObject search=(PatientSearchReportObject)Context.getReportService().getReportObject(patientSearchId);
+    patientSet=OpenmrsUtil.toPatientFilter(search.getPatientSearch(),null).filter(patientSet);
   }
   return patientSet;
 }

@@ -1,0 +1,9 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Form.class);
+  if (includeUnpublished == false)   crit.add(Expression.eq("published",true));
+  if (!includeRetired)   crit.add(Expression.eq("retired",false));
+  crit.add(Expression.like("name",text,MatchMode.ANYWHERE));
+  crit.addOrder(Order.asc("name"));
+  crit.addOrder(Order.desc("formId"));
+  return crit.list();
+}

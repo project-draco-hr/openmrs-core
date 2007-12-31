@@ -1,16 +1,15 @@
 {
-  CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+  CohortSearchHistory history=getMySearchHistory();
   try {
-    PatientFilter pf=history.getSearchHistory().get(indexInHistory);
-    if (pf == null)     return false;
-    if (pf instanceof CohortHistoryCompositionFilter)     pf=((CohortHistoryCompositionFilter)pf).toCohortDefinition();
-    AbstractReportObject aro=(AbstractReportObject)pf;
-    aro.setName(name);
-    aro.setDescription(description);
-    aro.setReportObjectId(null);
-    aro.setType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTFILTER);
-    aro.setSubType("CohortDefinition");
-    Context.getReportService().createReportObject(aro);
+    PatientSearch ps=history.getSearchHistory().get(indexInHistory);
+    if (ps == null)     return false;
+    ps=ps.copyAndDetachFromHistory(history);
+    PatientSearchReportObject ro=new PatientSearchReportObject();
+    ro.setName(name);
+    ro.setDescription(description);
+    ro.setPatientSearch(ps);
+    Integer newId=Context.getReportService().createReportObject(ro);
+    history.getSearchHistory().set(indexInHistory,PatientSearch.createSavedSearchReference(newId));
     return true;
   }
  catch (  Exception ex) {

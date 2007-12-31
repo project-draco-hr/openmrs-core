@@ -27,11 +27,11 @@ catch (      ObjectRetrievalFailureException noUserEx) {
     }
   }
   ShortPatientModel patient=new ShortPatientModel(p);
-  String name=request.getParameter("name");
+  String name=request.getParameter("addName");
   if (p == null && name != null) {
-    String gender=request.getParameter("gndr");
-    String date=request.getParameter("birthyear");
-    String age=request.getParameter("age");
+    String gender=request.getParameter("addGender");
+    String date=request.getParameter("addBirthdate");
+    String age=request.getParameter("addAge");
     p=new Patient();
     UserFormController.getMiniPerson(p,name,gender,date,age);
     patient=new ShortPatientModel(p);

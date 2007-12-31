@@ -1,5 +1,5 @@
 {
-  log.trace("finding resource: " + name);
+  if (log.isTraceEnabled())   log.trace("finding resource: " + name);
   URL result;
   for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
     result=classLoader.findResource(name);

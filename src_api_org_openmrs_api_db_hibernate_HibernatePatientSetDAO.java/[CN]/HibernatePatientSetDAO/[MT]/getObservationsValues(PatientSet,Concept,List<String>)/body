@@ -1,7 +1,5 @@
 {
   Map<Integer,List<List<Object>>> ret=new HashMap<Integer,List<List<Object>>>();
-  Collection<Integer> ids=patients.getPatientIds();
-  if (ids.size() == 0)   return ret;
   List<String> aliases=new Vector<String>();
   Boolean conditional=false;
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Obs","obs");
@@ -52,7 +50,7 @@
  else     projections.add(Projections.property(aliasName + "." + col));
   }
   criteria.setProjection(projections);
-  if (ids.size() != getAllPatients().size())   criteria.add(Restrictions.in("obs.personId",ids));
+  if (patients != null)   criteria.add(Restrictions.in("obs.personId",patients.getPatientIds()));
   criteria.add(Expression.eq("obs.concept",c));
   criteria.add(Expression.eq("obs.voided",false));
   criteria.addOrder(org.hibernate.criterion.Order.desc("obs.obsDatetime"));

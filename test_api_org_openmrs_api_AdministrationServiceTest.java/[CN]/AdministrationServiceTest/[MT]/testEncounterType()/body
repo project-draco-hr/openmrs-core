@@ -8,8 +8,8 @@
   List<EncounterType> encounterTypes=encounterService.getEncounterTypes();
   assertNotNull(encounterTypes);
   boolean found=false;
-  for (Iterator i=encounterTypes.iterator(); i.hasNext(); ) {
-    EncounterType encounterType2=(EncounterType)i.next();
+  for (Iterator<EncounterType> i=encounterTypes.iterator(); i.hasNext(); ) {
+    EncounterType encounterType2=i.next();
     assertNotNull(encounterType);
     assertTrue(encounterType.equals(encounterType2) == (encounterType.getEncounterTypeId().equals(encounterType2.getEncounterTypeId())));
     if (encounterType.equals(encounterType2))     found=true;

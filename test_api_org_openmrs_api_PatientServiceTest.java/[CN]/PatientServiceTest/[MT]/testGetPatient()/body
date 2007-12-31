@@ -1,24 +1,17 @@
 {
-  Context.authenticate("USER-1","test");
-  this.createPatient();
-  Set patientList;
-  patientList=ps.getPatientsByIdentifier("???",true);
-  assertNotNull(patientList);
-  assertTrue(patientList.size() == 0);
-  patientList=ps.getPatientsByIdentifier("",true);
-  assertNotNull(patientList);
-  assertTrue(patientList.size() > 0);
-  Patient patient;
-  patient=ps.getPatient(-1);
-  assertNull(patient);
-  patient=(Patient)ps.getPatient(createdPatient.getPatientId());
-  assertNotNull(patient);
-  patient.setGender("female");
+  executeDataSet(CREATE_PATIENT_XML);
+  Set<Patient> patientList=ps.getPatientsByIdentifier("???",true);
+  assertNotNull("an empty list should be returned instead of a null object",patientList);
+  assertTrue("There shouldn't be any patients with this weird identifier",patientList.size() == 0);
+  patientList=ps.getPatientsByIdentifier("1234",true);
+  assertTrue("There should be at least one patient found with this identifier",patientList.size() > 0);
+  Patient patient=ps.getPatient(-1);
+  assertNull("There should be no patients with a patient_id of negative 1",patient);
+  patient=ps.getPatient(2);
+  assertNotNull("There should be a patient with patient_id of 2",patient);
+  patient.setGender("F");
   ps.updatePatient(patient);
   Patient patient2=ps.getPatient(patient.getPatientId());
-  assertTrue(patient.equals(patient2));
-  PersonAddress pAddress=patient.getAddresses().iterator().next();
-  patient.removeAddress(pAddress);
-  PersonName pName=patient.getNames().iterator().next();
-  patient.removeName(pName);
+  assertTrue("The updated patient and the orig patient should still be equal",patient.equals(patient2));
+  assertTrue("The gender should be new",patient2.getGender().equals("F"));
 }

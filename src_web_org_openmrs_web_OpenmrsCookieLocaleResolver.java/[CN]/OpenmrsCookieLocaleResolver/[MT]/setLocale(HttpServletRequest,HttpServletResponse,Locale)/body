@@ -1,7 +1,12 @@
 {
+  HttpSession session=(HttpSession)request.getSession();
+  if (request.getParameter("lang") != null) {
+    if (Context.isAuthenticated() && !Context.getLocale().equals(locale)) {
+      session.setAttribute(WebConstants.OPENMRS_MSG_ARGS,request.getContextPath());
+      session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.localeChangeHint");
+    }
+  }
   Context.setLocale(locale);
   response.setLocale(locale);
   super.setLocale(request,response,locale);
-  HttpSession session=(HttpSession)request.getSession();
-  if (request.getParameter("lang") != null)   if (Context.isAuthenticated())   session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.localeChangeHint");
 }

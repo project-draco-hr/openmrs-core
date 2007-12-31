@@ -27,11 +27,11 @@ catch (      ObjectRetrievalFailureException noPatientEx) {
   }
   if (patient == null) {
     patient=new Patient();
-    String name=request.getParameter("name");
+    String name=request.getParameter("addName");
     if (name != null) {
-      String gender=request.getParameter("gndr");
-      String date=request.getParameter("birthyear");
-      String age=request.getParameter("age");
+      String gender=request.getParameter("addGender");
+      String date=request.getParameter("addBirthdate");
+      String age=request.getParameter("addAge");
       getMiniPerson(patient,name,gender,date,age);
     }
   }

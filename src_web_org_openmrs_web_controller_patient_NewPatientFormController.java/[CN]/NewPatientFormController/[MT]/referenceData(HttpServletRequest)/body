@@ -13,7 +13,7 @@
         String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
         Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
         if (conceptCause != null) {
-          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause);
+          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause,false);
           if (obssDeath.size() == 1) {
             Obs obsDeath=obssDeath.iterator().next();
             causeOfDeathOther=obsDeath.getValueText();
@@ -35,7 +35,6 @@
       }
     }
   }
-  map.put("datePattern",dateFormat.toLocalizedPattern().toLowerCase());
   if (pref.length() > 0)   for (  PatientIdentifier pi : identifiers)   pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
   map.put("identifiers",identifiers);
   map.put("causeOfDeathOther",causeOfDeathOther);

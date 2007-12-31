@@ -5,11 +5,13 @@
     PersonService ps=Context.getPersonService();
     Integer userId=Context.getAuthenticatedUser().getUserId();
     getParametersFromRequest(request);
-    log.debug("name: " + name + " birthyear: "+ birthyear+ " age: "+ age+ " gender: "+ gender);
-    if (!name.equals("") || !birthyear.equals("") || !age.equals("")|| !gender.equals("")) {
-      log.info(userId + "|" + name+ "|"+ birthyear+ "|"+ age+ "|"+ gender);
+    log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
+    if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
+      log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
       Integer d=null;
-      birthyear=birthyear.trim();
+      birthdate=birthdate.trim();
+      String birthyear="";
+      if (birthdate.length() > 6)       birthyear=birthdate.substring(6);
       age=age.trim();
       if (birthyear.length() > 3)       d=Integer.valueOf(birthyear);
  else       if (age.length() > 0) {

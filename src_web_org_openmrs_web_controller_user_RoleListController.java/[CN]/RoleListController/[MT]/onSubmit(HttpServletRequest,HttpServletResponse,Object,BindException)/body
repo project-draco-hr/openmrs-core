@@ -3,7 +3,7 @@
   Locale locale=request.getLocale();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String[] roleList=request.getParameterValues("roleId");
+    String[] roleList=ServletRequestUtils.getStringParameters(request,"roleId");
     AdministrationService as=Context.getAdministrationService();
     UserService us=Context.getUserService();
     String success="";
@@ -14,12 +14,12 @@
     for (    String p : roleList) {
       try {
         as.deleteRole(us.getRole(p));
-        if (!success.equals(""))         success+="<br>";
+        if (!success.equals(""))         success+="<br/>";
         success+=p + " " + deleted;
       }
  catch (      APIException e) {
         log.warn(e);
-        if (!error.equals(""))         error+="<br>";
+        if (!error.equals(""))         error+="<br/>";
         error+=p + " " + notDeleted;
       }
     }

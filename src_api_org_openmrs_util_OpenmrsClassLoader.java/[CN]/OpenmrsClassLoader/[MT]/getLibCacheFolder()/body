@@ -1,10 +1,8 @@
 {
-  if (libCacheFolder != null) {
-    return libCacheFolderInitialized ? libCacheFolder : null;
-  }
+  if (libCacheFolder != null)   return libCacheFolderInitialized ? libCacheFolder : null;
 synchronized (ModuleClassLoader.class) {
     libCacheFolder=new File(System.getProperty("java.io.tmpdir"),System.currentTimeMillis() + ".openmrs-lib-cache");
-    log.debug("libraries cache folder is " + libCacheFolder);
+    if (log.isDebugEnabled())     log.debug("libraries cache folder is " + libCacheFolder);
     File lockFile=new File(libCacheFolder,"lock");
     if (lockFile.exists()) {
       log.error("can't initialize libraries cache folder " + libCacheFolder + " as lock file indicates that it"+ " is owned by another openmrs instance");

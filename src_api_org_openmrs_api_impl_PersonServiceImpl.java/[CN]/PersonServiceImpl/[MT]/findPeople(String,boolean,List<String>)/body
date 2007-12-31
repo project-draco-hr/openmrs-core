@@ -1,0 +1,9 @@
+{
+  log.debug("starting method, roles are " + roles);
+  Set<Person> people=new HashSet<Person>();
+  if (roles == null) {
+    people.addAll(Context.getPatientService().findPatients(searchPhrase,includeVoided));
+  }
+  people.addAll(Context.getUserService().findUsers(searchPhrase,roles,includeVoided));
+  return people;
+}

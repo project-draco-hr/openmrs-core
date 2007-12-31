@@ -4,7 +4,7 @@
   String encUserColumn=command.getEncUserColumn();
   String orderUserColumn=command.getOrderUserColumn();
   List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(command.getFromDate(),toDateToUse,encUserColumn,orderUserColumn,command.getGroupBy());
-  DataTable table=DataEntryStatistic.tableByUserAndType(stats);
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats,command.getHideAverageObs());
   command.setTable(table);
   return showForm(request,response,errors);
 }

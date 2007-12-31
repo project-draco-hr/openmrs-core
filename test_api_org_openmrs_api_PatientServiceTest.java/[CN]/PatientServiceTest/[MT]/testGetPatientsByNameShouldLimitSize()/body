@@ -1,0 +1,5 @@
+{
+  executeDataSet(JOHN_PATIENTS_XML);
+  Collection<Patient> patients=ps.getPatientsByName("John");
+  assertTrue("The patient list size should be restricted to under the max (1000). its " + patients.size(),patients.size() == 1000);
+}

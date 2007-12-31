@@ -1,0 +1,39 @@
+{
+  Context.logout();
+  assertFalse("This test needs to start with an unauthenticated context",Context.isAuthenticated());
+  new AssertThrows(ContextAuthenticationException.class){
+    public void test() throws Exception {
+      Context.authenticate(null,null);
+    }
+  }
+.runTest();
+  assertFalse("No one should ever be authenticated with null parameters",Context.isAuthenticated());
+  new AssertThrows(ContextAuthenticationException.class){
+    public void test() throws Exception {
+      Context.authenticate("some username",null);
+    }
+  }
+.runTest();
+  assertFalse("No one should ever be authenticated with null parameters",Context.isAuthenticated());
+  new AssertThrows(ContextAuthenticationException.class){
+    public void test() throws Exception {
+      Context.authenticate(null,"some password");
+    }
+  }
+.runTest();
+  assertFalse("No one should ever be authenticated with null parameters",Context.isAuthenticated());
+  new AssertThrows(ContextAuthenticationException.class){
+    public void test() throws Exception {
+      Context.authenticate("admin",null);
+    }
+  }
+.runTest();
+  assertFalse("No one should ever be authenticated with null password and proper username",Context.isAuthenticated());
+  new AssertThrows(ContextAuthenticationException.class){
+    public void test() throws Exception {
+      Context.authenticate("1-8",null);
+    }
+  }
+.runTest();
+  assertFalse("No one should ever be authenticated with null password and proper system id",Context.isAuthenticated());
+}

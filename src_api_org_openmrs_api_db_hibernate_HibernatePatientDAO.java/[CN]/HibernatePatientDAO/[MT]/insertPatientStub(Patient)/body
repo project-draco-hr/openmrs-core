@@ -1,7 +1,7 @@
 {
   Connection connection=sessionFactory.getCurrentSession().connection();
   try {
-    PreparedStatement ps=connection.prepareStatement("INSERT INTO `patient` (patient_id, creator, date_created) VALUES (?, ?, ?)");
+    PreparedStatement ps=connection.prepareStatement("INSERT INTO patient (patient_id, creator, date_created) VALUES (?, ?, ?)");
     ps.setInt(1,patient.getPatientId());
     ps.setInt(2,patient.getCreator().getUserId());
     ps.setDate(3,new java.sql.Date(patient.getDateCreated().getTime()));

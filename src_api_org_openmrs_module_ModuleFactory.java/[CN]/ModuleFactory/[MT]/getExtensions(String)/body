@@ -1,5 +1,18 @@
 {
-  List<Extension> extensions=getExtensionMap().get(pointId);
+  List<Extension> extensions=null;
+  Map<String,List<Extension>> extensionMap=getExtensionMap();
+  extensions=extensionMap.get(pointId);
+  if (extensions == null)   extensions=new ArrayList<Extension>();
+  if (pointId.contains(Extension.extensionIdSeparator) == false) {
+    for (    MEDIA_TYPE mediaType : Extension.MEDIA_TYPE.values()) {
+      List<Extension> tmpExtensions=extensionMap.get(Extension.toExtensionId(pointId,mediaType));
+      if (tmpExtensions != null)       for (      Extension ext : tmpExtensions) {
+        if (extensions.contains(ext) == false) {
+          extensions.add(ext);
+        }
+      }
+    }
+  }
   if (extensions != null) {
     log.debug("Getting extensions defined by : " + pointId);
     return extensions;

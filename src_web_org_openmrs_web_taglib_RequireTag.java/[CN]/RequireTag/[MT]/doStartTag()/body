@@ -34,7 +34,7 @@
       }
     }
   }
-  if (session_ip_addr != null && !session_ip_addr.equals(request_ip_addr)) {
+  if (differentIpAddresses(session_ip_addr,request_ip_addr)) {
     errorOccurred=true;
     if ("0.0.0.0".equals(request_ip_addr) == false) {
       log.warn("Invalid ip addr: expected " + session_ip_addr + ", but found: "+ request_ip_addr);

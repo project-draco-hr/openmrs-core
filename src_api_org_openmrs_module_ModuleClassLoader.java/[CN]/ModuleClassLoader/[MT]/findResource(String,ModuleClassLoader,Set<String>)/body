@@ -19,35 +19,12 @@
   }
   if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
-  for (int i=0; i < publicImports.length; i++) {
-    if (seenModules.contains(publicImports[i].getModuleId())) {
-      continue;
-    }
-    result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(publicImports[i])).findResource(name,requestor,seenModules);
+  for (  Module publicImport : publicImports) {
+    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
+    result=mcl.findResource(name,requestor,seenModules);
     if (result != null) {
       break;
-    }
-  }
-  if ((this == requestor) && (result == null)) {
-    for (int i=0; i < privateImports.length; i++) {
-      if (seenModules.contains(privateImports[i].getModuleId())) {
-        continue;
-      }
-      result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(privateImports[i])).findResource(name,requestor,seenModules);
-      if (result != null) {
-        break;
-      }
-    }
-  }
-  if ((this == requestor) && (result == null)) {
-    for (    Module reverseLookup : reverseLookups) {
-      if (seenModules.contains(reverseLookup.getModuleId())) {
-        continue;
-      }
-      result=((ModuleClassLoader)ModuleFactory.getModuleClassLoader(reverseLookup)).findResource(name,requestor,seenModules);
-      if (result != null) {
-        break;
-      }
     }
   }
   return result;

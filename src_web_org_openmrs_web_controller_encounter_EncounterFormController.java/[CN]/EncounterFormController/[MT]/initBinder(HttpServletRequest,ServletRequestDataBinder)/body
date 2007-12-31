@@ -1,8 +1,7 @@
 {
   super.initBinder(request,binder);
-  dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale());
   binder.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,true));
-  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(dateFormat,true));
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(OpenmrsUtil.getDateFormat(),true));
   binder.registerCustomEditor(EncounterType.class,new EncounterTypeEditor());
   binder.registerCustomEditor(Location.class,new LocationEditor());
   binder.registerCustomEditor(Form.class,new FormEditor());

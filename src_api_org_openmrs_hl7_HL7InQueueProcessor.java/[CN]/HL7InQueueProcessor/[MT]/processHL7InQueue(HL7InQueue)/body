@@ -11,7 +11,17 @@
     Context.getHL7Service().deleteHL7InQueue(hl7InQueue);
   }
  catch (  HL7Exception e) {
-    setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
+    boolean skipError=false;
+    log.error(e.getCause().getMessage());
+    log.error(e.getCause().getMessage().equals("Could not resolve patient"));
+    log.error(hl7InQueue.getHL7Source().getName());
+    log.error(!hl7InQueue.getHL7Source().getName().equals("local"));
+    log.error(Context.getAdministrationService().getGlobalProperty("hl7_processor.ignore_missing_patient_non_local","false"));
+    log.error(Context.getAdministrationService().getGlobalProperty("hl7_processor.ignore_missing_patient_non_local","false").equals("true"));
+    if (e.getCause().getMessage().equals("Could not resolve patient") && !hl7InQueue.getHL7Source().getName().equals("local") && Context.getAdministrationService().getGlobalProperty("hl7_processor.ignore_missing_patient_non_local","false").equals("true")) {
+      skipError=true;
+    }
+    if (!skipError)     setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
     return;
   }
 catch (  Exception e) {

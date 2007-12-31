@@ -1,7 +1,5 @@
 {
   Map<Integer,Object> ret=new HashMap<Integer,Object>();
-  Collection<Integer> ids=patients.getPatientIds();
-  if (ids.size() == 0)   return ret;
   className="org.openmrs." + className;
   Criteria criteria=null;
   if (className.equals("org.openmrs.Patient"))   criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Patient","patient");
@@ -12,12 +10,12 @@
   if (className.contains("Person")) {
     projectionList.add(Projections.property("person.personId"));
     projectionList.add(Projections.property(property));
-    criteria.add(Restrictions.in("person.personId",ids));
+    if (patients != null)     criteria.add(Restrictions.in("person.personId",patients.getPatientIds()));
   }
  else {
     projectionList.add(Projections.property("patient.personId"));
     projectionList.add(Projections.property(property));
-    criteria.add(Restrictions.in("patient.personId",ids));
+    if (patients != null)     criteria.add(Restrictions.in("patient.personId",patients.getPatientIds()));
   }
   criteria.setProjection(projectionList);
   criteria.addOrder(org.hibernate.criterion.Order.desc("voided"));
@@ -32,7 +30,6 @@
     log.warn("Class not found: " + className);
   }
   criteria.addOrder(org.hibernate.criterion.Order.desc("dateCreated"));
-  log.debug("criteria: " + criteria);
   List<Object[]> rows=criteria.list();
   if (returnAll) {
     for (    Object[] row : rows) {

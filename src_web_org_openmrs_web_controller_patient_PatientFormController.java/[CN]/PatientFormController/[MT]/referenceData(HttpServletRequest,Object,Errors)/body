@@ -13,7 +13,7 @@
   String patientVariation="";
   Concept reasonForExitConcept=Context.getConceptService().getConceptByIdOrName(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null) {
-    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept);
+    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept,false);
     if (patientExitObs != null) {
       log.debug("Exit obs is size " + patientExitObs.size());
       if (patientExitObs.size() == 1) {

@@ -6,7 +6,7 @@
     personIdAttrMap=personAttributeMap.get(key);
   }
  else {
-    personIdAttrMap=patientSetService.getPersonAttributes(patientSet,attributeName,joinClass,joinProperty,outputColumn,returnAll);
+    personIdAttrMap=patientSetService.getPersonAttributes(getPatientSetIfNotAllPatients(),attributeName,joinClass,joinProperty,outputColumn,returnAll);
     personAttributeMap.put(key,personIdAttrMap);
   }
   return personIdAttrMap.get(patientId);

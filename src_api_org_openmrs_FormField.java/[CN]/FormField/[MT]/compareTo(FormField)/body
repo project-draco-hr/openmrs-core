@@ -1,0 +1,28 @@
+{
+  if (getSortWeight() != null || f.getSortWeight() != null) {
+    if (getSortWeight() == null)     return -1;
+    if (f.getSortWeight() == null)     return 1;
+    int c=getSortWeight().compareTo(f.getSortWeight());
+    if (c != 0)     return c;
+  }
+  if (getFieldNumber() != null || f.getFieldNumber() != null) {
+    if (getFieldNumber() == null)     return -1;
+    if (f.getFieldNumber() == null)     return 1;
+    int c=getFieldNumber().compareTo(f.getFieldNumber());
+    if (c != 0)     return c;
+  }
+  if (getFieldPart() != null || f.getFieldPart() != null) {
+    if (getFieldPart() == null)     return -1;
+    if (f.getFieldPart() == null)     return 1;
+    int c=getFieldPart().compareTo(f.getFieldPart());
+    if (c != 0)     return c;
+  }
+  if (getField() != null && f.getField() != null) {
+    int c=getField().getName().compareTo(f.getField().getName());
+    if (c != 0)     return c;
+  }
+  if (getFormFieldId() == null && f.getFormFieldId() != null)   return -1;
+  if (getFormFieldId() != null && f.getFormFieldId() == null)   return 1;
+  if (getFormFieldId() == null && f.getFormFieldId() == null)   return 1;
+  return getFormFieldId().compareTo(f.getFormFieldId());
+}

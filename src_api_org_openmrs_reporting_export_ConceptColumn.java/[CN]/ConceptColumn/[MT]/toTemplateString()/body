@@ -1,7 +1,7 @@
 {
   String s="";
   if (extras == null)   extras=new String[]{};
-  if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier)) {
+  if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier) || DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
     Integer num=modifierNum == null ? 1 : modifierNum;
     s+="#set($arr = [";
     for (Integer x=0; x < extras.length; x++) {
@@ -9,7 +9,8 @@
       if (!x.equals(extras.length - 1))       s+=",";
     }
     s+="])";
-    s+="#set($obsValues = $fn.getLastNObsWithValues(" + num + ", '"+ getConceptIdOrName()+ "', $arr))";
+    if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier))     s+="#set($obsValues = $fn.getLastNObsWithValues(" + num + ", '"+ getConceptIdOrName()+ "', $arr))";
+ else     if (DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier))     s+="#set($obsValues = $fn.getFirstNObsWithValues(" + num + ", '"+ getConceptIdOrName()+ "', $arr))";
     s+="#foreach($vals in $obsValues)";
     s+="#if($velocityCount > 1)";
     s+="$!{fn.getSeparator()}";

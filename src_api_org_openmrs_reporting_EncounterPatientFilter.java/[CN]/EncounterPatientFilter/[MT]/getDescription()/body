@@ -9,7 +9,14 @@
  else {
     ret.append("any ");
   }
-  if (encounterType != null)   ret.append(encounterType.getName() + " ");
+  if (encounterTypeList != null) {
+    ret.append("[");
+    for (Iterator<EncounterType> i=encounterTypeList.iterator(); i.hasNext(); ) {
+      ret.append(" " + i.next().getName());
+      if (i.hasNext())       ret.append(" ,");
+    }
+    ret.append(" ] ");
+  }
   ret.append("encounters ");
   if (location != null) {
     ret.append("at " + location.getName() + " ");
@@ -21,5 +28,6 @@
   }
   if (sinceDate != null)   ret.append("on or after " + sinceDate + " ");
   if (untilDate != null)   ret.append("on or before " + untilDate + " ");
+  if (form != null)   ret.append("from the " + form.getName() + " form ");
   return ret.toString();
 }

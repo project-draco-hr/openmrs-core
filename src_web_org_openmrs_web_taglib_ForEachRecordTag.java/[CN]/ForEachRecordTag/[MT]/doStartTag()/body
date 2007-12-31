@@ -9,6 +9,10 @@
     PersonService ps=Context.getPersonService();
     records=ps.getRelationshipTypes().iterator();
   }
+ else   if (name.equals("encounterType")) {
+    EncounterService es=Context.getEncounterService();
+    records=es.getEncounterTypes().iterator();
+  }
  else   if (name.equals("location")) {
     EncounterService es=Context.getEncounterService();
     records=es.getLocations().iterator();
@@ -20,6 +24,10 @@
  else   if (name.equals("cohort")) {
     List<Cohort> cohorts=Context.getCohortService().getCohorts();
     records=cohorts.iterator();
+  }
+ else   if (name.equals("form")) {
+    List<Form> forms=Context.getFormService().getForms();
+    records=forms.iterator();
   }
  else   if (name.equals("reportObject")) {
     List ret=null;
@@ -43,6 +51,32 @@
     Map<String,String> opts=OpenmrsConstants.GENDER();
     records=opts.entrySet().iterator();
     if (select != null)     select=select.toString() + "=" + opts.get(select);
+  }
+ else   if (name.equals("workflowStatus")) {
+    List<ProgramWorkflowState> ret=Context.getProgramWorkflowService().getStates();
+    records=ret.iterator();
+  }
+ else   if (name.equals("workflowProgram")) {
+    List<org.openmrs.Program> ret=Context.getProgramWorkflowService().getPrograms();
+    records=ret.iterator();
+  }
+ else   if (name.equals("role")) {
+    List<Role> ret=Context.getUserService().getRoles();
+    records=ret.iterator();
+  }
+ else   if (name.equals("conceptSet")) {
+    if (conceptSet == null)     throw new IllegalArgumentException("Must specify conceptSet");
+    Concept c=OpenmrsUtil.getConceptByIdOrName(conceptSet);
+    if (c == null)     throw new IllegalArgumentException("Can't find conceptSet " + conceptSet);
+    List<Concept> list=Context.getConceptService().getConceptsInSet(c);
+    records=list.iterator();
+  }
+ else   if (name.equals("answer")) {
+    if (concept == null)     throw new IllegalArgumentException("Must specify concept");
+    Concept c=OpenmrsUtil.getConceptByIdOrName(concept);
+    if (c == null)     throw new IllegalArgumentException("Can't find concept " + concept);
+    if (c.getAnswers() != null)     records=c.getAnswers().iterator();
+ else     records=new ArrayList<Concept>().iterator();
   }
  else {
     log.error(name + " not found in ForEachRecord list");

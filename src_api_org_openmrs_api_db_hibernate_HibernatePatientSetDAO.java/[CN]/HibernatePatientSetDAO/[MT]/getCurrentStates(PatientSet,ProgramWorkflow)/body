@@ -1,11 +1,9 @@
 {
   Map<Integer,PatientState> ret=new HashMap<Integer,PatientState>();
-  Collection<Integer> ids=ps.getPatientIds();
-  if (ids.size() == 0)   return ret;
   Date now=new Date();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientState.class);
   criteria.setCacheMode(CacheMode.IGNORE);
-  criteria.createCriteria("patientProgram").add(Restrictions.in("patient.personId",ids));
+  if (ps != null)   criteria.createCriteria("patientProgram").add(Restrictions.in("patient.personId",ps.getPatientIds()));
   criteria.createCriteria("state").add(Restrictions.eq("programWorkflow",wf));
   criteria.add(Restrictions.eq("voided",false));
   criteria.add(Restrictions.or(Restrictions.isNull("startDate"),Restrictions.le("startDate",now)));

@@ -5,7 +5,7 @@
   }
  else {
     Program program=Context.getProgramWorkflowService().getProgram(programName);
-    patientIdProgramMap=patientSetService.getPatientPrograms(getPatientSet(),program);
+    patientIdProgramMap=patientSetService.getPatientPrograms(getPatientSetIfNotAllPatients(),program);
     programMap.put(programName,patientIdProgramMap);
   }
   return patientIdProgramMap.get(patientId);

@@ -1,6 +1,24 @@
 {
-  ModuleFactory.loadAndStartModules();
-  Collection<Module> modules=ModuleFactory.getStartedModules();
-  if (modules == null || modules.size() == 0)   log.debug("No modules loaded");
- else   log.debug("Found and loaded " + modules.size() + " module(s)");
+  String moduleListString=props.getProperty(ModuleConstants.RUNTIMEPROPERTY_MODULE_LIST_TO_LOAD);
+  if (moduleListString == null || moduleListString.length() == 0) {
+    log.debug("Starting all modules");
+    ModuleFactory.loadModules();
+  }
+ else {
+    log.debug("Starting all modules in this list: " + moduleListString);
+    String[] moduleArray=moduleListString.split(" ");
+    List<File> modulesToLoad=new Vector<File>();
+    for (    String modulePath : moduleArray) {
+      File file=new File(modulePath);
+      if (file.exists())       modulesToLoad.add(file);
+ else       log.error("Unable to load module at path: " + modulePath + " because no file exists there. absolute path: "+ file.getAbsolutePath());
+    }
+    ModuleFactory.loadModules(modulesToLoad);
+  }
+  ModuleFactory.startModules();
+  if (log.isDebugEnabled()) {
+    Collection<Module> modules=ModuleFactory.getStartedModules();
+    if (modules == null || modules.size() == 0)     log.debug("No modules loaded");
+ else     log.debug("Found and loaded " + modules.size() + " module(s)");
+  }
 }

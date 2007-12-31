@@ -16,8 +16,8 @@
   List<Location> locations=encounterService.getLocations();
   assertNotNull(locations);
   boolean found=false;
-  for (Iterator i=locations.iterator(); i.hasNext(); ) {
-    Location location2=(Location)i.next();
+  for (Iterator<Location> i=locations.iterator(); i.hasNext(); ) {
+    Location location2=i.next();
     assertNotNull(location);
     assertTrue(location.equals(location2) == (location.getLocationId().equals(location2.getLocationId())));
     if (location.equals(location2))     found=true;
@@ -29,5 +29,4 @@
   assertTrue(newerLocation.getName().equals(newLocation.getName()));
   as.deleteLocation(newLocation);
   assertNull(encounterService.getLocation(newLocation.getLocationId()));
-  shutdown();
 }

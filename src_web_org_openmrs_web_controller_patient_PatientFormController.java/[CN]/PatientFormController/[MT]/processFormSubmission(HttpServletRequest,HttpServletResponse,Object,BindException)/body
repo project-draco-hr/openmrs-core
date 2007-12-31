@@ -14,6 +14,7 @@
       String[] ids=request.getParameterValues("identifier");
       String[] idTypes=request.getParameterValues("identifierType");
       String[] locs=request.getParameterValues("location");
+      String[] idPrefStatus=ServletRequestUtils.getStringParameters(request,"preferred");
       if (ids != null) {
         for (int i=0; i < ids.length; i++) {
           String id=ids[i].trim();
@@ -22,6 +23,7 @@
             pi.setIdentifier(id);
             pi.setIdentifierType(ps.getPatientIdentifierType(Integer.valueOf(idTypes[i])));
             pi.setLocation(es.getLocation(Integer.valueOf(locs[i])));
+            if (idPrefStatus != null && idPrefStatus.length > i)             pi.setPreferred(new Boolean(idPrefStatus[i]));
             patient.addIdentifier(pi);
           }
         }
@@ -36,6 +38,7 @@
       String[] pCodes=ServletRequestUtils.getStringParameters(request,"postalCode");
       String[] counties=ServletRequestUtils.getStringParameters(request,"countyDistrict");
       String[] cells=ServletRequestUtils.getStringParameters(request,"neighborhoodCell");
+      String[] addPrefStatus=ServletRequestUtils.getStringParameters(request,"preferred");
       if (add1s != null || add2s != null || cities != null || states != null || countries != null || lats != null || longs != null || pCodes != null || counties != null || cells != null) {
         int maxAddrs=0;
         if (add1s != null)         if (add1s.length > maxAddrs)         maxAddrs=add1s.length;
@@ -61,6 +64,7 @@
           if (pCodes.length >= i + 1)           pa.setPostalCode(pCodes[i]);
           if (counties.length >= i + 1)           pa.setCountyDistrict(counties[i]);
           if (cells.length >= i + 1)           pa.setNeighborhoodCell(cells[i]);
+          if (addPrefStatus != null && addPrefStatus.length > i)           pa.setPreferred(new Boolean(addPrefStatus[i]));
           patient.addAddress(pa);
         }
       }
@@ -75,11 +79,12 @@
       String[] fName2s=ServletRequestUtils.getStringParameters(request,"familyName2");
       String[] fNameSuffixes=ServletRequestUtils.getStringParameters(request,"familyNameSuffix");
       String[] degrees=ServletRequestUtils.getStringParameters(request,"degree");
+      String[] namePrefStatus=ServletRequestUtils.getStringParameters(request,"preferred");
       if (gNames != null) {
         for (int i=0; i < gNames.length; i++) {
           if (gNames[i] != "") {
             PersonName pn=new PersonName();
-            pn.setPreferred(false);
+            if (namePrefStatus != null && namePrefStatus.length > i)             pn.setPreferred(new Boolean(namePrefStatus[i]));
             if (gNames.length >= i + 1)             pn.setGivenName(gNames[i]);
             if (mNames.length >= i + 1)             pn.setMiddleName(mNames[i]);
             if (fNamePrefixes.length >= i + 1)             pn.setFamilyNamePrefix(fNamePrefixes[i]);

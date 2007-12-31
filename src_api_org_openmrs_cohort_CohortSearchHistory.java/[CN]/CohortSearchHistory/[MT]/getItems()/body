@@ -3,7 +3,34 @@
   List<CohortSearchHistoryItemHolder> ret=new ArrayList<CohortSearchHistoryItemHolder>();
   for (int i=0; i < searchHistory.size(); ++i) {
     CohortSearchHistoryItemHolder item=new CohortSearchHistoryItemHolder();
-    item.setFilter(searchHistory.get(i));
+    PatientSearch search=searchHistory.get(i);
+    item.setSearch(search);
+    ensureCachedFilter(i);
+    PatientFilter filter=cachedFilters.get(i);
+    item.setFilter(filter);
+    if (search.isSavedFilterReference()) {
+      ReportObject ro=Context.getReportService().getReportObject(search.getSavedFilterId());
+      item.setName(ro.getName());
+      item.setDescription(ro.getDescription());
+    }
+ else     if (search.isSavedCohortReference()) {
+      Cohort c=Context.getCohortService().getCohort(search.getSavedCohortId());
+      item.setName(c.getName());
+      item.setDescription(c.getDescription());
+    }
+ else     if (search.isSavedSearchReference()) {
+      ReportObject ro=Context.getReportService().getReportObject(search.getSavedSearchId());
+      item.setName(ro.getName());
+      item.setDescription(ro.getDescription());
+    }
+ else     if (search.isComposition()) {
+      item.setName(search.getCompositionString());
+    }
+ else {
+      item.setName(filter.getName());
+      item.setDescription(filter.getDescription());
+    }
+    item.setSaved(search.isSavedReference());
     item.setCachedResult(cachedResults.get(i));
     item.setCachedResultDate(cachedResultDates.get(i));
     ret.add(item);

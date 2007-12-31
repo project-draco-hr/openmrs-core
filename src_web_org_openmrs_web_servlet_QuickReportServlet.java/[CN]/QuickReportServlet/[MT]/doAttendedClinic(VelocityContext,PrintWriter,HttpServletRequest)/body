@@ -1,7 +1,6 @@
 {
   EncounterService es=Context.getEncounterService();
-  Locale locale=Context.getLocale();
-  DateFormat dateFormat=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(locale.toString().toLowerCase()),locale);
+  DateFormat dateFormat=OpenmrsUtil.getDateFormat();
   velocityContext.put("date",dateFormat);
   Calendar cal=Calendar.getInstance();
   Date start=new Date();

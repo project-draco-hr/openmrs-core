@@ -3,9 +3,8 @@
   Properties props=new Properties();
   try {
     FileInputStream propertyStream=null;
-    String webapp=WebConstants.OPENMRS_WEBAPP_NAME;
-    webapp=webapp.toUpperCase();
-    String env=webapp + "_RUNTIME_PROPERTIES_FILE";
+    String webapp=WebConstants.WEBAPP_NAME;
+    String env=webapp.toUpperCase() + "_RUNTIME_PROPERTIES_FILE";
     String filepath=System.getenv(env);
     if (filepath != null) {
       log.debug("Atempting to load runtime properties from: " + filepath + " ");

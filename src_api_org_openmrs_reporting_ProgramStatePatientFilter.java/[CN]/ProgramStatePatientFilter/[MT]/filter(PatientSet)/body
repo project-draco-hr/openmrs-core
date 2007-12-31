@@ -1,4 +1,5 @@
 {
   PatientSetService service=Context.getPatientSetService();
-  return input.intersect(service.getPatientsByProgramAndState(program,state,fromDateHelper(),toDateHelper()));
+  PatientSet ps=service.getPatientsByProgramAndState(program,stateList,fromDateHelper(),toDateHelper());
+  return input == null ? ps : input.intersect(ps);
 }

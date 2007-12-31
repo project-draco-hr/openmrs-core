@@ -1,0 +1,12 @@
+{
+  log.debug("starting method, roles is " + roles);
+  List<String> roleList=null;
+  if (roles != null)   if (roles.length() > 0) {
+    String[] splitRoles=roles.split(",");
+    for (    String role : splitRoles) {
+      if (roleList == null)       roleList=new ArrayList<String>();
+      roleList.add(role);
+    }
+  }
+  return this.findPeople(searchPhrase,includeVoided,roleList);
+}

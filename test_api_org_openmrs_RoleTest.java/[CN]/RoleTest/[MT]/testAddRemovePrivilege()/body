@@ -1,0 +1,18 @@
+{
+  Role role=new Role();
+  role.addPrivilege(null);
+  role.removePrivilege(null);
+  Privilege priv1=new Privilege("priv1");
+  role.addPrivilege(priv1);
+  assertTrue("The role should have 1 privilege but instead has " + role.getPrivileges().size(),role.getPrivileges().size() == 1);
+  role.addPrivilege(priv1);
+  assertTrue("The role should have 1 privilege but instead has " + role.getPrivileges().size(),role.getPrivileges().size() == 1);
+  Privilege priv2=new Privilege(priv1.getPrivilege());
+  role.addPrivilege(priv2);
+  assertTrue("The role should have 1 privilege but instead has " + role.getPrivileges().size(),role.getPrivileges().size() == 1);
+  Privilege priv3=new Privilege("priv3");
+  role.removePrivilege(priv3);
+  assertTrue("The role should have 1 privilege but instead has " + role.getPrivileges().size(),role.getPrivileges().size() == 1);
+  role.removePrivilege(priv1);
+  assertTrue("The role should have 0 privileges but instead has " + role.getPrivileges().size(),role.getPrivileges().size() == 0);
+}

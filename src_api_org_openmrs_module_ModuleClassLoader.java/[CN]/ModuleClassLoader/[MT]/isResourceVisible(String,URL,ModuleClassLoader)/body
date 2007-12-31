@@ -2,7 +2,7 @@
   if (this == requestor) {
     return true;
   }
-  URL lib;
+  @SuppressWarnings("unused") URL lib;
   try {
     String file=url.getFile();
     lib=new URL(url.getProtocol(),url.getHost(),file.substring(0,file.length() - name.length()));

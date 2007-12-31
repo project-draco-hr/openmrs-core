@@ -1,6 +1,4 @@
 {
-  Set<Person> people=new HashSet<Person>();
-  people.addAll(Context.getPatientService().findPatients(searchPhrase,includeVoided));
-  people.addAll(Context.getUserService().findUsers(searchPhrase,(List)null,includeVoided));
-  return people;
+  log.debug("starting method");
+  return this.findPeople(searchPhrase,includeVoided,(List)null);
 }

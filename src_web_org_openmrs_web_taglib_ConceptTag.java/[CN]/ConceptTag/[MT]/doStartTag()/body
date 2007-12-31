@@ -21,5 +21,8 @@
   pageContext.setAttribute(nameVar,cName);
   log.debug("Retrieved name " + cName.getName() + ", set to variable: "+ nameVar);
   pageContext.setAttribute(numericVar,cs.getConceptNumeric(conceptId));
+  if (c.isSet() && setMemberVar != null) {
+    pageContext.setAttribute(setMemberVar,Context.getConceptService().getConceptsInSet(c));
+  }
   return EVAL_BODY_BUFFERED;
 }

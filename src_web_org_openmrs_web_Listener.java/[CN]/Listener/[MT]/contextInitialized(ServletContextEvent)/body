@@ -1,7 +1,8 @@
 {
   log.debug("Initializing OpenMRS");
   ServletContext servletContext=event.getServletContext();
-  String realPath=event.getServletContext().getRealPath("");
+  String realPath=servletContext.getRealPath("");
+  loadConstants(servletContext);
   Properties props=getRuntimeProperties();
   Context.setRuntimeProperties(props);
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
@@ -46,15 +47,18 @@ catch (    Throwable t) {
     getContextLoader().initWebApplicationContext(servletContext);
   }
   Context.startup(props);
-  loadCoreModules(event.getServletContext());
+  loadCoreModules(servletContext);
+  boolean someModuleNeedsARefresh=false;
   for (  Module mod : ModuleFactory.getStartedModules()) {
     try {
-      WebModuleUtil.startModule(mod,event.getServletContext());
+      boolean thisModuleCausesRefresh=WebModuleUtil.startModule(mod,servletContext,true);
+      someModuleNeedsARefresh=someModuleNeedsARefresh || thisModuleCausesRefresh;
     }
  catch (    Throwable t) {
       mod.setStartupErrorMessage(t.getMessage());
     }
   }
+  if (someModuleNeedsARefresh)   WebModuleUtil.refreshWAC(servletContext);
   Map<String,String> custom=new HashMap<String,String>();
   custom.put("custom.template.dir","/WEB-INF/template");
   custom.put("custom.index.jsp.file","/WEB-INF/view/index.jsp");
