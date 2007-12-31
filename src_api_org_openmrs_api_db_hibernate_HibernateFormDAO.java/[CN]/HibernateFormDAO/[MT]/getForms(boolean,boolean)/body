@@ -3,6 +3,6 @@
   if (onlyPublished)   crit.add(Expression.eq("published",true));
   if (!includeRetired)   crit.add(Expression.eq("retired",false));
   crit.addOrder(Order.asc("name"));
-  crit.addOrder(Order.asc("formId"));
+  crit.addOrder(Order.desc("formId"));
   return crit.list();
 }

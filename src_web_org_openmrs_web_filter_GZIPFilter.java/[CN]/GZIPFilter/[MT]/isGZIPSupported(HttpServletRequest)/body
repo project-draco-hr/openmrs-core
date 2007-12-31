@@ -1,0 +1,12 @@
+{
+  String browserEncodings=req.getHeader("accept-encoding");
+  boolean supported=((browserEncodings != null) && (browserEncodings.indexOf("gzip") != -1));
+  String userAgent=req.getHeader("user-agent");
+  if ((userAgent != null) && userAgent.startsWith("httpunit")) {
+    log.debug("httpunit detected, disabling filter...");
+    return false;
+  }
+ else {
+    return supported;
+  }
+}

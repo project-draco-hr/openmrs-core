@@ -1,7 +1,5 @@
 {
   Map<Integer,Object> ret=new HashMap<Integer,Object>();
-  Collection<Integer> ids=patients.getPatientIds();
-  if (ids.size() == 0)   return ret;
   StringBuilder queryString=new StringBuilder();
   queryString.append("select attr.person.personId, ");
   if (joinClass != null && joinProperty != null && outputColumn != null) {
@@ -9,18 +7,18 @@
     queryString.append(outputColumn);
     queryString.append(" from PersonAttribute attr, PersonAttributeType t, ");
     queryString.append(joinClass);
-    queryString.append(" joinedClass where t.personAttributeTypeId = attr.attributeType ");
+    queryString.append(" joinedClass where t = attr.attributeType ");
     queryString.append("and attr.value = joinedClass.");
     queryString.append(joinProperty + " ");
   }
- else   queryString.append("attr.value from PersonAttribute attr, PersonAttributeType t where t.personAttributeTypeId = attr.attributeType ");
-  queryString.append("and attr.person.personId in (:ids) ");
+ else   queryString.append("attr.value from PersonAttribute attr, PersonAttributeType t where t = attr.attributeType ");
+  if (patients != null)   queryString.append("and attr.person.personId in (:ids) ");
   queryString.append("and t.name = :typeName ");
-  queryString.append("order by attr.voided desc, attr.dateCreated desc");
+  queryString.append("order by attr.voided asc, attr.dateCreated desc");
   Query query=sessionFactory.getCurrentSession().createQuery(queryString.toString());
-  query.setParameterList("ids",ids);
+  if (patients != null)   query.setParameterList("ids",patients.getPatientIds());
   query.setString("typeName",attributeTypeName);
-  log.error("query: " + queryString);
+  log.debug("query: " + queryString);
   List<Object[]> rows=query.list();
   if (returnAll) {
     for (    Object[] row : rows) {

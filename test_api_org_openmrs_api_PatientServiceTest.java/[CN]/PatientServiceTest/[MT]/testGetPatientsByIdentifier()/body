@@ -1,0 +1,11 @@
+{
+  executeDataSet(CREATE_PATIENT_XML);
+  Collection<Patient> johnPatients=ps.getPatientsByName("John");
+  assertNotNull("There should be a patient named 'John'",johnPatients);
+  assertFalse("There should be a patient named 'John'",johnPatients.isEmpty());
+  Patient firstJohnPatient=johnPatients.iterator().next();
+  String identifier=firstJohnPatient.getPatientIdentifier().getIdentifier();
+  assertNotNull("Uh oh, the patient doesn't have an identifier",identifier);
+  Set<Patient> patients=ps.getPatientsByIdentifier(identifier,true);
+  assertTrue("Odd. The firstJohnPatient isn't in the list of patients for this identifier",patients.contains(firstJohnPatient));
+}

@@ -146,7 +146,7 @@
       patientNode.appendChild(encounterNode);
     }
     ObsService obsService=Context.getObsService();
-    Set<Obs> allObservations=obsService.getObservations(p);
+    Set<Obs> allObservations=obsService.getObservations(p,false);
     if (allObservations != null && allObservations.size() > 0) {
       log.debug("allObservations has " + allObservations.size() + " obs");
       Set<Obs> undoneObservations=new HashSet<Obs>();

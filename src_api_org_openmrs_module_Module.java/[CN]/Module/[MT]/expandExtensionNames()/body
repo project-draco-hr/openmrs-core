@@ -5,14 +5,17 @@
       String className=entry.getValue();
       log.debug("expanding extension names: " + point + " : "+ className);
       try {
-        Class cls=ModuleFactory.getModuleClassLoader(this).loadClass(className);
+        Class<?> cls=ModuleFactory.getModuleClassLoader(this).loadClass(className);
         Extension ext=(Extension)cls.newInstance();
         ext.setPointId(point);
         ext.setModuleId(this.getModuleId());
         extensions.add(ext);
         log.debug("Added extension: " + ext.getExtensionId() + " : "+ ext.getClass());
       }
- catch (      ClassNotFoundException e) {
+ catch (      NoClassDefFoundError e) {
+        log.warn("Unable to find class definition for extension: " + point,e);
+      }
+catch (      ClassNotFoundException e) {
         log.warn("Unable to load class for extension: " + point,e);
       }
 catch (      IllegalAccessException e) {

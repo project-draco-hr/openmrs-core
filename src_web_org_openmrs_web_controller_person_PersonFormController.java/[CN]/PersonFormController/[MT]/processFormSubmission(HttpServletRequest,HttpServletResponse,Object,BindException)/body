@@ -9,6 +9,7 @@
     if (person.getGender() == null || person.getGender().equals(""))     errors.rejectValue("gender","Person.gender.required");
     for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes("","all")) {
       String value=request.getParameter(type.getPersonAttributeTypeId().toString());
+      if (value == null)       value="";
       person.addAttribute(new PersonAttribute(type,value));
     }
     if (person.getBirthdate() != null) {

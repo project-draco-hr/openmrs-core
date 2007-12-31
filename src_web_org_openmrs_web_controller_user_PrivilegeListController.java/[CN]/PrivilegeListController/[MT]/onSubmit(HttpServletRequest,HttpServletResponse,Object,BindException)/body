@@ -1,6 +1,5 @@
 {
   HttpSession httpSession=request.getSession();
-  Locale locale=request.getLocale();
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] privilegeList=request.getParameterValues("privilegeId");
@@ -14,12 +13,12 @@
     for (    String p : privilegeList) {
       try {
         as.deletePrivilege(us.getPrivilege(p));
-        if (!success.equals(""))         success+="<br>";
+        if (!success.equals(""))         success+="<br/>";
         success+=p + " " + deleted;
       }
  catch (      APIException e) {
         log.warn("Error deleting privielge",e);
-        if (!error.equals(""))         error+="<br>";
+        if (!error.equals(""))         error+="<br/>";
         error+=p + " " + notDeleted;
       }
     }

@@ -1,4 +1,4 @@
 {
   PatientSet ps=Context.getPatientSetService().getPatientsHavingDrugOrder(drugList,genericDrugList,null,null,OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),discontinued,discontinuedReasonList);
-  return input.intersect(ps);
+  return input == null ? ps : input.intersect(ps);
 }

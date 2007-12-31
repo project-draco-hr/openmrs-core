@@ -3,8 +3,13 @@
   Set<String> orWords=new HashSet<String>();
   Set<String> notWords=new HashSet<String>();
   andWords.add("and");
+  andWords.add("intersection");
+  andWords.add("*");
   orWords.add("or");
+  orWords.add("union");
+  orWords.add("+");
   notWords.add("not");
+  notWords.add("!");
   List<Object> currentLine=new ArrayList<Object>();
   try {
     StreamTokenizer st=new StreamTokenizer(new StringReader(description));
@@ -42,12 +47,11 @@
     log.error("Error in description string: " + description,ex);
     return null;
   }
-  if (!test(currentLine)) {
+  if (!testCompositionList(currentLine)) {
     log.error("Description string failed test: " + description);
     return null;
   }
-  CohortHistoryCompositionFilter ret=new CohortHistoryCompositionFilter();
-  ret.setHistory(this);
-  ret.setParsedCompositionString(currentLine);
+  PatientSearch ret=new PatientSearch();
+  ret.setParsedComposition(currentLine);
   return ret;
 }

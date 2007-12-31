@@ -1,5 +1,5 @@
 {
-  Context.authenticate("USER-1","test");
+  FormService formService=Context.getFormService();
   List<Form> forms=formService.getForms();
   assertNotNull(forms);
   assertTrue(forms.size() > 2);

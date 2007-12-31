@@ -1,5 +1,6 @@
 {
   Schedulable schedulable=SchedulableFactory.getInstance().createInstance(task);
+  if (schedulable == null)   return;
   TimerTaskWrapper wrapper=new TimerTaskWrapper(schedulable);
   Timer timer=getTimer(task);
   if (timer != null) {

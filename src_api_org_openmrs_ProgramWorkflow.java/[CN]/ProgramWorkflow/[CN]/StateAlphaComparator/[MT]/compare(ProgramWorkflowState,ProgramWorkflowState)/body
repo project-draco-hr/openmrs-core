@@ -1,0 +1,10 @@
+{
+  if (s1 != null && s2 != null) {
+    String name1=s1.getConcept().getName(Context.getLocale()).getName();
+    String name2=s2.getConcept().getName(Context.getLocale()).getName();
+    if (name1 != null && name2 != null) {
+      return name1.compareTo(name2);
+    }
+  }
+  return 0;
+}

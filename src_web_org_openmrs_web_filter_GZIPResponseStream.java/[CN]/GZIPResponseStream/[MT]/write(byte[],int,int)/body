@@ -1,0 +1,7 @@
+{
+  if (closed) {
+    throw new IOException("Cannot write to a closed output stream");
+  }
+  checkBufferSize(len);
+  bufferedOutput.write(b,off,len);
+}

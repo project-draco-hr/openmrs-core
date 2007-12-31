@@ -1,3 +1,5 @@
 {
-  model.put("patientSummarySpecification",PatientSummarySpecification.getInstance());
+  if (!model.containsKey("patientSummarySpecification")) {
+    model.put("patientSummarySpecification",PatientSummarySpecification.getInstance());
+  }
 }

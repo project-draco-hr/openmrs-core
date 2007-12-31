@@ -4,6 +4,6 @@
   properties.put("connection.username",username);
   properties.put("connection.password",password);
   setRuntimeProperties(properties);
-  @SuppressWarnings("unused") AbstractApplicationContext ctx=new FileSystemXmlApplicationContext("/applicationContext-service.xml");
+  @SuppressWarnings("unused") AbstractApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext-service.xml");
   startup(properties);
 }

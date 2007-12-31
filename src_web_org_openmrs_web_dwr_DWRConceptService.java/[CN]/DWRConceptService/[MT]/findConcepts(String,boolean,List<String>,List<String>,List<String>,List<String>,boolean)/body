@@ -23,13 +23,13 @@
     }
  else {
       List<ConceptClass> includeClasses=new Vector<ConceptClass>();
-      for (      String name : includeClassNames)       includeClasses.add(cs.getConceptClassByName(name));
+      for (      String name : includeClassNames)       if (!"".equals(name))       includeClasses.add(cs.getConceptClassByName(name));
       List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
-      for (      String name : excludeClassNames)       excludeClasses.add(cs.getConceptClassByName(name));
+      for (      String name : excludeClassNames)       if (!"".equals(name))       excludeClasses.add(cs.getConceptClassByName(name));
       List<ConceptDatatype> includeDatatypes=new Vector<ConceptDatatype>();
-      for (      String name : includeDatatypeNames)       includeDatatypes.add(cs.getConceptDatatypeByName(name));
+      for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
-      for (      String name : excludeDatatypeNames)       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
+      for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
       words.addAll(cs.findConcepts(phrase,locale,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
     }
     if (words.size() == 0) {

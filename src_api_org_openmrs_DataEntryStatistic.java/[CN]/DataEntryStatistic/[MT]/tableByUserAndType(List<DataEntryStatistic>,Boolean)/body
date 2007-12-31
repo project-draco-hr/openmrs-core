@@ -1,0 +1,54 @@
+{
+  Set<User> users=new HashSet<User>();
+  SortedSet<String> types=new TreeSet<String>();
+  Set<Object> groups=new HashSet<Object>();
+  Map<String,Integer> totals=new HashMap<String,Integer>();
+  Map<String,Integer> totalObs=new HashMap<String,Integer>();
+  for (  DataEntryStatistic s : stats) {
+    users.add(s.getUser());
+    types.add(s.getEntryType());
+    groups.add(s.getGroupBy());
+    String temp=s.getUser().getUserId() + "." + s.getEntryType()+ "."+ s.getGroupBy();
+    Integer soFar=totals.get(temp);
+    totals.put(temp,soFar == null ? s.getNumberOfEntries() : (soFar + s.getNumberOfEntries()));
+    totalObs.put(temp,soFar == null ? s.getNumberOfObs() : (soFar + s.getNumberOfObs()));
+  }
+  DataTable table=new DataTable();
+  table.addColumn("User");
+  table.addColumns(types);
+  for (  Object group : groups) {
+    Map<String,Integer> groupTotals=new HashMap<String,Integer>();
+    for (    User u : users) {
+      TableRow tr=new TableRow();
+      tr.put("User",u);
+      Integer rowTotal=0;
+      for (      String entryType : types) {
+        Integer i=totals.get(u.getUserId() + "." + entryType+ "."+ group);
+        Integer j=totalObs.get(u.getUserId() + "." + entryType+ "."+ group);
+        if (i == null)         i=0;
+        if (j == null)         j=0;
+        String averageObs="";
+        if (!hideAverageObs && i > 0 && j > 0) {
+          DecimalFormat df=new DecimalFormat("###,###.##");
+          float obss=j;
+          float encs=i;
+          float avgObs=obss / encs;
+          averageObs+=" (avg. " + df.format(avgObs) + " obs per enc)";
+        }
+        tr.put(entryType,i + averageObs);
+        Integer groupTotalSoFar=groupTotals.get(entryType);
+        groupTotalSoFar=groupTotalSoFar == null ? i : groupTotalSoFar + i;
+        groupTotals.put(entryType,groupTotalSoFar);
+        rowTotal+=i;
+      }
+      if (rowTotal > 0)       table.addRow(tr);
+    }
+    TableRow totalTR=new TableRow();
+    totalTR.put("User","--" + (group == null ? "Total" : group.toString()) + "--");
+    for (    String entryType : types) {
+      totalTR.put(entryType,groupTotals.get(entryType));
+    }
+    table.addRow(totalTR);
+  }
+  return table;
+}

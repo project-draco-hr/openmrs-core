@@ -2,8 +2,8 @@
   if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
     return;
   }
-  for (Enumeration enm=super.findResources(name); enm.hasMoreElements(); ) {
-    URL url=(URL)enm.nextElement();
+  for (Enumeration<URL> enm=super.findResources(name); enm.hasMoreElements(); ) {
+    URL url=enm.nextElement();
     if (isResourceVisible(name,url,requestor)) {
       result.add(url);
     }
@@ -13,23 +13,8 @@
   }
   seenModules.add(getModule().getModuleId());
   for (  Module publicImport : publicImports) {
-    if (seenModules.contains(publicImport.getModuleId())) {
-      continue;
-    }
-    ((ModuleClassLoader)ModuleFactory.getModuleClassLoader(publicImport)).findResources(result,name,requestor,seenModules);
-  }
-  if (this == requestor) {
-    for (    Module privateImport : privateImports) {
-      if (seenModules.contains(privateImport.getModuleId())) {
-        continue;
-      }
-      ((ModuleClassLoader)ModuleFactory.getModuleClassLoader(privateImport)).findResources(result,name,requestor,seenModules);
-    }
-    for (    Module reverseLookup : reverseLookups) {
-      if (seenModules.contains(reverseLookup.getModuleId())) {
-        continue;
-      }
-      ((ModuleClassLoader)ModuleFactory.getModuleClassLoader(reverseLookup)).findResources(result,name,requestor,seenModules);
-    }
+    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
+    mcl.findResources(result,name,requestor,seenModules);
   }
 }

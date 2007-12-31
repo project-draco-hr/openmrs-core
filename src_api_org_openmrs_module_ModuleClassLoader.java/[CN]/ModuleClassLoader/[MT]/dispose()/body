@@ -1,10 +1,8 @@
 {
-  log.debug("Disposing of ModuleClassLoader: " + this);
-  for (Iterator it=libraryCache.values().iterator(); it.hasNext(); ) {
-    ((File)it.next()).delete();
+  if (log.isDebugEnabled())   log.debug("Disposing of ModuleClassLoader: " + this);
+  for (Iterator<File> it=libraryCache.values().iterator(); it.hasNext(); ) {
+    it.next().delete();
   }
   libraryCache.clear();
-  reverseLookups=null;
-  privateImports=null;
   publicImports=null;
 }

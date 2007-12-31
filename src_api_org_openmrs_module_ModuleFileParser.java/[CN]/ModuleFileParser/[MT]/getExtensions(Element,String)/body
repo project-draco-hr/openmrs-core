@@ -17,7 +17,7 @@
       }
       log.debug("point: " + point + " class: "+ extClass);
       if (point.length() > 0 && extClass.length() > 0) {
-        if (point.indexOf("|") != -1)         log.warn("Point id contains illegal character: '|'");
+        if (point.indexOf(Extension.extensionIdSeparator) != -1)         log.warn("Point id contains illegal character: '" + Extension.extensionIdSeparator + "'");
  else {
           extensions.put(point,extClass);
         }

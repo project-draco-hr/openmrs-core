@@ -1,10 +1,9 @@
 {
   Map<Integer,List<Obs>> ret=new HashMap<Integer,List<Obs>>();
-  Collection<Integer> ids=patients.getPatientIds();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class);
   criteria.setCacheMode(CacheMode.IGNORE);
   criteria.add(Restrictions.eq("concept",concept));
-  criteria.add(Restrictions.in("person.personId",ids));
+  if (patients != null)   criteria.add(Restrictions.in("person.personId",patients.getPatientIds()));
   criteria.add(Restrictions.eq("voided",false));
   criteria.addOrder(org.hibernate.criterion.Order.desc("obsDatetime"));
   log.debug("criteria: " + criteria);

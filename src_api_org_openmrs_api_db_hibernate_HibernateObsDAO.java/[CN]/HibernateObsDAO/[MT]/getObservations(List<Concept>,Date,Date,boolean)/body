@@ -1,0 +1,17 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class);
+  if (concepts != null) {
+    criteria.add(Restrictions.in("concept",concepts));
+  }
+  if (fromDate != null) {
+    criteria.add(Restrictions.gt("obsDatetime",fromDate));
+  }
+  if (toDate != null) {
+    criteria.add(Restrictions.lt("obsDatetime",toDate));
+  }
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",false));
+  }
+  criteria.addOrder(Order.desc("obsDatetime"));
+  return (List<Obs>)criteria.list();
+}

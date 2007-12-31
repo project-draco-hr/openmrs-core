@@ -1,0 +1,31 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/include/DataExportTest-patients.xml");
+  authenticate();
+  DataExportReportObject export=new DataExportReportObject();
+  export.setName("TEST_EXPORT");
+  SimpleColumn patientId=new SimpleColumn();
+  patientId.setColumnName("PATIENT_ID");
+  patientId.setReturnValue("$!{fn.patientId}");
+  export.getColumns().add(patientId);
+  SimpleColumn gender=new SimpleColumn();
+  gender.setColumnName("GENDER");
+  gender.setReturnValue("$!{fn.getPatientAttr('Person', 'gender')}");
+  export.getColumns().add(gender);
+  SimpleColumn birthdate=new SimpleColumn();
+  birthdate.setColumnName("BIRTHDATE");
+  birthdate.setReturnValue("$!{fn.formatDate('short', $fn.getPatientAttr('Person', 'birthdate'))}");
+  export.getColumns().add(birthdate);
+  SimpleColumn age=new SimpleColumn();
+  age.setColumnName("AGE");
+  age.setReturnValue("$!{fn.calculateAge($fn.getPatientAttr('Person', 'birthdate'))}");
+  export.getColumns().add(age);
+  PatientSet patients=new PatientSet();
+  patients.add(2);
+  DataExportUtil.generateExport(export,patients,"\t");
+  File exportFile=DataExportUtil.getGeneratedFile(export);
+  String expectedOutput="PATIENT_ID	GENDER	BIRTHDATE	AGE\n2	M	01/01/2000	7\n";
+  String output=OpenmrsUtil.getFileAsString(exportFile);
+  exportFile.delete();
+  assertEquals("The output is not right.",expectedOutput,output);
+}

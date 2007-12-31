@@ -42,7 +42,7 @@
         }
         if (module != null) {
           ModuleFactory.startModule(module);
-          WebModuleUtil.startModule(module,getServletContext());
+          WebModuleUtil.startModule(module,getServletContext(),false);
           if (module.isStarted())           success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
  else           success=msa.getMessage("Module.loaded",new String[]{module.getName()});
         }
@@ -61,7 +61,7 @@
       ModuleFactory.stopModule(mod);
       WebModuleUtil.stopModule(mod,getServletContext());
       Module newModule=ModuleFactory.updateModule(mod);
-      WebModuleUtil.startModule(newModule,getServletContext());
+      WebModuleUtil.startModule(newModule,getServletContext(),false);
     }
   }
  else {
@@ -82,7 +82,7 @@
         }
  else         if ("start".equals(action)) {
           ModuleFactory.startModule(mod);
-          WebModuleUtil.startModule(mod,getServletContext());
+          WebModuleUtil.startModule(mod,getServletContext(),false);
           if (mod.isStarted())           success=msa.getMessage("Module.started",args);
  else           error=msa.getMessage("Module.not.started",args);
         }

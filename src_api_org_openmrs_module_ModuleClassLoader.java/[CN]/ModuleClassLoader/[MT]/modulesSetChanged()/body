@@ -15,8 +15,8 @@
   }
   collectImports();
   collectFilters();
-  for (Iterator it=libraryCache.entrySet().iterator(); it.hasNext(); ) {
-    if (((Map.Entry)it.next()).getValue() == null) {
+  for (Iterator<Map.Entry<URL,File>> it=libraryCache.entrySet().iterator(); it.hasNext(); ) {
+    if (it.next().getValue() == null) {
       it.remove();
     }
   }

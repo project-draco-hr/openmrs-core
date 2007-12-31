@@ -73,5 +73,7 @@
     }
   }
   if (log.isDebugEnabled())   log.debug("Finished creating observations");
+  log.debug("Current thread: " + Thread.currentThread());
+  hl7Service.encounterCreated(encounter);
   return oru;
 }

@@ -6,7 +6,7 @@
     patientIdAttrMap=patientAttributeMap.get(key);
   }
  else {
-    patientIdAttrMap=patientSetService.getPatientAttributes(patientSet,className,property,returnAll);
+    patientIdAttrMap=patientSetService.getPatientAttributes(getPatientSetIfNotAllPatients(),className,property,returnAll);
     patientAttributeMap.put(key,patientIdAttrMap);
   }
   return patientIdAttrMap.get(patientId);

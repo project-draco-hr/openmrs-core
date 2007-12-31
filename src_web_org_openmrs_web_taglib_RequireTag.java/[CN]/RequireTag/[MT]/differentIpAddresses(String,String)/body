@@ -1,0 +1,11 @@
+{
+  if (sessionIpAddr == null || requestIpAddr == null)   return false;
+  List<String> equivalentAddresses=new ArrayList<String>();
+  equivalentAddresses.add("127.0.0.1");
+  equivalentAddresses.add("0.0.0.0");
+  if (sessionIpAddr.equals(requestIpAddr))   return false;
+ else   if (equivalentAddresses.contains(sessionIpAddr) && equivalentAddresses.contains(requestIpAddr)) {
+    return false;
+  }
+  return true;
+}

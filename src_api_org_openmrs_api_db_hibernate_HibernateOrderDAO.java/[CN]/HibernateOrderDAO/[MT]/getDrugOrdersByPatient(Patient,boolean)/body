@@ -3,8 +3,9 @@
   if (patient != null) {
     log.debug("getting all orders by patient " + patient.getPatientId());
     Criteria c=sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
-    Criteria c1=c.add(Expression.eq("patient",patient));
-    orders=c1.list();
+    c=c.add(Expression.eq("patient",patient));
+    if (!showVoided)     c=c.add(Expression.eq("voided",false));
+    orders=c.list();
   }
   return orders;
 }

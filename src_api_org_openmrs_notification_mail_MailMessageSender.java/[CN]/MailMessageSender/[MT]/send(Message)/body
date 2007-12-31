@@ -4,6 +4,7 @@
     Transport.send(mimeMessage);
   }
  catch (  Exception e) {
+    log.error("failed to send message",e);
     throw new MessageException(e);
   }
 }

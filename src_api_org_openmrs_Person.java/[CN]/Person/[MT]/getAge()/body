@@ -1,12 +1,3 @@
 {
-  if (birthdate == null)   return null;
-  Calendar today=Calendar.getInstance();
-  Calendar bday=new GregorianCalendar();
-  bday.setTime(birthdate);
-  int age=today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
-  bday.set(Calendar.YEAR,today.get(Calendar.YEAR));
-  if (today.before(bday)) {
-    age=age - 1;
-  }
-  return age;
+  return getAge(null);
 }

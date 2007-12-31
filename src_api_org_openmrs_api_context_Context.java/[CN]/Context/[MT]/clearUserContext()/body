@@ -1,4 +1,4 @@
 {
-  log.info("Clearing user context " + userContextHolder.get());
+  if (log.isDebugEnabled())   log.debug("Clearing user context " + userContextHolder.get());
   userContextHolder.remove();
 }

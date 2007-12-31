@@ -1,5 +1,5 @@
 {
-  if (hasDuplicateUsername(user))   throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
+  if (hasDuplicateUsername(user.getUsername(),user.getSystemId(),user.getUserId()))   throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
   try {
     sessionFactory.getCurrentSession().save(user);
   }

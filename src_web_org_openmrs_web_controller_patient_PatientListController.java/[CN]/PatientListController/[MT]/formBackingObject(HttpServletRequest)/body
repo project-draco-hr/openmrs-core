@@ -1,9 +1,7 @@
 {
-  HttpSession httpSession=request.getSession();
-  Set<Patient> patientList=new HashSet<Patient>();
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
-    patientList.addAll(ps.getPatientsByName(""));
+    return ps.getPatientsByName("");
   }
-  return patientList;
+  return new HashSet<Patient>();
 }

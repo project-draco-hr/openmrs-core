@@ -1,17 +1,19 @@
 {
   String extForm=result.toExternalForm();
-  if (OpenmrsConstants.OPERATING_SYSTEM_FREEBSD.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_LINUX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM))   extForm=extForm.replaceFirst("jar:file:","").replaceAll("%20"," ");
+  if (OpenmrsConstants.OPERATING_SYSTEM_FREEBSD.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_LINUX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_OSX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM))   extForm=extForm.replaceFirst("jar:file:","").replaceAll("%20"," ");
  else   extForm=extForm.replaceFirst("jar:file:/","").replaceAll("%20"," ");
-  log.debug("url external form: " + extForm);
+  if (log.isDebugEnabled())   log.debug("url external form: " + extForm);
   int i=extForm.indexOf("!");
   String jarPath=extForm.substring(0,i);
   String filePath=extForm.substring(i + 2);
-  log.debug("jarPath: " + jarPath);
-  log.debug("filePath: " + filePath);
+  if (log.isDebugEnabled()) {
+    log.debug("jarPath: " + jarPath);
+    log.debug("filePath: " + filePath);
+  }
   File file=new File(folder,filePath);
-  log.debug("absolute path: " + file.getAbsolutePath());
+  if (log.isDebugEnabled())   log.debug("absolute path: " + file.getAbsolutePath());
   try {
-    if (file.exists())     return file.toURL();
+    if (file.exists())     return file.toURI().toURL();
  else {
       File jarFile=new File(jarPath);
       if (!jarFile.exists()) {
@@ -19,7 +21,7 @@
         return null;
       }
       ModuleUtil.expandJar(jarFile,folder,filePath,true);
-      return file.toURL();
+      return file.toURI().toURL();
     }
   }
  catch (  IOException io) {

@@ -41,9 +41,11 @@
             PatientIdentifier pi=new PatientIdentifier(identifiers[i],pit,loc);
             pi.setPreferred(pref.equals(identifiers[i] + types[i]));
             newIdentifiers.add(pi);
-            log.debug("Creating patient identifier with identifier: " + identifiers[i]);
-            log.debug("and type: " + types[i]);
-            log.debug("and location: " + locs[i]);
+            if (log.isDebugEnabled()) {
+              log.debug("Creating patient identifier with identifier: " + identifiers[i]);
+              log.debug("and type: " + types[i]);
+              log.debug("and location: " + locs[i]);
+            }
             try {
               if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifiers[i])) {
                 log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifiers[i]);

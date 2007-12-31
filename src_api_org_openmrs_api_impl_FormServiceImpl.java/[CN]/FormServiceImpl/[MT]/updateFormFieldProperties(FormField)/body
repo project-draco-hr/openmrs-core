@@ -3,11 +3,13 @@
     formField.setCreator(Context.getAuthenticatedUser());
     formField.setDateCreated(new Date());
   }
-  if (formField.getField().getCreator() == null) {
-    Field field=formField.getField();
+ else {
+    formField.setChangedBy(Context.getAuthenticatedUser());
+    formField.setDateChanged(new Date());
+  }
+  Field field=formField.getField();
+  if (field.getCreator() == null) {
     field.setCreator(Context.getAuthenticatedUser());
     field.setDateCreated(new Date());
   }
-  formField.setChangedBy(Context.getAuthenticatedUser());
-  formField.setDateChanged(new Date());
 }

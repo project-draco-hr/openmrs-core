@@ -1,0 +1,7 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ProgramWorkflowState.class);
+  if (!includeVoided)   crit.add(Expression.eq("voided",false));
+  crit.addOrder(Order.asc("programWorkflow.programWorkflowId"));
+  crit.addOrder(Order.asc("programWorkflowStateId"));
+  return crit.list();
+}

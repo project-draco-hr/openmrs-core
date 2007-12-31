@@ -1,0 +1,10 @@
+{
+  log.debug("Getting cohort text " + getValue());
+  String text="";
+  DataExportReportObject obj=(DataExportReportObject)getValue();
+  if (obj != null && obj.getReportObjectId() != null) {
+    text=String.valueOf(obj.getReportObjectId());
+  }
+  log.debug("Text: " + text);
+  return text;
+}

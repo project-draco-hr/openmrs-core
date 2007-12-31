@@ -1,3 +1,8 @@
 {
-  return (Patient)sessionFactory.getCurrentSession().get(Patient.class,patientId);
+  try {
+    return (Patient)sessionFactory.getCurrentSession().get(Patient.class,patientId);
+  }
+ catch (  ObjectNotFoundException ex) {
+    return null;
+  }
 }

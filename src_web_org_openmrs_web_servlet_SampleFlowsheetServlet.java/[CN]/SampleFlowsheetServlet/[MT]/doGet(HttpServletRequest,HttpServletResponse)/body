@@ -16,7 +16,7 @@
   ServletOutputStream out=response.getOutputStream();
   Integer patientId=Integer.parseInt(pid);
   Patient patient=Context.getPatientService().getPatient(patientId);
-  Set<Obs> obsList=Context.getObsService().getObservations(patient);
+  Set<Obs> obsList=Context.getObsService().getObservations(patient,true);
   if (obsList == null || obsList.size() < 1) {
     out.print("No observations found");
     return;
@@ -34,7 +34,7 @@
     obsDate.setTime(obs.getObsDatetime());
     if (Math.abs(obsDate.getTimeInMillis() - date.getTimeInMillis()) > 86400000) {
       date=obsDate;
-      out.println("<tr><td class=header colspan=2>" + dateFormat.format(date.getTime()) + "</td></tr>");
+      out.println("<tr><td class=header colspan=2>" + OpenmrsUtil.getDateFormat().format(date.getTime()) + "</td></tr>");
     }
     StringBuffer s=new StringBuffer("<tr><td class=label>");
     s.append(getName(obs,locale));

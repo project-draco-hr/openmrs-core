@@ -1,4 +1,7 @@
 {
   if (formFields == null)   formFields=new HashSet<FormField>();
-  if (!formFields.contains(formField) && formField != null)   this.formFields.add(formField);
+  if (!formFields.contains(formField) && formField != null) {
+    formField.setForm(this);
+    this.formFields.add(formField);
+  }
 }

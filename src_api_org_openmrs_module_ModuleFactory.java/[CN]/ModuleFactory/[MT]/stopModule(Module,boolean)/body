@@ -1,8 +1,14 @@
 {
   if (mod != null) {
     String moduleId=mod.getModuleId();
+    String modulePackage=mod.getPackageName();
+    List<Module> startedModulesCopy=new ArrayList<Module>();
+    startedModulesCopy.addAll(getStartedModules());
+    for (    Module dependentModule : startedModulesCopy) {
+      if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage))       stopModule(dependentModule,isShuttingDown);
+    }
     getStartedModulesMap().remove(moduleId);
-    if (isShuttingDown == false) {
+    if (isShuttingDown == false && !Context.isRefreshingContext()) {
       Context.addProxyPrivilege("");
       AdministrationService as=Context.getAdministrationService();
       GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));

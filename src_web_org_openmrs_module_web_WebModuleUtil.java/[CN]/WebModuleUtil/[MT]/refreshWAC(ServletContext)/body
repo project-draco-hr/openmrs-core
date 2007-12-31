@@ -1,22 +1,18 @@
 {
   XmlWebApplicationContext wac=(XmlWebApplicationContext)WebApplicationContextUtils.getWebApplicationContext(servletContext);
-  log.debug("WAC class: " + wac.getClass().getName());
-  OpenmrsClassLoader.saveState();
-  ServiceContext.destroyInstance();
+  if (log.isDebugEnabled())   log.debug("Refreshing web applciation Context of class: " + wac.getClass().getName());
+  XmlWebApplicationContext newAppContext=(XmlWebApplicationContext)ModuleUtil.refreshApplicationContext(wac);
   try {
-    wac.stop();
-    wac.close();
+    if (dispatcherServlet != null)     dispatcherServlet.reInitFrameworkServlet();
   }
- catch (  Exception e) {
+ catch (  ServletException se) {
+    log.warn("Caught a servlet exception while refreshing the dispatcher servlet",se);
   }
-  OpenmrsClassLoader.destroyInstance();
-  wac.setClassLoader(OpenmrsClassLoader.getInstance());
-  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-  ServiceContext.getInstance().startRefreshingContext();
-  wac.refresh();
-  ServiceContext.getInstance().doneRefreshingContext();
-  wac.setClassLoader(OpenmrsClassLoader.getInstance());
-  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-  OpenmrsClassLoader.restoreState();
-  return wac;
+  try {
+    if (dwrServlet != null)     dwrServlet.reInitServlet();
+  }
+ catch (  ServletException se) {
+    log.warn("Cause a servlet exception while refreshing the dwr servlet",se);
+  }
+  return newAppContext;
 }

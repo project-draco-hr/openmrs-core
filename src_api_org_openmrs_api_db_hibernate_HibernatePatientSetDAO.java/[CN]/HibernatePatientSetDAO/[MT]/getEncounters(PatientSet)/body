@@ -1,9 +1,8 @@
 {
   Map<Integer,Encounter> ret=new HashMap<Integer,Encounter>();
-  Collection<Integer> ids=patients.getPatientIds();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
   criteria.setCacheMode(CacheMode.IGNORE);
-  criteria.add(Restrictions.in("patient.personId",ids));
+  if (patients != null)   criteria.add(Restrictions.in("patient.personId",patients.getPatientIds()));
   criteria.add(Restrictions.eq("voided",false));
   criteria.addOrder(org.hibernate.criterion.Order.desc("patient.personId"));
   criteria.addOrder(org.hibernate.criterion.Order.desc("encounterDatetime"));

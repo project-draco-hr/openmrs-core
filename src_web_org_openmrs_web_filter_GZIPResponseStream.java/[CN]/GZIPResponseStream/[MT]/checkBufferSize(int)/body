@@ -1,0 +1,12 @@
+{
+  if (bufferedOutput instanceof ByteArrayOutputStream) {
+    ByteArrayOutputStream baos=(ByteArrayOutputStream)bufferedOutput;
+    if ((baos.size() + length) > bufferSize) {
+      response.addHeader("Content-Encoding","gzip");
+      byte[] bytes=baos.toByteArray();
+      GZIPOutputStream gzipstream=new GZIPOutputStream(output);
+      gzipstream.write(bytes);
+      bufferedOutput=gzipstream;
+    }
+  }
+}

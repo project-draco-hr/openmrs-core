@@ -1,0 +1,12 @@
+{
+  List<ListItem> ret=new ArrayList<ListItem>();
+  List<Cohort> cohorts=Context.getCohortService().getCohorts();
+  for (  Cohort c : cohorts) {
+    ListItem li=new ListItem();
+    li.setId(c.getCohortId());
+    li.setName(c.getName());
+    li.setDescription(c.getDescription());
+    ret.add(li);
+  }
+  return ret;
+}

@@ -1,6 +1,6 @@
 {
   super(urls.toArray(new URL[urls.size()]),parent,factory);
-  log.debug("URLs length: " + urls.size());
+  if (log.isDebugEnabled())   log.debug("URLs length: " + urls.size());
   this.module=module;
   collectImports();
   collectFilters();

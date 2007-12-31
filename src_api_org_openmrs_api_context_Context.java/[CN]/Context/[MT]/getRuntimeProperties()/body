@@ -1,7 +1,7 @@
 {
-  log.debug("getting runtime properties. size: " + runtimeProperties.size());
+  if (log.isDebugEnabled())   log.debug("getting runtime properties. size: " + runtimeProperties.size());
   Properties props=new Properties();
-  for (  Map.Entry entry : runtimeProperties.entrySet()) {
+  for (  Map.Entry<Object,Object> entry : runtimeProperties.entrySet()) {
     props.put(entry.getKey(),entry.getValue());
   }
   return props;

@@ -1,18 +1,17 @@
 {
+  if (voided)   return false;
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (startDate == null || checkDate.before(startDate)) {
+  if (startDate != null && checkDate.before(startDate)) {
     return false;
   }
-  if (discontinuedDate != null && discontinuedDate.before(checkDate)) {
-    return false;
+  if (discontinued != null && discontinued) {
+    if (discontinuedDate == null)     return checkDate.equals(startDate);
+ else     return checkDate.before(discontinuedDate);
   }
-  if (autoExpireDate != null && autoExpireDate.before(checkDate)) {
-    return false;
+ else {
+    if (autoExpireDate == null)     return true;
+ else     return checkDate.before(autoExpireDate);
   }
-  if (this.voided || this.discontinued) {
-    return false;
-  }
-  return true;
 }

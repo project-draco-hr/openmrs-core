@@ -15,8 +15,7 @@
   drugOrder.setInstructions(instructions);
   Date dStartDate=null;
   if (startDate != null) {
-    String datePattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase());
-    SimpleDateFormat sdf=new SimpleDateFormat(datePattern);
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
     try {
       dStartDate=sdf.parse(startDate);
     }

@@ -5,8 +5,18 @@
   boolean birthdateEstimated=false;
   if (date != null && !date.equals("")) {
     try {
-      birthdate=DateFormat.getDateInstance(DateFormat.SHORT).parse("01/01/" + date);
-      birthdateEstimated=true;
+      if (date.length() < 5) {
+        Calendar c=new GregorianCalendar();
+        c.set(Calendar.YEAR,Integer.valueOf(date));
+        c.set(Calendar.MONTH,0);
+        c.set(Calendar.DATE,1);
+        birthdate=c.getTime();
+        birthdateEstimated=true;
+      }
+ else {
+        birthdate=Context.getDateFormat().parse(date);
+        birthdateEstimated=false;
+      }
     }
  catch (    ParseException e) {
       log.debug("Error getting date from birthdate",e);

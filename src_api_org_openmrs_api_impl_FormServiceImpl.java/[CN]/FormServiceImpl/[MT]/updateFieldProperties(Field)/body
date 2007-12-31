@@ -3,6 +3,8 @@
     field.setCreator(Context.getAuthenticatedUser());
     field.setDateCreated(new Date());
   }
-  field.setChangedBy(Context.getAuthenticatedUser());
-  field.setDateChanged(new Date());
+ else {
+    field.setChangedBy(Context.getAuthenticatedUser());
+    field.setDateChanged(new Date());
+  }
 }

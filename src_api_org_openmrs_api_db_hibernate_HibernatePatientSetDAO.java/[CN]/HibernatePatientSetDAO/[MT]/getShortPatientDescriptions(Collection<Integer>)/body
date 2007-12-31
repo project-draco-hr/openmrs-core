@@ -1,6 +1,6 @@
 {
   Map<Integer,String> ret=new HashMap<Integer,String>();
-  Query query=sessionFactory.getCurrentSession().createQuery("select patient.personId, patient.gender, patient.birthdate from Patient patient");
+  Query query=sessionFactory.getCurrentSession().createQuery("select patient.personId, patient.gender, patient.birthdate from Patient patient where voided = false");
   query.setCacheMode(CacheMode.IGNORE);
   List<Object[]> temp=query.list();
   long now=System.currentTimeMillis();

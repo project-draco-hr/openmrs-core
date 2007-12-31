@@ -1,6 +1,6 @@
 {
   List<Integer> drugIds=new ArrayList<Integer>();
-  for (  Drug d : drugList)   drugIds.add(d.getDrugId());
+  for (  Drug d : getDrugListToUse())   drugIds.add(d.getDrugId());
   PatientSet ps=Context.getPatientSetService().getPatientsHavingDrugOrder(input.getPatientIds(),drugIds,getAnyOrAll(),OpenmrsUtil.fromDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()),OpenmrsUtil.fromDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()));
   return input.subtract(ps);
 }

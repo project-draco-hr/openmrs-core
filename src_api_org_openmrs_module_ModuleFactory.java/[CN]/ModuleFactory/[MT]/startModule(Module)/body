@@ -6,7 +6,7 @@
       String requireDBVersion=module.getRequireDatabaseVersion();
       if (requireDBVersion != null && !requireDBVersion.equals(""))       if (ModuleUtil.compareVersion(OpenmrsConstants.DATABASE_VERSION,requireDBVersion) < 0)       throw new ModuleException("Module requires at least database version '" + requireDBVersion + "'. Current database version is only '"+ OpenmrsConstants.DATABASE_VERSION+ "'",module.getName());
       if (!requiredModulesStarted(module)) {
-        throw new ModuleException("Not all required modules are started: (" + OpenmrsUtil.join(module.getRequiredModules(),", ") + "). ",module.getName());
+        throw new ModuleException("Not all required modules are started: " + OpenmrsUtil.join(module.getRequiredModules(),", ") + ". ",module.getName());
       }
       ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
       getModuleClassLoaderMap().put(module,moduleClassLoader);
@@ -20,9 +20,15 @@
         getExtensionMap().put(extId,tmpExtensions);
       }
       SortedMap<String,String> diffs=SqlDiffFileParser.getSqlDiffs(module);
-      for (      String version : diffs.keySet()) {
-        String sql=diffs.get(version);
-        runDiff(module,version,sql);
+      Context.addProxyPrivilege("");
+      try {
+        for (        String version : diffs.keySet()) {
+          String sql=diffs.get(version);
+          if (StringUtils.hasText(sql))           runDiff(module,version,sql);
+        }
+      }
+  finally {
+        Context.removeProxyPrivilege("");
       }
       getStartedModulesMap().put(module.getModuleId(),module);
       Context.addProxyPrivilege("");
@@ -47,7 +53,7 @@ catch (      Exception e) {
     }
  catch (    Exception e) {
       log.warn("Error while trying to start module: " + module.getModuleId(),e);
-      module.setStartupErrorMessage(e.getMessage());
+      module.setStartupErrorMessage("Error while trying to start module: " + e.getMessage());
       try {
         stopModule(module);
       }

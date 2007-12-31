@@ -27,7 +27,7 @@
     }
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
-    view=view + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
+    if (obs.getEncounter() != null)     view=view + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
   }
   return new ModelAndView(new RedirectView(view));
 }

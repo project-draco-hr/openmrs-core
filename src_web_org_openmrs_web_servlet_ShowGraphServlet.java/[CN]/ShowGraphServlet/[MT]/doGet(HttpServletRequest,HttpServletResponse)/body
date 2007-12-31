@@ -14,7 +14,7 @@
     Set<Obs> observations=new HashSet<Obs>();
     String chartTitle, rangeAxisTitle, domainAxisTitle, titleFontSize="";
     if (concept != null) {
-      observations=Context.getObsService().getObservations(patient,concept);
+      observations=Context.getObsService().getObservations(patient,concept,false);
       chartTitle=concept.getName(request.getLocale()).getName();
       rangeAxisTitle=chartTitle;
     }
@@ -35,7 +35,7 @@
       }
     }
     dataset.addSeries(series);
-    JFreeChart chart=ChartFactory.createTimeSeriesChart(chartTitle,domainAxisTitle,rangeAxisTitle,dataset,true,true,false);
+    JFreeChart chart=ChartFactory.createTimeSeriesChart(chartTitle,null,null,dataset,false,false,false);
     Font font=new Font("Arial",Font.BOLD,12);
     TextTitle title=chart.getTitle();
     title.setFont(font);

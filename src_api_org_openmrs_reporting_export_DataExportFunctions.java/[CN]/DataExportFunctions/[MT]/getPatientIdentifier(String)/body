@@ -1,0 +1,14 @@
+{
+  log.debug("Identifier Type: " + typeName);
+  Map<Integer,PatientIdentifier> patientIdentifiers;
+  if (patientIdentifierMap.containsKey(typeName)) {
+    patientIdentifiers=patientIdentifierMap.get(typeName);
+  }
+ else {
+    PatientIdentifierType type=patientService.getPatientIdentifierType(typeName);
+    patientIdentifiers=patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(),type);
+    log.debug("Found identifiers for patient identifier " + type + " = "+ patientIdentifiers);
+    patientIdentifierMap.put(typeName,patientIdentifiers);
+  }
+  return patientIdentifiers.get(patientId);
+}

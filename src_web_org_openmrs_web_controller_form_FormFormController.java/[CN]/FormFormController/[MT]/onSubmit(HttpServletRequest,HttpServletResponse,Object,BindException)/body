@@ -38,7 +38,7 @@
           log.error("Error while deleting form " + form.getFormId(),e);
           errors.reject(e.getMessage());
           httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Form.cannot.delete");
-          return showForm(request,response,errors);
+          throw e;
         }
       }
  else       if (action.equals(msa.getMessage("Form.updateSortOrder"))) {

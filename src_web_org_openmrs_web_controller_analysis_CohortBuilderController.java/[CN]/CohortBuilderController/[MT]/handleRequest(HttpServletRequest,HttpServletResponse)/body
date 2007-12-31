@@ -1,12 +1,10 @@
 {
   Map<String,Object> model=new HashMap<String,Object>();
   if (Context.isAuthenticated()) {
-    List<PatientFilter> savedFilters=Context.getReportService().getAllPatientFilters();
-    if (savedFilters == null)     savedFilters=new ArrayList<PatientFilter>();
-    CohortSearchHistory history=(CohortSearchHistory)Context.getVolatileUserData("CohortBuilderSearchHistory");
+    CohortSearchHistory history=getMySearchHistory(request);
     if (history == null) {
       history=new CohortSearchHistory();
-      Context.setVolatileUserData("CohortBuilderSearchHistory",history);
+      setMySearchHistory(request,history);
     }
     List<Shortcut> shortcuts=new ArrayList<Shortcut>();
     String shortcutProperty=Context.getAdministrationService().getGlobalProperty("cohort.cohortBuilder.shortcuts");
@@ -28,22 +26,33 @@
       if (c != null)       orderStopReasons.addAll(cs.getConceptsInSet(c));
       if (c != null && c.getAnswers() != null)       for (      ConceptAnswer ca : c.getAnswers())       orderStopReasons.add(ca.getAnswerConcept());
     }
-    List<Concept> genericDrugs=new ArrayList<Concept>();
-    genericDrugs=Context.getConceptService().getConceptsWithDrugsInFormulary();
+    List<Concept> genericDrugs=Context.getConceptService().getConceptsWithDrugsInFormulary();
     Collections.sort(genericDrugs,new Comparator<Concept>(){
       public int compare(      Concept left,      Concept right){
         return left.getName().getName().compareTo(right.getName().getName());
       }
     }
 );
-    model.put("savedFilters",savedFilters);
+    List<Concept> drugSets=new ArrayList<Concept>();
+{
+      String temp=Context.getAdministrationService().getGlobalProperty("cohortBuilder.drugSets");
+      if (StringUtils.hasText(temp)) {
+        String[] drugSetNames=temp.split(",");
+        for (        String setName : drugSetNames) {
+          Concept c=Context.getConceptService().getConceptByIdOrName(setName);
+          if (c != null)           drugSets.add(c);
+        }
+      }
+    }
     model.put("searchHistory",history);
     model.put("links",linkHelper());
     model.put("programs",Context.getProgramWorkflowService().getPrograms());
     model.put("encounterTypes",Context.getEncounterService().getEncounterTypes());
     model.put("locations",Context.getEncounterService().getLocations());
+    model.put("forms",Context.getFormService().getForms());
     model.put("drugs",Context.getConceptService().getDrugs());
     model.put("drugConcepts",genericDrugs);
+    model.put("drugSets",drugSets);
     model.put("orderStopReasons",orderStopReasons);
     model.put("personAttributeTypes",Context.getPersonService().getPersonAttributeTypes());
     model.put("shortcuts",shortcuts);

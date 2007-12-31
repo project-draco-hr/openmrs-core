@@ -4,7 +4,7 @@
   }
   if (roles == null)   return false;
   Set<Role> tmproles=getAllRoles();
-  log.debug("User #" + userId + " has roles: "+ tmproles);
+  if (log.isDebugEnabled())   log.debug("User #" + userId + " has roles: "+ tmproles);
   Role role=new Role(r);
   if (tmproles.contains(role))   return true;
   return false;

@@ -1,11 +1,9 @@
 {
   Map<Integer,List<Relationship>> ret=new HashMap<Integer,List<Relationship>>();
-  Collection<Integer> ids=ps.getPatientIds();
-  if (ids.size() == 0)   return ret;
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class);
   criteria.setCacheMode(CacheMode.IGNORE);
   if (relType != null)   criteria.add(Restrictions.eq("relationship",relType));
-  criteria.createCriteria("personB").add(Restrictions.in("personId",ids));
+  if (ps != null)   criteria.createCriteria("personB").add(Restrictions.in("personId",ps.getPatientIds()));
   criteria.add(Restrictions.eq("voided",false));
   log.debug("criteria: " + criteria);
   List<Relationship> temp=criteria.list();

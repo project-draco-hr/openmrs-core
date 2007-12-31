@@ -1,4 +1,4 @@
 {
   PatientSet ps=Context.getPatientSetService().getPatientsHavingPersonAttribute(getAttribute(),getValue());
-  return input.intersect(ps);
+  return input == null ? ps : input.intersect(ps);
 }

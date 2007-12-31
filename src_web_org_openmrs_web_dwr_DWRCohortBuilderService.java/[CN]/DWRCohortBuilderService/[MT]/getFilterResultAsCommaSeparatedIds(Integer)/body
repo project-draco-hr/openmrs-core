@@ -1,0 +1,5 @@
+{
+  PatientFilter pf=Context.getReportService().getPatientFilterById(filterId);
+  if (pf == null)   return "";
+ else   return pf.filter(Context.getPatientSetService().getAllPatients()).toCommaSeparatedPatientIds();
+}

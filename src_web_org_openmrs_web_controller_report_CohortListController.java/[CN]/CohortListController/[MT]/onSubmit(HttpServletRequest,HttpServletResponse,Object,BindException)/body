@@ -1,0 +1,16 @@
+{
+  String action=request.getParameter("method");
+  if ("delete".equals(action)) {
+    String[] toDelete=request.getParameterValues("cohortId");
+    if (toDelete != null) {
+      String reason=request.getParameter("voidReason");
+      for (      String s : toDelete) {
+        Integer id=Integer.valueOf(s);
+        Cohort cohort=Context.getCohortService().getCohort(id);
+        Context.getCohortService().voidCohort(cohort,reason);
+      }
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
+  }
+  return showForm(request,response,errors);
+}

@@ -1,13 +1,4 @@
 {
-  startup();
-  Context.authenticate("admin","test");
-  ps=Context.getPatientService();
-  us=Context.getUserService();
-  as=Context.getAdministrationService();
-  obsService=Context.getObsService();
-  orderService=Context.getOrderService();
-  formService=Context.getFormService();
-  encounterService=Context.getEncounterService();
   Calendar c=new GregorianCalendar();
   c.set(2006,6,12);
   c.set(Calendar.HOUR_OF_DAY,0);
@@ -20,7 +11,6 @@
   String encUserColumn=null;
   String orderUserColumn=null;
   List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(fromDate,toDateToUse,encUserColumn,orderUserColumn,"location");
-  DataTable table=DataEntryStatistic.tableByUserAndType(stats);
-  System.out.print(table.getHtmlTable());
-  log.error("done");
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats,true);
+  System.out.print("Data entry stats output: " + table.getHtmlTable());
 }

@@ -5,7 +5,7 @@
   }
  else {
     Concept drugSet=conceptService.getConceptByName(drugSetName);
-    patientIdDrugOrderMap=patientSetService.getCurrentDrugOrders(getPatientSet(),drugSet);
+    patientIdDrugOrderMap=patientSetService.getCurrentDrugOrders(getPatientSetIfNotAllPatients(),drugSet);
     drugOrderMap.put(drugSetName,patientIdDrugOrderMap);
   }
   return patientIdDrugOrderMap.get(patientId);

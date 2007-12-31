@@ -1,4 +1,5 @@
 {
   PatientSetService service=Context.getPatientSetService();
-  return input.intersect(service.getPatientsHavingNumericObs(concept.getConceptId(),timeModifier,modifier,value,fromDateHelper(),null));
+  PatientSet ps=service.getPatientsHavingNumericObs(concept.getConceptId(),timeModifier,modifier,value,fromDateHelper(),null);
+  return input == null ? ps : input.intersect(ps);
 }

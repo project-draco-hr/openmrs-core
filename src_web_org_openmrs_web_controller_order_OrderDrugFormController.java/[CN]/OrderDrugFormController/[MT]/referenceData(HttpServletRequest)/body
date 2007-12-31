@@ -3,6 +3,5 @@
   HttpSession httpSession=request.getSession();
   String emptyOrderTypeList=this.getMessageSourceAccessor().getMessage("OrderType.list.empty");
   refData.put("emptyOrderTypeList",emptyOrderTypeList);
-  refData.put("datePattern",OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()));
   return refData;
 }

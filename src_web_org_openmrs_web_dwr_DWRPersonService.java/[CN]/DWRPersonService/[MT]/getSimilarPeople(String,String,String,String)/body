@@ -1,13 +1,26 @@
 {
   Vector<Object> personList=new Vector<Object>();
   Integer userId=Context.getAuthenticatedUser().getUserId();
-  log.info(userId + "|" + name+ "|"+ birthyear+ "|"+ age+ "|"+ gender);
+  log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
   PersonService ps=Context.getPersonService();
   List<Person> persons=new Vector<Person>();
   Integer d=null;
-  birthyear=birthyear.trim();
+  birthdate=birthdate.trim();
   age=age.trim();
-  if (birthyear.length() > 3)   d=Integer.valueOf(birthyear);
+  if (birthdate.length() > 0) {
+    DateFormat format=OpenmrsUtil.getDateFormat();
+    Date dateObject=null;
+    try {
+      dateObject=format.parse(birthdate);
+    }
+ catch (    Exception e) {
+    }
+    if (dateObject != null) {
+      Calendar c=Calendar.getInstance();
+      c.setTime(dateObject);
+      d=c.get(Calendar.YEAR);
+    }
+  }
  else   if (age.length() > 0) {
     Calendar c=Calendar.getInstance();
     c.setTime(new Date());

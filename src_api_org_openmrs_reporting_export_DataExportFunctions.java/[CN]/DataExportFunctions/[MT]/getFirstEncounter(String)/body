@@ -3,7 +3,7 @@
   log.debug("getting first encounters for type: " + encounterType);
   EncounterType type=null;
   if (!encounterType.equals(""))   type=encounterService.getEncounterType(encounterType);
-  Map<Integer,Encounter> encounterMap=patientSetService.getFirstEncountersByType(getPatientSet(),type);
+  Map<Integer,Encounter> encounterMap=patientSetService.getFirstEncountersByType(getPatientSetIfNotAllPatients(),type);
   patientFirstEncounterMap.put(encounterType,encounterMap);
   return encounterMap.get(getPatientId());
 }

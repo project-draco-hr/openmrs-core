@@ -2,6 +2,7 @@
   log.debug("Starting tag for extension point: " + pointId);
   extensions=null;
   parameterMap=OpenmrsUtil.parseParameterList(parameters);
+  status=new HashMap<String,Object>();
   List<Extension> extensionList=null;
   if (type != null && type.length() > 0) {
     try {

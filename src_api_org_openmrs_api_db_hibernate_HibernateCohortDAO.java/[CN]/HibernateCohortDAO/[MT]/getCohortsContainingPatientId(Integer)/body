@@ -1,0 +1,5 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("from Cohort c where :patientId in elements(c.memberIds)");
+  query.setInteger("patientId",patientId);
+  return (List<Cohort>)query.list();
+}

@@ -5,10 +5,9 @@
   if (query.length() < 3)   return patients;
   if (query.matches(".*\\d+.*")) {
     log.debug("[Identifier search] Query: " + query);
-    patients.addAll(dao.getPatientsByIdentifierPattern(query,includeVoided));
+    return dao.getPatientsByIdentifierPattern(query,includeVoided);
   }
  else {
-    patients.addAll(dao.getPatientsByName(query,includeVoided));
+    return dao.getPatientsByName(query,includeVoided);
   }
-  return patients;
 }

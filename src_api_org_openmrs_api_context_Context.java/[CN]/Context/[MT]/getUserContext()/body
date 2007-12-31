@@ -1,6 +1,6 @@
 {
   Object[] arr=userContextHolder.get();
-  if (log.isInfoEnabled())   log.info("Getting user context " + arr + " from userContextHolder "+ userContextHolder);
+  if (log.isDebugEnabled())   log.debug("Getting user context " + arr + " from userContextHolder "+ userContextHolder);
   if (arr == null) {
     log.debug("userContext is null. Creating new userContext");
     setUserContext(new UserContext());

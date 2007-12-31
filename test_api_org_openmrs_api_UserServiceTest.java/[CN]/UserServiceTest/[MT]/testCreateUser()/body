@@ -1,0 +1,12 @@
+{
+  assertTrue("The context needs to be correctly authenticated to by a user",Context.isAuthenticated());
+  UserService us=Context.getUserService();
+  User u=new User();
+  u.addName(new PersonName("Benjamin","A","Wolfe"));
+  u.setUsername("bwolfe");
+  u.setGender("M");
+  User createdUser=us.createUser(u,"some arbitrary password to use");
+  assertTrue("The user returned by the create user method should equal the passed in user",createdUser.equals(u));
+  createdUser=us.getUserByUsername("bwolfe");
+  assertTrue("The created user should equal the passed in user",createdUser.equals(u));
+}

@@ -1,4 +1,5 @@
 {
   PatientSetService service=Context.getPatientSetService();
-  return input.intersect(service.getPatientsHavingEncounters(encounterType,location,OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),atLeastCount,atMostCount));
+  PatientSet ps=service.getPatientsHavingEncounters(encounterTypeList,location,form,OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),atLeastCount,atMostCount);
+  return input == null ? ps : input.intersect(ps);
 }

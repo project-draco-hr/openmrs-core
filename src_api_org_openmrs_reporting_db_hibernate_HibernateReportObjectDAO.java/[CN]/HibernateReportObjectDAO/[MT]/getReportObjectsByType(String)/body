@@ -1,11 +1,10 @@
 {
   List<AbstractReportObject> reportObjects=new Vector<AbstractReportObject>();
-  List<ReportObjectWrapper> wrappedObjects=new Vector<ReportObjectWrapper>();
   Query query=sessionFactory.getCurrentSession().createQuery("from ReportObjectWrapper ro where ro.type=:type order by date_created, name");
   query.setString("type",reportObjectType);
-  wrappedObjects.addAll((ArrayList<ReportObjectWrapper>)query.list());
+  List<ReportObjectWrapper> wrappedObjects=query.list();
   for (  ReportObjectWrapper wrappedObject : wrappedObjects) {
-    AbstractReportObject reportObject=(AbstractReportObject)wrappedObject.getReportObject();
+    AbstractReportObject reportObject=wrappedObject.getReportObject();
     if (reportObject.getReportObjectId() == null) {
       reportObject.setReportObjectId(wrappedObject.getReportObjectId());
     }
