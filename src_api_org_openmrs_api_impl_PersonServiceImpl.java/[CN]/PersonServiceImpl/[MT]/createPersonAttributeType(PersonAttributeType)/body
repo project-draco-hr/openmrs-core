@@ -1,9 +1,13 @@
 {
   log.info("Creating person attribute type: " + type);
   User user=Context.getAuthenticatedUser();
-  type.setChangedBy(user);
-  type.setDateChanged(new Date());
-  type.setCreator(user);
-  type.setDateCreated(new Date());
+  if (type.getCreator() == null) {
+    type.setCreator(user);
+    type.setDateCreated(new Date());
+  }
+ else {
+    type.setChangedBy(user);
+    type.setDateChanged(new Date());
+  }
   getPersonDAO().createPersonAttributeType(type);
 }
