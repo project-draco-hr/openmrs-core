@@ -1,8 +1,12 @@
 {
   log.debug("Create a alert " + alert);
-  if (alert.getCreator() == null)   alert.setCreator(Context.getAuthenticatedUser());
-  if (alert.getDateCreated() == null)   alert.setDateCreated(new Date());
-  alert.setChangedBy(Context.getAuthenticatedUser());
-  alert.setDateChanged(new Date());
+  if (alert.getCreator() == null) {
+    alert.setCreator(Context.getAuthenticatedUser());
+    alert.setDateCreated(new Date());
+  }
+ else {
+    alert.setChangedBy(Context.getAuthenticatedUser());
+    alert.setDateChanged(new Date());
+  }
   getAlertDAO().createAlert(alert);
 }

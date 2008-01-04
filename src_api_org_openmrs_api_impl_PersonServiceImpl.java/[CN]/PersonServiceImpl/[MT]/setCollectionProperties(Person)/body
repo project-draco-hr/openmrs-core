@@ -3,8 +3,10 @@
     person.setCreator(Context.getAuthenticatedUser());
     person.setDateCreated(new Date());
   }
-  person.setChangedBy(Context.getAuthenticatedUser());
-  person.setDateChanged(new Date());
+ else {
+    person.setChangedBy(Context.getAuthenticatedUser());
+    person.setDateChanged(new Date());
+  }
   if (person.getAddresses() != null && person.getAddresses().size() > 0)   for (  PersonAddress pAddress : person.getAddresses()) {
     if (pAddress.getDateCreated() == null) {
       pAddress.setDateCreated(new Date());
