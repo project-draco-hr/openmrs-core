@@ -1,7 +1,7 @@
 {
   if (getConcept() != null) {
     String abbrev=getConcept().getDatatype().getHl7Abbreviation();
-    if (abbrev.equals("BIT"))     return getValueAsBoolean().toString();
+    if (abbrev.equals("BIT"))     return getValueAsBoolean() == null ? "" : getValueAsBoolean().toString();
  else     if (abbrev.equals("CWE")) {
       if (getValueCoded() == null)       return "";
       if (getValueDrug() != null)       return getValueDrug().getFullName(locale);
