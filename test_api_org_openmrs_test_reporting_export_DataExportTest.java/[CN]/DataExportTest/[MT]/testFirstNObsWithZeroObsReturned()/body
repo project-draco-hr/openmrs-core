@@ -1,7 +1,7 @@
 {
   initializeInMemoryDatabase();
-  executeDataSet("org/openmrs/test/include/DataExportTest-patients.xml");
-  executeDataSet("org/openmrs/test/include/DataExportTest-obs.xml");
+  executeDataSet("org/openmrs/test/reporting/export/include/DataExportTest-patients.xml");
+  executeDataSet("org/openmrs/test/reporting/export/include/DataExportTest-obs.xml");
   authenticate();
   DataExportReportObject export=new DataExportReportObject();
   export.setName("NO CONCEPT, THEN GET WEIGHTS");
