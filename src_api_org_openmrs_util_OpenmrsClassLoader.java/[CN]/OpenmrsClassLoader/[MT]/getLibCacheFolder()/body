@@ -21,12 +21,12 @@ synchronized (ModuleClassLoader.class) {
     }
     try {
       if (!lockFile.createNewFile()) {
-        log.error("can\'t create lock file in JPF libraries cache" + " folder " + libCacheFolder);
+        log.error("can't create lock file in JPF libraries cache folder" + libCacheFolder);
         return null;
       }
     }
  catch (    IOException ioe) {
-      log.error("can\'t create lock file in JPF libraries cache" + " folder " + libCacheFolder,ioe);
+      log.error("can't create lock file in JPF libraries cache folder " + libCacheFolder,ioe);
       return null;
     }
     lockFile.deleteOnExit();

@@ -6,6 +6,8 @@
     dataManipulation=true;
   }
   if (selectOnly && dataManipulation)   throw new DAOException("Illegal command(s) found in query string");
+  Dialect dialect=HibernateUtil.getDialect(sessionFactory);
+  if (HSQLDialect.class.getName().equals(dialect.getClass().getName()))   sql=sql.replace("`","");
   Connection conn=sessionFactory.getCurrentSession().connection();
   PreparedStatement ps=null;
   List<List<Object>> results=new Vector<List<Object>>();

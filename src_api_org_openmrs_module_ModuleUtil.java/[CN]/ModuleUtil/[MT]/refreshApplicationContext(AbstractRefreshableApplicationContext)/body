@@ -17,7 +17,7 @@
   ctx.setClassLoader(OpenmrsClassLoader.getInstance());
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
-  log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
+  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
   for (  Module module : ModuleFactory.getStartedModules()) {
     ModuleFactory.loadAdvice(module);
   }

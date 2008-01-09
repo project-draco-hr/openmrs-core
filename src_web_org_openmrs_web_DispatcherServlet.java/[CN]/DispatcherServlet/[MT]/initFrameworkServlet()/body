@@ -1,4 +1,5 @@
 {
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   log.debug("Framework being initialized");
   WebModuleUtil.setDispatcherServlet(this);
   super.initFrameworkServlet();

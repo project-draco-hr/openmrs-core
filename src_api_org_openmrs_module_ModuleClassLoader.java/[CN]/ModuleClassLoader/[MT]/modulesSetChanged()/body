@@ -13,7 +13,7 @@
     }
     log.debug(buf.toString());
   }
-  collectImports();
+  collectRequiredModuleImports();
   collectFilters();
   for (Iterator<Map.Entry<URL,File>> it=libraryCache.entrySet().iterator(); it.hasNext(); ) {
     if (it.next().getValue() == null) {

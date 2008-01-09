@@ -25,6 +25,10 @@
   finally {
     if (in != null)     in.close();
     if (out != null)     out.close();
+    try {
+      outputStream.close();
+    }
+ catch (    Exception e) {
+    }
   }
-  outputStream.close();
 }
