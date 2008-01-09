@@ -1,4 +1,14 @@
 {
+  if (name.endsWith("DssService")) {
+    log.warn("loading " + name + " "+ getModule()+ " seenModules: "+ seenModules+ " requestor: "+ requestor+ " resolve? "+ resolve);
+    StringBuilder output=new StringBuilder();
+    for (    StackTraceElement element : Thread.currentThread().getStackTrace()) {
+      if (element.getClassName().contains("openmrs"))       output.append("+ ");
+      output.append(element);
+      output.append("\n");
+    }
+    log.warn("stacktrace: " + output.toString());
+  }
   if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
     return null;
   }
@@ -13,6 +23,13 @@ synchronized (this) {
     if (result != null) {
       checkClassVisibility(result,requestor);
       return result;
+    }
+    for (    Module reqMod : requiredModules) {
+      if (name.startsWith(reqMod.getPackageName())) {
+        ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(reqMod);
+        result=mcl.loadClass(name,resolve,requestor,seenModules);
+        if (result != null)         return result;
+      }
     }
     try {
 synchronized (getClass()) {
@@ -34,7 +51,7 @@ catch (    ClassNotFoundException cnfe) {
   }
   if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
-  for (  Module publicImport : publicImports) {
+  for (  Module publicImport : requiredModules) {
     if (seenModules.contains(publicImport.getModuleId()))     continue;
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
     result=mcl.loadClass(name,resolve,requestor,seenModules);

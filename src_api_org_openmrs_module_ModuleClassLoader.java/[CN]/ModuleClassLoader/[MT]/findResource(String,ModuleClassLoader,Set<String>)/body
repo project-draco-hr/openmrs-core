@@ -19,7 +19,7 @@
   }
   if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
-  for (  Module publicImport : publicImports) {
+  for (  Module publicImport : requiredModules) {
     if (seenModules.contains(publicImport.getModuleId()))     continue;
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
     result=mcl.findResource(name,requestor,seenModules);

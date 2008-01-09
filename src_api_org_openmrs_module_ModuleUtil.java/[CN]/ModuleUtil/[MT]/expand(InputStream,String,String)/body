@@ -1,6 +1,6 @@
 {
   if (log.isDebugEnabled())   log.debug("expanding: " + name);
-  File file=new File(docBase,name);
+  File file=new File(fileDir,name);
   FileOutputStream outStream=null;
   try {
     outStream=new FileOutputStream(file);
@@ -13,4 +13,5 @@
  catch (    Exception e) {
     }
   }
+  return file;
 }
