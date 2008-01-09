@@ -1,6 +1,6 @@
 {
   initializeInMemoryDatabase();
-  executeDataSet("org/openmrs/test/include/DataExportTest-patients.xml");
+  executeDataSet("org/openmrs/test/reporting/export/include/DataExportTest-patients.xml");
   authenticate();
   DataExportReportObject export=new DataExportReportObject();
   export.setName("TEST_EXPORT");
@@ -24,7 +24,10 @@
   patients.add(2);
   DataExportUtil.generateExport(export,patients,"\t");
   File exportFile=DataExportUtil.getGeneratedFile(export);
-  String expectedOutput="PATIENT_ID	GENDER	BIRTHDATE	AGE\n2	M	01/01/2000	7\n";
+  String expectedOutput="PATIENT_ID	GENDER	BIRTHDATE	AGE\n2	M	01/01/2000	XXX\n";
+  Calendar cal=new GregorianCalendar();
+  int expectedAge=cal.get(Calendar.YEAR);
+  expectedOutput=expectedOutput.replace("XXX",String.valueOf(expectedAge - 2000));
   String output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not right.",expectedOutput,output);
