@@ -11,6 +11,10 @@
       if (pIdentifier.getDateCreated() == null)       pIdentifier.setDateCreated(new Date());
       if (pIdentifier.getCreator() == null)       pIdentifier.setCreator(Context.getAuthenticatedUser());
       if (pIdentifier.getPatient() == null)       pIdentifier.setPatient(patient);
+      if (pIdentifier.isVoided()) {
+        if (pIdentifier.getVoidedBy() == null)         pIdentifier.setVoidedBy(Context.getAuthenticatedUser());
+        if (pIdentifier.getDateVoided() == null)         pIdentifier.setDateVoided(new Date());
+      }
     }
   }
 }
