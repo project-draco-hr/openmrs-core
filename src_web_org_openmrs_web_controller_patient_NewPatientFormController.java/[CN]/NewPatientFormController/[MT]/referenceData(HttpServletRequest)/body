@@ -1,6 +1,6 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
-  List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
+  Set<PatientIdentifier> identifiers=new TreeSet<PatientIdentifier>();
   Patient patient=null;
   String causeOfDeathOther="";
   if (Context.isAuthenticated()) {
@@ -9,7 +9,7 @@
     if (patientId != null && !patientId.equals("")) {
       patient=ps.getPatient(Integer.valueOf(patientId));
       if (patient != null) {
-        identifiers.addAll(patient.getIdentifiers());
+        identifiers.addAll(patient.getActiveIdentifiers());
         String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
         Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
         if (conceptCause != null) {
@@ -35,6 +35,10 @@
       }
     }
   }
+  for (  PatientIdentifier identifier : newIdentifiers) {
+    identifier.setPatient(patient);
+  }
+  identifiers.addAll(newIdentifiers);
   if (pref.length() > 0)   for (  PatientIdentifier pi : identifiers)   pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
   map.put("identifiers",identifiers);
   map.put("causeOfDeathOther",causeOfDeathOther);

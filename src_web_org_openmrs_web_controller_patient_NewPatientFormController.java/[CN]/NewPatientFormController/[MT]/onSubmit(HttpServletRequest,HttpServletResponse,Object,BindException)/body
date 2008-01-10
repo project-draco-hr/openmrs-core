@@ -53,11 +53,18 @@
       }
     }
     if (log.isDebugEnabled())     log.debug("patient addresses: " + patient.getAddresses());
-    if (patient.getIdentifiers() == null)     patient.setIdentifiers(new HashSet<PatientIdentifier>());
+    if (patient.getIdentifiers() == null)     patient.setIdentifiers(new TreeSet<PatientIdentifier>());
     for (    PatientIdentifier pi : patient.getIdentifiers()) {
       pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
     }
     patient.addIdentifiers(newIdentifiers);
+    List<PatientIdentifier> newIdentifiersList=new Vector<PatientIdentifier>();
+    newIdentifiersList.addAll(newIdentifiers);
+    for (    PatientIdentifier identifier : patient.getIdentifiers()) {
+      if (!newIdentifiersList.contains(identifier)) {
+        identifier.setVoided(true);
+      }
+    }
     patient.setBirthdate(shortPatient.getBirthdate());
     patient.setBirthdateEstimated(shortPatient.getBirthdateEstimated());
     patient.setGender(shortPatient.getGender());
