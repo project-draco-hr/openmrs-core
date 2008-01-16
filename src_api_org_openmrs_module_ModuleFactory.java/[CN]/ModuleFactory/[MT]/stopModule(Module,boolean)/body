@@ -37,8 +37,8 @@
           }
         }
       }
- catch (      Exception e) {
-        log.warn("Error while getting advicePoints from module: " + moduleId,e);
+ catch (      Throwable t) {
+        log.warn("Error while getting advicePoints from module: " + moduleId,t);
       }
       try {
         for (        Extension ext : mod.getExtensions()) {
@@ -54,8 +54,8 @@
           }
         }
       }
- catch (      Exception e) {
-        log.warn("Error while getting extensions from module: " + moduleId,e);
+ catch (      Throwable t) {
+        log.warn("Error while getting extensions from module: " + moduleId,t);
       }
     }
     try {
@@ -64,8 +64,8 @@
  catch (    ModuleException me) {
       log.debug("Exception encountered while calling module's activator.shutdown()",me);
     }
-catch (    Exception e) {
-      log.warn("Unable to call module's Activator.shutdown() method",e);
+catch (    Throwable t) {
+      log.warn("Unable to call module's Activator.shutdown() method",t);
     }
     ModuleClassLoader cl=removeClassLoader(mod);
     if (cl != null) {
