@@ -1,7 +1,8 @@
 {
   if (obj instanceof Person) {
-    Person u=(Person)obj;
-    return (personId != null && personId.equals(u.getPersonId()));
+    Person person=(Person)obj;
+    if (getPersonId() == null || person.getPersonId() == null)     return super.equals(person);
+    return (personId.equals(person.getPersonId()));
   }
   return false;
 }
