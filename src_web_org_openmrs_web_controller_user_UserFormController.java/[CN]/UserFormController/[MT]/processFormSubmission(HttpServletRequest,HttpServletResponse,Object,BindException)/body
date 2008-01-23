@@ -19,7 +19,7 @@
   }
  else {
     if (us.hasDuplicateUsername(user))     errors.rejectValue("username","error.username.taken");
-    String password=request.getParameter("password");
+    String password=request.getParameter("userFormPassword");
     if (password == null || password.equals("XXXXXXXXXXXXXXX"))     password="";
     String confirm=request.getParameter("confirm");
     if (confirm == null || confirm.equals("XXXXXXXXXXXXXXX"))     confirm="";
