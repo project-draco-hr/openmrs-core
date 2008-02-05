@@ -9,6 +9,7 @@
   Number numericValue=null;
   String stringValue=null;
   Concept codedValue=null;
+  Date dateValue=null;
   String valueSql=null;
   if (value != null) {
     if (concept == null) {
@@ -30,6 +31,20 @@
       if (value instanceof Concept)       codedValue=(Concept)value;
  else       codedValue=Context.getConceptService().getConceptByName(value.toString());
       valueSql="o.value_coded";
+    }
+ else     if (concept.getDatatype().getHl7Abbreviation().equals("DT") || concept.getDatatype().getHl7Abbreviation().equals("TS")) {
+      if (value instanceof Date) {
+        dateValue=(Date)value;
+      }
+ else {
+        try {
+          dateValue=Context.getDateFormat().parse(value.toString());
+        }
+ catch (        ParseException ex) {
+          throw new IllegalArgumentException("Cannot interpret " + dateValue + " as a date in the format "+ Context.getDateFormat());
+        }
+      }
+      valueSql="o.value_datetime";
     }
   }
   StringBuilder sb=new StringBuilder();
@@ -78,7 +93,8 @@
     if (numericValue != null)     query.setDouble("value",numericValue.doubleValue());
  else     if (codedValue != null)     query.setInteger("value",codedValue.getConceptId());
  else     if (stringValue != null)     query.setString("value",stringValue);
- else     throw new IllegalArgumentException("useValue is true, but numeric, coded, and string values are all null");
+ else     if (dateValue != null)     query.setDate("value",dateValue);
+ else     throw new IllegalArgumentException("useValue is true, but numeric, coded, string, and date values are all null");
   }
   if (fromDate != null)   query.setDate("fromDate",fromDate);
   if (toDate != null)   query.setDate("toDate",toDate);
