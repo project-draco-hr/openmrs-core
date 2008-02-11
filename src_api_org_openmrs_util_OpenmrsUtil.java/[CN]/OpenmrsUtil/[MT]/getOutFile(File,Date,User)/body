@@ -1,0 +1,20 @@
+{
+  File outFile;
+  do {
+    DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd-HHmm-ssSSS");
+    if (date == null)     date=new Date();
+    StringBuilder filename=new StringBuilder();
+    filename.append(dateFormat.format(date));
+    if (user != null) {
+      filename.append("-");
+      filename.append(user.getUserId());
+      filename.append("-");
+    }
+    filename.append((int)(Math.random() * 10000));
+    filename.append(".xml");
+    outFile=new File(dir,filename.toString());
+    date=null;
+  }
+ while (outFile.exists());
+  return outFile;
+}
