@@ -125,6 +125,11 @@
     String folderPath=realPath + "/WEB-INF/view/module/" + mod.getModuleId();
     File outFile=new File(folderPath.replace("/",File.separator));
     outFile.deleteOnExit();
+    if (moduleNeedsContextRefresh == false) {
+      if (mod.getAdvicePoints() != null && mod.getAdvicePoints().size() > 0) {
+        moduleNeedsContextRefresh=true;
+      }
+    }
     if (moduleNeedsContextRefresh && delayContextRefresh == false) {
       if (log.isDebugEnabled())       log.debug("Refreshing context for module" + mod);
       try {

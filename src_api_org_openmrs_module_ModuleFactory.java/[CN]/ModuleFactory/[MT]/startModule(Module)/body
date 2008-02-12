@@ -10,7 +10,6 @@
       }
       ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
       getModuleClassLoaderMap().put(module,moduleClassLoader);
-      loadAdvice(module);
       for (      Extension ext : module.getExtensions()) {
         String extId=ext.getExtensionId();
         List<Extension> tmpExtensions=getExtensions(extId);
