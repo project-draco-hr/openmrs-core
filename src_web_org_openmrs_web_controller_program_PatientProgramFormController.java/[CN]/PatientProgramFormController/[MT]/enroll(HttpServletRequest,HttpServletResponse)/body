@@ -17,6 +17,6 @@
   Patient patient=Context.getPatientService().getPatient(Integer.valueOf(patientIdStr));
   Program program=pws.getProgram(Integer.valueOf(programIdStr));
   if (pws.isInProgram(patient,program,enrollmentDate,completionDate))   request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.already");
- else   Context.getProgramWorkflowService().enrollPatientInProgram(patient,program,enrollmentDate,completionDate);
+ else   Context.getProgramWorkflowService().enrollPatientInProgram(patient,program,enrollmentDate,completionDate,null);
   return new ModelAndView(new RedirectView(returnPage));
 }
