@@ -5,5 +5,8 @@
   p.setPatient(patient);
   p.setProgram(program);
   p.setDateEnrolled(enrollmentDate);
+  if (null != creator) {
+    p.setCreator(creator);
+  }
   createPatientProgram(p);
 }
