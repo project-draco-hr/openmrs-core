@@ -36,6 +36,7 @@
       model.put("authenticatedUser",Context.getAuthenticatedUser());
       model.put("myPatientSet",Context.getPatientSetService().getMyPatientSet());
     }
+    Integer personId=null;
     Object o=request.getAttribute("org.openmrs.portlet.patientId");
     if (o != null) {
       String patientVariation="";
@@ -95,24 +96,41 @@
             model.put("patientPrograms",Context.getProgramWorkflowService().getPatientPrograms(p));
             model.put("patientCurrentPrograms",Context.getProgramWorkflowService().getCurrentPrograms(p,null));
           }
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_RELATIONSHIPS)) {
-            List<Relationship> relationships=new ArrayList<Relationship>();
-            relationships.addAll(Context.getPersonService().getRelationships(p,false));
-            Map<RelationshipType,List<Relationship>> relationshipsByType=new HashMap<RelationshipType,List<Relationship>>();
-            for (            Relationship rel : relationships) {
-              List<Relationship> list=relationshipsByType.get(rel.getRelationshipType());
-              if (list == null) {
-                list=new ArrayList<Relationship>();
-                relationshipsByType.put(rel.getRelationshipType(),list);
-              }
-              list.add(rel);
-            }
-            model.put("patientRelationships",relationships);
-            model.put("patientRelationshipsByType",relationshipsByType);
-            model.put("patientId",patientId);
-            if (p != null)             model.put("personId",p.getPatientId());
+          model.put("patientId",patientId);
+          if (p != null) {
+            personId=p.getPatientId();
+            model.put("personId",personId);
           }
           model.put("patientVariation",patientVariation);
+        }
+      }
+    }
+    if (personId == null) {
+      o=request.getAttribute("org.openmrs.portlet.personId");
+      if (o != null) {
+        personId=(Integer)o;
+        model.put("personId",personId);
+      }
+    }
+    if (personId != null) {
+      if (!model.containsKey("person")) {
+        Person p=(Person)model.get("patient");
+        if (p == null)         p=Context.getPersonService().getPerson(personId);
+        model.put("person",p);
+        if (Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_RELATIONSHIPS)) {
+          List<Relationship> relationships=new ArrayList<Relationship>();
+          relationships.addAll(Context.getPersonService().getRelationships(p,false));
+          Map<RelationshipType,List<Relationship>> relationshipsByType=new HashMap<RelationshipType,List<Relationship>>();
+          for (          Relationship rel : relationships) {
+            List<Relationship> list=relationshipsByType.get(rel.getRelationshipType());
+            if (list == null) {
+              list=new ArrayList<Relationship>();
+              relationshipsByType.put(rel.getRelationshipType(),list);
+            }
+            list.add(rel);
+          }
+          model.put("personRelationships",relationships);
+          model.put("personRelationshipsByType",relationshipsByType);
         }
       }
     }

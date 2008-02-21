@@ -1,0 +1,4 @@
+{
+  if (!Context.isAuthenticated())   return new Person();
+ else   return Context.getPersonService().getPerson(Integer.valueOf(request.getParameter("personId")));
+}
