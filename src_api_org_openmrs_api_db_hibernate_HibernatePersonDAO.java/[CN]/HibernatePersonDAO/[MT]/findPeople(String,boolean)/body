@@ -1,0 +1,17 @@
+{
+  name=name.replace(", "," ");
+  String[] names=name.split(" ");
+  log.debug("name: " + name);
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Person.class);
+  criteria.createAlias("names","name");
+  for (  String n : names) {
+    if (n != null && n.length() > 0) {
+      criteria.add(Expression.or(Expression.like("name.givenName",n,MatchMode.START),Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("systemId",n,MatchMode.START)))));
+    }
+  }
+  if (includeVoided == false)   criteria.add(Expression.eq("voided",false));
+  criteria.addOrder(Order.asc("personId"));
+  List returnList=new Vector();
+  returnList=criteria.list();
+  return returnList;
+}
