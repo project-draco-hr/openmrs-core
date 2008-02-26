@@ -44,7 +44,7 @@
   try {
     Connection conn=sessionFactory.getCurrentSession().connection();
     psSelect=conn.prepareStatement("SELECT * FROM global_property WHERE UPPER(property) = UPPER(?)");
-    psInsert=conn.prepareStatement("INSERT INTO global_property VALUES (?, ?, ?)");
+    psInsert=conn.prepareStatement("INSERT INTO global_property (property, property_value, description) VALUES (?, ?, ?)");
     psUpdate=conn.prepareStatement("UPDATE global_property SET description = ? WHERE UPPER(property) = UPPER(?) AND description IS null");
     for (    GlobalProperty gp : OpenmrsConstants.CORE_GLOBAL_PROPERTIES()) {
       psSelect.setString(1,gp.getProperty());
