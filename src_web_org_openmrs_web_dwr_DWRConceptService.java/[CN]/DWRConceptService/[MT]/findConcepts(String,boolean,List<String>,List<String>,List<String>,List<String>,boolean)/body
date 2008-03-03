@@ -33,7 +33,7 @@
       words.addAll(cs.findConcepts(phrase,locale,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
     }
     if (words.size() == 0) {
-      objectList.add("No matches found for <b>" + phrase + "</b>");
+      objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ Context.getLocale().getDisplayName());
     }
  else {
       objectList=new Vector<Object>(words.size());
@@ -53,6 +53,6 @@
     log.error("Error while finding concepts + " + e.getMessage(),e);
     objectList.add("Error while attempting to find concepts - " + e.getMessage());
   }
-  if (objectList.size() == 0)   objectList.add("No matches found for <b>" + phrase + "</b>");
+  if (objectList.size() == 0)   objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ Context.getLocale().getDisplayName());
   return objectList;
 }
