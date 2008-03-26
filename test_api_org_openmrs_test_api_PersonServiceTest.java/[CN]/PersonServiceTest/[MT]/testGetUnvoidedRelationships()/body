@@ -1,0 +1,53 @@
+{
+  executeDataSet(CREATE_PATIENT_XML);
+  executeDataSet(CREATE_RELATIONSHIP_XML);
+  Patient patient=new Patient();
+  PersonName pName=new PersonName();
+  pName.setGivenName("Tom");
+  pName.setMiddleName("E.");
+  pName.setFamilyName("Patient");
+  patient.addName(pName);
+  PersonAddress pAddress=new PersonAddress();
+  pAddress.setAddress1("123 My street");
+  pAddress.setAddress2("Apt 402");
+  pAddress.setCityVillage("Anywhere city");
+  pAddress.setCountry("Some Country");
+  Set<PersonAddress> pAddressList=patient.getAddresses();
+  pAddressList.add(pAddress);
+  patient.setAddresses(pAddressList);
+  patient.addAddress(pAddress);
+  patient.setDeathDate(new Date());
+  patient.setBirthdate(new Date());
+  patient.setBirthdateEstimated(true);
+  patient.setGender("male");
+  List<PatientIdentifierType> patientIdTypes=ps.getPatientIdentifierTypes();
+  assertNotNull(patientIdTypes);
+  PatientIdentifier patientIdentifier=new PatientIdentifier();
+  patientIdentifier.setIdentifier("123-0");
+  patientIdentifier.setIdentifierType(patientIdTypes.get(0));
+  Set<PatientIdentifier> patientIdentifiers=new TreeSet<PatientIdentifier>();
+  patientIdentifiers.add(patientIdentifier);
+  patient.setIdentifiers(patientIdentifiers);
+  ps.createPatient(patient);
+  Patient createdPatient=ps.getPatient(patient.getPatientId());
+  Relationship sibling=new Relationship();
+  sibling.setPersonA(ps.getPatient(2));
+  sibling.setPersonB(patient);
+  sibling.setRelationshipType(personService.getRelationshipType(4));
+  personService.createRelationship(sibling);
+  Relationship doctor=new Relationship();
+  doctor.setPersonB(ps.getPatient(2));
+  doctor.setPersonA(patient);
+  doctor.setRelationshipType(personService.getRelationshipType(3));
+  personService.createRelationship(doctor);
+  Person p=personService.getPerson(2);
+  List<Relationship> aRels=personService.getRelationships(p,false);
+  List<Relationship> bRels=personService.getRelationships(patient,false);
+  List<Relationship> allRels=personService.getRelationships();
+  for (  Relationship r : allRels) {
+    personService.voidRelationship(r,"Because of a JUnit test.");
+  }
+  List<Relationship> updatedARels=personService.getRelationships(p,false);
+  List<Relationship> updatedBRels=personService.getRelationships(patient,false);
+  assertEquals(updatedARels,updatedBRels);
+}
