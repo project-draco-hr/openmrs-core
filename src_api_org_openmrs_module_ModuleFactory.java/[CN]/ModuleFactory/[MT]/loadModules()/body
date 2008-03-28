@@ -2,12 +2,7 @@
   File modulesFolder=ModuleUtil.getModuleRepository();
   if (log.isDebugEnabled())   log.debug("Loading modules from: " + modulesFolder.getAbsolutePath());
   if (modulesFolder.isDirectory()) {
-    for (    File f : modulesFolder.listFiles()) {
-      if (!f.getName().startsWith(".")) {
-        Module mod=loadModule(f);
-        log.debug("Loaded module: " + mod + " successfully");
-      }
-    }
+    loadModules(Arrays.asList(modulesFolder.listFiles()));
   }
  else   log.error("modules folder: '" + modulesFolder.getAbsolutePath() + "' is not a valid directory");
 }
