@@ -18,7 +18,7 @@
     if (patients != null)     criteria.add(Restrictions.in("patient.personId",patients.getPatientIds()));
   }
   criteria.setProjection(projectionList);
-  criteria.addOrder(org.hibernate.criterion.Order.desc("voided"));
+  criteria.add(Expression.eq("voided",false));
   try {
     boolean hasPreferred=false;
     for (    Field f : Class.forName(className).getDeclaredFields()) {
