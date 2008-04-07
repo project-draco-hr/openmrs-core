@@ -15,7 +15,6 @@
   Encounter encounter1=(Encounter)es.getEncounter(1);
   Date datetime1=new Date();
   Location location1=es.getLocation(2);
-  Integer groupId1=new Integer(1);
   Integer valueGroupId1=new Integer(5);
   Date valueDatetime1=new Date();
   Concept valueCoded1=conceptService.getConcept(2);
@@ -31,7 +30,6 @@
   o.setEncounter(encounter1);
   o.setObsDatetime(datetime1);
   o.setLocation(location1);
-  o.setObsGroupId(groupId1);
   o.setValueGroupId(valueGroupId1);
   o.setValueDatetime(valueDatetime1);
   o.setValueCoded(valueCoded1);
@@ -51,7 +49,6 @@
   Encounter encounter2=(Encounter)es.getEncounter(2);
   Date datetime2=new Date();
   Location location2=es.getLocation(2);
-  Integer groupId2=new Integer(2);
   Integer valueGroupId2=new Integer(3);
   Date valueDatetime2=new Date();
   Concept valueCoded2=conceptService.getConcept(1);
@@ -68,7 +65,6 @@
   o2.setEncounter(encounter2);
   o2.setObsDatetime(datetime2);
   o2.setLocation(location2);
-  o2.setObsGroupId(groupId2);
   o2.setValueGroupId(valueGroupId2);
   o2.setValueDatetime(valueDatetime2);
   o2.setValueCoded(valueCoded2);
@@ -91,7 +87,6 @@
   assertTrue(o3.getEncounter().equals(encounter2));
   assertTrue(o3.getObsDatetime().equals(datetime2));
   assertTrue(o3.getLocation().equals(location2));
-  assertTrue(o3.getObsGroupId().equals(groupId2));
   assertTrue(o3.getValueGroupId().equals(valueGroupId2));
   assertTrue(o3.getValueDatetime().equals(valueDatetime2));
   assertTrue(o3.getValueCoded().equals(valueCoded2));

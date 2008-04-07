@@ -1,8 +1,21 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_OBS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_OBS);
-  obs.setVoided(false);
-  obs.setVoidReason(null);
-  obs.setVoidedBy(null);
-  obs.setDateVoided(null);
+  Set<Obs> obsToUnVoid=new HashSet<Obs>();
+  obsToUnVoid.add(obs);
+  Obs testObs=obs;
+  List<Obs> childGroups=new ArrayList<Obs>();
+  while (testObs.isObsGrouping()) {
+    for (    Obs oInner : testObs.getGroupMembers()) {
+      if (oInner.isObsGrouping())       childGroups.add(oInner);
+      if (oInner.getDateVoided().equals(obs.getDateVoided()))       obsToUnVoid.add(oInner);
+    }
+    if (childGroups.size() > 0)     testObs=childGroups.remove(childGroups.size() - 1);
+ else     testObs=new Obs();
+  }
+  for (  Obs o : obsToUnVoid) {
+    o.setVoided(false);
+    o.setVoidReason(null);
+    o.setVoidedBy(null);
+    o.setDateVoided(null);
+  }
   getObsDAO().updateObs(obs);
 }

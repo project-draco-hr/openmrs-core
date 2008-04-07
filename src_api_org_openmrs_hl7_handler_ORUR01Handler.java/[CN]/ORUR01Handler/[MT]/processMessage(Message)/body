@@ -1,6 +1,6 @@
 {
   if (!(message instanceof ORU_R01))   throw new ApplicationException("Invalid message sent to ORU_R01 handler");
-  if (log.isDebugEnabled())   log.debug("Processing ORU_R01 message");
+  log.debug("Processing ORU_R01 message");
   Message response;
   try {
     ORU_R01 oru=(ORU_R01)message;
@@ -14,6 +14,6 @@ catch (  HL7Exception e) {
     log.error("Error while processing ORU_R01 message",e);
     throw new ApplicationException(e);
   }
-  if (log.isDebugEnabled())   log.debug("Finished processing ORU_R01 message");
+  log.debug("Finished processing ORU_R01 message");
   return response;
 }

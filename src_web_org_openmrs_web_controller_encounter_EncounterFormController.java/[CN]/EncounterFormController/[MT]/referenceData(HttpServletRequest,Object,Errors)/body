@@ -2,76 +2,41 @@
   Encounter encounter=(Encounter)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   List<Integer> editedObs=new Vector<Integer>();
-  Map<Integer,FormField> obsMap=new HashMap<Integer,FormField>();
-  Map<Obs,FormField> obsMapTemp=new HashMap<Obs,FormField>();
-  List<FormField> formFields=new Vector<FormField>();
-  Map<Integer,List<Obs>> obsGroups=new HashMap<Integer,List<Obs>>();
-  List<Obs> observations=new Vector<Obs>();
-  Form form=encounter.getForm();
+  SortedMap<FormField,Obs> obsMapToReturn=new TreeMap<FormField,Obs>();
+  Map<Obs,FormField> otherFormFields=new HashMap<Obs,FormField>();
   if (Context.isAuthenticated()) {
     EncounterService es=Context.getEncounterService();
     FormService fs=Context.getFormService();
+    Form form=encounter.getForm();
     map.put("encounterTypes",es.getEncounterTypes());
     map.put("forms",Context.getFormService().getForms());
     String reason="";
-    if (encounter.getObs() != null && !encounter.getObs().isEmpty()) {
-      for (      Obs o : encounter.getObs()) {
-        if (o.isVoided()) {
-          reason=o.getVoidReason();
-          int start=reason.lastIndexOf(" ") + 1;
-          int end=reason.length() - 1;
-          try {
-            reason=reason.substring(start,end);
-            editedObs.add(Integer.valueOf(reason));
-          }
- catch (          Exception e) {
-          }
+    for (    Obs o : encounter.getObsAtTopLevel(false)) {
+      if (o.isVoided()) {
+        reason=o.getVoidReason();
+        int start=reason.lastIndexOf(" ") + 1;
+        int end=reason.length() - 1;
+        try {
+          reason=reason.substring(start,end);
+          editedObs.add(Integer.valueOf(reason));
         }
-        FormField ff=fs.getFormField(form,o.getConcept());
-        if (ff == null)         ff=new FormField();
-        FormField parent=ff.getParent();
-        Integer groupId=o.getObsGroupId();
-        if (groupId == null && parent != null) {
-          Concept fieldConcept=null;
-          if ((fieldConcept=parent.getField().getConcept()) != null && fieldConcept.isSet()) {
-            groupId=o.getObsId();
-            o.setObsGroupId(groupId);
-          }
+ catch (        Exception e) {
         }
-        if (groupId != null) {
-          if (!obsGroups.containsKey(groupId)) {
-            obsGroups.put(groupId,new Vector<Obs>());
-            if (parent == null)             log.error("Parent should not be null for obs with a group id obs id: " + o.getObsId() + " form field id: "+ ff.getFormFieldId());
-            formFields.add(parent);
-            obsMap.put(o.getObsId(),parent);
-            obsMapTemp.put(o,parent);
-          }
-          obsGroups.get(groupId).add(o);
-        }
+      }
+      FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);
+      if (ff == null)       ff=new FormField();
+      if (o.getObsGroup() == null) {
+        obsMapToReturn.put(ff,o);
+      }
  else {
-          formFields.add(ff);
-          obsMap.put(o.getObsId(),ff);
-          obsMapTemp.put(o,ff);
-        }
-      }
-      try {
-        Collections.sort(formFields,new FormFieldNameComparator());
-      }
- catch (      Exception e) {
-        log.error("Error while sorting obs for encounter: " + encounter,e);
-      }
-      for (      FormField f : formFields) {
-        Obs o=popObsFromMap(obsMapTemp,f);
-        if (o != null)         observations.add(o);
+        otherFormFields.put(o,ff);
       }
     }
   }
-  log.debug("setting sorted observations in page context (size: " + observations.size() + ")");
-  map.put("observations",observations);
-  log.debug("setting obsMap in page context (size: " + obsMap.size() + ")");
-  map.put("obsMap",obsMap);
+  if (log.isDebugEnabled())   log.debug("setting obsMap in page context (size: " + obsMapToReturn.size() + ")");
+  map.put("obsMap",obsMapToReturn);
+  map.put("otherFormFields",otherFormFields);
   map.put("locale",Context.getLocale());
   map.put("editedObs",editedObs);
-  map.put("obsGroups",obsGroups);
   return map;
 }

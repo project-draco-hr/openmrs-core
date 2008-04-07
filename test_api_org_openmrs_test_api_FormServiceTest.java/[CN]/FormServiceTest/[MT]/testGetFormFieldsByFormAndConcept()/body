@@ -1,0 +1,18 @@
+{
+  executeDataSet(INITIAL_FIELDS_XML);
+  executeDataSet("org/openmrs/test/api/include/FormServiceTest-formFields.xml");
+  FormService formService=Context.getFormService();
+  Form form=new Form(1);
+  Concept concept=new Concept(1);
+  List<FormField> ignoreFormFields=new Vector<FormField>();
+  FormField ff=formService.getFormField(form,concept,null,false);
+  assertNotNull(ff);
+  ff=formService.getFormField(form,concept);
+  assertNotNull(ff);
+  assertNull(formService.getFormField(form,new Concept(293934)));
+  assertNull(formService.getFormField(new Form(12343),new Concept(293934)));
+  ignoreFormFields.add(ff);
+  FormField ff2=formService.getFormField(form,concept,ignoreFormFields,false);
+  assertNotNull(ff2);
+  assertNotSame(ff,ff2);
+}

@@ -1,12 +1,14 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_OBS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_OBS);
   if (obs == null || obs.length < 1)   return;
-  getObsDAO().createObs(obs[0]);
-  Integer obsGroupId=obs[0].getObsId();
-  obs[0].setObsGroupId(obsGroupId);
-  getObsDAO().updateObs(obs[0]);
-  for (int i=1; i < obs.length; i++) {
-    obs[i].setObsGroupId(obsGroupId);
-    getObsDAO().createObs(obs[i]);
+  String conceptIdStr=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MEDICAL_RECORD_OBSERVATIONS,"1238");
+  if (conceptIdStr == null || conceptIdStr.length() == 0)   return;
+  Integer conceptId=Integer.valueOf(conceptIdStr);
+  Concept defaultObsGroupConcept=Context.getConceptService().getConcept(conceptId);
+  if (defaultObsGroupConcept == null)   throw new APIException("There is no concept defined with concept id: " + conceptIdStr + "You should correctly define the default obs group concept id with the global propery"+ OpenmrsConstants.GLOBAL_PROPERTY_MEDICAL_RECORD_OBSERVATIONS);
+  Obs obsGroup=new Obs();
+  obsGroup.setConcept(defaultObsGroupConcept);
+  for (  Obs member : obs) {
+    obsGroup.addGroupMember(member);
   }
+  updateObs(obsGroup);
 }

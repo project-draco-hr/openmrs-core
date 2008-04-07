@@ -1,8 +1,0 @@
-{
-  List<Concept> ret=new ArrayList<Concept>();
-  Set<Concept> withObs=new HashSet<Concept>();
-  for (  ObsGroupHolder ogh : obsGroups.values())   for (  Obs o : ogh.getObservations())   withObs.add(o.getConcept());
-  ret.addAll(getObsGroupConcepts());
-  ret.retainAll(withObs);
-  return ret;
-}

@@ -1,0 +1,15 @@
+{
+  if (conceptToSearchFor == null)   return null;
+  Integer conceptId=conceptToSearchFor.getConceptId();
+  for (  FormField formField : formFields) {
+    Field field=formField.getField();
+    if (field != null) {
+      Concept otherConcept=field.getConcept();
+      if (otherConcept != null && conceptId.equals(otherConcept.getConceptId())) {
+        formFields.remove(formField);
+        return formField;
+      }
+    }
+  }
+  return null;
+}

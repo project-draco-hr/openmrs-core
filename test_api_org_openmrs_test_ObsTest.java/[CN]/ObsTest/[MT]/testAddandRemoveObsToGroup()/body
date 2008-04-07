@@ -1,0 +1,24 @@
+{
+  Obs obs=new Obs(1);
+  Obs obsGroup=new Obs(755);
+  assertFalse(obsGroup.isObsGrouping());
+  assertFalse(obsGroup.hasGroupMembers());
+  obsGroup.addGroupMember(obs);
+  assertEquals(1,obsGroup.getGroupMembers().size());
+  obsGroup.addGroupMember(obs);
+  assertTrue(obsGroup.hasGroupMembers());
+  assertEquals("Duplicate add should not increase the grouped obs size",1,obsGroup.getGroupMembers().size());
+  Obs obs2=new Obs(2);
+  obsGroup.removeGroupMember(obs2);
+  assertTrue(obsGroup.hasGroupMembers());
+  assertEquals("Removing a non existent obs should not decrease the number of grouped obs",1,obsGroup.getGroupMembers().size());
+  new Obs().removeGroupMember(obs2);
+  obsGroup.removeGroupMember(obs);
+  assertEquals(0,obsGroup.getGroupMembers().size());
+  try {
+    obsGroup.addGroupMember(obsGroup);
+    fail("An APIException about adding an obsGroup should have been thrown");
+  }
+ catch (  APIException e) {
+  }
+}
