@@ -1,0 +1,15 @@
+{
+  Map<Obs,LinkedList<Obs>> matrix=new HashMap<Obs,LinkedList<Obs>>();
+  for (  Obs obsGrouper : obs) {
+    LinkedList<Obs> obsRow=new LinkedList<Obs>();
+    Map<Concept,Obs> conceptToObsMap=new HashMap<Concept,Obs>();
+    for (    Obs groupedObs : obsGrouper.getGroupMembers()) {
+      conceptToObsMap.put(groupedObs.getConcept(),groupedObs);
+    }
+    for (    Concept concept : groupMemberConcepts) {
+      obsRow.add(conceptToObsMap.get(concept));
+    }
+    matrix.put(obsGrouper,obsRow);
+  }
+  return matrix;
+}

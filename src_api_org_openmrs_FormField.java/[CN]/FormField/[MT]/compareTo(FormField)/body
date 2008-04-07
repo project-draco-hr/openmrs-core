@@ -5,6 +5,12 @@
     int c=getSortWeight().compareTo(f.getSortWeight());
     if (c != 0)     return c;
   }
+  if (getPageNumber() != null || f.getPageNumber() != null) {
+    if (getPageNumber() == null)     return -1;
+    if (f.getPageNumber() == null)     return 1;
+    int c=getPageNumber().compareTo(f.getPageNumber());
+    if (c != 0)     return c;
+  }
   if (getFieldNumber() != null || f.getFieldNumber() != null) {
     if (getFieldNumber() == null)     return -1;
     if (f.getFieldNumber() == null)     return 1;

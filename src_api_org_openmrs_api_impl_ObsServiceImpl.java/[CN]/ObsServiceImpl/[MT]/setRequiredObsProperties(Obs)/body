@@ -1,0 +1,9 @@
+{
+  if (obs.getCreator() == null)   obs.setCreator(Context.getAuthenticatedUser());
+  if (obs.getDateCreated() == null)   obs.setDateCreated(new Date());
+  if (obs.getGroupMembers() != null) {
+    for (    Obs member : obs.getGroupMembers()) {
+      if (member.getCreator() == null || member.getDateCreated() == null)       setRequiredObsProperties(member);
+    }
+  }
+}

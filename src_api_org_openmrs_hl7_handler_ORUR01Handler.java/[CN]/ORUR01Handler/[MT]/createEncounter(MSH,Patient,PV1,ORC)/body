@@ -15,10 +15,5 @@
   encounter.setEncounterType(encounterType);
   encounter.setCreator(enterer);
   encounter.setDateCreated(dateEntered);
-  if (log.isDebugEnabled())   log.debug("Creating encounter");
-  Context.getEncounterService().createEncounter(encounter);
-  if (encounter == null || encounter.getEncounterId() == null || encounter.getEncounterId() == 0) {
-    throw new HL7Exception("Invalid encounter");
-  }
   return encounter;
 }

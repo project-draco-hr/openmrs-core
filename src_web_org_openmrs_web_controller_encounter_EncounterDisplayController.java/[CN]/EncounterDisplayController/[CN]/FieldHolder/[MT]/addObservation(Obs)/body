@@ -1,23 +1,11 @@
 {
-  Integer obsGroupId=o.getObsGroupId();
-  boolean obsGroupAnyway=obsGroupId == null && obsGroupConcepts.contains(o.getConcept());
-  if (obsGroupId == null && !obsGroupAnyway) {
-    List<Obs> obsForConcept=observations.get(o.getConcept());
-    if (obsForConcept == null) {
-      obsForConcept=new ArrayList<Obs>();
-      observations.put(o.getConcept(),obsForConcept);
+  if (obsToAdd.isObsGrouping()) {
+    for (    Obs groupedObs : obsToAdd.getGroupMembers()) {
+      groupMemberConcepts.add(groupedObs.getConcept());
     }
-    obsForConcept.add(o);
   }
  else {
-    if (obsGroupAnyway)     obsGroupId=o.getObsId();
-    ObsGroupHolder group=obsGroups.get(obsGroupId);
-    if (group == null) {
-      group=new ObsGroupHolder();
-      group.setParent(this);
-      obsGroups.put(obsGroupId,group);
-    }
-    group.getObservations().add(o);
-    obsGroupConcepts.add(o.getConcept());
+    groupMemberConcepts.add(obsToAdd.getConcept());
   }
+  obs.add(obsToAdd);
 }

@@ -20,5 +20,13 @@
   }
  else   if (getValueDatetime() != null)   return Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE);
  else   if (getValueText() != null)   return getValueText();
+ else   if (hasGroupMembers()) {
+    StringBuilder sb=new StringBuilder();
+    for (    Obs groupMember : getGroupMembers()) {
+      if (sb.length() > 0)       sb.append(", ");
+      sb.append(groupMember.getValueAsString(locale));
+    }
+    return sb.toString();
+  }
   return "";
 }

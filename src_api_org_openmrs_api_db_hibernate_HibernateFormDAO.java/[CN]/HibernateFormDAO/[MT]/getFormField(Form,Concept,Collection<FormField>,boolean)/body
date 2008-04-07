@@ -1,0 +1,22 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormField.class,"ff").createAlias("field","field").add(Expression.eq("field.concept",concept)).add(Expression.eq("form",form));
+  List<FormField> formFields=crit.list();
+  String err="FormField warning.  No FormField matching concept '" + concept + "' for form '"+ form+ "'";
+  if (formFields.size() < 1) {
+    log.warn(err);
+    return null;
+  }
+  FormField backupPlan=formFields.get(0);
+  formFields.removeAll(ignoreFormFields);
+  if (formFields.size() < 1) {
+    if (force == false)     return backupPlan;
+ else {
+      log.warn(err);
+      return null;
+    }
+  }
+ else {
+    FormField ff=(FormField)formFields.get(0);
+    return ff;
+  }
+}
