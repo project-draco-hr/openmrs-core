@@ -3,7 +3,6 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     Obs obs=(Obs)obj;
-    obs=setObjects(obs,request);
     ObsService os=Context.getObsService();
     if (obs.getObsId() == null)     os.createObs(obs);
  else {
