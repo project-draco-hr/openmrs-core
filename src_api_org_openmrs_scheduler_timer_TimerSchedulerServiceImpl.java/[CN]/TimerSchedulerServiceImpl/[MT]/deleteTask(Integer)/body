@@ -1,0 +1,12 @@
+{
+  TaskDefinition task=getTask(id);
+  if (task.getStarted()) {
+    try {
+      shutdownTask(task);
+    }
+ catch (    SchedulerException e) {
+      log.error("Failed to remove task " + task.getName(),e);
+    }
+  }
+  getSchedulerDAO().deleteTask(id);
+}

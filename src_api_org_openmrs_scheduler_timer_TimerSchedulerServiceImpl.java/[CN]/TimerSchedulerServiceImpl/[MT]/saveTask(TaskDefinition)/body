@@ -1,0 +1,10 @@
+{
+  if (task.getId() != null) {
+    setChangedMetadata(task);
+    getSchedulerDAO().updateTask(task);
+  }
+ else {
+    setCreatedMetadata(task);
+    getSchedulerDAO().createTask(task);
+  }
+}

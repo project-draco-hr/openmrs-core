@@ -1,0 +1,14 @@
+{
+  Collection<User> users=new HashSet<User>();
+  for (  Alert alert : alerts) {
+    log.debug("Send email to alert recipient(s) ...");
+    if (!alert.isAlertRead() && alert.getRecipients() != null) {
+      for (      AlertRecipient recipient : alert.getRecipients()) {
+        if (!recipient.isAlertRead() && recipient.getRecipient() != null) {
+          users.add(recipient.getRecipient());
+        }
+      }
+    }
+  }
+  return users;
+}
