@@ -1,10 +1,10 @@
 {
   HttpSession httpSession=request.getSession();
   String view=getFormView();
-  TaskConfig task=(TaskConfig)command;
+  TaskDefinition task=(TaskDefinition)command;
   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
   log.info("task started? " + task.getStarted());
-  Context.getSchedulerService().updateTask(task);
+  Context.getSchedulerService().saveTask(task);
   view=getSuccessView();
   Object[] args=new Object[]{task.getName()};
   String success=getMessageSourceAccessor().getMessage("Scheduler.taskForm.saved",args);

@@ -5,5 +5,9 @@
   }
  catch (  Throwable t) {
   }
-  if (service != null)   service.shutdown();
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+  if (service != null) {
+    service.shutdown();
+  }
+  Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
 }

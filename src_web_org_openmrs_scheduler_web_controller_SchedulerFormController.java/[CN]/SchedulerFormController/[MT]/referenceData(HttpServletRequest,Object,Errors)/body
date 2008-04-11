@@ -1,6 +1,6 @@
 {
   Map<String,String> map=new HashMap<String,String>();
-  TaskConfig task=(TaskConfig)command;
+  TaskDefinition task=(TaskDefinition)command;
   Long interval=task.getRepeatInterval();
   if (interval == null || interval < 60)   map.put("units","seconds");
  else   if (interval < 3600) {

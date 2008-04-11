@@ -1,0 +1,16 @@
+{
+  log.debug("Starting scheduler service ...");
+  Collection<TaskDefinition> taskDefinitions=getSchedulerDAO().getTasks();
+  if (taskDefinitions != null) {
+    for (    TaskDefinition taskDefinition : taskDefinitions) {
+      try {
+        if (taskDefinition.getStartOnStartup()) {
+          scheduleTask(taskDefinition);
+        }
+      }
+ catch (      SchedulerException e) {
+        log.error("Failed to schedule task for class " + taskDefinition.getTaskClass(),e);
+      }
+    }
+  }
+}

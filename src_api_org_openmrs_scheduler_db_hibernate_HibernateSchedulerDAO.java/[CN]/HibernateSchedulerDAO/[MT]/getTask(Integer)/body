@@ -1,8 +1,8 @@
 {
-  TaskConfig task=(TaskConfig)sessionFactory.getCurrentSession().get(TaskConfig.class,taskId);
+  TaskDefinition task=(TaskDefinition)sessionFactory.getCurrentSession().get(TaskDefinition.class,taskId);
   if (task == null) {
     log.warn("Task '" + taskId + "' not found");
-    throw new ObjectRetrievalFailureException(TaskConfig.class,taskId);
+    throw new ObjectRetrievalFailureException(TaskDefinition.class,taskId);
   }
   return task;
 }

@@ -1,0 +1,13 @@
+{
+  Calendar startDate=Calendar.getInstance();
+  startDate.set(2008,3,30,1,22,0);
+  long SECOND_PER_DAY=86400;
+  long SECOND_PER_HOUR=3600;
+  long SECOND_PER_MINUTE=60;
+  TaskDefinition taskDefinition=new TaskDefinition();
+  taskDefinition.setStartTime(null);
+  taskDefinition.setRepeatInterval(new Long(4 * SECOND_PER_MINUTE));
+  Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
+  log.info("Current time: " + new Date());
+  log.info("Next time: " + nextTime);
+}

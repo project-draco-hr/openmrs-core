@@ -6,21 +6,22 @@
   String action=request.getParameter("action");
   MessageSourceAccessor msa=getMessageSourceAccessor();
   String[] taskList=request.getParameterValues("taskId");
+  SchedulerService schedulerService=Context.getSchedulerService();
   if (taskList != null) {
-    for (    String task : taskList) {
-      Object[] args=new Object[]{task};
+    for (    String taskId : taskList) {
+      Object[] args=new Object[]{taskId};
       try {
-        Integer taskId=Integer.valueOf(task);
+        TaskDefinition task=schedulerService.getTask(Integer.valueOf(taskId));
         if (action.equals(msa.getMessage("Scheduler.taskList.delete"))) {
-          getSchedulerService().deleteTask(taskId);
+          schedulerService.deleteTask(Integer.valueOf(taskId));
           success.append(msa.getMessage("Scheduler.taskList.deleted",args));
         }
  else         if (action.equals(msa.getMessage("Scheduler.taskList.stop"))) {
-          getSchedulerService().stopTask(taskId);
+          schedulerService.shutdownTask(task);
           success.append(msa.getMessage("Scheduler.taskList.stopped",args));
         }
  else         if (action.equals(msa.getMessage("Scheduler.taskList.start"))) {
-          getSchedulerService().startTask(taskId);
+          schedulerService.scheduleTask(task);
           success.append(msa.getMessage("Scheduler.taskList.started",args));
         }
       }

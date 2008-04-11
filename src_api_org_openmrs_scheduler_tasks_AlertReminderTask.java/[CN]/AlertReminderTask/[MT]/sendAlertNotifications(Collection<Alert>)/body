@@ -1,0 +1,10 @@
+{
+  try {
+    Message message=Context.getMessageService().create("Alert Reminder","You have unread alerts.");
+    Collection<User> users=getRecipients(alerts);
+    Context.getMessageService().send(message,users);
+  }
+ catch (  MessageException e) {
+    log.error(e);
+  }
+}

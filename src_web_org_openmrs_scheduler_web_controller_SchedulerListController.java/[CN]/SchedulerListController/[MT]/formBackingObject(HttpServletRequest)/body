@@ -1,7 +1,3 @@
 {
-  log.info("Getting tasks");
-  Collection<TaskConfig> taskList=new ArrayList<TaskConfig>();
-  taskList=getSchedulerService().getTasks();
-  log.info("Returning " + taskList.size() + " tasks");
-  return taskList;
+  return Context.getSchedulerService().getRegisteredTasks();
 }

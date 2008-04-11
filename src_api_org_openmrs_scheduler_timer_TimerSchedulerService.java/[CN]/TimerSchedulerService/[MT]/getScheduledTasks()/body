@@ -1,7 +1,0 @@
-{
-  List<TaskConfig> scheduledTasks=new ArrayList<TaskConfig>();
-  for (  TaskConfig task : getSchedulerDAO().getTasks()) {
-    if (task.getStarted())     scheduledTasks.add(task);
-  }
-  return scheduledTasks;
-}
