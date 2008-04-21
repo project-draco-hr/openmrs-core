@@ -1,10 +1,10 @@
 {
-  if (log.isDebugEnabled()) {
+  if (log.isTraceEnabled()) {
     if (name != null && name.contains("starter")) {
-      if (seenModules != null)       log.debug("seenModules.size: " + seenModules.size());
-      log.debug("name: " + name);
+      if (seenModules != null)       log.trace("seenModules.size: " + seenModules.size());
+      log.trace("name: " + name);
       for (      URL url : getURLs()) {
-        log.debug("url: " + url);
+        log.trace("url: " + url);
       }
     }
   }
