@@ -18,6 +18,7 @@
       try {
         as.setGlobalProperties(globalPropList);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
+        OpenmrsUtil.applyLogLevels();
       }
  catch (      Exception e) {
         log.error("Error saving properties",e);
