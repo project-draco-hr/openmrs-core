@@ -5,6 +5,7 @@
   Message hl7message=parser.parse(hl7string);
   router.processMessage(hl7message);
   Patient patient=new Patient(2);
+  Context.clearSession();
   Set<Obs> obsForPatient2=obsService.getObservations(patient,false);
   assertNotNull(obsForPatient2);
   assertTrue("There should be some obs created for #3",obsForPatient2.size() > 0);
@@ -15,22 +16,32 @@
   Set<Obs> returnVisitDateObsForPatient2=obsService.getObservations(patient,returnVisitDateConcept,false);
   assertEquals("There should be a return visit date",1,returnVisitDateObsForPatient2.size());
   Obs firstObs=(Obs)returnVisitDateObsForPatient2.toArray()[0];
-  assertEquals("The date should be the 1st",returnVisitDate.toString(),firstObs.getValueDatetime().toString());
+  cal.setTime(firstObs.getValueDatetime());
+  cal.clear(Calendar.HOUR);
+  cal.clear(Calendar.MINUTE);
+  cal.clear(Calendar.SECOND);
+  cal.clear(Calendar.MILLISECOND);
+  assertEquals("The date should be the 1st",returnVisitDate.toString(),cal.getTime().toString());
   Concept contactMethod=new Concept(1558);
   Concept phoneContact=Context.getConceptService().getConcept(1555);
   Set<Obs> contactMethodObsForPatient2=obsService.getObservations(patient,contactMethod,false);
   assertEquals("There should be a contact method",1,contactMethodObsForPatient2.size());
   Obs firstContactMethodObs=(Obs)contactMethodObsForPatient2.toArray()[0];
   assertEquals("The contact method should be phone",phoneContact,firstContactMethodObs.getValueCoded());
-  Integer obsGroupId=firstContactMethodObs.getObsGroupId();
-  assertNotNull("Their should be a group id",obsGroupId);
+  Obs obsGroup=firstContactMethodObs.getObsGroup();
+  assertNotNull("Their should be a grouping obs",obsGroup);
+  assertNotNull("Their should be an associated encounter",firstContactMethodObs.getEncounter());
   List<Integer> groupedConceptIds=new Vector<Integer>();
   groupedConceptIds.add(1558);
   groupedConceptIds.add(1553);
   groupedConceptIds.add(1554);
+  assertEquals(5,obsForPatient2.size());
+  int groupedObsCount=0;
   for (  Obs obs : obsForPatient2) {
     if (groupedConceptIds.contains(obs.getConcept().getConceptId())) {
-      assertEquals("All of the group ids should match",obsGroupId,obs.getObsGroupId());
+      groupedObsCount+=1;
+      assertEquals("All of the parent groups should match",obsGroup,obs.getObsGroup());
     }
   }
+  assertEquals(3,groupedObsCount);
 }
