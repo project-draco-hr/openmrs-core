@@ -155,7 +155,7 @@
   os.voidObs(oGGGP,"testing void cascade");
   childLeafObs=os.getObs(childOneId);
   assertTrue(childLeafObs.isVoided());
-  childLeafObs.setDateVoided(new Date());
+  childLeafObs.setDateVoided(new Date(childLeafObs.getDateVoided().getTime() - 5000));
   os.updateObs(childLeafObs);
   os.unvoidObs(oGGGP);
   childLeafObs=os.getObs(childOneId);
