@@ -98,6 +98,7 @@
   assertTrue(o3.getComplexValue().equals(complexValue2));
   obsService.voidObs(o,"testing void function");
   Obs o4=obsService.getObs(o.getObsId());
+  assertNotNull(o4.getVoidReason());
   assertTrue(o4.getVoidReason().equals("testing void function"));
   assertTrue(o4.getVoidedBy().equals(o3.getVoidedBy()));
   assertTrue(o4.isVoided());

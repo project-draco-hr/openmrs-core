@@ -1,0 +1,32 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ConceptService cs=Context.getConceptService();
+  ObsService os=Context.getObsService();
+  Obs o2=new Obs();
+  o2.setConcept(cs.getConcept(1));
+  o2.setDateCreated(new Date());
+  o2.setCreator(Context.getAuthenticatedUser());
+  o2.setLocation(new Location(1));
+  o2.setObsDatetime(new Date());
+  o2.setValueText("test");
+  o2.setPerson(new Patient(2));
+  Obs oParent=new Obs();
+  oParent.setConcept(cs.getConcept(2));
+  oParent.setDateCreated(new Date());
+  oParent.setCreator(Context.getAuthenticatedUser());
+  oParent.setLocation(new Location(1));
+  oParent.setObsDatetime(new Date());
+  oParent.setPerson(new Patient(2));
+  oParent.addGroupMember(o2);
+  os.createObs(oParent);
+  Integer parentObsId=oParent.getObsId();
+  assertNotNull(parentObsId);
+  Integer childObsId=o2.getObsId();
+  assertNotNull(childObsId);
+  oParent=null;
+  o2=null;
+  Context.clearSession();
+  Obs fetchedParent=os.getObs(parentObsId);
+  assertTrue(fetchedParent.isObsGrouping());
+  assertEquals(1,fetchedParent.getGroupMembers().size());
+}
