@@ -49,9 +49,11 @@
         Obs obs=parseObs(encounter,obx,obr);
         if (obs != null) {
           if (obsGrouper != null)           obsGrouper.addGroupMember(obs);
-          log.debug("Obs is not null. Adding to encounter object");
-          encounter.addObs(obs);
-          log.debug("Done with this obs");
+ else {
+            log.debug("Obs is not null. Adding to encounter object");
+            encounter.addObs(obs);
+            log.debug("Done with this obs");
+          }
         }
       }
  catch (      HL7Exception e) {
