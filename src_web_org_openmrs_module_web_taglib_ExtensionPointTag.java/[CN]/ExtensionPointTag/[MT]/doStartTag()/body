@@ -21,10 +21,16 @@
   if (extensionList != null) {
     log.debug("Found " + extensionList.size() + " extensions");
     if (requiredClass != null) {
-      for (      Extension ext : extensionList) {
-        if (!requiredClass.isAssignableFrom(ext.getClass())) {
-          throw new ClassCastException("Extension at this point (" + pointId + ") are "+ "required to be of "+ requiredClass+ " or a subclass. "+ ext.getClass()+ " is not.");
+      try {
+        Class clazz=Class.forName(requiredClass);
+        for (        Extension ext : extensionList) {
+          if (!clazz.isAssignableFrom(ext.getClass())) {
+            throw new ClassCastException("Extension at this point (" + pointId + ") are "+ "required to be of "+ clazz+ " or a subclass. "+ ext.getClass()+ " is not.");
+          }
         }
+      }
+ catch (      ClassNotFoundException ex) {
+        throw new IllegalArgumentException(ex);
       }
     }
     extensions=extensionList.iterator();
