@@ -4,6 +4,7 @@
   if (message.getSender() != null)   mimeMessage.setSender(new InternetAddress(message.getSender()));
   mimeMessage.setRecipients(javax.mail.Message.RecipientType.TO,InternetAddress.parse(message.getRecipients(),false));
   mimeMessage.setSubject(message.getSubject());
-  mimeMessage.setContent(message.getContent(),"text/plain");
+  if (!message.hasAttachment())   mimeMessage.setContent(message.getContent(),"text/plain");
+ else   mimeMessage.setContent(createMultipart(message));
   return mimeMessage;
 }
