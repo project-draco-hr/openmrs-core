@@ -1,0 +1,10 @@
+{
+  Message tryToSend=ms.createMessage("recipient@example.com","sender@example.com","subject","content");
+  try {
+    ms.sendMessage(tryToSend);
+  }
+ catch (  MessageException e) {
+    e.printStackTrace();
+    fail();
+  }
+}
