@@ -4,7 +4,10 @@
   String sender="foo@bar.com";
   String subject="tres important";
   String content="message";
-  Message toTest=new Message(id,recipients,sender,subject,content);
+  String attachment="attachment";
+  String attachmentContentType="text/plain";
+  String attachmentFileName="moo.txt";
+  Message toTest=new Message(id,recipients,sender,subject,content,attachment,attachmentContentType,attachmentFileName);
   assertEquals((int)toTest.getId(),1);
   assertEquals(recipients,toTest.getRecipients());
   assertEquals(sender,toTest.getSender());
