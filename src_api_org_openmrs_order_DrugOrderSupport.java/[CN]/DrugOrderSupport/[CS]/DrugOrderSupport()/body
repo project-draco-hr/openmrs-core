@@ -1,3 +1,8 @@
 {
-  if (singleton == null)   singleton=this;
+  if (singleton == null) {
+    singleton=this;
+    xstream=new XStream(new DomDriver());
+    xstream.alias("regimenSuggestion",RegimenSuggestion.class);
+    xstream.alias("drugSuggestion",DrugSuggestion.class);
+  }
 }

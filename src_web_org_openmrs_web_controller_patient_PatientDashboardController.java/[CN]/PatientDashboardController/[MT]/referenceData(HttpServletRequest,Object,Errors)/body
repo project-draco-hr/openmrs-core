@@ -49,7 +49,7 @@
           patientVariation="Exited";
         }
       }
- else {
+ else       if (patientExitObs.size() > 1) {
         log.error("Too many reasons for exit - not putting data into model");
       }
     }
