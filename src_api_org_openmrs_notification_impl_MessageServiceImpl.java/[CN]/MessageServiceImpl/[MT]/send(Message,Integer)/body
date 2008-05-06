@@ -1,6 +1,3 @@
 {
-  log.debug("Sending message to user with user id " + recipientId);
-  User user=Context.getUserService().getUser(recipientId);
-  message.addRecipient(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));
-  send(message);
+  sendMessage(message,userId);
 }

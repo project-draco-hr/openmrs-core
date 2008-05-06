@@ -1,9 +1,3 @@
 {
-  try {
-    messageSender.send(message);
-  }
- catch (  Exception e) {
-    log.error("Message could not be sent due to " + e.getMessage(),e);
-    throw new MessageException(e);
-  }
+  sendMessage(message);
 }
