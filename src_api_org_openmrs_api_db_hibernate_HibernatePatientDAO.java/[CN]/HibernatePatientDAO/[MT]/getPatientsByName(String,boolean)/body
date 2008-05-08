@@ -4,9 +4,19 @@
   String[] names=name.split(" ");
   if (log.isDebugEnabled())   log.debug("name: " + name);
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class).createAlias("names","name");
-  for (  String n : names) {
+  String nameSoFar=names[0];
+  for (int i=0; i < names.length; i++) {
+    String n=names[i];
     if (n != null && n.length() > 0) {
-      criteria.add(Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("name.givenName",n,MatchMode.START))));
+      LogicalExpression searchExpression;
+      LogicalExpression oneNameSearch=getNameSearch(n);
+      searchExpression=oneNameSearch;
+      if (i > 0) {
+        nameSoFar+=" " + n;
+        LogicalExpression fullNameSearch=getNameSearch(nameSoFar);
+        searchExpression=Expression.or(oneNameSearch,fullNameSearch);
+      }
+      criteria.add(searchExpression);
     }
   }
   if (includeVoided == false)   criteria.add(Expression.eq("voided",new Boolean(false)));
