@@ -1,0 +1,8 @@
+{
+  Map<Integer,Result> entry=getCache().get(key);
+  log.debug("Logic cache: " + (entry == null ? "NOT FOUND" : "FOUND"));
+  if (entry == null)   return null;
+  Result r=entry.get(patientId);
+  if (r == null)   r=Result.emptyResult();
+  return r;
+}

@@ -2,15 +2,12 @@
   Context.openSession();
   try {
     log.debug("Generating data exports...");
-    if (!Context.isAuthenticated()) {
-      authenticate();
-    }
-    authenticate();
+    if (!Context.isAuthenticated())     authenticate();
     if (idString != null && idString.length() > 0) {
       idString=idString.replace(","," ");
       String[] ids=idString.split(" ");
       List<DataExportReportObject> reports=new Vector<DataExportReportObject>();
-      ReportService rs=Context.getReportService();
+      ReportObjectService rs=Context.getReportObjectService();
       for (      String id : ids) {
         if (id != null) {
           id=id.trim();
@@ -20,7 +17,7 @@
           }
         }
       }
-      DataExportUtil.generateExports(reports);
+      DataExportUtil.generateExports(reports,this.getEvaluationContext());
     }
   }
  catch (  Exception e) {

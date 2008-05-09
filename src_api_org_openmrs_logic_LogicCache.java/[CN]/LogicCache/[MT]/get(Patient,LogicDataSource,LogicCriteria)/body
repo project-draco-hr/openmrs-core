@@ -1,0 +1,7 @@
+{
+  LogicCacheEntryKey key=new LogicCacheEntryKey(dataSource,criteria);
+  Result r=get(key,patient.getPatientId());
+  log.debug("Searching cache for " + key.toString() + " - "+ (r == null ? "NOT" : "")+ " found");
+  logCacheContents();
+  return r;
+}

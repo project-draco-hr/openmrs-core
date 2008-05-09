@@ -11,10 +11,10 @@
       pa.setVoidReason(reason);
     }
   }
-  person.setVoided(true);
-  person.setVoidedBy(Context.getAuthenticatedUser());
-  person.setDateVoided(new Date());
-  person.setVoidReason(reason);
+  person.setPersonVoided(true);
+  person.setPersonVoidedBy(Context.getAuthenticatedUser());
+  person.setPersonDateVoided(new Date());
+  person.setPersonVoidReason(reason);
   updatePerson(person);
   Context.getPatientService().voidPatient(Context.getPatientService().getPatient(person.getPersonId()),reason);
   Context.getUserService().voidUser(Context.getUserService().getUser(person.getPersonId()),reason);

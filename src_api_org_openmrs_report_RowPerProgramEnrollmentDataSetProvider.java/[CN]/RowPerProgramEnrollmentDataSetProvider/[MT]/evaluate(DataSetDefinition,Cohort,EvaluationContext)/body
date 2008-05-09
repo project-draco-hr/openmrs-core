@@ -1,0 +1,15 @@
+{
+  RowPerProgramEnrollmentDataSetDefinition definition=(RowPerProgramEnrollmentDataSetDefinition)dataSetDefinition;
+  Cohort patients=inputCohort;
+  if (definition.getFilter() != null) {
+    if (patients != null)     patients=Cohort.intersect(patients,Context.getCohortService().evaluate(definition.getFilter(),evalContext));
+ else     patients=Context.getCohortService().evaluate(definition.getFilter(),evalContext);
+  }
+  RowPerProgramEnrollmentDataSet ret=new RowPerProgramEnrollmentDataSet();
+  ret.setDefinition(definition);
+  ret.setEvaluationContext(evalContext);
+  List<Program> programs=new ArrayList<Program>(definition.getPrograms());
+  List<PatientProgram> list=Context.getProgramWorkflowService().getPatientPrograms(patients,programs);
+  ret.setData(list);
+  return ret;
+}

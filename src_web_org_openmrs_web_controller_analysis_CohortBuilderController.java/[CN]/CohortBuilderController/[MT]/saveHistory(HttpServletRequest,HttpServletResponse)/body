@@ -9,7 +9,7 @@
     if (history.getReportObjectId() != null)     throw new RuntimeException("Re-saving histories is not yet implemented");
     history.setName(name);
     history.setDescription(description);
-    Context.getReportService().createSearchHistory(history);
+    Context.getReportObjectService().createSearchHistory(history);
   }
   return new ModelAndView(new RedirectView(getSuccessView()));
 }

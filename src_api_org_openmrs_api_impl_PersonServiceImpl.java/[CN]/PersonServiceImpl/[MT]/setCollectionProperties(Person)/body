@@ -1,11 +1,11 @@
 {
-  if (person.getCreator() == null) {
-    person.setCreator(Context.getAuthenticatedUser());
-    person.setDateCreated(new Date());
+  if (person.getPersonCreator() == null) {
+    person.setPersonCreator(Context.getAuthenticatedUser());
+    person.setPersonDateCreated(new Date());
   }
  else {
-    person.setChangedBy(Context.getAuthenticatedUser());
-    person.setDateChanged(new Date());
+    person.setPersonChangedBy(Context.getAuthenticatedUser());
+    person.setPersonDateChanged(new Date());
   }
   if (person.getAddresses() != null && person.getAddresses().size() > 0)   for (  PersonAddress pAddress : person.getAddresses()) {
     if (pAddress.getDateCreated() == null) {

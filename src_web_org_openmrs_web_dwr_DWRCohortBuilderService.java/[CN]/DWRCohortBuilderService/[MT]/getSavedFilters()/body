@@ -1,6 +1,6 @@
 {
   List<ListItem> ret=new ArrayList<ListItem>();
-  List<PatientFilter> savedFilters=Context.getReportService().getAllPatientFilters();
+  List<PatientFilter> savedFilters=Context.getReportObjectService().getAllPatientFilters();
   for (  PatientFilter pf : savedFilters) {
     ListItem li=new ListItem();
     li.setId(pf.getReportObjectId());

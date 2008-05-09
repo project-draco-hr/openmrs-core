@@ -1,0 +1,25 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/test/reporting/include/PatientFilterTest.xml");
+  authenticate();
+  EvaluationContext ec=new EvaluationContext();
+  Drug inh=Context.getConceptService().getDrug("INH 300mg");
+  DrugOrderFilter filter=new DrugOrderFilter();
+  filter.setAnyOrAll(PatientSetService.GroupMethod.ANY);
+  filter.setDrugList(Collections.singletonList(inh));
+  assertEquals("No dates should get 1",1,filter.filter(null,ec).size());
+  filter.setUntilDate(ymd.parse("2004-06-01"));
+  assertEquals("Until before should get 0",0,filter.filter(null,ec).size());
+  filter.setUntilDate(ymd.parse("2005-06-01"));
+  assertEquals("Until during should get 1",1,filter.filter(null,ec).size());
+  filter.setUntilDate(ymd.parse("2006-06-01"));
+  assertEquals("Until after should get 1",1,filter.filter(null,ec).size());
+  filter.setUntilDate(null);
+  filter.setSinceDate(ymd.parse("2004-06-01"));
+  assertEquals("since before should get 1",1,filter.filter(null,ec).size());
+  filter.setSinceDate(ymd.parse("2005-06-01"));
+  assertEquals("since during should get 1",1,filter.filter(null,ec).size());
+  filter.setSinceDate(ymd.parse("2006-06-01"));
+  assertEquals("since after should get 0",0,filter.filter(null,ec).size());
+  filter.setSinceDate(null);
+}

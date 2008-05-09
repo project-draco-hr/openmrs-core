@@ -1,0 +1,89 @@
+{
+  if (expression == null) {
+    log.warn("evaluateExpression returning null.");
+    return null;
+  }
+  log.debug("Starting expression: " + expression);
+  boolean containsDate=false;
+  while (expression.contains(START_OF_EXPRESSION) && expression.contains(END_OF_EXPRESSION)) {
+    int startIndex=expression.indexOf(START_OF_EXPRESSION);
+    int endIndex=expression.indexOf(END_OF_EXPRESSION);
+    String toReplace=expression.substring(startIndex,endIndex + END_OF_EXPRESSION.length());
+    log.debug("Found expression to replace: " + toReplace);
+    String replacement=expression.substring(startIndex + START_OF_EXPRESSION.length(),endIndex);
+    log.debug("Stripped this down to: " + replacement);
+    boolean found=false;
+    Map<Parameter,Object> globalParameters=parameterValues.get(null);
+    if (globalParameters != null) {
+      log.debug("Starting parameters: " + globalParameters);
+      for (      Parameter parameter : globalParameters.keySet()) {
+        if (replacement.contains(parameter.getName())) {
+          found=true;
+          Object value=globalParameters.get(parameter);
+          if (value == null) {
+            throw new ParameterException("Expression [" + replacement + "] requires parameter ["+ parameter+ "] which is null.");
+          }
+          log.debug("Starting evaluation of " + replacement + " with "+ value);
+          if (value instanceof Date) {
+            containsDate=true;
+            replacement=replacement.replace(parameter.getName(),df.format((Date)value));
+            log.debug("Modified to: " + replacement);
+            Matcher m=DATE_OPERATION_PATTERN.matcher(replacement);
+            Calendar cal=new GregorianCalendar();
+            try {
+              while (m.find()) {
+                log.debug("Found date expression of: " + m.group());
+                String foundDate=m.group(1);
+                if (m.group(2) != null) {
+                  int num=("-".equals(m.group(3)) ? -1 : 1) * Integer.parseInt(m.group(4));
+                  int field=Calendar.DATE;
+                  if ("w".equals(m.group(5))) {
+                    num*=7;
+                  }
+ else                   if ("m".equals(m.group(5))) {
+                    field=Calendar.MONTH;
+                  }
+ else                   if ("y".equals(m.group(5))) {
+                    field=Calendar.YEAR;
+                  }
+                  cal.setTime(df.parse(foundDate));
+                  cal.add(field,num);
+                  foundDate=df.format(cal.getTime());
+                  log.debug("Calculated date of: " + foundDate);
+                }
+                replacement=replacement.replaceAll("\\Q" + m.group(0) + "\\E",foundDate);
+                log.debug("Modified to: " + replacement);
+              }
+            }
+ catch (            Exception e) {
+              log.debug(e.getMessage());
+              throw new ParameterException("Error parsing dates in expression: " + replacement);
+            }
+          }
+ else {
+            replacement=replacement.replace(parameter.getName(),value.toString());
+          }
+          log.debug("Modified to: " + replacement);
+          expression=expression.replace(toReplace,replacement);
+          log.debug("Expression now: " + expression);
+        }
+      }
+    }
+    if (!found) {
+      throw new ParameterException("Expression [" + expression + "] requires parameter ["+ replacement+ "] which is not found.");
+    }
+  }
+  if (containsDate) {
+    try {
+      log.debug("Trying to parse back to a Date: " + expression);
+      Date newDate=df.parse(expression);
+      log.debug("Returning Date: " + newDate);
+      return newDate;
+    }
+ catch (    Exception e) {
+      log.debug("Unable to parse into a Date.");
+    }
+  }
+  log.debug("Returning String: " + expression);
+  return expression;
+}

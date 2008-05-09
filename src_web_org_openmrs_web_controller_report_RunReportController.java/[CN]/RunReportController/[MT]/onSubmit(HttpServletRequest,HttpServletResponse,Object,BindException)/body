@@ -1,0 +1,50 @@
+{
+  CommandObject command=(CommandObject)commandObject;
+  ReportSchema rs=command.getSchema();
+  ReportService reportService=Context.getReportService();
+  EvaluationContext evalContext=new EvaluationContext();
+  if (rs.getReportParameters() != null) {
+    for (    Parameter p : rs.getReportParameters()) {
+      if (command.getUserEnteredParams() != null) {
+        String valString=command.getUserEnteredParams().get(p.getName());
+        Object value;
+        if (StringUtils.hasText(valString)) {
+          try {
+            value=OpenmrsUtil.parse(valString,p.getClazz());
+            evalContext.addParameterValue(p,value);
+          }
+ catch (          Exception ex) {
+            errors.rejectValue("userEnteredParams",p.getLabel() + ": " + ex.getMessage());
+          }
+        }
+      }
+    }
+  }
+  if (errors.hasErrors())   return showForm(request,response,errors);
+  ReportData data=reportService.evaluate(rs,null,evalContext);
+  String renderClass=command.getSelectedRenderer();
+  String renderArg="";
+  if (renderClass.indexOf("!") > 0) {
+    int ind=renderClass.indexOf("!");
+    renderArg=renderClass.substring(ind + 1);
+    renderClass=renderClass.substring(0,ind);
+  }
+  ReportRenderer renderer=reportService.getReportRenderer(renderClass);
+  if (renderer instanceof WebReportRenderer) {
+    WebReportRenderer webRenderer=(WebReportRenderer)renderer;
+    if (webRenderer.getLinkUrl(rs) != null) {
+      request.getSession().setAttribute(WebConstants.OPENMRS_REPORT_DATA,data);
+      request.getSession().setAttribute(WebConstants.OPENMRS_REPORT_ARGUMENT,renderArg);
+      String url=webRenderer.getLinkUrl(rs);
+      if (!url.startsWith("/"))       url="/" + url;
+      url=request.getContextPath() + url;
+      return new ModelAndView(new RedirectView(url));
+    }
+  }
+  String filename=renderer.getFilename(rs,renderArg).replace(" ","_");
+  response.setContentType(renderer.getRenderedContentType(rs,renderArg));
+  response.setHeader("Content-Disposition","attachment; filename=" + filename);
+  response.setHeader("Pragma","no-cache");
+  renderer.render(data,renderArg,response.getOutputStream());
+  return null;
+}

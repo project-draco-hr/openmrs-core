@@ -1,0 +1,17 @@
+{
+  LogicDataSource lds=Context.getLogicService().getLogicDataSource("obs");
+  Cohort patients=new Cohort();
+  patients.addMember(2);
+  patients.addMember(3);
+  assertEquals(2,patients.getSize());
+  LogicContext context=new LogicContext(patients);
+  Map<Integer,Result> result=lds.read(context,patients,new LogicCriteria("CD4 COUNT"));
+  context=null;
+  assertNotNull(result);
+  assertEquals(2,result.size());
+  for (  Integer id : result.keySet()) {
+    for (    Result r : result.get(id)) {
+      log.error("PatientID: " + id + ", CD4 COUNT: "+ r.toNumber());
+    }
+  }
+}

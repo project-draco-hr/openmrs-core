@@ -52,7 +52,7 @@
     }
   }
  else {
-    PatientFilter pf=Context.getReportService().getPatientFilterByName(spec);
+    PatientFilter pf=Context.getReportObjectService().getPatientFilterByName(spec);
     if (label == null)     label=pf.getName();
     if (pf != null)     setPatientFilter(pf);
  else     throw new IllegalArgumentException("Couldn't find a patient filter called: " + spec);

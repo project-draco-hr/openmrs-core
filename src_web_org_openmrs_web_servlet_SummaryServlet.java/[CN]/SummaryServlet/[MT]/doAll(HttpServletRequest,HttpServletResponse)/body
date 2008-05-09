@@ -7,17 +7,22 @@
     return;
   }
   PrintWriter summary=response.getWriter();
-  PatientSet patientSet=getPatientSet(request,response);
+  Cohort patientSet=getPatientSet(request,response);
   PatientService patientService=Context.getPatientService();
   LogicService logic=Context.getLogicService();
   summary.write("<clinicalSummaryList>\n");
-  for (  Integer patientId : patientSet.getPatientIds()) {
-    Result xml=logic.eval(patientService.getPatient(patientId),"CLINICAL SUMMARY");
-    String s=xml.toString();
-    summary.write(s);
-    String[] lines=s.split("\n");
-    for (int x=1; x < lines.length; x++) {
-      summary.write(lines[x] + "\n");
+  for (  Integer patientId : patientSet.getMemberIds()) {
+    try {
+      Result xml=logic.eval(patientService.getPatient(patientId),"CLINICAL SUMMARY");
+      String s=xml.toString();
+      summary.write(s);
+      String[] lines=s.split("\n");
+      for (int x=1; x < lines.length; x++) {
+        summary.write(lines[x] + "\n");
+      }
+    }
+ catch (    LogicException e) {
+      throw new ServletException("Error while evaluating rule CLINICAL SUMMARY for patient: " + patientId,e);
     }
   }
   summary.write("</clinicalSummaryList>");

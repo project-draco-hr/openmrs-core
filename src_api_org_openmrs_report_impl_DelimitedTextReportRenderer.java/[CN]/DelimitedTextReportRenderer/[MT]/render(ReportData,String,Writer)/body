@@ -1,0 +1,23 @@
+{
+  DataSet dataset=results.getDataSets().values().iterator().next();
+  List<String> colKeys=dataset.getDefinition().getColumnKeys();
+  writer.write(getBeforeRowDelimiter());
+  for (  String colKey : colKeys) {
+    writer.write(getBeforeColumnDelimiter());
+    writer.write(escape(colKey));
+    writer.write(getAfterColumnDelimiter());
+  }
+  writer.write(getAfterRowDelimiter());
+  for (Iterator<Map<String,Object>> i=dataset.iterator(); i.hasNext(); ) {
+    writer.write(getBeforeRowDelimiter());
+    Map<String,Object> map=i.next();
+    for (    String colKey : colKeys) {
+      Object colValue=map.get(colKey);
+      writer.write(getBeforeColumnDelimiter());
+      if (colValue != null)       writer.write(escape(colValue.toString()));
+      writer.write(getAfterColumnDelimiter());
+    }
+    writer.write(getAfterRowDelimiter());
+  }
+  writer.flush();
+}

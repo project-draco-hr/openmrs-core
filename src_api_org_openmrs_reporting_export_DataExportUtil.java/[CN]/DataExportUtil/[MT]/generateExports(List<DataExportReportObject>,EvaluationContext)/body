@@ -1,0 +1,11 @@
+{
+  Log log=LogFactory.getLog(DataExportUtil.class);
+  for (  DataExportReportObject dataExport : exports) {
+    try {
+      generateExport(dataExport,null,context);
+    }
+ catch (    Exception e) {
+      log.warn("Error while generating export: " + dataExport,e);
+    }
+  }
+}

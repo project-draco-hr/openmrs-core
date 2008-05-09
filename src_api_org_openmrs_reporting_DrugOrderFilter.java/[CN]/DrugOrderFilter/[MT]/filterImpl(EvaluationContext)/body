@@ -1,0 +1,7 @@
+{
+  List<Integer> drugIds=new ArrayList<Integer>();
+  if (getDrugListToUse() != null)   for (  Drug d : getDrugListToUse())   drugIds.add(d.getDrugId());
+  log.debug("filtering with these ids " + drugIds);
+  Collection<Integer> patientIds=context == null ? null : context.getBaseCohort().getMemberIds();
+  return Context.getPatientSetService().getPatientsHavingDrugOrder(patientIds,drugIds,getAnyOrAll(),OpenmrsUtil.fromDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()),OpenmrsUtil.toDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()));
+}

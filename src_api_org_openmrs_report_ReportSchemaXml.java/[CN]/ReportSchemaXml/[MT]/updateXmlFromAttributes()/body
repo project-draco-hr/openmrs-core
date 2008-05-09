@@ -1,0 +1,8 @@
+{
+  if (getXml() != null && getReportSchemaId() != null) {
+    String newXml;
+    if (xml.contains("reportSchemaId="))     newXml=xml.replaceFirst("reportSchemaId=[\"'][^ ]*[\"']","reportSchemaId=\"" + reportSchemaId + "\"");
+ else     newXml=xml.replaceFirst("<reportSchema([ >])","<reportSchema reportSchemaId=\"" + reportSchemaId + "\"$1");
+    setXml(newXml);
+  }
+}

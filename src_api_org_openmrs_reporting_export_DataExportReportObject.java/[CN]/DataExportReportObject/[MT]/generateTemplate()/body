@@ -9,7 +9,7 @@
   }
   sb.append("\n");
   sb.append("$!{fn.setPatientSet($patientSet)}");
-  sb.append("#foreach($patientId in $patientSet.patientIds)\n");
+  sb.append("#foreach($patientId in $patientSet.memberIds)\n");
   sb.append("$!{fn.setPatientId($patientId)}");
   if (columns.size() >= 1) {
     sb.append(columns.get(0).toTemplateString());

@@ -18,12 +18,14 @@
     if (msa.getMessage("DataExport.generate").equals(action)) {
       if (reportList == null)       success=noneGenerated;
  else {
-        ReportService rs=Context.getReportService();
+        ReportObjectService rs=Context.getReportObjectService();
+        EvaluationContext evalContext=new EvaluationContext();
+        evalContext.addParameterValue(new Parameter("general.user","Authenticated User",org.openmrs.User.class,null),Context.getAuthenticatedUser());
         for (        String id : reportList) {
           DataExportReportObject report=null;
           try {
             report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(id));
-            DataExportUtil.generateExport(report,null);
+            DataExportUtil.generateExport(report,null,evalContext);
             if (!success.equals(""))             success+="<br/>";
             success+=textDataExport + " '" + report.getName()+ "' "+ generated;
           }

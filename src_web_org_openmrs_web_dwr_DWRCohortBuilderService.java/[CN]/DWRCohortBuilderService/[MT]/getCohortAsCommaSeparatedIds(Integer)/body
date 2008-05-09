@@ -1,5 +1,5 @@
 {
   Cohort c=Context.getCohortService().getCohort(cohortId);
   if (c == null)   return "";
- else   return c.toPatientSet().toCommaSeparatedPatientIds();
+ else   return c.getCommaSeparatedPatientIds();
 }

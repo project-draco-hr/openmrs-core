@@ -3,29 +3,29 @@
   ASTPair currentAST=new ASTPair();
   AST institution_slot_AST=null;
   try {
-    AST tmp148_AST=null;
-    tmp148_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp148_AST);
-    match(LITERAL_institution);
-    AST tmp149_AST=null;
-    tmp149_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp149_AST);
+    AST tmp187_AST=null;
+    tmp187_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp187_AST);
+    match(INSTITUTION);
+    AST tmp188_AST=null;
+    tmp188_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp188_AST);
     match(COLON);
 {
-      _loop32:       do {
+      _loop33:       do {
         if ((_tokenSet_4.member(LA(1)))) {
           text();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop32;
+          break _loop33;
         }
       }
  while (true);
     }
-    AST tmp150_AST=null;
-    tmp150_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp150_AST);
+    AST tmp189_AST=null;
+    tmp189_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp189_AST);
     match(ENDBLOCK);
     institution_slot_AST=(AST)currentAST.root;
   }

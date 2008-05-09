@@ -58,7 +58,14 @@ catch (    Throwable t) {
       mod.setStartupErrorMessage(t.getMessage());
     }
   }
-  if (someModuleNeedsARefresh)   WebModuleUtil.refreshWAC(servletContext);
+  if (someModuleNeedsARefresh) {
+    try {
+      WebModuleUtil.refreshWAC(servletContext);
+    }
+ catch (    Throwable t) {
+      log.fatal("Unable to refresh the spring application context",t);
+    }
+  }
   Map<String,String> custom=new HashMap<String,String>();
   custom.put("custom.template.dir","/WEB-INF/template");
   custom.put("custom.index.jsp.file","/WEB-INF/view/index.jsp");

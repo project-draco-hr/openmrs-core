@@ -1,0 +1,20 @@
+{
+  Result result=getCache().get(patient,criteria,parameters);
+  PatientService patientService=Context.getPatientService();
+  if (result == null) {
+    Integer targetPatientId=patient.getPatientId();
+    log.debug("Context database read (pid = " + targetPatientId + ")");
+    Rule rule=Context.getLogicService().getRule(criteria.getRootToken());
+    Map<Integer,Result> resultMap=new Hashtable<Integer,Result>();
+    for (    Integer pid : patients.getMemberIds()) {
+      Patient currPatient=patientService.getPatient(pid);
+      Result r=rule.eval(this,currPatient,parameters);
+      resultMap.put(pid,r);
+      if (pid.equals(targetPatientId))       result=r;
+    }
+    getCache().put(criteria,parameters,rule.getTTL(),resultMap);
+  }
+  result=applyCriteria(result,criteria);
+  if (result == null)   result=Result.emptyResult();
+  return result;
+}

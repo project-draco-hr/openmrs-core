@@ -1,5 +1,0 @@
-{
-  PatientSetService service=Context.getPatientSetService();
-  PatientSet ps=service.getPatientsHavingObs(question == null ? null : question.getConceptId(),timeModifier,modifier,value,OpenmrsUtil.fromDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()),OpenmrsUtil.toDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate()));
-  return input == null ? ps : input.intersect(ps);
-}

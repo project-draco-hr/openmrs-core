@@ -3,29 +3,29 @@
   ASTPair currentAST=new ASTPair();
   AST specialist_slot_AST=null;
   try {
-    AST tmp155_AST=null;
-    tmp155_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp155_AST);
-    match(LITERAL_specialist);
-    AST tmp156_AST=null;
-    tmp156_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp156_AST);
+    AST tmp194_AST=null;
+    tmp194_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp194_AST);
+    match(SPECIALIST);
+    AST tmp195_AST=null;
+    tmp195_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp195_AST);
     match(COLON);
 {
-      _loop42:       do {
+      _loop43:       do {
         if ((_tokenSet_4.member(LA(1)))) {
           text();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop42;
+          break _loop43;
         }
       }
  while (true);
     }
-    AST tmp157_AST=null;
-    tmp157_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp157_AST);
+    AST tmp196_AST=null;
+    tmp196_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp196_AST);
     match(ENDBLOCK);
     specialist_slot_AST=(AST)currentAST.root;
   }

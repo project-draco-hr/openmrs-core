@@ -23,7 +23,7 @@
         }
       }
     }
-    if (person.isVoided())     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+    if (person.isPersonVoided())     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
     if (person.isDead() && (person.getCauseOfDeath() == null))     errors.rejectValue("causeOfDeath","Patient.dead.causeOfDeathNull");
   }
   if (log.isDebugEnabled())   log.debug("Person Attributes: \n" + person.printAttributes());

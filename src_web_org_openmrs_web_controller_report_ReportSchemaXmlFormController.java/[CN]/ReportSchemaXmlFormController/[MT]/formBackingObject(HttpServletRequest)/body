@@ -1,0 +1,11 @@
+{
+  ReportService reportService=(ReportService)Context.getService(ReportService.class);
+  Integer reportSchemaId=ServletRequestUtils.getIntParameter(request,"reportSchemaId");
+  log.debug("Getting report schema xml with schema id: " + reportSchemaId);
+  if (reportSchemaId != null) {
+    ReportSchemaXml reportSchemaXml=reportService.getReportSchemaXml(reportSchemaId);
+    reportSchemaXml.updateXmlFromAttributes();
+    return reportSchemaXml;
+  }
+ else   return new ReportSchemaXml();
+}

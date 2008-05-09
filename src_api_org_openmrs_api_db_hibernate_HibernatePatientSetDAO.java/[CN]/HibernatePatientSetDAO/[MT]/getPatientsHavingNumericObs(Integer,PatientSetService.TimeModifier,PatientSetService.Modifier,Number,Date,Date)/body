@@ -42,15 +42,13 @@
   }
   if (fromDate != null)   query.setDate("fromDate",fromDate);
   if (toDate != null)   query.setDate("toDate",fromDate);
-  PatientSet ret;
+  Cohort ret;
   if (doInvert) {
     ret=getAllPatients();
-    ret.removeAllIds(query.list());
+    ret.getMemberIds().removeAll(query.list());
   }
  else {
-    ret=new PatientSet();
-    List patientIds=query.list();
-    ret.setPatientIds(new ArrayList<Integer>(patientIds));
+    ret=new Cohort(query.list());
   }
   return ret;
 }

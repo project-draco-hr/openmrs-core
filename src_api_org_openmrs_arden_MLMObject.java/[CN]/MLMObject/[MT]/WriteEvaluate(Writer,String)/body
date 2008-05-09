@@ -4,6 +4,17 @@
     String key;
     ListIterator<MLMEvaluateElement> thisList;
     thisList=evaluateList.listIterator(0);
+    if (retValEval == false) {
+      return false;
+    }
+    w.append("\npublic Result eval(LogicContext context, Patient patient,\n" + "Map<String, Object> parameters) throws LogicException {\n");
+    w.append("\tString actionStr = \"\";\n");
+    w.append("\tResult ruleResult = new Result();\n");
+    w.append("\tBoolean ageOK = null;\n\n\n\ttry {\n");
+    w.append("\tuserVarMap = new HashMap <String, String>();\n");
+    w.append("\tfirstname = patient.getPersonName().getGivenName();\n");
+    w.append("\tuserVarMap.put(\"firstname\", firstname);\n");
+    w.append("\tinitAction();\n");
     while (thisList.hasNext()) {
       Iterator iter1=thisList.next().iterator();
       while (iter1.hasNext()) {
@@ -14,39 +25,20 @@
         }
       }
     }
-    if (retValEval == false) {
-      return false;
-    }
-    w.append("\n@Override\npublic Result eval(LogicDataSource d, Patient p, Object[] args) {\n");
-    w.append("\n\tpatient = p;\n\tdataSource = d;\n");
-    w.append("\tuserVarMap = new HashMap <String, String>();\n");
-    w.append("\tfirstname = patient.getPersonName().getGivenName();\n");
-    w.append("\tuserVarMap.put(\"firstname\", firstname);\n");
-    w.append("\tinitAction();\n");
-    w.append("\tResult ruleResult = new Result(\"Evaluating Rule - " + classname + "...\");\n");
-    w.append("\tString actionStr = \"\";\n\n");
-    w.append("\tif(evaluate_logic(ruleResult)){\n");
+    w.append("\n\tif(evaluate_logic(ruleResult)){\n");
     w.append("\t\tactionStr = doAction();\n");
-    w.append("\t\truleResult.setValueText(\"Evaluating Rule - " + classname + "...............*****CONCLUDED TRUE****\");\n");
-    w.append("\t\t//ruleResult.debug(0);\n");
-    w.append("\t\treturn new Result(actionStr);\n");
+    w.append("\t\truleResult.clear();\n");
+    w.append("\t\truleResult.add(new Result(actionStr));\n");
+    w.append("\t\treturn ruleResult;\n");
     w.append("\n\t}\n\n");
-    w.append("\truleResult.setValueText(\"Evaluating Rule - " + classname + "...............*****CONCLUDED FALSE****\");\n");
-    w.append("\treturn ruleResult;\n");
-    w.append("\n}\n");
+    w.append("\n} catch (LogicException e) {\n");
+    w.append("\t\treturn Result.emptyResult();");
+    w.append("\n}\n\treturn ruleResult;\n}\n\n");
     w.append("\n");
     w.append("private boolean evaluate_logic(Result valueMap) {\n");
     w.append("\tboolean retVal = false;\n");
-    w.append("\tResult val;\n");
-    thisList=evaluateList.listIterator(0);
-    while (thisList.hasNext()) {
-      Iterator iter=thisList.next().iterator();
-      retVal=WriteLogic(iter,w);
-      w.flush();
-    }
-    if (retVal) {
-      w.append("\t\treturn retVal;\n");
-    }
+    w.append("\tif(valueMap.exists())\n\t{\n");
+    w.append("\t\t//conclude here\n\t\tretVal = true;\n\t\treturn retVal;\n\t}\n\t\treturn retVal;");
     w.append("\n\t}");
     w.append("\n");
   }

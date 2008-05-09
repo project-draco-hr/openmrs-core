@@ -1,0 +1,9 @@
+{
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    CommandObject command=(CommandObject)obj;
+    Context.getAdministrationService().setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS,command.getMacros());
+    view=getSuccessView();
+  }
+  return new ModelAndView(new RedirectView(view));
+}

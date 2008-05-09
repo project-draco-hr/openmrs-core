@@ -1,6 +1,6 @@
 {
   Map<Integer,Collection<Integer>> activeDrugs=getPatientSetDAO().getActiveDrugIds(patientIds,onDate,onDate);
-  List<Integer> ret=new ArrayList<Integer>();
+  Set<Integer> ret=new HashSet<Integer>();
   boolean takingAny=takingIds != null && takingIds.size() == 0;
   boolean takingNone=takingIds == null;
   if (takingAny) {
@@ -8,7 +8,7 @@
   }
  else   if (takingNone) {
     if (patientIds == null) {
-      patientIds=getAllPatients().getPatientIds();
+      patientIds=getAllPatients().getMemberIds();
     }
     patientIds.removeAll(activeDrugs.keySet());
     ret.addAll(patientIds);
@@ -23,7 +23,5 @@
       }
     }
   }
-  PatientSet ps=new PatientSet();
-  ps.setPatientIds(ret);
-  return ps;
+  return new Cohort(ret);
 }

@@ -4,29 +4,29 @@
   AST title_slot_AST=null;
   try {
 {
-      AST tmp127_AST=null;
-      tmp127_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp127_AST);
-      match(LITERAL_title);
-      AST tmp128_AST=null;
-      tmp128_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp128_AST);
+      AST tmp166_AST=null;
+      tmp166_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp166_AST);
+      match(TITLE);
+      AST tmp167_AST=null;
+      tmp167_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp167_AST);
       match(COLON);
 {
-        _loop12:         do {
+        _loop13:         do {
           if ((_tokenSet_4.member(LA(1)))) {
             text();
             astFactory.addASTChild(currentAST,returnAST);
           }
  else {
-            break _loop12;
+            break _loop13;
           }
         }
  while (true);
       }
-      AST tmp129_AST=null;
-      tmp129_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp129_AST);
+      AST tmp168_AST=null;
+      tmp168_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp168_AST);
       match(ENDBLOCK);
     }
     title_slot_AST=(AST)currentAST.root;

@@ -1,0 +1,32 @@
+{
+  log.info("read patient programs for " + patients.size() + " patients, criteria "+ criteria);
+  Map<Integer,Result> resultSet=new HashMap<Integer,Result>();
+  Collection<PatientProgram> patientPrograms=getPatientPrograms(patients,criteria);
+  for (  PatientProgram patientProgram : patientPrograms) {
+    String token=(String)criteria.getRightOperand();
+    Integer personId=patientProgram.getPatient().getPersonId();
+    Result result=null;
+    if (PROGRAM_ENROLLMENT_KEY.equals(token)) {
+      result=new Result(patientProgram.getProgram().getConcept());
+      result.setResultDate(patientProgram.getDateEnrolled());
+    }
+ else     if (PROGRAM_COMPLETED_KEY.equals(token)) {
+      result=new Result(patientProgram.getProgram().getConcept());
+      result.setResultDate(patientProgram.getDateCompleted());
+    }
+ else     if (CURRENT_STATE_KEY.equals(token)) {
+      result=new Result(patientProgram.getCurrentState().getState().getConcept());
+      result.setResultDate(patientProgram.getDateEnrolled());
+    }
+    if (result != null) {
+      log.info("Add result to result set: " + result);
+      if (!resultSet.containsKey(personId)) {
+        resultSet.put(personId,result);
+      }
+ else {
+        resultSet.get(personId).add(result);
+      }
+    }
+  }
+  return resultSet;
+}

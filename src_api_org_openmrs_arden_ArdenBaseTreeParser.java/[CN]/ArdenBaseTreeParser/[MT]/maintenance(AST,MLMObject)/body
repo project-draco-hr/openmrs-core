@@ -4,22 +4,22 @@
   String a="", b="";
   try {
 {
-      AST __t487=_t;
-      AST tmp111_AST_in=(AST)_t;
+      AST __t505=_t;
+      AST tmp128_AST_in=(AST)_t;
       match(_t,MAINTENANCE);
       _t=_t.getFirstChild();
 {
-        _loop492:         do {
+        _loop516:         do {
           if (_t == null)           _t=ASTNULL;
           if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
 {
               if (_t == null)               _t=ASTNULL;
               if ((_t.getType() == FILENAME)) {
-                AST __t490=_t;
-                AST tmp112_AST_in=(AST)_t;
+                AST __t508=_t;
+                AST tmp129_AST_in=(AST)_t;
                 match(_t,FILENAME);
                 _t=_t.getFirstChild();
-                AST tmp113_AST_in=(AST)_t;
+                AST tmp130_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Filename: ";
@@ -28,15 +28,15 @@
                 obj.setClassName(b);
                 s+=b;
                 s+="\n";
-                _t=__t490;
+                _t=__t508;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == MLMNAME)) {
-                AST __t491=_t;
-                AST tmp114_AST_in=(AST)_t;
+                AST __t509=_t;
+                AST tmp131_AST_in=(AST)_t;
                 match(_t,MLMNAME);
                 _t=_t.getFirstChild();
-                AST tmp115_AST_in=(AST)_t;
+                AST tmp132_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Filename: ";
@@ -45,14 +45,116 @@
                 obj.setClassName(b);
                 s+=b;
                 s+="\n";
-                _t=__t491;
+                _t=__t509;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == VERSION)) {
+                AST __t510=_t;
+                AST tmp133_AST_in=(AST)_t;
+                match(_t,VERSION);
+                _t=_t.getFirstChild();
+                AST tmp134_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Version: ";
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setVersion(b);
+                s+=b;
+                s+="\n";
+                _t=__t510;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == TITLE)) {
+                AST __t511=_t;
+                AST tmp135_AST_in=(AST)_t;
+                match(_t,TITLE);
+                _t=_t.getFirstChild();
+                AST tmp136_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Title: ";
+                b=textAST(_t,obj);
+                _t=_retTree;
+                obj.setTitle(b);
+                s+=b;
+                s+="\n";
+                _t=__t511;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == AUTHOR)) {
+                AST __t512=_t;
+                AST tmp137_AST_in=(AST)_t;
+                match(_t,AUTHOR);
+                _t=_t.getFirstChild();
+                AST tmp138_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Author: ";
+                b=textAST(_t,obj);
+                _t=_retTree;
+                obj.setAuthor(b);
+                s+=b;
+                s+="\n";
+                _t=__t512;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == SPECIALIST)) {
+                AST __t513=_t;
+                AST tmp139_AST_in=(AST)_t;
+                match(_t,SPECIALIST);
+                _t=_t.getFirstChild();
+                AST tmp140_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Specialist: ";
+                b=textAST(_t,obj);
+                _t=_retTree;
+                obj.setSpecialist(b);
+                s+=b;
+                s+="\n";
+                _t=__t513;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == DATE)) {
+                AST __t514=_t;
+                AST tmp141_AST_in=(AST)_t;
+                match(_t,DATE);
+                _t=_t.getFirstChild();
+                AST tmp142_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Date: ";
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setDate(b);
+                s+=b;
+                s+="\n";
+                _t=__t514;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == INSTITUTION)) {
+                AST __t515=_t;
+                AST tmp143_AST_in=(AST)_t;
+                match(_t,INSTITUTION);
+                _t=_t.getFirstChild();
+                AST tmp144_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Institution: ";
+                b=textAST(_t,obj);
+                _t=_retTree;
+                obj.setInstitution(b);
+                s+=b;
+                s+="\n";
+                _t=__t515;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
                 s+=a;
-                AST tmp116_AST_in=(AST)_t;
+                AST tmp145_AST_in=(AST)_t;
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
                 s+="\n";
@@ -63,12 +165,12 @@
             }
           }
  else {
-            break _loop492;
+            break _loop516;
           }
         }
  while (true);
       }
-      _t=__t487;
+      _t=__t505;
       _t=_t.getNextSibling();
     }
   }

@@ -4,14 +4,14 @@
     String temp=request.getParameter("filter_id");
     if (temp != null) {
       Integer filterId=new Integer(temp);
-      PatientFilter pf=Context.getReportService().getPatientFilterById(filterId);
+      PatientFilter pf=Context.getReportObjectService().getPatientFilterById(filterId);
       if (pf != null)       history.addSearchItem(PatientSearch.createSavedFilterReference(filterId));
  else       log.warn("addFilter(id) didn't find " + filterId);
     }
     temp=request.getParameter("search_id");
     if (temp != null) {
       Integer searchId=new Integer(temp);
-      PatientSearchReportObject ro=(PatientSearchReportObject)Context.getReportService().getReportObject(searchId);
+      PatientSearchReportObject ro=(PatientSearchReportObject)Context.getReportObjectService().getReportObject(searchId);
       if (ro != null)       history.addSearchItem(PatientSearch.createSavedSearchReference(searchId));
  else       log.warn("addSearch(id) didn't find " + searchId);
     }

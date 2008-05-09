@@ -1,0 +1,13 @@
+{
+  Map<Parameter,Object> params=parameterValues.get(obj);
+  if (params != null) {
+    Object localParam=params.get(parameter);
+    if (localParam != null) {
+      return localParam;
+    }
+    if (obj != null) {
+      return getParameterValue(null,parameter);
+    }
+  }
+  return null;
+}

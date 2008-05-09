@@ -1,6 +1,6 @@
 {
   Vector<PatientListItem> ret=new Vector<PatientListItem>();
-  List<Integer> temp=new ArrayList<Integer>(Context.getPatientSetService().getMyPatientSet().getPatientIds());
+  List<Integer> temp=new ArrayList<Integer>(Context.getPatientSetService().getMyPatientSet().getMemberIds());
   if (fromIndex >= temp.size()) {
     return ret;
   }

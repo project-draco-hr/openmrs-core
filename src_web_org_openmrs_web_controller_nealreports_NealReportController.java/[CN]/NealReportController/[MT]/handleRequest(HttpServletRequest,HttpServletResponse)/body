@@ -49,9 +49,9 @@
   ConceptService cs=Context.getConceptService();
   PatientSetService pss=Context.getPatientSetService();
   String patientSetParameter=request.getParameter("patientIds");
-  PatientSet ps;
+  Cohort ps;
   if (patientSetParameter != null && patientSetParameter.length() > 0) {
-    ps=PatientSet.parseCommaSeparatedPatientIds(patientSetParameter.trim());
+    ps=new Cohort(patientSetParameter.trim());
   }
  else {
     ps=pss.getAllPatients();
@@ -128,7 +128,7 @@
       holder.put(nameToUse,valToUse);
     }
   }
-  List<Patient> patients=ps.getPatients();
+  List<Patient> patients=Context.getPatientSetService().getPatients(ps.getMemberIds());
   for (  Patient p : patients) {
     if (p.getActiveIdentifiers() != null) {
       for (      PatientIdentifier pId : p.getActiveIdentifiers()) {

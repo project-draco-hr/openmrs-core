@@ -1,7 +1,0 @@
-{
-  PatientSet temp=new PatientSet();
-  temp.copyPatientIds(patientIds);
-  Map<Integer,Object> ret=Context.getPatientSetService().getPatientAttributes(temp,tableName,columnName,false);
-  if (transformer != null)   for (  Map.Entry<Integer,Object> e : ret.entrySet())   e.setValue(transformer.transform(e.getValue()));
-  return ret;
-}

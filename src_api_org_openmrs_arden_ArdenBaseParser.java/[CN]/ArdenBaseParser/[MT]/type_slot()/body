@@ -3,19 +3,19 @@
   ASTPair currentAST=new ASTPair();
   AST type_slot_AST=null;
   try {
-    AST tmp179_AST=null;
-    tmp179_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp179_AST);
-    match(LITERAL_type);
-    AST tmp180_AST=null;
-    tmp180_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp180_AST);
+    AST tmp218_AST=null;
+    tmp218_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp218_AST);
+    match(TYPE);
+    AST tmp219_AST=null;
+    tmp219_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp219_AST);
     match(COLON);
     type_code();
     astFactory.addASTChild(currentAST,returnAST);
-    AST tmp181_AST=null;
-    tmp181_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp181_AST);
+    AST tmp220_AST=null;
+    tmp220_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp220_AST);
     match(ENDBLOCK);
     type_slot_AST=(AST)currentAST.root;
   }

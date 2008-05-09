@@ -5,7 +5,7 @@
   String endDateString=ServletRequestUtils.getStringParameter(request,"endDate","");
   String locationString=ServletRequestUtils.getStringParameter(request,"location","");
   String identifierStrings=ServletRequestUtils.getStringParameter(request,"patientIdentifiers","");
-  PatientSet ps=new PatientSet();
+  Cohort ps=new Cohort();
   if ((startDateString.length() != 0) || (endDateString.length() != 0)) {
     Concept c=Context.getConceptService().getConcept(new Integer("5096"));
     Calendar cal=new GregorianCalendar();
@@ -38,11 +38,11 @@
       }
       endDate=cal.getTime();
     }
-    ps.add(Context.getPatientSetService().getPatientsHavingDateObs(c.getConceptId(),startDate,endDate));
-    log.debug("PatientSet length after adding Return Visit obs: " + ps.getSize());
+    ps=Cohort.union(ps,Context.getPatientSetService().getPatientsHavingDateObs(c.getConceptId(),startDate,endDate));
+    log.debug("PatientSet length after adding Return Visit obs: " + ps.size());
   }
   if (locationString.length() > 0) {
-    ps.add(Context.getPatientSetService().getPatientsHavingLocation(Integer.valueOf(locationString)));
+    ps=Cohort.union(ps,Context.getPatientSetService().getPatientsHavingLocation(Integer.valueOf(locationString)));
   }
   List<String> identifiers=new Vector<String>();
   if (identifierStrings.length() > 0) {
@@ -64,7 +64,7 @@
         log.warn("Invalid check digit: '" + id + "' at location "+ x,e);
       }
     }
-    ps.add(Context.getPatientSetService().convertPatientIdentifier(identifiers));
+    ps=Cohort.union(ps,Context.getPatientSetService().convertPatientIdentifier(identifiers));
   }
   return ps;
 }

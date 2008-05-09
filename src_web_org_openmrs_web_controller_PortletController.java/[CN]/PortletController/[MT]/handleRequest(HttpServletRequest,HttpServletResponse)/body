@@ -197,7 +197,7 @@
     o=request.getAttribute("org.openmrs.portlet.patientIds");
     if (o != null && !"".equals(o) && !model.containsKey("patientIds")) {
       if (!model.containsKey("patientSet")) {
-        PatientSet ps=PatientSet.parseCommaSeparatedPatientIds((String)o);
+        Cohort ps=new Cohort((String)o);
         model.put("patientSet",ps);
         model.put("patientIds",(String)o);
       }
