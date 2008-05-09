@@ -1,4 +1,6 @@
 {
-  if (singleton == null)   throw new RuntimeException("Not Yet Instantiated");
- else   return singleton;
+synchronized (DrugOrderSupport.class) {
+    if (singleton == null)     singleton=new DrugOrderSupport();
+  }
+  return singleton;
 }
