@@ -3,37 +3,30 @@
   AST action_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
   try {
-    AST __t474=_t;
-    AST tmp106_AST_in=(AST)_t;
-    match(_t,ACTION);
-    _t=_t.getFirstChild();
-    System.err.println("\n");
-    System.err.println("-------Starting Action--------");
 {
-      _loop476:       do {
+      _loop474:       do {
         if (_t == null)         _t=ASTNULL;
         if ((_t.getType() == WRITE)) {
           System.err.println("-----------Starting Write -------");
           s=writeAST(_t,obj);
           _t=_retTree;
+          obj.setActionStr(s);
           System.err.println("\n");
           System.err.println("-----------End Write -------");
         }
  else {
-          break _loop476;
+          break _loop474;
         }
       }
  while (true);
     }
 {
-      AST tmp107_AST_in=(AST)_t;
+      AST tmp104_AST_in=(AST)_t;
       match(_t,ENDBLOCK);
       _t=_t.getNextSibling();
     }
     System.err.println("\n");
     System.err.println("-----------End Action -------");
-    _t=__t474;
-    _t=_t.getNextSibling();
   }
  catch (  RecognitionException ex) {
     reportError(ex);

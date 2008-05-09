@@ -1,0 +1,46 @@
+{
+  LogicService logicService=Context.getLogicService();
+  Cohort patients=new Cohort();
+  Map<Integer,Result> result=null;
+  patients.addMember(2);
+  try {
+    log.error("Evaluating FIRST HUMAN IMMUNODEFICIENCY VIRUS");
+    result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("HUMAN IMMUNODEFICIENCY VIRUS").first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating FIRST HIV INFECTED");
+    result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("HIV INFECTED").first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating FIRST ASYMPTOMATIC HIV INFECTION");
+    result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("ASYMPTOMATIC HIV INFECTION").first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating FIRST HIV VIRAL LOAD");
+    result=logicService.eval(patients,new LogicCriteria("HIV VIRAL LOAD").first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating FIRST HIV VIRAL LOAD, QUALITATIVE");
+    result=logicService.eval(patients,new LogicCriteria("HIV VIRAL LOAD, QUALITATIVE").first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating FIRST CD4 COUNT < 200");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").lt(200).first());
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating HIV POSITIVE");
+    result=logicService.eval(patients,"HIV POSITIVE");
+    for (    Integer id : result.keySet()) {
+      log.error("Patient ID: " + id + " "+ result.get(id));
+    }
+  }
+ catch (  LogicException e) {
+    log.error("Error generated",e);
+  }
+}

@@ -6,24 +6,24 @@
 switch (LA(1)) {
 case LPAREN:
 {
-        AST tmp462_AST=null;
-        tmp462_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp462_AST);
+        AST tmp501_AST=null;
+        tmp501_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp501_AST);
         match(LPAREN);
         event_or();
         astFactory.addASTChild(currentAST,returnAST);
-        AST tmp463_AST=null;
-        tmp463_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp463_AST);
+        AST tmp502_AST=null;
+        tmp502_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp502_AST);
         match(RPAREN);
         event_factor_AST=(AST)currentAST.root;
         break;
       }
 case ID:
 {
-      AST tmp464_AST=null;
-      tmp464_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp464_AST);
+      AST tmp503_AST=null;
+      tmp503_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp503_AST);
       match(ID);
       event_factor_AST=(AST)currentAST.root;
       break;

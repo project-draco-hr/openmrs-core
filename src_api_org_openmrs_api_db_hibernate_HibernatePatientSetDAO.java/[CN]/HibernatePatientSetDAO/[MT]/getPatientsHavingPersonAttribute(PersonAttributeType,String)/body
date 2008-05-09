@@ -9,7 +9,5 @@
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
   if (attribute != null)   query.setInteger("typeId",attribute.getPersonAttributeTypeId());
   if (value != null)   query.setString("value",value);
-  PatientSet ps=new PatientSet();
-  ps.copyPatientIds(query.list());
-  return ps;
+  return new Cohort(query.list());
 }

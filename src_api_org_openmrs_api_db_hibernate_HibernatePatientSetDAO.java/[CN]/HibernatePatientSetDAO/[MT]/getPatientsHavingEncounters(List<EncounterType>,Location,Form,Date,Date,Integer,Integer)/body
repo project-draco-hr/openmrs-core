@@ -36,7 +36,5 @@
   if (toDate != null)   query.setDate("toDate",toDate);
   if (minCount != null)   query.setInteger("minCount",minCount);
   if (maxCount != null)   query.setInteger("maxCount",maxCount);
-  PatientSet ret=new PatientSet();
-  ret.copyPatientIds(query.list());
-  return ret;
+  return new Cohort(query.list());
 }

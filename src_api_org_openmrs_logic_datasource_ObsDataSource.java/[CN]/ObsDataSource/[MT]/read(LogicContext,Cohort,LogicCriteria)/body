@@ -1,0 +1,14 @@
+{
+  Map<Integer,Result> finalResult=new HashMap<Integer,Result>();
+  List<Obs> obs=getLogicObsDAO().getObservations(patients,criteria);
+  for (  Obs ob : obs) {
+    int personId=ob.getPerson().getPersonId();
+    Result result=finalResult.get(personId);
+    if (result == null) {
+      result=new Result();
+      finalResult.put(personId,result);
+    }
+    result.add(new Result(ob));
+  }
+  return finalResult;
+}

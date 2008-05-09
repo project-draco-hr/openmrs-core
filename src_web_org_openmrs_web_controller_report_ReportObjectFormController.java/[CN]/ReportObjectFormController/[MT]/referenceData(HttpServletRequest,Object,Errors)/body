@@ -1,6 +1,6 @@
 {
   Map addedData=new HashMap();
-  ReportService rs=Context.getReportService();
+  ReportObjectService rs=Context.getReportObjectService();
   Set<String> availableTypes=rs.getReportObjectTypes();
   addedData.put("availableTypes",availableTypes.iterator());
   String selectedType=ServletRequestUtils.getStringParameter(request,"type","");

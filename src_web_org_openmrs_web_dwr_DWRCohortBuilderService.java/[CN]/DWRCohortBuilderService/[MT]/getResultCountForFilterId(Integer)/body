@@ -1,7 +1,7 @@
 {
-  PatientFilter pf=Context.getReportService().getPatientFilterById(filterId);
+  PatientFilter pf=Context.getReportObjectService().getPatientFilterById(filterId);
   if (pf == null)   return null;
-  PatientSet everyone=Context.getPatientSetService().getAllPatients();
-  PatientSet filtered=pf.filter(everyone);
+  Cohort everyone=Context.getPatientSetService().getAllPatients();
+  Cohort filtered=(Cohort)pf.filter(everyone,null);
   return filtered.size();
 }

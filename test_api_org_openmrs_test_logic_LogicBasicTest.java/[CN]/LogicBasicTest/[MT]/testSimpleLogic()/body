@@ -1,0 +1,14 @@
+{
+  Cohort cohort=new Cohort();
+  ArrayList<Integer> ids=new java.util.ArrayList(Context.getPatientSetService().getAllPatients().getMemberIds());
+  for (int i=1; i < ids.size(); i++) {
+    cohort.addMember(ids.get(i));
+  }
+  cohort.addMember(2);
+  long l=System.currentTimeMillis();
+  System.out.println(new Date());
+  LogicService ls=Context.getLogicService();
+  Map<Integer,Result> m=ls.eval(cohort,"WEIGHT (KG)");
+  System.out.println(m.toString());
+  System.out.println(String.valueOf(System.currentTimeMillis() - l) + " milliseconds");
+}

@@ -1,0 +1,7 @@
+{
+  StaticCohortDefinition def=(StaticCohortDefinition)cohortDefinition;
+  Cohort c=def.getCohort();
+  if (c.getCohortId() == null)   Context.getCohortService().createCohort(c);
+ else   Context.getCohortService().updateCohort(c);
+  return def;
+}

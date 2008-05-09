@@ -5,8 +5,5 @@
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
   query.setCacheMode(CacheMode.IGNORE);
   query.setParameterList("identifiers",identifiers,new StringType());
-  PatientSet ret=new PatientSet();
-  List<Integer> patientIds=query.list();
-  ret.setPatientIds(new ArrayList<Integer>(patientIds));
-  return ret;
+  return new Cohort(query.list());
 }

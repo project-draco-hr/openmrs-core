@@ -1,0 +1,4 @@
+{
+  PatientSetService service=Context.getPatientSetService();
+  return service.getPatientsHavingEncounters(encounterTypeList,location,form,OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate),atLeastCount,atMostCount);
+}

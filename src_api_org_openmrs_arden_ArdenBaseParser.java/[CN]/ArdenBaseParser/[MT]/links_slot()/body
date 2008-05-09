@@ -3,26 +3,26 @@
   ASTPair currentAST=new ASTPair();
   AST links_slot_AST=null;
   try {
-    if ((LA(1) == LITERAL_knowledge)) {
+    if ((LA(1) == KNOWLEDGE)) {
       links_slot_AST=(AST)currentAST.root;
     }
- else     if ((LA(1) == LITERAL_knowledge)) {
+ else     if ((LA(1) == KNOWLEDGE)) {
       links_slot_AST=(AST)currentAST.root;
     }
- else     if ((LA(1) == LITERAL_links)) {
-      AST tmp176_AST=null;
-      tmp176_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp176_AST);
-      match(LITERAL_links);
-      AST tmp177_AST=null;
-      tmp177_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp177_AST);
+ else     if ((LA(1) == LINKS)) {
+      AST tmp215_AST=null;
+      tmp215_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp215_AST);
+      match(LINKS);
+      AST tmp216_AST=null;
+      tmp216_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp216_AST);
       match(COLON);
       link_body();
       astFactory.addASTChild(currentAST,returnAST);
-      AST tmp178_AST=null;
-      tmp178_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp178_AST);
+      AST tmp217_AST=null;
+      tmp217_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp217_AST);
       match(ENDBLOCK);
       links_slot_AST=(AST)currentAST.root;
     }

@@ -8,9 +8,5 @@
   query.setInteger("programId",programId);
   if (fromDate != null)   query.setDate("fromDate",fromDate);
   if (toDate != null)   query.setDate("toDate",toDate);
-  Set<Integer> ptIds=new HashSet<Integer>();
-  ptIds.addAll(query.list());
-  PatientSet ret=new PatientSet();
-  ret.copyPatientIds(ptIds);
-  return ret;
+  return new Cohort(query.list());
 }

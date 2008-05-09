@@ -6,18 +6,18 @@
 switch (LA(1)) {
 case ELSE:
 {
-        AST tmp343_AST=null;
-        tmp343_AST=astFactory.create(LT(1));
-        astFactory.makeASTRoot(currentAST,tmp343_AST);
+        AST tmp382_AST=null;
+        tmp382_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp382_AST);
         match(ELSE);
         data_elseif_AST=(AST)currentAST.root;
         break;
       }
 case ELSEIF:
 {
-      AST tmp344_AST=null;
-      tmp344_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp344_AST);
+      AST tmp383_AST=null;
+      tmp383_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp383_AST);
       match(ELSEIF);
       data_if_then_else2();
       astFactory.addASTChild(currentAST,returnAST);
@@ -27,9 +27,9 @@ case ELSEIF:
 case ENDIF:
 {
 {
-      AST tmp345_AST=null;
-      tmp345_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp345_AST);
+      AST tmp384_AST=null;
+      tmp384_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp384_AST);
       match(ENDIF);
     }
     data_elseif_AST=(AST)currentAST.root;

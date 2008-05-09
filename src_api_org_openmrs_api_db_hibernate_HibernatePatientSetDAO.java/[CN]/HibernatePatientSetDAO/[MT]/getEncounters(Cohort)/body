@@ -1,0 +1,15 @@
+{
+  Map<Integer,Encounter> ret=new HashMap<Integer,Encounter>();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  criteria.setCacheMode(CacheMode.IGNORE);
+  if (patients != null)   criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
+  criteria.add(Restrictions.eq("voided",false));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("patient.personId"));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("encounterDatetime"));
+  List<Encounter> encounters=criteria.list();
+  for (  Encounter enc : encounters) {
+    Integer ptId=enc.getPatientId();
+    if (!ret.containsKey(ptId))     ret.put(ptId,enc);
+  }
+  return ret;
+}

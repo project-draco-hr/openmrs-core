@@ -1,7 +1,7 @@
 {
   DataExportReportObject report=null;
   if (Context.isAuthenticated()) {
-    ReportService rs=Context.getReportService();
+    ReportObjectService rs=Context.getReportObjectService();
     String reportId=request.getParameter("dataExportId");
     if (reportId != null)     report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(reportId));
   }

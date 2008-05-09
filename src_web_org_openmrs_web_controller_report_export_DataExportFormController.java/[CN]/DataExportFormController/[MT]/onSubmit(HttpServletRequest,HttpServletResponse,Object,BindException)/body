@@ -75,7 +75,7 @@
     }
     String saveAsNew=ServletRequestUtils.getStringParameter(request,"saveAsNew","");
     if (!saveAsNew.equals(""))     report.setReportObjectId(null);
-    Context.getReportService().updateReportObject(report);
+    Context.getReportObjectService().updateReportObject(report);
     String action=ServletRequestUtils.getRequiredStringParameter(request,"action");
     MessageSourceAccessor msa=getMessageSourceAccessor();
     if (action.equals(msa.getMessage("DataExport.save"))) {

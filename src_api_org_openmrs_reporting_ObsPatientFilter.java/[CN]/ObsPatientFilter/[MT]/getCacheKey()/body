@@ -1,0 +1,12 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(getClass().getName()).append(".");
+  if (getQuestion() != null)   sb.append(getQuestion().getConceptId());
+  sb.append(".");
+  sb.append(getModifier()).append(".");
+  sb.append(getTimeModifier()).append(".");
+  sb.append(OpenmrsUtil.fromDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate())).append(".");
+  sb.append(OpenmrsUtil.toDateHelper(null,getWithinLastDays(),getWithinLastMonths(),getUntilDaysAgo(),getUntilMonthsAgo(),getSinceDate(),getUntilDate())).append(".");
+  sb.append(getValue());
+  return sb.toString();
+}

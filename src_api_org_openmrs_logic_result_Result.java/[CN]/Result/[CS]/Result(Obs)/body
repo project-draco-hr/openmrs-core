@@ -1,0 +1,17 @@
+{
+  this(obs.getObsDatetime(),null,obs.getValueAsBoolean(),obs.getValueCoded(),obs.getValueDatetime(),obs.getValueNumeric(),obs.getValueText());
+  Concept concept=obs.getConcept();
+  ConceptDatatype conceptDatatype=null;
+  if (concept != null) {
+    conceptDatatype=concept.getDatatype();
+    if (conceptDatatype == null) {
+      concept=Context.getConceptService().getConcept(concept.getConceptId());
+      conceptDatatype=concept.getDatatype();
+    }
+    if (conceptDatatype.isCoded())     this.datatype=Datatype.CODED;
+ else     if (conceptDatatype.isNumeric())     this.datatype=Datatype.NUMERIC;
+ else     if (conceptDatatype.isDate())     this.datatype=Datatype.DATETIME;
+ else     if (conceptDatatype.isText())     this.datatype=Datatype.TEXT;
+ else     if (conceptDatatype.isBoolean())     this.datatype=Datatype.BOOLEAN;
+  }
+}

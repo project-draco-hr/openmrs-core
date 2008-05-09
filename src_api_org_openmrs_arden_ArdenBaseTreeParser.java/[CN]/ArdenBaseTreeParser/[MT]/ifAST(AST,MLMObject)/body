@@ -4,8 +4,8 @@
   String a, b;
   try {
 {
-      AST __t419=_t;
-      AST tmp69_AST_in=(AST)_t;
+      AST __t418=_t;
+      AST tmp67_AST_in=(AST)_t;
       match(_t,IF);
       _t=_t.getFirstChild();
       obj.ResetConceptVar();
@@ -25,7 +25,7 @@ case OR:
 switch (_t.getType()) {
 case OR:
 {
-                  AST tmp70_AST_in=(AST)_t;
+                  AST tmp68_AST_in=(AST)_t;
                   match(_t,OR);
                   _t=_t.getNextSibling();
                   obj.AddToEvaluateList("OR");
@@ -33,7 +33,7 @@ case OR:
                 }
 case AND:
 {
-                AST tmp71_AST_in=(AST)_t;
+                AST tmp69_AST_in=(AST)_t;
                 match(_t,AND);
                 _t=_t.getNextSibling();
                 obj.AddToEvaluateList("AND");
@@ -41,7 +41,7 @@ case AND:
               }
 case NOT:
 {
-              AST tmp72_AST_in=(AST)_t;
+              AST tmp70_AST_in=(AST)_t;
               match(_t,NOT);
               _t=_t.getNextSibling();
               obj.AddToEvaluateList("NOT");
@@ -67,11 +67,11 @@ throw new NoViableAltException(_t);
 }
 }
 }
-AST tmp73_AST_in=(AST)_t;
+AST tmp71_AST_in=(AST)_t;
 match(_t,THEN);
 _t=_t.getNextSibling();
 obj.AddToEvaluateList("THEN");
-_t=__t419;
+_t=__t418;
 _t=_t.getNextSibling();
 }
 }

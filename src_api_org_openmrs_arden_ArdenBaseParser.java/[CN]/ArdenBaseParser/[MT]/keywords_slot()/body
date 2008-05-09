@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST keywords_slot_AST=null;
   try {
-    AST tmp171_AST=null;
-    tmp171_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp171_AST);
-    match(LITERAL_keywords);
-    AST tmp172_AST=null;
-    tmp172_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp172_AST);
+    AST tmp210_AST=null;
+    tmp210_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp210_AST);
+    match(KEYWORDS);
+    AST tmp211_AST=null;
+    tmp211_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp211_AST);
     match(COLON);
 {
       keyword_text();

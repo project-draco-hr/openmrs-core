@@ -6,18 +6,18 @@
   String a="", b="";
   try {
 {
-      AST __t480=_t;
-      AST tmp108_AST_in=(AST)_t;
+      AST __t478=_t;
+      AST tmp105_AST_in=(AST)_t;
       match(_t,WRITE);
       _t=_t.getFirstChild();
 {
-        _loop484:         do {
+        _loop482:         do {
           if (_t == null)           _t=ASTNULL;
 switch (_t.getType()) {
 case ACTION_OP:
 {
 {
-                AST tmp109_AST_in=(AST)_t;
+                AST tmp106_AST_in=(AST)_t;
                 match(_t,ACTION_OP);
                 _t=_t.getNextSibling();
                 id=(AST)_t;
@@ -26,7 +26,7 @@ case ACTION_OP:
                 a=id.getText();
                 b="||" + a + "||";
                 s+=b;
-                AST tmp110_AST_in=(AST)_t;
+                AST tmp107_AST_in=(AST)_t;
                 match(_t,ACTION_OP);
                 _t=_t.getNextSibling();
               }
@@ -44,13 +44,13 @@ case STRING_LITERAL:
           }
 default :
 {
-          break _loop484;
+          break _loop482;
         }
     }
   }
  while (true);
 }
-_t=__t480;
+_t=__t478;
 _t=_t.getNextSibling();
 }
 }

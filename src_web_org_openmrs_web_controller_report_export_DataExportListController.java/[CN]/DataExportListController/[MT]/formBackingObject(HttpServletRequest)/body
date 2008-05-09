@@ -1,7 +1,7 @@
 {
   List<AbstractReportObject> reportList=new Vector<AbstractReportObject>();
   if (Context.isAuthenticated()) {
-    ReportService rs=Context.getReportService();
+    ReportObjectService rs=Context.getReportObjectService();
     reportList=rs.getReportObjectsByType(DataExportReportObject.TYPE_NAME);
   }
   return reportList;

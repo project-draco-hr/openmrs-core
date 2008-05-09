@@ -8,7 +8,7 @@
     ro.setName(name);
     ro.setDescription(description);
     ro.setPatientSearch(ps);
-    Integer newId=Context.getReportService().createReportObject(ro);
+    Integer newId=Context.getReportObjectService().createReportObject(ro);
     history.getSearchHistory().set(indexInHistory,PatientSearch.createSavedSearchReference(newId));
     return true;
   }

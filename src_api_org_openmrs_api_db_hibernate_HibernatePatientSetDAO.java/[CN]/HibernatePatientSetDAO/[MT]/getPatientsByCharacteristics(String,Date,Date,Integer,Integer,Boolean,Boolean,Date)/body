@@ -1,0 +1,68 @@
+{
+  if (effectiveDate == null) {
+    effectiveDate=new Date();
+  }
+  StringBuffer queryString=new StringBuffer("select patientId from Patient patient");
+  List<String> clauses=new ArrayList<String>();
+  clauses.add("patient.voided = false");
+  if (gender != null) {
+    gender=gender.toUpperCase();
+    clauses.add("patient.gender = :gender");
+  }
+  if (minBirthdate != null) {
+    clauses.add("patient.birthdate >= :minBirthdate");
+  }
+  if (maxBirthdate != null) {
+    clauses.add("patient.birthdate <= :maxBirthdate");
+  }
+  if (aliveOnly != null && aliveOnly) {
+    clauses.add("patient.dead = false");
+  }
+  if (deadOnly != null && deadOnly) {
+    clauses.add("patient.dead = true");
+  }
+  Date maxBirthFromAge=null;
+  if (minAge != null) {
+    Calendar cal=new GregorianCalendar();
+    cal.setTime(effectiveDate);
+    cal.add(Calendar.YEAR,-minAge);
+    maxBirthFromAge=cal.getTime();
+    clauses.add("patient.birthdate <= :maxBirthFromAge");
+  }
+  Date minBirthFromAge=null;
+  if (maxAge != null) {
+    Calendar cal=new GregorianCalendar();
+    cal.setTime(effectiveDate);
+    cal.add(Calendar.YEAR,-(maxAge + 1));
+    minBirthFromAge=cal.getTime();
+    clauses.add("patient.birthdate > :minBirthFromAge");
+  }
+  boolean first=true;
+  for (  String clause : clauses) {
+    if (first) {
+      queryString.append(" where ").append(clause);
+      first=false;
+    }
+ else {
+      queryString.append(" and ").append(clause);
+    }
+  }
+  Query query=sessionFactory.getCurrentSession().createQuery(queryString.toString());
+  query.setCacheMode(CacheMode.IGNORE);
+  if (gender != null) {
+    query.setString("gender",gender);
+  }
+  if (minBirthdate != null) {
+    query.setDate("minBirthdate",minBirthdate);
+  }
+  if (maxBirthdate != null) {
+    query.setDate("maxBirthdate",maxBirthdate);
+  }
+  if (minAge != null) {
+    query.setDate("maxBirthFromAge",maxBirthFromAge);
+  }
+  if (maxAge != null) {
+    query.setDate("minBirthFromAge",minBirthFromAge);
+  }
+  return new Cohort(query.list());
+}

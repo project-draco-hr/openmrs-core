@@ -1,6 +1,6 @@
 {
   AbstractReportObject reportObject=null;
-  ReportService rs=Context.getReportService();
+  ReportObjectService rs=Context.getReportObjectService();
   if (Context.isAuthenticated()) {
     int reportObjectId=ServletRequestUtils.getIntParameter(request,"reportObjectId",0);
     if (reportObjectId > 0)     reportObject=rs.getReportObject(Integer.valueOf(reportObjectId));

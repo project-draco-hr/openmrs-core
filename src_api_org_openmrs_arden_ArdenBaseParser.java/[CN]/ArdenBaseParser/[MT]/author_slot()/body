@@ -3,55 +3,55 @@
   ASTPair currentAST=new ASTPair();
   AST author_slot_AST=null;
   try {
-    AST tmp151_AST=null;
-    tmp151_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp151_AST);
-    match(LITERAL_author);
-    AST tmp152_AST=null;
-    tmp152_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp152_AST);
+    AST tmp190_AST=null;
+    tmp190_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp190_AST);
+    match(AUTHOR);
+    AST tmp191_AST=null;
+    tmp191_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp191_AST);
     match(COLON);
 {
-      _loop35:       do {
+      _loop36:       do {
         if ((_tokenSet_4.member(LA(1)))) {
           text();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop35;
+          break _loop36;
         }
       }
  while (true);
     }
 {
-      _loop39:       do {
+      _loop40:       do {
         if ((LA(1) == SEMI)) {
-          AST tmp153_AST=null;
-          tmp153_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp153_AST);
+          AST tmp192_AST=null;
+          tmp192_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp192_AST);
           match(SEMI);
 {
-            _loop38:             do {
+            _loop39:             do {
               if ((_tokenSet_4.member(LA(1)))) {
                 text();
                 astFactory.addASTChild(currentAST,returnAST);
               }
  else {
-                break _loop38;
+                break _loop39;
               }
             }
  while (true);
           }
         }
  else {
-          break _loop39;
+          break _loop40;
         }
       }
  while (true);
     }
-    AST tmp154_AST=null;
-    tmp154_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp154_AST);
+    AST tmp193_AST=null;
+    tmp193_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp193_AST);
     match(ENDBLOCK);
     author_slot_AST=(AST)currentAST.root;
   }

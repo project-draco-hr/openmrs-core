@@ -3,38 +3,10 @@
   if (conceptEvalWritten) {
     return true;
   }
+  String cn=getConcept();
   if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
-    String cn=getConcept();
-    concept=Context.getConceptService().getConceptByName(cn);
-    if (dbAccessRequired) {
-      if (concept != null) {
-        w.append("private Result " + key + "(){\n");
-        w.append("\tConcept c = new Concept();\n");
-        w.append("\tc.setConceptId(" + Integer.toString(concept.getConceptId()) + "); // "+ cn+ "\n");
-        if (hasWhere) {
-          w.append("\t return dataSource.eval(patient, Aggregation" + getReadType() + ", c, DateConstraint."+ whereType+ "(Duration."+ durationOp+ "("+ durationVal+ ")) );\n");
-        }
- else {
-          w.append("\t return dataSource.eval(patient, Aggregation" + getReadType() + ", c, null);\n");
-        }
-        w.append("}\n\n");
-      }
- else {
-        System.out.println("Compiler error - No concept found in the dictionary: " + cn);
-        error="Compiler error - No concept found in the dictionary: " + cn;
-        retVal=false;
-      }
-      conceptEvalWritten=true;
-    }
- else {
-      if (readType != null && readType.equals("call")) {
-      }
- else {
-        w.append("\t\tString val = userVarMap.get( \"" + key + "\");\n");
-        w.append("\t\tif(val == \"false\") {retVal = false;}\n");
-        w.append("\t\tif(val == \"true\") {retVal = true;}\n");
-      }
-    }
+    w.append("\n\t\truleResult.add(logicService.eval(\n\t\t\t\tpatient,\n\t\t\t\tnew LogicCriteria(\"" + cn + "\").contains(\n\t\t\t\t\t");
+    w.append("\"" + getAnswerStr() + "\").last()));");
   }
   return retVal;
 }

@@ -1,0 +1,8 @@
+{
+  if (isSingleResult())   return this;
+  Integer something=new Integer(1);
+  HashMap<Result,Integer> map=new HashMap<Result,Integer>();
+  for (  Result r : this)   map.put(r,something);
+  List<Result> uniqueList=new ArrayList<Result>(map.keySet());
+  return new Result(uniqueList);
+}

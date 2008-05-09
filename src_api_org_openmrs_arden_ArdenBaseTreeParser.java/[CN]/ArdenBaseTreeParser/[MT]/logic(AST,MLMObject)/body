@@ -4,14 +4,8 @@
   String a, b;
   Integer i=1;
   try {
-    AST __t403=_t;
-    AST tmp66_AST_in=(AST)_t;
-    match(_t,LOGIC);
-    _t=_t.getFirstChild();
-    System.err.println("\n");
-    System.err.println("-------Starting LOGIC--------");
 {
-      _loop412:       do {
+      _loop411:       do {
         if (_t == null)         _t=ASTNULL;
 switch (_t.getType()) {
 case IF:
@@ -153,15 +147,15 @@ break;
 }
 case ENDIF:
 {
-AST __t411=_t;
-AST tmp67_AST_in=(AST)_t;
+AST __t410=_t;
+AST tmp65_AST_in=(AST)_t;
 match(_t,ENDIF);
 _t=_t.getFirstChild();
 System.err.println("ENDIF FOUND");
 a="ENDIF";
 obj.AddToEvaluateList(a);
 obj.SetConceptVar(a);
-_t=__t411;
+_t=__t410;
 _t=_t.getNextSibling();
 break;
 }
@@ -190,21 +184,19 @@ break;
 }
 default :
 {
-break _loop412;
+break _loop411;
 }
 }
 }
  while (true);
 }
 {
-AST tmp68_AST_in=(AST)_t;
+AST tmp66_AST_in=(AST)_t;
 match(_t,ENDBLOCK);
 _t=_t.getNextSibling();
 }
 System.err.println("\n");
 System.err.println("-----------End LOGIC -------");
-_t=__t403;
-_t=_t.getNextSibling();
 }
  catch (RecognitionException ex) {
 reportError(ex);

@@ -1,7 +1,0 @@
-{
-  if (!Rule.class.isAssignableFrom(clazz)) {
-    log.warn("Attempt to register Logic token with class that does not extend Rule : " + clazz.getName());
-    throw new LogicException("Class is not a Rule (must extend " + Rule.class.getName() + ") : "+ clazz.getName());
-  }
-  tokenMap.put(token,new ClassRule(clazz));
-}

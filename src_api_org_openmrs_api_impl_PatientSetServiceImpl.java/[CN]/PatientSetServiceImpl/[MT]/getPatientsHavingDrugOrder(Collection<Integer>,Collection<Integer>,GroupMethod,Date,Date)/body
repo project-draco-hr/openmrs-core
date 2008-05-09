@@ -1,11 +1,11 @@
 {
   Map<Integer,Collection<Integer>> activeDrugs=getPatientSetDAO().getActiveDrugIds(patientIds,fromDate,toDate);
-  List<Integer> ret=new ArrayList<Integer>();
+  Set<Integer> ret=new HashSet<Integer>();
   if (drugIds == null)   drugIds=new ArrayList();
   if (drugIds.size() == 0) {
     if (groupMethod == GroupMethod.NONE) {
       if (patientIds == null) {
-        patientIds=getAllPatients().getPatientIds();
+        patientIds=getAllPatients().getMemberIds();
       }
       patientIds.removeAll(activeDrugs.keySet());
       ret.addAll(patientIds);
@@ -27,7 +27,6 @@
       for (      Map.Entry<Integer,Collection<Integer>> e : activeDrugs.entrySet())       if (OpenmrsUtil.containsAny(e.getValue(),drugIds))       ret.add(e.getKey());
     }
   }
-  PatientSet ps=new PatientSet();
-  ps.setPatientIds(ret);
+  Cohort ps=new Cohort(ret);
   return ps;
 }

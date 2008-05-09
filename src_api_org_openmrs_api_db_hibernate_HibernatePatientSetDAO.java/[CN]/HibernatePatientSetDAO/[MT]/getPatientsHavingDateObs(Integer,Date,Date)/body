@@ -8,8 +8,5 @@
   query.setInteger("concept_id",conceptId);
   query.setDate("startValue",startTime);
   query.setDate("endValue",endTime);
-  PatientSet ret=new PatientSet();
-  List patientIds=query.list();
-  ret.setPatientIds(new ArrayList<Integer>(patientIds));
-  return ret;
+  return new Cohort(query.list());
 }

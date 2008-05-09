@@ -40,8 +40,5 @@
   log.debug("query: " + sb);
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
   query.setInteger("location_id",locationId);
-  PatientSet ret=new PatientSet();
-  List<Integer> patientIds=query.list();
-  ret.setPatientIds(new ArrayList<Integer>(patientIds));
-  return ret;
+  return new Cohort(query.list());
 }

@@ -11,7 +11,7 @@
     response.sendRedirect(request.getContextPath() + "/login.htm");
     return;
   }
-  ReportService rs=Context.getReportService();
+  ReportObjectService rs=Context.getReportObjectService();
   DataExportReportObject dataExport=(DataExportReportObject)rs.getReportObject(Integer.valueOf(reportId));
   File file=DataExportUtil.getGeneratedFile(dataExport);
   if (!file.exists())   throw new ServletException("The data export: " + dataExport + " has not been generated yet");

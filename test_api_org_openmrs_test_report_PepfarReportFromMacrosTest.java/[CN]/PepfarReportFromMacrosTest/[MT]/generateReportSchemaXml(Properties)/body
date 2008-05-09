@@ -1,0 +1,29 @@
+{
+  Set<Object> indicatorKeys=indicators.keySet();
+  StringBuilder xml=new StringBuilder();
+  xml.append("<reportSchema id=\"1\">\n");
+  xml.append("    <name>Test pepfar report</name>\n");
+  xml.append("	<description>\n");
+  xml.append("		Sample monthly PEPFAR report, modelled after the lesotho one\n");
+  xml.append("	</description>\n");
+  xml.append("	<parameters class=\"java.util.ArrayList\">\n");
+  xml.append("		<parameter clazz=\"java.util.Date\"><name>report.startDate</name><label>When does the report period start?</label></parameter>/>\n");
+  xml.append("		<parameter clazz=\"java.util.Date\"><name>report.endDate</name><label>When does the report period end?</label></parameter>\n");
+  xml.append("	</parameters>\n");
+  xml.append("	<dataSets class=\"java.util.ArrayList\">\n");
+  xml.append("		<dataSetDefinition class=\"org.openmrs.dataset.CohortDataSetDefinition\" name=\"Cohorts\">\n");
+  xml.append("			<strategies class=\"java.util.LinkedHashMap\">\n");
+  for (  Object indicatorKey : indicatorKeys) {
+    xml.append("				<entry>\n");
+    xml.append("					<string>" + indicatorKey.toString() + "</string>\n");
+    xml.append("					<cohort class=\"org.openmrs.reporting.PatientSearch\">\n");
+    xml.append("						<specification>" + indicators.getProperty(indicatorKey.toString()) + "</specification>\n");
+    xml.append("					</cohort>\n");
+    xml.append("				</entry>\n");
+  }
+  xml.append("			</strategies>\n");
+  xml.append("		</dataSetDefinition>\n");
+  xml.append("	</dataSets>\n");
+  xml.append("</reportSchema>\n");
+  return xml.toString();
+}

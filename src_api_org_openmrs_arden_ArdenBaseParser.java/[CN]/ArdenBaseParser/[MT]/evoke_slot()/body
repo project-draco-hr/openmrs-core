@@ -3,21 +3,21 @@
   ASTPair currentAST=new ASTPair();
   AST evoke_slot_AST=null;
   try {
-    AST tmp190_AST=null;
-    tmp190_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp190_AST);
+    AST tmp229_AST=null;
+    tmp229_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp229_AST);
     match(LITERAL_evoke);
-    AST tmp191_AST=null;
-    tmp191_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp191_AST);
+    AST tmp230_AST=null;
+    tmp230_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp230_AST);
     match(COLON);
 {
       evoke_statement();
       astFactory.addASTChild(currentAST,returnAST);
     }
-    AST tmp192_AST=null;
-    tmp192_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp192_AST);
+    AST tmp231_AST=null;
+    tmp231_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp231_AST);
     match(ENDBLOCK);
     evoke_slot_AST=(AST)currentAST.root;
   }

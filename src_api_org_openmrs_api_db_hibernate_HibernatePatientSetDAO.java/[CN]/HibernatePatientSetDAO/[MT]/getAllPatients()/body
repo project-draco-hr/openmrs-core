@@ -1,8 +1,6 @@
 {
-  Query query=sessionFactory.getCurrentSession().createQuery("select distinct patientId from Patient p where p.voided = 0 order by patientId");
-  List<Integer> ids=new ArrayList<Integer>();
+  Query query=sessionFactory.getCurrentSession().createQuery("select distinct patientId from Patient p where p.voided = 0");
+  Set<Integer> ids=new HashSet<Integer>();
   ids.addAll(query.list());
-  PatientSet patientSet=new PatientSet();
-  patientSet.setPatientIds(ids);
-  return patientSet;
+  return new Cohort(ids);
 }

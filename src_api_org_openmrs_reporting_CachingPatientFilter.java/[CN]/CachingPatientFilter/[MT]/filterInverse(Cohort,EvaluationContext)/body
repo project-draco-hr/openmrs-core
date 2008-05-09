@@ -1,0 +1,8 @@
+{
+  Cohort cached=getAndMaybeCache(context);
+  if (input == null) {
+    if (context != null)     input=context.getBaseCohort();
+ else     input=Context.getPatientSetService().getAllPatients();
+  }
+  return Cohort.subtract(input,cached);
+}

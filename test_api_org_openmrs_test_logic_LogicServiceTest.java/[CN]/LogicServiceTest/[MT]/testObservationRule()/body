@@ -1,0 +1,94 @@
+{
+  LogicService logicService=Context.getLogicService();
+  Cohort patients=new Cohort();
+  Map<Integer,Result> result=null;
+  patients.addMember(6217);
+  try {
+    log.error("Evaluating CD4 COUNT");
+    Result r=logicService.eval(new Patient(6217),"CD4 COUNT");
+    log.error("PatientID: 6217 " + r);
+    log.error("Evaluating CD4 COUNT");
+    result=logicService.eval(patients,"CD4 COUNT");
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT < 170");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").lt(170));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT > 185");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").gt(185));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT EQUALS 190");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").equalTo(190));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT BEFORE 2006-04-11");
+    Calendar cal=Calendar.getInstance();
+    cal.set(2006,3,11);
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").before(cal.getTime()));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT < 190 BEFORE 2006-04-11");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").lt(190).before(cal.getTime()));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT AFTER 2006-04-11");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").after(cal.getTime()));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating LAST CD4 COUNT");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").last());
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating LAST CD4 COUNT BEFORE 2006-4-11");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").last().before(cal.getTime()));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating NOT CD4 COUNT < 150");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").not().lt(150));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating NOT NOT CD4 COUNT < 150");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").not().not().lt(150));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT < 200");
+    patients.addMember(2994);
+    patients.addMember(2004);
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").lt(200));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    patients.addMember(39);
+    log.error("Evaluating PROBLEM ADDED ASNWERED BY HUMAN IMMUNODEFICIENCY VIRUS");
+    result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("HUMAN IMMUNODEFICIENCY VIRUS"));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT AS OF 2006-04-01");
+    result=logicService.eval(patients,"CD4 COUNT");
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+    log.error("Evaluating CD4 COUNT AS OF 2006-04-01, WITHIN 1 MONTH");
+    result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").within(Duration.months(1)));
+    for (    Integer id : result.keySet()) {
+      log.error("PatientID: " + id + " "+ result.get(id));
+    }
+  }
+ catch (  LogicException e) {
+    log.error("testObservationRule: Error generated",e);
+  }
+}

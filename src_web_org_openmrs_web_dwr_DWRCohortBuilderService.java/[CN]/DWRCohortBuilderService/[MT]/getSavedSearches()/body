@@ -1,6 +1,6 @@
 {
   List<ListItem> ret=new ArrayList<ListItem>();
-  List<AbstractReportObject> savedSearches=Context.getReportService().getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+  List<AbstractReportObject> savedSearches=Context.getReportObjectService().getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
   for (  ReportObject ps : savedSearches) {
     ListItem li=new ListItem();
     li.setId(ps.getReportObjectId());

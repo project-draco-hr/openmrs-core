@@ -6,45 +6,45 @@
 switch (LA(1)) {
 case LITERAL_arden:
 {
-        AST tmp134_AST=null;
-        tmp134_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp134_AST);
+        AST tmp173_AST=null;
+        tmp173_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp173_AST);
         match(LITERAL_arden);
-        AST tmp135_AST=null;
-        tmp135_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp135_AST);
+        AST tmp174_AST=null;
+        tmp174_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp174_AST);
         match(COLON);
 {
 switch (LA(1)) {
-case 86:
+case 98:
 {
 {
-                AST tmp136_AST=null;
-                tmp136_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp136_AST);
-                match(86);
-                AST tmp137_AST=null;
-                tmp137_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp137_AST);
+                AST tmp175_AST=null;
+                tmp175_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp175_AST);
+                match(98);
+                AST tmp176_AST=null;
+                tmp176_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp176_AST);
                 match(INTLIT);
-                AST tmp138_AST=null;
-                tmp138_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp138_AST);
+                AST tmp177_AST=null;
+                tmp177_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp177_AST);
                 match(MINUS);
-                AST tmp139_AST=null;
-                tmp139_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp139_AST);
+                AST tmp178_AST=null;
+                tmp178_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp178_AST);
                 match(INTLIT);
               }
               break;
             }
-case LITERAL_version:
+case VERSION:
 {
 {
-              AST tmp140_AST=null;
-              tmp140_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp140_AST);
-              match(LITERAL_version);
+              AST tmp179_AST=null;
+              tmp179_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp179_AST);
+              match(VERSION);
               version_num();
               astFactory.addASTChild(currentAST,returnAST);
             }
@@ -56,14 +56,14 @@ default :
         }
     }
   }
-  AST tmp141_AST=null;
-  tmp141_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp141_AST);
+  AST tmp180_AST=null;
+  tmp180_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp180_AST);
   match(ENDBLOCK);
   arden_version_slot_AST=(AST)currentAST.root;
   break;
 }
-case LITERAL_version:
+case VERSION:
 {
 arden_version_slot_AST=(AST)currentAST.root;
 break;

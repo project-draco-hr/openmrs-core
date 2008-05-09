@@ -2,10 +2,10 @@
   String url=request.getParameter("url");
   String id=request.getParameter("patientId");
   String ids=request.getParameter("patientIds");
-  PatientSet patientSet=Context.getPatientSetService().getMyPatientSet();
+  Cohort patientSet=Context.getPatientSetService().getMyPatientSet();
   if (id != null) {
     try {
-      patientSet.remove(Integer.valueOf(id.trim()));
+      patientSet.removeMember(Integer.valueOf(id.trim()));
     }
  catch (    NumberFormatException ex) {
     }
@@ -13,14 +13,14 @@
   if (ids != null) {
     for (    String s : ids.split(",")) {
       try {
-        patientSet.remove(Integer.valueOf(s.trim()));
+        patientSet.removeMember(Integer.valueOf(s.trim()));
       }
  catch (      NumberFormatException ex) {
       }
     }
   }
   if (patientSet.size() > 0) {
-    if ("true".equals(request.getParameter("appendPatientId")))     url+=(url.indexOf('?') >= 0 ? "&" : "?") + "patientId=" + patientSet.getPatientIds().iterator().next();
+    if ("true".equals(request.getParameter("appendPatientId")))     url+=(url.indexOf('?') >= 0 ? "&" : "?") + "patientId=" + patientSet.getMemberIds().iterator().next();
     if ("true".equals(request.getParameter("showPatientSet")))     url+=(url.indexOf('?') >= 0 ? "&" : "?") + "showPatientSet=true";
   }
   return new ModelAndView(new RedirectView(url));

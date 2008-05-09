@@ -9,17 +9,17 @@
     PatientFilter filter=cachedFilters.get(i);
     item.setFilter(filter);
     if (search.isSavedFilterReference()) {
-      ReportObject ro=Context.getReportService().getReportObject(search.getSavedFilterId());
+      ReportObject ro=Context.getReportObjectService().getReportObject(search.getSavedFilterId());
       item.setName(ro.getName());
       item.setDescription(ro.getDescription());
     }
  else     if (search.isSavedCohortReference()) {
-      Cohort c=Context.getCohortService().getCohort(search.getSavedCohortId());
+      org.openmrs.Cohort c=Context.getCohortService().getCohort(search.getSavedCohortId());
       item.setName(c.getName());
       item.setDescription(c.getDescription());
     }
  else     if (search.isSavedSearchReference()) {
-      ReportObject ro=Context.getReportService().getReportObject(search.getSavedSearchId());
+      ReportObject ro=Context.getReportObjectService().getReportObject(search.getSavedSearchId());
       item.setName(ro.getName());
       item.setDescription(ro.getDescription());
     }

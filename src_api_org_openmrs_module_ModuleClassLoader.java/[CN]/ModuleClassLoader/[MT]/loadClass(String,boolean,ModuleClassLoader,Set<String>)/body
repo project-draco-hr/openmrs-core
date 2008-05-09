@@ -24,13 +24,6 @@ synchronized (this) {
       checkClassVisibility(result,requestor);
       return result;
     }
-    for (    Module reqMod : requiredModules) {
-      if (name.startsWith(reqMod.getPackageName())) {
-        ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(reqMod);
-        result=mcl.loadClass(name,resolve,requestor,seenModules);
-        if (result != null)         return result;
-      }
-    }
     try {
 synchronized (getClass()) {
         result=findClass(name);

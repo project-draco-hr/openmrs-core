@@ -35,7 +35,5 @@
   if (stateIds != null)   query.setParameterList("stateIds",stateIds);
   if (fromDate != null)   query.setDate("fromDate",fromDate);
   if (toDate != null)   query.setDate("toDate",toDate);
-  PatientSet ret=new PatientSet();
-  ret.copyPatientIds(query.list());
-  return ret;
+  return new Cohort(query.list());
 }

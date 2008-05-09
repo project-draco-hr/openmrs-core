@@ -6,26 +6,26 @@
 switch (LA(1)) {
 case INTLIT:
 {
-        AST tmp217_AST=null;
-        tmp217_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp217_AST);
+        AST tmp256_AST=null;
+        tmp256_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp256_AST);
         match(INTLIT);
         version_num_AST=(AST)currentAST.root;
         break;
       }
 case DIGIT:
 {
-      AST tmp218_AST=null;
-      tmp218_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp218_AST);
+      AST tmp257_AST=null;
+      tmp257_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp257_AST);
       match(DIGIT);
-      AST tmp219_AST=null;
-      tmp219_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp219_AST);
+      AST tmp258_AST=null;
+      tmp258_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp258_AST);
       match(DOT);
-      AST tmp220_AST=null;
-      tmp220_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp220_AST);
+      AST tmp259_AST=null;
+      tmp259_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp259_AST);
       match(DIGIT);
       version_num_AST=(AST)currentAST.root;
       break;

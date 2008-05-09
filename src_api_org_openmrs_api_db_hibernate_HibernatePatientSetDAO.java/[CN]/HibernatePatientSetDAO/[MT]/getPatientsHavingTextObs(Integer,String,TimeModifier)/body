@@ -31,8 +31,5 @@
   if (useVal) {
     query.setString("value",value);
   }
-  PatientSet ret=new PatientSet();
-  List patientIds=query.list();
-  ret.setPatientIds(new ArrayList<Integer>(patientIds));
-  return ret;
+  return new Cohort(query.list());
 }

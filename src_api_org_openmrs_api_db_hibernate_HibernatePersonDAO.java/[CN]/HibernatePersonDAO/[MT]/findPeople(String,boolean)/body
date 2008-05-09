@@ -9,7 +9,7 @@
       criteria.add(Expression.or(Expression.like("name.givenName",n,MatchMode.START),Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("systemId",n,MatchMode.START)))));
     }
   }
-  if (includeVoided == false)   criteria.add(Expression.eq("voided",false));
+  if (includeVoided == false)   criteria.add(Expression.eq("personVoided",false));
   criteria.addOrder(Order.asc("personId"));
   List returnList=new Vector();
   returnList=criteria.list();

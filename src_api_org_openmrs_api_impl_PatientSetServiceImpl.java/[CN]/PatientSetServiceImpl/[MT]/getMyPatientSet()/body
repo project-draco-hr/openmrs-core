@@ -1,11 +1,11 @@
 {
-  if (Context.isAuthenticated() == false)   return new PatientSet();
+  if (Context.isAuthenticated() == false)   return new Cohort();
   if (userPatientSets == null) {
-    userPatientSets=new HashMap<User,PatientSet>();
+    userPatientSets=new HashMap<User,Cohort>();
   }
-  PatientSet mine=userPatientSets.get(Context.getAuthenticatedUser());
+  Cohort mine=userPatientSets.get(Context.getAuthenticatedUser());
   if (mine == null) {
-    mine=new PatientSet();
+    mine=new Cohort();
     userPatientSets.put(Context.getAuthenticatedUser(),mine);
   }
   return mine;
