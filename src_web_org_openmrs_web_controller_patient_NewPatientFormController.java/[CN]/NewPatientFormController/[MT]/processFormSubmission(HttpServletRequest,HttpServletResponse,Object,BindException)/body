@@ -24,8 +24,9 @@
       }
       if (identifiers != null) {
         for (int i=0; i < identifiers.length; i++) {
-          String[] args={identifiers[i]};
-          if (identifiers[i].length() > 0) {
+          String id=identifiers[i].trim();
+          String[] args={id};
+          if (id.length() > 0) {
             PatientIdentifierType pit=null;
             if (types[i] == null || types[i].equals("")) {
               String msg=getMessageSourceAccessor().getMessage("PatientIdentifier.identifierType.null",args);
@@ -38,23 +39,23 @@
               errors.reject(msg);
             }
  else             loc=es.getLocation(Integer.valueOf(locs[i]));
-            PatientIdentifier pi=new PatientIdentifier(identifiers[i],pit,loc);
-            pi.setPreferred(pref.equals(identifiers[i] + types[i]));
+            PatientIdentifier pi=new PatientIdentifier(id,pit,loc);
+            pi.setPreferred(pref.equals(id + types[i]));
             newIdentifiers.add(pi);
             if (log.isDebugEnabled()) {
-              log.debug("Creating patient identifier with identifier: " + identifiers[i]);
+              log.debug("Creating patient identifier with identifier: " + id);
               log.debug("and type: " + types[i]);
               log.debug("and location: " + locs[i]);
             }
             try {
-              if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifiers[i])) {
-                log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifiers[i]);
+              if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(id)) {
+                log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ id);
                 String msg=getMessageSourceAccessor().getMessage("error.checkdigits.verbose",args);
                 errors.rejectValue("identifier",msg);
               }
             }
  catch (            Exception e) {
-              log.error("exception thrown with: " + pit.getName() + " "+ identifiers[i]);
+              log.error("exception thrown with: " + pit.getName() + " "+ id);
               log.error("Error while adding patient identifiers to savedIdentifier list",e);
               String msg=getMessageSourceAccessor().getMessage("error.checkdigits",args);
               errors.rejectValue("identifier",msg);
