@@ -5,9 +5,18 @@
     patientIdentifiers=patientIdentifierMap.get(typeName);
   }
  else {
-    PatientIdentifierType type=patientService.getPatientIdentifierType(typeName);
+    PatientIdentifierType type=null;
+    try {
+      Integer id=Integer.valueOf(typeName);
+      type=patientService.getPatientIdentifierType(id);
+    }
+ catch (    NumberFormatException ex) {
+    }
+    if (type == null) {
+      type=patientService.getPatientIdentifierType(typeName);
+    }
     patientIdentifiers=patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(),type);
-    log.debug("Found identifiers for patient identifier " + type + " = "+ patientIdentifiers);
+    log.debug("Found identifiers for patient identifier " + type);
     patientIdentifierMap.put(typeName,patientIdentifiers);
   }
   return patientIdentifiers.get(patientId);

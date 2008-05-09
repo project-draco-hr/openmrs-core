@@ -5,7 +5,7 @@
     dos=DrugOrderSupport.getInstance();
   }
  catch (  Exception e) {
-    log.error("Error getting instance of DrugOrderSupport object");
+    log.error("Error getting instance of DrugOrderSupport object",e);
   }
   if (dos != null) {
     standardRegimens=dos.getStandardRegimens();
