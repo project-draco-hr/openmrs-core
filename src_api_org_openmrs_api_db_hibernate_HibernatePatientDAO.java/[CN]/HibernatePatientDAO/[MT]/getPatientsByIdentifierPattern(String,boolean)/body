@@ -1,5 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifier.class);
+  criteria.add(Restrictions.eq("voided",false));
   criteria.setProjection(Projections.property("patient"));
   AdministrationService adminService=Context.getAdministrationService();
   String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
