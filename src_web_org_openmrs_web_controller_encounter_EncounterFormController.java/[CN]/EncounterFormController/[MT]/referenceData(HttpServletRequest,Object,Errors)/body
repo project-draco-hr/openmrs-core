@@ -11,7 +11,7 @@
     map.put("encounterTypes",es.getEncounterTypes());
     map.put("forms",Context.getFormService().getForms());
     String reason="";
-    for (    Obs o : encounter.getObsAtTopLevel(false)) {
+    for (    Obs o : encounter.getObsAtTopLevel(true)) {
       if (o.isVoided()) {
         reason=o.getVoidReason();
         int start=reason.lastIndexOf(" ") + 1;
