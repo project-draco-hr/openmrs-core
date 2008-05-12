@@ -1,6 +1,6 @@
 {
   Query query;
-  String sql="select patient from Patient patient, PersonName name join patient.identifiers ids where ids.identifier = :id and patient.patientId = name.person.personId";
+  String sql="select patient from Patient patient, PersonName name join patient.identifiers ids where ids.voided = false and ids.identifier = :id and patient.patientId = name.person.personId";
   String order=" order by name.givenName asc, name.middleName asc, name.familyName asc";
   if (includeVoided) {
     query=sessionFactory.getCurrentSession().createQuery(sql + order);
