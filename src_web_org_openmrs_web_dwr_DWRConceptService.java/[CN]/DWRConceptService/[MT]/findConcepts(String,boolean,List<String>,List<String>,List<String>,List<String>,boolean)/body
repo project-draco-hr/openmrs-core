@@ -1,10 +1,28 @@
 {
   Vector<Object> objectList=new Vector<Object>();
-  Integer userId=-1;
-  User u=Context.getAuthenticatedUser();
-  if (u != null)   userId=u.getUserId();
-  log.info(userId + "|" + phrase+ "|"+ includeClassNames.toString());
-  Locale locale=Context.getLocale();
+  User currentUser=Context.getAuthenticatedUser();
+  if (log.isInfoEnabled()) {
+    Integer userId=-1;
+    if (currentUser != null)     userId=currentUser.getUserId();
+    log.info(userId + "|" + phrase+ "|"+ includeClassNames.toString());
+  }
+  Locale defaultLocale=Context.getLocale();
+  List<Locale> localesToSearchOn=null;
+  if (currentUser != null)   localesToSearchOn=currentUser.getProficientLocales();
+  if (localesToSearchOn == null)   localesToSearchOn=new Vector<Locale>();
+  if (localesToSearchOn.size() == 0) {
+    localesToSearchOn.add(defaultLocale);
+    if (defaultLocale.getCountry() != "") {
+      localesToSearchOn.add(new Locale(defaultLocale.getLanguage()));
+    }
+  }
+  if (log.isDebugEnabled()) {
+    StringBuffer searchLocalesString=new StringBuffer();
+    for (    Locale loc : localesToSearchOn) {
+      searchLocalesString.append(loc.toString() + " ");
+    }
+    log.debug("searching locales: " + searchLocalesString);
+  }
   if (includeClassNames == null)   includeClassNames=new Vector<String>();
   if (excludeClassNames == null)   excludeClassNames=new Vector<String>();
   if (includeDatatypeNames == null)   includeDatatypeNames=new Vector<String>();
@@ -15,7 +33,7 @@
     if (phrase.matches("\\d+")) {
       Concept c=cs.getConcept(Integer.valueOf(phrase));
       if (c != null) {
-        ConceptWord word=new ConceptWord(phrase,c,locale.getLanguage(),"Concept Id #" + phrase);
+        ConceptWord word=new ConceptWord(phrase,c,defaultLocale,"Concept Id #" + phrase);
         words.add(word);
       }
     }
@@ -30,10 +48,10 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      words.addAll(cs.findConcepts(phrase,locale,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
+      words.addAll(cs.findConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
     }
     if (words.size() == 0) {
-      objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ Context.getLocale().getDisplayName());
+      objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ OpenmrsUtil.join(localesToSearchOn,", "));
     }
  else {
       objectList=new Vector<Object>(words.size());
@@ -44,7 +62,7 @@
         objectList.add(new ConceptListItem(word));
         if (includeDrugConcepts) {
           Integer classId=word.getConcept().getConceptClass().getConceptClassId();
-          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugs(word.getConcept()))           objectList.add(new ConceptDrugListItem(d,locale));
+          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugs(word.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
         }
       }
     }
@@ -53,6 +71,6 @@
     log.error("Error while finding concepts + " + e.getMessage(),e);
     objectList.add("Error while attempting to find concepts - " + e.getMessage());
   }
-  if (objectList.size() == 0)   objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ Context.getLocale().getDisplayName());
+  if (objectList.size() == 0)   objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ defaultLocale);
   return objectList;
 }

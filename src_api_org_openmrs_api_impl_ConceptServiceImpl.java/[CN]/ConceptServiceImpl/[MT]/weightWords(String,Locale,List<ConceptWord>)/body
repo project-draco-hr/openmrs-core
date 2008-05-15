@@ -1,42 +1,5 @@
 {
-  Map<Integer,ConceptWord> uniqueConcepts=new HashMap<Integer,ConceptWord>();
-  if (phrase == null)   phrase="";
-  List<String> searchedWords=ConceptWord.getUniqueWords(phrase);
-  Integer id=null;
-  Concept concept=null;
-  for (  ConceptWord tmpWord : conceptWords) {
-    concept=tmpWord.getConcept();
-    id=concept.getConceptId();
-    if (uniqueConcepts.containsKey(id)) {
-      ConceptWord initialWord=uniqueConcepts.get(id);
-      String toSplit=initialWord.getSynonym();
-      if (toSplit == null || toSplit.equals("")) {
-        ConceptName cn=initialWord.getConcept().getName(locale);
-        toSplit=cn.getName();
-      }
-      List<String> nameWords=ConceptWord.getUniqueWords(toSplit);
-      if (!containsAll(nameWords,searchedWords)) {
-        tmpWord.setWeight(initialWord.getWeight());
-        uniqueConcepts.put(id,tmpWord);
-      }
- else       tmpWord=null;
-    }
- else {
-      tmpWord.setWeight(0.0);
-      uniqueConcepts.put(id,tmpWord);
-    }
-    if (tmpWord != null) {
-      String matchedString=tmpWord.getSynonym();
-      if (matchedString.length() == 0) {
-        tmpWord.increaseWeight(2.0);
-        matchedString=tmpWord.getConcept().getName(locale).getName();
-      }
-      Double percentMatched=getPercentMatched(searchedWords,matchedString);
-      tmpWord.increaseWeight(5.0 * percentMatched);
-    }
-  }
-  conceptWords=new Vector<ConceptWord>();
-  conceptWords.addAll(uniqueConcepts.values());
-  Collections.sort(conceptWords);
-  return conceptWords;
+  List<Locale> locales=new ArrayList<Locale>();
+  locales.add(locale);
+  return weightWords(phrase,locales,conceptWords);
 }
