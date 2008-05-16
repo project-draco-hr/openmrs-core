@@ -1,4 +1,5 @@
 {
+  newIdentifiers=new HashSet<PatientIdentifier>();
   Patient p=null;
   Integer id=null;
   if (Context.isAuthenticated()) {
@@ -10,7 +11,7 @@
         p=ps.getPatient(id);
       }
  catch (      NumberFormatException numberError) {
-        log.warn("Invalid userId supplied: '" + patientId + "'",numberError);
+        log.warn("Invalid patientId supplied: '" + patientId + "'",numberError);
       }
 catch (      ObjectRetrievalFailureException noUserEx) {
       }
