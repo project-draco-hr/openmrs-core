@@ -23,6 +23,7 @@
       tmpIdentifier.setVoided(false);
       tmpIdentifier.setVoidedBy(null);
       tmpIdentifier.setVoidReason(null);
+      tmpIdentifier.setPreferred(false);
       preferred.addIdentifier(tmpIdentifier);
       log.debug("Merging identifier " + tmpIdentifier.getIdentifier() + " to "+ preferred.getPatientId());
     }
@@ -43,6 +44,7 @@
       tmpName.setVoided(false);
       tmpName.setVoidedBy(null);
       tmpName.setVoidReason(null);
+      tmpName.setPreferred(false);
       preferred.addName(tmpName);
       log.debug("Merging name " + newName.getGivenName() + " to "+ preferred.getPatientId());
     }
@@ -65,6 +67,47 @@
       tmpAddress.setVoidReason(null);
       preferred.addAddress(tmpAddress);
       log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
+    }
+  }
+  ProgramWorkflowService programService=Context.getProgramWorkflowService();
+  for (  PatientProgram pp : programService.getPatientPrograms(notPreferred)) {
+    if (!pp.getVoided()) {
+      PatientProgram enroll=pp.copy();
+      enroll.setPatient(preferred);
+      log.debug("Copying patientProgram " + pp.getPatientProgramId() + " to "+ preferred.getPatientId());
+      programService.createPatientProgram(enroll);
+    }
+  }
+  PersonService personService=Context.getPersonService();
+  for (  Relationship rel : personService.getRelationships(notPreferred)) {
+    if (!rel.isVoided()) {
+      Relationship tmpRel=rel.copy();
+      if (tmpRel.getPersonA().equals(notPreferred))       tmpRel.setPersonA(preferred);
+      if (tmpRel.getPersonB().equals(notPreferred))       tmpRel.setPersonB(preferred);
+      log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
+      personService.createRelationship(tmpRel);
+    }
+  }
+  ObsService obsService=Context.getObsService();
+  for (  Obs obs : obsService.getObservations(notPreferred,false)) {
+    if (obs.getEncounter() == null && !obs.isVoided()) {
+      obs.setPerson(preferred);
+      obsService.updateObs(obs);
+    }
+  }
+  OrderService os=Context.getOrderService();
+  for (  Order o : os.getOrdersByPatient(notPreferred)) {
+    if (o.getEncounter() == null && !o.getVoided()) {
+      Order tmpOrder=o.copy();
+      tmpOrder.setPatient(preferred);
+      os.createOrder(tmpOrder);
+    }
+  }
+  for (  PersonAttribute attr : notPreferred.getAttributes()) {
+    if (!attr.isVoided()) {
+      PersonAttribute tmpAttr=attr.copy();
+      tmpAttr.setPerson(null);
+      preferred.addAttribute(tmpAttr);
     }
   }
   if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());

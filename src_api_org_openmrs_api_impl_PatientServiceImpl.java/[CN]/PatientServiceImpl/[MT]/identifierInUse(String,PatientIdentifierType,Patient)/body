@@ -1,6 +1,7 @@
 {
   List<PatientIdentifier> ids=getPatientIdentifiers(identifier,type);
   for (  PatientIdentifier id : ids) {
+    if (id.getPatient().isVoided())     continue;
     if (ignorePatient == null || !id.getPatient().equals(ignorePatient))     return id.getPatient();
   }
   return null;
