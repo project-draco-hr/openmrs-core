@@ -1,0 +1,4 @@
+{
+  Criteria c=sessionFactory.getCurrentSession().createCriteria(Order.class).add(Restrictions.eq("encounter",encounter));
+  return (List<Order>)c.list();
+}

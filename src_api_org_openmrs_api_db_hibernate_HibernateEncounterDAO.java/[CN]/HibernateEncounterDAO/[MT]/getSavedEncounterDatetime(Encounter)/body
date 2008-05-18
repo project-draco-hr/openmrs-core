@@ -1,0 +1,5 @@
+{
+  SQLQuery sql=sessionFactory.getCurrentSession().createSQLQuery("select encounter_datetime from encounter where encounter_id = :encounterId");
+  sql.setInteger("encounterId",encounter.getEncounterId());
+  return (Date)sql.uniqueResult();
+}
