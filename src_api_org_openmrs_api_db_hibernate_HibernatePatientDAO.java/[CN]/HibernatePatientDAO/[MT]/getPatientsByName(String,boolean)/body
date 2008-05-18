@@ -19,6 +19,7 @@
       criteria.add(searchExpression);
     }
   }
+  criteria.add(Expression.eq("name.voided",false));
   if (includeVoided == false)   criteria.add(Expression.eq("voided",new Boolean(false)));
   criteria.addOrder(Order.asc("name.givenName"));
   criteria.addOrder(Order.asc("name.middleName"));
