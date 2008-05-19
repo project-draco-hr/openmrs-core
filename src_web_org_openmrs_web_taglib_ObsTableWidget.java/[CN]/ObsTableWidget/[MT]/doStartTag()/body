@@ -84,7 +84,15 @@
         ConceptName cn=c.getName(loc,false);
         String name=cn.getShortName();
         if (name == null || name.length() == 0)         name=cn.getName();
-        ret.append("<th>" + name + "</th>");
+        ret.append("<th>");
+        if (conceptLink != null) {
+          ret.append("<a href=\"" + conceptLink + "conceptId="+ c.getConceptId()+ "\">");
+        }
+        ret.append(name);
+        if (conceptLink != null) {
+          ret.append("</a>");
+        }
+        ret.append("</th>");
       }
       ret.append("</tr>");
     }
@@ -120,7 +128,15 @@
         ConceptName cn=c.getName(loc,false);
         String name=cn.getShortName();
         if (name == null || name.length() == 0)         name=cn.getName();
-        ret.append("<th>" + name + "</th>");
+        ret.append("<th>");
+        if (conceptLink != null) {
+          ret.append("<a href=\"" + conceptLink + "conceptId="+ c.getConceptId()+ "\">");
+        }
+        ret.append(name);
+        if (conceptLink != null) {
+          ret.append("</a>");
+        }
+        ret.append("</th>");
       }
       for (      Date date : dateOrder) {
         ret.append("<td>");
