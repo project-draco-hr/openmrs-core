@@ -1,0 +1,15 @@
+{
+  try {
+    StringBuilder sb=new StringBuilder();
+    if (conceptId != null)     concept=Context.getConceptService().getConcept(conceptId);
+    if (concept != null)     sb.append(concept.getName().getName());
+    if (obsValue != null)     sb.append(obsValue.getValueAsString(Context.getLocale()));
+    if (userId != null)     user=Context.getUserService().getUser(userId);
+    if (user != null)     sb.append(user.getPersonName());
+    pageContext.getOut().write(sb.toString());
+  }
+ catch (  IOException e) {
+    log.error("Failed to write to pageContext.getOut()",e);
+  }
+  return SKIP_BODY;
+}
