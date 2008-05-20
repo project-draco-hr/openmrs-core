@@ -2,7 +2,7 @@
   Encounter encounter=(Encounter)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   List<Integer> editedObs=new Vector<Integer>();
-  SortedMap<FormField,Obs> obsMapToReturn=new TreeMap<FormField,Obs>();
+  SortedMap<FormField,List<Obs>> obsMapToReturn=new TreeMap<FormField,List<Obs>>();
   Map<Obs,FormField> otherFormFields=new HashMap<Obs,FormField>();
   if (Context.isAuthenticated()) {
     EncounterService es=Context.getEncounterService();
@@ -26,7 +26,12 @@
       FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);
       if (ff == null)       ff=new FormField();
       if (o.getObsGroup() == null) {
-        obsMapToReturn.put(ff,o);
+        List<Obs> list=obsMapToReturn.get(ff);
+        if (list == null) {
+          list=new Vector<Obs>();
+          obsMapToReturn.put(ff,list);
+        }
+        list.add(o);
       }
  else {
         otherFormFields.put(o,ff);
