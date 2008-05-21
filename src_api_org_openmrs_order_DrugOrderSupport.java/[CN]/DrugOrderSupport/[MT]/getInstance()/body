@@ -1,6 +1,9 @@
 {
 synchronized (DrugOrderSupport.class) {
-    if (singleton == null)     singleton=new DrugOrderSupport();
+    if (singleton == null) {
+      singleton=new DrugOrderSupport();
+      Context.getAdministrationService().addGlobalPropertyListener(singleton);
+    }
   }
   return singleton;
 }
