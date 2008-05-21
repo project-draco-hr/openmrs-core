@@ -10,7 +10,7 @@
     PatientIdentifierType newType=ps.getPatientIdentifierType(new Integer("4"));
     List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
     for (    PatientIdentifierType pit : ps.getPatientIdentifierTypes()) {
-      if (pit.hasCheckDigit() && !pit.equals(newType)) {
+      if (pit.hasValidator() && !pit.equals(newType)) {
         identifiers.addAll(ps.getPatientIdentifiers(pit));
       }
     }
@@ -18,7 +18,8 @@
     for (    PatientIdentifier identifier : identifiers) {
       boolean updateNeeded=true;
       try {
-        updateNeeded=!OpenmrsUtil.isValidCheckDigit(identifier.getIdentifier());
+        IdentifierValidator piv=Context.getPatientService().getIdentifierValidator(identifier.getIdentifierType().getValidator());
+        updateNeeded=!piv.isValid(identifier.getIdentifier());
       }
  catch (      Exception e) {
         log.error("Patient #" + identifier.getPatient().getPatientId() + " Bad identifier: '"+ identifier.getIdentifier()+ "'");

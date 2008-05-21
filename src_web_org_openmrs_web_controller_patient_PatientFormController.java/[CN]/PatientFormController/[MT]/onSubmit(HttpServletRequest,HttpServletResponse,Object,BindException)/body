@@ -28,12 +28,6 @@
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PatientIdentifier.error.formatInvalid");
         isError=true;
       }
-catch (      InvalidCheckDigitException icde) {
-        log.error(icde);
-        patient.removeIdentifier(icde.getPatientIdentifier());
-        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PatientIdentifier.error.checkDigit");
-        isError=true;
-      }
 catch (      IdentifierNotUniqueException inue) {
         log.error(inue);
         patient.removeIdentifier(inue.getPatientIdentifier());
