@@ -4,8 +4,7 @@
   if (userId == null)   userId=new Integer(-1);
   String usernameWithCheckDigit=username;
   try {
-    Integer cd=OpenmrsUtil.getCheckDigit(username);
-    usernameWithCheckDigit=usernameWithCheckDigit + "-" + cd;
+    usernameWithCheckDigit=new LuhnIdentifierValidator().getValidIdentifier(username);
   }
  catch (  Exception e) {
   }
