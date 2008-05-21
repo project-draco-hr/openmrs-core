@@ -107,12 +107,7 @@
         if (formatDescription != null)         if (formatDescription.length() > 0)         formatStr=formatDescription;
         String[] args={identifier,formatStr};
         try {
-          if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifier)) {
-            log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifier);
-            String msg=getMessageSourceAccessor().getMessage("error.checkdigits.verbose",args);
-            errors.rejectValue("identifiers",msg);
-          }
- else           if (format != null)           if (format.length() > 0 && !identifier.matches(format)) {
+          if (format != null)           if (format.length() > 0 && !identifier.matches(format)) {
             log.error("Identifier format is not valid: (" + format + ") "+ identifier);
             String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
             errors.rejectValue("identifiers",msg);

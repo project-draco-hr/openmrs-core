@@ -28,15 +28,14 @@
         }
       }
     }
-    try {
-      if (pit.hasCheckDigit() && !OpenmrsUtil.isValidCheckDigit(identifier)) {
-        log.error("hasCheckDigit and is not valid: " + pit.getName() + " "+ identifier);
-        throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier,pi);
+    if (pit.hasValidator()) {
+      IdentifierValidator piv=getIdentifierValidator(pit.getValidator());
+      try {
+        if (!piv.isValid(identifier))         throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier,pi);
       }
-    }
- catch (    Exception e) {
-      log.warn("Got exception while validating check digit for identifier: " + identifier,e);
-      throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier,pi);
+ catch (      UnallowedIdentifierException e) {
+        throw new InvalidCheckDigitException("Identifier " + identifier + " is not appropriate for validation scheme "+ piv.getName()+ ".",pi);
+      }
     }
   }
 }
