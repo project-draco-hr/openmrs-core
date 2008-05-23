@@ -104,9 +104,13 @@
         String key=c.getConceptId() + "." + date;
         List<Obs> list=groupedObs.get(key);
         if (list != null) {
-          for (          Obs obs : list) {
-            ret.append(obs.getValueAsString(loc));
-            ret.append("<br/>");
+          if (combineEqualResults) {
+            List<String> unique=new ArrayList<String>();
+            for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
+            for (            String s : unique)             ret.append(s).append("<br/>");
+          }
+ else {
+            for (            Obs obs : list)             ret.append(obs.getValueAsString(loc)).append("<br/>");
           }
         }
         ret.append("</td>");
@@ -143,9 +147,13 @@
         String key=c.getConceptId() + "." + date;
         List<Obs> list=groupedObs.get(key);
         if (list != null) {
-          for (          Obs obs : list) {
-            ret.append(obs.getValueAsString(loc));
-            ret.append("<br/>");
+          if (combineEqualResults) {
+            List<String> unique=new ArrayList<String>();
+            for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
+            for (            String s : unique)             ret.append(s).append("<br/>");
+          }
+ else {
+            for (            Obs obs : list)             ret.append(obs.getValueAsString(loc)).append("<br/>");
           }
         }
         ret.append("</td>");
