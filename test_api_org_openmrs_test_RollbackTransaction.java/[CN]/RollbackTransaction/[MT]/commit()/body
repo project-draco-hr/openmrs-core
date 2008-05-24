@@ -1,9 +1,0 @@
-{
-  LOG.debug("Executing fake-commit (only session.flush() is invoked.");
-  if (!begun)   throw new TransactionException("Transaction not successfully started");
-  log.debug("commit");
-  if (!transactionContext.isFlushModeNever())   transactionContext.managedFlush();
-  committed=true;
-  jdbcContext.afterTransactionCompletion(true,this);
-  toggleAutoCommit();
-}
