@@ -2,8 +2,7 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    Alert alert=(Alert)obj;
-    Context.getAlertService().updateAlert(alert);
+    Context.getAlertService().saveAlert((Alert)obj);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Alert.saved");
   }

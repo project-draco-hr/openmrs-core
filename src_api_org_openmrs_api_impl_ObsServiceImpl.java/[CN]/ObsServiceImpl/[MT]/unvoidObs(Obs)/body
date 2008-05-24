@@ -1,21 +1,18 @@
 {
-  Set<Obs> obsToUnVoid=new HashSet<Obs>();
-  obsToUnVoid.add(obs);
-  Obs testObs=obs;
-  List<Obs> childGroups=new ArrayList<Obs>();
-  while (testObs.isObsGrouping()) {
-    for (    Obs oInner : testObs.getGroupMembers()) {
-      if (oInner.isObsGrouping())       childGroups.add(oInner);
-      if (oInner.getDateVoided().equals(obs.getDateVoided()))       obsToUnVoid.add(oInner);
+  if (obs.isVoided() == false) {
+    return obs;
+  }
+  Set<Obs> obsToUnvoid=new HashSet<Obs>();
+  obsToUnvoid.add(obs);
+  fetchObsMembers(obs,obsToUnvoid);
+  Date originalDateVoided=obs.getDateVoided();
+  for (  Obs o : obsToUnvoid) {
+    if (originalDateVoided.equals(o.getDateVoided())) {
+      o.setVoided(false);
+      o.setVoidReason(null);
+      o.setVoidedBy(null);
+      o.setDateVoided(null);
     }
-    if (childGroups.size() > 0)     testObs=childGroups.remove(childGroups.size() - 1);
- else     testObs=new Obs();
   }
-  for (  Obs o : obsToUnVoid) {
-    o.setVoided(false);
-    o.setVoidReason(null);
-    o.setVoidedBy(null);
-    o.setDateVoided(null);
-  }
-  getObsDAO().updateObs(obs);
+  return dao.saveObs(obs);
 }

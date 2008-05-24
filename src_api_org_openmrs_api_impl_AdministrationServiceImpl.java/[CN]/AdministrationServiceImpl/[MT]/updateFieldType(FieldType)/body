@@ -1,4 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_FIELD_TYPES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_FIELD_TYPES);
-  getAdministrationDAO().updateFieldType(fieldType);
+  Context.getFormService().saveFieldType(fieldType);
 }

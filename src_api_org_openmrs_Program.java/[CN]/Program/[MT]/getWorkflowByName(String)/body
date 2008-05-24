@@ -1,4 +1,8 @@
 {
-  for (  ProgramWorkflow pw : workflows)   if (pw.getConcept().isNamed(name))   return pw;
+  for (  ProgramWorkflow pw : getWorkflows()) {
+    if (pw.getConcept().isNamed(name)) {
+      return pw;
+    }
+  }
   return null;
 }

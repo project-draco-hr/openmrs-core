@@ -1,13 +1,7 @@
 {
   if (obj instanceof AlertRecipient) {
     AlertRecipient a=(AlertRecipient)obj;
-    log.debug("Alert: " + alert);
-    log.debug("recipient: " + recipient);
-    if (a != null) {
-      log.debug("a.alert: " + a.getAlert());
-      log.debug("a.recip: " + a.getRecipient());
-    }
     if (alert != null && a.getAlert() != null && recipient != null && a.getRecipient() != null)     return (alert.equals(a.getAlert()) && recipient.equals(a.getRecipient()));
   }
-  return false;
+  return obj == this;
 }

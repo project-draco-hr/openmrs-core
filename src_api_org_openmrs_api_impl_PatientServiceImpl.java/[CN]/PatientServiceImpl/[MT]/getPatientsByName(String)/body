@@ -1,4 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
-  return getPatientsByName(name,false);
+  return getPatients(name,null,null);
 }

@@ -1,0 +1,6 @@
+{
+  RollbackTransaction tx=new RollbackTransaction(jdbcContext,context);
+  tx.begin();
+  LOG.debug("Returning Rollback-only transaction factory when starting transaction! Used only in testing!!");
+  return tx;
+}

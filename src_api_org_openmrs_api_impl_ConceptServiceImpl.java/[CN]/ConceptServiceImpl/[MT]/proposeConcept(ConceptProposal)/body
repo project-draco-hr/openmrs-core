@@ -4,5 +4,5 @@
  else   conceptProposal.setCreator(Context.getAuthenticatedUser());
   if (conceptProposal.getDateCreated() == null && conceptProposal.getEncounter() != null)   conceptProposal.setDateCreated(conceptProposal.getEncounter().getDateCreated());
  else   conceptProposal.setDateCreated(new Date());
-  getConceptDAO().proposeConcept(conceptProposal);
+  dao.saveConceptProposal(conceptProposal);
 }

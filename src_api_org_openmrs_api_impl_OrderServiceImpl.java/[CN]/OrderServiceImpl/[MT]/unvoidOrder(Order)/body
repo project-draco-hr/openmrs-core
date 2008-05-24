@@ -1,4 +1,7 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_ORDERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_ORDERS);
-  getOrderDAO().unvoidOrder(order);
+  order.setVoided(false);
+  order.setVoidedBy(null);
+  order.setDateVoided(null);
+  order.setVoidReason(null);
+  return saveOrder(order);
 }

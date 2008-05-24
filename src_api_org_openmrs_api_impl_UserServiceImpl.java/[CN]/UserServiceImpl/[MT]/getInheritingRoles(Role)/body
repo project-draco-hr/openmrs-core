@@ -1,3 +1,5 @@
 {
-  return getUserDAO().getInheritingRoles(role);
+  List<Role> roles=new Vector<Role>();
+  roles.addAll(role.getInheritedRoles());
+  return roles;
 }

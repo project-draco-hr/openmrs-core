@@ -1,0 +1,24 @@
+{
+  if (cohort.getCohortId() == null) {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_COHORTS);
+  }
+ else {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_COHORTS);
+  }
+  if (cohort.getName() == null) {
+    throw new APIException("Cohort name is required");
+  }
+  Date now=new Date();
+  if (cohort.getDateCreated() == null) {
+    cohort.setDateCreated(now);
+  }
+  if (cohort.getCreator() == null) {
+    cohort.setCreator(Context.getAuthenticatedUser());
+  }
+  if (cohort.getCohortId() != null) {
+    cohort.setChangedBy(Context.getAuthenticatedUser());
+    cohort.setDateChanged(now);
+  }
+  if (log.isInfoEnabled())   log.info("Saving cohort " + cohort);
+  return dao.saveCohort(cohort);
+}

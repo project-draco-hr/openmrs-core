@@ -9,14 +9,14 @@
   o.setLocation(new Location(1));
   o.setObsDatetime(new Date());
   o.setPerson(new Patient(2));
-  o.setValueText("test");
+  o.setValueText("original obs value text");
   Obs o2=new Obs();
   o2.setConcept(cs.getConcept(1));
   o2.setDateCreated(new Date());
   o2.setCreator(Context.getAuthenticatedUser());
   o2.setLocation(new Location(1));
   o2.setObsDatetime(new Date());
-  o2.setValueText("test");
+  o2.setValueText("second obs value text");
   o2.setPerson(new Patient(2));
   Obs oParent=new Obs();
   oParent.setConcept(cs.getConcept(2));
@@ -34,7 +34,7 @@
   oGP.setLocation(new Location(1));
   oGP.setObsDatetime(new Date());
   oGP.setPerson(new Patient(2));
-  oGP.setValueText("test");
+  oGP.setValueText("grandparent obs value text");
   oGP.addGroupMember(oParent);
   Obs o3=new Obs();
   o3.setConcept(cs.getConcept(1));
@@ -42,7 +42,7 @@
   o3.setCreator(Context.getAuthenticatedUser());
   o3.setLocation(new Location(1));
   o3.setObsDatetime(new Date());
-  o3.setValueText("test");
+  o3.setValueText("leaf obs value text");
   o3.setPerson(new Patient(2));
   oGP.addGroupMember(o3);
   Obs oGGP=new Obs();
@@ -51,7 +51,7 @@
   oGGP.setCreator(Context.getAuthenticatedUser());
   oGGP.setLocation(new Location(1));
   oGGP.setObsDatetime(new Date());
-  oGGP.setValueText("test");
+  oGGP.setValueText("great grandparent value text");
   oGGP.setPerson(new Patient(2));
   oGGP.addGroupMember(oGP);
   Obs oGGGP=new Obs();
@@ -60,10 +60,10 @@
   oGGGP.setCreator(Context.getAuthenticatedUser());
   oGGGP.setLocation(new Location(1));
   oGGGP.setObsDatetime(new Date());
-  oGGGP.setValueText("test");
+  oGGGP.setValueText("great great grandparent value text");
   oGGGP.setPerson(new Patient(2));
   oGGGP.addGroupMember(oGGP);
-  os.createObs(oGGGP);
+  os.saveObs(oGGGP,null);
   int oGGGPId=oGGGP.getObsId();
   Obs testGGGP=os.getObs(oGGGPId);
   assertTrue(testGGGP.isObsGrouping());
@@ -89,12 +89,11 @@
       }
     }
   }
-  os.updateObs(oGGGP);
+  Obs oGGGPThatWasUpdated=os.saveObs(oGGGP,"Updating obs group parent");
   int childOneId=0;
   int childTwoId=0;
-  Obs testGGGP2=os.getObs(oGGGPId);
-  assertTrue(testGGGP2.isObsGrouping());
-  Set<Obs> GGGPmembers2=testGGGP2.getGroupMembers();
+  assertTrue(oGGGPThatWasUpdated.isObsGrouping());
+  Set<Obs> GGGPmembers2=oGGGPThatWasUpdated.getGroupMembers();
   assertEquals(GGGPmembers2.size(),1);
   for (  Obs testGGP : GGGPmembers2) {
     assertTrue(testGGP.isObsGrouping());
@@ -110,7 +109,7 @@
           assertNotNull(parent.getObsId());
           int i=0;
           for (          Obs child : parent.getGroupMembers()) {
-            assertEquals(child.getValueText(),"testingUpdate");
+            assertEquals("testingUpdate",child.getValueText());
             if (i == 0)             childOneId=child.getObsId();
  else             childTwoId=child.getObsId();
             i++;
@@ -126,44 +125,37 @@
   oVoidTest.setLocation(new Location(1));
   oVoidTest.setObsDatetime(new Date());
   oVoidTest.setPerson(new Patient(2));
-  oVoidTest.setValueText("test");
-  os.createObs(oVoidTest);
-  int oVoidTestId=oVoidTest.getObsId();
-  os.voidObs(oVoidTest,"testing void method");
-  Obs oVoidTestTwo=os.getObs(oVoidTestId);
-  assertTrue(oVoidTestTwo.getVoided());
-  oVoidTestTwo.setVoided(false);
-  oVoidTest=os.getObs(oVoidTestId);
-  assertFalse(oVoidTest.isVoided());
-  os.voidObs(oGGGP,"testing void cascade");
+  oVoidTest.setValueText("value text of soon-to-be-voided obs");
+  Obs obsThatWasVoided=os.saveObs(oVoidTest,null);
+  os.voidObs(obsThatWasVoided,"testing void method");
+  assertTrue(obsThatWasVoided.getVoided());
+  obsThatWasVoided.setVoided(false);
+  assertFalse(obsThatWasVoided.isVoided());
+  os.voidObs(oGGGPThatWasUpdated,"testing void cascade");
+  assertTrue(oGGGPThatWasUpdated.isVoided());
   Obs childLeafObs=os.getObs(childOneId);
   assertTrue(childLeafObs.isVoided());
-  os.unvoidObs(oGGGP);
-  childLeafObs=os.getObs(childOneId);
+  os.unvoidObs(oGGGPThatWasUpdated);
+  assertFalse(oGGGPThatWasUpdated.isVoided());
   assertFalse(childLeafObs.isVoided());
-  oGGGP.setVoided(true);
-  oGGGP.setDateVoided(new Date());
-  oGGGP.setVoidedBy(Context.getAuthenticatedUser());
-  oGGGP.setVoidReason("test");
-  os.voidObs(oGGGP,"testing void cascade");
+  os.voidObs(oGGGPThatWasUpdated,"testing void cascade");
   childLeafObs=os.getObs(childOneId);
   assertTrue(childLeafObs.isVoided());
-  oGGGP.setVoided(false);
-  os.updateObs(oGGGP);
+  os.unvoidObs(oGGGPThatWasUpdated);
   childLeafObs=os.getObs(childOneId);
   assertFalse(childLeafObs.isVoided());
-  os.voidObs(oGGGP,"testing void cascade");
+  os.voidObs(oGGGPThatWasUpdated,"testing void cascade");
   childLeafObs=os.getObs(childOneId);
   assertTrue(childLeafObs.isVoided());
   childLeafObs.setDateVoided(new Date(childLeafObs.getDateVoided().getTime() - 5000));
-  os.updateObs(childLeafObs);
-  os.unvoidObs(oGGGP);
+  os.unvoidObs(oGGGPThatWasUpdated);
+  commitTransaction(false);
   childLeafObs=os.getObs(childOneId);
   Obs childLeafObsTwo=os.getObs(childTwoId);
   assertFalse(childLeafObsTwo.getVoided());
   assertTrue(childLeafObs.getVoided());
-  os.deleteObs(oGGGP);
-  assertNull(os.getObs(oGGGPId));
+  os.purgeObs(oGGGPThatWasUpdated);
+  assertNull(os.getObs(oGGGPThatWasUpdated.getObsId()));
   assertNull(os.getObs(childOneId));
   assertNull(os.getObs(childTwoId));
 }

@@ -29,7 +29,7 @@
       String[] args=new String[]{cp.getOriginalText(),cp.getComments()};
       msg=msa.getMessage("ConceptProposal.alert.ignored",args,locale);
     }
-    alertService.createAlert(msg,uniqueProposers);
+    alertService.saveAlert(new Alert(msg,uniqueProposers));
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptProposal.saved");
   }

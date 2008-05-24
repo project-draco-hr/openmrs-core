@@ -1,16 +1,9 @@
 {
-  log.debug("Getting workflows with program: " + program);
-  Set<ProgramWorkflow> ret=null;
-  if (program != null) {
-    Set<PatientState> states=program.getStates();
-    if (states != null) {
-      for (      PatientState state : states) {
-        if (ret == null)         ret=new HashSet<ProgramWorkflow>();
-        ret.add(state.getState().getProgramWorkflow());
-      }
+  Set<ProgramWorkflow> ret=new HashSet<ProgramWorkflow>();
+  if (patientProgram != null) {
+    for (    PatientState state : patientProgram.getStates()) {
+      ret.add(state.getState().getProgramWorkflow());
     }
   }
-  if (ret == null)   log.debug("Ret is null, leaving the method");
- else   log.debug("Ret is size: " + ret.size());
   return ret;
 }

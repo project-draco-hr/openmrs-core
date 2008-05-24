@@ -1,5 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_DATATYPES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_CONCEPT_DATATYPES);
-  Context.getConceptService().checkIfLocked();
-  getAdministrationDAO().updateConceptDatatype(cd);
+  Context.getConceptService().saveConceptDatatype(cd);
 }

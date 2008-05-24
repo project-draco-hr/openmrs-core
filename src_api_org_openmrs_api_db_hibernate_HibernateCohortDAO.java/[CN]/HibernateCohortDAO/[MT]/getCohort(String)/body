@@ -1,0 +1,3 @@
+{
+  return (Cohort)sessionFactory.getCurrentSession().createQuery("from Cohort where name = :name").setString("name",name).uniqueResult();
+}

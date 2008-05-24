@@ -1,8 +1,0 @@
-{
-  if (drug.getDrugId() == null)   createDrug(drug);
- else {
-    if (drug.getCreator() == null)     drug.setCreator(Context.getAuthenticatedUser());
-    if (drug.getDateCreated() == null)     drug.setDateCreated(new Date());
-    sessionFactory.getCurrentSession().update(drug);
-  }
-}

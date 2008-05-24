@@ -1,0 +1,4 @@
+{
+  if (search == null || search.equals(""))   return getAllLocations(true);
+  return sessionFactory.getCurrentSession().createCriteria(Location.class).add(Expression.ilike("name",search,MatchMode.START)).addOrder(Order.asc("name")).list();
+}

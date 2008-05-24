@@ -2,7 +2,7 @@
   List<AlertListItem> alerts=new Vector<AlertListItem>();
   try {
     AlertService as=Context.getAlertService();
-    for (    Alert a : as.getAlerts()) {
+    for (    Alert a : as.getAlertsByUser(null)) {
       alerts.add(new AlertListItem(a));
     }
   }

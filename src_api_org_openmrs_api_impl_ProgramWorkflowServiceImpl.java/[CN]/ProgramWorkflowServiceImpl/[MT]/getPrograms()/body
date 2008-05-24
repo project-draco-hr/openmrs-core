@@ -1,4 +1,3 @@
 {
-  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_VIEW_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PROGRAMS);
-  return getProgramWorkflowDAO().getPrograms();
+  return getAllPrograms();
 }

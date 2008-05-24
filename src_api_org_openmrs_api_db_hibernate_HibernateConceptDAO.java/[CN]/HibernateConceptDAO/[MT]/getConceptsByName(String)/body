@@ -1,6 +1,0 @@
-{
-  Query query=sessionFactory.getCurrentSession().createQuery("select c from Concept c join c.names names where names.name like '%' || ? || '%'");
-  query.setString(0,name);
-  List<Concept> concepts=query.list();
-  return concepts;
-}

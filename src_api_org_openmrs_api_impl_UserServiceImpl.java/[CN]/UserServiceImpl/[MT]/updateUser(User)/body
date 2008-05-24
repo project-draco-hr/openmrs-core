@@ -1,6 +1,3 @@
 {
-  checkPrivileges(user);
-  setCollectionProperties(user);
-  if (user.getSystemId() == null || user.getSystemId().equals(""))   user.setSystemId(generateSystemId());
-  getUserDAO().updateUser(user);
+  saveUser(user,null);
 }

@@ -48,7 +48,7 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      words.addAll(cs.findConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
+      words.addAll(cs.getConceptWords(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,null,null));
     }
     if (words.size() == 0) {
       objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ OpenmrsUtil.join(localesToSearchOn,", "));

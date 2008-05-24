@@ -1,14 +1,16 @@
 {
   initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/test/report/include/RowPerProgramEnrollment.xml");
   authenticate();
   EvaluationContext evalContext=new EvaluationContext();
-  DataSetService service=Context.getDataSetService();
   PatientSearch kids=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
   kids.addArgument("maxAge","3",Integer.class);
   Cohort kidsCohort=Context.getCohortService().evaluate(kids,evalContext);
   RowPerProgramEnrollmentDataSetDefinition definition=new RowPerProgramEnrollmentDataSetDefinition();
   definition.setName("Row per enrollment");
-  definition.getPrograms().add(Context.getProgramWorkflowService().getProgram(1));
+  Set<Program> programs=new HashSet<Program>();
+  programs.add(Context.getProgramWorkflowService().getProgram(1));
+  definition.setPrograms(programs);
   ReportSchema rs=new ReportSchema();
   rs.setName("Testing row-per-obs");
   rs.setDescription("Tesing RowPerObsDataSet*");

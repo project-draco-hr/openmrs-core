@@ -7,7 +7,7 @@
   }
   Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
   if (service != null) {
-    service.shutdown();
+    service.onShutdown();
   }
   Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
 }

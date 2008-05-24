@@ -1,34 +1,3 @@
 {
-  log.debug("In getDrugSetsByConcepts method");
-  Map<Concept,List<DrugOrder>> hmRet=null;
-  if (drugSets != null && drugOrders != null) {
-    log.debug("drugSets is size " + drugSets.size());
-    for (    Concept c : drugSets) {
-      List<DrugOrder> ordersForConcept=new ArrayList<DrugOrder>();
-      Collection<ConceptSet> relatedConcepts=c.getConceptSets();
-      log.debug("Concept is " + c.getName(Context.getLocale()) + " and has "+ relatedConcepts.size()+ " related concepts");
-      if (relatedConcepts != null) {
-        for (        ConceptSet cs : relatedConcepts) {
-          Concept csConcept=cs.getConcept();
-          for (          DrugOrder currOrder : drugOrders) {
-            Drug currDrug=currOrder.getDrug();
-            if (currDrug != null) {
-              Concept currConcept=currDrug.getConcept();
-              if (currConcept.equals(csConcept)) {
-                ordersForConcept.add(currOrder);
-                log.debug("just added an order for " + currDrug.getName() + " to list of "+ c.getName(Context.getLocale()));
-              }
-            }
-          }
-        }
-      }
-      if (ordersForConcept.size() > 0) {
-        if (hmRet == null)         hmRet=new HashMap<Concept,List<DrugOrder>>();
-        hmRet.put(c,ordersForConcept);
-        log.debug("Concept " + c.getName(Context.getLocale()) + " was put to the map with a list of size "+ ordersForConcept.size());
-      }
-    }
-  }
- else   log.debug("drugSets is null");
-  return hmRet;
+  return OrderUtil.getDrugSetsByConcepts(drugOrders,drugSets);
 }

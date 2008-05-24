@@ -1,15 +1,17 @@
 {
   Connection connection=sessionFactory.getCurrentSession().connection();
   boolean stubInsertNeeded=false;
-  try {
-    PreparedStatement ps=connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
-    ps.setInt(1,user.getUserId());
-    ps.execute();
-    if (ps.getResultSet().next())     stubInsertNeeded=false;
- else     stubInsertNeeded=true;
-  }
- catch (  SQLException e) {
-    log.error("Error while trying to see if this person is a user already",e);
+  if (user.getUserId() != null) {
+    try {
+      PreparedStatement ps=connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+      ps.setInt(1,user.getUserId());
+      ps.execute();
+      if (ps.getResultSet().next())       stubInsertNeeded=false;
+ else       stubInsertNeeded=true;
+    }
+ catch (    SQLException e) {
+      log.error("Error while trying to see if this person is a user already",e);
+    }
   }
   if (stubInsertNeeded) {
     try {

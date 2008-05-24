@@ -1,0 +1,6 @@
+{
+  if (cascade && !patientProgram.getStates().isEmpty()) {
+    throw new APIException("Cascade purging of PatientPrograms is not implemented yet");
+  }
+  dao.deletePatientProgram(patientProgram);
+}

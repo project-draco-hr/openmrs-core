@@ -1,0 +1,13 @@
+{
+  if (cascade) {
+    ObsService obsService=Context.getObsService();
+    List<Encounter> justThisEncounter=new ArrayList<Encounter>();
+    justThisEncounter.add(encounter);
+    List<Obs> observations=new Vector<Obs>();
+    observations.addAll(obsService.getObservations(null,justThisEncounter,null,null,null,null,null,null,null,null,null,cascade));
+    for (    Obs o : observations) {
+      obsService.purgeObs(o,cascade);
+    }
+  }
+  purgeEncounter(encounter);
+}

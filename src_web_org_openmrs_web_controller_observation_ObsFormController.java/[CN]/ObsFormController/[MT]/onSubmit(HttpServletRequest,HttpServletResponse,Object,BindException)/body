@@ -4,29 +4,16 @@
   if (Context.isAuthenticated()) {
     Obs obs=(Obs)obj;
     ObsService os=Context.getObsService();
-    if (obs.getObsId() == null)     os.createObs(obs);
- else {
-      if (obs.isVoided()) {
-        String reason=obs.getVoidReason();
-        if (reason != null && reason.length() > 0)         reason+=", ";
-        os.voidObs(obs,reason + request.getParameter("editReason"));
-      }
- else {
-        Integer oldObsId=obs.getObsId();
-        Context.clearSession();
-        obs.setObsId(null);
-        obs.setCreator(Context.getAuthenticatedUser());
-        obs.setDateCreated(new Date());
-        os.updateObs(obs);
-        Integer newObsId=obs.getObsId();
-        Context.clearSession();
-        Obs oldObs=os.getObs(oldObsId);
-        os.voidObs(oldObs,request.getParameter("editReason") + " (new obsId: " + newObsId+ ")");
-      }
+    String reason=request.getParameter("editReason");
+    try {
+      os.saveObs(obs,reason);
     }
-    view=getSuccessView();
+ catch (    APIException e) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+      return showForm(request,response,errors);
+    }
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
-    if (obs.getEncounter() != null)     view=view + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
+    if (obs.getEncounter() != null)     view=getSuccessView() + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
   }
   return new ModelAndView(new RedirectView(view));
 }

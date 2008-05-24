@@ -1,6 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class);
-  criteria.createAlias("obsGroup","og");
-  criteria.add(Restrictions.eq("og.obsId",obsGroupId));
-  return criteria.list();
-}

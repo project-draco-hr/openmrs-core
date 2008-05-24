@@ -1,3 +1,8 @@
 {
-  return getObsDAO().getObservations(c,loc,sort,personType);
+  List<Concept> questions=new Vector<Concept>();
+  questions.add(c);
+  List<Location> locations=new Vector<Location>();
+  locations.add(loc);
+  List<String> sortList=makeSortList(sort);
+  return getObservations(null,null,questions,null,getPersonTypeEnumerations(personType),locations,sortList,null,null,null,null,includeVoided);
 }

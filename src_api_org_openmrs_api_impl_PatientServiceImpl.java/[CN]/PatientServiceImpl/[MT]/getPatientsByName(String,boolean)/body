@@ -1,4 +1,4 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
-  return getPatientDAO().getPatientsByName(name,includeVoided);
+  if (includeVoided == true)   throw new APIException("Searching on voided patients is no longer allowed");
+  return getPatients(name,null,null);
 }

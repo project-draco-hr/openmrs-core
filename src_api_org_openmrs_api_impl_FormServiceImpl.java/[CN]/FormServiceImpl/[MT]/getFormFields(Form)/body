@@ -1,3 +1,5 @@
 {
-  return getFormDAO().getFormFields(form);
+  List<FormField> formFields=new Vector<FormField>();
+  if (form != null && form.getFormFields() != null)   formFields.addAll(form.getFormFields());
+  return formFields;
 }

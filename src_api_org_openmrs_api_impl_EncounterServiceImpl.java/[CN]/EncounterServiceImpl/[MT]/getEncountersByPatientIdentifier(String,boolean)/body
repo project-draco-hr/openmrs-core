@@ -1,7 +1,3 @@
 {
-  List<Encounter> encs=new Vector<Encounter>();
-  for (  Patient p : Context.getPatientService().getPatientsByIdentifier(identifier,includeVoided)) {
-    encs.addAll(getEncountersByPatientId(p.getPatientId(),includeVoided));
-  }
-  return encs;
+  return getEncountersByPatientIdentifier(identifier);
 }

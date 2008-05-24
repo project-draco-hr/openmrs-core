@@ -1,13 +1,3 @@
 {
-  log.info("Creating person attribute type: " + type);
-  User user=Context.getAuthenticatedUser();
-  if (type.getCreator() == null) {
-    type.setCreator(user);
-    type.setDateCreated(new Date());
-  }
- else {
-    type.setChangedBy(user);
-    type.setDateChanged(new Date());
-  }
-  getPersonDAO().createPersonAttributeType(type);
+  savePersonAttributeType(type);
 }

@@ -1,6 +1,3 @@
 {
-  checkIfLocked();
-  String authUserId=Context.getAuthenticatedUser().getUserId().toString();
-  log.info("creating drug - " + authUserId + "|"+ drug.getConcept().toString());
-  getConceptDAO().createDrug(drug);
+  saveDrug(drug);
 }

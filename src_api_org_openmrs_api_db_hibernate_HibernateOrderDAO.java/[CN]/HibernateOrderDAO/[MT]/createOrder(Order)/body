@@ -1,7 +1,0 @@
-{
-  log.debug("In createOrder method");
-  order.setCreator(Context.getAuthenticatedUser());
-  order.setDateCreated(new Date());
-  sessionFactory.getCurrentSession().save(order);
-  log.debug("Ending createOrder method");
-}

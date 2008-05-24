@@ -1,16 +1,18 @@
 {
-  if (patient == null)   return;
+  if (patient == null)   return null;
   String voidReason=patient.getVoidReason();
   if (voidReason == null)   voidReason="";
   for (  PatientIdentifier pi : patient.getIdentifiers()) {
-    if (voidReason.equals(pi.getVoidReason())) {
+    if (voidReason.equals(pi.getDateVoided())) {
       pi.setVoided(false);
       pi.setVoidReason(null);
+      pi.setDateVoided(null);
+      pi.setVoidedBy(null);
     }
   }
   patient.setVoided(false);
   patient.setVoidedBy(null);
   patient.setDateVoided(null);
   patient.setVoidReason(null);
-  updatePatient(patient);
+  return savePatient(patient);
 }

@@ -1,0 +1,18 @@
+{
+  if (!begun)   throw new TransactionException("Transaction not successfully started");
+  log.debug("rollback");
+  if (!commitFailed) {
+    try {
+      jdbcContext.connection().rollback();
+      rolledBack=true;
+    }
+ catch (    SQLException e) {
+      log.error("Rollback failed",e);
+      throw new TransactionException("Rollback failed with SQL exception: ",e);
+    }
+ finally {
+      jdbcContext.afterTransactionCompletion(false,this);
+      toggleAutoCommit();
+    }
+  }
+}

@@ -1,17 +1,7 @@
 {
-  log.debug("Getting workflows with patient: " + patient);
-  Set<ProgramWorkflow> ret=null;
-  List<PatientProgram> programs=(List<PatientProgram>)this.getPatientPrograms(patient);
-  if (programs != null) {
-    for (    PatientProgram program : programs) {
-      Set<ProgramWorkflow> workflows=this.getCurrentWorkflowsByPatientProgram(program);
-      if (workflows != null) {
-        if (ret == null)         ret=new HashSet<ProgramWorkflow>();
-        ret.addAll(workflows);
-      }
-    }
+  Set<ProgramWorkflow> ret=new HashSet<ProgramWorkflow>();
+  for (  PatientProgram patientProgram : getPatientPrograms(patient)) {
+    ret.addAll(getCurrentWorkflowsByPatientProgram(patientProgram));
   }
-  if (ret == null)   log.debug("Ret is null, leaving the method");
- else   log.debug("Ret is size: " + ret.size());
   return ret;
 }

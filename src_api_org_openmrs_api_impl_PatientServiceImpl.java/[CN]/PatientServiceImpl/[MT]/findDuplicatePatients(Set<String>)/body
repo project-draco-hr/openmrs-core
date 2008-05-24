@@ -1,5 +1,5 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
-  PatientDAO dao=getPatientDAO();
-  return dao.findDuplicatePatients(attributes);
+  List<String> attributesAsList=new Vector<String>();
+  attributesAsList.addAll(attributes);
+  return getDuplicatePatientsByAttributes(attributesAsList);
 }

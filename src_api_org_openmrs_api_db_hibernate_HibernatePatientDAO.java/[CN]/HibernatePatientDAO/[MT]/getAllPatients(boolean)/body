@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
+  if (includeVoided == false)   criteria.add(Expression.eq("voided",false));
+  return criteria.list();
+}

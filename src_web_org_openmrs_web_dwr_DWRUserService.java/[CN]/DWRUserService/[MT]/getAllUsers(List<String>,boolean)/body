@@ -17,7 +17,7 @@
           if (role != null)           roles.add(role);
         }
       }
-      users.addAll(us.getAllUsers(roles,includeVoided));
+      users.addAll(us.getUsers(null,roles,includeVoided));
       userList=new Vector(users.size());
       for (      User u : users) {
         userList.add(new UserListItem(u));

@@ -1,4 +1,7 @@
 {
-  name=name.replace(", "," ");
-  return getUserDAO().findUsers(name,roles,includeVoided);
+  List<Role> rolesToSearch=new Vector<Role>();
+  for (  String role : roles) {
+    rolesToSearch.add(new Role(role));
+  }
+  return getUsers(name,rolesToSearch,includeVoided);
 }

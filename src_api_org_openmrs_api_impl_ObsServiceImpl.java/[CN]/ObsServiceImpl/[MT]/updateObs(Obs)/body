@@ -1,9 +1,3 @@
 {
-  if (obs.isVoided() && obs.getVoidedBy() == null)   voidObs(obs,obs.getVoidReason());
- else   if (obs.isVoided() == false && obs.getVoidedBy() != null)   unvoidObs(obs);
- else {
-    setRequiredObsProperties(obs);
-    log.debug("Date voided: " + obs.getDateVoided());
-    getObsDAO().updateObs(obs);
-  }
+  saveObs(obs,obs.getVoidReason());
 }

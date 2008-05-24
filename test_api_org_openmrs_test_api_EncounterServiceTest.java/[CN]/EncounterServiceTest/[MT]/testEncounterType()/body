@@ -1,0 +1,25 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterType=new EncounterType();
+  encounterType.setName("testing");
+  encounterType.setDescription("desc");
+  encounterService.saveEncounterType(encounterType);
+  EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
+  assertNotNull(newEncounterType);
+  List<EncounterType> encounterTypes=encounterService.getAllEncounterTypes();
+  assertNotNull(encounterTypes);
+  boolean found=false;
+  for (Iterator<EncounterType> i=encounterTypes.iterator(); i.hasNext(); ) {
+    EncounterType encounterType2=i.next();
+    assertNotNull(encounterType);
+    assertTrue(encounterType.equals(encounterType2) == (encounterType.getEncounterTypeId().equals(encounterType2.getEncounterTypeId())));
+    if (encounterType.equals(encounterType2))     found=true;
+  }
+  assertTrue(found);
+  newEncounterType.setName("another test");
+  encounterService.saveEncounterType(newEncounterType);
+  EncounterType newerEncounterType=encounterService.getEncounterType(newEncounterType.getEncounterTypeId());
+  assertTrue(newerEncounterType.getName().equals(newEncounterType.getName()));
+  encounterService.purgeEncounterType(newEncounterType);
+  assertNull(encounterService.getEncounterType(newEncounterType.getEncounterTypeId()));
+}

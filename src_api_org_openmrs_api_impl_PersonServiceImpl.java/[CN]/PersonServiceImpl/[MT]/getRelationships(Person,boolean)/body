@@ -1,3 +1,4 @@
 {
-  return getPersonDAO().getRelationships(p,showVoided);
+  if (showVoided)   throw new APIException("Voided relationships should be considered gone and unusable.  Don't search for or show them");
+  return getRelationshipsByPerson(p);
 }

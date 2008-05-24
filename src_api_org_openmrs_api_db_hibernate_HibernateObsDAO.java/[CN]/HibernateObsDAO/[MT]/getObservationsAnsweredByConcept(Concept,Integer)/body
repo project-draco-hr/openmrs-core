@@ -1,4 +1,0 @@
-{
-  Query query=sessionFactory.getCurrentSession().createQuery("select obs " + getHqlPersonModifier(personType,"obs.valueCoded = :c and obs.voided = false")).setParameter("c",answer);
-  return query.list();
-}

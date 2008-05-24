@@ -24,13 +24,12 @@
       for (      AlertRecipient ar : recipientsToRemove)       alert.removeRecipient(ar);
       if (userIds != null) {
         for (        Integer userId : userIds) {
-          alert.addRecipient(us.getUser(userId));
+          alert.addRecipient(new User(userId));
         }
       }
       if (roles != null) {
         for (        String roleStr : roles) {
-          Role role=us.getRole(roleStr);
-          List<User> users=us.getUsersByRole(role);
+          List<User> users=us.getUsersByRole(new Role(roleStr));
           for (          User user : users)           alert.addRecipient(user);
         }
       }

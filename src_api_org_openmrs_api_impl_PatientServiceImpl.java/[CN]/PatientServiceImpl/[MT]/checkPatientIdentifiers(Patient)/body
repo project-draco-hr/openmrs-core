@@ -3,7 +3,7 @@
   List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
   identifiers.addAll(patient.getIdentifiers());
   List<String> identifiersUsed=new Vector<String>();
-  List<PatientIdentifierType> requiredTypes=this.getRequiredPatientIdentifierTypes();
+  List<PatientIdentifierType> requiredTypes=getPatientIdentifierTypes(null,null,true,null);
   if (requiredTypes == null)   requiredTypes=new ArrayList<PatientIdentifierType>();
   List<PatientIdentifierType> foundRequiredTypes=new ArrayList<PatientIdentifierType>();
   for (  PatientIdentifier pi : identifiers) {

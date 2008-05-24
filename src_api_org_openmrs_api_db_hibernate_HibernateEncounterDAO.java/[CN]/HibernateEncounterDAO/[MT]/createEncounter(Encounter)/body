@@ -1,6 +1,0 @@
-{
-  log.debug("Creating encounter: " + encounter.getEncounterId());
-  if (encounter.getCreator() == null)   encounter.setCreator(Context.getAuthenticatedUser());
-  if (encounter.getDateCreated() == null)   encounter.setDateCreated(new Date());
-  sessionFactory.getCurrentSession().save(encounter);
-}

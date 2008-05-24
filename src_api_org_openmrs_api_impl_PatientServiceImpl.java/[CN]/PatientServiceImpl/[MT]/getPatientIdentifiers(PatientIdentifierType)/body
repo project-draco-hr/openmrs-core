@@ -1,4 +1,5 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
-  return getPatientDAO().getPatientIdentifiers(pit);
+  List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
+  types.add(pit);
+  return getPatientIdentifiers(null,types,null,null,null);
 }

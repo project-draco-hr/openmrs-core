@@ -2,7 +2,7 @@
   List<ConceptDatatype> cdList=new Vector<ConceptDatatype>();
   if (Context.isAuthenticated()) {
     ConceptService cs=Context.getConceptService();
-    cdList=cs.getConceptDatatypes();
+    cdList=cs.getAllConceptDatatypes();
   }
   return cdList;
 }

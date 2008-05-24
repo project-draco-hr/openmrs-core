@@ -1,8 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class).add(Expression.eq("name",name));
-  if (crit.list().size() < 1) {
-    log.warn("No concept datatype found with name: " + name);
-    return null;
-  }
-  return (ConceptDatatype)crit.list().get(0);
-}

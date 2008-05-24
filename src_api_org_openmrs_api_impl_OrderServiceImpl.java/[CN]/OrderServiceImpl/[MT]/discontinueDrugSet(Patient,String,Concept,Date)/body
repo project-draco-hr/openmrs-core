@@ -1,17 +1,3 @@
 {
-  log.debug("in discontinueDrugSet() method with " + drugSetId);
-  if (Context.isAuthenticated() && patient != null && drugSetId != null && discontinueDate != null) {
-    List<DrugOrder> currentOrders=this.getDrugOrdersByPatient(patient,OrderService.SHOW_CURRENT);
-    Map<String,List<DrugOrder>> ordersBySetId=this.getDrugSetsByDrugSetIdList(currentOrders,drugSetId,",");
-    if (ordersBySetId != null) {
-      List<DrugOrder> ordersToDiscontinue=ordersBySetId.get(drugSetId);
-      if (ordersToDiscontinue != null) {
-        for (        DrugOrder order : ordersToDiscontinue) {
-          this.discontinueOrder(order,discontinueReason,discontinueDate);
-        }
-      }
- else       log.debug("no orders to discontinue");
-    }
- else     log.debug("no ordersBySetId returned for " + drugSetId);
-  }
+  OrderUtil.discontinueDrugSet(patient,drugSetId,discontinueReason,discontinueDate);
 }

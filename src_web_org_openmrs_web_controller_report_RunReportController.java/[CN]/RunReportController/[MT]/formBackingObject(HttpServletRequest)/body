@@ -6,17 +6,6 @@
     ReportSchema schema=reportService.getReportSchema(id);
     ret.setSchema(schema);
     ret.setRenderingModes(reportService.getRenderingModes(schema));
-    String commaSeparated=request.getParameter("patientIds");
-    String cohortName=request.getParameter("cohortName");
-    if (commaSeparated != null) {
-      try {
-        Cohort inputCohort=new Cohort(commaSeparated);
-        if (cohortName != null)         inputCohort.setName(cohortName);
-        ret.setInputCohort(inputCohort);
-      }
- catch (      Exception ex) {
-      }
-    }
   }
   return ret;
 }

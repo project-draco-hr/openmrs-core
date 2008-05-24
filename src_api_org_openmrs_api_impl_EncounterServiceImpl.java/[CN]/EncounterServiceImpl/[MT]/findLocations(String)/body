@@ -1,4 +1,3 @@
 {
-  if (!Context.isAuthenticated())   throw new APIAuthenticationException("Authentication required");
-  return getEncounterDAO().findLocations(name);
+  return Context.getLocationService().getLocations(name);
 }

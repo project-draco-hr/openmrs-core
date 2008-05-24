@@ -1,6 +1,3 @@
 {
-  log.debug("Getting alerts for the authenticated user");
-  User user=new User();
-  if (Context.isAuthenticated())   user=Context.getAuthenticatedUser();
-  return getAlerts(user);
+  return getAlertsByUser(null);
 }

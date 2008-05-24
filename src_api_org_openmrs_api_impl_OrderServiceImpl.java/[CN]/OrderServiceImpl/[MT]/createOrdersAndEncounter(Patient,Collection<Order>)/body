@@ -1,5 +1,4 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_ORDERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_ORDERS);
   User unknownUser=Context.getUserService().getUserByUsername("Unknown");
   Location unknownLocation=Context.getEncounterService().getLocationByName("Unknown Location");
   if (unknownLocation == null)   unknownLocation=Context.getEncounterService().getLocationByName("Unknown");
@@ -27,5 +26,5 @@
     e.addOrder(order);
     order.setEncounter(e);
   }
-  Context.getEncounterService().createEncounter(e);
+  Context.getEncounterService().saveEncounter(e);
 }

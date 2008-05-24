@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createCriteria(EncounterType.class).add(Expression.eq("retired",includeRetired)).addOrder(Order.asc("name")).list();
+}

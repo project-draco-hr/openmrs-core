@@ -1,6 +1,6 @@
 {
   executeDataSet(FIND_PATIENTS_XML);
-  Collection<Patient> pset=ps.findPatients("Jea",false);
+  Collection<Patient> pset=ps.getPatients("Jea",null,null);
   boolean claudioFound=false;
   boolean jeanClaudeFound1=false;
   boolean jeanClaudeFound2=false;
@@ -15,7 +15,7 @@
   assertTrue(jeanClaudeFound1);
   assertTrue(jeanClaudeFound2);
   assertTrue(jeannetteClaudentFound);
-  pset=ps.findPatients("Jean Claude",false);
+  pset=ps.getPatients("Jean Claude",null,null);
   claudioFound=false;
   jeanClaudeFound1=false;
   jeanClaudeFound2=false;
@@ -30,8 +30,6 @@
   assertTrue(jeanClaudeFound1);
   assertTrue(jeanClaudeFound2);
   assertTrue(jeannetteClaudentFound);
-  pset=ps.findPatients("I am voided",true);
-  assertEquals(pset.iterator().next().getFamilyName(),"voided");
-  pset=ps.findPatients("I am voided",false);
+  pset=ps.getPatients("I am voided",null,null);
   assertEquals(pset.size(),0);
 }

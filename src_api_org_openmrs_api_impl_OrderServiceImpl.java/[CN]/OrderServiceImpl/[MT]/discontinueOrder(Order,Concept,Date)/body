@@ -1,4 +1,7 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ORDERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_ORDERS);
-  getOrderDAO().discontinueOrder(order,discontinueReason,discontinueDate);
+  order.setDiscontinued(Boolean.TRUE);
+  order.setDiscontinuedReason(discontinueReason);
+  order.setDiscontinuedDate(discontinueDate);
+  order.setDiscontinuedBy(Context.getAuthenticatedUser());
+  return saveOrder(order);
 }

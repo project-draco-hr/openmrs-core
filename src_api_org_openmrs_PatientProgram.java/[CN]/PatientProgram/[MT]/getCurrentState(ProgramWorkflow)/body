@@ -1,9 +1,8 @@
 {
-  Set<PatientState> states=this.getStates();
   Date now=new Date();
-  if (states != null) {
-    for (    PatientState state : states) {
-      if (!state.getVoided() && (wf == null || state.getState().getProgramWorkflow().equals(wf)) && state.getActive(now))       return state;
+  for (  PatientState state : getStates()) {
+    if ((programWorkflow == null || state.getState().getProgramWorkflow().equals(programWorkflow)) && state.getActive(now)) {
+      return state;
     }
   }
   return null;

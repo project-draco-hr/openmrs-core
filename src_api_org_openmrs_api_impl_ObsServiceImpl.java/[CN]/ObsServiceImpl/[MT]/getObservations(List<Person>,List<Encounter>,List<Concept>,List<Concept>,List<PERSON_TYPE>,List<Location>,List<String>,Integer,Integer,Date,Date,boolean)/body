@@ -1,0 +1,12 @@
+{
+  if (whom == null)   whom=new Vector<Person>();
+  if (encounters == null)   encounters=new Vector<Encounter>();
+  if (questions == null)   questions=new Vector<Concept>();
+  if (answers == null)   answers=new Vector<Concept>();
+  if (personTypes == null)   personTypes=new Vector<PERSON_TYPE>();
+  if (locations == null)   locations=new Vector<Location>();
+  if (sort == null)   sort=new Vector<String>();
+  if (sort.isEmpty())   sort.add("obsDatetime");
+  if (mostRecentN == null)   mostRecentN=-1;
+  return dao.getObservations(whom,encounters,questions,answers,personTypes,locations,sort,mostRecentN,obsGroupId,fromDate,toDate,includeVoidedObs);
+}

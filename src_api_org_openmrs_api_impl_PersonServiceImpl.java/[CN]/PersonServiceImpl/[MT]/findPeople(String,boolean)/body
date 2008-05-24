@@ -1,4 +1,6 @@
 {
-  log.debug("starting method");
-  return this.findPeople(searchPhrase,includeVoided,(List)null);
+  if (includeVoided)   throw new APIException("You should consider voided people as if they are deleted and they cannot be searched");
+  Set<Person> matchingPersons=new LinkedHashSet<Person>();
+  matchingPersons.addAll(getPeople(searchPhrase,null));
+  return matchingPersons;
 }
