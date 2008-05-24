@@ -1,10 +1,10 @@
 {
   List<String> sortList=new Vector<String>();
-  if (sort != null && !sort.isEmpty()) {
+  if (sort != null && !"".equals(sort)) {
     for (    String sortPart : sort.split(",")) {
       sortPart=sortPart.trim();
       if (sortPart.contains(" "))       sortPart=sortPart.substring(0,sortPart.indexOf(" "));
-      if (!sortPart.isEmpty())       sortList.add(sortPart);
+      if (!"".equals(sort))       sortList.add(sortPart);
     }
   }
   return sortList;

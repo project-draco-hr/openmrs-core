@@ -1,6 +1,6 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Form.class,"form");
-  if (partialName != null && !partialName.isEmpty())   crit.add(Expression.like("name",partialName,MatchMode.START));
+  if (partialName != null && !"".equals(partialName))   crit.add(Expression.like("name",partialName,MatchMode.START));
   if (published != null)   crit.add(Expression.eq("published",published));
   if (!encounterTypes.isEmpty())   crit.add(Expression.in("encounterType",encounterTypes));
   if (retired != null)   crit.add(Expression.eq("retired",retired));
