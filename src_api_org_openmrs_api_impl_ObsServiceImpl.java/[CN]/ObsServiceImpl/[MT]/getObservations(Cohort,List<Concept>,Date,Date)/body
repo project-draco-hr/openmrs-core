@@ -1,3 +1,5 @@
 {
-  return getObservations(patients,concepts,fromDate,toDate);
+  List<Person> persons=new Vector<Person>();
+  for (  Integer memberId : patients.getMemberIds())   persons.add(new Person(memberId));
+  return getObservations(persons,null,concepts,null,null,null,null,null,null,fromDate,toDate,false);
 }
