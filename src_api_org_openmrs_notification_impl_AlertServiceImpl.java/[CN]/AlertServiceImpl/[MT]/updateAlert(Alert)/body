@@ -1,17 +1,3 @@
 {
-  log.debug("Update alert " + alert);
-  if (alert.getCreator() == null) {
-    alert.setCreator(Context.getAuthenticatedUser());
-    alert.setDateCreated(new Date());
-  }
- else {
-    alert.setChangedBy(Context.getAuthenticatedUser());
-    alert.setDateChanged(new Date());
-  }
-  if (alert.getRecipients() != null) {
-    for (    AlertRecipient recipient : alert.getRecipients()) {
-      if (!alert.equals(recipient.getAlert()))       recipient.setAlert(alert);
-    }
-  }
-  getAlertDAO().updateAlert(alert);
+  saveAlert(alert);
 }

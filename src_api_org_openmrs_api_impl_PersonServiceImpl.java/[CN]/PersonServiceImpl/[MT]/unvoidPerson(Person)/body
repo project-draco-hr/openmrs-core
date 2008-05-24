@@ -17,7 +17,8 @@
   person.setPersonVoidedBy(null);
   person.setPersonDateVoided(null);
   person.setPersonVoidReason(null);
-  updatePerson(person);
+  savePerson(person);
   Context.getPatientService().unvoidPatient(Context.getPatientService().getPatient(person.getPersonId()));
   Context.getUserService().unvoidUser(Context.getUserService().getUser(person.getPersonId()));
+  return person;
 }

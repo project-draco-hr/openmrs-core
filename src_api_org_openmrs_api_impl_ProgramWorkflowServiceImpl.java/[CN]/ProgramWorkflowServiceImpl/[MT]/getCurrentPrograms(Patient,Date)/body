@@ -1,7 +1,9 @@
 {
-  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_VIEW_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_PROGRAMS);
-  if (onDate == null)   onDate=new Date();
-  Collection<PatientProgram> ret=new HashSet<PatientProgram>();
-  for (  PatientProgram pp : getPatientPrograms(patient))   if (pp.getActive(onDate))   ret.add(pp);
+  List<PatientProgram> ret=new ArrayList<PatientProgram>();
+  for (  PatientProgram pp : getPatientPrograms(patient)) {
+    if (pp.getActive(onDate == null ? new Date() : onDate)) {
+      ret.add(pp);
+    }
+  }
   return ret;
 }

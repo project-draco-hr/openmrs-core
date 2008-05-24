@@ -1,7 +1,0 @@
-{
-  Query query=sessionFactory.getCurrentSession().createQuery("from Obs obs where obs.person = :p and obs.concept = :c order by obs.obsDatetime desc");
-  query.setParameter("p",who);
-  query.setParameter("c",question);
-  query.setMaxResults(n);
-  return query.list();
-}

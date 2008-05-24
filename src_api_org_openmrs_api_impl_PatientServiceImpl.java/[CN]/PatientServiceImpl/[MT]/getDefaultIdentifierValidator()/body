@@ -1,5 +1,5 @@
 {
-  String defaultPIV=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_PATIENT_IDENTIFIER_VALIDATOR);
+  String defaultPIV=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_PATIENT_IDENTIFIER_VALIDATOR,"");
   try {
     return identifierValidators.get(Class.forName(defaultPIV));
   }

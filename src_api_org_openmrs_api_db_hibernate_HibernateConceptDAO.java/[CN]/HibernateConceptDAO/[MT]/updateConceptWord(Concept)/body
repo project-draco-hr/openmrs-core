@@ -1,0 +1,17 @@
+{
+  if (concept != null) {
+    if (concept.getConceptId() != null && concept.getConceptId() > 0)     deleteConceptWord(concept);
+    Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);
+    log.debug("words: " + words);
+    for (    ConceptWord word : words) {
+      try {
+        sessionFactory.getCurrentSession().save(word);
+      }
+ catch (      NonUniqueObjectException e) {
+        ConceptWord tmp=(ConceptWord)sessionFactory.getCurrentSession().merge(word);
+        sessionFactory.getCurrentSession().evict(tmp);
+        sessionFactory.getCurrentSession().save(word);
+      }
+    }
+  }
+}

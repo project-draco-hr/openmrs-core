@@ -7,7 +7,7 @@
   as.createPatientIdentifierType(patientIdentifierType);
   PatientIdentifierType newPatientIdentifierType=ps.getPatientIdentifierType(patientIdentifierType.getPatientIdentifierTypeId());
   assertNotNull(newPatientIdentifierType);
-  List<PatientIdentifierType> patientIdentifierTypes=ps.getPatientIdentifierTypes();
+  List<PatientIdentifierType> patientIdentifierTypes=ps.getAllPatientIdentifierTypes();
   assertNotNull(patientIdentifierTypes);
   boolean found=false;
   for (Iterator<PatientIdentifierType> i=patientIdentifierTypes.iterator(); i.hasNext(); ) {

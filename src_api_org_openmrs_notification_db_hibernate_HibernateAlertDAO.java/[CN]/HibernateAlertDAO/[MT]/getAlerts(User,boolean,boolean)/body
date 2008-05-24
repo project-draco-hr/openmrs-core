@@ -1,16 +1,18 @@
 {
   log.debug("Getting alerts for user " + user + " read? "+ includeRead+ " expired? "+ includeExpired);
-  List<Alert> alerts=new Vector<Alert>();
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Alert.class,"alert");
-  crit.createCriteria("recipients","recipient");
-  if (user != null && user.getUserId() != null)   crit.add(Expression.eq("recipient.recipient",user));
- else   crit.add(Expression.isNull("recipient.recipient"));
+  if (user != null && user.getUserId() != null) {
+    crit.createCriteria("recipients","recipient");
+    crit.add(Expression.eq("recipient.recipient",user));
+  }
+ else {
+    return Collections.emptyList();
+  }
   if (includeExpired == false)   crit.add(Expression.or(Expression.isNull("dateToExpire"),Expression.gt("dateToExpire",new Date())));
-  if (includeRead == false && user.getUserId() != null) {
+  if (includeRead == false && (user != null && user.getUserId() != null)) {
     crit.add(Expression.eq("alertRead",false));
     crit.add(Expression.eq("recipient.alertRead",false));
   }
   crit.addOrder(Order.desc("dateChanged"));
-  alerts=crit.list();
-  return alerts;
+  return crit.list();
 }

@@ -1,7 +1,8 @@
 {
-  TreeSet<ProgramWorkflowState> sorted=new TreeSet<ProgramWorkflowState>(new StateAlphaComparator());
-  if (this.getStates() != null) {
-    sorted.addAll(this.getStates());
+  Comparator c=new PropertyComparator("concept.name.name",true,true);
+  TreeSet<ProgramWorkflowState> sorted=new TreeSet<ProgramWorkflowState>(c);
+  if (getStates() != null) {
+    sorted.addAll(getStates());
   }
   return sorted;
 }

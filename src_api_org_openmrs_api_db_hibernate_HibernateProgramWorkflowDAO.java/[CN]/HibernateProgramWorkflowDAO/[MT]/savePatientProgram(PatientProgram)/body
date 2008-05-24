@@ -1,0 +1,9 @@
+{
+  if (patientProgram.getPatientProgramId() == null) {
+    sessionFactory.getCurrentSession().save(patientProgram);
+  }
+ else {
+    sessionFactory.getCurrentSession().merge(patientProgram);
+  }
+  return patientProgram;
+}

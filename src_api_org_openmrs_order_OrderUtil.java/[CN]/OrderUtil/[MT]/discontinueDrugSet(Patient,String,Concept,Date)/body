@@ -1,0 +1,25 @@
+{
+  if (log.isDebugEnabled()) {
+    log.debug("Discontinuing drug sets. patient: " + patient + " drugSetId: "+ drugSetId+ " reason: "+ discontinueReason+ " date: "+ discontinueDate);
+  }
+  if (Context.isAuthenticated() == false)   throw new ContextAuthenticationException("Unable to discontinue drugs when no one is logged in");
+  if (patient == null)   throw new APIException("Unable to discontinue drugs without a patient being given");
+  if (drugSetId == null)   throw new APIException("Unable to discontinue drugs without a drugSetId being given");
+  OrderService orderService=Context.getOrderService();
+  List<DrugOrder> currentOrders=orderService.getDrugOrdersByPatient(patient,ORDER_STATUS.CURRENT);
+  Map<String,List<DrugOrder>> ordersBySetId=getDrugSetsByDrugSetIdList(currentOrders,drugSetId,",");
+  if (ordersBySetId != null) {
+    List<DrugOrder> ordersToDiscontinue=ordersBySetId.get(drugSetId);
+    if (ordersToDiscontinue != null) {
+      for (      DrugOrder order : ordersToDiscontinue) {
+        orderService.discontinueOrder(order,discontinueReason,discontinueDate);
+      }
+    }
+ else {
+      log.debug("no orders to discontinue");
+    }
+  }
+ else {
+    log.debug("no ordersBySetId returned for " + drugSetId);
+  }
+}

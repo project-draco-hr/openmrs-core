@@ -21,7 +21,7 @@
     }
   }
   if (errors.hasErrors())   return showForm(request,response,errors);
-  ReportData data=reportService.evaluate(rs,command.getInputCohort(),evalContext);
+  ReportData data=reportService.evaluate(rs,null,evalContext);
   String renderClass=command.getSelectedRenderer();
   String renderArg="";
   if (renderClass.indexOf("!") > 0) {

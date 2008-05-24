@@ -1,0 +1,5 @@
+{
+  String hql="from Cohort order by name";
+  if (!includeVoided)   hql+=" where voided = false";
+  return (List<Cohort>)sessionFactory.getCurrentSession().createQuery(hql).list();
+}

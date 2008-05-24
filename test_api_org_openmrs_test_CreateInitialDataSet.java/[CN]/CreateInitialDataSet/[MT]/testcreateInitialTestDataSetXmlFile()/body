@@ -1,4 +1,5 @@
 {
+  if (getLoadCount() != 1)   return;
   IDatabaseConnection connection=new DatabaseConnection(getConnection());
   QueryDataSet initialDataSet=new QueryDataSet(connection);
   initialDataSet.addTable("concept","SELECT * FROM concept");

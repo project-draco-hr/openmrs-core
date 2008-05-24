@@ -1,8 +1,0 @@
-{
-  if (concept.getConceptId() == null)   createConcept(concept);
- else {
-    modifyCollections(concept);
-    sessionFactory.getCurrentSession().merge(concept);
-    Context.getAdministrationService().updateConceptWord(concept);
-  }
-}

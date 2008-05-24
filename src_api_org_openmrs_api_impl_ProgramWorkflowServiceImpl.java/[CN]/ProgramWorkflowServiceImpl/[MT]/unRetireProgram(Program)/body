@@ -1,0 +1,15 @@
+{
+  Date lastModifiedDate=program.getDateChanged();
+  program.setRetired(false);
+  for (  ProgramWorkflow workflow : program.getWorkflows()) {
+    if (lastModifiedDate != null && lastModifiedDate.equals(workflow.getDateChanged())) {
+      workflow.setRetired(false);
+      for (      ProgramWorkflowState state : workflow.getStates()) {
+        if (lastModifiedDate != null && lastModifiedDate.equals(state.getDateChanged())) {
+          state.setRetired(false);
+        }
+      }
+    }
+  }
+  return saveProgram(program);
+}

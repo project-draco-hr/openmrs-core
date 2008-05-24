@@ -1,15 +1,3 @@
 {
-  Integer drugId=null;
-  try {
-    drugId=new Integer(drug);
-  }
- catch (  NumberFormatException nfe) {
-    drugId=null;
-  }
-  if (drugId != null) {
-    return getDrug(drugId);
-  }
- else {
-    return getDrug(drug);
-  }
+  return getDrug(drugNameOrId);
 }

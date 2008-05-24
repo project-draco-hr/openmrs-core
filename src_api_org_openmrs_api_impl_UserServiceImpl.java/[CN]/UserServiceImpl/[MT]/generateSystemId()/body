@@ -3,7 +3,7 @@
   String systemId;
   Integer offset=0;
   do {
-    Integer generatedId=getUserDAO().generateSystemId() + offset++;
+    Integer generatedId=dao.generateSystemId() + offset++;
     systemId=generatedId.toString();
     try {
       systemId=liv.getValidIdentifier(systemId);
@@ -13,6 +13,6 @@
       return systemId;
     }
   }
- while (getUserDAO().hasDuplicateUsername(null,systemId,null));
+ while (dao.hasDuplicateUsername(null,systemId,null));
   return systemId;
 }

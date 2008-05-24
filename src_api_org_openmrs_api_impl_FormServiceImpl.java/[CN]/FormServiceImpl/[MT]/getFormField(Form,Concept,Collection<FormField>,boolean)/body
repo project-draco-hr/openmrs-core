@@ -1,4 +1,4 @@
 {
-  if (ignoreFormFields == null)   ignoreFormFields=new Vector<FormField>();
-  return getFormDAO().getFormField(form,concept,ignoreFormFields,force);
+  if (ignoreFormFields == null)   ignoreFormFields=Collections.emptyList();
+  return dao.getFormField(form,concept,ignoreFormFields,force);
 }

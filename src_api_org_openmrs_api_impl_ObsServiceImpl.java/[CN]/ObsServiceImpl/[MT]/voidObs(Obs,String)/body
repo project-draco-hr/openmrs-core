@@ -1,21 +1,19 @@
 {
+  if (obs.isVoided()) {
+    return obs;
+  }
+  User user=Context.getAuthenticatedUser();
+  Date date=new Date();
   Set<Obs> obsToVoid=new HashSet<Obs>();
   obsToVoid.add(obs);
-  Obs testObs=obs;
-  List<Obs> childGroups=new ArrayList<Obs>();
-  while (testObs.isObsGrouping()) {
-    for (    Obs oInner : testObs.getGroupMembers()) {
-      if (oInner.isObsGrouping())       childGroups.add(oInner);
-      obsToVoid.add(oInner);
-    }
-    if (childGroups.size() > 0)     testObs=childGroups.remove(childGroups.size() - 1);
- else     testObs=new Obs();
-  }
+  fetchObsMembers(obs,obsToVoid);
   for (  Obs o : obsToVoid) {
-    o.setVoided(true);
-    o.setVoidReason(reason);
-    o.setVoidedBy(Context.getAuthenticatedUser());
-    o.setDateVoided(new Date());
+    if (o.isVoided() == false) {
+      o.setVoided(true);
+      o.setVoidReason(reason);
+      o.setVoidedBy(user);
+      o.setDateVoided(date);
+    }
   }
-  getObsDAO().updateObs(obs);
+  return dao.saveObs(obs);
 }

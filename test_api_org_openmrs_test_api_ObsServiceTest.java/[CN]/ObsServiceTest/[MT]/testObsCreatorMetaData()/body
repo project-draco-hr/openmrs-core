@@ -1,0 +1,16 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Obs o=new Obs(new Person(2),new Concept(1),new Date(),new Location(1));
+  o.setValueNumeric(1.0);
+  Obs savedObs=obsService.saveObs(o,null);
+  assertNotNull(o.getCreator());
+  assertNotNull(o.getDateCreated());
+  assertEquals(savedObs.getCreator(),o.getCreator());
+  assertEquals(savedObs.getDateCreated(),o.getDateCreated());
+  savedObs.setValueNumeric(2.0);
+  Obs updatedObs=obsService.saveObs(savedObs,"updating");
+  assertNotNull(updatedObs.getCreator());
+  assertNotNull(updatedObs.getDateCreated());
+  assertNotSame(updatedObs.getDateCreated(),o.getDateCreated());
+}

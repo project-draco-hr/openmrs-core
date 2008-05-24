@@ -1,6 +1,3 @@
 {
-  checkIfLocked();
-  String authUserId=Context.getAuthenticatedUser().getUserId().toString();
-  log.info(authUserId + "|" + concept.getConceptId().toString());
-  getConceptDAO().voidConcept(concept,reason);
+  retireConcept(concept,reason);
 }

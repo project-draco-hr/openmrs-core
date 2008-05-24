@@ -1,5 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_PRIVILEGES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_PRIVILEGES);
-  if (OpenmrsConstants.CORE_PRIVILEGES().keySet().contains(privilege.getPrivilege()))   throw new APIException("Cannot delete a core privilege");
-  getAdministrationDAO().deletePrivilege(privilege);
+  Context.getUserService().purgePrivilege(privilege);
 }

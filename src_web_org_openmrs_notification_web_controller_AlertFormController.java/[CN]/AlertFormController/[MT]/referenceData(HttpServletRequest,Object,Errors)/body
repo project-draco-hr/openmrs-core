@@ -1,8 +1,7 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
   if (Context.isAuthenticated()) {
-    List<Role> allRoles=Context.getUserService().getRoles();
-    map.put("allRoles",allRoles);
+    map.put("allRoles",Context.getUserService().getAllRoles());
   }
   return map;
 }

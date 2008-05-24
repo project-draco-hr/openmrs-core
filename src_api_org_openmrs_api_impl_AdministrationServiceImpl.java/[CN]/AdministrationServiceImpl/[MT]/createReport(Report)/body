@@ -1,4 +1,4 @@
 {
   if (!Context.hasPrivilege(OpenmrsConstants.PRIV_ADD_REPORTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_ADD_REPORTS);
-  getAdministrationDAO().createReport(report);
+  dao.createReport(report);
 }

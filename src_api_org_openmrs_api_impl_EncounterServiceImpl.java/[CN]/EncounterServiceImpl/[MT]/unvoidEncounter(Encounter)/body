@@ -1,5 +1,4 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
   String voidReason=encounter.getVoidReason();
   if (voidReason == null)   voidReason="";
   ObsService os=Context.getObsService();
@@ -10,5 +9,5 @@
   encounter.setVoidedBy(null);
   encounter.setDateVoided(null);
   encounter.setVoidReason(null);
-  updateEncounter(encounter);
+  saveEncounter(encounter);
 }

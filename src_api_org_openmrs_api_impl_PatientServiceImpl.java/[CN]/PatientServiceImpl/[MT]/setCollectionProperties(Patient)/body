@@ -1,19 +1,21 @@
 {
   Context.getPersonService().setCollectionProperties(patient);
-  if (patient.getCreator() == null)   patient.setCreator(Context.getAuthenticatedUser());
-  if (patient.getDateCreated() == null)   patient.setDateCreated(new Date());
+  User currentUser=Context.getAuthenticatedUser();
+  Date currentTime=new Date();
+  if (patient.getCreator() == null)   patient.setCreator(currentUser);
+  if (patient.getDateCreated() == null)   patient.setDateCreated(currentTime);
   if (patient.getPatientId() != null) {
-    patient.setChangedBy(Context.getAuthenticatedUser());
-    patient.setDateChanged(new Date());
+    patient.setChangedBy(currentUser);
+    patient.setDateChanged(currentTime);
   }
   if (patient.getIdentifiers() != null) {
     for (    PatientIdentifier pIdentifier : patient.getIdentifiers()) {
-      if (pIdentifier.getDateCreated() == null)       pIdentifier.setDateCreated(new Date());
-      if (pIdentifier.getCreator() == null)       pIdentifier.setCreator(Context.getAuthenticatedUser());
+      if (pIdentifier.getDateCreated() == null)       pIdentifier.setDateCreated(currentTime);
+      if (pIdentifier.getCreator() == null)       pIdentifier.setCreator(currentUser);
       if (pIdentifier.getPatient() == null)       pIdentifier.setPatient(patient);
       if (pIdentifier.isVoided()) {
-        if (pIdentifier.getVoidedBy() == null)         pIdentifier.setVoidedBy(Context.getAuthenticatedUser());
-        if (pIdentifier.getDateVoided() == null)         pIdentifier.setDateVoided(new Date());
+        if (pIdentifier.getVoidedBy() == null)         pIdentifier.setVoidedBy(currentUser);
+        if (pIdentifier.getDateVoided() == null)         pIdentifier.setDateVoided(currentTime);
       }
     }
   }

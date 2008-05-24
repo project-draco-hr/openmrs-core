@@ -1,9 +1,8 @@
 {
   Alert alert=null;
   if (Context.isAuthenticated()) {
-    AlertService as=Context.getAlertService();
     String a=request.getParameter("alertId");
-    if (a != null)     alert=as.getAlert(Integer.valueOf(a));
+    if (a != null)     alert=Context.getAlertService().getAlert(Integer.valueOf(a));
   }
   if (alert == null)   alert=new Alert();
   return alert;

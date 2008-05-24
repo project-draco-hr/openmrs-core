@@ -1,5 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ENCOUNTER_TYPES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_ENCOUNTER_TYPES);
-  if (encounterType.getEncounterTypeId() == null)   createEncounterType(encounterType);
- else   getAdministrationDAO().updateEncounterType(encounterType);
+  Context.getEncounterService().saveEncounterType(encounterType);
 }

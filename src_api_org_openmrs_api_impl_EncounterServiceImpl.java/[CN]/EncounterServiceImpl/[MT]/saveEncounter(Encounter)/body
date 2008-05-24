@@ -1,0 +1,49 @@
+{
+  Date now=new Date();
+  User me=Context.getAuthenticatedUser();
+  if (encounter.getEncounterId() == null) {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_ENCOUNTERS);
+    if (encounter.getDateCreated() == null)     encounter.setDateCreated(now);
+    if (encounter.getCreator() == null)     encounter.setCreator(me);
+    if (encounter.getObsAtTopLevel(false) != null) {
+      for (      Obs o : encounter.getObsAtTopLevel(false)) {
+        if (o.getDateCreated() == null)         o.setDateCreated(now);
+        if (o.getCreator() == null)         o.setCreator(me);
+      }
+    }
+    if (encounter.getOrders() != null) {
+      for (      Order o : encounter.getOrders()) {
+        if (o.getDateCreated() == null)         o.setDateCreated(now);
+        if (o.getCreator() == null)         o.setCreator(me);
+      }
+    }
+    dao.saveEncounter(encounter);
+  }
+ else {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
+    Date originalDate=dao.getSavedEncounterDatetime(encounter);
+    Date newDate=encounter.getEncounterDatetime();
+    dao.saveEncounter(encounter);
+    Patient p=encounter.getPatient();
+    for (    Obs obs : encounter.getAllObs()) {
+      boolean obsWasChanged=false;
+      if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
+        if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
+          obs.setObsDatetime(newDate);
+          obsWasChanged=true;
+        }
+        if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
+          obs.setPerson(p);
+          obsWasChanged=true;
+        }
+        if (obsWasChanged)         Context.getObsService().saveObs(obs,"Encounter datetime or person was changed");
+      }
+    }
+    for (    Order o : Context.getOrderService().getOrdersByEncounter(encounter)) {
+      if (!p.equals(o.getPatient())) {
+        o.setPatient(p);
+        Context.getOrderService().saveOrder(o);
+      }
+    }
+  }
+}

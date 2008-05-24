@@ -1,3 +1,6 @@
 {
-  return null;
+  if (user == null)   throw new APIException("Unable to get orders if I am not given a user");
+  List<User> users=new Vector<User>();
+  users.add(user);
+  return getOrders(Order.class,null,null,ORDER_STATUS.NOTVOIDED,users,null,null);
 }

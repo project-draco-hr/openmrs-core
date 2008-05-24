@@ -1,0 +1,6 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Form.class);
+  crit.add(Expression.eq("name",name));
+  crit.add(Expression.eq("version",version));
+  return (Form)crit.uniqueResult();
+}

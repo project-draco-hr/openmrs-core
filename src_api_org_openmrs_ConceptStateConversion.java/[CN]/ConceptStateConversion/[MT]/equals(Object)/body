@@ -1,7 +1,10 @@
 {
-  if (o instanceof ConceptStateConversion) {
-    ConceptStateConversion other=(ConceptStateConversion)o;
-    return getConceptStateConversionId() != null && other.getConceptStateConversionId() != null && getConceptStateConversionId().equals(other.getConceptStateConversionId());
+  if (obj != null && obj instanceof ConceptStateConversion) {
+    ConceptStateConversion p=(ConceptStateConversion)obj;
+    if (this.getConceptStateConversionId() == null) {
+      return p.getConceptStateConversionId() == null;
+    }
+    return (this.getConceptStateConversionId().equals(p.getConceptStateConversionId()));
   }
   return false;
 }

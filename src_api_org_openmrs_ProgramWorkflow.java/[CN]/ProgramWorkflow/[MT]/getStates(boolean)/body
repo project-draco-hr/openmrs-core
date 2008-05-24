@@ -1,0 +1,9 @@
+{
+  Set<ProgramWorkflowState> ret=new HashSet<ProgramWorkflowState>();
+  for (  ProgramWorkflowState s : getStates()) {
+    if (includeRetired || !s.isRetired()) {
+      ret.add(s);
+    }
+  }
+  return ret;
+}

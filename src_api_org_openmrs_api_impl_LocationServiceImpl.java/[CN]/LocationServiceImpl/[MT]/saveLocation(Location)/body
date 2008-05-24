@@ -1,0 +1,12 @@
+{
+  if (location.getName() == null) {
+    throw new APIException("Location name is required");
+  }
+  if (location.getDateCreated() == null) {
+    location.setDateCreated(new Date());
+  }
+  if (location.getCreator() == null) {
+    location.setCreator(Context.getAuthenticatedUser());
+  }
+  return dao.saveLocation(location);
+}

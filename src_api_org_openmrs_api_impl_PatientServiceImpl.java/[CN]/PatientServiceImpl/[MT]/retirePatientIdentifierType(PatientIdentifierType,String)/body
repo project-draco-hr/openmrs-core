@@ -1,0 +1,8 @@
+{
+  if (reason == null || reason.length() < 1)   throw new APIException("A reason is required when retiring an identifier type");
+  patientIdentifierType.setRetired(true);
+  patientIdentifierType.setRetiredBy(Context.getAuthenticatedUser());
+  patientIdentifierType.setDateRetired(new Date());
+  patientIdentifierType.setRetireReason(reason);
+  return savePatientIdentifierType(patientIdentifierType);
+}

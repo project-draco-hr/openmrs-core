@@ -1,3 +1,4 @@
 {
-  return getConceptDAO().findDrugs(phrase,includeRetired);
+  if (includeRetired == true)   throw new APIException("Getting retired drugs is no longer an options.  Use the getAllDrugs() method for that");
+  return getDrugs(phrase);
 }

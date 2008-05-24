@@ -1,8 +1,10 @@
 {
-  if (o instanceof ProgramWorkflowState) {
-    ProgramWorkflowState other=(ProgramWorkflowState)o;
-    return getProgramWorkflowStateId() != null && other.getProgramWorkflowStateId() != null && getProgramWorkflowStateId().equals(other.getProgramWorkflowStateId());
+  if (obj != null && obj instanceof ProgramWorkflowState) {
+    ProgramWorkflowState p=(ProgramWorkflowState)obj;
+    if (this.getProgramWorkflowStateId() == null) {
+      return p.getProgramWorkflowStateId() == null;
+    }
+    return (this.getProgramWorkflowStateId().equals(p.getProgramWorkflowStateId()));
   }
-  log.warn("o: " + o + " is not a ProgramWorkflowState");
   return false;
 }

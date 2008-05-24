@@ -1,6 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class).add(Expression.eq("patient",who)).add(Expression.eq("location",where)).add(Expression.eq("voided",false));
-  Set<Encounter> encounters=new HashSet<Encounter>();
-  encounters.addAll(crit.list());
-  return encounters;
-}

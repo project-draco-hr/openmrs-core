@@ -1,29 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
-  if (encounter.getEncounterId() != null) {
-    Date originalDate=dao.getSavedEncounterDatetime(encounter);
-    Date newDate=encounter.getEncounterDatetime();
-    if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
-      for (      Obs obs : encounter.getAllObs()) {
-        if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
-          obs.setObsDatetime(newDate);
-          Context.getObsService().updateObs(obs);
-        }
-      }
-    }
-  }
-  getEncounterDAO().updateEncounter(encounter);
-  Patient p=encounter.getPatient();
-  for (  Obs obs : Context.getObsService().getObservations(encounter)) {
-    if (!p.equals(obs.getPerson())) {
-      obs.setPerson(p);
-      Context.getObsService().updateObs(obs);
-    }
-  }
-  for (  Order o : Context.getOrderService().getOrdersByEncounter(encounter)) {
-    if (!p.equals(o.getPatient())) {
-      o.setPatient(p);
-      Context.getOrderService().updateOrder(o);
-    }
-  }
+  saveEncounter(encounter);
 }

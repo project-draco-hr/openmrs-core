@@ -1,16 +1,22 @@
 {
   executeDataSet(CREATE_PATIENT_XML);
-  Set<Patient> patientList=ps.getPatientsByIdentifier("???",true);
+  List<Patient> patientList=ps.getPatients(null,"???",null);
   assertNotNull("an empty list should be returned instead of a null object",patientList);
   assertTrue("There shouldn't be any patients with this weird identifier",patientList.size() == 0);
-  patientList=ps.getPatientsByIdentifier("1234",true);
+  GlobalProperty prop=new GlobalProperty("patient.identifierRegex","");
+  Context.getAdministrationService().saveGlobalProperty(prop);
+  patientList=ps.getPatients(null,"1234",null);
+  assertTrue("There should be at least one patient found with this identifier",patientList.size() > 0);
+  prop.setPropertyValue("^0*@SEARCH@([A-Z]+-[0-9])?$");
+  Context.getAdministrationService().saveGlobalProperty(prop);
+  patientList=ps.getPatients(null,"1234",null);
   assertTrue("There should be at least one patient found with this identifier",patientList.size() > 0);
   Patient patient=ps.getPatient(-1);
   assertNull("There should be no patients with a patient_id of negative 1",patient);
   patient=ps.getPatient(2);
   assertNotNull("There should be a patient with patient_id of 2",patient);
   patient.setGender("F");
-  ps.updatePatient(patient);
+  ps.savePatient(patient);
   Patient patient2=ps.getPatient(patient.getPatientId());
   assertTrue("The updated patient and the orig patient should still be equal",patient.equals(patient2));
   assertTrue("The gender should be new",patient2.getGender().equals("F"));

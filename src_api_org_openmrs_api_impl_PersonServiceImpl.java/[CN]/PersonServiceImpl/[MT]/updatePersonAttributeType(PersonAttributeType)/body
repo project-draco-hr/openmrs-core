@@ -1,9 +1,3 @@
 {
-  log.info("Updating person attribute type: " + type);
-  if (type.getPersonAttributeTypeId() == null)   createPersonAttributeType(type);
- else {
-    type.setChangedBy(Context.getAuthenticatedUser());
-    type.setDateChanged(new Date());
-    getPersonDAO().updatePersonAttributeType(type);
-  }
+  savePersonAttributeType(type);
 }

@@ -1,7 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class,"r").add(Expression.or(Expression.eq("personA",person),Expression.eq("personB",person)));
-  if (!showVoided) {
-    criteria.add(Expression.eq("voided",showVoided));
-  }
-  return criteria.list();
-}

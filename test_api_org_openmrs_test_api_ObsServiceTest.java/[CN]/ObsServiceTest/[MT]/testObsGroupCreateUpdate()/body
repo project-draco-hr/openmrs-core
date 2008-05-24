@@ -14,7 +14,7 @@
   groupMember1.setLocation(new Location(2));
   obsGroup.addGroupMember(groupMember1);
   assertTrue(obsGroup.hasGroupMembers());
-  obsService.createObs(obsGroup);
+  obsService.saveObs(obsGroup,null);
   assertNotNull(obsGroup.getObsId());
   assertNotNull(obsGroup.getCreator());
   assertNotNull(obsGroup.getDateCreated());
@@ -32,7 +32,7 @@
   obsGroup.addGroupMember(groupMember2);
   assertEquals(2,obsGroup.getGroupMembers().size());
   assertNotNull(groupMember2.getObsGroup());
-  obsService.updateObs(obsGroup);
+  obsService.saveObs(obsGroup,"Updating obs group");
   assertNotNull(groupMember2.getObsId());
   assertNotNull(groupMember2.getObsGroup());
   assertNotNull(groupMember2.getCreator());

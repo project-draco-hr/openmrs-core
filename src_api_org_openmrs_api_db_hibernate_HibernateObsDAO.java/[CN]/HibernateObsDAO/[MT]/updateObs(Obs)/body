@@ -1,9 +1,0 @@
-{
-  if (obs.getObsId() == null)   createObs(obs);
- else {
-    if (obs.hasGroupMembers()) {
-      for (      Obs member : obs.getGroupMembers())       if (member.getObsId() == null)       updateObs(member);
-    }
-    Obs o=(Obs)sessionFactory.getCurrentSession().merge(obs);
-  }
-}

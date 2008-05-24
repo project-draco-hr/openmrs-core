@@ -1,15 +1,3 @@
 {
-  List<DrugOrder> ret=new ArrayList<DrugOrder>();
-  if (patient != null) {
-    List<DrugOrder> drugOrders=getOrderDAO().getDrugOrdersByPatient(patient,includeVoided);
-    if (drugOrders != null) {
-      for (      DrugOrder drugOrder : drugOrders) {
-        if (whatToShow == OrderService.SHOW_COMPLETE && drugOrder.isDiscontinued())         ret.add(drugOrder);
-        if (whatToShow == OrderService.SHOW_CURRENT && drugOrder.isCurrent())         ret.add(drugOrder);
-        if (whatToShow == OrderService.SHOW_NOTVOIDED && !drugOrder.getVoided())         ret.add(drugOrder);
-        if (whatToShow == OrderService.SHOW_ALL)         ret.add(drugOrder);
-      }
-    }
-  }
-  return ret;
+  return getDrugOrdersByPatient(patient,convertToOrderStatus(whatToShow),includeVoided);
 }

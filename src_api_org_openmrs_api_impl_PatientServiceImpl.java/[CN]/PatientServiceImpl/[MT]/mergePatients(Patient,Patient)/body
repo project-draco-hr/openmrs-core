@@ -4,7 +4,7 @@
   for (  Encounter e : es.getEncounters(notPreferred)) {
     e.setPatient(preferred);
     log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
-    es.updateEncounter(e);
+    es.saveEncounter(e);
   }
   for (  PatientIdentifier pi : notPreferred.getIdentifiers()) {
     PatientIdentifier tmpIdentifier=new PatientIdentifier();
@@ -119,5 +119,5 @@
   if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
   if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
   voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
-  updatePatient(preferred);
+  savePatient(preferred);
 }

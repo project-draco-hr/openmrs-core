@@ -1,4 +1,6 @@
 {
-  if (onDate == null)   onDate=new Date();
-  return !getVoided() && (dateEnrolled == null || OpenmrsUtil.compare(dateEnrolled,onDate) <= 0) && (dateCompleted == null || OpenmrsUtil.compare(dateCompleted,onDate) > 0);
+  if (onDate == null) {
+    onDate=new Date();
+  }
+  return !getVoided() && (getDateEnrolled() == null || OpenmrsUtil.compare(getDateEnrolled(),onDate) <= 0) && (getDateCompleted() == null || OpenmrsUtil.compare(getDateCompleted(),onDate) > 0);
 }

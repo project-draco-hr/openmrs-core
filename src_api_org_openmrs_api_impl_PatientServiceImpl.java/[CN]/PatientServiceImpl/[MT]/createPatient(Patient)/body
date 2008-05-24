@@ -1,12 +1,3 @@
 {
-  if (log.isDebugEnabled()) {
-    String s="" + patient.getPatientId();
-    if (patient.getIdentifiers() != null)     s+="|" + patient.getIdentifiers();
-    log.debug("Creating patient: " + s);
-  }
-  setCollectionProperties(patient);
-  checkPatientIdentifiers(patient);
-  if (patient.getDateCreated() == null)   patient.setDateCreated(new Date());
-  if (patient.getCreator() == null)   patient.setCreator(Context.getAuthenticatedUser());
-  return getPatientDAO().createPatient(patient);
+  return savePatient(patient);
 }

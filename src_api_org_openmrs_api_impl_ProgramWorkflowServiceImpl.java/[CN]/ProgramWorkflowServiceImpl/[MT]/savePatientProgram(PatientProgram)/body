@@ -1,0 +1,69 @@
+{
+  User currentUser=Context.getAuthenticatedUser();
+  Date currentDate=new Date();
+  if (patientProgram.getPatient() == null || patientProgram.getProgram() == null) {
+    throw new APIException("PatientProgram requires a Patient and a Program");
+  }
+  if (patientProgram.getCreator() == null) {
+    patientProgram.setCreator(currentUser);
+  }
+  if (patientProgram.getDateCreated() == null) {
+    patientProgram.setDateCreated(currentDate);
+  }
+  if (patientProgram.getPatientProgramId() != null) {
+    patientProgram.setChangedBy(currentUser);
+    patientProgram.setDateChanged(currentDate);
+  }
+  if (patientProgram.getVoided()) {
+    if (patientProgram.getVoidedBy() == null) {
+      patientProgram.setVoidedBy(currentUser);
+    }
+    if (patientProgram.getDateVoided() == null) {
+      patientProgram.setDateVoided(currentDate);
+    }
+  }
+ else {
+    patientProgram.setVoidedBy(null);
+    patientProgram.setVoidReason(null);
+    patientProgram.setDateVoided(null);
+  }
+  for (  PatientState state : patientProgram.getStates()) {
+    if (state.getState() == null) {
+      throw new APIException("PatientState requires a State");
+    }
+    if (state.getPatientProgram() == null) {
+      state.setPatientProgram(patientProgram);
+    }
+ else     if (!state.getPatientProgram().equals(patientProgram)) {
+      throw new APIException("This PatientProgram contains a ProgramWorkflowState whose parent is already assigned to " + state.getPatientProgram());
+    }
+    if (state.getCreator() == null) {
+      state.setCreator(currentUser);
+    }
+    if (state.getDateCreated() == null) {
+      state.setDateCreated(currentDate);
+    }
+    if (state.getPatientStateId() != null) {
+      state.setChangedBy(currentUser);
+      state.setDateChanged(currentDate);
+    }
+    if (patientProgram.getVoided() || state.getVoided()) {
+      state.setVoided(true);
+      if (state.getVoidedBy() == null) {
+        state.setVoidedBy(currentUser);
+      }
+      if (state.getDateVoided() == null) {
+        state.setDateVoided(currentDate);
+      }
+      if (state.getVoidReason() == null && patientProgram.getVoidReason() != null) {
+        state.setVoidReason(patientProgram.getVoidReason());
+      }
+    }
+ else {
+      state.setVoidedBy(null);
+      state.setVoidReason(null);
+      state.setDateVoided(null);
+    }
+  }
+  return dao.savePatientProgram(patientProgram);
+}

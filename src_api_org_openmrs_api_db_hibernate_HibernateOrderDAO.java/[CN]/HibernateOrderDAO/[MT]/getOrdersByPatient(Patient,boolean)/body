@@ -1,6 +1,0 @@
-{
-  log.debug("getting all orders by patient " + patient.getPatientId());
-  Criteria c=sessionFactory.getCurrentSession().createCriteria(Order.class);
-  Criteria c1=c.add(Expression.eq("patient",patient));
-  return c1.list();
-}

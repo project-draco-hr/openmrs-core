@@ -1,4 +1,4 @@
 {
   if (!Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_TRIBES))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_TRIBES);
-  getAdministrationDAO().retireTribe(tribe);
+  dao.retireTribe(tribe);
 }

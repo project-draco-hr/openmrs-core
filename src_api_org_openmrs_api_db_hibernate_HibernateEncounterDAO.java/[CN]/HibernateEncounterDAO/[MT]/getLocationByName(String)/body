@@ -1,9 +1,0 @@
-{
-  List result=sessionFactory.getCurrentSession().createQuery("from Location l where l.name = :name").setString("name",name).list();
-  if (result.size() == 0) {
-    return null;
-  }
- else {
-    return (Location)result.get(0);
-  }
-}

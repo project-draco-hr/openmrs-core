@@ -1,6 +1,12 @@
 {
-  cohort.setVoided(true);
-  cohort.setVoidedBy(Context.getAuthenticatedUser());
-  cohort.setVoidReason(reason);
-  updateCohort(cohort);
+  if (cohort.isVoided()) {
+    return cohort;
+  }
+ else {
+    if (!StringUtils.hasText(reason))     throw new APIException("Reason is required");
+    cohort.setVoided(true);
+    cohort.setVoidedBy(Context.getAuthenticatedUser());
+    cohort.setVoidReason(reason);
+    return saveCohort(cohort);
+  }
 }

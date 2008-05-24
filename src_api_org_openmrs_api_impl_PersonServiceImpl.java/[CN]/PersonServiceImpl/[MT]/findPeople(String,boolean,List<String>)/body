@@ -1,8 +1,7 @@
 {
-  log.debug("starting method, roles are " + roles);
   Set<Person> people=new HashSet<Person>();
   if (roles == null) {
-    people.addAll(getPersonDAO().findPeople(searchPhrase,includeVoided));
+    people.addAll(getPeople(searchPhrase,includeVoided));
   }
  else {
     people.addAll(Context.getUserService().findUsers(searchPhrase,roles,includeVoided));

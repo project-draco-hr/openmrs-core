@@ -1,13 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_CONCEPTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_CONCEPTS);
-  Context.getConceptService().checkIfLocked();
-  ConceptService cs=Context.getConceptService();
-  int batchStartId=0;
-  int endId=cs.getNextAvailableId();
-  int batchSize=1000;
-  while (batchStartId < endId) {
-    updateConceptWords(batchStartId,batchStartId + batchSize);
-    Context.clearSession();
-    batchStartId+=batchSize;
-  }
+  Context.getConceptService().updateConceptWords();
 }

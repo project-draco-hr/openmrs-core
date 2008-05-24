@@ -1,8 +1,7 @@
 {
-  List<GlobalProperty> globalPropList=new ArrayList<GlobalProperty>();
   if (Context.isAuthenticated()) {
     AdministrationService as=Context.getAdministrationService();
-    globalPropList=as.getGlobalProperties();
+    return as.getAllGlobalProperties();
   }
-  return globalPropList;
+ else   return new ArrayList<GlobalProperty>();
 }

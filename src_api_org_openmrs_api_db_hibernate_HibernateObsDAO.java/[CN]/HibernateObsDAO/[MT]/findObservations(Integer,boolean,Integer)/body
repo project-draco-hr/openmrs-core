@@ -1,8 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class).createAlias("person","p").createAlias("encounter","e").add(Expression.or(Expression.eq("p.personId",id),Expression.like("e.encounterId",id)));
-  if (includeVoided == false) {
-    criteria.add(Expression.eq("voided",new Boolean(false)));
-  }
-  getCriteriaPersonModifier(criteria,personType);
-  return criteria.list();
-}

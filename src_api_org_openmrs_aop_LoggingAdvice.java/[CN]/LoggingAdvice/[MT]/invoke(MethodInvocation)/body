@@ -1,0 +1,46 @@
+{
+  Method method=invocation.getMethod();
+  String name=method.getName();
+  boolean logGetter=(name.startsWith("get") || name.startsWith("find")) && log.isDebugEnabled();
+  boolean logSetter=(logGetter == false) && log.isInfoEnabled();
+  long startTime=new Date().getTime();
+  if (logGetter || logSetter) {
+    StringBuilder output=new StringBuilder();
+    output.append("In method ").append(method.getDeclaringClass().getSimpleName()).append(".").append(name);
+    Logging loggingAnnotation=method.getAnnotation(Logging.class);
+    if (loggingAnnotation == null || loggingAnnotation.ignoreAllArgumentValues() == false) {
+      int x;
+      Class<?>[] types=method.getParameterTypes();
+      Object[] values=invocation.getArguments();
+      List<Integer> argsToIgnore=new ArrayList<Integer>();
+      if (loggingAnnotation != null && loggingAnnotation.ignoredArgumentIndexes().length > 0) {
+        for (        int argIndexToIgnore : loggingAnnotation.ignoredArgumentIndexes())         argsToIgnore.add(argIndexToIgnore);
+      }
+      output.append(". Arguments: ");
+      for (x=0; x < types.length; x++) {
+        output.append(types[x].getSimpleName()).append("=");
+        if (argsToIgnore.contains(x))         output.append("<Arg value ignored>");
+ else         output.append(values[x]);
+        output.append(", ");
+      }
+    }
+    if (logGetter)     log.debug(output.toString());
+ else     if (logSetter)     log.info(output.toString());
+  }
+  try {
+    return invocation.proceed();
+  }
+ catch (  Throwable t) {
+    if (logGetter || logSetter)     log.error("An error occurred while executing this method. Error message: " + t.getMessage());
+    throw t;
+  }
+ finally {
+    if (logGetter || logSetter) {
+      StringBuilder output=new StringBuilder();
+      output.append("Exiting method ").append(name);
+      if (log.isDebugEnabled())       output.append(". execution time: " + (new Date().getTime() - startTime)).append(" ms");
+      if (logGetter)       log.debug(output.toString());
+ else       if (logSetter)       log.info(output.toString());
+    }
+  }
+}

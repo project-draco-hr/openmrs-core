@@ -24,8 +24,8 @@
         wf.addState(pws);
       }
  else {
-        if (pws.getVoided()) {
-          pws.setVoided(false);
+        if (pws.isRetired()) {
+          pws.setRetired(false);
         }
       }
       pws.setInitial(Boolean.valueOf(tmp[1]));
@@ -34,7 +34,7 @@
     }
     for (    ProgramWorkflowState s : wf.getStates()) {
       if (!doneSoFar.contains(s.getConcept().getConceptId())) {
-        s.setVoided(true);
+        s.setRetired(true);
       }
     }
     Context.getProgramWorkflowService().updateWorkflow(wf);

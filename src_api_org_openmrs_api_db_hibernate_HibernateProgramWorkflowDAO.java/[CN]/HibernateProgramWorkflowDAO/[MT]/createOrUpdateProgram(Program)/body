@@ -1,6 +1,0 @@
-{
-  log.debug("Creating or updating program " + program);
-  if (program.getWorkflows() != null)   log.debug("\twith " + program.getWorkflows().size() + " workflows: "+ program.getWorkflows());
-  if (program.getProgramId() == null)   sessionFactory.getCurrentSession().save(program);
- else   sessionFactory.getCurrentSession().merge(program);
-}

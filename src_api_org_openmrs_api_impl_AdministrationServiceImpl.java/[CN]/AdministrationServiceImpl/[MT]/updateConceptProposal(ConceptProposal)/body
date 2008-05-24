@@ -1,6 +1,3 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_CONCEPT_PROPOSAL))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_CONCEPT_PROPOSAL);
-  cp.setChangedBy(Context.getAuthenticatedUser());
-  cp.setDateChanged(new Date());
-  getAdministrationDAO().updateConceptProposal(cp);
+  Context.getConceptService().saveConceptProposal(cp);
 }

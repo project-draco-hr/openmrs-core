@@ -1,8 +1,0 @@
-{
-  log.debug("In getAllconversions");
-  List<ConceptStateConversion> conversions=new ArrayList<ConceptStateConversion>();
-  conversions.addAll(sessionFactory.getCurrentSession().createCriteria(ConceptStateConversion.class).list());
-  if (conversions == null)   log.debug("Conversions are null");
- else   log.debug("conversions is size " + conversions.size());
-  return conversions;
-}

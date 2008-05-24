@@ -1,11 +1,12 @@
 {
   authenticate();
   EncounterService es=Context.getEncounterService();
+  LocationService locationService=Context.getLocationService();
   PatientService ps=Context.getPatientService();
   Encounter enc=new Encounter();
-  Location loc1=es.getLocations().get(0);
+  Location loc1=locationService.getAllLocations().get(0);
   assertNotNull("We need a location",loc1);
-  EncounterType encType1=es.getEncounterTypes().get(0);
+  EncounterType encType1=es.getAllEncounterTypes().get(0);
   assertNotNull("We need an encounter type",encType1);
   Date d1=new Date();
   Patient pat1=new Patient(3);
@@ -15,13 +16,13 @@
   enc.setEncounterDatetime(d1);
   enc.setPatient(pat1);
   enc.setProvider(pro1);
-  es.createEncounter(enc);
+  es.saveEncounter(enc);
   Encounter newEnc=es.getEncounter(enc.getEncounterId());
   assertNotNull("We should get back an encounter",newEnc);
   assertTrue("The created encounter needs to equal the pojo encounter",enc.equals(newEnc));
-  Location loc2=es.getLocations().get(1);
+  Location loc2=locationService.getAllLocations().get(1);
   assertNotNull("We need a location",loc2);
-  EncounterType encType2=es.getEncounterTypes().get(1);
+  EncounterType encType2=es.getAllEncounterTypes().get(1);
   assertNotNull("we need an encounter type",encType2);
   Date d2=new Date(d1.getTime() + 25);
   Patient pat2=ps.getPatient(2);
@@ -30,7 +31,7 @@
   enc.setEncounterType(encType2);
   enc.setEncounterDatetime(d2);
   enc.setPatient(pat2);
-  es.updateEncounter(newEnc);
+  es.saveEncounter(newEnc);
   Encounter newestEnc=es.getEncounter(newEnc.getEncounterId());
   assertFalse("The location should be different",loc1.equals(loc2));
   assertTrue("The location should be different",newestEnc.getLocation().equals(loc2));
@@ -47,7 +48,7 @@
   QueryDataSet outputSet=new QueryDataSet(connection);
   outputSet.addTable("encounter");
   FlatXmlDataSet.write(outputSet,System.out);
-  es.deleteEncounter(newEnc);
+  es.purgeEncounter(newEnc);
   Encounter e=es.getEncounter(newEnc.getEncounterId());
   assertNull("We shouldn't find the encounter after deletion",e);
 }

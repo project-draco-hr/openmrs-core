@@ -14,7 +14,7 @@
   assertTrue(user.getUsername().equals("bwolfe"));
   assertTrue(user.hasRole("Some Role"));
   userService.updateUser(user);
-  transactionManager.commit(this.transactionStatus);
+  commitTransaction(true);
   Context.clearSession();
   User fetchedUser=userService.getUser(2);
   User fetchedUser3=userService.getUser(3);

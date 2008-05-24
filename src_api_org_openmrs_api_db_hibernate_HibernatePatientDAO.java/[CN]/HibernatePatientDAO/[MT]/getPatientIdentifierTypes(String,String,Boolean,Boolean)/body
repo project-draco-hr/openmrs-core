@@ -1,0 +1,10 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifierType.class);
+  criteria.addOrder(Order.asc("name"));
+  if (name != null)   criteria.add(Expression.eq("name",name));
+  if (format != null)   criteria.add(Expression.eq("format",format));
+  if (required != null)   criteria.add(Expression.eq("required",required));
+  if (hasCheckDigit != null)   criteria.add(Expression.eq("checkDigit",hasCheckDigit));
+  criteria.add(Expression.eq("retired",false));
+  return criteria.list();
+}

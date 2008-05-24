@@ -1,26 +1,6 @@
 {
-  if (!Context.getUserContext().hasPrivilege(OpenmrsConstants.PRIV_MANAGE_PROGRAMS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_MANAGE_PROGRAMS);
-  if (w.getVoided()) {
-    if (w.getVoidedBy() == null) {
-      w.setVoidedBy(Context.getAuthenticatedUser());
-    }
-    if (w.getDateVoided() == null) {
-      w.setDateVoided(new Date());
-    }
+  if (w.getProgram() == null) {
+    throw new APIException("ProgramWorkflow requires a Program");
   }
- else {
-    w.setVoidedBy(null);
-    w.setVoidReason(null);
-    w.setDateVoided(null);
-  }
-  for (  ProgramWorkflowState s : w.getStates()) {
-    s.setProgramWorkflow(w);
-    if (s.getCreator() == null) {
-      s.setCreator(Context.getAuthenticatedUser());
-    }
-    if (s.getDateCreated() == null) {
-      s.setDateCreated(new Date());
-    }
-  }
-  getProgramWorkflowDAO().updateWorkflow(w);
+  saveProgram(w.getProgram());
 }

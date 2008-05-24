@@ -1,0 +1,11 @@
+{
+  try {
+    if (toggleAutoCommit) {
+      log.debug("re-enabling autocommit");
+      jdbcContext.connection().setAutoCommit(true);
+    }
+  }
+ catch (  Exception sqle) {
+    log.error("Could not toggle autocommit",sqle);
+  }
+}

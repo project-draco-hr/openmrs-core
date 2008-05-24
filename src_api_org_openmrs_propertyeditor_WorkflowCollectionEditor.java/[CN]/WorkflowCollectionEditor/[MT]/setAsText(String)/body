@@ -23,10 +23,10 @@
     Set<ProgramWorkflow> newSet=new HashSet<ProgramWorkflow>();
     for (    ProgramWorkflow pw : oldSet) {
       if (!newConceptIds.contains(pw.getConcept().getConceptId())) {
-        pw.setVoided(true);
+        pw.setRetired(true);
       }
- else       if (pw.getVoided()) {
-        pw.setVoided(false);
+ else       if (pw.isRetired()) {
+        pw.setRetired(false);
       }
       newSet.add(pw);
       alreadyDone.add(pw.getConcept().getConceptId());

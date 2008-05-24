@@ -1,0 +1,6 @@
+{
+  Date now=new Date();
+  if (patientIdentifierType.getDateCreated() == null)   patientIdentifierType.setDateCreated(now);
+  if (patientIdentifierType.getCreator() == null)   patientIdentifierType.setCreator(Context.getAuthenticatedUser());
+  return dao.savePatientIdentifierType(patientIdentifierType);
+}

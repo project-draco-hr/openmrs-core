@@ -1,0 +1,5 @@
+{
+  if (order.getCreator() == null)   order.setCreator(Context.getAuthenticatedUser());
+  if (order.getDateCreated() == null)   order.setDateCreated(new Date());
+  return dao.saveOrder(order);
+}
