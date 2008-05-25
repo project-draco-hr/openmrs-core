@@ -34,9 +34,13 @@
     Set<Role> newRoles=new HashSet<Role>();
     if (roles != null) {
       for (      String r : roles) {
-        Role role=us.getRole(r);
+        Role role=null;
+        for (        Role test : user.getRoles())         if (test.getRole().equals(r))         role=test;
+        if (role == null) {
+          role=us.getRole(r);
+          user.addRole(role);
+        }
         newRoles.add(role);
-        user.addRole(role);
       }
     }
     if (user.getRoles() == null)     newRoles.clear();
