@@ -35,7 +35,7 @@
     if (roles != null) {
       for (      String r : roles) {
         Role role=null;
-        for (        Role test : user.getRoles())         if (test.getRole().equals(r))         role=test;
+        if (user.getRoles() != null)         for (        Role test : user.getRoles())         if (test.getRole().equals(r))         role=test;
         if (role == null) {
           role=us.getRole(r);
           user.addRole(role);
