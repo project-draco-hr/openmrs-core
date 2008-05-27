@@ -5,7 +5,7 @@
  else   if (personTypeStr == null || personTypeStr.equals(""))   personType=null;
  else   throw new APIException(personTypeStr + " is an invalid value for 'personType' attribute");
   ATTR_VIEW_TYPE attrDisplayType=null;
-  if ("listing".equals(personTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.LISTING;
+  if ("listing".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.LISTING;
  else   if ("viewing".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.VIEWING;
  else   if ("all".equals(displayTypeStr))   attrDisplayType=null;
  else   throw new APIException(displayTypeStr + " is an invalid value for 'displayType' attribute");
