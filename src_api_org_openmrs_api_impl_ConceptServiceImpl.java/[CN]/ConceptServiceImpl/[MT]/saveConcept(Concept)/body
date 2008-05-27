@@ -1,6 +1,7 @@
 {
   checkIfLocked();
   this.modifyCollections(concept);
-  this.updateConceptWord(concept);
-  return dao.saveConcept(concept);
+  Concept conceptToReturn=dao.saveConcept(concept);
+  this.updateConceptWord(conceptToReturn);
+  return conceptToReturn;
 }
