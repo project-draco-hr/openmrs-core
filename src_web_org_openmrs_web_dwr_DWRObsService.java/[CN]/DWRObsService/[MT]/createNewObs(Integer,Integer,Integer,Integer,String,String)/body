@@ -24,11 +24,11 @@
   }
  else {
     Location location=null;
-    if (locationId != null)     Context.getEncounterService().getLocation(locationId);
+    if (locationId != null)     Context.getLocationService().getLocation(locationId);
     if (location == null) {
-      location=Context.getEncounterService().getLocationByName("Unknown Location");
-      if (location == null)       location=Context.getEncounterService().getLocationByName("Unknown");
-      if (location == null)       location=Context.getEncounterService().getLocation(1);
+      location=Context.getLocationService().getLocation("Unknown Location");
+      if (location == null)       location=Context.getLocationService().getLocation("Unknown");
+      if (location == null)       location=Context.getLocationService().getLocation(1);
     }
     obs.setLocation(location);
   }
@@ -41,5 +41,5 @@
  else {
     obs.setValueText(valueText);
   }
-  Context.getObsService().createObs(obs);
+  Context.getObsService().saveObs(obs,null);
 }

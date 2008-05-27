@@ -34,9 +34,9 @@
       model.put("patientSetSize",Context.getPatientSetService().getMyPatientSet().size());
     }
     model.put("patientSet",patientSet);
-    if (Context.isAuthenticated() && !model.containsKey("batchEntryForms")) {
+    if (Context.isAuthenticated() && !model.containsKey("batchEntryForms") && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS)) {
       if ("true".equals(model.get("allowBatchEntry"))) {
-        Collection<Form> forms=Context.getFormService().getForms();
+        Collection<Form> forms=Context.getFormService().getAllForms(false);
         List<Form> shortForms=new ArrayList<Form>();
         int maxBatchEntryFields=25;
         String maxEntryGlobal=Context.getAdministrationService().getGlobalProperty("formentry.batch.max_fields");

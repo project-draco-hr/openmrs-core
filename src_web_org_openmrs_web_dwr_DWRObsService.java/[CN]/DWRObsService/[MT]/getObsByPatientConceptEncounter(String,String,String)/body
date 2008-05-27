@@ -21,18 +21,18 @@
   if (pId != null)   p=Context.getPersonService().getPerson(pId);
   if (conceptId != null)   c=OpenmrsUtil.getConceptByIdOrName(conceptId);
   if (eId != null)   e=Context.getEncounterService().getEncounter(eId);
-  Set<Obs> obss=null;
+  Collection<Obs> obss=null;
   if (p != null && c != null) {
     log.debug("Getting obss with patient and concept");
-    obss=Context.getObsService().getObservations(p,c,true);
+    obss=Context.getObsService().getObservationsByPersonAndConcept(p,c);
   }
  else   if (e != null) {
-    log.debug("Getting obss with encounter");
-    obss=Context.getObsService().getObservations(e);
+    log.debug("Getting obss by encounter");
+    obss=e.getAllObs();
   }
  else   if (p != null) {
     log.debug("Getting obss with just patient");
-    obss=Context.getObsService().getObservations(p,true);
+    obss=Context.getObsService().getObservationsByPerson(p);
   }
   if (obss != null) {
     for (    Obs obs : obss) {

@@ -1,8 +1,9 @@
 {
   Method method=invocation.getMethod();
   String name=method.getName();
-  boolean logGetter=(name.startsWith("get") || name.startsWith("find")) && log.isDebugEnabled();
-  boolean logSetter=(logGetter == false) && log.isInfoEnabled();
+  boolean isGetterTypeOfMethod=name.startsWith("get") || name.startsWith("find");
+  boolean logGetter=isGetterTypeOfMethod && log.isDebugEnabled();
+  boolean logSetter=!isGetterTypeOfMethod && log.isInfoEnabled();
   long startTime=new Date().getTime();
   if (logGetter || logSetter) {
     StringBuilder output=new StringBuilder();

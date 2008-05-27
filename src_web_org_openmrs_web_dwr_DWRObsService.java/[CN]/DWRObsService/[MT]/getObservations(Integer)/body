@@ -4,8 +4,8 @@
   HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
   try {
     Encounter encounter=Context.getEncounterService().getEncounter(encounterId);
-    Set<Obs> observations=Context.getObsService().getObservations(encounter);
-    for (    Obs obs : observations) {
+    Set<Obs> observations=encounter.getAllObs();
+    if (observations != null)     for (    Obs obs : observations) {
       obsList.add(new ObsListItem(obs,request.getLocale()));
     }
   }
