@@ -7,10 +7,9 @@
     if (person.getPersonName().getGivenName() == "")     errors.rejectValue("names[0].givenName","Person.name.required");
     if (person.getPersonName().getFamilyName() == "")     errors.rejectValue("names[0].familyName","Person.name.required");
     if (person.getGender() == null || person.getGender().equals(""))     errors.rejectValue("gender","Person.gender.required");
-    for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes("","all")) {
+    for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PERSON,null)) {
       String value=request.getParameter(type.getPersonAttributeTypeId().toString());
-      if (value == null)       value="";
-      person.addAttribute(new PersonAttribute(type,value));
+      if (value != null)       person.addAttribute(new PersonAttribute(type,value));
     }
     if (person.getBirthdate() != null) {
       if (person.getBirthdate().after(new Date()))       errors.rejectValue("birthdate","error.date.future");
