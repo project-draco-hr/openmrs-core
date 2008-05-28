@@ -1,3 +1,5 @@
 {
-  return (Cohort)sessionFactory.getCurrentSession().createQuery("from Cohort where name = :name").setString("name",name).uniqueResult();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Cohort.class);
+  criteria.add(Restrictions.eq("name",name));
+  return (Cohort)criteria.uniqueResult();
 }
