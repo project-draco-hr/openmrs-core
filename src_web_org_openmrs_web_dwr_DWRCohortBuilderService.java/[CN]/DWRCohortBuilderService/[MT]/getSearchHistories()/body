@@ -1,6 +1,6 @@
 {
   List<ListItem> ret=new ArrayList<ListItem>();
-  List<CohortSearchHistory> histories=Context.getReportObjectService().getSearchHistories();
+  List<CohortSearchHistory> histories=Context.getReportObjectService().getAllSearchHistories();
   for (  CohortSearchHistory h : histories) {
     ListItem li=new ListItem();
     li.setId(h.getReportObjectId());

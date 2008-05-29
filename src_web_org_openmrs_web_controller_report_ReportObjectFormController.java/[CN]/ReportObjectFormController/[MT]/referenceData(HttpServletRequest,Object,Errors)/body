@@ -1,11 +1,11 @@
 {
   Map addedData=new HashMap();
   ReportObjectService rs=Context.getReportObjectService();
-  Set<String> availableTypes=rs.getReportObjectTypes();
+  List<String> availableTypes=rs.getReportObjectTypes();
   addedData.put("availableTypes",availableTypes.iterator());
   String selectedType=ServletRequestUtils.getStringParameter(request,"type","");
   if (selectedType.length() > 0) {
-    Set<String> availableSubTypes=rs.getReportObjectSubTypes(selectedType);
+    List<String> availableSubTypes=rs.getReportObjectSubTypes(selectedType);
     addedData.put("availableSubTypes",availableSubTypes.iterator());
   }
   Map extendedObjectInfo=new HashMap();

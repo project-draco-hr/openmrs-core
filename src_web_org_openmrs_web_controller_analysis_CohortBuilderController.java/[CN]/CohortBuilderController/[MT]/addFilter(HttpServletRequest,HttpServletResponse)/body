@@ -19,7 +19,9 @@
     if (temp != null) {
       Integer cohortId=new Integer(temp);
       Cohort c=Context.getCohortService().getCohort(cohortId);
-      if (c != null)       history.addSearchItem(PatientSearch.createSavedCohortReference(cohortId));
+      if (c != null) {
+        history.addSearchItem(PatientSearch.createSavedCohortReference(cohortId));
+      }
  else       log.warn("addCohort(id) didn't find " + cohortId);
     }
     temp=request.getParameter("composition");
