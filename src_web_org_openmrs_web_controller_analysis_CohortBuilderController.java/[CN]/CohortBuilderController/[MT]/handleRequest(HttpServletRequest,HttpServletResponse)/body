@@ -23,7 +23,7 @@
     List<Concept> orderStopReasons=new ArrayList<Concept>();
 {
       Concept c=cs.getConceptByName("REASON ORDER STOPPED");
-      if (c != null)       orderStopReasons.addAll(cs.getConceptsInSet(c));
+      if (c != null)       orderStopReasons.addAll(cs.getConceptsByConceptSet(c));
       if (c != null && c.getAnswers() != null)       for (      ConceptAnswer ca : c.getAnswers())       orderStopReasons.add(ca.getAnswerConcept());
     }
     List<Concept> genericDrugs=Context.getConceptService().getConceptsWithDrugsInFormulary();
@@ -39,22 +39,22 @@
       if (StringUtils.hasText(temp)) {
         String[] drugSetNames=temp.split(",");
         for (        String setName : drugSetNames) {
-          Concept c=Context.getConceptService().getConceptByIdOrName(setName);
+          Concept c=Context.getConceptService().getConcept(setName);
           if (c != null)           drugSets.add(c);
         }
       }
     }
     model.put("searchHistory",history);
     model.put("links",linkHelper());
-    model.put("programs",Context.getProgramWorkflowService().getPrograms());
-    model.put("encounterTypes",Context.getEncounterService().getEncounterTypes());
-    model.put("locations",Context.getEncounterService().getLocations());
-    model.put("forms",Context.getFormService().getForms());
-    model.put("drugs",Context.getConceptService().getDrugs());
+    model.put("programs",Context.getProgramWorkflowService().getAllPrograms());
+    model.put("encounterTypes",Context.getEncounterService().getAllEncounterTypes());
+    model.put("locations",Context.getLocationService().getAllLocations());
+    model.put("forms",Context.getFormService().getAllForms());
+    model.put("drugs",Context.getConceptService().getAllDrugs());
     model.put("drugConcepts",genericDrugs);
     model.put("drugSets",drugSets);
     model.put("orderStopReasons",orderStopReasons);
-    model.put("personAttributeTypes",Context.getPersonService().getPersonAttributeTypes());
+    model.put("personAttributeTypes",Context.getPersonService().getAllPersonAttributeTypes());
     model.put("shortcuts",shortcuts);
   }
   return new ModelAndView(formView,"model",model);

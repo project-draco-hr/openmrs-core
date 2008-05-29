@@ -3,5 +3,5 @@
   if (history.getReportObjectId() != null)   throw new RuntimeException("Re-saving search history Not Yet Implemented");
   history.setName(name);
   history.setDescription(description);
-  Context.getReportObjectService().createSearchHistory(history);
+  Context.getReportObjectService().saveSearchHistory(history);
 }

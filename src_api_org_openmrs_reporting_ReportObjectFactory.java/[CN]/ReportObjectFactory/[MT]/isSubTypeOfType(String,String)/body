@@ -1,8 +1,8 @@
 {
   boolean retVal=false;
-  Set availableTypes=getReportObjectTypes();
+  List<String> availableTypes=getReportObjectTypes();
   if (availableTypes.contains(type)) {
-    Set availableSubTypes=getReportObjectSubTypes(type);
+    List<String> availableSubTypes=getReportObjectSubTypes(type);
     if (availableSubTypes.contains(subType)) {
       retVal=true;
     }

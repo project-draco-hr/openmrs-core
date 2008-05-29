@@ -1,8 +1,7 @@
 {
   if (modules != null && name != null) {
     String className="";
-    for (int i=0; i < modules.size(); i++) {
-      ReportObjectFactoryModule mod=modules.get(i);
+    for (    ReportObjectFactoryModule mod : modules) {
       if (name.equals(mod.getName())) {
         className=mod.getClassName();
       }

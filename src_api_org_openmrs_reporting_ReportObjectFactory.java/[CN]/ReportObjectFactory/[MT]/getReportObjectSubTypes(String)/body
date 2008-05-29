@@ -1,15 +1,14 @@
 {
   if (modules != null && type != null) {
-    Set<String> uniqueTypes=new HashSet<String>();
-    for (int i=0; i < modules.size(); i++) {
-      ReportObjectFactoryModule mod=modules.get(i);
-      if (type.equals(mod.getType())) {
-        boolean isAdded=uniqueTypes.add(mod.getDisplayName());
+    List<String> uniqueTypes=new Vector<String>();
+    for (    ReportObjectFactoryModule mod : modules) {
+      if (type.equals(mod.getType()) && !uniqueTypes.contains(mod.getDisplayName())) {
+        uniqueTypes.add(mod.getDisplayName());
       }
     }
     return uniqueTypes;
   }
  else {
-    return new HashSet<String>();
+    return Collections.emptyList();
   }
 }
