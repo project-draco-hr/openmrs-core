@@ -12,7 +12,7 @@
       Context.addProxyPrivilege("");
       AdministrationService as=Context.getAdministrationService();
       GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
-      as.setGlobalProperty(gp);
+      as.saveGlobalProperty(gp);
       Context.removeProxyPrivilege("");
     }
     if (getModuleClassLoaderMap().containsKey(mod)) {
