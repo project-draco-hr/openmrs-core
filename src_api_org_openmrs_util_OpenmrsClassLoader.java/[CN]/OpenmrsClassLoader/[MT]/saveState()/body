@@ -3,6 +3,6 @@
     String key=SchedulerService.class.getName();
     if (!Context.isRefreshingContext())     mementos.put(key,Context.getSchedulerService().saveToMemento());
   }
- catch (  APIException e) {
+ catch (  Throwable t) {
   }
 }
