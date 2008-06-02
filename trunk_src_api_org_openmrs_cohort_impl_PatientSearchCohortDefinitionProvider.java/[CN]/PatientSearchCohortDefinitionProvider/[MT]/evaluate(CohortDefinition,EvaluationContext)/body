@@ -1,8 +1,0 @@
-{
-  PatientSearch search=(PatientSearch)cohortDefinition;
-  PatientFilter filter=OpenmrsUtil.toPatientFilter(search,null,evaluationContext);
-  Cohort ret=filter.filter(null,evaluationContext);
-  ret.setCohortDefinition(cohortDefinition);
-  ret.setEvaluationContext(evaluationContext);
-  return ret;
-}

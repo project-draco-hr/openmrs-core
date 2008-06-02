@@ -1,9 +1,0 @@
-{
-  List<RenderingMode> ret=new Vector<RenderingMode>();
-  for (  ReportRenderer r : getReportRenderers()) {
-    Collection<RenderingMode> modes=r.getRenderingModes(schema);
-    if (modes != null)     ret.addAll(modes);
-  }
-  Collections.sort(ret);
-  return ret;
-}

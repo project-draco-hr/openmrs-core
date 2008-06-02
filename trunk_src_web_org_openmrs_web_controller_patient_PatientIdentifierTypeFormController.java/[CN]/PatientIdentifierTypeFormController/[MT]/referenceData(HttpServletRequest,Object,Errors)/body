@@ -1,8 +1,0 @@
-{
-  Map<String,Object> toReturn=new LinkedHashMap<String,Object>();
-  Collection<IdentifierValidator> pivs=Context.getPatientService().getAllIdentifierValidators();
-  toReturn.put("patientIdentifierValidators",pivs);
-  String defaultValidatorName=Context.getPatientService().getDefaultIdentifierValidator().getName();
-  toReturn.put("defaultValidatorName",defaultValidatorName);
-  return toReturn;
-}

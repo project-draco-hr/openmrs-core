@@ -1,6 +1,0 @@
-{
-  Collection<Privilege> privileges=role.getPrivileges();
-  if (privileges != null)   for (  Privilege p : privileges) {
-    if (!Context.hasPrivilege(p.getPrivilege()))     throw new APIAuthenticationException("Privilege required: " + p);
-  }
-}

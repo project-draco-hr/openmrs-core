@@ -1,9 +1,0 @@
-{
-  if (Context.isAuthenticated()) {
-    String conceptId=request.getParameter("conceptId");
-    if (conceptId != null && conceptId.length() > 0)     field.setConcept(Context.getConceptService().getConcept(Integer.valueOf(conceptId)));
- else     field.setConcept(null);
-    field.setFieldType(Context.getFormService().getFieldType(Integer.valueOf(request.getParameter("fieldTypeId"))));
-  }
-  return field;
-}

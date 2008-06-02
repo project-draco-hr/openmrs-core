@@ -1,9 +1,0 @@
-{
-  try {
-    return getIdentifierValidator(((Class<IdentifierValidator>)Class.forName(pivClassName)));
-  }
- catch (  ClassNotFoundException e) {
-    log.error("Could not find patient identifier validator " + pivClassName,e);
-    return getDefaultIdentifierValidator();
-  }
-}

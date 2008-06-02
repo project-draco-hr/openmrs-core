@@ -1,5 +1,0 @@
-{
-  if (role == null || role.getRole() == null)   return;
-  if (OpenmrsConstants.CORE_ROLES().keySet().contains(role.getRole()))   throw new APIException("Cannot delete a core role");
-  dao.deleteRole(role);
-}

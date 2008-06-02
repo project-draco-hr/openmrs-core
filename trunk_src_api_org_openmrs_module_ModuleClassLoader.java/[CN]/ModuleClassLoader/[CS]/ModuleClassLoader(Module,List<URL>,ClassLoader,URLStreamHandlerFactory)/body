@@ -1,8 +1,0 @@
-{
-  super(urls.toArray(new URL[urls.size()]),parent,factory);
-  if (log.isDebugEnabled())   log.debug("URLs length: " + urls.size());
-  this.module=module;
-  collectRequiredModuleImports();
-  collectFilters();
-  libraryCache=new WeakHashMap<URL,File>();
-}

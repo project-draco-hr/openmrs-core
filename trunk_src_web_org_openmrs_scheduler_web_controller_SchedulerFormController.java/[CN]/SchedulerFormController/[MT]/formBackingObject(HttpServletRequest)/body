@@ -1,9 +1,0 @@
-{
-  TaskDefinition task=new TaskDefinition();
-  String taskId=request.getParameter("taskId");
-  if (taskId != null) {
-    task=Context.getSchedulerService().getTask(Integer.valueOf(taskId));
-  }
-  if (task.getStartTimePattern() == null)   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
-  return task;
-}

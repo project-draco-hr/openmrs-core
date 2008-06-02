@@ -1,6 +1,0 @@
-{
-  String q="select c from Concept c join c.answers ca where ca.answerConcept = :answer";
-  Query query=sessionFactory.getCurrentSession().createQuery(q);
-  query.setParameter("answer",concept);
-  return query.list();
-}

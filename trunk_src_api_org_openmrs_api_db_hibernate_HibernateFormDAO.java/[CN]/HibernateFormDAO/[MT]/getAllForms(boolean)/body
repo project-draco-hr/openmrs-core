@@ -1,7 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Form.class);
-  if (includeRetired == false)   crit.add(Expression.eq("retired",false));
-  crit.addOrder(Order.asc("name"));
-  crit.addOrder(Order.asc("formId"));
-  return crit.list();
-}

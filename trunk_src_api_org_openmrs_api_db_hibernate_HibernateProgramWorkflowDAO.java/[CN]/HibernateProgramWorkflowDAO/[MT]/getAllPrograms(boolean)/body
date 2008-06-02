@@ -1,7 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Program.class);
-  if (includeRetired == false) {
-    criteria.add(Expression.eq("retired",false));
-  }
-  return criteria.list();
-}

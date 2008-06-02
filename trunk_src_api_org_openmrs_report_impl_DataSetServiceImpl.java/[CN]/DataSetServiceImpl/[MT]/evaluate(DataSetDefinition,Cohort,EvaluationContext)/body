@@ -1,5 +1,0 @@
-{
-  DataSetProvider provider=getProvider(definition);
-  if (provider == null)   throw new APIException("No DataSetProvider found for (" + definition.getClass() + ") "+ definition.getName());
-  return provider.evaluate(definition,inputCohort,evalContext);
-}

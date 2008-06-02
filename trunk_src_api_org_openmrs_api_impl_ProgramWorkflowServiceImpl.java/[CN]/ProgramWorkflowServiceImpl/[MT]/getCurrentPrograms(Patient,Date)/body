@@ -1,9 +1,0 @@
-{
-  List<PatientProgram> ret=new ArrayList<PatientProgram>();
-  for (  PatientProgram pp : getPatientPrograms(patient)) {
-    if (pp.getActive(onDate == null ? new Date() : onDate)) {
-      ret.add(pp);
-    }
-  }
-  return ret;
-}

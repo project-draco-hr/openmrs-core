@@ -1,8 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptProposal.class);
-  if (includeCompleted == false) {
-    crit.add(Expression.eq("state",OpenmrsConstants.CONCEPT_PROPOSAL_UNMAPPED));
-  }
-  crit.addOrder(Order.asc("originalText"));
-  return crit.list();
-}

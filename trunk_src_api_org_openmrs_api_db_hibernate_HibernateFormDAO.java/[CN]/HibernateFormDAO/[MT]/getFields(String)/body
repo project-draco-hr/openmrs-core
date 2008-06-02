@@ -1,6 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Field.class);
-  criteria.add(Restrictions.like("name",search,MatchMode.ANYWHERE));
-  criteria.addOrder(Order.asc("name"));
-  return criteria.list();
-}

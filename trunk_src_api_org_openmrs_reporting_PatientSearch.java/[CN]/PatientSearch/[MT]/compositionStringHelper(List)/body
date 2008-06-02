@@ -1,9 +1,0 @@
-{
-  StringBuilder ret=new StringBuilder();
-  for (  Object o : list) {
-    if (ret.length() > 0)     ret.append(" ");
-    if (o instanceof List)     ret.append("(" + compositionStringHelper((List)o) + ")");
- else     ret.append(o);
-  }
-  return ret.toString();
-}

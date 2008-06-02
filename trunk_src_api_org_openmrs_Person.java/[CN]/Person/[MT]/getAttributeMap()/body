@@ -1,9 +1,0 @@
-{
-  if (attributeMap != null)   return attributeMap;
-  if (log.isDebugEnabled())   log.debug("Current Person Attributes: \n" + printAttributes());
-  attributeMap=new HashMap<String,PersonAttribute>();
-  for (  PersonAttribute attribute : getActiveAttributes()) {
-    attributeMap.put(attribute.getAttributeType().getName(),attribute);
-  }
-  return attributeMap;
-}

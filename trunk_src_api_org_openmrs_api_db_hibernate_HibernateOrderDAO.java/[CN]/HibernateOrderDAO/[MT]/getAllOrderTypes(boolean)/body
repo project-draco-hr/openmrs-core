@@ -1,8 +1,0 @@
-{
-  log.debug("getting all order types");
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(OrderType.class);
-  if (includeRetired == false) {
-    crit.add(Expression.eq("retired",false));
-  }
-  return crit.list();
-}

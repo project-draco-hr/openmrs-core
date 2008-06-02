@@ -1,8 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Location.class).add(Expression.eq("name",name));
-  List<Location> locations=criteria.list();
-  if (null == locations || locations.isEmpty()) {
-    return null;
-  }
-  return locations.get(0);
-}

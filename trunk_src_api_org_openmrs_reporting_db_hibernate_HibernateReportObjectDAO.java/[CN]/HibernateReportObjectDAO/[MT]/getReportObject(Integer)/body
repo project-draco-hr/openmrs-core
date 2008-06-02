@@ -1,7 +1,0 @@
-{
-  ReportObjectWrapper wrappedReportObject=(ReportObjectWrapper)sessionFactory.getCurrentSession().get(ReportObjectWrapper.class,reportObjId);
-  if (wrappedReportObject == null)   return null;
-  AbstractReportObject reportObject=wrappedReportObject.getReportObject();
-  if (reportObject.getReportObjectId() == null)   reportObject.setReportObjectId(wrappedReportObject.getReportObjectId());
-  return reportObject;
-}
