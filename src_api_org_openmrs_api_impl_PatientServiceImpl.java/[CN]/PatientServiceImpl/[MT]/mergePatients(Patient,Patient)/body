@@ -1,7 +1,7 @@
 {
   log.debug("Merging patients: (preferred)" + preferred.getPatientId() + ", (notPreferred) "+ notPreferred.getPatientId());
   EncounterService es=Context.getEncounterService();
-  for (  Encounter e : es.getEncounters(notPreferred)) {
+  for (  Encounter e : es.getEncountersByPatient(notPreferred)) {
     e.setPatient(preferred);
     log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
     es.saveEncounter(e);
