@@ -1,0 +1,19 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Obs obs=(Obs)obj;
+    ObsService os=Context.getObsService();
+    String reason=request.getParameter("editReason");
+    try {
+      os.saveObs(obs,reason);
+    }
+ catch (    APIException e) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+      return showForm(request,response,errors);
+    }
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
+    if (obs.getEncounter() != null)     view=getSuccessView() + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

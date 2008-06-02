@@ -1,0 +1,76 @@
+{
+  HttpSession httpSession=request.getSession();
+  String username=request.getParameter("uname");
+  String password=request.getParameter("pw");
+  String redirect=request.getParameter("redirect");
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getParameter("refererURL");
+    int index=redirect.indexOf(request.getContextPath(),9);
+    if (index != -1)     redirect=redirect.substring(index);
+  }
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getContextPath();
+  }
+  log.debug("Going to use redirect: '" + redirect + "'");
+  if (redirect != null) {
+    if (redirect.contains("login.")) {
+      log.debug("Redirect contains 'login.', redirecting to main page");
+      redirect=request.getContextPath();
+    }
+    if (!redirect.startsWith(request.getContextPath())) {
+      log.debug("redirect is outside of openmrs, redirecting to main page");
+      redirect=request.getContextPath();
+    }
+  }
+  Integer loginAttempts=(Integer)httpSession.getAttribute("loginAttempts");
+  if (loginAttempts == null)   loginAttempts=0;
+  try {
+    if (username == null || username.length() == 0)     throw new ContextAuthenticationException("Unable to authenticate with an empty username");
+    Context.authenticate(username,password);
+    if (Context.isAuthenticated()) {
+      httpSession.setAttribute("loginAttempts",0);
+      User user=Context.getAuthenticatedUser();
+      if (user.getUserProperties() != null) {
+        if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
+          String localeString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
+          Locale locale=null;
+          if (localeString.length() == 5) {
+            String lang=localeString.substring(0,2);
+            String country=localeString.substring(3,5);
+            locale=new Locale(lang,country);
+          }
+ else {
+            locale=new Locale(localeString);
+          }
+          OpenmrsCookieLocaleResolver oclr=new OpenmrsCookieLocaleResolver();
+          oclr.setLocale(request,response,locale);
+        }
+      }
+      Boolean forcePasswordChange=new Boolean(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
+      if (forcePasswordChange) {
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.password.change");
+        redirect=request.getContextPath() + "/options.form#Change Login Info";
+      }
+      if (Context.getLocale() == null) {
+        Context.setLocale(OpenmrsConstants.GLOBAL_DEFAULT_LOCALE);
+      }
+      if (log.isDebugEnabled()) {
+        log.debug("Redirecting after login to: " + redirect);
+        log.debug("Locale address: " + request.getLocalAddr());
+      }
+      response.sendRedirect(redirect);
+      httpSession.setAttribute(WebConstants.OPENMRS_CLIENT_IP_HTTPSESSION_ATTR,request.getLocalAddr());
+      httpSession.removeAttribute(WebConstants.OPENMRS_LOGIN_REDIRECT_HTTPSESSION_ATTR);
+      return;
+    }
+  }
+ catch (  ContextAuthenticationException e) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.password.invalid");
+    httpSession.setAttribute(WebConstants.OPENMRS_LOGIN_REDIRECT_HTTPSESSION_ATTR,redirect);
+    response.sendRedirect(request.getContextPath() + "/login.htm");
+  }
+ finally {
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+  }
+}

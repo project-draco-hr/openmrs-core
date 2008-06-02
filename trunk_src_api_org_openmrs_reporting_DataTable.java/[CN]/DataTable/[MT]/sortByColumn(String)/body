@@ -1,0 +1,10 @@
+{
+  Collections.sort(rows,new Comparator<TableRow>(){
+    @SuppressWarnings("unchecked") public int compare(    TableRow left,    TableRow right){
+      Comparable l=(Comparable)left.get(colName);
+      Comparable r=(Comparable)right.get(colName);
+      return OpenmrsUtil.compareWithNullAsLowest(l,r);
+    }
+  }
+);
+}

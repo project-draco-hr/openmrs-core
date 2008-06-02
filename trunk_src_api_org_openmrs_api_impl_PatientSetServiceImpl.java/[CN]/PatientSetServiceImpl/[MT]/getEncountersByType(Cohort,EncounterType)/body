@@ -1,0 +1,5 @@
+{
+  List<EncounterType> types=new Vector<EncounterType>();
+  if (encType != null)   types.add(encType);
+  return getPatientSetDAO().getEncountersByType(patients,types);
+}

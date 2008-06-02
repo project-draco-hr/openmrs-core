@@ -1,0 +1,19 @@
+{
+  setUrl(defaultUrl);
+  if (fieldGenTag != null) {
+    String initialValue="";
+    OrderType ot=(OrderType)this.fieldGenTag.getVal();
+    if (ot != null)     if (ot.getOrderTypeId() != null)     initialValue=ot.getOrderTypeId().toString();
+    String optionHeader="";
+    if (this.fieldGenTag.getParameterMap() != null) {
+      optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
+    }
+    if (optionHeader == null)     optionHeader="";
+    OrderService os=Context.getOrderService();
+    List<OrderType> orderTypes=os.getOrderTypes();
+    if (orderTypes == null)     orderTypes=new ArrayList<OrderType>();
+    setParameter("initialValue",initialValue);
+    setParameter("optionHeader",optionHeader);
+    setParameter("orderTypes",orderTypes);
+  }
+}

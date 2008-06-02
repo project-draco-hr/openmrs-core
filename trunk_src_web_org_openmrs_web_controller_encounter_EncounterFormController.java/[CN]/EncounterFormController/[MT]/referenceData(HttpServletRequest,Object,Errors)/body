@@ -1,0 +1,47 @@
+{
+  Encounter encounter=(Encounter)obj;
+  Map<String,Object> map=new HashMap<String,Object>();
+  List<Integer> editedObs=new Vector<Integer>();
+  SortedMap<FormField,List<Obs>> obsMapToReturn=new TreeMap<FormField,List<Obs>>();
+  Map<Obs,FormField> otherFormFields=new HashMap<Obs,FormField>();
+  if (Context.isAuthenticated()) {
+    EncounterService es=Context.getEncounterService();
+    FormService fs=Context.getFormService();
+    Form form=encounter.getForm();
+    map.put("encounterTypes",es.getEncounterTypes());
+    map.put("forms",Context.getFormService().getForms());
+    String reason="";
+    for (    Obs o : encounter.getObsAtTopLevel(true)) {
+      if (o.isVoided()) {
+        reason=o.getVoidReason();
+        int start=reason.lastIndexOf(" ") + 1;
+        int end=reason.length() - 1;
+        try {
+          reason=reason.substring(start,end);
+          editedObs.add(Integer.valueOf(reason));
+        }
+ catch (        Exception e) {
+        }
+      }
+      FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);
+      if (ff == null)       ff=new FormField();
+      if (o.getObsGroup() == null) {
+        List<Obs> list=obsMapToReturn.get(ff);
+        if (list == null) {
+          list=new Vector<Obs>();
+          obsMapToReturn.put(ff,list);
+        }
+        list.add(o);
+      }
+ else {
+        otherFormFields.put(o,ff);
+      }
+    }
+  }
+  if (log.isDebugEnabled())   log.debug("setting obsMap in page context (size: " + obsMapToReturn.size() + ")");
+  map.put("obsMap",obsMapToReturn);
+  map.put("otherFormFields",otherFormFields);
+  map.put("locale",Context.getLocale());
+  map.put("editedObs",editedObs);
+  return map;
+}

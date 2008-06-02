@@ -1,0 +1,22 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class);
+  Date indexDate=Calendar.getInstance().getTime();
+  Operator operator=logicCriteria.getOperator();
+  if (operator == Operator.LAST) {
+    criteria.addOrder(Order.desc("obsDatetime")).setMaxResults(1);
+    if (logicCriteria.getRightOperand() instanceof LogicCriteria) {
+      logicCriteria=(LogicCriteria)logicCriteria.getRightOperand();
+    }
+  }
+ else   if (operator == Operator.FIRST) {
+    criteria.addOrder(Order.asc("obsDatetime")).setMaxResults(1);
+    if (logicCriteria.getRightOperand() instanceof LogicCriteria) {
+      logicCriteria=(LogicCriteria)logicCriteria.getRightOperand();
+    }
+  }
+  Criterion c=this.getCriterion(logicCriteria,indexDate);
+  if (c != null) {
+    criteria.add(c);
+  }
+  return criteria;
+}

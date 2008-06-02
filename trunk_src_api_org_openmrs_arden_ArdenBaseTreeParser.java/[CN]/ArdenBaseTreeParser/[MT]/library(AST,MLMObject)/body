@@ -1,0 +1,126 @@
+{
+  String s="";
+  AST library_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a="", b="";
+  try {
+{
+      AST __t531=_t;
+      AST tmp146_AST_in=(AST)_t;
+      match(_t,LIBRARY);
+      _t=_t.getFirstChild();
+{
+        _loop538:         do {
+          if (_t == null)           _t=ASTNULL;
+          if ((_t.getType() == PURPOSE)) {
+            AST __t533=_t;
+            AST tmp147_AST_in=(AST)_t;
+            match(_t,PURPOSE);
+            _t=_t.getFirstChild();
+            AST tmp148_AST_in=(AST)_t;
+            match(_t,COLON);
+            _t=_t.getNextSibling();
+            s+=" Purpose: ";
+            b=textAST(_t,obj);
+            _t=_retTree;
+            obj.setPurpose(b);
+            s+=b;
+            s+="\n";
+            _t=__t533;
+            _t=_t.getNextSibling();
+          }
+ else           if ((_t.getType() == EXPLANATION)) {
+            AST __t534=_t;
+            AST tmp149_AST_in=(AST)_t;
+            match(_t,EXPLANATION);
+            _t=_t.getFirstChild();
+            AST tmp150_AST_in=(AST)_t;
+            match(_t,COLON);
+            _t=_t.getNextSibling();
+            s+=" Explanation: ";
+            b=textAST(_t,obj);
+            _t=_retTree;
+            obj.setExplanation(b);
+            s+=b;
+            s+="\n";
+            _t=__t534;
+            _t=_t.getNextSibling();
+          }
+ else           if ((_t.getType() == KEYWORDS)) {
+            AST __t535=_t;
+            AST tmp151_AST_in=(AST)_t;
+            match(_t,KEYWORDS);
+            _t=_t.getFirstChild();
+            AST tmp152_AST_in=(AST)_t;
+            match(_t,COLON);
+            _t=_t.getNextSibling();
+            s+=" Keywords: ";
+            b=textAST(_t,obj);
+            _t=_retTree;
+            obj.setKeywords(b);
+            s+=b;
+            s+="\n";
+            _t=__t535;
+            _t=_t.getNextSibling();
+          }
+ else           if ((_t.getType() == CITATIONS)) {
+            AST __t536=_t;
+            AST tmp153_AST_in=(AST)_t;
+            match(_t,CITATIONS);
+            _t=_t.getFirstChild();
+            AST tmp154_AST_in=(AST)_t;
+            match(_t,COLON);
+            _t=_t.getNextSibling();
+            s+=" Citations: ";
+            b=textAST(_t,obj);
+            _t=_retTree;
+            obj.setCitations(b);
+            s+=b;
+            s+="\n";
+            _t=__t536;
+            _t=_t.getNextSibling();
+          }
+ else           if ((_t.getType() == LINKS)) {
+            AST __t537=_t;
+            AST tmp155_AST_in=(AST)_t;
+            match(_t,LINKS);
+            _t=_t.getFirstChild();
+            AST tmp156_AST_in=(AST)_t;
+            match(_t,COLON);
+            _t=_t.getNextSibling();
+            s+=" Links: ";
+            b=textAST(_t,obj);
+            _t=_retTree;
+            obj.setLinks(b);
+            s+=b;
+            s+="\n";
+            _t=__t537;
+            _t=_t.getNextSibling();
+          }
+ else           if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
+            a=textAST(_t,obj);
+            _t=_retTree;
+            s+=a;
+            AST tmp157_AST_in=(AST)_t;
+            match(_t,ENDBLOCK);
+            _t=_t.getNextSibling();
+            s+="\n";
+          }
+ else {
+            break _loop538;
+          }
+        }
+ while (true);
+      }
+      _t=__t531;
+      _t=_t.getNextSibling();
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

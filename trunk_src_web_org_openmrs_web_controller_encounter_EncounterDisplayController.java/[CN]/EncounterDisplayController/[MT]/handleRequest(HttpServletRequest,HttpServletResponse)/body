@@ -1,0 +1,66 @@
+{
+  Map<String,Object> model=new HashMap<String,Object>();
+  if (Context.isAuthenticated()) {
+    String encounterId=request.getParameter("encounterId");
+    if (encounterId == null || encounterId.length() == 0)     throw new IllegalArgumentException("encounterId is a required parameter");
+    model.put("encounterId",Integer.valueOf(encounterId));
+    Encounter encounter=Context.getEncounterService().getEncounter(Integer.valueOf(encounterId));
+    model.put("encounter",encounter);
+    List<FormField> formFields=Context.getFormService().getFormFields(encounter.getForm());
+    Map<Concept,FieldHolder> rowMapping=new HashMap<Concept,FieldHolder>();
+    for (    Obs obs : encounter.getObsAtTopLevel(false)) {
+      Concept conceptForThisObs=obs.getConcept();
+      FormField formField=popFormFieldForConcept(formFields,conceptForThisObs);
+      FieldHolder fieldHolder=rowMapping.get(conceptForThisObs);
+      if (fieldHolder != null) {
+        fieldHolder.addObservation(obs);
+      }
+ else {
+        if (formField == null) {
+          formField=new FormField();
+          formField.setPageNumber(DEFAULT_PAGE_NUMBER);
+          formField.setFieldNumber(null);
+        }
+        fieldHolder=new FieldHolder(formField,obs);
+        rowMapping.put(conceptForThisObs,fieldHolder);
+      }
+    }
+    List<FieldHolder> rows=new ArrayList<FieldHolder>();
+    rows.addAll(rowMapping.values());
+    Collections.sort(rows);
+    String usePages=Context.getAdministrationService().getGlobalProperty("dashboard.encounters.usePages","true").toLowerCase();
+    if (usePages.equals("smart")) {
+      int with=0;
+      int without=0;
+      for (      FieldHolder holder : rows) {
+        if (holder.getPageNumber() == DEFAULT_PAGE_NUMBER)         ++without;
+ else         ++with;
+      }
+      usePages="" + (with > without);
+    }
+    Map<Integer,List<FieldHolder>> pages=new HashMap<Integer,List<FieldHolder>>();
+    if (Boolean.valueOf(usePages).booleanValue()) {
+      for (      FieldHolder row : rows) {
+        Integer pageNumber=row.getPageNumber();
+        List<FieldHolder> thisPage=pages.get(pageNumber);
+        if (thisPage == null) {
+          thisPage=new ArrayList<FieldHolder>();
+          pages.put(pageNumber,thisPage);
+        }
+        thisPage.add(row);
+      }
+    }
+ else {
+      List<FieldHolder> pageOneRows=new ArrayList<FieldHolder>();
+      pageOneRows.addAll(rows);
+      pages.put(0,pageOneRows);
+    }
+    model.put("showBlankFields","true".equals(request.getParameter("showBlankFields")));
+    model.put("usePages",Boolean.valueOf(usePages).booleanValue());
+    model.put("pageNumbers",pages.keySet());
+    model.put("pages",pages);
+    model.put("orders",encounter.getOrders());
+    model.put("locale",Context.getLocale());
+  }
+  return new ModelAndView("/encounters/encounterDisplay","model",model);
+}

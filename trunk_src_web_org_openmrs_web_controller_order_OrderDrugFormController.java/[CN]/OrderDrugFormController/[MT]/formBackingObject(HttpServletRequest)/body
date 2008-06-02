@@ -1,0 +1,18 @@
+{
+  HttpSession httpSession=request.getSession();
+  OrderService os=Context.getOrderService();
+  DrugOrder order=null;
+  if (Context.isAuthenticated()) {
+    Integer orderId=ServletRequestUtils.getIntParameter(request,"orderId");
+    if (orderId != null)     order=(DrugOrder)os.getOrder(orderId);
+  }
+  if (order == null) {
+    order=new DrugOrder();
+    Integer orderTypeId=ServletRequestUtils.getIntParameter(request,"orderTypeId");
+    if (orderTypeId != null) {
+      OrderType ot=os.getOrderType(orderTypeId);
+      order.setOrderType(ot);
+    }
+  }
+  return order;
+}

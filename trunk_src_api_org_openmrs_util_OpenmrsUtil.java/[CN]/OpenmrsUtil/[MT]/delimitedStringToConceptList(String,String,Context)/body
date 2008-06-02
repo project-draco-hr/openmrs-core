@@ -1,0 +1,27 @@
+{
+  List<Concept> ret=null;
+  if (delimitedString != null && context != null) {
+    String[] tokens=delimitedString.split(delimiter);
+    for (    String token : tokens) {
+      Integer conceptId=null;
+      try {
+        conceptId=new Integer(token);
+      }
+ catch (      NumberFormatException nfe) {
+        conceptId=null;
+      }
+      Concept c=null;
+      if (conceptId != null) {
+        c=Context.getConceptService().getConcept(conceptId);
+      }
+ else {
+        c=Context.getConceptService().getConceptByName(token);
+      }
+      if (c != null) {
+        if (ret == null)         ret=new ArrayList<Concept>();
+        ret.add(c);
+      }
+    }
+  }
+  return ret;
+}

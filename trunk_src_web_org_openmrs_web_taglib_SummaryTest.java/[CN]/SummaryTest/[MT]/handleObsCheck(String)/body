@@ -1,0 +1,75 @@
+{
+  log.debug("handleObsCheck(" + expr + ")");
+  expr=expr.trim();
+  if (expr.length() == 0)   return true;
+  Map<String,String> args=new HashMap<String,String>();
+  String[] lines=expr.split("\n");
+  for (  String s : lines) {
+    s=s.trim();
+    int ind=s.indexOf(':');
+    String key=s.substring(0,ind).toLowerCase();
+    String val=s.substring(ind + 1);
+    args.put(key,val);
+    log.debug(key + " -> " + val);
+  }
+  PatientSetService.TimeModifier test=PatientSetService.TimeModifier.ANY;
+  Set<Concept> conceptsOfInterest=new HashSet<Concept>();
+  Date fromDate=null;
+  Date toDate=null;
+  if (args.containsKey("test"))   test=PatientSetService.TimeModifier.valueOf(args.get("test").trim().toUpperCase());
+  String conceptName=args.get("concept");
+  if (conceptName == null)   throw new IllegalArgumentException("You must specify a concept");
+{
+    ConceptService cs=Context.getConceptService();
+    boolean isSet=conceptName.startsWith("set:");
+    if (isSet)     conceptName=conceptName.substring("set:".length());
+    Concept c=cs.getConceptByName(conceptName);
+    if (c == null) {
+      log.warn("Can't find concept " + conceptName);
+    }
+ else {
+      if (isSet)       conceptsOfInterest.addAll(cs.getConceptsInSet(c));
+ else       conceptsOfInterest.add(c);
+    }
+  }
+  if (args.containsKey("timespan")) {
+    boolean inPast=true;
+    int timeUnit=Calendar.MONTH;
+    Integer time=1;
+    String ts=args.get("timespan");
+    String[] s=ts.split(" ");
+    for (    String str : s) {
+      if (str.length() == 0)       continue;
+      if (str.startsWith("l"))       inPast=true;
+ else       if (str.startsWith("n"))       inPast=false;
+ else       if (str.startsWith("m"))       timeUnit=Calendar.MONTH;
+ else       if (str.startsWith("d"))       timeUnit=Calendar.DAY_OF_MONTH;
+ else       if (str.startsWith("y"))       timeUnit=Calendar.YEAR;
+ else       time=Integer.valueOf(str);
+    }
+    Calendar c=new GregorianCalendar();
+    c.add(timeUnit,(inPast ? -1 : 1) * time);
+    if (inPast)     fromDate=c.getTime();
+ else     toDate=c.getTime();
+  }
+  log.debug("test:" + test);
+  log.debug("concepts of interest:" + conceptsOfInterest);
+  log.debug("fromDate:" + fromDate);
+  log.debug("toDate:" + toDate);
+  List<Obs> obsThatMatter=new ArrayList<Obs>();
+  for (  Obs o : observations) {
+    if (conceptsOfInterest.contains(o.getConcept()) && (fromDate == null || OpenmrsUtil.compare(fromDate,o.getObsDatetime()) <= 0) && (toDate == null || OpenmrsUtil.compare(o.getObsDatetime(),toDate) <= 0)) {
+      obsThatMatter.add(o);
+    }
+  }
+  log.debug("obsThatMatter (" + obsThatMatter.size() + "): "+ obsThatMatter);
+  if (test == PatientSetService.TimeModifier.ANY) {
+    return obsThatMatter.size() > 0;
+  }
+ else   if (test == PatientSetService.TimeModifier.NO) {
+    return obsThatMatter.size() == 0;
+  }
+ else {
+    throw new RuntimeException("Can't handle test:" + test);
+  }
+}

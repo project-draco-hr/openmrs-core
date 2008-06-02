@@ -1,0 +1,12 @@
+{
+  StringBuffer sb=new StringBuffer();
+  sb.append("select o.person_id from obs o " + "where concept_id = :concept_id ");
+  sb.append(" and o.value_datetime between :startValue and :endValue");
+  sb.append(" and o.voided = 0");
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
+  query.setCacheMode(CacheMode.IGNORE);
+  query.setInteger("concept_id",conceptId);
+  query.setDate("startValue",startTime);
+  query.setDate("endValue",endTime);
+  return new Cohort(query.list());
+}

@@ -1,0 +1,11 @@
+{
+  Set<Privilege> privileges=new HashSet<Privilege>();
+  Set<Role> tmproles=getAllRoles();
+  Role role;
+  for (Iterator<Role> i=tmproles.iterator(); i.hasNext(); ) {
+    role=i.next();
+    Collection<Privilege> privs=role.getPrivileges();
+    if (privs != null)     privileges.addAll(privs);
+  }
+  return privileges;
+}

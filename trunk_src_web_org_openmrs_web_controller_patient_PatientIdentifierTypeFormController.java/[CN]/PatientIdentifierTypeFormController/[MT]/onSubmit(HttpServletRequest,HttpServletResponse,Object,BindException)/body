@@ -1,0 +1,13 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  ModelAndView toReturn=new ModelAndView(new RedirectView(view));
+  if (Context.isAuthenticated()) {
+    PatientIdentifierType identifierType=(PatientIdentifierType)obj;
+    identifierType.setCheckDigit(identifierType.hasValidator());
+    Context.getAdministrationService().updatePatientIdentifierType(identifierType);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.saved");
+    toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+  }
+  return toReturn;
+}

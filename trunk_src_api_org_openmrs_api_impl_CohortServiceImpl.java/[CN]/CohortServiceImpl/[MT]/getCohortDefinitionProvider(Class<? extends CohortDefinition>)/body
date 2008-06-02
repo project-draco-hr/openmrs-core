@@ -1,0 +1,5 @@
+{
+  CohortDefinitionProvider ret=cohortDefinitionProviders.get(definitionClass);
+  if (ret == null)   throw new APIException("No CohortDefinitionProvider registered for " + definitionClass);
+ else   return ret;
+}

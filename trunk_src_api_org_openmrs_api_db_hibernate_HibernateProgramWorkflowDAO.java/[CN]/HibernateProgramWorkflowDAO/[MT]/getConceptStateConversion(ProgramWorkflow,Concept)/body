@@ -1,0 +1,10 @@
+{
+  ConceptStateConversion csc=null;
+  if (workflow != null && trigger != null) {
+    Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptStateConversion.class,"csc");
+    criteria.add(Expression.eq("csc.programWorkflow",workflow));
+    criteria.add(Expression.eq("csc.concept",trigger));
+    csc=(ConceptStateConversion)criteria.uniqueResult();
+  }
+  return csc;
+}

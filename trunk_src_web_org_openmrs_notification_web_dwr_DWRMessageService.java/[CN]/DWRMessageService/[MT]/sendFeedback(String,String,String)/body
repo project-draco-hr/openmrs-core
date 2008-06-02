@@ -1,0 +1,20 @@
+{
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  if (!Context.isAuthenticated()) {
+    try {
+      MessageService messageService=Context.getMessageService();
+      String recipients=NotificationConstants.FEEDBACK_EMAIL_ADDRESS;
+      if (subject == null || subject.equals(""))       subject=NotificationConstants.FEEDBACK_EMAIL_SUBJECT;
+      String referer=request.getPathTranslated();
+      String userName="an Anonymous User";
+      if (Context.isAuthenticated())       userName=Context.getAuthenticatedUser().getPersonName().toString();
+      content+="\n\n This email sent from: " + referer + " by: "+ userName;
+      messageService.send(recipients,sender,subject,content);
+      return true;
+    }
+ catch (    Exception e) {
+      log.error("Error sending feedback",e);
+    }
+  }
+  return false;
+}

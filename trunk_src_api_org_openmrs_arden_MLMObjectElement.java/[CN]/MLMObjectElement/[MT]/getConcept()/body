@@ -1,0 +1,19 @@
+{
+  String cn;
+  int len;
+  int index;
+  index=conceptName.indexOf("from");
+  if (index != -1) {
+    cn=conceptName.substring(1,index);
+  }
+ else {
+    len=conceptName.length();
+    if (conceptName.contains("{")) {
+      cn=conceptName.substring(1,len - 1);
+    }
+ else {
+      cn=conceptName.substring(0,len);
+    }
+  }
+  return cn;
+}

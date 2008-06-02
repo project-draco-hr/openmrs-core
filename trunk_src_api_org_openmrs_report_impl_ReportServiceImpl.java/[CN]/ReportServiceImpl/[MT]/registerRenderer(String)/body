@@ -1,0 +1,9 @@
+{
+  try {
+    Class loadedClass=OpenmrsClassLoader.getInstance().loadClass(rendererClass);
+    registerRenderer(loadedClass,(ReportRenderer)loadedClass.newInstance());
+  }
+ catch (  Exception e) {
+    throw new APIException("Unable to load and instantiate renderer",e);
+  }
+}

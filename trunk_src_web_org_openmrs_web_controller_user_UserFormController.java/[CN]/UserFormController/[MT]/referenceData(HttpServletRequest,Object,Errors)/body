@@ -1,0 +1,21 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  User user=(User)obj;
+  List<Role> roles=Context.getUserService().getRoles();
+  if (roles == null)   roles=new Vector<Role>();
+  for (  String s : OpenmrsConstants.AUTO_ROLES()) {
+    Role r=new Role(s);
+    roles.remove(r);
+  }
+  if (Context.isAuthenticated()) {
+    map.put("roles",roles);
+    if (user.getUserId() == null || Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS))     ;
+    map.put("modifyPasswords",true);
+    map.put("changePasswordName",OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    String s=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD);
+    map.put("changePassword",new Boolean(s).booleanValue());
+    map.put("isNewUser",isNewUser(user));
+  }
+  super.setupReferenceData(map,user);
+  return map;
+}

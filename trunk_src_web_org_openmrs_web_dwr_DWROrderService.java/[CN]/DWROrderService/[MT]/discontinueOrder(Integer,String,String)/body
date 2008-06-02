@@ -1,0 +1,14 @@
+{
+  Date dDiscDate=null;
+  if (discontinueDate != null) {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
+    try {
+      dDiscDate=sdf.parse(discontinueDate);
+    }
+ catch (    ParseException e) {
+      dDiscDate=null;
+    }
+  }
+  Order o=Context.getOrderService().getOrder(orderId);
+  Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConceptByIdOrName(discontinueReason),dDiscDate);
+}

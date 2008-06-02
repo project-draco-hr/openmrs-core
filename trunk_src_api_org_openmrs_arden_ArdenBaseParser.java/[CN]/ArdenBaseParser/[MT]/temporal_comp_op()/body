@@ -1,0 +1,66 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST temporal_comp_op_AST=null;
+  try {
+switch (LA(1)) {
+case WITHIN:
+{
+        AST tmp429_AST=null;
+        tmp429_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp429_AST);
+        match(WITHIN);
+{
+switch (LA(1)) {
+case THE:
+{
+              the();
+              break;
+            }
+case PAST:
+{
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+    }
+  }
+  AST tmp430_AST=null;
+  tmp430_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp430_AST);
+  match(PAST);
+  expr_string();
+  astFactory.addASTChild(currentAST,returnAST);
+  temporal_comp_op_AST=(AST)currentAST.root;
+  break;
+}
+case AFTER:
+{
+AST tmp431_AST=null;
+tmp431_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp431_AST);
+match(AFTER);
+expr_string();
+astFactory.addASTChild(currentAST,returnAST);
+temporal_comp_op_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_44);
+}
+ else {
+throw ex;
+}
+}
+returnAST=temporal_comp_op_AST;
+}

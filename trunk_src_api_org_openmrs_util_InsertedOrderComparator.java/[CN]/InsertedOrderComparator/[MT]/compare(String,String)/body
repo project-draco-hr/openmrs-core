@@ -1,0 +1,13 @@
+{
+  Integer a1Order=insertedOrder.get(a1);
+  Integer a2Order=insertedOrder.get(a2);
+  if (a2Order == null) {
+    a2Order=insertedOrder.size();
+    insertedOrder.put(a2,a2Order);
+  }
+  if (a1Order == null) {
+    a1Order=insertedOrder.size();
+    insertedOrder.put(a1,a1Order);
+  }
+  return a1Order.compareTo(a2Order);
+}

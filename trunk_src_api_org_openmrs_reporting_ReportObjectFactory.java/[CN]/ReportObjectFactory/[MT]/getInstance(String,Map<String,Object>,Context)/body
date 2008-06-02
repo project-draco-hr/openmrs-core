@@ -1,0 +1,15 @@
+{
+  ReportObjectFactory rof=ReportObjectFactory.singleton;
+  String className=rof.getReportObjectClassByName(reportObjectName);
+  AbstractReportObject reportObj=null;
+  if (className != null) {
+    try {
+      Class cls=Class.forName(className);
+      reportObj=ReportObjectFactory.getInstance(cls,initialValues);
+    }
+ catch (    Throwable t) {
+      log.error("Could not create class: " + className + " when trying to get report object from the factory");
+    }
+  }
+  return reportObj;
+}

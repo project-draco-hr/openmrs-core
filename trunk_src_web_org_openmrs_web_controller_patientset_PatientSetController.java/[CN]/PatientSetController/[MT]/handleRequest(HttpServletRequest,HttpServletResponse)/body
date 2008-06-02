@@ -1,0 +1,6 @@
+{
+  Cohort ps=Context.getPatientSetService().getMyPatientSet();
+  Map<String,Object> model=new HashMap<String,Object>();
+  model.put("patientSet",ps);
+  return new ModelAndView("/analysis/patientSetTest","model",model);
+}

@@ -1,0 +1,34 @@
+{
+  String idNumber=xcn.getIDNumber().getValue();
+  String familyName=xcn.getFamilyName().getSurname().getValue();
+  String givenName=xcn.getGivenName().getValue();
+  if (idNumber != null && idNumber.length() > 0) {
+    try {
+      Integer userId=new Integer(idNumber);
+      User user=Context.getUserService().getUser(userId);
+      return user.getUserId();
+    }
+ catch (    Exception e) {
+      log.error("Invalid user ID '" + idNumber + "'",e);
+      return null;
+    }
+  }
+ else {
+    try {
+      StringBuilder username=new StringBuilder();
+      if (familyName != null) {
+        username.append(familyName);
+      }
+      if (givenName != null) {
+        if (username.length() > 0)         username.append(" ");
+        username.append(givenName);
+      }
+      User user=Context.getUserService().getUserByUsername(username.toString());
+      return user.getUserId();
+    }
+ catch (    Exception e) {
+      log.error("Error resolving user with family name '" + familyName + "' and given name '"+ givenName+ "'",e);
+      return null;
+    }
+  }
+}

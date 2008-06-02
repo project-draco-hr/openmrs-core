@@ -1,0 +1,13 @@
+{
+  String sql="select count(user_id) as user_id from users";
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sql);
+  Object object=query.uniqueResult();
+  Integer id=null;
+  if (object instanceof BigInteger)   id=((BigInteger)query.uniqueResult()).intValue() + 1;
+ else   if (object instanceof Integer)   id=((Integer)query.uniqueResult()).intValue() + 1;
+ else {
+    log.warn("What is being returned here? Definitely nothing expected object value: '" + object + "' of class: "+ object.getClass());
+    id=1;
+  }
+  return id;
+}

@@ -1,0 +1,20 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  if (!Context.isAuthenticated()) {
+    objectList.add("Your session has expired.");
+    objectList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
+  }
+ else {
+    try {
+      MessageService messageService=Context.getMessageService();
+      messageService.send(recipients,sender,subject,content);
+      objectList.add("Message has been sent successfully.");
+    }
+ catch (    Exception e) {
+      log.error(e);
+      objectList.add("Error while attempting to send message: " + e.getMessage());
+    }
+  }
+  return objectList;
+}

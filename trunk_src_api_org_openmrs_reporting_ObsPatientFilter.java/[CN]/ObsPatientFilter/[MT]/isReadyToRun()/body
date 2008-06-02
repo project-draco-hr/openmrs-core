@@ -1,0 +1,18 @@
+{
+  if (question == null)   return value != null && (value instanceof Concept);
+  if (question.getDatatype().getHl7Abbreviation().equals("NM") || question.getDatatype().getHl7Abbreviation().equals("DT") || question.getDatatype().getHl7Abbreviation().equals("TS")) {
+    if (getTimeModifier() == TimeModifier.ANY || getTimeModifier() == TimeModifier.NO)     return true;
+ else     return getValue() != null && getModifier() != null;
+  }
+ else   if (question.getDatatype().getHl7Abbreviation().equals("ST")) {
+    if (getTimeModifier() == TimeModifier.ANY || getTimeModifier() == TimeModifier.NO)     return true;
+ else     return getValue() != null;
+  }
+ else   if (question.getDatatype().getHl7Abbreviation().equals("CWE")) {
+    if (getTimeModifier() == TimeModifier.ANY || getTimeModifier() == TimeModifier.NO)     return true;
+ else     return getValue() != null;
+  }
+ else {
+    return false;
+  }
+}

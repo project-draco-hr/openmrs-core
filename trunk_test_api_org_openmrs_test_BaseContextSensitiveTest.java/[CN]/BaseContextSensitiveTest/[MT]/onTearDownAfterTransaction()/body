@@ -1,0 +1,15 @@
+{
+  try {
+    super.onTearDownAfterTransaction();
+    if (wasCommitted) {
+      if (useInMemoryDatabase() == false)       throw new APIException("A commit occurred on a non-inmemory database.  It is recommended that either a manual commit or the setComplete() method is used instead or commitTransaction(boolean)");
+      startNewTransaction();
+      deleteAllData();
+      transactionManager.commit(transactionStatus);
+      transactionStatus=null;
+    }
+  }
+  finally {
+    wasCommitted=false;
+  }
+}

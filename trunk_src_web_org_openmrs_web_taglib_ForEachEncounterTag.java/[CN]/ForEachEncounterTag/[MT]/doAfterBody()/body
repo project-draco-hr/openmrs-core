@@ -1,0 +1,10 @@
+{
+  if (matchingEncs.size() > count && (num == null || count < num.intValue())) {
+    pageContext.setAttribute("count",count);
+    pageContext.setAttribute(var,matchingEncs.get(count++));
+    return EVAL_BODY_BUFFERED;
+  }
+ else {
+    return SKIP_BODY;
+  }
+}

@@ -1,0 +1,12 @@
+{
+  if (isSingleResult()) {
+    if (valueNumeric == null || valueNumeric <= value)     return emptyResult;
+    return this;
+  }
+  List<Result> matches=new ArrayList<Result>();
+  for (  Result r : this) {
+    if (!r.gt(value).isEmpty())     matches.add(r);
+  }
+  if (matches.size() < 1)   return emptyResult;
+  return new Result(matches);
+}

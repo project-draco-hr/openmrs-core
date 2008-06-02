@@ -1,0 +1,17 @@
+{
+  if (chart != null) {
+    try {
+      HttpSession session=pageContext.getSession();
+      HttpServletRequest request=(HttpServletRequest)pageContext.getRequest();
+      Long time=new Date().getTime();
+      Double random=Math.random() * 1000.0;
+      String key="chart-" + time + "-"+ session.getId()+ "-"+ random;
+      session.setAttribute(key,chart);
+      pageContext.getOut().write("<img src=\"" + request.getContextPath() + "/"+ DisplayChartServlet.SERVLET_NAME+ "?"+ DisplayChartServlet.CHART_KEY+ "="+ key+ "&mimeType="+ AbstractGraphServlet.PNG_MIME_TYPE+ "&width="+ width+ "&height="+ height+ "\" />");
+    }
+ catch (    IOException e) {
+      log.error("Unable to generate chart servlet url",e);
+    }
+  }
+  return EVAL_BODY_BUFFERED;
+}

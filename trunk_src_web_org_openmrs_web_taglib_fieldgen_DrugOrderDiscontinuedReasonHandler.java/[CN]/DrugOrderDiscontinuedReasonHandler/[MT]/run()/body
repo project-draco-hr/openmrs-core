@@ -1,0 +1,42 @@
+{
+  setUrl(defaultUrl);
+  if (fieldGenTag != null) {
+    String initialValue="";
+    checkEmptyVal("");
+    String optionHeader="";
+    if (this.fieldGenTag.getParameterMap() != null) {
+      optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
+    }
+    if (optionHeader == null)     optionHeader="";
+    String reasonOrderStopped=Context.getAdministrationService().getGlobalProperty("concept.reasonOrderStopped");
+    Concept reasonStopped=Context.getConceptService().getConceptByIdOrName(reasonOrderStopped);
+    if (reasonStopped == null)     log.debug("Could not get even the default reason concept from global properties");
+    if (this.fieldGenTag.getParameterMap() != null) {
+      String reasonSetOverride=(String)this.fieldGenTag.getParameterMap().get("reasonSet");
+      if (reasonSetOverride != null)       reasonStopped=Context.getConceptService().getConceptByIdOrName(reasonSetOverride);
+    }
+    List<Concept> possibleReasons=null;
+    if (reasonStopped != null) {
+      Collection<ConceptAnswer> answers=reasonStopped.getAnswers();
+      for (      ConceptAnswer answer : answers) {
+        if (possibleReasons == null)         possibleReasons=new ArrayList<Concept>();
+        possibleReasons.add(answer.getAnswerConcept());
+      }
+    }
+ else {
+      log.debug("No reasonStopped concept found, either as global property or override.  Cannot generate list of possible reasons.");
+    }
+    Map<String,String> reasons=new HashMap<String,String>();
+    if (possibleReasons != null) {
+      for (      Concept reason : possibleReasons) {
+        reasons.put(reason.getConceptId().toString(),reason.getName(Context.getLocale()).getName());
+      }
+    }
+ else {
+      log.debug("No possible reasons found.");
+    }
+    setParameter("initialValue",initialValue);
+    setParameter("optionHeader",optionHeader);
+    setParameter("reasons",reasons);
+  }
+}

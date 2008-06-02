@@ -1,0 +1,9 @@
+{
+  if (csc.getConceptStateConversionId() == null) {
+    sessionFactory.getCurrentSession().save(csc);
+  }
+ else {
+    sessionFactory.getCurrentSession().merge(csc);
+  }
+  return csc;
+}

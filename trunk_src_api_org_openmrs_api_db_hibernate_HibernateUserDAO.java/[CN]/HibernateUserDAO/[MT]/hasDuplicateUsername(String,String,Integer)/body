@@ -1,0 +1,15 @@
+{
+  if (username == null || username.length() == 0)   username="-";
+  if (systemId == null || systemId.length() == 0)   systemId="-";
+  if (userId == null)   userId=new Integer(-1);
+  String usernameWithCheckDigit=username;
+  try {
+    usernameWithCheckDigit=new LuhnIdentifierValidator().getValidIdentifier(username);
+  }
+ catch (  Exception e) {
+  }
+  Long count=(Long)sessionFactory.getCurrentSession().createQuery("select count(*) from User u where (u.username = :uname1 or u.systemId = :uname2 or u.username = :sysid1 or u.systemId = :sysid2 or u.systemId = :uname3) and u.userId <> :uid").setString("uname1",username).setString("uname2",username).setString("sysid1",systemId).setString("sysid2",systemId).setString("uname3",usernameWithCheckDigit).setInteger("uid",userId).uniqueResult();
+  log.debug("# users found: " + count);
+  if (count == null || count == 0)   return false;
+ else   return true;
+}

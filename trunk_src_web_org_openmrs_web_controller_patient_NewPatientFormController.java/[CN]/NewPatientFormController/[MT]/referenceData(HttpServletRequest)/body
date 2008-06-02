@@ -1,0 +1,47 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  Set<PatientIdentifier> identifiers=new TreeSet<PatientIdentifier>();
+  Patient patient=null;
+  String causeOfDeathOther="";
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
+    String patientId=request.getParameter("patientId");
+    if (patientId != null && !patientId.equals("")) {
+      patient=ps.getPatient(Integer.valueOf(patientId));
+      if (patient != null) {
+        identifiers.addAll(patient.getActiveIdentifiers());
+        String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+        Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
+        if (conceptCause != null) {
+          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause,false);
+          if (obssDeath.size() == 1) {
+            Obs obsDeath=obssDeath.iterator().next();
+            causeOfDeathOther=obsDeath.getValueText();
+            if (causeOfDeathOther == null) {
+              log.debug("cod is null, so setting to empty string");
+              causeOfDeathOther="";
+            }
+ else {
+              log.debug("cod is valid: " + causeOfDeathOther);
+            }
+          }
+ else {
+            log.debug("obssDeath is wrong size: " + obssDeath.size());
+          }
+        }
+ else {
+          log.debug("No concept cause found");
+        }
+      }
+    }
+  }
+  for (  PatientIdentifier identifier : newIdentifiers) {
+    identifier.setPatient(patient);
+  }
+  identifiers.addAll(newIdentifiers);
+  if (pref.length() > 0)   for (  PatientIdentifier pi : identifiers)   pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
+  if (Context.isAuthenticated())   map.put("defaultLocation",Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
+  map.put("identifiers",identifiers);
+  map.put("causeOfDeathOther",causeOfDeathOther);
+  return map;
+}

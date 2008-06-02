@@ -1,0 +1,29 @@
+{
+  DateFormat ymd=new SimpleDateFormat("yyyy-MM-dd");
+  Order o=new Order();
+  assertTrue("startDate==null && no end date should always be current",o.isCurrent(ymd.parse("2007-10-26")));
+  o.setStartDate(ymd.parse("2007-01-01"));
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertTrue("should be current after startDate",o.isCurrent(ymd.parse("2007-10-26")));
+  o.setAutoExpireDate(ymd.parse("2007-12-31"));
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertTrue("should be current between startDate and autoExpireDate",o.isCurrent(ymd.parse("2007-10-26")));
+  assertFalse("shouldn't be current after autoExpireDate",o.isCurrent(ymd.parse("2008-10-26")));
+  o.setDiscontinued(true);
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertFalse("shouldn't be current if discontinued with no date",o.isCurrent(ymd.parse("2007-10-26")));
+  assertFalse("shouldn't be current if discontinued with no date",o.isCurrent(ymd.parse("2008-10-26")));
+  o.setDiscontinuedDate(ymd.parse("2007-11-01"));
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertTrue("should be current between startDate and discontinuedDate",o.isCurrent(ymd.parse("2007-10-26")));
+  assertFalse("shouldn't be current after discontinuedDate",o.isCurrent(ymd.parse("2007-11-26")));
+  o.setAutoExpireDate(null);
+  o.setDiscontinuedDate(null);
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertFalse("shouldn't be current if discontinued with no date",o.isCurrent(ymd.parse("2007-10-26")));
+  assertFalse("shouldn't be current if discontinued with no date",o.isCurrent(ymd.parse("2008-10-26")));
+  o.setDiscontinuedDate(ymd.parse("2007-11-01"));
+  assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
+  assertTrue("should be current between startDate and discontinuedDate",o.isCurrent(ymd.parse("2007-10-26")));
+  assertFalse("shouldn't be current after discontinuedDate",o.isCurrent(ymd.parse("2007-11-26")));
+}

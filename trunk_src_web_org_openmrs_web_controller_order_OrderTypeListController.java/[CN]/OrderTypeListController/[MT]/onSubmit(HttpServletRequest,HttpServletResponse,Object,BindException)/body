@@ -1,0 +1,30 @@
+{
+  HttpSession httpSession=request.getSession();
+  Locale locale=request.getLocale();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String[] orderTypeList=request.getParameterValues("orderTypeId");
+    OrderService os=Context.getOrderService();
+    String success="";
+    String error="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String deleted=msa.getMessage("general.deleted");
+    String notDeleted=msa.getMessage("general.cannot.delete");
+    for (    String p : orderTypeList) {
+      try {
+        os.deleteOrderType(os.getOrderType(Integer.valueOf(p)));
+        if (!success.equals(""))         success+="<br/>";
+        success+=p + " " + deleted;
+      }
+ catch (      APIException e) {
+        log.warn("Error deleting order type",e);
+        if (!error.equals(""))         error+="<br/>";
+        error+=p + " " + notDeleted;
+      }
+    }
+    view=getSuccessView();
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

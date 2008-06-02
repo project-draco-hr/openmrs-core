@@ -1,0 +1,46 @@
+{
+  Locale locale=Context.getLocale();
+  List<Object> objects=new Vector<Object>();
+  Concept concept=null;
+  try {
+    Integer i=Integer.valueOf(txt);
+    concept=Context.getConceptService().getConcept(i);
+  }
+ catch (  NumberFormatException e) {
+  }
+  Map<Integer,Boolean> fieldForConceptAdded=new HashMap<Integer,Boolean>();
+  if (concept != null) {
+    for (    Field field : Context.getFormService().findFields(concept)) {
+      FieldListItem fli=new FieldListItem(field,locale);
+      if (!objects.contains(fli))       objects.add(fli);
+      fieldForConceptAdded.put(concept.getConceptId(),true);
+    }
+    if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
+      objects.add(new ConceptListItem(concept,locale));
+      fieldForConceptAdded.put(concept.getConceptId(),true);
+    }
+  }
+  for (  Field field : Context.getFormService().findFields(txt)) {
+    FieldListItem fi=new FieldListItem(field,locale);
+    if (!objects.contains(fi)) {
+      objects.add(fi);
+      concept=field.getConcept();
+      if (concept != null)       fieldForConceptAdded.put(concept.getConceptId(),true);
+    }
+  }
+  List<ConceptWord> conceptWords=Context.getConceptService().findConcepts(txt,locale,false);
+  for (  ConceptWord word : conceptWords) {
+    concept=word.getConcept();
+    for (    Field field : Context.getFormService().findFields(concept)) {
+      FieldListItem fli=new FieldListItem(field,locale);
+      if (!objects.contains(fli))       objects.add(fli);
+      fieldForConceptAdded.put(concept.getConceptId(),true);
+    }
+    if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
+      objects.add(new ConceptListItem(word));
+      fieldForConceptAdded.put(concept.getConceptId(),true);
+    }
+  }
+  Collections.sort(objects,new FieldConceptSort<Object>(locale));
+  return objects;
+}

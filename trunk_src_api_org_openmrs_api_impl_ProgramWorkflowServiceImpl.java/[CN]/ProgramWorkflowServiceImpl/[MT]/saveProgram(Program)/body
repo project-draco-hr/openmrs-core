@@ -1,0 +1,60 @@
+{
+  User currentUser=Context.getAuthenticatedUser();
+  Date currentDate=new Date();
+  if (program.getConcept() == null) {
+    throw new APIException("Program concept is required");
+  }
+  if (program.getCreator() == null) {
+    program.setCreator(currentUser);
+  }
+  if (program.getDateCreated() == null) {
+    program.setDateCreated(currentDate);
+  }
+  if (program.getProgramId() != null) {
+    program.setChangedBy(currentUser);
+    program.setDateChanged(currentDate);
+  }
+  for (  ProgramWorkflow workflow : program.getWorkflows()) {
+    if (workflow.getConcept() == null) {
+      throw new APIException("ProgramWorkflow concept is required");
+    }
+    if (workflow.getCreator() == null) {
+      workflow.setCreator(currentUser);
+    }
+    if (workflow.getDateCreated() == null) {
+      workflow.setDateCreated(currentDate);
+    }
+    if (workflow.getProgramWorkflowId() != null) {
+      workflow.setChangedBy(currentUser);
+      workflow.setDateChanged(currentDate);
+    }
+    if (workflow.getProgram() == null) {
+      workflow.setProgram(program);
+    }
+ else     if (!workflow.getProgram().equals(program)) {
+      throw new APIException("This Program contains a ProgramWorkflow whose parent Program is already assigned to " + workflow.getProgram());
+    }
+    for (    ProgramWorkflowState state : workflow.getStates()) {
+      if (state.getConcept() == null || state.getInitial() == null || state.getTerminal() == null) {
+        throw new APIException("ProgramWorkflowState concept, initial, terminal are required");
+      }
+      if (state.getCreator() == null) {
+        state.setCreator(currentUser);
+      }
+      if (state.getDateCreated() == null) {
+        state.setDateCreated(currentDate);
+      }
+      if (state.getProgramWorkflowStateId() != null) {
+        state.setChangedBy(currentUser);
+        state.setDateChanged(currentDate);
+      }
+      if (state.getProgramWorkflow() == null) {
+        state.setProgramWorkflow(workflow);
+      }
+ else       if (!state.getProgramWorkflow().equals(workflow)) {
+        throw new APIException("This ProgramWorkflow contains a State whose parent ProgramWorkflow is already assigned to " + workflow.getProgram());
+      }
+    }
+  }
+  return dao.saveProgram(program);
+}

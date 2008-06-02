@@ -1,0 +1,6 @@
+{
+  PatientEditor editor=new PatientEditor();
+  Patient patient=(Patient)oldInstance;
+  editor.setAsText(patient.getPatientId().toString());
+  return new Expression(editor,"getValue",null);
+}

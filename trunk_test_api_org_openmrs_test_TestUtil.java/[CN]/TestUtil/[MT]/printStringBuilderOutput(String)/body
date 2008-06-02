@@ -1,0 +1,10 @@
+{
+  output=output.replace("\"","\\\"");
+  String[] lines=output.split("\n");
+  System.out.println("StringBuilder correctOutput = new StringBuilder();");
+  for (  String line : lines) {
+    System.out.print("correctOutput.append(\"");
+    System.out.print(line);
+    System.out.println("\");\\n");
+  }
+}

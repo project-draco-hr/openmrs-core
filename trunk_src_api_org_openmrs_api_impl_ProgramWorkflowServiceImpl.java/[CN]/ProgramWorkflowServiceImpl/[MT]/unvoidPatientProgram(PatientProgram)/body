@@ -1,0 +1,13 @@
+{
+  Date voidDate=patientProgram.getDateVoided();
+  patientProgram.setVoided(false);
+  for (  PatientState state : patientProgram.getStates()) {
+    if (voidDate != null && voidDate.equals(state.getDateVoided())) {
+      state.setVoided(false);
+      state.setVoidedBy(null);
+      state.setDateVoided(null);
+      state.setVoidReason(null);
+    }
+  }
+  return savePatientProgram(patientProgram);
+}

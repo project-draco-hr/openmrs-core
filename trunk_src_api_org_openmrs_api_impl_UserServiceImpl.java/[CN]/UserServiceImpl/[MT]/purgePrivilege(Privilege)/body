@@ -1,0 +1,4 @@
+{
+  if (OpenmrsConstants.CORE_PRIVILEGES().keySet().contains(privilege.getPrivilege()))   throw new APIException("Cannot delete a core privilege");
+  dao.deletePrivilege(privilege);
+}

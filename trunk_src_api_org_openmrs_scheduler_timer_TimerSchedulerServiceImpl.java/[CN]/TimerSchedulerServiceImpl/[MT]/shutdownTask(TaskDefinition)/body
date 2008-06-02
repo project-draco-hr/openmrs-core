@@ -1,0 +1,10 @@
+{
+  if (taskDefinition != null) {
+    TimerSchedulerTask schedulerTask=scheduledTasks.remove(taskDefinition.getId());
+    if (schedulerTask != null) {
+      schedulerTask.shutdown();
+    }
+    taskDefinition.setStarted(false);
+    saveTask(taskDefinition);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  String defaultPIV=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_PATIENT_IDENTIFIER_VALIDATOR,"");
+  try {
+    return identifierValidators.get(Class.forName(defaultPIV));
+  }
+ catch (  ClassNotFoundException e) {
+    log.error("Global Property " + OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_PATIENT_IDENTIFIER_VALIDATOR + " not set to an actual class.",e);
+    return identifierValidators.get(LuhnIdentifierValidator.class);
+  }
+}

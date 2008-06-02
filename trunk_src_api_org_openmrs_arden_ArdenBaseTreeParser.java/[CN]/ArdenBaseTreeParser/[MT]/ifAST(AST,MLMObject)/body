@@ -1,0 +1,86 @@
+{
+  String s="";
+  AST ifAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+{
+      AST __t418=_t;
+      AST tmp67_AST_in=(AST)_t;
+      match(_t,IF);
+      _t=_t.getFirstChild();
+      obj.ResetConceptVar();
+      obj.InitEvaluateList();
+      obj.AddToEvaluateList("IF");
+      s=exprAST(_t,obj);
+      _t=_retTree;
+{
+        if (_t == null)         _t=ASTNULL;
+switch (_t.getType()) {
+case AND:
+case NOT:
+case OR:
+{
+{
+              if (_t == null)               _t=ASTNULL;
+switch (_t.getType()) {
+case OR:
+{
+                  AST tmp68_AST_in=(AST)_t;
+                  match(_t,OR);
+                  _t=_t.getNextSibling();
+                  obj.AddToEvaluateList("OR");
+                  break;
+                }
+case AND:
+{
+                AST tmp69_AST_in=(AST)_t;
+                match(_t,AND);
+                _t=_t.getNextSibling();
+                obj.AddToEvaluateList("AND");
+                break;
+              }
+case NOT:
+{
+              AST tmp70_AST_in=(AST)_t;
+              match(_t,NOT);
+              _t=_t.getNextSibling();
+              obj.AddToEvaluateList("NOT");
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(_t);
+          }
+      }
+    }
+    s=exprAST(_t,obj);
+    _t=_retTree;
+    break;
+  }
+case THEN:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+AST tmp71_AST_in=(AST)_t;
+match(_t,THEN);
+_t=_t.getNextSibling();
+obj.AddToEvaluateList("THEN");
+_t=__t418;
+_t=_t.getNextSibling();
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

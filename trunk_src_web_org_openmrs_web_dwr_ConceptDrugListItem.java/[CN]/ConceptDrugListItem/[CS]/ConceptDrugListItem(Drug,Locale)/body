@@ -1,0 +1,11 @@
+{
+  if (drug != null) {
+    drugId=drug.getDrugId();
+    if (drug.getConcept() != null) {
+      conceptId=drug.getConcept().getConceptId();
+      concept=new ConceptListItem(drug.getConcept(),locale);
+    }
+    name=drug.getName();
+    fullName=drug.getFullName(locale);
+  }
+}

@@ -1,0 +1,14 @@
+{
+  Concept concept;
+  boolean retVal=false;
+  Obs obs;
+  concept=Context.getConceptService().getConceptByName("BLOOD LEAD LEVEL");
+  obs=getObsForConceptForPatient(concept,locale,patient);
+  if (obs != null) {
+    double Last_Pb=obs.getValueNumeric();
+    if (Last_Pb >= 14) {
+      retVal=true;
+    }
+  }
+  return retVal;
+}

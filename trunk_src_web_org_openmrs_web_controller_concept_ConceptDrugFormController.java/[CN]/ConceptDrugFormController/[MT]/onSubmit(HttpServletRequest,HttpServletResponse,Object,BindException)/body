@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Drug drug=(Drug)obj;
+    drug.setConcept(Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
+    Context.getConceptService().updateDrug(drug);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

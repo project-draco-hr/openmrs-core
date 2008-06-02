@@ -1,0 +1,11 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    ConceptDatatype cd=(ConceptDatatype)obj;
+    Context.getAdministrationService().updateConceptDatatype(cd);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDatatype.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

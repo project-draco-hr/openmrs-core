@@ -1,0 +1,9 @@
+{
+  if (isSingleResult()) {
+    return ((valueBoolean != null && valueBoolean) || valueCoded != null || valueDatetime != null || (valueNumeric != null && valueNumeric != 0) || (valueText != null && valueText.length() > 0));
+  }
+  for (  Result r : this) {
+    if (r.exists())     return true;
+  }
+  return false;
+}

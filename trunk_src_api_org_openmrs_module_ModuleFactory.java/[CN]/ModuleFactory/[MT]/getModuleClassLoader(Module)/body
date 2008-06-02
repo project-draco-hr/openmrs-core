@@ -1,0 +1,5 @@
+{
+  ModuleClassLoader mcl=getModuleClassLoaderMap().get(mod);
+  if (mcl == null)   throw new ModuleException("Module not found",mod.getName());
+  return mcl;
+}

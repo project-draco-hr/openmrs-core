@@ -1,0 +1,224 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST text_AST=null;
+  try {
+switch (LA(1)) {
+case ID:
+{
+        AST tmp243_AST=null;
+        tmp243_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp243_AST);
+        match(ID);
+        text_AST=(AST)currentAST.root;
+        break;
+      }
+case AND:
+case IS:
+case ARE:
+case WAS:
+case WERE:
+case COUNT:
+case IN:
+case LESS:
+case THE:
+case THAN:
+case FROM:
+case BEFORE:
+case AFTER:
+case AGO:
+case WRITE:
+case AT:
+case LET:
+case BE:
+case YEAR:
+case YEARS:
+case IF:
+case IT:
+case THEY:
+case NOT:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case WHERE:
+case EXIST:
+case EXISTS:
+case PAST:
+case MONTH:
+case MONTHS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case DATA:
+case LOGIC:
+case ACTION:
+case OF:
+case TIME:
+case WITHIN:
+case CALL:
+case WITH:
+case TO:
+case ANY:
+case TIMES:
+{
+{
+        any_reserved_word();
+        astFactory.addASTChild(currentAST,returnAST);
+      }
+      text_AST=(AST)currentAST.root;
+      break;
+    }
+case INTLIT:
+{
+    AST tmp244_AST=null;
+    tmp244_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp244_AST);
+    match(INTLIT);
+    text_AST=(AST)currentAST.root;
+    break;
+  }
+case LPAREN:
+{
+{
+    AST tmp245_AST=null;
+    tmp245_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp245_AST);
+    match(LPAREN);
+{
+      _loop54:       do {
+switch (LA(1)) {
+case ID:
+{
+            AST tmp246_AST=null;
+            tmp246_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp246_AST);
+            match(ID);
+            break;
+          }
+case INTLIT:
+{
+          AST tmp247_AST=null;
+          tmp247_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp247_AST);
+          match(INTLIT);
+          break;
+        }
+case AND:
+case IS:
+case ARE:
+case WAS:
+case WERE:
+case COUNT:
+case IN:
+case LESS:
+case THE:
+case THAN:
+case FROM:
+case BEFORE:
+case AFTER:
+case AGO:
+case WRITE:
+case AT:
+case LET:
+case BE:
+case YEAR:
+case YEARS:
+case IF:
+case IT:
+case THEY:
+case NOT:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case WHERE:
+case EXIST:
+case EXISTS:
+case PAST:
+case MONTH:
+case MONTHS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case DATA:
+case LOGIC:
+case ACTION:
+case OF:
+case TIME:
+case WITHIN:
+case CALL:
+case WITH:
+case TO:
+case ANY:
+case TIMES:
+{
+{
+          any_reserved_word();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+        break;
+      }
+default :
+{
+      break _loop54;
+    }
+}
+}
+ while (true);
+}
+AST tmp248_AST=null;
+tmp248_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp248_AST);
+match(RPAREN);
+}
+text_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_25);
+}
+ else {
+throw ex;
+}
+}
+returnAST=text_AST;
+}

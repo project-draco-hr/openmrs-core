@@ -1,0 +1,12 @@
+{
+  Integer formId=null;
+  try {
+    formId=Integer.parseInt(msh.getMessageProfileIdentifier(0).getEntityIdentifier().getValue());
+  }
+ catch (  Exception e) {
+    throw new HL7Exception("Error parsing form id from message",e);
+  }
+  Form form=null;
+  if (formId != null)   form=Context.getFormService().getForm(formId);
+  return form;
+}

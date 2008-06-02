@@ -1,0 +1,19 @@
+{
+  log.debug("Processing ADT_A28 message");
+  if (!(message instanceof ADT_A05))   throw new ApplicationException("Invalid message sent to ADT_A28 handler");
+  Message response;
+  try {
+    ADT_A05 adt=(ADT_A05)message;
+    response=processADT_A28(adt);
+  }
+ catch (  ClassCastException e) {
+    log.error("Error casting " + message.getClass().getName() + " to ADT_A28",e);
+    throw new ApplicationException("Invalid message type for handler");
+  }
+catch (  HL7Exception e) {
+    log.error("Error while processing ADT_A28 message",e);
+    throw new ApplicationException(e);
+  }
+  log.debug("Finished processing ADT_A28 message");
+  return response;
+}

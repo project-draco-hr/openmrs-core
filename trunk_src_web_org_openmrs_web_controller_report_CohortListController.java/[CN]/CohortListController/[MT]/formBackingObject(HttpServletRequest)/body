@@ -1,0 +1,15 @@
+{
+  List<Cohort> cohorts=new ArrayList<Cohort>();
+  if (Context.isAuthenticated()) {
+    cohorts=Context.getCohortService().getCohorts();
+    Collections.sort(cohorts,new Comparator<Cohort>(){
+      public int compare(      Cohort a,      Cohort b){
+        int temp=a.getVoided().compareTo(b.getVoided());
+        if (temp == 0)         temp=a.getCohortId().compareTo(b.getCohortId());
+        return temp;
+      }
+    }
+);
+  }
+  return cohorts;
+}

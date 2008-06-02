@@ -1,0 +1,13 @@
+{
+  String key=className + "." + property;
+  if (returnAll)   key+="--all";
+  Map<Integer,Object> patientIdAttrMap;
+  if (patientAttributeMap.containsKey(key)) {
+    patientIdAttrMap=patientAttributeMap.get(key);
+  }
+ else {
+    patientIdAttrMap=patientSetService.getPatientAttributes(getPatientSetIfNotAllPatients(),className,property,returnAll);
+    patientAttributeMap.put(key,patientIdAttrMap);
+  }
+  return patientIdAttrMap.get(patientId);
+}

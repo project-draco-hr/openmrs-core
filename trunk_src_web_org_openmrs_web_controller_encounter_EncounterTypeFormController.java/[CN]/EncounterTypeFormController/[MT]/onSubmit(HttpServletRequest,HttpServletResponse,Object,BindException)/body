@@ -1,0 +1,11 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    EncounterType encounterType=(EncounterType)obj;
+    Context.getAdministrationService().updateEncounterType(encounterType);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"EncounterType.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

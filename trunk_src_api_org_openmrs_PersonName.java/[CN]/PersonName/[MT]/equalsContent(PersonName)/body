@@ -1,0 +1,23 @@
+{
+  boolean returnValue=true;
+  String[] methods={"getGivenName","getMiddleName","getFamilyName"};
+  Class nameClass=this.getClass();
+  for (  String methodName : methods) {
+    try {
+      Method method=nameClass.getMethod(methodName,new Class[]{});
+      String thisValue=(String)method.invoke(this);
+      String otherValue=(String)method.invoke(otherName);
+      if (otherValue != null && otherValue.length() > 0)       returnValue&=otherValue.equals(thisValue);
+    }
+ catch (    NoSuchMethodException e) {
+      log.warn("No such method for comparison " + methodName,e);
+    }
+catch (    IllegalAccessException e) {
+      log.error("Error while comparing names",e);
+    }
+catch (    InvocationTargetException e) {
+      log.error("Error while comparing names",e);
+    }
+  }
+  return returnValue;
+}

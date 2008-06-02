@@ -1,0 +1,8 @@
+{
+  if (obj instanceof ConceptProposal) {
+    ConceptProposal c=(ConceptProposal)obj;
+    return (this.conceptProposalId.equals(c.getConceptProposalId()));
+  }
+  log.warn("Obj: " + obj + " is not a ConceptProposal");
+  return false;
+}

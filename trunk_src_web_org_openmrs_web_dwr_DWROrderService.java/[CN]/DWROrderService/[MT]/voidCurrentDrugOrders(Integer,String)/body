@@ -1,0 +1,10 @@
+{
+  log.debug("beginning method");
+  boolean ret=true;
+  Patient p=Context.getPatientService().getPatient(patientId);
+  List<DrugOrder> currentOrders=Context.getOrderService().getDrugOrdersByPatient(p,OrderService.SHOW_CURRENT);
+  for (  DrugOrder o : currentOrders) {
+    Context.getOrderService().voidOrder(o,voidReason);
+  }
+  return ret;
+}

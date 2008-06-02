@@ -1,0 +1,11 @@
+{
+  if (formField.getCreator() == null)   formField.setCreator(Context.getAuthenticatedUser());
+  if (formField.getDateCreated() == null)   formField.setDateCreated(ts);
+  if (formField.getFormFieldId() != null) {
+    formField.setChangedBy(Context.getAuthenticatedUser());
+    formField.setDateChanged(ts);
+  }
+  Field field=formField.getField();
+  if (field.getCreator() == null)   field.setCreator(Context.getAuthenticatedUser());
+  if (field.getDateCreated() == null)   field.setDateCreated(new Date());
+}

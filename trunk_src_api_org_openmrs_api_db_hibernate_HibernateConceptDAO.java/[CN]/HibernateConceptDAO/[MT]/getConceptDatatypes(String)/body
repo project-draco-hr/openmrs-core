@@ -1,0 +1,5 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
+  if (name != null)   crit.add(Expression.like("name",name,MatchMode.START));
+  return crit.list();
+}

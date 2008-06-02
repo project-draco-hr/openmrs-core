@@ -1,0 +1,4 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("select distinct concept from Drug d where d.retired = false");
+  return query.list();
+}

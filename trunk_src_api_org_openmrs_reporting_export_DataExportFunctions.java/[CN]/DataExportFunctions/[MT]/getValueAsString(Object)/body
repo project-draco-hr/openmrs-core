@@ -1,0 +1,10 @@
+{
+  if (o == null)   return "";
+ else   if (o instanceof Concept)   return ((Concept)o).getName().toString();
+ else   if (o instanceof Drug)   return ((Drug)o).getName();
+ else   if (o instanceof Location)   return ((Location)o).getName();
+ else   if (o instanceof User)   return ((User)o).toString();
+ else   if (o instanceof EncounterType)   return ((EncounterType)o).getName();
+ else   if (o instanceof Date)   return formatDate(null,(Date)o);
+ else   return o.toString();
+}

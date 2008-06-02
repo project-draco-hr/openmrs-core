@@ -1,0 +1,4 @@
+{
+  super.initBinder(request,binder);
+  binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(OpenmrsUtil.getDateFormat(),true,10));
+}

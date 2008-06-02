@@ -1,0 +1,13 @@
+{
+  String s="";
+  if (formFields.containsKey(current)) {
+    TreeSet<FormField> set=formFields.get(current);
+    for (    FormField ff : set) {
+      s+=generateFormFieldJavascript(ff,locale);
+      if (formFields.containsKey(ff.getFormFieldId())) {
+        s+=generateJSTree(formFields,ff.getFormFieldId(),locale);
+      }
+    }
+  }
+  return s;
+}

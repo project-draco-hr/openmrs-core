@@ -1,0 +1,32 @@
+{
+  Vector userList=new Vector();
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  if (!Context.isAuthenticated()) {
+    userList.add("Your session has expired.");
+    userList.add("Please <a href='" + request.getContextPath() + "/logout'>log in</a> again.");
+  }
+ else {
+    try {
+      UserService us=Context.getUserService();
+      Set<User> users=new TreeSet<User>(new UserComparator());
+      if (roleStrings == null)       roleStrings=new Vector<String>();
+      List<Role> roles=new Vector<Role>();
+      for (      String r : roleStrings) {
+        if (!"".equals(r)) {
+          Role role=us.getRole(r);
+          if (role != null)           roles.add(role);
+        }
+      }
+      users.addAll(us.getUsers(null,roles,includeVoided));
+      userList=new Vector(users.size());
+      for (      User u : users) {
+        userList.add(new UserListItem(u));
+      }
+    }
+ catch (    Exception e) {
+      log.error("Error while getting all users",e);
+      userList.add("Error while attempting to get users - " + e.getMessage());
+    }
+  }
+  return userList;
+}

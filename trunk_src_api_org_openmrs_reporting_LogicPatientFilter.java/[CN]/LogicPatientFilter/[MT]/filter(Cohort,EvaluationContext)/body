@@ -1,0 +1,13 @@
+{
+  try {
+    Map<Integer,Result> results=Context.getLogicService().eval(input,criteria);
+    Cohort matches=new Cohort();
+    for (    Map.Entry<Integer,Result> e : results.entrySet()) {
+      if (e.getValue().latest().toBoolean())       matches.addMember(e.getKey());
+    }
+    return matches;
+  }
+ catch (  LogicException ex) {
+    throw new RuntimeException(ex);
+  }
+}

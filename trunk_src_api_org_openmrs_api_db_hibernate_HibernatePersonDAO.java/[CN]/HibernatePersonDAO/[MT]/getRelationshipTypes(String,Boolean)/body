@@ -1,0 +1,7 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(RelationshipType.class,"t");
+  criteria.add(Expression.eq("retired",false));
+  criteria.add(Expression.sql("CONCAT(t.aIsToB, CONCAT('/', t.bIsToA))",relationshipTypeName,new StringType()));
+  if (preferred != null)   criteria.add(Expression.eq("preferred",preferred));
+  return criteria.list();
+}

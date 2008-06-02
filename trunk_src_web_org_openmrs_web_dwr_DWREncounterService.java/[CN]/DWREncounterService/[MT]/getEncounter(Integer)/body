@@ -1,0 +1,5 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter e=es.getEncounter(encounterId);
+  return e == null ? null : new EncounterListItem(e);
+}

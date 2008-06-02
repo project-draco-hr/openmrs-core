@@ -1,0 +1,49 @@
+{
+  Alert alert=(Alert)obj;
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  try {
+    UserService us=Context.getUserService();
+    if (Context.isAuthenticated()) {
+      String[] userIdValues=request.getParameter("userIds").split(" ");
+      List<Integer> userIds=new Vector<Integer>();
+      String[] roleValues=request.getParameter("newRoles").split(",");
+      List<String> roles=new Vector<String>();
+      if (userIdValues != null)       for (      String userId : userIdValues) {
+        if (!userId.trim().equals(""))         userIds.add(Integer.valueOf(userId.trim()));
+      }
+      if (roleValues != null)       for (      String role : roleValues) {
+        if (!role.trim().equals(""))         roles.add(role.trim());
+      }
+      List<AlertRecipient> recipientsToRemove=new Vector<AlertRecipient>();
+      if (alert.getRecipients() != null) {
+        for (        AlertRecipient recipient : alert.getRecipients()) {
+          Integer userId=recipient.getRecipient().getUserId();
+          if (!userIds.contains(userId))           recipientsToRemove.add(recipient);
+        }
+      }
+      for (      AlertRecipient ar : recipientsToRemove)       alert.removeRecipient(ar);
+      if (userIds != null) {
+        for (        Integer userId : userIds) {
+          alert.addRecipient(new User(userId));
+        }
+      }
+      if (roles != null) {
+        for (        String roleStr : roles) {
+          List<User> users=us.getUsersByRole(new Role(roleStr));
+          for (          User user : users)           alert.addRecipient(user);
+        }
+      }
+    }
+    if ((alert.getRecipients() == null || alert.getRecipients().size() == 0)) {
+      errors.rejectValue("users","Alert.recipientRequired");
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while processing alert form",e);
+    errors.reject(e.getMessage());
+  }
+ finally {
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+  }
+  return super.processFormSubmission(request,reponse,alert,errors);
+}

@@ -1,0 +1,19 @@
+{
+  Vector locationList=new Vector();
+  try {
+    EncounterService es=Context.getEncounterService();
+    List<Location> locations=es.findLocations(searchValue);
+    locationList=new Vector(locations.size());
+    for (    Location loc : locations) {
+      locationList.add(new LocationListItem(loc));
+    }
+  }
+ catch (  Exception e) {
+    log.error(e);
+    locationList.add("Error while attempting to find locations - " + e.getMessage());
+  }
+  if (locationList.size() == 0) {
+    locationList.add("No locations found. Please search again.");
+  }
+  return locationList;
+}

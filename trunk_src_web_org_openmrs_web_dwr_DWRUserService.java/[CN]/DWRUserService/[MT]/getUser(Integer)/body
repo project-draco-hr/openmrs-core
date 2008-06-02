@@ -1,0 +1,12 @@
+{
+  UserListItem user=new UserListItem();
+  if (Context.isAuthenticated()) {
+    try {
+      user=new UserListItem(Context.getUserService().getUser(userId));
+    }
+ catch (    Exception e) {
+      log.error("Error while getting user",e);
+    }
+  }
+  return user;
+}

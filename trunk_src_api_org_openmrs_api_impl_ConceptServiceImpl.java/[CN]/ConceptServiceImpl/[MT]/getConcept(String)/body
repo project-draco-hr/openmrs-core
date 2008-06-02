@@ -1,0 +1,17 @@
+{
+  Concept c=null;
+  Integer conceptId=null;
+  try {
+    conceptId=new Integer(conceptIdOrName);
+  }
+ catch (  NumberFormatException nfe) {
+    conceptId=null;
+  }
+  if (conceptId != null) {
+    c=getConcept(conceptId);
+  }
+ else {
+    c=getConceptByName(conceptIdOrName);
+  }
+  return c;
+}

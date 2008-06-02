@@ -1,0 +1,10 @@
+{
+  if (obj != null && obj instanceof ProgramWorkflow) {
+    ProgramWorkflow p=(ProgramWorkflow)obj;
+    if (this.getProgramWorkflowId() == null) {
+      return p.getProgramWorkflowId() == null;
+    }
+    return (this.getProgramWorkflowId().equals(p.getProgramWorkflowId()));
+  }
+  return false;
+}

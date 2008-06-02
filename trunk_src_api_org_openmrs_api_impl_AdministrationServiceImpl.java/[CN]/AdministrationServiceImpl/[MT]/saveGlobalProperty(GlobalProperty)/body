@@ -1,0 +1,8 @@
+{
+  if (gp.getProperty() != null && gp.getProperty().length() > 0) {
+    dao.saveGlobalProperty(gp);
+    notifyGlobalPropertyChange(gp);
+    return gp;
+  }
+  return gp;
+}

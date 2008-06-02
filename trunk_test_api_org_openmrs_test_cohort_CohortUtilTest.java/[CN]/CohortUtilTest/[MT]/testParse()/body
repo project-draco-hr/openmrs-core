@@ -1,0 +1,28 @@
+{
+{
+    PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+    ps.addArgument("gender","m",String.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Male",ps));
+  }
+{
+    PatientSearch ps=PatientSearch.createFilterSearch(ProgramStatePatientFilter.class);
+    ps.addArgument("untilDate","${date}",Date.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("EnrolledOnDate",ps));
+  }
+  PatientSearch ps=(PatientSearch)CohortUtil.parse("[Male] and [EnrolledOnDate|untilDate=${report.startDate}]");
+  List<Object> list=ps.getParsedComposition();
+{
+    PatientSearch test=(PatientSearch)list.get(0);
+    assertEquals(test.getFilterClass(),PatientCharacteristicFilter.class);
+    assertEquals(test.getArguments().iterator().next().getValue(),"m");
+    assertEquals(test.getArguments().size(),1);
+  }
+  assertEquals(list.get(1),PatientSetService.BooleanOperator.AND);
+{
+    PatientSearch test=(PatientSearch)list.get(2);
+    assertEquals(test.getFilterClass(),ProgramStatePatientFilter.class);
+    assertEquals(test.getArguments().iterator().next().getValue(),"${date}");
+    assertEquals(test.getArgumentValue("untilDate"),"${report.startDate}");
+    assertEquals(test.getArguments().size(),1);
+  }
+}

@@ -1,0 +1,10 @@
+{
+  Location location=null;
+  if (Context.isAuthenticated()) {
+    EncounterService os=Context.getEncounterService();
+    String locationId=request.getParameter("locationId");
+    if (locationId != null)     location=os.getLocation(Integer.valueOf(locationId));
+  }
+  if (location == null)   location=new Location();
+  return location;
+}

@@ -1,0 +1,8 @@
+{
+  List<Location> locationList=new Vector<Location>();
+  if (Context.isAuthenticated()) {
+    EncounterService os=Context.getEncounterService();
+    locationList=os.getLocations();
+  }
+  return locationList;
+}

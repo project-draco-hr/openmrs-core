@@ -1,0 +1,43 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST data_slot_AST=null;
+  try {
+    AST tmp221_AST=null;
+    tmp221_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp221_AST);
+    match(DATA);
+    AST tmp222_AST=null;
+    tmp222_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp222_AST);
+    match(COLON);
+{
+      _loop113:       do {
+        if ((_tokenSet_18.member(LA(1)))) {
+          data_statement();
+          astFactory.addASTChild(currentAST,returnAST);
+          match(SEMI);
+        }
+ else {
+          break _loop113;
+        }
+      }
+ while (true);
+    }
+    AST tmp224_AST=null;
+    tmp224_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp224_AST);
+    match(ENDBLOCK);
+    data_slot_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_19);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=data_slot_AST;
+}

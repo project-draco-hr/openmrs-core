@@ -1,0 +1,65 @@
+{
+  String s="";
+  AST writeAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST id=null;
+  AST i=null;
+  String a="", b="";
+  try {
+{
+      AST __t478=_t;
+      AST tmp105_AST_in=(AST)_t;
+      match(_t,WRITE);
+      _t=_t.getFirstChild();
+{
+        _loop482:         do {
+          if (_t == null)           _t=ASTNULL;
+switch (_t.getType()) {
+case ACTION_OP:
+{
+{
+                AST tmp106_AST_in=(AST)_t;
+                match(_t,ACTION_OP);
+                _t=_t.getNextSibling();
+                id=(AST)_t;
+                match(_t,ID);
+                _t=_t.getNextSibling();
+                a=id.getText();
+                b="||" + a + "||";
+                s+=b;
+                AST tmp107_AST_in=(AST)_t;
+                match(_t,ACTION_OP);
+                _t=_t.getNextSibling();
+              }
+              break;
+            }
+case STRING_LITERAL:
+{
+{
+              i=(AST)_t;
+              match(_t,STRING_LITERAL);
+              _t=_t.getNextSibling();
+              s+=i.getText();
+            }
+            break;
+          }
+default :
+{
+          break _loop482;
+        }
+    }
+  }
+ while (true);
+}
+_t=__t478;
+_t=_t.getNextSibling();
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

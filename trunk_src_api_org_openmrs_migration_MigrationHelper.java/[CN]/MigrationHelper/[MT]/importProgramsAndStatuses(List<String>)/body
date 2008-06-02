@@ -1,0 +1,58 @@
+{
+  ProgramWorkflowService pws=Context.getProgramWorkflowService();
+  PatientService ps=Context.getPatientService();
+  List<PatientProgram> patientPrograms=new ArrayList<PatientProgram>();
+  Map<String,PatientProgram> knownPatientPrograms=new HashMap<String,PatientProgram>();
+  Map<String,Program> programsByName=new HashMap<String,Program>();
+  for (  Program program : pws.getPrograms()) {
+    programsByName.put(program.getConcept().getName(Context.getLocale(),false).getName(),program);
+  }
+  for (  String s : programWorkflow) {
+    log.debug(s);
+    if (s.startsWith("ENROLLMENT:")) {
+      s=s.substring(s.indexOf(":") + 1);
+      String[] temp=s.split(",");
+      PatientIdentifierType pit=ps.getPatientIdentifierType(temp[0]);
+      String identifier=temp[1];
+      List<PatientIdentifier> pis=ps.getPatientIdentifiers(identifier,pit);
+      if (pis.size() != 1)       throw new IllegalArgumentException("Found " + pis.size() + " instances of identifier "+ identifier+ " of type "+ pit);
+      Patient p=pis.get(0).getPatient();
+      Program program=programsByName.get(temp[2]);
+      if (program == null)       throw new RuntimeException("Couldn't find program \"" + temp[2] + "\" in "+ programsByName);
+      Date enrollmentDate=temp.length < 4 ? null : parseDate(temp[3]);
+      Date completionDate=temp.length < 5 ? null : parseDate(temp[4]);
+      PatientProgram pp=new PatientProgram();
+      pp.setPatient(p);
+      pp.setProgram(program);
+      pp.setDateEnrolled(enrollmentDate);
+      pp.setDateCompleted(completionDate);
+      patientPrograms.add(pp);
+      knownPatientPrograms.put(temp[0] + "," + temp[1]+ ","+ temp[2],pp);
+    }
+ else     if (s.startsWith("STATUS:")) {
+      s=s.substring(s.indexOf(":") + 1);
+      String[] temp=s.split(",");
+      Program program=programsByName.get(temp[2]);
+      if (program == null)       throw new RuntimeException("Couldn't find program \"" + temp[2] + "\" in "+ programsByName);
+      ProgramWorkflow wf=program.getWorkflowByName(temp[3]);
+      if (wf == null)       throw new RuntimeException("Couldn't find workflow \"" + temp[3] + "\" for program "+ program+ " (in "+ program.getWorkflows()+ ")");
+      ProgramWorkflowState st=wf.getStateByName(temp[4]);
+      if (st == null)       throw new RuntimeException("Couldn't find state \"" + temp[4] + "\" for workflow "+ wf+ " (in "+ wf.getStates()+ ")");
+      Date startDate=temp.length < 6 ? null : parseDate(temp[5]);
+      Date endDate=temp.length < 7 ? null : parseDate(temp[6]);
+      PatientState state=new PatientState();
+      PatientProgram pp=knownPatientPrograms.get(temp[0] + "," + temp[1]+ ","+ temp[2]);
+      state.setPatientProgram(pp);
+      state.setState(st);
+      state.setStartDate(startDate);
+      state.setEndDate(endDate);
+      pp.getStates().add(state);
+    }
+  }
+  int numAdded=0;
+  for (  PatientProgram pp : knownPatientPrograms.values()) {
+    pws.createPatientProgram(pp);
+    ++numAdded;
+  }
+  return numAdded;
+}

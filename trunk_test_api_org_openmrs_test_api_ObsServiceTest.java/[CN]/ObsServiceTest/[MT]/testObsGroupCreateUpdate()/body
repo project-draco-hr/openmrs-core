@@ -1,0 +1,50 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Obs obsGroup=new Obs();
+  obsGroup.setConcept(new Concept(1));
+  obsGroup.setObsDatetime(new Date());
+  obsGroup.setPerson(new Patient(2));
+  obsGroup.setLocation(new Location(2));
+  Obs groupMember1=new Obs();
+  groupMember1.setConcept(new Concept(1));
+  groupMember1.setValueNumeric(1.0);
+  groupMember1.setObsDatetime(new Date());
+  groupMember1.setPerson(new Patient(2));
+  groupMember1.setLocation(new Location(2));
+  obsGroup.addGroupMember(groupMember1);
+  assertTrue(obsGroup.hasGroupMembers());
+  obsService.saveObs(obsGroup,null);
+  assertNotNull(obsGroup.getObsId());
+  assertNotNull(obsGroup.getCreator());
+  assertNotNull(obsGroup.getDateCreated());
+  assertNotNull(obsGroup.getGroupMembers());
+  assertNotNull(groupMember1.getObsId());
+  assertNotNull(groupMember1.getObsGroup());
+  assertNotNull(groupMember1.getCreator());
+  assertNotNull(groupMember1.getDateCreated());
+  Integer groupMember1OriginalObsId=groupMember1.getObsId();
+  Obs groupMember2=new Obs();
+  groupMember2.setConcept(new Concept(2));
+  groupMember2.setObsDatetime(new Date());
+  groupMember2.setPerson(new Patient(2));
+  groupMember2.setLocation(new Location(2));
+  obsGroup.addGroupMember(groupMember2);
+  assertEquals(2,obsGroup.getGroupMembers().size());
+  assertNotNull(groupMember2.getObsGroup());
+  obsService.saveObs(obsGroup,"Updating obs group");
+  assertNotNull(groupMember2.getObsId());
+  assertNotNull(groupMember2.getObsGroup());
+  assertNotNull(groupMember2.getCreator());
+  assertNotNull(groupMember2.getDateCreated());
+  Obs firstMember=(Obs)(obsGroup.getGroupMembers().toArray()[0]);
+  Obs secondMember=(Obs)(obsGroup.getGroupMembers().toArray()[1]);
+  if (firstMember.getConcept().equals(new Concept(1))) {
+    assertEquals(groupMember1OriginalObsId,firstMember.getObsId());
+    assertEquals(groupMember2,secondMember);
+  }
+ else {
+    assertEquals(groupMember1OriginalObsId,secondMember.getObsId());
+    assertEquals(groupMember2,firstMember);
+  }
+}

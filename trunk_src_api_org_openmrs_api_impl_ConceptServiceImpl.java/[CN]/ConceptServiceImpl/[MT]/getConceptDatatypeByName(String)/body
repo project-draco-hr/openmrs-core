@@ -1,0 +1,7 @@
+{
+  List<ConceptDatatype> lcd=new ArrayList<ConceptDatatype>();
+  lcd=getConceptDatatypes(name);
+  if (lcd.size() > 1)   log.warn("More than one ConceptDatatype found with name " + name);
+  if (lcd.size() == 0)   return null;
+  return lcd.get(0);
+}

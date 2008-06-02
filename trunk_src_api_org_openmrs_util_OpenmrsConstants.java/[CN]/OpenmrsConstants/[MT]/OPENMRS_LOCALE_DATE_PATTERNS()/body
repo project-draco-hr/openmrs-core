@@ -1,0 +1,14 @@
+{
+  if (OPENMRS_LOCALE_DATE_PATTERNS == null) {
+    Map<String,String> patterns=new HashMap<String,String>();
+    patterns.put(Locale.US.toString().toLowerCase(),"MM/dd/yyyy");
+    patterns.put(Locale.UK.toString().toLowerCase(),"dd/MM/yyyy");
+    patterns.put(Locale.FRENCH.toString().toLowerCase(),"dd/MM/yyyy");
+    patterns.put(Locale.GERMAN.toString().toLowerCase(),"MM.dd.yyyy");
+    patterns.put(SPANISH_LANGUAGE.toString().toLowerCase(),"dd/MM/yyyy");
+    patterns.put(PORTUGUESE_LANGUAGE.toString().toLowerCase(),"dd/MM/yyyy");
+    patterns.put(ITALIAN_LANGUAGE.toString().toLowerCase(),"dd/MM/yyyy");
+    OPENMRS_LOCALE_DATE_PATTERNS=patterns;
+  }
+  return OPENMRS_LOCALE_DATE_PATTERNS;
+}

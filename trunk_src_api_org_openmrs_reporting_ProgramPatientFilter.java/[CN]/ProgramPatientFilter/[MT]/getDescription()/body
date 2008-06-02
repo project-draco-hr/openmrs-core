@@ -1,0 +1,14 @@
+{
+  if (!isReadyToRun())   return "";
+  Locale locale=Context.getLocale();
+  DateFormat df=DateFormat.getDateInstance(DateFormat.SHORT,locale);
+  StringBuffer ret=new StringBuffer();
+  ret.append("Patients in ");
+  ret.append(getConceptName(program.getConcept()));
+  if (onDate != null)   ret.append(" on " + df.format(onDate));
+ else {
+    if (fromDate != null)     ret.append(" anytime after " + df.format(fromDate));
+    if (toDate != null)     ret.append(" anytime before " + df.format(toDate));
+  }
+  return ret.toString();
+}

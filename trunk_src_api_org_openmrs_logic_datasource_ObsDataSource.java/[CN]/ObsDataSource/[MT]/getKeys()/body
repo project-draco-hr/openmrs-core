@@ -1,0 +1,20 @@
+{
+  if (this.keys.size() == 0) {
+    ConceptClass cc=Context.getConceptService().getConceptClassByName("Test");
+    List<Concept> testConcepts=Context.getConceptService().getConceptsByClass(cc);
+    for (    Concept c : testConcepts) {
+      keys.add(c.getName().getName());
+    }
+    cc=Context.getConceptService().getConceptClassByName("Finding");
+    testConcepts=Context.getConceptService().getConceptsByClass(cc);
+    for (    Concept c : testConcepts) {
+      keys.add(c.getName().getName());
+    }
+    cc=Context.getConceptService().getConceptClassByName("Question");
+    testConcepts=Context.getConceptService().getConceptsByClass(cc);
+    for (    Concept c : testConcepts) {
+      keys.add(c.getName().getName());
+    }
+  }
+  return keys;
+}

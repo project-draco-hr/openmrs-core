@@ -1,0 +1,10 @@
+{
+  Tribe tribe=null;
+  if (Context.isAuthenticated()) {
+    PatientService ps=Context.getPatientService();
+    String tribeId=request.getParameter("tribeId");
+    if (tribeId != null)     tribe=ps.getTribe(Integer.valueOf(tribeId));
+  }
+  if (tribe == null)   tribe=new Tribe();
+  return tribe;
+}

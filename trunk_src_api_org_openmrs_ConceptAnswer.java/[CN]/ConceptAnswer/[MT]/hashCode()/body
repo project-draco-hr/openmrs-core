@@ -1,0 +1,8 @@
+{
+  if (this.getConceptAnswerId() != null)   return this.getConceptAnswerId().hashCode();
+  int hash=9;
+  if (concept != null)   hash=hash * concept.hashCode() + 31;
+  if (answerConcept != null)   hash=hash * answerConcept.hashCode() + 31;
+  if (answerDrug != null)   hash=hash * answerDrug.hashCode() + 31;
+  return hash;
+}

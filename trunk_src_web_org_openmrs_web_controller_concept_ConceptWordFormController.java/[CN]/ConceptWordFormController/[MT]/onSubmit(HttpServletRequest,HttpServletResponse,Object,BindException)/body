@@ -1,0 +1,29 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String s=request.getParameter("conceptId");
+    if (s != null && !s.equals("")) {
+      s=s.trim();
+      if (s.contains("-")) {
+        String[] parts=s.split("-");
+        String start=parts[0].trim();
+        String end=parts[1].trim();
+        Context.getAdministrationService().updateConceptWords(Integer.valueOf(start),Integer.valueOf(end));
+      }
+ else {
+        Concept c=Context.getConceptService().getConcept(Integer.valueOf(s));
+        if (c != null) {
+          log.debug("c.conceptId: " + c.getConceptId());
+          Context.getAdministrationService().updateConceptWord(c);
+        }
+      }
+    }
+ else {
+      Context.getAdministrationService().updateConceptWords();
+    }
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptWord.updated");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

@@ -1,0 +1,16 @@
+{
+  log.debug("Setting report object text " + text);
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(Context.getReportObjectService().getReportObject(Integer.valueOf(text)));
+      log.debug("value: " + getValue());
+    }
+ catch (    Exception ex) {
+      log.error("Error setting text: " + text,ex);
+      throw new IllegalArgumentException("Report object not found: " + ex.getMessage());
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if ("patient".equals(personType)) {
+    if ("edit".equals(viewType))     return request.getContextPath() + PATIENT_EDIT_URL + getParametersForURL(personId,personType);
+    if ("shortEdit".equals(viewType))     return request.getContextPath() + PATIENT_SHORT_EDIT_URL + getParametersForURL(personId,personType);
+ else     if ("view".equals(viewType))     return request.getContextPath() + PATIENT_VIEW_URL + getParametersForURL(personId,personType);
+  }
+ else   if ("user".equals(personType)) {
+    return request.getContextPath() + USER_EDIT_URL + getParametersForURL(personId,personType);
+  }
+  throw new ServletException("Undefined personType/viewType combo: " + personType + "/"+ viewType);
+}

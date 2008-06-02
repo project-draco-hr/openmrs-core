@@ -1,0 +1,26 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST logic_if_then_else2_AST=null;
+  try {
+{
+      expr();
+      astFactory.addASTChild(currentAST,returnAST);
+    }
+    AST tmp530_AST=null;
+    tmp530_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp530_AST);
+    match(THEN);
+    logic_if_then_else2_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_22);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=logic_if_then_else2_AST;
+}

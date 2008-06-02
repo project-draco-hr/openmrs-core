@@ -1,0 +1,21 @@
+{
+  UserService us=Context.getUserService();
+  executeDataSet(XML_FILENAME);
+  User u=us.getUserByUsername("admin");
+  Role role1=new Role();
+  role1.setDescription("testing1");
+  role1.setRole("test1");
+  Privilege p1=us.getPrivileges().get(0);
+  Set<Privilege> privileges1=new HashSet<Privilege>();
+  privileges1.add(p1);
+  role1.setPrivileges(privileges1);
+  Role role2=new Role();
+  role2.setDescription("testing2");
+  role2.setRole("test2");
+  Privilege p2=us.getPrivileges().get(0);
+  Set<Privilege> privileges2=new HashSet<Privilege>();
+  privileges2.add(p2);
+  role2.setPrivileges(privileges2);
+  us.grantUserRole(u,role1);
+  us.grantUserRole(u,role2);
+}

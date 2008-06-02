@@ -1,0 +1,11 @@
+{
+  log.debug("called formBackingObject");
+  Program program=null;
+  if (Context.isAuthenticated()) {
+    ProgramWorkflowService ps=Context.getProgramWorkflowService();
+    String programId=request.getParameter("programId");
+    if (programId != null)     program=ps.getProgram(Integer.valueOf(programId));
+  }
+  if (program == null)   program=new Program();
+  return program;
+}

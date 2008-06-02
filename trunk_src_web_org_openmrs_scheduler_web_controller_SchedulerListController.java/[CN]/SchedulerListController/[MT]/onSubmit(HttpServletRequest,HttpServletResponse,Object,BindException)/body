@@ -1,0 +1,42 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  StringBuffer success=new StringBuffer();
+  StringBuffer error=new StringBuffer();
+  String action=request.getParameter("action");
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String[] taskList=request.getParameterValues("taskId");
+  SchedulerService schedulerService=Context.getSchedulerService();
+  if (taskList != null) {
+    for (    String taskId : taskList) {
+      Object[] args=new Object[]{taskId};
+      try {
+        TaskDefinition task=schedulerService.getTask(Integer.valueOf(taskId));
+        if (action.equals(msa.getMessage("Scheduler.taskList.delete"))) {
+          schedulerService.deleteTask(Integer.valueOf(taskId));
+          success.append(msa.getMessage("Scheduler.taskList.deleted",args));
+        }
+ else         if (action.equals(msa.getMessage("Scheduler.taskList.stop"))) {
+          schedulerService.shutdownTask(task);
+          success.append(msa.getMessage("Scheduler.taskList.stopped",args));
+        }
+ else         if (action.equals(msa.getMessage("Scheduler.taskList.start"))) {
+          schedulerService.scheduleTask(task);
+          success.append(msa.getMessage("Scheduler.taskList.started",args));
+        }
+      }
+ catch (      APIException e) {
+        log.warn("Error processing schedulerlistcontroller task",e);
+        error.append(msa.getMessage("Scheduler.taskList.error",args));
+      }
+    }
+  }
+  view=getSuccessView();
+  if (!success.toString().equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+  }
+  if (!error.toString().equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+  }
+  return new ModelAndView(new RedirectView(view));
+}

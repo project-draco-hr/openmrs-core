@@ -1,0 +1,9 @@
+{
+  List<AbstractReportObject> allMatchingObjects=getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+  if (allMatchingObjects != null) {
+    for (    AbstractReportObject aro : allMatchingObjects) {
+      if (aro.getName().equals(name))       return ((PatientSearchReportObject)aro).getPatientSearch();
+    }
+  }
+  return null;
+}

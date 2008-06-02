@@ -1,0 +1,25 @@
+{
+  boolean isUsed=false;
+  if (fileName != null) {
+    log.debug("initialRequestId: " + initialRequestId);
+    String lastRequestId=(String)pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_REQUEST_ID_KEY,PageContext.SESSION_SCOPE);
+    HashMap<String,String> hmIncludeMap=(HashMap<String,String>)pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,PageContext.SESSION_SCOPE);
+    if (hmIncludeMap == null || !initialRequestId.equals(lastRequestId)) {
+      log.debug("Creating new hmIncludeMap");
+      hmIncludeMap=new HashMap<String,String>();
+    }
+ else     log.debug("Using hmIncludeMap from object");
+    if (hmIncludeMap.containsKey(fileName)) {
+      log.debug("HTMLINCLUDETAG HAS ALREADY INCLUDED FILE " + fileName);
+      isUsed=true;
+    }
+ else {
+      log.debug("HTMLINCLUDETAG IS WRITING HTML TO INCLUDE FILE " + fileName);
+      log.debug("HashCode for file is " + fileName.hashCode());
+      hmIncludeMap.put(fileName,"true");
+      pageContext.setAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,hmIncludeMap,PageContext.SESSION_SCOPE);
+      pageContext.setAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_REQUEST_ID_KEY,initialRequestId,PageContext.SESSION_SCOPE);
+    }
+  }
+  return isUsed;
+}

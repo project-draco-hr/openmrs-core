@@ -1,0 +1,18 @@
+{
+  List<PERSON_TYPE> personTypes=new Vector<PERSON_TYPE>();
+  if (personType == null) {
+    personTypes.add(PERSON_TYPE.PERSON);
+    return personTypes;
+  }
+ else   if ((personType & ObsService.PATIENT) == ObsService.PATIENT) {
+    personTypes.add(PERSON_TYPE.PATIENT);
+    return personTypes;
+  }
+ else   if ((personType & ObsService.USER) == ObsService.USER) {
+    personTypes.add(PERSON_TYPE.USER);
+    return personTypes;
+  }
+ else {
+    return personTypes;
+  }
+}

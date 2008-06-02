@@ -1,0 +1,6 @@
+{
+  log.info("Getting all notes from the database");
+  List<Note> notes=new ArrayList<Note>();
+  notes=sessionFactory.getCurrentSession().createQuery("from Note").list();
+  return notes;
+}

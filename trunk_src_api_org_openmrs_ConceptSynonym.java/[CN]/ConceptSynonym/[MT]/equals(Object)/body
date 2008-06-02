@@ -1,0 +1,12 @@
+{
+  if (obj == null)   return false;
+  if (obj instanceof ConceptSynonym) {
+    ConceptSynonym c=(ConceptSynonym)obj;
+    boolean ret=true;
+    if (concept != null && c.getConcept() != null)     ret=ret && this.concept.equals(c.getConcept());
+    if (synonym != null && c.getSynonym() != null)     ret=ret && this.synonym.equals(c.getSynonym());
+    if (locale != null && c.getLocale() != null)     ret=ret && locale.equals(c.getLocale());
+    return ret;
+  }
+  return false;
+}

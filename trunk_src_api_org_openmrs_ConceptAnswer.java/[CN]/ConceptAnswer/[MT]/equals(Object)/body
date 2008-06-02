@@ -1,0 +1,14 @@
+{
+  if (obj instanceof ConceptAnswer) {
+    ConceptAnswer c=(ConceptAnswer)obj;
+    if (this.conceptAnswerId != null && c.getConceptAnswerId() != null)     return (this.conceptAnswerId.equals(c.getConceptAnswerId()));
+ else {
+      boolean ret=true;
+      if (this.concept != null && c.getConcept() != null)       ret=ret && this.concept.equals(c.getConcept());
+      if (this.answerConcept != null && c.getAnswerConcept() != null)       ret=ret && this.answerConcept.equals(c.getAnswerConcept());
+      if (this.answerDrug != null && c.getAnswerDrug() != null)       ret=ret && this.answerDrug.equals(c.getAnswerDrug());
+      return ret;
+    }
+  }
+  return false;
+}

@@ -1,0 +1,10 @@
+{
+  Person p=new Person();
+  assertNull(p.getAge());
+  DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+  p.setBirthdate(df.parse("1978-04-11"));
+  assertEquals(p.getAge(df.parse("1978-05-20")).intValue(),0);
+  assertEquals(p.getAge(df.parse("2007-04-11")).intValue(),29);
+  assertEquals(p.getAge(df.parse("2007-04-12")).intValue(),29);
+  assertEquals(p.getAge(df.parse("2007-04-10")).intValue(),28);
+}

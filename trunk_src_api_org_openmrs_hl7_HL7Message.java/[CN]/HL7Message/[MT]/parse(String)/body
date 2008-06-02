@@ -1,0 +1,27 @@
+{
+  segments=message.split("\\r");
+  if (segments.length < 1)   throw new HL7Exception("Invalid message format");
+  hl7Segments=new HL7Segment[segments.length];
+  String msh=segments[0];
+  if (!msh.startsWith("MSH"))   throw new HL7Exception("Invalid message format - must begin with message header (MSH) segment");
+  try {
+    fieldSeparator=msh.substring(3,4);
+    String[] mshFields=msh.split("\\" + fieldSeparator);
+    String encodingCharacters=safeArrayElement(mshFields,1);
+    componentSeparator=safeSubstring(encodingCharacters,0,1);
+    repetitionSeparator=safeSubstring(encodingCharacters,1,2);
+    escapeCharacter=safeSubstring(encodingCharacters,2,3);
+    subcomponentSeparator=safeSubstring(encodingCharacters,3,4);
+    dateTime=HL7Util.parseHL7Timestamp(mshFields[6]);
+    String[] typeComponents=safeArrayElement(mshFields,8).split("\\" + componentSeparator);
+    messageType=safeArrayElement(typeComponents,0);
+    eventType=safeArrayElement(typeComponents,1);
+    controlId=safeArrayElement(mshFields,9);
+    processingId=safeArrayElement(mshFields,10);
+    version=safeArrayElement(mshFields,11);
+    profileId=safeArrayElement(mshFields,20);
+  }
+ catch (  Exception e) {
+    throw new HL7Exception("Error parsing MSH segment",e);
+  }
+}

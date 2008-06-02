@@ -1,0 +1,24 @@
+{
+  target.setPatient(this.getPatient());
+  target.setProgram(this.getProgram());
+  target.setDateEnrolled(this.getDateEnrolled());
+  target.setDateCompleted(target.getDateCompleted());
+  Set<PatientState> statesCopy=new HashSet<PatientState>();
+  if (this.getStates() != null) {
+    for (    PatientState s : this.getStates()) {
+      PatientState stateCopy=s.copy();
+      stateCopy.setPatientProgram(target);
+      statesCopy.add(stateCopy);
+    }
+  }
+  target.setStates(statesCopy);
+  target.setCreator(this.getCreator());
+  target.setDateCreated(this.getDateCreated());
+  target.setChangedBy(this.getChangedBy());
+  target.setDateChanged(this.getDateChanged());
+  target.setVoided(this.getVoided());
+  target.setVoidedBy(this.getVoidedBy());
+  target.setDateVoided(this.getDateVoided());
+  target.setVoidReason(this.getVoidReason());
+  return target;
+}

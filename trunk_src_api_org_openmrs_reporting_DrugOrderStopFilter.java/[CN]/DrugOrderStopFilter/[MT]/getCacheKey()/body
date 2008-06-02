@@ -1,0 +1,14 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(getClass().getName()).append(".");
+  sb.append(getStopDate()).append(".");
+  sb.append(getDiscontinued()).append(".");
+  sb.append(OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate)).append(".");
+  sb.append(OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate)).append(".");
+  if (drugList != null)   for (  Drug d : drugList)   sb.append(d.getDrugId()).append(",");
+  sb.append(".");
+  if (genericDrugList != null)   for (  Concept c : genericDrugList)   sb.append(c.getConceptId()).append(",");
+  sb.append(".");
+  if (discontinuedReasonList != null)   for (  Concept c : discontinuedReasonList)   sb.append(c.getConceptId()).append(",");
+  return sb.toString();
+}

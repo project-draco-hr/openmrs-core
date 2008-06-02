@@ -1,0 +1,10 @@
+{
+  Form form=null;
+  if (Context.isAuthenticated()) {
+    FormService fs=Context.getFormService();
+    String formId=request.getParameter("formId");
+    if (formId != null)     form=fs.getForm(Integer.valueOf(formId));
+  }
+  if (form == null)   form=new Form();
+  return form;
+}

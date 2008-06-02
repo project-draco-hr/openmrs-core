@@ -1,0 +1,6 @@
+{
+  Integer i=c.getConceptId();
+  List<Concept> concepts=sessionFactory.getCurrentSession().createCriteria(Concept.class).add(Expression.lt("conceptId",i)).addOrder(Order.desc("conceptId")).setFetchSize(1).list();
+  if (concepts.size() < 1)   return null;
+  return concepts.get(0);
+}

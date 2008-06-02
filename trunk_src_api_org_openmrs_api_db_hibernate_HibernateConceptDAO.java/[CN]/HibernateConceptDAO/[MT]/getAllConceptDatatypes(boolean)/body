@@ -1,0 +1,5 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
+  if (includeRetired == false)   crit.add(Expression.eq("retired",false));
+  return crit.list();
+}

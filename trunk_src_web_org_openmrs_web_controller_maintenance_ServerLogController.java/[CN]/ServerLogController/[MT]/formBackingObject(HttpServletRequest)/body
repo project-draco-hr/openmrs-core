@@ -1,0 +1,10 @@
+{
+  Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+  if (appender instanceof MemoryAppender) {
+    MemoryAppender memoryAppender=(MemoryAppender)appender;
+    return memoryAppender.getLogLines();
+  }
+ else {
+    return new ArrayList<String>();
+  }
+}

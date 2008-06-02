@@ -1,0 +1,10 @@
+{
+  try {
+    ByteArrayOutputStream out=new ByteArrayOutputStream();
+    macros.store(out,null);
+    Context.getAdministrationService().setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS,out.toString());
+  }
+ catch (  Exception ex) {
+    throw new APIException(ex);
+  }
+}

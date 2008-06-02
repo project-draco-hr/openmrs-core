@@ -1,0 +1,7 @@
+{
+  if (obj instanceof AlertRecipient) {
+    AlertRecipient a=(AlertRecipient)obj;
+    if (alert != null && a.getAlert() != null && recipient != null && a.getRecipient() != null)     return (alert.equals(a.getAlert()) && recipient.equals(a.getRecipient()));
+  }
+  return obj == this;
+}

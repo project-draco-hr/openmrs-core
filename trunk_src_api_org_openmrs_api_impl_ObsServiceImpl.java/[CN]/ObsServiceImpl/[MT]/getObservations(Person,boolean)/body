@@ -1,0 +1,6 @@
+{
+  if (includeVoided == true)   throw new APIException("Voided observations are no longer allowed to be queried");
+  Set<Obs> obsSet=new HashSet<Obs>();
+  obsSet.addAll(getObservationsByPerson(who));
+  return obsSet;
+}

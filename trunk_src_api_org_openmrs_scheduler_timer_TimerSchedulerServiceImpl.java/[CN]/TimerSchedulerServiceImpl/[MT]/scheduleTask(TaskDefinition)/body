@@ -1,0 +1,32 @@
+{
+  if (taskDefinition != null) {
+    TimerSchedulerTask schedulerTask=scheduledTasks.get(taskDefinition.getId());
+    if (schedulerTask != null) {
+      schedulerTask.cancel();
+    }
+    try {
+      Task task=TaskFactory.getInstance().createInstance(taskDefinition);
+      if (task != null) {
+        schedulerTask=new TimerSchedulerTask(task);
+        long repeatInterval=taskDefinition.getRepeatInterval() * SchedulerConstants.SCHEDULER_MILLIS_PER_SECOND;
+        if (taskDefinition.getStartTime() != null) {
+          log.info("Starting task at " + taskDefinition.getStartTime());
+          Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
+          timerScheduler.scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
+        }
+ else {
+          log.info("Delaying start time by " + SchedulerConstants.SCHEDULER_DEFAULT_DELAY + " seconds");
+          timerScheduler.scheduleAtFixedRate(schedulerTask,SchedulerConstants.SCHEDULER_DEFAULT_DELAY,repeatInterval);
+        }
+        log.debug("Registering timer for task " + taskDefinition.getId());
+        scheduledTasks.put(taskDefinition.getId(),schedulerTask);
+        taskDefinition.setStarted(true);
+        saveTask(taskDefinition);
+      }
+    }
+ catch (    Exception e) {
+      log.error("Failed to schedule task " + taskDefinition.getName(),e);
+      throw new SchedulerException(e);
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
+  criteria.createAlias("names","name");
+  criteria.add(Expression.eq("name.voided",false));
+  criteria.addOrder(Order.asc("name.givenName"));
+  criteria.addOrder(Order.asc("name.middleName"));
+  criteria.addOrder(Order.asc("name.familyName"));
+  if (name != null) {
+    name=name.replaceAll("  "," ");
+    name=name.replace(", "," ");
+    String[] names=name.split(" ");
+    String nameSoFar=names[0];
+    for (int i=0; i < names.length; i++) {
+      String n=names[i];
+      if (n != null && n.length() > 0) {
+        LogicalExpression oneNameSearch=getNameSearch(n);
+        LogicalExpression searchExpression=oneNameSearch;
+        if (i > 0) {
+          nameSoFar+=" " + n;
+          LogicalExpression fullNameSearch=getNameSearch(nameSoFar);
+          searchExpression=Expression.or(oneNameSearch,fullNameSearch);
+        }
+        criteria.add(searchExpression);
+      }
+    }
+  }
+  if (identifier != null || identifierTypes.size() > 0) {
+    criteria.createAlias("identifiers","ids");
+    criteria.add(Expression.eq("ids.voided",false));
+    if (identifier != null) {
+      AdministrationService adminService=Context.getAdministrationService();
+      String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
+      if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+        String prefix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_PREFIX,"");
+        String suffix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX,"");
+        StringBuffer likeString=new StringBuffer(prefix).append(identifier).append(suffix);
+        criteria.add(Expression.like("ids.identifier",likeString.toString()));
+      }
+ else {
+        regex=regex.replace("@SEARCH@",identifier);
+        criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+      }
+    }
+    if (identifierTypes.size() > 0) {
+      criteria.add(Expression.in("ids.identifierType",identifierTypes));
+    }
+  }
+  criteria.add(Expression.eq("voided",false));
+  criteria.setFirstResult(0);
+  criteria.setMaxResults(getMaximumSearchResults());
+  return criteria.list();
+}

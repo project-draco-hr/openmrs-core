@@ -1,0 +1,7 @@
+{
+  if (name != null) {
+    name.setPerson(this);
+    if (names == null)     names=new TreeSet<PersonName>();
+    if (!OpenmrsUtil.collectionContains(names,name))     names.add(name);
+  }
+}

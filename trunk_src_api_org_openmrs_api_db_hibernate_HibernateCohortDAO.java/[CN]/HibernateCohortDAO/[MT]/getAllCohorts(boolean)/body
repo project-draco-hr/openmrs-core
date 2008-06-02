@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Cohort.class);
+  criteria.addOrder(Order.asc("name"));
+  if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
+  return (List<Cohort>)criteria.list();
+}

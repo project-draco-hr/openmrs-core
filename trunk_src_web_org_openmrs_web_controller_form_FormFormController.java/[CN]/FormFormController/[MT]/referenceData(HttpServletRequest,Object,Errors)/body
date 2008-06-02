@@ -1,0 +1,12 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  List<FieldType> fieldTypes=new Vector<FieldType>();
+  List<EncounterType> encTypes=new Vector<EncounterType>();
+  if (Context.isAuthenticated()) {
+    fieldTypes=Context.getFormService().getFieldTypes();
+    encTypes=Context.getEncounterService().getEncounterTypes();
+  }
+  map.put("fieldTypes",fieldTypes);
+  map.put("encounterTypes",encTypes);
+  return map;
+}

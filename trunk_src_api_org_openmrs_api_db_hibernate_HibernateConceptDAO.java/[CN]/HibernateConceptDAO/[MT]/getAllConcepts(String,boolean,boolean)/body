@@ -1,0 +1,21 @@
+{
+  String sql="from Concept concept";
+  if (!includeRetired)   sql+=" where retired = false ";
+  try {
+    Concept.class.getDeclaredField(sortBy);
+  }
+ catch (  NoSuchFieldException e) {
+    try {
+      ConceptName.class.getDeclaredField(sortBy);
+      sortBy="names." + sortBy;
+    }
+ catch (    NoSuchFieldException e2) {
+      sortBy="conceptId";
+    }
+  }
+  sql+=" order by concept." + sortBy;
+  if (!asc)   sql+=" desc";
+ else   sql+=" asc";
+  Query query=sessionFactory.getCurrentSession().createQuery(sql);
+  return (List<Concept>)query.list();
+}

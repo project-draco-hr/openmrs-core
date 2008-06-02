@@ -1,0 +1,25 @@
+{
+  if (user.getUserId() == null) {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_USERS);
+  }
+ else {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+  }
+  checkPrivileges(user);
+  setCollectionProperties(user);
+  if (user.getUserId() == null && (password == null || password.length() < 1))   throw new APIException("A password is required when creating a user");
+  if (user.getSystemId() == null || user.getSystemId().equals(""))   user.setSystemId(generateSystemId());
+  if (hasDuplicateUsername(user))   throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
+  Date now=new Date();
+  if (user.getDateCreated() == null) {
+    user.setDateCreated(now);
+  }
+  if (user.getCreator() == null) {
+    user.setCreator(Context.getAuthenticatedUser());
+  }
+  if (user.getUserId() != null) {
+    user.setChangedBy(Context.getAuthenticatedUser());
+    user.setDateChanged(now);
+  }
+  return dao.saveUser(user,password);
+}

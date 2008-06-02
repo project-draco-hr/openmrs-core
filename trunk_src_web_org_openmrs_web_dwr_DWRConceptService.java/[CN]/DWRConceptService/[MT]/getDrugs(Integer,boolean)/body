@@ -1,0 +1,16 @@
+{
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
+  Concept concept=cs.getConcept(conceptId);
+  List<Object> items=new Vector<Object>();
+  if (showConcept == true) {
+    ConceptDrugListItem thisConcept=new ConceptDrugListItem(null,conceptId,concept.getName(locale,false).getName());
+    items.add(thisConcept);
+  }
+  List<Drug> drugs=null;
+  if (drugs.size() > 0 && showConcept == true)   items.add("Or choose a form of " + concept.getName(locale,false).getName());
+  for (  Drug drug : drugs) {
+    items.add(new ConceptDrugListItem(drug,locale));
+  }
+  return items;
+}

@@ -1,0 +1,14 @@
+{
+  Map<String,Object> ret=new HashMap<String,Object>();
+  ReportData report=(ReportData)request.getSession().getAttribute(WebConstants.OPENMRS_REPORT_DATA);
+  if (Context.isAuthenticated() && report != null) {
+    ReportService reportService=(ReportService)Context.getService(ReportService.class);
+    List<RenderingMode> otherRenderingModes=new ArrayList<RenderingMode>(reportService.getRenderingModes(report.getReportSchema()));
+    for (Iterator<RenderingMode> i=otherRenderingModes.iterator(); i.hasNext(); ) {
+      Class temp=i.next().getRenderer().getClass();
+      if (temp.equals(CohortReportWebRenderer.class))       i.remove();
+    }
+    ret.put("otherRenderingModes",otherRenderingModes);
+  }
+  return ret;
+}

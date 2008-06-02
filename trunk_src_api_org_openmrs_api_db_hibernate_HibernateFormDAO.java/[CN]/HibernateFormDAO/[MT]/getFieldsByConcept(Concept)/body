@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Field.class);
+  criteria.add(Expression.eq("concept",concept));
+  criteria.addOrder(Order.asc("name"));
+  return criteria.list();
+}

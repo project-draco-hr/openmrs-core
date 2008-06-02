@@ -1,0 +1,14 @@
+{
+  Map<String,Concept> ret=null;
+  if (delimitedString != null) {
+    String[] tokens=delimitedString.split(delimiter);
+    for (    String token : tokens) {
+      Concept c=OpenmrsUtil.getConceptByIdOrName(token);
+      if (c != null) {
+        if (ret == null)         ret=new HashMap<String,Concept>();
+        ret.put(token,c);
+      }
+    }
+  }
+  return ret;
+}

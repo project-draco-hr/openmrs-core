@@ -1,0 +1,13 @@
+{
+  Date birthdate=context.read(patient,context.getLogicDataSource("person"),"BIRTHDATE").toDatetime();
+  Calendar bdate=Calendar.getInstance();
+  bdate.setTime(birthdate);
+  Calendar now=Calendar.getInstance();
+  now.setTime(context.getIndexDate());
+  Integer age=now.get(Calendar.YEAR) - bdate.get(Calendar.YEAR);
+  bdate.set(Calendar.YEAR,now.get(Calendar.YEAR));
+  if (now.before(bdate)) {
+    age=age - 1;
+  }
+  return new Result(age);
+}

@@ -1,0 +1,9 @@
+{
+  Set<ProgramWorkflow> ret=new HashSet<ProgramWorkflow>();
+  if (patientProgram != null) {
+    for (    PatientState state : patientProgram.getStates()) {
+      ret.add(state.getState().getProgramWorkflow());
+    }
+  }
+  return ret;
+}

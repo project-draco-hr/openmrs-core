@@ -1,0 +1,31 @@
+{
+  String handlerClassName=null;
+  try {
+    factory=FieldGenHandlerFactory.getSingletonInstance();
+  }
+ catch (  Exception e) {
+    factory=null;
+    e.printStackTrace();
+  }
+  if (factory != null) {
+    handlerClassName=factory.getHandlerByClassName(className);
+    if (handlerClassName != null) {
+      try {
+        Class cls=Class.forName(handlerClassName);
+        Constructor ct=cls.getConstructor();
+        FieldGenHandler handler=(FieldGenHandler)ct.newInstance();
+        return handler;
+      }
+ catch (      Exception e) {
+        log.error("Unable to handle type [" + className + "] with handler ["+ handlerClassName+ "].");
+        return null;
+      }
+    }
+ else {
+      return null;
+    }
+  }
+ else {
+    return null;
+  }
+}

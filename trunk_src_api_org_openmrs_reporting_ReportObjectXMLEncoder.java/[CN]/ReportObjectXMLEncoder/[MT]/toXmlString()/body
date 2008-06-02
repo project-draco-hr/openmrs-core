@@ -1,0 +1,47 @@
+{
+  ByteArrayOutputStream arr=new ByteArrayOutputStream();
+  EnumDelegate enumDelegate=new EnumDelegate();
+  XMLEncoder enc=new XMLEncoder(new BufferedOutputStream(arr));
+  enc.setPersistenceDelegate(User.class,new UserDelegate());
+  enc.setPersistenceDelegate(Location.class,new LocationDelegate());
+  enc.setPersistenceDelegate(Cohort.class,new CohortDelegate());
+  enc.setPersistenceDelegate(Concept.class,new ConceptDelegate());
+  enc.setPersistenceDelegate(Drug.class,new DrugDelegate());
+  enc.setPersistenceDelegate(Encounter.class,new EncounterDelegate());
+  enc.setPersistenceDelegate(Patient.class,new PatientDelegate());
+  enc.setPersistenceDelegate(Program.class,new ProgramDelegate());
+  enc.setPersistenceDelegate(ProgramWorkflow.class,new ProgramWorkflowDelegate());
+  enc.setPersistenceDelegate(ProgramWorkflowState.class,new ProgramWorkflowStateDelegate());
+  enc.setPersistenceDelegate(ConceptAnswer.class,new ConceptAnswerDelegate());
+  enc.setPersistenceDelegate(EncounterType.class,new EncounterTypeDelegate());
+  enc.setPersistenceDelegate(PersonAttributeType.class,new PersonAttributeTypeDelegate());
+  enc.setPersistenceDelegate(ConceptNumeric.class,new ConceptNumericDelegate());
+  Set<Class> alreadyAdded=new HashSet<Class>();
+{
+    List<Class> enumClasses=new ArrayList<Class>();
+    enumClasses.add(PatientSetService.Modifier.class);
+    enumClasses.add(PatientSetService.TimeModifier.class);
+    enumClasses.add(PatientSetService.BooleanOperator.class);
+    enumClasses.add(PatientSetService.GroupMethod.class);
+    for (    Class clz : enumClasses) {
+      enc.setPersistenceDelegate(clz,enumDelegate);
+      alreadyAdded.add(clz);
+    }
+  }
+  for (  Field f : this.objectToEncode.getClass().getDeclaredFields()) {
+    Class clz=f.getType();
+    if (clz.isEnum() && !alreadyAdded.contains(clz)) {
+      try {
+        enc.setPersistenceDelegate(clz,enumDelegate);
+        alreadyAdded.add(clz);
+      }
+ catch (      Exception e) {
+        log.error("ReportObjectXMLEncoder failed to write enumeration " + f.getName(),e);
+      }
+    }
+  }
+  log.debug("objectToEncode.type: " + objectToEncode.getClass());
+  enc.writeObject(this.objectToEncode);
+  enc.close();
+  return arr.toString();
+}

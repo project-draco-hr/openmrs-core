@@ -1,0 +1,24 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ConceptService cs=Context.getConceptService();
+  ObsService os=Context.getObsService();
+  Obs child=new Obs();
+  Obs oParent=new Obs();
+  createObsGroup(oParent,child,cs,os);
+  List<Obs> obs=os.findObsByGroupId(child.getObsGroupId());
+  List<Obs> obs2=os.findObsByGroupId(oParent.getObsId());
+  List<Obs> obs3=os.findObsByGroupId(child.getObsId());
+  Obs child2=new Obs();
+  child2.setConcept(cs.getConcept(1));
+  child2.setDateCreated(new Date());
+  child2.setCreator(Context.getAuthenticatedUser());
+  child2.setLocation(new Location(2));
+  child2.setObsDatetime(new Date());
+  child2.setPerson(new Patient(2));
+  oParent.addGroupMember(child2);
+  List<Obs> obs4=os.findObsByGroupId(oParent.getObsId());
+  assertTrue(obs.equals(obs2));
+  assertTrue(obs3.size() == 0);
+  assertTrue(obs4.contains(child));
+  assertTrue(obs4.contains(child2));
+}

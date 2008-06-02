@@ -1,0 +1,12 @@
+{
+  if (modules != null) {
+    List<String> uniqueTypes=new Vector<String>();
+    for (    ReportObjectFactoryModule mod : modules) {
+      if (!uniqueTypes.contains(mod.getType()))       uniqueTypes.add(mod.getType());
+    }
+    return uniqueTypes;
+  }
+ else {
+    return Collections.emptyList();
+  }
+}

@@ -1,0 +1,117 @@
+{
+  AST duration_op_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  try {
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case YEAR:
+{
+        AST tmp31_AST_in=(AST)_t;
+        match(_t,YEAR);
+        _t=_t.getNextSibling();
+        break;
+      }
+case YEARS:
+{
+      AST tmp32_AST_in=(AST)_t;
+      match(_t,YEARS);
+      _t=_t.getNextSibling();
+      break;
+    }
+case MONTH:
+{
+    AST tmp33_AST_in=(AST)_t;
+    match(_t,MONTH);
+    _t=_t.getNextSibling();
+    break;
+  }
+case MONTHS:
+{
+  AST tmp34_AST_in=(AST)_t;
+  match(_t,MONTHS);
+  _t=_t.getNextSibling();
+  break;
+}
+case WEEK:
+{
+AST tmp35_AST_in=(AST)_t;
+match(_t,WEEK);
+_t=_t.getNextSibling();
+break;
+}
+case WEEKS:
+{
+AST tmp36_AST_in=(AST)_t;
+match(_t,WEEKS);
+_t=_t.getNextSibling();
+break;
+}
+case DAY:
+{
+AST tmp37_AST_in=(AST)_t;
+match(_t,DAY);
+_t=_t.getNextSibling();
+break;
+}
+case DAYS:
+{
+AST tmp38_AST_in=(AST)_t;
+match(_t,DAYS);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_hour:
+{
+AST tmp39_AST_in=(AST)_t;
+match(_t,LITERAL_hour);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_hours:
+{
+AST tmp40_AST_in=(AST)_t;
+match(_t,LITERAL_hours);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_minute:
+{
+AST tmp41_AST_in=(AST)_t;
+match(_t,LITERAL_minute);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_minutes:
+{
+AST tmp42_AST_in=(AST)_t;
+match(_t,LITERAL_minutes);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_second:
+{
+AST tmp43_AST_in=(AST)_t;
+match(_t,LITERAL_second);
+_t=_t.getNextSibling();
+break;
+}
+case LITERAL_seconds:
+{
+AST tmp44_AST_in=(AST)_t;
+match(_t,LITERAL_seconds);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+}

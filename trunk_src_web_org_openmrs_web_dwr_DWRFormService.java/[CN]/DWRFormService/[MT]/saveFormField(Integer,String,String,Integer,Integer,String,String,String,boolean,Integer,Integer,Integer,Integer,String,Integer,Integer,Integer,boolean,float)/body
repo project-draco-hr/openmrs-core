@@ -1,0 +1,42 @@
+{
+  FormField ff=null;
+  Field field=null;
+  FormService fs=Context.getFormService();
+  ConceptService cs=Context.getConceptService();
+  if (formFieldId != null && formFieldId != 0)   ff=fs.getFormField(formFieldId);
+ else   ff=new FormField(formFieldId);
+  ff.setForm(fs.getForm(formId));
+  if (parent == null)   ff.setParent(null);
+ else   if (!parent.equals(ff.getFormFieldId()))   ff.setParent(fs.getFormField(parent));
+  ff.setFieldNumber(number);
+  ff.setFieldPart(part);
+  ff.setPageNumber(page);
+  ff.setMinOccurs(min);
+  ff.setMaxOccurs(max);
+  ff.setRequired(required);
+  ff.setSortWeight(sortWeight);
+  log.debug("fieldId: " + fieldId);
+  log.debug("formFieldId: " + formFieldId);
+  log.debug("parentId: " + parent);
+  log.debug("parent: " + ff.getParent());
+  if (fieldId != null && fieldId != 0)   field=fs.getField(fieldId);
+ else   field=new Field(fieldId);
+  if (field == null) {
+    log.error("Field is null. Field Id: " + fieldId);
+  }
+  field.setName(name);
+  field.setDescription(fieldDesc);
+  field.setFieldType(fs.getFieldType(fieldTypeId));
+  if (conceptId != null && conceptId != 0)   field.setConcept(cs.getConcept(conceptId));
+ else   field.setConcept(null);
+  field.setTableName(table);
+  field.setAttributeName(attr);
+  field.setDefaultValue(defaultValue);
+  field.setSelectMultiple(multiple);
+  ff.setField(field);
+  fs.updateFormField(ff);
+  fieldId=ff.getField().getFieldId();
+  formFieldId=ff.getFormFieldId();
+  Integer[] arr={fieldId,formFieldId};
+  return arr;
+}

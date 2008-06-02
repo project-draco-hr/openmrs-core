@@ -1,0 +1,19 @@
+{
+  if (patient == null)   throw new APIException("Unable to get drug orders if not given a patient");
+  List<Patient> patients=new Vector<Patient>();
+  patients.add(patient);
+  List<DrugOrder> drugOrders=getOrders(DrugOrder.class,patients,null,ORDER_STATUS.ANY,null,null,null);
+  if (drugOrders != null) {
+    if (orderStatus == ORDER_STATUS.ANY)     return drugOrders;
+ else {
+      List<DrugOrder> ret=new ArrayList<DrugOrder>();
+      for (      DrugOrder drugOrder : drugOrders) {
+        if (orderStatus == ORDER_STATUS.CURRENT && drugOrder.isCurrent())         ret.add(drugOrder);
+ else         if (orderStatus == ORDER_STATUS.NOTVOIDED && !drugOrder.getVoided())         ret.add(drugOrder);
+ else         if (orderStatus == ORDER_STATUS.COMPLETE && drugOrder.isDiscontinued())         ret.add(drugOrder);
+      }
+      return ret;
+    }
+  }
+  return Collections.EMPTY_LIST;
+}

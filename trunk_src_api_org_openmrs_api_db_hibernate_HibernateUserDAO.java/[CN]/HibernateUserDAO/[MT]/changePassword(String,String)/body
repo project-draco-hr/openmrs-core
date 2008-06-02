@@ -1,0 +1,14 @@
+{
+  User u=Context.getAuthenticatedUser();
+  String passwordOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
+  String saltOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
+  String hashedPassword=Security.encodeString(pw + saltOnRecord);
+  if (!passwordOnRecord.equals(hashedPassword)) {
+    log.error("Passwords don't match");
+    throw new DAOException("Passwords don't match");
+  }
+  log.debug("updating password");
+  String salt=Security.getRandomToken();
+  String newPassword=Security.encodeString(pw2 + salt);
+  updateUserPassword(newPassword,salt,u.getUserId(),new Date(),u.getUserId());
+}

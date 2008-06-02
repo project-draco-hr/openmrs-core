@@ -1,0 +1,6 @@
+{
+  String xml=request.getParameter("location_xml");
+  log.debug("xml to upload = " + xml);
+  int numAdded=MigrationHelper.importLocations(MigrationHelper.parseXml(xml));
+  return new ModelAndView(new RedirectView("migration.form?message=" + URLEncoder.encode("Uploaded " + numAdded + " locations","UTF-8")));
+}

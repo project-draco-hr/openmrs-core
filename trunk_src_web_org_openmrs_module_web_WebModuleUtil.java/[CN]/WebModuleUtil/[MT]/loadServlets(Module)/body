@@ -1,0 +1,42 @@
+{
+  Element rootNode=mod.getConfig().getDocumentElement();
+  NodeList servletTags=rootNode.getElementsByTagName("servlet");
+  Map<String,HttpServlet> servletMap=new HashMap<String,HttpServlet>();
+  for (int i=0; i < servletTags.getLength(); i++) {
+    Node node=servletTags.item(i);
+    NodeList childNodes=node.getChildNodes();
+    String name="", className="";
+    for (int j=0; j < childNodes.getLength(); j++) {
+      Node childNode=childNodes.item(j);
+      if ("servlet-name".equals(childNode.getNodeName())) {
+        if (childNode.getTextContent() != null)         name=childNode.getTextContent().trim();
+      }
+ else       if ("servlet-class".equals(childNode.getNodeName())) {
+        if (childNode.getTextContent() != null)         className=childNode.getTextContent().trim();
+      }
+    }
+    if (name.length() == 0 || className.length() == 0) {
+      log.warn("both 'servlet-name' and 'servlet-class' are required for the 'servlet' tag. Given '" + name + "' and '"+ className+ "' for module "+ mod.getName());
+      continue;
+    }
+    HttpServlet httpServlet=null;
+    try {
+      httpServlet=(HttpServlet)ModuleFactory.getModuleClassLoader(mod).loadClass(className).newInstance();
+    }
+ catch (    ClassNotFoundException e) {
+      log.warn("Class not found for servlet " + name + " for module "+ mod.getName(),e);
+      continue;
+    }
+catch (    IllegalAccessException e) {
+      log.warn("Class cannot be accessed for servlet " + name + " for module "+ mod.getName(),e);
+      continue;
+    }
+catch (    InstantiationException e) {
+      log.warn("Class cannot be instantiated for servlet " + name + " for module "+ mod.getName(),e);
+      continue;
+    }
+    servletMap.put(name,httpServlet);
+  }
+  moduleServlets.put(mod,servletMap);
+  return servletMap;
+}

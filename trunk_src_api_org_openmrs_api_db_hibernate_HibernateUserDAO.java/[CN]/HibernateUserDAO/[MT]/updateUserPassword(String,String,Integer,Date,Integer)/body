@@ -1,0 +1,17 @@
+{
+  try {
+    PreparedStatement ps=getUpdateUserPasswordStatement();
+    if (ps != null) {
+      ps.setString(1,newPassword);
+      ps.setString(2,salt);
+      ps.setInt(3,changedBy);
+      ps.setDate(4,new java.sql.Date(dateChanged.getTime()));
+      ps.setInt(5,userIdToChange);
+      ps.executeUpdate();
+    }
+  }
+ catch (  SQLException e) {
+    log.warn("SQL Exception while running user-password-update ",e);
+  }
+  sessionFactory.getCurrentSession().flush();
+}

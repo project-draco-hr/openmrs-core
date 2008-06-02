@@ -1,0 +1,26 @@
+{
+  String tmpStr="";
+  try {
+    if (Key.equals("EXIST") && !nextKey.equals("")) {
+      tmpStr="userVarMap.containsKey(\"" + nextKey + "\") && !userVarMap.get(\""+ nextKey+ "\").equals(\"\")  ";
+    }
+ else     if (Key.equals("ANY") && !nextKey.equals("")) {
+      tmpStr=" (val = " + nextKey + "()) != null ) {\n\t";
+      IsComplexIf=true;
+      if (mObjElem != null) {
+        tmpStr+="\tif (";
+        tmpStr+=mObjElem.getCompOpCode(nextKey,LIST);
+      }
+    }
+ else {
+      if (mObjElem != null) {
+        tmpStr+=mObjElem.getCompOpCode(nextKey,NOLIST);
+      }
+    }
+  }
+ catch (  Exception e) {
+    System.err.println("ComplexFunc: " + e);
+    e.printStackTrace();
+  }
+  return tmpStr;
+}

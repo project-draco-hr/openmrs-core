@@ -1,0 +1,5 @@
+{
+  if (role.getAllParentRoles().contains(role))   throw new APIAuthenticationException("Invalid Role or parent Role.  A role cannot inherit itself.");
+  checkPrivileges(role);
+  return dao.saveRole(role);
+}

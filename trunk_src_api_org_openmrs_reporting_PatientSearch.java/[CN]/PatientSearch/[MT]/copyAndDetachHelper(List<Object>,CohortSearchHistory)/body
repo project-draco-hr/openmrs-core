@@ -1,0 +1,17 @@
+{
+  List<Object> ret=new ArrayList<Object>();
+  for (  Object o : list) {
+    if (o instanceof PatientSearch) {
+      ret.add(((PatientSearch)o).copyAndDetachFromHistory(history));
+    }
+ else     if (o instanceof Integer) {
+      PatientSearch ps=history.getSearchHistory().get(((Integer)o) - 1);
+      ret.add(ps.copyAndDetachFromHistory(history));
+    }
+ else     if (o instanceof List) {
+      ret.add(copyAndDetachHelper((List)o,history));
+    }
+ else     ret.add(o);
+  }
+  return ret;
+}

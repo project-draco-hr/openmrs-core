@@ -1,0 +1,107 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST action_statement_AST=null;
+  try {
+{
+      AST tmp535_AST=null;
+      tmp535_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp535_AST);
+      match(WRITE);
+    }
+{
+{
+        if ((LA(1) == LPAREN)) {
+          match(LPAREN);
+        }
+ else         if ((_tokenSet_60.member(LA(1)))) {
+        }
+ else {
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+      }
+{
+        if ((_tokenSet_61.member(LA(1)))) {
+{
+            _loop257:             do {
+              if ((LA(1) == ACTION_OP)) {
+                AST tmp537_AST=null;
+                tmp537_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp537_AST);
+                match(ACTION_OP);
+                expr_factor();
+                astFactory.addASTChild(currentAST,returnAST);
+              }
+ else {
+                break _loop257;
+              }
+            }
+ while (true);
+          }
+        }
+ else         if ((_tokenSet_62.member(LA(1)))) {
+          expr();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+      }
+{
+switch (LA(1)) {
+case RPAREN:
+{
+            match(RPAREN);
+            break;
+          }
+case AT:
+case SEMI:
+{
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(LT(1),getFilename());
+      }
+  }
+}
+}
+{
+switch (LA(1)) {
+case AT:
+{
+{
+      AST tmp539_AST=null;
+      tmp539_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp539_AST);
+      match(AT);
+    }
+    AST tmp540_AST=null;
+    tmp540_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp540_AST);
+    match(ID);
+    break;
+  }
+case SEMI:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+action_statement_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_33);
+}
+ else {
+throw ex;
+}
+}
+returnAST=action_statement_AST;
+}

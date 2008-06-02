@@ -1,0 +1,76 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST data_assign_phrase_AST=null;
+  try {
+{
+switch (LA(1)) {
+case READ:
+{
+          AST tmp437_AST=null;
+          tmp437_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp437_AST);
+          match(READ);
+          read_phrase();
+          astFactory.addASTChild(currentAST,returnAST);
+          break;
+        }
+case EVENT:
+case LITERAL_EVENT:
+case LITERAL_Event:
+{
+{
+switch (LA(1)) {
+case LITERAL_EVENT:
+{
+              AST tmp438_AST=null;
+              tmp438_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp438_AST);
+              match(LITERAL_EVENT);
+              break;
+            }
+case LITERAL_Event:
+{
+            AST tmp439_AST=null;
+            tmp439_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp439_AST);
+            match(LITERAL_Event);
+            break;
+          }
+case EVENT:
+{
+          AST tmp440_AST=null;
+          tmp440_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp440_AST);
+          match(EVENT);
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(LT(1),getFilename());
+      }
+  }
+}
+mapping_factor();
+astFactory.addASTChild(currentAST,returnAST);
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+data_assign_phrase_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_0);
+}
+ else {
+throw ex;
+}
+}
+returnAST=data_assign_phrase_AST;
+}

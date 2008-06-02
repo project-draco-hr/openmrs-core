@@ -1,0 +1,11 @@
+{
+  boolean retVal=false;
+  List<String> availableTypes=getReportObjectTypes();
+  if (availableTypes.contains(type)) {
+    List<String> availableSubTypes=getReportObjectSubTypes(type);
+    if (availableSubTypes.contains(subType)) {
+      retVal=true;
+    }
+  }
+  return retVal;
+}

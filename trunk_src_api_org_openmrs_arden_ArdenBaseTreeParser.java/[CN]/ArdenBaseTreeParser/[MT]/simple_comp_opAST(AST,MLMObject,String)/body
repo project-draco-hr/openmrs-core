@@ -1,0 +1,82 @@
+{
+  String s="";
+  AST simple_comp_opAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case EQUALS:
+{
+        AST __t451=_t;
+        AST tmp84_AST_in=(AST)_t;
+        match(_t,EQUALS);
+        _t=_t.getFirstChild();
+        System.err.println("Found = ");
+        obj.SetCompOperator(EQUALS,key);
+        _t=__t451;
+        _t=_t.getNextSibling();
+        break;
+      }
+case GTE:
+{
+      AST __t452=_t;
+      AST tmp85_AST_in=(AST)_t;
+      match(_t,GTE);
+      _t=_t.getFirstChild();
+      System.err.println("Found >= ");
+      obj.SetCompOperator(GTE,key);
+      _t=__t452;
+      _t=_t.getNextSibling();
+      break;
+    }
+case GT:
+{
+    AST __t453=_t;
+    AST tmp86_AST_in=(AST)_t;
+    match(_t,GT);
+    _t=_t.getFirstChild();
+    System.err.println("Found > ");
+    obj.SetCompOperator(GT,key);
+    _t=__t453;
+    _t=_t.getNextSibling();
+    break;
+  }
+case LT:
+{
+  AST __t454=_t;
+  AST tmp87_AST_in=(AST)_t;
+  match(_t,LT);
+  _t=_t.getFirstChild();
+  System.err.println("Found < ");
+  obj.SetCompOperator(LT,key);
+  _t=__t454;
+  _t=_t.getNextSibling();
+  break;
+}
+case LTE:
+{
+AST __t455=_t;
+AST tmp88_AST_in=(AST)_t;
+match(_t,LTE);
+_t=_t.getFirstChild();
+System.err.println("Found <= ");
+obj.SetCompOperator(LTE,key);
+_t=__t455;
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

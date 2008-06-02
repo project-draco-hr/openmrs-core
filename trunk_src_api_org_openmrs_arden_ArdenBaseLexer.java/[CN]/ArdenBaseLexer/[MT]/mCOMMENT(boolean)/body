@@ -1,0 +1,27 @@
+{
+  int _ttype;
+  Token _token=null;
+  int _begin=text.length();
+  _ttype=COMMENT;
+  int _saveIndex;
+  match("//");
+{
+    _loop545:     do {
+      if ((_tokenSet_0.member(LA(1)))) {
+{
+          match(_tokenSet_0);
+        }
+      }
+ else {
+        break _loop545;
+      }
+    }
+ while (true);
+  }
+  _ttype=Token.SKIP;
+  if (_createToken && _token == null && _ttype != Token.SKIP) {
+    _token=makeToken(_ttype);
+    _token.setText(new String(text.getBuffer(),_begin,text.length() - _begin));
+  }
+  _returnToken=_token;
+}

@@ -1,0 +1,16 @@
+{
+  Calendar c=new GregorianCalendar();
+  c.set(2006,6,12);
+  c.set(Calendar.HOUR_OF_DAY,0);
+  c.set(Calendar.MINUTE,0);
+  c.set(Calendar.SECOND,0);
+  Date fromDate=c.getTime();
+  c.add(Calendar.DATE,7);
+  Date toDate=c.getTime();
+  Date toDateToUse=OpenmrsUtil.lastSecondOfDay(toDate);
+  String encUserColumn=null;
+  String orderUserColumn=null;
+  List<DataEntryStatistic> stats=Context.getAdministrationService().getDataEntryStatistics(fromDate,toDateToUse,encUserColumn,orderUserColumn,"location");
+  DataTable table=DataEntryStatistic.tableByUserAndType(stats,true);
+  System.out.print("Data entry stats output: " + table.getHtmlTable());
+}

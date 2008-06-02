@@ -1,0 +1,8 @@
+{
+  List<CohortDefinition> ret=new ArrayList<CohortDefinition>();
+  for (  AbstractReportObject o : Context.getReportObjectService().getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH)) {
+    PatientSearchReportObject s=(PatientSearchReportObject)o;
+    ret.add(s.getPatientSearch());
+  }
+  return ret;
+}

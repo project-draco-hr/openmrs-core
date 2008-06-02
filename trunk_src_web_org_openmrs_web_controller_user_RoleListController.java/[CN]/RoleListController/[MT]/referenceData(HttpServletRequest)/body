@@ -1,0 +1,8 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  HttpSession httpSession=request.getSession();
+  if (Context.isAuthenticated()) {
+    map.put("superuser",OpenmrsConstants.SUPERUSER_ROLE);
+  }
+  return map;
+}

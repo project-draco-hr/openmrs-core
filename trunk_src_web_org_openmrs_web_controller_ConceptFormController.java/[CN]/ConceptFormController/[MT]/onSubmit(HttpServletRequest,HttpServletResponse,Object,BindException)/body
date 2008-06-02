@@ -1,0 +1,60 @@
+{
+  HttpSession httpSession=request.getSession();
+  ConceptService cs=Context.getConceptService();
+  if (Context.isAuthenticated()) {
+    Concept concept=(Concept)obj;
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String action=request.getParameter("action");
+    if (action.equals(msa.getMessage("Concept.delete"))) {
+      try {
+        cs.deleteConcept(concept);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.deleted");
+        return new ModelAndView(new RedirectView("index.htm"));
+      }
+ catch (      APIException e) {
+        log.error(e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.delete");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId().toString()));
+      }
+    }
+ else {
+      String isSet=ServletRequestUtils.getStringParameter(request,"conceptSet","");
+      if (isSet.equals(""))       concept.setSet(false);
+ else       concept.setSet(true);
+      boolean isNew=false;
+      try {
+        if (concept.getConceptId() == null) {
+          isNew=true;
+          concept.setConceptId(cs.getNextAvailableId());
+          if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
+            ConceptNumeric cn=getConceptNumeric(concept,request);
+            cs.createConcept(cn);
+          }
+ else {
+            cs.createConcept(concept);
+          }
+        }
+ else {
+          if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
+            ConceptNumeric cn=getConceptNumeric(concept,request);
+            cs.updateConcept(cn);
+          }
+ else {
+            cs.updateConcept(concept);
+          }
+        }
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.saved");
+      }
+ catch (      APIException e) {
+        log.error("Error while trying to save concept",e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.save");
+        if (isNew) {
+          errors.reject("concept","Concept.cannot.save");
+          return new ModelAndView(new RedirectView(getSuccessView()));
+        }
+      }
+      return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+    }
+  }
+  return new ModelAndView(new RedirectView(getFormView()));
+}

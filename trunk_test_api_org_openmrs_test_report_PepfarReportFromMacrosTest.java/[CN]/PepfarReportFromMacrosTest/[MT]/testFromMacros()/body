@@ -1,0 +1,28 @@
+{
+  initializeInMemoryDatabase();
+  authenticate();
+  long startTime=System.currentTimeMillis();
+  authenticate();
+  System.out.println("Setting up required patient searches...");
+  setupPatientSearches();
+  Properties macros=getMacros();
+  System.out.println("Retrieved macros: " + macros);
+  String xml=generateReportSchemaXml(getReportIndicators());
+  System.out.println("Constructed starting xml: " + xml);
+  xml=explodeReportSchemaMacros(xml,getMacros());
+  System.out.println("Exploded macros in xml: " + xml);
+  Serializer serializer=new Persister(new OpenmrsCycleStrategy());
+  ReportSchema schema=serializer.read(ReportSchema.class,xml.toString());
+  System.out.println("Serialized ReportSchema...");
+  EvaluationContext evalContext=new EvaluationContext();
+  for (  Map.Entry<Parameter,Object> e : getUserEnteredParameters(schema.getReportParameters()).entrySet()) {
+    System.out.println("adding parameter value " + e.getKey());
+    evalContext.addParameterValue(e.getKey(),e.getValue());
+  }
+  System.out.println("Created EvaluationContext...");
+  ReportService rs=(ReportService)Context.getService(ReportService.class);
+  ReportData data=rs.evaluate(schema,null,evalContext);
+  System.out.println("Rendering output to file:");
+  renderData(data);
+  System.out.println("Test run in " + (System.currentTimeMillis() - startTime) + " ms");
+}

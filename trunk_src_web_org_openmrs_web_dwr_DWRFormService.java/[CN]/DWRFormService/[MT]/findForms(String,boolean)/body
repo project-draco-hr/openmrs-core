@@ -1,0 +1,7 @@
+{
+  List<FormListItem> forms=new Vector<FormListItem>();
+  for (  Form form : Context.getFormService().findForms(text,includeUnpublished,false)) {
+    forms.add(new FormListItem(form));
+  }
+  return forms;
+}

@@ -1,0 +1,10 @@
+{
+  Date now=new Date();
+  if (field.getCreator() == null)   field.setCreator(Context.getAuthenticatedUser());
+  if (field.getDateCreated() == null)   field.setDateCreated(now);
+  if (field.getFieldId() != null) {
+    field.setChangedBy(Context.getAuthenticatedUser());
+    field.setDateChanged(now);
+  }
+  return dao.saveField(field);
+}

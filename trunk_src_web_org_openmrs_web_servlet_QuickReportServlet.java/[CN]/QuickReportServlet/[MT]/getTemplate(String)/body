@@ -1,0 +1,45 @@
+{
+  String template="<table>\n";
+  if (reportType.equals("RETURN VISIT DATE THIS WEEK")) {
+    template+="#foreach($o in $observations)\n";
+    template+=" <tr>\n";
+    template+="  <td>$!{o.Patient.PersonName.GivenName} $!{o.Patient.PersonName.MiddleName} $!{o.Patient.PersonName.FamilyName}</td>\n";
+    template+="  <td>$!{o.Patient.PatientIdentifier}</td>\n";
+    template+="  <td>$!{o.Location.Name}</td>\n";
+    template+="  <td>$!{date.format($!{o.Encounter.EncounterDatetime})}</td>\n";
+    template+="  <td>$!{date.format($o.ValueDatetime)}</td>\n";
+    template+=" </tr>\n";
+    template+="#end\n";
+  }
+  if (reportType.equals("ATTENDED CLINIC THIS WEEK")) {
+    template+="#foreach($e in $encounters)\n";
+    template+=" <tr>\n";
+    template+="  <td>$!{e.Patient.PersonName.GivenName} $!{e.Patient.PersonName.MiddleName} $!{e.Patient.PersonName.FamilyName}</td>\n";
+    template+="  <td>$!{e.Patient.PatientIdentifier}</td>\n";
+    template+="  <td>$!{e.Location.Name}</td>\n";
+    template+="  <td>$!{date.format($e.encounterDatetime)}</td>\n";
+    template+=" </tr>\n";
+    template+="#end\n";
+  }
+ else   if (reportType.equals("VOIDED OBS")) {
+    template+=" <tr> \n";
+    template+="  <th>Id</th><th>Patient</th><th>Encounter</th>";
+    template+="  <th>Concept</th><th>Voided Answer</th>";
+    template+="  <th>Comment</th><th>Voided By</th><th>Void Reason</th> \n";
+    template+=" </tr>\n";
+    template+="#foreach($o in $observations)\n";
+    template+=" <tr>\n";
+    template+="  <td><a href='admin/observations/obs.form?obsId=$!{o.ObsId}'>$!{o.ObsId}</a></td>\n";
+    template+="  <td><a href='admin/patients/patient.form?patientId=$!{o.Patient.patientId}'>$!{o.Patient.PatientIdentifier}</a></td>\n";
+    template+="  <td><a href='admin/encounters/encounter.form?encounterId=$!{o.Encounter.EncounterId}'>$!{o.Encounter.EncounterId}</a></td>\n";
+    template+="  <td>$!{o.Concept.getName(locale)}</td>\n";
+    template+="  <td>$!{o.getValueAsString(locale)}</td>\n";
+    template+="  <td>$!{o.Comment}</td>\n";
+    template+="  <td>$!{o.VoidedBy.FirstName} $!{o.VoidedBy.LastName} $!{date.format($o.DateVoided)}</td>\n";
+    template+="  <td>$!{o.VoidReason}</td>\n";
+    template+=" </tr>\n";
+    template+="#end\n";
+  }
+  template+="</table>\n";
+  return template;
+}

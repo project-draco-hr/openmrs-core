@@ -1,0 +1,27 @@
+{
+  if (closed) {
+    throw new IOException("This output stream has already been closed");
+  }
+  if (bufferedOutput instanceof ByteArrayOutputStream) {
+    ByteArrayOutputStream baos=(ByteArrayOutputStream)bufferedOutput;
+    ByteArrayOutputStream compressedContent=new ByteArrayOutputStream();
+    GZIPOutputStream gzipstream=new GZIPOutputStream(compressedContent);
+    byte[] bytes=baos.toByteArray();
+    gzipstream.write(bytes);
+    gzipstream.finish();
+    byte[] compressedBytes=compressedContent.toByteArray();
+    response.setContentLength(compressedBytes.length);
+    response.addHeader("Content-Encoding","gzip");
+    output.write(compressedBytes);
+    output.flush();
+    output.close();
+    closed=true;
+  }
+ else   if (bufferedOutput instanceof GZIPOutputStream) {
+    GZIPOutputStream gzipstream=(GZIPOutputStream)bufferedOutput;
+    gzipstream.finish();
+    output.flush();
+    output.close();
+    closed=true;
+  }
+}

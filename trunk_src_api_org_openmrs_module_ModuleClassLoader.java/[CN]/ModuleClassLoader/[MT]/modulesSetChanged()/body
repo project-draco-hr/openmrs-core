@@ -1,0 +1,23 @@
+{
+  List<URL> newUrls=getUrls(getModule(),getURLs());
+  for (  URL u : newUrls) {
+    addURL(u);
+  }
+  if (log.isDebugEnabled()) {
+    StringBuffer buf=new StringBuffer();
+    buf.append("New code URL's populated for module " + getModule() + ":\r\n");
+    for (    URL u : newUrls) {
+      buf.append("\t");
+      buf.append(u);
+      buf.append("\r\n");
+    }
+    log.debug(buf.toString());
+  }
+  collectRequiredModuleImports();
+  collectFilters();
+  for (Iterator<Map.Entry<URL,File>> it=libraryCache.entrySet().iterator(); it.hasNext(); ) {
+    if (it.next().getValue() == null) {
+      it.remove();
+    }
+  }
+}

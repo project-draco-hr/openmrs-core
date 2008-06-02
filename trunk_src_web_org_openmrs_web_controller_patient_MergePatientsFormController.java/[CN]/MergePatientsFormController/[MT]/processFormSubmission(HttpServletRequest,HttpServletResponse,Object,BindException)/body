@@ -1,0 +1,12 @@
+{
+  log.debug("Number of errors: " + errors.getErrorCount());
+  for (  Object o : errors.getAllErrors()) {
+    ObjectError e=(ObjectError)o;
+    log.debug("Error name: " + e.getObjectName());
+    log.debug("Error code: " + e.getCode());
+    log.debug("Error message: " + e.getDefaultMessage());
+    log.debug("Error args: " + e.getArguments());
+    log.debug("Error codes: " + e.getCodes());
+  }
+  return onSubmit(request,response,object,errors);
+}

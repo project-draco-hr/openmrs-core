@@ -1,0 +1,13 @@
+{
+  for (  TaskDefinition task : getScheduledTasks()) {
+    try {
+      shutdownTask(task);
+    }
+ catch (    SchedulerException e) {
+      log.error("Failed to stop task " + task.getTaskClass() + " due to Scheduler exception",e);
+    }
+catch (    APIException e) {
+      log.error("Failed to stop task " + task.getTaskClass() + " due to API exception",e);
+    }
+  }
+}

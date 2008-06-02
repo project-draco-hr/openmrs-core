@@ -1,0 +1,11 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService os=Context.getObsService();
+  Concept c=new Concept(1);
+  List<Concept> questions=new Vector<Concept>();
+  questions.add(c);
+  List<PERSON_TYPE> personTypes=new Vector<PERSON_TYPE>();
+  personTypes.add(PERSON_TYPE.PATIENT);
+  List<Obs> obs=os.getObservations(c,"location.locationId asc, obs.valueDatetime asc",ObsService.USER,true);
+  assertEquals(2,obs.size());
+}

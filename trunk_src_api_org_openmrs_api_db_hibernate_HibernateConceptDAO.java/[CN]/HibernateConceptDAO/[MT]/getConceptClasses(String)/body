@@ -1,0 +1,5 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptClass.class);
+  if (name != null)   crit.add(Expression.eq("name",name));
+  return crit.list();
+}
