@@ -1,7 +1,7 @@
 {
   User unknownUser=Context.getUserService().getUserByUsername("Unknown");
-  Location unknownLocation=Context.getEncounterService().getLocationByName("Unknown Location");
-  if (unknownLocation == null)   unknownLocation=Context.getEncounterService().getLocationByName("Unknown");
+  Location unknownLocation=Context.getLocationService().getLocation("Unknown Location");
+  if (unknownLocation == null)   unknownLocation=Context.getLocationService().getLocation("Unknown");
   if (unknownUser == null) {
     unknownUser=Context.getAuthenticatedUser();
   }
