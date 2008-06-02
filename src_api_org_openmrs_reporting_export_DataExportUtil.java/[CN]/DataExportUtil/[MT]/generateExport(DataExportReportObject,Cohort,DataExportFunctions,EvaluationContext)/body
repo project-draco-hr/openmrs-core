@@ -20,6 +20,11 @@
   Locale locale=Context.getLocale();
   velocityContext.put("locale",locale);
   velocityContext.put("fn",functions);
+  if (dataExportKeys != null && dataExportKeys.size() != 0) {
+    for (    Map.Entry<String,Object> entry : dataExportKeys.entrySet()) {
+      velocityContext.put(entry.getKey(),entry.getValue());
+    }
+  }
   velocityContext.put("patientSet",patientSet);
   String template=dataExport.generateTemplate();
   if (log.isDebugEnabled())   log.debug("Template: " + template.substring(0,template.length() < 3500 ? template.length() : 3500) + "...");
