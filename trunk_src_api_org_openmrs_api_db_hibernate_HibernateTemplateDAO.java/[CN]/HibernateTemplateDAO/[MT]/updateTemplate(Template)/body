@@ -1,0 +1,9 @@
+{
+  if (template.getId() == null) {
+    createTemplate(template);
+  }
+ else {
+    template=(Template)sessionFactory.getCurrentSession().merge(template);
+    sessionFactory.getCurrentSession().saveOrUpdate(template);
+  }
+}

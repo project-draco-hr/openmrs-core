@@ -1,0 +1,21 @@
+{
+  alerts=null;
+  try {
+    AlertService as=Context.getAlertService();
+    if (user == null) {
+      List<Alert> alertList=as.getAlerts();
+      log.debug("alertList.size: " + alertList.size());
+      alerts=alertList.iterator();
+    }
+ else {
+      List<Alert> alertList=as.getAlerts(user,includeRead,includeExpired);
+      log.debug("alertList.size: " + alertList.size());
+      alerts=alertList.iterator();
+    }
+    setVar("alert");
+    setVarStatus("varStatus");
+  }
+ catch (  Exception e) {
+    log.error(e);
+  }
+}

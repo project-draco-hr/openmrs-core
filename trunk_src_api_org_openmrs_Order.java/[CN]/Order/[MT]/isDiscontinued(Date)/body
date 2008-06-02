@@ -1,0 +1,12 @@
+{
+  if (voided)   return false;
+  if (checkDate == null)   checkDate=new Date();
+  if (discontinued == null || !discontinued)   return false;
+  if (startDate == null || checkDate.before(startDate)) {
+    return false;
+  }
+  if (discontinuedDate != null && discontinuedDate.after(checkDate)) {
+    return false;
+  }
+  return true;
+}

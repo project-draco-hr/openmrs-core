@@ -1,0 +1,6 @@
+{
+  ProgramWorkflowStateEditor editor=new ProgramWorkflowStateEditor();
+  ProgramWorkflowState programWorkflowState=(ProgramWorkflowState)oldInstance;
+  editor.setAsText(programWorkflowState.getProgramWorkflowStateId().toString());
+  return new Expression(editor,"getValue",null);
+}

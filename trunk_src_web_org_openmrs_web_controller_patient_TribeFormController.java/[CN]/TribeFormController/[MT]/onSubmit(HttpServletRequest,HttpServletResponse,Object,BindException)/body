@@ -1,0 +1,12 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Tribe tribe=(Tribe)obj;
+    Context.getAdministrationService().updateTribe(tribe);
+    view=getSuccessView();
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,msa.getMessage("Tribe.saved"));
+  }
+  return new ModelAndView(new RedirectView(view));
+}

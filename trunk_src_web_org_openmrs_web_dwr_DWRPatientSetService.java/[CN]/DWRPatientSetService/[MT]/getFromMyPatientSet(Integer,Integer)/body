@@ -1,0 +1,16 @@
+{
+  Vector<PatientListItem> ret=new Vector<PatientListItem>();
+  List<Integer> temp=new ArrayList<Integer>(Context.getPatientSetService().getMyPatientSet().getMemberIds());
+  if (fromIndex >= temp.size()) {
+    return ret;
+  }
+  if (fromIndex < 0) {
+    fromIndex=0;
+  }
+  int toIndex=Math.min(fromIndex + pageSize,temp.size());
+  List<Patient> patients=Context.getPatientSetService().getPatients(temp.subList(fromIndex,toIndex));
+  for (  Patient patient : patients) {
+    ret.add(new PatientListItem(patient));
+  }
+  return ret;
+}

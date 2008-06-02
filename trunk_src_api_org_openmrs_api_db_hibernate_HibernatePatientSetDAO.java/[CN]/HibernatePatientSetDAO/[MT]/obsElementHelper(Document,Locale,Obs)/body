@@ -1,0 +1,66 @@
+{
+  Element obsNode=doc.createElement("obs");
+  Concept c=obs.getConcept();
+  obsNode.setAttribute("obs_id",obs.getObsId().toString());
+  obsNode.setAttribute("concept_id",c.getConceptId().toString());
+  obsNode.setAttribute("concept_name",c.getName(locale).getName());
+  if (obs.getObsDatetime() != null) {
+    obsNode.setAttribute("datetime",df.format(obs.getObsDatetime()));
+  }
+  if (obs.getAccessionNumber() != null) {
+    obsNode.setAttribute("accession_number",obs.getAccessionNumber());
+  }
+  if (obs.getComment() != null) {
+    obsNode.setAttribute("comment",obs.getComment());
+  }
+  if (obs.getDateStarted() != null) {
+    obsNode.setAttribute("date_started",df.format(obs.getDateStarted()));
+  }
+  if (obs.getDateStopped() != null) {
+    obsNode.setAttribute("date_stopped",df.format(obs.getDateStopped()));
+  }
+  if (obs.getObsGroupId() != null) {
+    obsNode.setAttribute("obs_group_id",obs.getObsGroupId().toString());
+  }
+  if (obs.getValueGroupId() != null) {
+    obsNode.setAttribute("value_group_id",obs.getValueGroupId().toString());
+  }
+  String value=null;
+  String dataType=null;
+  if (obs.getValueCoded() != null) {
+    Concept valueConcept=obs.getValueCoded();
+    obsNode.setAttribute("value_coded_id",valueConcept.getConceptId().toString());
+    obsNode.setAttribute("value_coded",valueConcept.getName(locale).getName());
+    dataType="coded";
+    value=valueConcept.getName(locale).getName();
+  }
+  if (obs.getValueAsBoolean() != null) {
+    obsNode.setAttribute("value_boolean",obs.getValueAsBoolean().toString());
+    dataType="boolean";
+    value=obs.getValueAsBoolean().toString();
+  }
+  if (obs.getValueDatetime() != null) {
+    obsNode.setAttribute("value_datetime",df.format(obs.getValueDatetime()));
+    dataType="datetime";
+    value=obs.getValueDatetime().toString();
+  }
+  if (obs.getValueNumeric() != null) {
+    obsNode.setAttribute("value_numeric",obs.getValueNumeric().toString());
+    dataType="numeric";
+    value=obs.getValueNumeric().toString();
+  }
+  if (obs.getValueText() != null) {
+    obsNode.setAttribute("value_text",obs.getValueText());
+    dataType="text";
+    value=obs.getValueText();
+  }
+  if (obs.getValueModifier() != null) {
+    obsNode.setAttribute("value_modifier",obs.getValueModifier());
+    if (value != null) {
+      value=obs.getValueModifier() + " " + value;
+    }
+  }
+  obsNode.setAttribute("data_type",dataType);
+  obsNode.appendChild(doc.createTextNode(value));
+  return obsNode;
+}

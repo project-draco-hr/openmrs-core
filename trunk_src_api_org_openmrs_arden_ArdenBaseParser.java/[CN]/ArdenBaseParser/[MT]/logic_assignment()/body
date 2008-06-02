@@ -1,0 +1,141 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST logic_assignment_AST=null;
+  try {
+{
+switch (LA(1)) {
+case ACTION_OP:
+{
+          AST tmp506_AST=null;
+          tmp506_AST=astFactory.create(LT(1));
+          astFactory.makeASTRoot(currentAST,tmp506_AST);
+          match(ACTION_OP);
+          break;
+        }
+case ID:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+}
+}
+identifier_or_object_ref();
+astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case ACTION_OP:
+{
+    AST tmp507_AST=null;
+    tmp507_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp507_AST);
+    match(ACTION_OP);
+    break;
+  }
+case BECOMES:
+case EQUALS:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+{
+switch (LA(1)) {
+case BECOMES:
+{
+match(BECOMES);
+break;
+}
+case EQUALS:
+{
+match(EQUALS);
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+{
+switch (LA(1)) {
+case COUNT:
+case THE:
+case NOW:
+case IF:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case OF:
+case TIME:
+case ANY:
+case INTLIT:
+case SEMI:
+case ID:
+case LPAREN:
+case COMMA:
+case ACTION_OP:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case STRING_LITERAL:
+case TERM_LITERAL:
+{
+expr();
+astFactory.addASTChild(currentAST,returnAST);
+break;
+}
+case CALL:
+{
+{
+AST tmp510_AST=null;
+tmp510_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp510_AST);
+match(CALL);
+}
+call_phrase();
+astFactory.addASTChild(currentAST,returnAST);
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+logic_assignment_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_22);
+}
+ else {
+throw ex;
+}
+}
+returnAST=logic_assignment_AST;
+}

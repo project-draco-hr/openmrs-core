@@ -1,0 +1,14 @@
+{
+  List<String> sortList=new Vector<String>();
+  if (sortByValue) {
+    sortList.add("valueNumeric");
+  }
+  List<Concept> answers=new Vector<Concept>();
+  answers.add(answer);
+  List<Obs> obs=getObservations(null,null,null,answers,getPersonTypeEnumerations(personType),null,sortList,null,null,null,null,includeVoided);
+  List<Object[]> returnList=new Vector<Object[]>();
+  for (  Obs o : obs) {
+    returnList.add(new Object[]{o.getObsId(),o.getObsDatetime(),o.getValueNumeric()});
+  }
+  return returnList;
+}

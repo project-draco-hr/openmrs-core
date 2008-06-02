@@ -1,0 +1,15 @@
+{
+  if (StringUtils.hasText(text)) {
+    try {
+      ReportService rs=(ReportService)Context.getService(ReportService.class);
+      setValue(rs.getReportSchemaXml(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      log.error("Error setting text: " + text,ex);
+      throw new IllegalArgumentException("ReportSchemaXml not found: " + ex.getMessage());
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

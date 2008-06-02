@@ -1,0 +1,9 @@
+{
+  for (  PatientProgram p : getPatientPrograms(null,null,null,null,null,null,false)) {
+    PatientState state=p.getPatientState(patientStateId);
+    if (state != null) {
+      return state;
+    }
+  }
+  return null;
+}

@@ -1,0 +1,16 @@
+{
+  Vector locationList=new Vector();
+  try {
+    EncounterService es=Context.getEncounterService();
+    List<Location> locations=es.getLocations();
+    locationList=new Vector(locations.size());
+    for (    Location loc : locations) {
+      locationList.add(new LocationListItem(loc));
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while attempting to get locations",e);
+    locationList.add("Error while attempting to get locations - " + e.getMessage());
+  }
+  return locationList;
+}

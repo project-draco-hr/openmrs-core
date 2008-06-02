@@ -1,0 +1,29 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/test/report/include/RowPerProgramEnrollment.xml");
+  authenticate();
+  EvaluationContext evalContext=new EvaluationContext();
+  PatientSearch kids=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+  kids.addArgument("maxAge","3",Integer.class);
+  Cohort kidsCohort=Context.getCohortService().evaluate(kids,evalContext);
+  RowPerProgramEnrollmentDataSetDefinition definition=new RowPerProgramEnrollmentDataSetDefinition();
+  definition.setName("Row per enrollment");
+  Set<Program> programs=new HashSet<Program>();
+  programs.add(Context.getProgramWorkflowService().getProgram(1));
+  definition.setPrograms(programs);
+  ReportSchema rs=new ReportSchema();
+  rs.setName("Testing row-per-obs");
+  rs.setDescription("Tesing RowPerObsDataSet*");
+  rs.addDataSetDefinition(definition);
+  Serializer serializer=OpenmrsUtil.getSerializer();
+  StringWriter writer=new StringWriter();
+  serializer.write(rs,writer);
+  System.out.println("xml =\n" + writer.toString());
+  rs=(ReportSchema)serializer.read(ReportSchema.class,writer.toString());
+  System.out.println("deserialized as name=" + rs.getName());
+  System.out.println("deserialized with " + rs.getDataSetDefinitions().size() + " data set definitions");
+  System.out.println("Evaluating...");
+  ReportData data=Context.getReportService().evaluate(rs,kidsCohort,evalContext);
+  System.out.println("Result=");
+  new TsvReportRenderer().render(data,null,System.out);
+}

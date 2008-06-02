@@ -1,0 +1,21 @@
+{
+  ModuleClassLoader moduleClassLoader=getModuleClassLoader(module);
+  for (  AdvicePoint advice : module.getAdvicePoints()) {
+    Class cls=null;
+    try {
+      cls=moduleClassLoader.loadClass(advice.getPoint());
+      Object aopObject=advice.getClassInstance();
+      if (Advisor.class.isInstance(aopObject)) {
+        log.debug("adding advisor: " + aopObject.getClass());
+        Context.addAdvisor(cls,(Advisor)aopObject);
+      }
+ else {
+        log.debug("Adding advice: " + aopObject.getClass());
+        Context.addAdvice(cls,(Advice)aopObject);
+      }
+    }
+ catch (    ClassNotFoundException e) {
+      throw new ModuleException("Could not load advice point: " + advice.getPoint(),e);
+    }
+  }
+}

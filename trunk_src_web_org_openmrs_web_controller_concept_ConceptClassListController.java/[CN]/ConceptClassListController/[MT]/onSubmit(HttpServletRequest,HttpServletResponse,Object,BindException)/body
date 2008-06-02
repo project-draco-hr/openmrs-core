@@ -1,0 +1,30 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String[] conceptClassList=request.getParameterValues("conceptClassId");
+    AdministrationService as=Context.getAdministrationService();
+    ConceptService cs=Context.getConceptService();
+    String success="";
+    String error="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String deleted=msa.getMessage("general.deleted");
+    String notDeleted=msa.getMessage("general.cannot.delete");
+    for (    String cc : conceptClassList) {
+      try {
+        as.deleteConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
+        if (!success.equals(""))         success+="<br/>";
+        success+=cc + " " + deleted;
+      }
+ catch (      APIException e) {
+        log.warn("Error deleting concept class",e);
+        if (!error.equals(""))         error+="<br/>";
+        error+=cc + " " + notDeleted;
+      }
+    }
+    view=getSuccessView();
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

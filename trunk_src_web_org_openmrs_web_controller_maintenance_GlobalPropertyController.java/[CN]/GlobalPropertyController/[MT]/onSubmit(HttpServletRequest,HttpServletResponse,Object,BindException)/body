@@ -1,0 +1,45 @@
+{
+  String action=request.getParameter("action");
+  if (action == null)   action="cancel";
+  if (action.equals(getMessageSourceAccessor().getMessage("general.save"))) {
+    HttpSession httpSession=request.getSession();
+    if (Context.isAuthenticated()) {
+      AdministrationService as=Context.getAdministrationService();
+      List<GlobalProperty> formBackingObject=(List<GlobalProperty>)obj;
+      Map<String,GlobalProperty> formBackingObjectMap=new HashMap<String,GlobalProperty>();
+      for (      GlobalProperty prop : formBackingObject) {
+        formBackingObjectMap.put(prop.getProperty(),prop);
+      }
+      List<GlobalProperty> globalPropList=new ArrayList<GlobalProperty>();
+      String[] keys=request.getParameterValues(PROP_NAME);
+      String[] values=request.getParameterValues(PROP_VAL_NAME);
+      String[] descriptions=request.getParameterValues(PROP_DESC_NAME);
+      for (int x=0; x < keys.length; x++) {
+        String key=keys[x];
+        String val=values[x];
+        String desc=descriptions[x];
+        GlobalProperty tmpGlobalProperty=formBackingObjectMap.get(key);
+        if (tmpGlobalProperty != null) {
+          tmpGlobalProperty.setPropertyValue(val);
+          tmpGlobalProperty.setDescription(desc);
+          globalPropList.add(tmpGlobalProperty);
+        }
+ else {
+          globalPropList.add(new GlobalProperty(key,val,desc));
+        }
+      }
+      try {
+        as.saveGlobalProperties(globalPropList);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
+        OpenmrsUtil.applyLogLevels();
+      }
+ catch (      Exception e) {
+        log.error("Error saving properties",e);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.not.saved");
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,e.getMessage());
+      }
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
+  }
+  return showForm(request,response,errors);
+}

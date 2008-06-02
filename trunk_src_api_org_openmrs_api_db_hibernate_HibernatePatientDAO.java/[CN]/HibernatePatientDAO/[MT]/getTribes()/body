@@ -1,0 +1,4 @@
+{
+  List<Tribe> tribes=sessionFactory.getCurrentSession().createQuery("from Tribe t order by t.name asc").list();
+  return tribes;
+}

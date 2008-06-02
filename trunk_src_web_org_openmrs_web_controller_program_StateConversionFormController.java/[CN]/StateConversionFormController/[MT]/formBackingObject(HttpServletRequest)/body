@@ -1,0 +1,29 @@
+{
+  log.debug("called formBackingObject");
+  ConceptStateConversion conversion=null;
+  if (Context.isAuthenticated()) {
+    ProgramWorkflowService ps=Context.getProgramWorkflowService();
+    String conversionId=ServletRequestUtils.getStringParameter(request,"conceptStateConversionId");
+    if (conversionId != null) {
+      log.debug("conversion ID is " + conversionId);
+      try {
+        conversion=ps.getConceptStateConversion(Integer.valueOf(conversionId));
+        log.debug("Csc is now " + conversion);
+      }
+ catch (      NumberFormatException nfe) {
+        log.error("conversionId passed is not a valid number");
+      }
+    }
+ else {
+      log.debug("conversionID is null");
+    }
+  }
+  if (conversion == null) {
+    log.debug("Conversion is null");
+    conversion=new ConceptStateConversion();
+  }
+ else {
+    log.debug("Conversion is not null");
+  }
+  return conversion;
+}

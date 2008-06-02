@@ -1,0 +1,9 @@
+{
+  if (this.getCreator() == null)   setCreator(creator);
+  if (this.getDateCreated() == null)   setDateCreated(dateCreated);
+  if (getGroupMembers() != null) {
+    for (    Obs member : getGroupMembers()) {
+      if (member.getCreator() == null || member.getDateCreated() == null)       member.setRequiredProperties(creator,dateCreated);
+    }
+  }
+}

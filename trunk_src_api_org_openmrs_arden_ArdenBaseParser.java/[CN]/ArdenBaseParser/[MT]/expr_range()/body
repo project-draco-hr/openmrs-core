@@ -1,0 +1,36 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_range_AST=null;
+  try {
+    expr_or();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop278:       do {
+        if ((LA(1) == LITERAL_SEQTO)) {
+          AST tmp547_AST=null;
+          tmp547_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp547_AST);
+          match(LITERAL_SEQTO);
+          expr_or();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop278;
+        }
+      }
+ while (true);
+    }
+    expr_range_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_66);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=expr_range_AST;
+}

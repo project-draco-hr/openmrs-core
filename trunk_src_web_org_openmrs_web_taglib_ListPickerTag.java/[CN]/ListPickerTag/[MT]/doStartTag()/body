@@ -1,0 +1,28 @@
+{
+  if (name == null)   name="list" + (int)(Math.random() * 100);
+  if (currentItems == null)   currentItems=new Vector<Object>();
+  if (allItems == null)   allItems=new Vector<Object>();
+  String str="\n<div id='" + name + "' class='listItemBox'>";
+  for (  Object item : allItems) {
+    boolean checked=false;
+    if (currentItems.contains(item))     checked=true;
+    String id=name + "." + item.toString().replace(" ","");
+    str+="<span class='listItem" + (checked ? " listItemChecked" : "") + "'>";
+    str+="<input type='checkbox'";
+    str+="  name='" + name + "'";
+    str+="  id='" + id + "'";
+    str+="  value='" + item + "'";
+    str+="  onclick='this.parentNode.className=\"listItem \" + (this.checked == true ? \"listItemChecked\" : \"\");'";
+    if (checked)     str+="  checked='checked' ";
+    str+=" /><label for='" + id + "'>"+ item+ "</label>";
+    str+="</span>\n";
+  }
+  str+="</div>\n\n";
+  try {
+    pageContext.getOut().write(str);
+  }
+ catch (  IOException e) {
+    log.error(e);
+  }
+  return SKIP_BODY;
+}

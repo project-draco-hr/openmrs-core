@@ -1,0 +1,184 @@
+{
+  String s="";
+  AST exprAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a, b;
+  try {
+{
+      if (_t == null)       _t=ASTNULL;
+      if ((_tokenSet_1.member(_t.getType()))) {
+{
+          a=exprStringAST(_t,obj,"");
+          _t=_retTree;
+          s=a;
+{
+            if (_t == null)             _t=ASTNULL;
+switch (_t.getType()) {
+case IN:
+case LESS:
+case GREATER:
+case EQUALS:
+case LT:
+case GT:
+case LTE:
+case GTE:
+{
+{
+                  if (_t == null)                   _t=ASTNULL;
+                  if ((_tokenSet_2.member(_t.getType()))) {
+                    simple_comp_opAST(_t,obj,a);
+                    _t=_retTree;
+                  }
+ else                   if ((_tokenSet_3.member(_t.getType()))) {
+                    binary_comp_opAST(_t,obj,a);
+                    _t=_retTree;
+                  }
+ else {
+                    throw new NoViableAltException(_t);
+                  }
+                }
+                b=exprStringAST(_t,obj,a);
+                _t=_retTree;
+                break;
+              }
+case 3:
+case AND:
+case COUNT:
+case IF:
+case NOT:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case TO:
+case ENDBLOCK:
+case INTLIT:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(_t);
+          }
+      }
+    }
+  }
+}
+ else if ((_tokenSet_4.member(_t.getType()))) {
+  expr_functionAST(_t,obj);
+  _t=_retTree;
+{
+    a=exprStringAST(_t,obj,"notnull");
+    _t=_retTree;
+    s=a;
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case IN:
+case LESS:
+case GREATER:
+case EQUALS:
+{
+{
+            binary_comp_opAST(_t,obj,a);
+            _t=_retTree;
+          }
+          b=exprStringAST(_t,obj,a);
+          _t=_retTree;
+{
+            _loop434:             do {
+              if (_t == null)               _t=ASTNULL;
+              if ((_t.getType() == COMMA)) {
+                AST tmp26_AST_in=(AST)_t;
+                match(_t,COMMA);
+                _t=_t.getNextSibling();
+                exprStringAST(_t,obj,a);
+                _t=_retTree;
+                s=a;
+              }
+ else {
+                break _loop434;
+              }
+            }
+ while (true);
+          }
+          break;
+        }
+case 3:
+case AND:
+case COUNT:
+case IF:
+case NOT:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case TO:
+case ENDBLOCK:
+case INTLIT:
+case ID:
+case ARDEN_CURLY_BRACKETS:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(_t);
+    }
+}
+}
+}
+}
+ else {
+throw new NoViableAltException(_t);
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

@@ -1,0 +1,14 @@
+{
+  AbstractReportObject reportObj=null;
+  if (reportObjectClass != null) {
+    try {
+      Constructor ct=reportObjectClass.getConstructor();
+      reportObj=(AbstractReportObject)ct.newInstance();
+      reportObj=ReportObjectFactory.initInstance(reportObj,initialValues);
+    }
+ catch (    Throwable t) {
+      log.error("Could not instantiate class: " + reportObjectClass.getName() + " when trying to get report object from the factory");
+    }
+  }
+  return reportObj;
+}

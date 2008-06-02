@@ -1,0 +1,11 @@
+{
+  setUrl(defaultUrl);
+  String needScript="true";
+  if (getRequest().getAttribute("org.openmrs.widget.dateField.needScript") != null) {
+    needScript="false";
+  }
+ else {
+    getRequest().setAttribute("org.openmrs.widget.dateField.needScript","false");
+  }
+  setParameter("needScript",needScript);
+}

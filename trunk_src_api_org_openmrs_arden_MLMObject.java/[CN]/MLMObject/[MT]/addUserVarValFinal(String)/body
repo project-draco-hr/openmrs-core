@@ -1,0 +1,16 @@
+{
+  MLMObjectElement mObjElem=GetMLMObjectElement(key);
+  if (mObjElem != null) {
+    String var="", val="";
+    Iterator iter=mObjElem.iterator();
+    while (iter.hasNext()) {
+      var=(String)iter.next();
+      val=mObjElem.getUserVarVal(var);
+      if (!userVarMapFinal.containsKey(var)) {
+        userVarMapFinal.put(var,val);
+      }
+ else {
+      }
+    }
+  }
+}

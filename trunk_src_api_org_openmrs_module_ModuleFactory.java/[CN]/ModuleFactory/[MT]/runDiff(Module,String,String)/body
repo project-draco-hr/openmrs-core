@@ -1,0 +1,30 @@
+{
+  AdministrationService as=Context.getAdministrationService();
+  String key=module.getModuleId() + ".database_version";
+  String select="select property_value from global_property where property = '" + key + "'";
+  List<List<Object>> results=as.executeSQL(select,true);
+  boolean executeSQL=false;
+  if (results.size() > 0) {
+    for (    List<Object> row : results) {
+      String column=(String)row.get(0);
+      log.debug("version:column " + version + ":"+ column);
+      log.debug("compare: " + ModuleUtil.compareVersion(version,column));
+      if (ModuleUtil.compareVersion(version,column) > 0)       executeSQL=true;
+    }
+  }
+ else {
+    String insert="insert into global_property (property, property_value) values ('" + key + "', '0')";
+    as.executeSQL(insert,false);
+    executeSQL=true;
+  }
+  if (executeSQL) {
+    log.debug("Executing sql: " + sql);
+    String[] sqlStatements=sql.split(";");
+    for (    String sqlStatement : sqlStatements) {
+      if (sqlStatement.trim().length() > 0)       as.executeSQL(sqlStatement,false);
+    }
+    String description="DO NOT MODIFY.  Current database version number for the " + module.getModuleId() + " module.";
+    String update="update global_property set property_value = '" + version + "', description = '"+ description+ "' where property = '"+ key+ "'";
+    as.executeSQL(update,false);
+  }
+}

@@ -1,0 +1,48 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST timepart_AST=null;
+  try {
+    time();
+    astFactory.addASTChild(currentAST,returnAST);
+    AST tmp331_AST=null;
+    tmp331_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp331_AST);
+    match(INTLIT);
+    AST tmp332_AST=null;
+    tmp332_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp332_AST);
+    match(111);
+    AST tmp333_AST=null;
+    tmp333_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp333_AST);
+    match(INTLIT);
+    AST tmp334_AST=null;
+    tmp334_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp334_AST);
+    match(111);
+    AST tmp335_AST=null;
+    tmp335_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp335_AST);
+    match(INTLIT);
+    fractional_seconds();
+    astFactory.addASTChild(currentAST,returnAST);
+    time_zone();
+    astFactory.addASTChild(currentAST,returnAST);
+    AST tmp336_AST=null;
+    tmp336_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp336_AST);
+    match(ENDBLOCK);
+    timepart_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_26);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=timepart_AST;
+}

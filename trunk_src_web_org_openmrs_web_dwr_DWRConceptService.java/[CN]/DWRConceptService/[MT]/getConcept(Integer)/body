@@ -1,0 +1,6 @@
+{
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
+  Concept c=cs.getConcept(conceptId);
+  return c == null ? null : new ConceptListItem(c,locale);
+}

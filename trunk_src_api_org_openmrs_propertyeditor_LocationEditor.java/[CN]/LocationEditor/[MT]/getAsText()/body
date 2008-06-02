@@ -1,0 +1,9 @@
+{
+  Location t=(Location)getValue();
+  if (t == null && Context.isAuthenticated()) {
+    return null;
+  }
+ else {
+    return t.getLocationId().toString();
+  }
+}

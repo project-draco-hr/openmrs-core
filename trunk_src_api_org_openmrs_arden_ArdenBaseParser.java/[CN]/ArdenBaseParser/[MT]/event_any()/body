@@ -1,0 +1,50 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST event_any_AST=null;
+  try {
+switch (LA(1)) {
+case ANY:
+{
+        AST tmp497_AST=null;
+        tmp497_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp497_AST);
+        match(ANY);
+        AST tmp498_AST=null;
+        tmp498_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp498_AST);
+        match(LPAREN);
+        event_list();
+        astFactory.addASTChild(currentAST,returnAST);
+        AST tmp499_AST=null;
+        tmp499_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp499_AST);
+        match(RPAREN);
+        event_any_AST=(AST)currentAST.root;
+        break;
+      }
+case ID:
+case LPAREN:
+{
+      event_factor();
+      astFactory.addASTChild(currentAST,returnAST);
+      event_any_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_54);
+}
+ else {
+throw ex;
+}
+}
+returnAST=event_any_AST;
+}

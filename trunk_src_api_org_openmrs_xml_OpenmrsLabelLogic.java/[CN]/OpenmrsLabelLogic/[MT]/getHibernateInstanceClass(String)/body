@@ -1,0 +1,8 @@
+{
+  if (typename.equals("org.hibernate.collection.PersistentSet"))   return "java.util.HashSet";
+  if (typename.equals("org.hibernate.collection.PersistentSortedSet"))   return "java.util.TreeSet";
+ else   if (typename.equals("org.hibernate.collection.PersistentList"))   return "java.util.ArrayList";
+ else   if (typename.equals("org.hibernate.collection.PersistentMap"))   return "java.util.Map";
+ else   if (typename.contains("hibernate"))   log.warn("Unknown possible invalid serialized object type: " + typename);
+  return typename;
+}

@@ -1,0 +1,8 @@
+{
+  StringBuilder sb=new StringBuilder();
+  for (  TableRowClassifier classifier : classifiers) {
+    if (sb.length() > 0)     sb.append(separator);
+    sb.append(classifier.classify(row));
+  }
+  return sb.toString();
+}

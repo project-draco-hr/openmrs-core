@@ -1,0 +1,44 @@
+{
+  executeDataSet(INITIAL_REPORT_OBJECTS_XML);
+  String testName="Dr. Giffy";
+  String salutation="Hello";
+  Date today=new Date();
+  DateFormat df=new java.text.SimpleDateFormat("yyyy-MM-dd");
+  PatientSearch ps=new PatientSearch();
+  List<Object> parsedComposition=new ArrayList<Object>();
+  parsedComposition.add(Integer.valueOf(1));
+  parsedComposition.add(Integer.valueOf(2));
+  parsedComposition.add(Integer.valueOf(3));
+  ps.setParsedComposition(parsedComposition);
+  ps.addParameter(new Parameter("${test.name}","TestName",String.class,null));
+  ps.addParameter(new Parameter("${test.salutation}","TestSalutation",String.class,null));
+  ps.addParameter(new Parameter("${test.date}","TestDate",Date.class,null));
+  PatientSearchReportObject ro=new PatientSearchReportObject();
+  ro.setName("testReportObject1");
+  ro.setDescription("OldCohortFrameworkTest testPatientSearchParameter");
+  ro.setPatientSearch(ps);
+  Integer newId=Context.getReportObjectService().createReportObject(ro);
+  EvaluationContext context=new EvaluationContext();
+  context.addParameterValue(new Parameter("test.name","TestName",String.class,"WrongName"),testName);
+  context.addParameterValue(new Parameter("test.salutation","TestSalutation",String.class,"WrongSalutation"),salutation);
+  context.addParameterValue(new Parameter("test.date","TestDate",java.util.Date.class,"WrongDate"),today);
+  PatientSearch ps2=((PatientSearchReportObject)Context.getReportObjectService().getReportObject(newId)).getPatientSearch();
+  List<Parameter> parameters=ps2.getParameters();
+  for (  Parameter p : parameters) {
+    if ("TestName".equals(p.getLabel())) {
+      assertEquals(testName,context.evaluateExpression(ps2.getArgumentValue(p.getName())).toString());
+      log.info("Testing Parameters: " + context.evaluateExpression(p.getName()).toString() + " "+ testName);
+    }
+ else     if ("TestSalutation".equals(p.getLabel())) {
+      assertEquals(salutation,context.evaluateExpression(ps2.getArgumentValue(p.getName())).toString());
+      log.info("Testing Parameters: " + context.evaluateExpression(p.getName()).toString() + " "+ salutation);
+    }
+ else     if ("TestDate".equals(p.getLabel())) {
+      assertEquals(df.format(today),df.format((Date)context.evaluateExpression(ps2.getArgumentValue(p.getName()))));
+      log.info("Testing Parameters: " + context.evaluateExpression(p.getName()).toString() + " "+ df.format(today));
+    }
+ else {
+      log.info("Testing Parameters: " + context.evaluateExpression(p.getName()).toString() + " "+ p.getName());
+    }
+  }
+}

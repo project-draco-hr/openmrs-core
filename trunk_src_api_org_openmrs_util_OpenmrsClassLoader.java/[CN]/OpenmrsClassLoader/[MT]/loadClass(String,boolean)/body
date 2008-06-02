@@ -1,0 +1,10 @@
+{
+  for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
+    try {
+      return classLoader.loadClass(name);
+    }
+ catch (    ClassNotFoundException e) {
+    }
+  }
+  return getParent().loadClass(name);
+}

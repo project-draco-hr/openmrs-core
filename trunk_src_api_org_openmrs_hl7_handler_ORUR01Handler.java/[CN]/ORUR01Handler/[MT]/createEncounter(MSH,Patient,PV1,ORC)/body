@@ -1,0 +1,19 @@
+{
+  Encounter encounter=new Encounter();
+  Date encounterDate=getEncounterDate(pv1);
+  User provider=getProvider(pv1);
+  Location location=getLocation(pv1);
+  Form form=getForm(msh);
+  EncounterType encounterType=getEncounterType(msh,form);
+  User enterer=getEnterer(orc);
+  Date dateEntered=getDateEntered(orc);
+  encounter.setEncounterDatetime(encounterDate);
+  encounter.setProvider(provider);
+  encounter.setPatient(patient);
+  encounter.setLocation(location);
+  encounter.setForm(form);
+  encounter.setEncounterType(encounterType);
+  encounter.setCreator(enterer);
+  encounter.setDateCreated(new Date());
+  return encounter;
+}

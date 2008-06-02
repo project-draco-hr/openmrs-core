@@ -1,0 +1,19 @@
+{
+  CohortSearchHistory history=getMySearchHistory();
+  try {
+    PatientSearch ps=history.getSearchHistory().get(indexInHistory);
+    if (ps == null)     return false;
+    ps=ps.copyAndDetachFromHistory(history);
+    PatientSearchReportObject ro=new PatientSearchReportObject();
+    ro.setName(name);
+    ro.setDescription(description);
+    ro.setPatientSearch(ps);
+    Context.getReportObjectService().saveReportObject(ro);
+    history.getSearchHistory().set(indexInHistory,PatientSearch.createSavedSearchReference(ro.getReportObjectId()));
+    return true;
+  }
+ catch (  Exception ex) {
+    log.error("Exception",ex);
+    return false;
+  }
+}

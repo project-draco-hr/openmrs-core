@@ -1,0 +1,30 @@
+{
+  User unknownUser=Context.getUserService().getUserByUsername("Unknown");
+  Location unknownLocation=Context.getLocationService().getLocation("Unknown Location");
+  if (unknownLocation == null)   unknownLocation=Context.getLocationService().getLocation("Unknown");
+  if (unknownUser == null) {
+    unknownUser=Context.getAuthenticatedUser();
+  }
+  if (unknownUser == null || unknownLocation == null) {
+    throw new APIException("Couldn't find a Location and a User named 'Unknown'.");
+  }
+  EncounterType encounterType=Context.getEncounterService().getEncounterType("Regimen Change");
+  if (encounterType == null)   throw new APIException("Couldn't find an encounter type 'Regimen Change'");
+  Encounter e=new Encounter();
+  e.setPatient(p);
+  e.setProvider(unknownUser);
+  e.setLocation(unknownLocation);
+  e.setEncounterDatetime(new Date());
+  e.setEncounterType(encounterType);
+  for (  Order order : orders) {
+    if (order.getCreator() == null) {
+      order.setCreator(Context.getAuthenticatedUser());
+    }
+    if (order.getDateCreated() == null) {
+      order.setDateCreated(new Date());
+    }
+    e.addOrder(order);
+    order.setEncounter(e);
+  }
+  Context.getEncounterService().saveEncounter(e);
+}

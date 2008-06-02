@@ -1,0 +1,10 @@
+{
+  EncounterType encounterType=null;
+  if (Context.isAuthenticated()) {
+    EncounterService os=Context.getEncounterService();
+    String encounterTypeId=request.getParameter("encounterTypeId");
+    if (encounterTypeId != null)     encounterType=os.getEncounterType(Integer.valueOf(encounterTypeId));
+  }
+  if (encounterType == null)   encounterType=new EncounterType();
+  return encounterType;
+}

@@ -1,0 +1,5 @@
+{
+  CommandObject command=new CommandObject();
+  if (!isFormSubmission(request))   command.setMacros(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS));
+  return command;
+}

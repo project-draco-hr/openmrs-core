@@ -1,0 +1,9 @@
+{
+  HttpSession httpSession=request.getSession();
+  List<MimeType> mimeTypeList=new Vector<MimeType>();
+  if (Context.isAuthenticated()) {
+    ObsService os=Context.getObsService();
+    mimeTypeList=os.getMimeTypes();
+  }
+  return mimeTypeList;
+}

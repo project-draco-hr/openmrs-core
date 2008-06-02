@@ -1,0 +1,27 @@
+{
+  Class<?> result=null;
+  if (probeParentLoaderLast) {
+    try {
+      result=loadClass(name,resolve,this,null);
+    }
+ catch (    ClassNotFoundException cnfe) {
+      if (getParent() != null)       result=getParent().loadClass(name);
+    }
+catch (    NullPointerException e) {
+      log.debug("Error while attempting to load class: " + name + " from: "+ this.toString());
+    }
+    if (result == null) {
+      if (getParent() != null)       result=getParent().loadClass(name);
+    }
+  }
+ else {
+    try {
+      if (getParent() != null)       result=getParent().loadClass(name);
+    }
+ catch (    ClassNotFoundException cnfe) {
+      result=loadClass(name,resolve,this,null);
+    }
+  }
+  if (result != null)   return result;
+  throw new ClassNotFoundException(name);
+}

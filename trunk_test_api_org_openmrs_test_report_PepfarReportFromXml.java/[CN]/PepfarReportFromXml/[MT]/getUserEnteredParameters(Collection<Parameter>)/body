@@ -1,0 +1,10 @@
+{
+  Map<Parameter,Object> ret=new HashMap<Parameter,Object>();
+  if (params != null) {
+    for (    Parameter p : params) {
+      if (p.getName().equals("report.startDate"))       ret.put(p,ymd.parse("2007-09-01"));
+ else       if (p.getName().equals("report.endDate"))       ret.put(p,ymd.parse("2007-09-30"));
+    }
+  }
+  return ret;
+}

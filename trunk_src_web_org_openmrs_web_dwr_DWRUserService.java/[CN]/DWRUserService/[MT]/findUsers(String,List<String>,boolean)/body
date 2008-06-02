@@ -1,0 +1,32 @@
+{
+  Vector userList=new Vector();
+  try {
+    UserService userService=Context.getUserService();
+    String userId="Anonymous";
+    if (Context.isAuthenticated()) {
+      User us=Context.getAuthenticatedUser();
+      userId=us.getUserId().toString();
+    }
+    log.info(userId + "|" + searchValue+ "|"+ rolesStrings.toString());
+    if (rolesStrings == null)     rolesStrings=new Vector<String>();
+    List<Role> roles=new Vector<Role>();
+    for (    String r : rolesStrings) {
+      if (!"".equals(r)) {
+        Role role=userService.getRole(r);
+        if (role != null)         roles.add(role);
+      }
+    }
+    userList=new Vector();
+    for (    User u : userService.getUsers(searchValue,roles,includeVoided)) {
+      userList.add(new UserListItem(u));
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for users",e);
+    userList.add("Error while attempting to find users - " + e.getMessage());
+  }
+  if (userList.size() == 0) {
+    userList.add("No users found. Please search again.");
+  }
+  return userList;
+}

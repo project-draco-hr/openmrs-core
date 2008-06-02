@@ -1,0 +1,11 @@
+{
+  Map<Privilege,Boolean> privilegeList=new LinkedHashMap<Privilege,Boolean>();
+  if (Context.isAuthenticated()) {
+    UserService us=Context.getUserService();
+    for (    Privilege p : us.getPrivileges()) {
+      if (OpenmrsConstants.CORE_PRIVILEGES().keySet().contains(p.getPrivilege()))       privilegeList.put(p,true);
+ else       privilegeList.put(p,false);
+    }
+  }
+  return privilegeList;
+}

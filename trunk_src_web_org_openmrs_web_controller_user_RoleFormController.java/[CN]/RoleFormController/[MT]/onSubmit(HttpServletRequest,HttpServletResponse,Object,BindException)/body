@@ -1,0 +1,17 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Role role=(Role)obj;
+    try {
+      Context.getAdministrationService().updateRole(role);
+      view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Role.saved");
+    }
+ catch (    APIException e) {
+      errors.reject(e.getMessage());
+      return showForm(request,response,errors);
+    }
+  }
+  return new ModelAndView(new RedirectView(view));
+}

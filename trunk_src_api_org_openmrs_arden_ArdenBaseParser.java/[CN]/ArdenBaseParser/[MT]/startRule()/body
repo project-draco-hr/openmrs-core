@@ -1,0 +1,26 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST startRule_AST=null;
+  try {
+    maintenance_category();
+    astFactory.addASTChild(currentAST,returnAST);
+    library_category();
+    astFactory.addASTChild(currentAST,returnAST);
+    knowledge_category();
+    astFactory.addASTChild(currentAST,returnAST);
+    match(LITERAL_end);
+    match(COLON);
+    startRule_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_0);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=startRule_AST;
+}

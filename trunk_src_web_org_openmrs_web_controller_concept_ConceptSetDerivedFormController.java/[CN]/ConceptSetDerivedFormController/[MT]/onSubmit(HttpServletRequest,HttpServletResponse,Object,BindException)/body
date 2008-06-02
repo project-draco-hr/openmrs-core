@@ -1,0 +1,17 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String s=request.getParameter("conceptId");
+    if (s != null && !s.equals("")) {
+      Concept c=Context.getConceptService().getConcept(Integer.valueOf(s));
+      if (c != null)       Context.getAdministrationService().updateConceptSetDerived(c);
+    }
+ else {
+      Context.getAdministrationService().updateConceptSetDerived();
+    }
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptSetDerived.updated");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

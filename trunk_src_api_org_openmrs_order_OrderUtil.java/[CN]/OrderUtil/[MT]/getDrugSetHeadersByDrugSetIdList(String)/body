@@ -1,0 +1,14 @@
+{
+  Map<String,String> ret=null;
+  if (drugSetIds == null)   throw new APIException("Unable to get drug headers without drugSetIds being given");
+  Map<String,Concept> concepts=OpenmrsUtil.delimitedStringToConceptMap(drugSetIds,",");
+  if (concepts != null) {
+    for (    Map.Entry<String,Concept> e : concepts.entrySet()) {
+      String id=e.getKey();
+      Concept concept=e.getValue();
+      if (ret == null)       ret=new HashMap<String,String>();
+      ret.put(id,concept.getName(Context.getLocale()).getName());
+    }
+  }
+  return ret;
+}

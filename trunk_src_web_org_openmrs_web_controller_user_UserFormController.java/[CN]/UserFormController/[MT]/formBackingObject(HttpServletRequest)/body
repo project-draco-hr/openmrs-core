@@ -1,0 +1,41 @@
+{
+  User user=null;
+  if (Context.isAuthenticated()) {
+    UserService us=Context.getUserService();
+    String userId=request.getParameter("userId");
+    Integer id=null;
+    if (userId != null) {
+      try {
+        id=Integer.valueOf(userId);
+        user=us.getUser(id);
+      }
+ catch (      NumberFormatException numberError) {
+        log.warn("Invalid userId supplied: '" + userId + "'",numberError);
+      }
+catch (      ObjectRetrievalFailureException noUserEx) {
+      }
+      if (user == null) {
+        try {
+          Person person=Context.getPersonService().getPerson(id);
+          user=new User(person);
+        }
+ catch (        ObjectRetrievalFailureException noPersonEx) {
+          log.warn("There is no user or person with id: '" + userId + "'",noPersonEx);
+          throw new ServletException("There is no user or person with id: '" + userId + "'");
+        }
+      }
+    }
+  }
+  if (user == null) {
+    user=new User();
+    String name=request.getParameter("addName");
+    if (name != null) {
+      String gender=request.getParameter("addGender");
+      String date=request.getParameter("addBirthdate");
+      String age=request.getParameter("addAge");
+      getMiniPerson(user,name,gender,date,age);
+    }
+  }
+  setupFormBackingObject(user);
+  return user;
+}

@@ -1,0 +1,26 @@
+{
+  if (obs == null || obs.isEmpty()) {
+    log.error("ForEachObsTag skipping body due to obs param = " + obs);
+    return SKIP_BODY;
+  }
+  matchingObs=new ArrayList<Obs>();
+  for (Iterator<Obs> i=obs.iterator(); i.hasNext(); ) {
+    Obs o=i.next();
+    if (conceptId == null || (o.getConcept() != null && o.getConcept().getConceptId().intValue() == conceptId.intValue())) {
+      matchingObs.add(o);
+    }
+  }
+  log.debug("ForEachObsTag found " + matchingObs.size() + " observations matching conceptId = "+ conceptId);
+  if (sortBy == null || sortBy.equals("")) {
+    sortBy="obsDatetime";
+  }
+  Comparator comp=new BeanComparator(sortBy,(descending ? new ReverseComparator(new ComparableComparator()) : new ComparableComparator()));
+  Collections.sort(matchingObs,comp);
+  if (matchingObs.isEmpty()) {
+    return SKIP_BODY;
+  }
+ else {
+    pageContext.setAttribute(var,matchingObs.get(count++));
+    return EVAL_BODY_BUFFERED;
+  }
+}

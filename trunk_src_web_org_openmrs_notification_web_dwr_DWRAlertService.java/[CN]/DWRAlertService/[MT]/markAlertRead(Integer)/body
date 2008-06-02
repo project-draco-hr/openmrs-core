@@ -1,0 +1,10 @@
+{
+  try {
+    AlertService as=Context.getAlertService();
+    Alert alert=as.getAlert(alertId);
+    if (alert != null)     as.saveAlert(alert.markAlertRead());
+  }
+ catch (  Exception e) {
+    log.error("Error while marking alert '" + alertId + "' as read",e);
+  }
+}

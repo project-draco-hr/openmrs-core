@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  sb.append(getClass().getName()).append(".");
+  if (getProgram() != null)   sb.append(getProgram().getProgramId());
+  sb.append(".");
+  sb.append(OpenmrsUtil.fromDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate)).append(".");
+  sb.append(OpenmrsUtil.toDateHelper(null,withinLastDays,withinLastMonths,untilDaysAgo,untilMonthsAgo,sinceDate,untilDate)).append(".");
+  if (getStateList() != null)   for (  ProgramWorkflowState s : getStateList())   sb.append(s.getProgramWorkflowStateId()).append(",");
+  return sb.toString();
+}

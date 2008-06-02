@@ -1,0 +1,8 @@
+{
+  File tmpModuleDir=new File(OpenmrsClassLoader.getLibCacheFolder(),module.getModuleId());
+  if (!tmpModuleDir.exists()) {
+    tmpModuleDir.mkdir();
+    tmpModuleDir.deleteOnExit();
+  }
+  return tmpModuleDir;
+}

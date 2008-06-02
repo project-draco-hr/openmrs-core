@@ -1,0 +1,11 @@
+{
+  PatientSearch temp=(PatientSearch)CohortUtil.parse(specification);
+  if (temp == null)   throw new IllegalArgumentException("Couldn't parse: " + specification);
+  this.setParsedComposition(temp.getParsedComposition());
+  this.setSavedSearchId(temp.getSavedSearchId());
+  this.setSavedFilterId(temp.getSavedFilterId());
+  this.setSavedCohortId(temp.getSavedCohortId());
+  this.setFilterClass(temp.getFilterClass());
+  if (temp.getArguments() != null)   this.setArguments(new ArrayList<SearchArgument>(temp.getArguments()));
+ else   this.setArguments(null);
+}

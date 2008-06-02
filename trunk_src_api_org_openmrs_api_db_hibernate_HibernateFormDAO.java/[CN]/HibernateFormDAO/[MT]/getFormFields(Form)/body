@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createCriteria(FormField.class,"ff").add(Expression.eq("ff.form",form)).list();
+}

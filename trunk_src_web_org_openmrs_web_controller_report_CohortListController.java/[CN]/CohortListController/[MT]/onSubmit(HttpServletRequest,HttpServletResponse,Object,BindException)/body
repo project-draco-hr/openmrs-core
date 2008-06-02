@@ -1,0 +1,50 @@
+{
+  String action=request.getParameter("method");
+  String error="";
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String title=msa.getMessage("Cohort.title");
+  String refByCompSearch=msa.getMessage("Cohort.referencedByACompositePatientSearch");
+  String couldNotDelete=msa.getMessage("Cohort.couldNotDelete");
+  HttpSession httpSession=request.getSession();
+  if ("delete".equals(action)) {
+    String[] toDelete=request.getParameterValues("cohortId");
+    if (toDelete != null) {
+      List<AbstractReportObject> savedSearches=Context.getReportObjectService().getReportObjectsByType(OpenmrsConstants.REPORT_OBJECT_TYPE_PATIENTSEARCH);
+      for (      String s : toDelete) {
+        int compositeTest=0;
+        for (        ReportObject ro : savedSearches) {
+          PatientSearchReportObject psro=(PatientSearchReportObject)ro;
+          if (psro.getPatientSearch().isComposition()) {
+            List<Object> psList=psro.getPatientSearch().getParsedComposition();
+            for (            Object psObj : psList) {
+              if (psObj.getClass().getName().contains("org.openmrs.reporting.PatientSearch")) {
+                PatientSearch psInner=(PatientSearch)psObj;
+                if (psInner.getSavedCohortId() != null) {
+                  if (psInner.getSavedCohortId() == Integer.valueOf(Integer.valueOf(s)).intValue()) {
+                    compositeTest=1;
+                  }
+                }
+              }
+            }
+          }
+        }
+        if (compositeTest == 0) {
+          String reason=request.getParameter("voidReason");
+          Cohort cohort=Context.getCohortService().getCohort(Integer.valueOf(s));
+          Context.getCohortService().voidCohort(cohort,reason);
+        }
+ else {
+          if (!error.equals("")) {
+            error+="<Br>";
+          }
+          error+=couldNotDelete + " " + title+ " "+ s+ ", "+ refByCompSearch;
+        }
+        if (!error.equals("")) {
+          httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+        }
+      }
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
+  }
+  return showForm(request,response,errors);
+}

@@ -1,0 +1,35 @@
+{
+  if (Context.isAuthenticated()) {
+    CohortSearchHistory history=getMySearchHistory(request);
+    String temp=request.getParameter("filter_id");
+    if (temp != null) {
+      Integer filterId=new Integer(temp);
+      PatientFilter pf=Context.getReportObjectService().getPatientFilterById(filterId);
+      if (pf != null)       history.addSearchItem(PatientSearch.createSavedFilterReference(filterId));
+ else       log.warn("addFilter(id) didn't find " + filterId);
+    }
+    temp=request.getParameter("search_id");
+    if (temp != null) {
+      Integer searchId=new Integer(temp);
+      PatientSearchReportObject ro=(PatientSearchReportObject)Context.getReportObjectService().getReportObject(searchId);
+      if (ro != null)       history.addSearchItem(PatientSearch.createSavedSearchReference(searchId));
+ else       log.warn("addSearch(id) didn't find " + searchId);
+    }
+    temp=request.getParameter("cohort_id");
+    if (temp != null) {
+      Integer cohortId=new Integer(temp);
+      Cohort c=Context.getCohortService().getCohort(cohortId);
+      if (c != null) {
+        history.addSearchItem(PatientSearch.createSavedCohortReference(cohortId));
+      }
+ else       log.warn("addCohort(id) didn't find " + cohortId);
+    }
+    temp=request.getParameter("composition");
+    if (temp != null) {
+      PatientSearch ps=history.createCompositionFilter(temp);
+      if (ps != null)       history.addSearchItem(ps);
+ else       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Error building composition filter");
+    }
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

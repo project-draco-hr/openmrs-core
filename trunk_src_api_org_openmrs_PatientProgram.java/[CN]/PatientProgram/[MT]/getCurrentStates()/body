@@ -1,0 +1,10 @@
+{
+  Set<PatientState> ret=new HashSet<PatientState>();
+  Date now=new Date();
+  for (  PatientState state : getStates()) {
+    if (state.getActive(now)) {
+      ret.add(state);
+    }
+  }
+  return ret;
+}

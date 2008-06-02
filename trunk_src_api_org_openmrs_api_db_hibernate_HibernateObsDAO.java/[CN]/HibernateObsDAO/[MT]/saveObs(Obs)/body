@@ -1,0 +1,7 @@
+{
+  if (obs.hasGroupMembers() && obs.getObsId() != null) {
+    for (    Obs member : obs.getGroupMembers())     if (member.getObsId() == null)     saveObs(member);
+  }
+  sessionFactory.getCurrentSession().saveOrUpdate(obs);
+  return obs;
+}

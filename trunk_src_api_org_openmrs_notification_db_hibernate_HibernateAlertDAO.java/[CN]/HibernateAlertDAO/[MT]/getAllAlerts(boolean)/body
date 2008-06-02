@@ -1,0 +1,5 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Alert.class);
+  if (includeExpired == false)   crit.add(Expression.or(Expression.isNull("dateToExpire"),Expression.gt("dateToExpire",new Date())));
+  return crit.list();
+}

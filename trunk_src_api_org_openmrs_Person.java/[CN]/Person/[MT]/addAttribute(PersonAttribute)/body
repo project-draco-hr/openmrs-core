@@ -1,0 +1,15 @@
+{
+  newAttribute.setPerson(this);
+  for (  PersonAttribute currentAttribute : getActiveAttributes()) {
+    if (currentAttribute.equals(newAttribute))     return;
+ else     if (currentAttribute.getAttributeType().equals(newAttribute.getAttributeType())) {
+      if (currentAttribute.getValue() != null && currentAttribute.getValue().equals(newAttribute.getValue()))       return;
+      if (newAttribute.isVoided() == false) {
+        if (currentAttribute.getCreator() != null)         currentAttribute.voidAttribute("New value: " + newAttribute.getValue());
+ else         removeAttribute(currentAttribute);
+      }
+    }
+  }
+  attributeMap=null;
+  if (!OpenmrsUtil.collectionContains(attributes,newAttribute))   attributes.add(newAttribute);
+}

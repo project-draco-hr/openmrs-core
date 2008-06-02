@@ -1,0 +1,12 @@
+{
+  Drug drug=null;
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
+    String id=request.getParameter("drugId");
+    if (id != null) {
+      drug=cs.getDrug(Integer.valueOf(id));
+    }
+  }
+  if (drug == null)   drug=new Drug();
+  return drug;
+}

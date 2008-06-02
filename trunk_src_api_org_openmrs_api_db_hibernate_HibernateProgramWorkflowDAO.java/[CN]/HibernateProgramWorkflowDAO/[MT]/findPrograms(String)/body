@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Program.class,"program");
+  criteria.add(Expression.ilike("name",nameFragment,MatchMode.ANYWHERE));
+  criteria.addOrder(Order.asc("name"));
+  return criteria.list();
+}

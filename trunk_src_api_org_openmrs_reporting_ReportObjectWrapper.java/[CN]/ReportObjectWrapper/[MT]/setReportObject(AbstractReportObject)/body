@@ -1,0 +1,9 @@
+{
+  this.setReportObjectId(obj.getReportObjectId());
+  this.setName(obj.getName());
+  this.setDescription(obj.getDescription());
+  this.setType(obj.getType());
+  this.setSubType(obj.getSubType());
+  ReportObjectXMLEncoder roxe=new ReportObjectXMLEncoder(obj);
+  this.xml=roxe.toXmlString();
+}

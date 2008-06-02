@@ -1,0 +1,10 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(CREATE_PATIENT_PROGRAMS_XML);
+  authenticate();
+  if (pws == null) {
+    pws=Context.getProgramWorkflowService();
+    adminService=Context.getAdministrationService();
+    encounterService=Context.getEncounterService();
+  }
+}

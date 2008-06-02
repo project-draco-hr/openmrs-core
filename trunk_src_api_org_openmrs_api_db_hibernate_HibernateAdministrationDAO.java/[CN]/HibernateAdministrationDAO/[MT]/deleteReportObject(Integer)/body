@@ -1,0 +1,5 @@
+{
+  ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper();
+  wrappedReportObject=(ReportObjectWrapper)sessionFactory.getCurrentSession().get(ReportObjectWrapper.class,reportObjectId);
+  sessionFactory.getCurrentSession().delete(wrappedReportObject);
+}

@@ -1,0 +1,17 @@
+{
+  child.setConcept(cs.getConcept(1));
+  child.setDateCreated(new Date());
+  child.setCreator(Context.getAuthenticatedUser());
+  child.setLocation(new Location(1));
+  child.setObsDatetime(new Date());
+  child.setValueText("test");
+  child.setPerson(new Patient(2));
+  parent.setConcept(cs.getConcept(2));
+  parent.setDateCreated(new Date());
+  parent.setCreator(Context.getAuthenticatedUser());
+  parent.setLocation(new Location(1));
+  parent.setObsDatetime(new Date());
+  parent.setPerson(new Patient(2));
+  parent.addGroupMember(child);
+  os.saveObs(parent,null);
+}

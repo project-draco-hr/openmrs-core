@@ -1,0 +1,21 @@
+{
+  String contextPath=request.getContextPath();
+  String path=request.getPathInfo();
+  log.debug("path info: " + path);
+  if (path != null) {
+    path=path.substring(1);
+    Integer nextSlash=path.indexOf("/");
+    if (nextSlash != -1)     path=path.substring(0,nextSlash);
+    log.debug("new concept id: " + path);
+    try {
+      Integer i=new Integer(path);
+      response.sendRedirect(contextPath + "/dictionary/concept.htm?conceptId=" + i);
+      return;
+    }
+ catch (    Exception e) {
+      response.sendRedirect(contextPath + "/dictionary/index.htm?phrase=" + path);
+      return;
+    }
+  }
+  response.sendRedirect(contextPath + "/dictionary");
+}

@@ -1,0 +1,84 @@
+{
+  String retStr="";
+  String answer;
+  Integer i;
+  if (compOp != null) {
+switch (getCompOp()) {
+case IN:
+      if (concept != null && type == MLMObject.NOLIST) {
+        if (concept.isNumeric()) {
+          retStr+="val.toNumber() == " + getAnswerInt();
+        }
+ else         if (concept.getDatatype().getName().equals("Coded")) {
+          answer=getAnswerStr();
+          answerConcept=Context.getConceptService().getConceptByName(answer);
+          if (answerConcept != null) {
+            retStr+="val.containsConcept(" + Integer.toString(answerConcept.getConceptId()) + ")\t //"+ answer+ "\n";
+          }
+        }
+      }
+ else       if (concept != null && type == MLMObject.LIST) {
+        if (concept.isNumeric()) {
+          retStr+="val.toNumber() == " + getAnswerInt();
+          while ((i=getAnswerInt()) != null) {
+            retStr+="\n\t || val.toNumber() == " + i;
+          }
+        }
+ else         if (concept.getDatatype().getName().equals("Coded")) {
+          answer=getAnswerStr();
+          answerConcept=Context.getConceptService().getConceptByName(answer);
+          if (answerConcept != null) {
+            retStr+="val.containsConcept(" + Integer.toString(answerConcept.getConceptId()) + ")\t //"+ answer+ "\n";
+          }
+ else {
+            Exception e=new Exception("Concept not found in openmrs dictionary: " + answer);
+            throw (e);
+          }
+          while ((answer=getAnswerStr()) != null) {
+            answerConcept=Context.getConceptService().getConceptByName(answer);
+            if (answerConcept != null) {
+              retStr+="\n\t || val.containsConcept(" + Integer.toString(answerConcept.getConceptId()) + ")\t //"+ answer+ "\n";
+            }
+ else {
+              Exception e=new Exception("Concept not found in openmrs dictionary: " + answer);
+              throw (e);
+            }
+          }
+        }
+      }
+    break;
+case EQUALS:
+  if (concept != null) {
+    if (concept.isNumeric()) {
+      retStr+="val.toNumber() == " + getAnswerInt();
+    }
+ else     if (concept.getDatatype().getName().equals("Coded")) {
+      answer=getAnswerStr();
+      answerConcept=Context.getConceptService().getConceptByName(answer);
+      if (answerConcept != null) {
+        retStr+="val.containsConcept(" + Integer.toString(answerConcept.getConceptId()) + ")\t //"+ answer+ "\n";
+      }
+    }
+  }
+break;
+case GTE:
+if (concept != null && concept.isNumeric()) {
+retStr+="val.toNumber() >= " + getAnswerInt();
+}
+break;
+case GT:
+if (concept != null && concept.isNumeric()) {
+retStr+="val.toNumber() > " + getAnswerInt();
+}
+break;
+case LT:
+if (concept != null && concept.isNumeric()) {
+retStr+="val.toNumber() < " + getAnswerInt();
+}
+break;
+default :
+break;
+}
+}
+return retStr;
+}

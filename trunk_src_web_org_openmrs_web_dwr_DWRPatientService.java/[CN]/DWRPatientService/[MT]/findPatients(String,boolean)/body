@@ -1,0 +1,51 @@
+{
+  Collection<Object> patientList=new Vector<Object>();
+  Integer userId=-1;
+  if (Context.isAuthenticated())   userId=Context.getAuthenticatedUser().getUserId();
+  log.info(userId + "|" + searchValue);
+  PatientService ps=Context.getPatientService();
+  Collection<Patient> patients;
+  patients=ps.findPatients(searchValue,includeVoided);
+  patientList=new Vector<Object>(patients.size());
+  for (  Patient p : patients)   patientList.add(new PatientListItem(p));
+  if (patientList.size() < 3 && !searchValue.matches(".*\\d+.*")) {
+    String[] names=searchValue.split(" ");
+    String newSearch="";
+    for (    String name : names) {
+      if (name.length() > 3)       name=name.substring(0,4);
+      newSearch+=" " + name;
+    }
+    newSearch=newSearch.trim();
+    Collection<Patient> newPatients=ps.findPatients(newSearch,includeVoided);
+    newPatients.removeAll(patients);
+    if (newPatients.size() > 0) {
+      patientList.add("Minimal patients returned. Results for <b>" + newSearch + "</b>");
+      for (      Patient p : newPatients) {
+        PatientListItem pi=new PatientListItem(p);
+        patientList.add(pi);
+      }
+    }
+  }
+ else   if (patientList.size() == 0 && searchValue.matches(".*\\d+.*")) {
+    Collection<IdentifierValidator> pivs=ps.getAllIdentifierValidators();
+    boolean shouldWarnUser=true;
+    boolean validCheckDigit=false;
+    boolean identifierMatchesValidationScheme=false;
+    for (    IdentifierValidator piv : pivs) {
+      try {
+        if (piv.isValid(searchValue)) {
+          shouldWarnUser=false;
+          validCheckDigit=true;
+        }
+        identifierMatchesValidationScheme=true;
+      }
+ catch (      UnallowedIdentifierException e) {
+      }
+    }
+    if (identifierMatchesValidationScheme) {
+      if (shouldWarnUser)       patientList.add("<p style=\"color:red; font-size:big;\"><b>WARNING: Identifier has been typed incorrectly!  Please double check the identifier.</b></p>");
+ else       if (validCheckDigit)       patientList.add("<p style=\"color:green; font-size:big;\"><b>This identifier has been entered correctly, but still no patients have been found.</b></p>");
+    }
+  }
+  return patientList;
+}

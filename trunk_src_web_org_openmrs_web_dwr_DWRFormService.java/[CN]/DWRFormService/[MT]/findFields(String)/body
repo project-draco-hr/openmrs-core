@@ -1,0 +1,5 @@
+{
+  List<FieldListItem> fields=new Vector<FieldListItem>();
+  for (  Field field : Context.getFormService().findFields(txt))   fields.add(new FieldListItem(field,Context.getLocale()));
+  return fields;
+}

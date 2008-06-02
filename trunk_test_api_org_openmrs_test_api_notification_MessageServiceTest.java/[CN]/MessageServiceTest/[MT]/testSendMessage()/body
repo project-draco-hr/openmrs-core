@@ -1,0 +1,22 @@
+{
+  Message tryToSend1=ms.createMessage("recipient@example.com","sender@example.com","subject","content");
+  try {
+    ms.sendMessage(tryToSend1);
+  }
+ catch (  MessageException e) {
+    if (!e.getMessage().contains(NO_SMTP_SERVER_ERROR)) {
+      e.printStackTrace();
+      fail();
+    }
+  }
+  Message tryToSend2=ms.createMessage("recipient@example.com,recipient2@example.com","openmrs.emailer@gmail.com","subject","content","moo","text/plain","moo.txt");
+  try {
+    ms.sendMessage(tryToSend2);
+  }
+ catch (  MessageException e) {
+    if (!e.getMessage().contains(NO_SMTP_SERVER_ERROR)) {
+      e.printStackTrace();
+      fail();
+    }
+  }
+}

@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createCriteria(ConceptSet.class).add(Restrictions.eq("conceptSet",concept)).addOrder(Order.asc("sortWeight")).list();
+}

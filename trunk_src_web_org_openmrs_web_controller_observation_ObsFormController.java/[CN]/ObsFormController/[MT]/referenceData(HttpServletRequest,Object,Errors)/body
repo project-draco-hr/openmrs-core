@@ -1,0 +1,15 @@
+{
+  Obs obs=(Obs)obj;
+  Map<String,Object> map=new HashMap<String,Object>();
+  String defaultVerbose="false";
+  if (Context.isAuthenticated()) {
+    map.put("forms",Context.getFormService().getForms());
+    if (obs.getConcept() != null)     map.put("conceptName",obs.getConcept().getName(request.getLocale()));
+    defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+  }
+  map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
+  String editReason=request.getParameter("editReason");
+  if (editReason == null)   editReason="";
+  map.put("editReason",editReason);
+  return map;
+}

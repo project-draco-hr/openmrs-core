@@ -1,0 +1,13 @@
+{
+  SchedulerService service=null;
+  try {
+    service=Context.getSchedulerService();
+  }
+ catch (  Throwable t) {
+  }
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+  if (service != null) {
+    service.onShutdown();
+  }
+  Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+}

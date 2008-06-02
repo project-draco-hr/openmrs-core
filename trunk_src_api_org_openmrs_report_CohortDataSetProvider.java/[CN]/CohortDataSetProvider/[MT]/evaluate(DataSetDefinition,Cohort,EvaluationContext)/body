@@ -1,0 +1,16 @@
+{
+  CohortDataSetDefinition def=(CohortDataSetDefinition)dataSetDefinition;
+  CohortDataSet data=new CohortDataSet();
+  data.setDefinition(def);
+  data.setEvaluationContext(evalContext);
+  data.setName(def.getName());
+  Map<String,Cohort> results=new LinkedHashMap<String,Cohort>();
+  CohortService cs=Context.getCohortService();
+  for (  Map.Entry<String,CohortDefinition> e : def.getStrategies().entrySet()) {
+    Cohort temp=cs.evaluate(e.getValue(),evalContext);
+    if (inputCohort != null)     temp=Cohort.intersect(temp,inputCohort);
+    results.put(e.getKey(),temp);
+  }
+  data.setCohortData(results);
+  return data;
+}

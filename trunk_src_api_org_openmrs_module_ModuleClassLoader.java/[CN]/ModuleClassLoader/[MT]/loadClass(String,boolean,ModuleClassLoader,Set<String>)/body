@@ -1,0 +1,56 @@
+{
+  if (log.isTraceEnabled()) {
+    log.trace("loading " + name + " "+ getModule()+ " seenModules: "+ seenModules+ " requestor: "+ requestor+ " resolve? "+ resolve);
+    StringBuilder output=new StringBuilder();
+    for (    StackTraceElement element : Thread.currentThread().getStackTrace()) {
+      if (element.getClassName().contains("openmrs"))       output.append("+ ");
+      output.append(element);
+      output.append("\n");
+    }
+    log.trace("stacktrace: " + output.toString());
+  }
+  if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
+    return null;
+  }
+  if ((this != requestor) && !ModuleFactory.isModuleStarted(getModule())) {
+    String msg="can't load class " + name + ", module "+ getModule()+ " is not started yet";
+    log.warn(msg);
+    throw new ClassNotFoundException(msg);
+  }
+  Class<?> result=null;
+synchronized (this) {
+    result=findLoadedClass(name);
+    if (result != null) {
+      checkClassVisibility(result,requestor);
+      return result;
+    }
+    try {
+synchronized (getClass()) {
+        result=findClass(name);
+      }
+    }
+ catch (    LinkageError le) {
+      throw le;
+    }
+catch (    ClassNotFoundException cnfe) {
+    }
+    if (result != null) {
+      checkClassVisibility(result,requestor);
+      if (resolve) {
+        resolveClass(result);
+      }
+      return result;
+    }
+  }
+  if (seenModules == null)   seenModules=new HashSet<String>();
+  seenModules.add(getModule().getModuleId());
+  for (  Module publicImport : requiredModules) {
+    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
+    result=mcl.loadClass(name,resolve,requestor,seenModules);
+    if (result != null) {
+      break;
+    }
+  }
+  return result;
+}

@@ -1,0 +1,13 @@
+{
+  List<ProgramWorkflowState> ret=new ArrayList<ProgramWorkflowState>();
+  for (  Program p : getAllPrograms()) {
+    for (    ProgramWorkflow w : p.getWorkflows()) {
+      for (      ProgramWorkflowState s : w.getStates()) {
+        if (includeRetired || !s.isRetired()) {
+          ret.add(s);
+        }
+      }
+    }
+  }
+  return ret;
+}

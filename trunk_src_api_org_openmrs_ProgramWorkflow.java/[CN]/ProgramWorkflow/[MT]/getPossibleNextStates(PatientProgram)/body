@@ -1,0 +1,10 @@
+{
+  List<ProgramWorkflowState> ret=new ArrayList<ProgramWorkflowState>();
+  PatientState currentState=patientProgram.getCurrentState(this);
+  for (  ProgramWorkflowState st : getSortedStates()) {
+    if (isLegalTransition(currentState == null ? null : currentState.getState(),st)) {
+      ret.add(st);
+    }
+  }
+  return ret;
+}

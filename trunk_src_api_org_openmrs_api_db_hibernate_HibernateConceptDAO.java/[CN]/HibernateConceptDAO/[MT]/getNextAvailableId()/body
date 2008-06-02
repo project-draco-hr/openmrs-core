@@ -1,0 +1,25 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("select distinct conceptId from Concept order by concept_id");
+  List<Object> conceptIds=query.list();
+  Integer maxConceptId=0;
+  if (conceptIds.size() != 0)   maxConceptId=(Integer)conceptIds.get(conceptIds.size() - 1);
+  Integer ret=maxConceptId + 1;
+  boolean found=true;
+  for (Integer i=1; i <= maxConceptId; i++) {
+    if (found=true) {
+      found=false;
+      for (      Object tmpObj : conceptIds) {
+        Integer tmpId=(Integer)tmpObj;
+        if (i == tmpId || i.equals(tmpId)) {
+          found=true;
+          break;
+        }
+      }
+      if (found == false) {
+        ret=i;
+        break;
+      }
+    }
+  }
+  return ret;
+}

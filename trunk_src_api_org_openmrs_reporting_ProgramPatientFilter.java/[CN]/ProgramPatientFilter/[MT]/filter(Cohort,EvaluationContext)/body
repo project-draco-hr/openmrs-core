@@ -1,0 +1,8 @@
+{
+  if (!isReadyToRun())   return null;
+  PatientSetService service=Context.getPatientSetService();
+  Cohort matches=null;
+  if (onDate != null)   matches=service.getPatientsInProgram(program,onDate,onDate);
+ else   matches=service.getPatientsInProgram(program,fromDate,toDate);
+  return input == null ? matches : Cohort.intersect(input,matches);
+}

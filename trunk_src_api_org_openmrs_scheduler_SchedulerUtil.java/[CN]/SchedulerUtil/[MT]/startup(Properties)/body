@@ -1,0 +1,15 @@
+{
+  String val=p.getProperty("scheduler.username",null);
+  if (val != null) {
+    SchedulerConstants.SCHEDULER_USERNAME=val;
+    log.warn("Deprecated runtime property: scheduler.username. Value set in global_property in database now.");
+  }
+  val=p.getProperty("scheduler.password",null);
+  if (val != null) {
+    SchedulerConstants.SCHEDULER_PASSWORD=val;
+    log.warn("Deprecated runtime property: scheduler.username. Value set in global_property in database now.");
+  }
+  Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+  Context.getSchedulerService().onStartup();
+  Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+}

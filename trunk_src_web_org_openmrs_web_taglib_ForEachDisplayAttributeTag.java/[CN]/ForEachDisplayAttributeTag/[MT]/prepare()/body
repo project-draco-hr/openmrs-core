@@ -1,0 +1,12 @@
+{
+  attrTypes=null;
+  try {
+    PersonService ps=Context.getPersonService();
+    List<PersonAttributeType> types=ps.getPersonAttributeTypes(getPersonType(),getDisplayType());
+    attrTypes=types.iterator();
+    setVarStatus("varStatus");
+  }
+ catch (  Exception e) {
+    log.error("Error getting attributes",e);
+  }
+}

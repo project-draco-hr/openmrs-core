@@ -1,0 +1,39 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST time_value_AST=null;
+  try {
+switch (LA(1)) {
+case NOW:
+{
+        AST tmp450_AST=null;
+        tmp450_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp450_AST);
+        match(NOW);
+        time_value_AST=(AST)currentAST.root;
+        break;
+      }
+case INTLIT:
+{
+      iso_date_time();
+      astFactory.addASTChild(currentAST,returnAST);
+      time_value_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_47);
+}
+ else {
+throw ex;
+}
+}
+returnAST=time_value_AST;
+}

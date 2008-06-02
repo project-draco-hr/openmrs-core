@@ -1,0 +1,6 @@
+{
+  String url=request.getParameter("url");
+  Context.getPatientSetService().clearMyPatientSet();
+  log.debug("Cleared user's PatientSet");
+  return new ModelAndView(new RedirectView(url));
+}

@@ -1,0 +1,29 @@
+{
+  AbstractReportObject reportObject=null;
+  ReportObjectService rs=Context.getReportObjectService();
+  if (Context.isAuthenticated()) {
+    int reportObjectId=ServletRequestUtils.getIntParameter(request,"reportObjectId",0);
+    if (reportObjectId > 0)     reportObject=rs.getReportObject(Integer.valueOf(reportObjectId));
+  }
+  if (reportObject == null)   reportObject=new EmptyReportObject();
+  String presetType=ServletRequestUtils.getStringParameter(request,"type","");
+  if (presetType.length() > 0)   reportObject.setType(presetType);
+  String presetSubType=ServletRequestUtils.getStringParameter(request,"subType","");
+  if (presetSubType.length() > 0 && ReportObjectFactory.getInstance().isSubTypeOfType(presetType,presetSubType)) {
+    reportObject.setSubType(presetSubType);
+    String className=rs.getReportObjectClassBySubType(presetSubType);
+    if (className.length() > 0) {
+      try {
+        Class cls=Class.forName(className);
+        Constructor ct=cls.getConstructor();
+        reportObject=(AbstractReportObject)ct.newInstance();
+        reportObject.setType(presetType);
+        reportObject.setSubType(presetSubType);
+      }
+ catch (      Throwable e) {
+        log.error("Unable to generate subtype class for ReportObject",e);
+      }
+    }
+  }
+  return reportObject;
+}

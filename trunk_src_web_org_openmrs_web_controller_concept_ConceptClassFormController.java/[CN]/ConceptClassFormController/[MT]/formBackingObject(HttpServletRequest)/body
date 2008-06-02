@@ -1,0 +1,10 @@
+{
+  ConceptClass identifierType=null;
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
+    String identifierTypeId=request.getParameter("conceptClassId");
+    if (identifierTypeId != null)     identifierType=cs.getConceptClass(Integer.valueOf(identifierTypeId));
+  }
+  if (identifierType == null)   identifierType=new ConceptClass();
+  return identifierType;
+}

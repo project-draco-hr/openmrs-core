@@ -1,0 +1,22 @@
+{
+  String returnPage=request.getParameter("returnPage");
+  if (returnPage == null) {
+    throw new IllegalArgumentException("must specify a returnPage parameter in a call to enroll()");
+  }
+  String patientIdStr=request.getParameter("patientId");
+  String programIdStr=request.getParameter("programId");
+  String enrollmentDateStr=request.getParameter("dateEnrolled");
+  String completionDateStr=request.getParameter("dateCompleted");
+  log.debug("enroll " + patientIdStr + " in "+ programIdStr+ " on "+ enrollmentDateStr);
+  ProgramWorkflowService pws=Context.getProgramWorkflowService();
+  CustomDateEditor cde=new CustomDateEditor(new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale()),true,10);
+  cde.setAsText(enrollmentDateStr);
+  Date enrollmentDate=(Date)cde.getValue();
+  cde.setAsText(completionDateStr);
+  Date completionDate=(Date)cde.getValue();
+  Patient patient=Context.getPatientService().getPatient(Integer.valueOf(patientIdStr));
+  Program program=pws.getProgram(Integer.valueOf(programIdStr));
+  if (pws.isInProgram(patient,program,enrollmentDate,completionDate))   request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.already");
+ else   Context.getProgramWorkflowService().enrollPatientInProgram(patient,program,enrollmentDate,completionDate,null);
+  return new ModelAndView(new RedirectView(returnPage));
+}

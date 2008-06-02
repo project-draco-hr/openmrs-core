@@ -1,0 +1,14 @@
+{
+  Concept concept;
+  boolean retVal=false;
+  Obs obs;
+  concept=Context.getConceptService().getConceptByName("Qualitative_Blood_Lead");
+  obs=getObsForConceptForPatient(concept,locale,patient);
+  if (obs != null) {
+    boolean Qual_Pb=obs.getValueAsBoolean();
+    if (Qual_Pb == true) {
+      retVal=true;
+    }
+  }
+  return retVal;
+}

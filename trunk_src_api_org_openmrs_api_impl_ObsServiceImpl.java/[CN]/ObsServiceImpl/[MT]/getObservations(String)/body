@@ -1,0 +1,18 @@
+{
+  EncounterService es=Context.getEncounterService();
+  List<Encounter> encounters=es.getEncountersByPatientIdentifier(searchString);
+  try {
+    Encounter e=es.getEncounter(Integer.valueOf(searchString));
+    if (e != null)     encounters.add(e);
+  }
+ catch (  NumberFormatException e) {
+  }
+  List<Obs> returnList=getObservations(null,encounters,null,null,null,null,null,null,null,null,null,false);
+  try {
+    Obs o=getObs(Integer.valueOf(searchString));
+    if (o != null)     returnList.add(o);
+  }
+ catch (  NumberFormatException e) {
+  }
+  return returnList;
+}

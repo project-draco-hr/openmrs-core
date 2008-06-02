@@ -1,0 +1,37 @@
+{
+  executeDataSet(CREATE_PATIENT_VALID_IDENT_XML);
+  Patient patient=createBasicPatient();
+  Patient patient2=createBasicPatient();
+  PatientIdentifierType pit=ps.getPatientIdentifierType(1);
+  PatientIdentifier ident1=new PatientIdentifier("123-1",pit,encounterService.getLocation(0));
+  PatientIdentifier ident2=new PatientIdentifier("123",pit,encounterService.getLocation(0));
+  PatientIdentifier ident3=new PatientIdentifier("123-0",pit,encounterService.getLocation(0));
+  PatientIdentifier ident4=new PatientIdentifier("123-A",pit,encounterService.getLocation(0));
+  try {
+    patient.addIdentifier(ident1);
+    ps.createPatient(patient);
+    fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
+  }
+ catch (  InvalidCheckDigitException ex) {
+  }
+  patient.removeIdentifier(ident1);
+  try {
+    patient.addIdentifier(ident2);
+    ps.createPatient(patient);
+    fail("Patient creation should have failed with identifier " + ident2.getIdentifier());
+  }
+ catch (  InvalidCheckDigitException ex) {
+  }
+  patient.removeIdentifier(ident2);
+  try {
+    patient.addIdentifier(ident3);
+    ps.createPatient(patient);
+    ps.deletePatient(patient);
+    patient.removeIdentifier(ident3);
+    patient2.addIdentifier(ident4);
+    ps.createPatient(patient2);
+  }
+ catch (  InvalidCheckDigitException ex) {
+    fail("Patient creation should have worked with identifiers " + ident3.getIdentifier() + " and "+ ident4.getIdentifier());
+  }
+}

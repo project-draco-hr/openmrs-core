@@ -1,0 +1,11 @@
+{
+  Vector tribeList=new Vector();
+  try {
+    tribeList.addAll(Context.getPatientService().getTribes());
+  }
+ catch (  Exception e) {
+    log.error(e);
+    tribeList.add("Error while attempting to find tribe - " + e.getMessage());
+  }
+  return tribeList;
+}

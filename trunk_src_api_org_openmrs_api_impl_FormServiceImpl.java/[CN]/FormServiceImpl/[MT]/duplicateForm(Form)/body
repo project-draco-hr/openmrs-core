@@ -1,0 +1,10 @@
+{
+  for (  FormField formField : form.getFormFields()) {
+    formField.setFormFieldId(null);
+  }
+  form.setFormFields(new HashSet<FormField>(form.getFormFields()));
+  form.setFormId(null);
+  Context.clearSession();
+  Form newForm=dao.duplicateForm(form);
+  return newForm;
+}

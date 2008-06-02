@@ -1,0 +1,19 @@
+{
+  if (!evaluateList.isEmpty()) {
+    MLMEvaluateElement mEvalElem=evaluateList.getLast();
+    if (mEvalElem != null && mEvalElem.getLast().equals("ELSEIF")) {
+      return;
+    }
+ else     if (mEvalElem != null && mEvalElem.getLast().equals("ELSE")) {
+      return;
+    }
+ else {
+      MLMEvaluateElement mEvalElemNew=new MLMEvaluateElement();
+      evaluateList.add(mEvalElemNew);
+    }
+  }
+ else {
+    MLMEvaluateElement mEvalElemNew=new MLMEvaluateElement();
+    evaluateList.add(mEvalElemNew);
+  }
+}

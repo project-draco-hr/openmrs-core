@@ -1,0 +1,7 @@
+{
+  orderType.setRetired(true);
+  orderType.setRetireReason(reason);
+  orderType.setDateRetired(new Date());
+  orderType.setRetiredBy(Context.getAuthenticatedUser());
+  return saveOrderType(orderType);
+}

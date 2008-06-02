@@ -1,0 +1,41 @@
+{
+  HttpServletRequest httpRequest=(HttpServletRequest)request;
+  HttpSession httpSession=httpRequest.getSession();
+  UserContext userContext=null;
+  Object val=httpRequest.getAttribute(WebConstants.INIT_REQ_UNIQUE_ID);
+  boolean initialRequest=(val == null);
+  if (log.isDebugEnabled()) {
+    log.debug("initial Request? " + initialRequest);
+    log.debug("requestURI " + httpRequest.getRequestURI());
+    log.debug("requestURL " + httpRequest.getRequestURL());
+    log.debug("request path info " + httpRequest.getPathInfo());
+  }
+  if (initialRequest)   httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(new Date().getTime()));
+  if (initialRequest == true) {
+    httpSession.setAttribute("username","-anonymous user-");
+    userContext=(UserContext)httpSession.getAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR);
+    if (userContext == null) {
+      userContext=new UserContext();
+      httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
+      if (log.isDebugEnabled())       log.debug("Just set user context " + userContext + " as attribute on session");
+    }
+ else {
+      User user;
+      if ((user=userContext.getAuthenticatedUser()) != null)       httpSession.setAttribute("username",user.getUsername());
+    }
+    httpSession.setAttribute("locale",userContext.getLocale());
+    Context.setUserContext(userContext);
+  }
+  log.debug("before doFilter");
+  try {
+    chain.doFilter(request,response);
+  }
+  finally {
+    if (initialRequest == true) {
+      Context.clearUserContext();
+      log.debug("This was considered an initial request");
+    }
+  }
+  httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
+  log.debug("after doFilter");
+}

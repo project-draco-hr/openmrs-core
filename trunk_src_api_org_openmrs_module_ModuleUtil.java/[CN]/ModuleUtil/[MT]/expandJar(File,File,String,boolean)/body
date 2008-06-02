@@ -1,0 +1,48 @@
+{
+  JarFile jarFile=null;
+  InputStream input=null;
+  String docBase=tmpModuleDir.getAbsolutePath();
+  try {
+    jarFile=new JarFile(fileToExpand);
+    Enumeration jarEntries=jarFile.entries();
+    boolean foundName=(name == null);
+    while (jarEntries.hasMoreElements()) {
+      JarEntry jarEntry=(JarEntry)jarEntries.nextElement();
+      if (name == null || jarEntry.getName().startsWith(name)) {
+        String entryName=jarEntry.getName();
+        if (keepFullPath == false && name != null)         entryName=entryName.replaceFirst(name,"");
+        int last=entryName.lastIndexOf('/');
+        if (last >= 0) {
+          File parent=new File(docBase,entryName.substring(0,last));
+          parent.mkdirs();
+          log.debug("Creating parent dirs: " + parent.getAbsolutePath());
+        }
+        if (entryName.endsWith("/") || entryName.equals("")) {
+          continue;
+        }
+        input=jarFile.getInputStream(jarEntry);
+        expand(input,docBase,entryName);
+        input.close();
+        input=null;
+        foundName=true;
+      }
+    }
+    if (!foundName)     log.debug("Unable to find: " + name + " in file "+ fileToExpand.getAbsolutePath());
+  }
+ catch (  IOException e) {
+    log.warn("Unable to delete tmpModuleFile on error",e);
+    throw e;
+  }
+ finally {
+    try {
+      input.close();
+    }
+ catch (    Exception e) {
+    }
+    try {
+      jarFile.close();
+    }
+ catch (    Exception e) {
+    }
+  }
+}

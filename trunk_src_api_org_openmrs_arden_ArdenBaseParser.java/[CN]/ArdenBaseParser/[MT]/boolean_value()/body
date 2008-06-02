@@ -1,0 +1,45 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST boolean_value_AST=null;
+  try {
+switch (LA(1)) {
+case TRUE:
+{
+{
+          AST tmp531_AST=null;
+          tmp531_AST=astFactory.create(LT(1));
+          astFactory.makeASTRoot(currentAST,tmp531_AST);
+          match(TRUE);
+        }
+        boolean_value_AST=(AST)currentAST.root;
+        break;
+      }
+case FALSE:
+{
+{
+        AST tmp532_AST=null;
+        tmp532_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp532_AST);
+        match(FALSE);
+      }
+      boolean_value_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_47);
+}
+ else {
+throw ex;
+}
+}
+returnAST=boolean_value_AST;
+}

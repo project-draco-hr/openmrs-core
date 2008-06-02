@@ -1,0 +1,13 @@
+{
+  List<Parameter> parameters=new ArrayList<Parameter>();
+  if (arguments != null) {
+    for (    SearchArgument a : arguments) {
+      String value=parameterValues.get(a.getName());
+      if (value == null)       value=a.getValue();
+      if (EvaluationContext.isExpression(value)) {
+        parameters.add(new Parameter(a.getName(),a.getName(),a.getPropertyClass(),value));
+      }
+    }
+  }
+  return parameters;
+}

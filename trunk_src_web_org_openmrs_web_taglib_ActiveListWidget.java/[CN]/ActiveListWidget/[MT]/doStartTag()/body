@@ -1,0 +1,109 @@
+{
+  UserContext userContext=Context.getUserContext();
+  Locale loc=userContext.getLocale();
+  DateFormat df=DateFormat.getDateInstance(DateFormat.SHORT,loc);
+  Set<Concept> addConceptList=OpenmrsUtil.conceptSetHelper(addConcept);
+  Set<Concept> removeConceptList=OpenmrsUtil.conceptSetHelper(removeConcept);
+  List<Concept> otherConceptList=OpenmrsUtil.conceptListHelper(otherGroupedConcepts);
+  boolean doObsGroups=otherConceptList.size() > 0;
+  if (onDate == null)   onDate=new Date();
+  Map<Concept,Obs> activeList=new HashMap<Concept,Obs>();
+  for (  Obs o : observations) {
+    if (OpenmrsUtil.compare(o.getObsDatetime(),onDate) > 0)     continue;
+    Concept c=o.getConcept();
+    Concept toDo=o.getValueCoded();
+    if (toDo == null)     toDo=c;
+    if (addConceptList.contains(o.getConcept())) {
+      Date newActiveDate=o.getObsDatetime();
+      Obs tmp=activeList.get(c);
+      Date currentActiveDate=tmp == null ? null : tmp.getObsDatetime();
+      if (currentActiveDate == null || newActiveDate.compareTo(currentActiveDate) < 0)       activeList.put(toDo,o);
+    }
+ else     if (removeConceptList.contains(o.getConcept())) {
+      activeList.remove(toDo);
+    }
+  }
+  List<Map.Entry<Concept,Obs>> ordered=new ArrayList<Map.Entry<Concept,Obs>>(activeList.entrySet());
+  Collections.sort(ordered,new Comparator<Map.Entry<Concept,Obs>>(){
+    public int compare(    Map.Entry<Concept,Obs> left,    Map.Entry<Concept,Obs> right){
+      return left.getValue().getObsDatetime().compareTo(right.getValue().getObsDatetime());
+    }
+  }
+);
+  Map<Obs,Collection<Obs>> obsGroups=new HashMap<Obs,Collection<Obs>>();
+  if (doObsGroups) {
+    ObsService os=Context.getObsService();
+    for (    Obs o : activeList.values())     if (o.getObsGroupId() != null)     obsGroups.put(o,os.findObsByGroupId(o.getObsGroupId()));
+  }
+  StringBuilder sb=new StringBuilder();
+  String before="";
+  String after="";
+  String obsGroupHeader="";
+  String beforeItem="";
+  String afterItem="";
+  String obsGroupItemSeparator="";
+  if ("ol".equals(displayStyle) || "ul".equals(displayStyle)) {
+    before="<" + displayStyle + ">";
+    after="</" + displayStyle + ">";
+    beforeItem="<li>";
+    afterItem="</li>";
+    obsGroupItemSeparator=", ";
+  }
+ else   if (displayStyle.startsWith("separator:")) {
+    afterItem=displayStyle.substring(displayStyle.indexOf(":") + 1);
+    obsGroupItemSeparator=" ";
+  }
+ else   if ("table".equals(displayStyle)) {
+    before="<table>";
+    after="</table>";
+    beforeItem="<tr><td>";
+    afterItem="</td></tr>";
+    obsGroupItemSeparator="</td><td>";
+    if (doObsGroups) {
+      StringBuilder s=new StringBuilder();
+      s.append("<tr><th></th>");
+      for (      Concept c : otherConceptList) {
+        ConceptName cn=c.getName(loc,false);
+        s.append("<th><small>" + (cn.getShortName() == null ? cn.getName() : cn.getShortName()) + "</small></th>");
+      }
+      s.append("</tr>");
+      obsGroupHeader=s.toString();
+    }
+  }
+ else {
+    throw new RuntimeException("Unknown displayStyle: " + displayStyle);
+  }
+  if (ordered.size() > 0) {
+    sb.append(before);
+    sb.append(obsGroupHeader);
+    for (    Map.Entry<Concept,Obs> e : ordered) {
+      sb.append(beforeItem);
+      sb.append(e.getKey().getName(loc,false).getName());
+      if (showDate)       sb.append(" ").append(df.format(e.getValue().getObsDatetime()));
+      if (doObsGroups) {
+        Collection<Obs> obsGroup=obsGroups.get(e.getValue());
+        for (        Concept c : otherConceptList) {
+          sb.append(obsGroupItemSeparator);
+          if (obsGroup != null) {
+            for (            Obs o : obsGroup) {
+              if (c.equals(o.getConcept())) {
+                sb.append(o.getValueAsString(loc));
+                break;
+              }
+            }
+          }
+        }
+      }
+      sb.append(afterItem);
+    }
+    sb.append(after);
+  }
+  try {
+    JspWriter w=pageContext.getOut();
+    w.println(sb);
+  }
+ catch (  IOException ex) {
+    log.error("Error while writing to JSP",ex);
+  }
+  return SKIP_BODY;
+}

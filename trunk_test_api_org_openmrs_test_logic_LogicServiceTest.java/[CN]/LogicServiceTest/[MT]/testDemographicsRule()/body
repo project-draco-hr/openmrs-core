@@ -1,0 +1,36 @@
+{
+  LogicService logicService=Context.getLogicService();
+  Cohort patients=new Cohort();
+  Map<Integer,Result> result;
+  patients.addMember(2);
+  try {
+    log.error("Evaluating BIRTHDATE");
+    result=logicService.eval(patients,"BIRTHDATE");
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    log.error("Evaluating AGE");
+    result=logicService.eval(patients,"AGE");
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    log.error("Evaluating AGE > 10");
+    result=logicService.eval(patients,new LogicCriteria("AGE").gt(10));
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    log.error("Evaluating BIRTHDATE AFTER 2000");
+    Calendar cal=Calendar.getInstance();
+    cal.set(Calendar.YEAR,2000);
+    result=logicService.eval(patients,new LogicCriteria("BIRTHDATE").after(cal.getTime()));
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    log.error("Evaluating BIRTHDATE BEFORE 2000");
+    result=logicService.eval(patients,new LogicCriteria("BIRTHDATE").before(cal.getTime()));
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    Calendar index=Calendar.getInstance();
+    index.set(1970,0,1);
+    log.error("Evaluating BIRTHDATE AS OF 1970-01-01");
+    result=logicService.eval(patients,"BIRTHDATE");
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+    log.error("Evaluating BIRTHDATE AS OF 1970-01-01, WITHIN 5 YEARS");
+    result=logicService.eval(patients,new LogicCriteria("BIRTHDATE").within(Duration.years(5)));
+    for (    Integer id : result.keySet())     log.error("Patient ID: " + id + " "+ result.get(id));
+  }
+ catch (  LogicException e) {
+    log.error("testDemographicsRule: Error generated",e);
+  }
+}

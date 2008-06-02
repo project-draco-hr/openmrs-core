@@ -1,0 +1,8 @@
+{
+  List<FieldType> fieldTypeList=new Vector<FieldType>();
+  if (Context.isAuthenticated()) {
+    FormService fs=Context.getFormService();
+    fieldTypeList=fs.getFieldTypes();
+  }
+  return fieldTypeList;
+}

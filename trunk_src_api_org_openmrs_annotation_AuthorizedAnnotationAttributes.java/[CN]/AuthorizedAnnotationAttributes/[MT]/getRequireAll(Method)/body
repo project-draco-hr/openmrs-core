@@ -1,0 +1,9 @@
+{
+  for (  Annotation annotation : method.getAnnotations()) {
+    if (annotation instanceof Authorized) {
+      Authorized attr=(Authorized)annotation;
+      return attr.requireAll();
+    }
+  }
+  return false;
+}

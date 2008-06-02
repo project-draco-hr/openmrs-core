@@ -1,0 +1,10 @@
+{
+  if (isSingleResult())   return this;
+  Result last=emptyResult();
+  for (  Result r : this) {
+    if ((last.getResultDate() == null || r.getResultDate().after(last.getResultDate()))) {
+      last=r;
+    }
+  }
+  return last;
+}

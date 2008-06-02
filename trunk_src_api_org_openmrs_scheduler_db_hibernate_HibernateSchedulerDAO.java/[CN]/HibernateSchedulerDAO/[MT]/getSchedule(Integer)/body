@@ -1,0 +1,8 @@
+{
+  Schedule schedule=(Schedule)sessionFactory.getCurrentSession().get(Schedule.class,scheduleId);
+  if (schedule == null) {
+    log.error("Schedule '" + scheduleId + "' not found");
+    throw new ObjectRetrievalFailureException(Schedule.class,scheduleId);
+  }
+  return schedule;
+}

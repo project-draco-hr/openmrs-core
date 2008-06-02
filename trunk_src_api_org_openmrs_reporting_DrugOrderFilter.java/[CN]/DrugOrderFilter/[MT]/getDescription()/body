@@ -1,0 +1,34 @@
+{
+  DateFormat df=DateFormat.getDateInstance(DateFormat.SHORT,Context.getLocale());
+  StringBuffer ret=new StringBuffer();
+  boolean currentlyCase=getWithinLastDays() != null && getWithinLastDays() == 0 && (getWithinLastMonths() == null || getWithinLastMonths() == 0);
+  if (currentlyCase)   ret.append("Patients currently ");
+ else   ret.append("Patients ");
+  if (getDrugListToUse() == null || getDrugListToUse().size() == 0) {
+    if (getAnyOrAll() == GroupMethod.NONE)     ret.append(currentlyCase ? "taking no drugs" : "who never took any drugs");
+ else     ret.append(currentlyCase ? "taking any drugs" : "ever taking any drugs");
+  }
+ else {
+    if (getDrugListToUse().size() == 1) {
+      if (getAnyOrAll() == GroupMethod.NONE)       ret.append("not taking ");
+ else       ret.append("taking ");
+      ret.append(getDrugListToUse().get(0).getName());
+    }
+ else {
+      ret.append("taking " + getAnyOrAll() + " of [");
+      for (Iterator<Drug> i=getDrugListToUse().iterator(); i.hasNext(); ) {
+        ret.append(i.next().getName());
+        if (i.hasNext())         ret.append(" , ");
+      }
+      ret.append("]");
+    }
+  }
+  if (!currentlyCase)   if (getWithinLastDays() != null || getWithinLastMonths() != null) {
+    ret.append(" withing the last");
+    if (getWithinLastMonths() != null)     ret.append(" " + getWithinLastMonths() + " months");
+    if (getWithinLastDays() != null)     ret.append(" " + getWithinLastDays() + " days");
+  }
+  if (getSinceDate() != null)   ret.append(" since " + df.format(getSinceDate()));
+  if (getUntilDate() != null)   ret.append(" until " + df.format(getUntilDate()));
+  return ret.toString();
+}

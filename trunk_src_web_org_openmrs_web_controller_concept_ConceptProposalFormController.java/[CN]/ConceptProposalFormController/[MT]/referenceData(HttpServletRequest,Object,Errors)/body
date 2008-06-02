@@ -1,0 +1,26 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  ConceptProposal cp=(ConceptProposal)object;
+  Locale locale=Context.getLocale();
+  List<ConceptProposal> matchingProposals=new Vector<ConceptProposal>();
+  List<ConceptListItem> possibleConceptsListItems=new Vector<ConceptListItem>();
+  ConceptListItem listItem=null;
+  if (cp.getObsConcept() != null)   listItem=new ConceptListItem(cp.getObsConcept(),locale);
+  map.put("obsConcept",listItem);
+  String defaultVerbose="false";
+  if (Context.isAuthenticated() && cp.getConceptProposalId() != null) {
+    ConceptService cs=Context.getConceptService();
+    defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+    matchingProposals=cs.findMatchingConceptProposals(cp.getOriginalText());
+    String phrase=cp.getOriginalText();
+    if (phrase.length() > 3)     phrase=phrase.substring(0,3);
+    List<ConceptWord> possibleConcepts=cs.findConcepts(phrase,locale,false);
+    if (possibleConcepts != null)     for (    ConceptWord word : possibleConcepts)     possibleConceptsListItems.add(new ConceptListItem(word));
+    if (cp.getMappedConcept() != null)     map.put("mappedConceptName",cp.getMappedConcept().getName(locale));
+  }
+  map.put("possibleConcepts",possibleConceptsListItems);
+  map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
+  map.put("states",OpenmrsConstants.CONCEPT_PROPOSAL_STATES());
+  map.put("matchingProposals",matchingProposals);
+  return map;
+}

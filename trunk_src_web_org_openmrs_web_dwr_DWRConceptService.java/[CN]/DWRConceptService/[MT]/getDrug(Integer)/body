@@ -1,0 +1,6 @@
+{
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
+  Drug d=cs.getDrug(drugId);
+  return d == null ? null : new ConceptDrugListItem(d,locale);
+}

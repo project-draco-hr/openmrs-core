@@ -1,0 +1,18 @@
+{
+  int n=1;
+  if (IsVarAdded == true && !conceptMap.containsKey(ConceptVar)) {
+    if (s == "false" || s == "true") {
+      MLMObjectElement mObjElem=new MLMObjectElement("",readType,n,"");
+      conceptMap.put(ConceptVar,mObjElem);
+      mObjElem.addUserVarVal(ConceptVar,s);
+    }
+ else {
+      if (howMany != null) {
+        n=howMany.intValue();
+      }
+      conceptMap.put(ConceptVar,new MLMObjectElement(s,readType,n,""));
+    }
+    IsVarAdded=false;
+    ConceptVar="";
+  }
+}

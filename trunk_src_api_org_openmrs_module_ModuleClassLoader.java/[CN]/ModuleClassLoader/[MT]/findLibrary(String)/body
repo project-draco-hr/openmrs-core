@@ -1,0 +1,12 @@
+{
+  if ((name == null) || "".equals(name.trim()))   return null;
+  if (log.isTraceEnabled()) {
+    log.trace("findLibrary(String): name=" + name + ", this="+ this);
+  }
+  String libname=System.mapLibraryName(name);
+  String result=null;
+  if (log.isTraceEnabled()) {
+    log.trace("findLibrary(String): name=" + name + ", libname="+ libname+ ", result="+ result+ ", this="+ this);
+  }
+  return result;
+}

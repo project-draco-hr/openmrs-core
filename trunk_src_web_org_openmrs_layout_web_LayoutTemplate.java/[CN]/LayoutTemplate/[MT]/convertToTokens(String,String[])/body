@@ -1,0 +1,71 @@
+{
+  List<Map<String,String>> ret=null;
+  if (line != null && nonTokens != null && nonTokens.length > 0) {
+    int idxCurr=-1;
+    for (int i=0; i < nonTokens.length; i++) {
+      String nonToken=nonTokens[i];
+      if (idxCurr + 1 < line.length())       idxCurr=line.indexOf(nonToken,idxCurr + 1);
+      if (ret == null)       ret=new Vector<Map<String,String>>();
+      if (i == 0 && idxCurr > 0) {
+        Map<String,String> currToken=new HashMap<String,String>();
+        currToken.put("isToken",getLayoutToken());
+        String realToken=line.substring(0,idxCurr);
+        currToken.put("displayText",this.getNameMappings().get(realToken));
+        currToken.put("displaySize",this.getSizeMappings().get(realToken));
+        currToken.put("codeName",realToken);
+        ret.add(currToken);
+      }
+      if (i < nonTokens.length - 1) {
+        int idxNext=line.indexOf(nonTokens[i + 1],idxCurr + 1);
+        Map<String,String> currNonToken=new HashMap<String,String>();
+        currNonToken.put("isToken",getNonLayoutToken());
+        currNonToken.put("displayText",nonToken);
+        Map<String,String> currToken=new HashMap<String,String>();
+        currToken.put("isToken",getLayoutToken());
+        String realToken=line.substring(idxCurr + nonToken.length(),idxNext);
+        currToken.put("displayText",this.getNameMappings().get(realToken));
+        currToken.put("displaySize",this.getSizeMappings().get(realToken));
+        currToken.put("codeName",realToken);
+        ret.add(currNonToken);
+        ret.add(currToken);
+      }
+ else {
+        Map<String,String> currNonToken=new HashMap<String,String>();
+        currNonToken.put("isToken",getNonLayoutToken());
+        currNonToken.put("displayText",nonToken);
+        ret.add(currNonToken);
+        if (idxCurr + nonToken.length() >= line.length()) {
+        }
+ else {
+          Map<String,String> currToken=new HashMap<String,String>();
+          currToken.put("isToken",getLayoutToken());
+          String realToken=line.substring(idxCurr + nonToken.length());
+          currToken.put("displayText",this.getNameMappings().get(realToken));
+          currToken.put("displaySize",this.getSizeMappings().get(realToken));
+          currToken.put("codeName",realToken);
+          ret.add(currToken);
+        }
+      }
+    }
+  }
+ else   if (line != null) {
+    if (line.length() > 0) {
+      if (ret == null)       ret=new Vector<Map<String,String>>();
+      Map<String,String> currToken=new HashMap<String,String>();
+      Map<String,String> currNonToken=new HashMap<String,String>();
+      currNonToken.put("isToken",getNonLayoutToken());
+      currNonToken.put("displayText","");
+      ret.add(currNonToken);
+      currToken.put("isToken",getLayoutToken());
+      String realToken=line;
+      currToken.put("displayText",this.getNameMappings().get(realToken));
+      currToken.put("displaySize",this.getSizeMappings().get(realToken));
+      currToken.put("codeName",realToken);
+      ret.add(currToken);
+    }
+  }
+  if (this.maxTokens < ret.size()) {
+    this.maxTokens=ret.size();
+  }
+  return ret;
+}

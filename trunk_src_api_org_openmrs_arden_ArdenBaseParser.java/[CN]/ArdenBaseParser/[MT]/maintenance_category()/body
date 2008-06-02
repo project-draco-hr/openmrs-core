@@ -1,0 +1,27 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST maintenance_category_AST=null;
+  try {
+{
+      AST tmp160_AST=null;
+      tmp160_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp160_AST);
+      match(MAINTENANCE);
+      match(COLON);
+    }
+    maintenance_body();
+    astFactory.addASTChild(currentAST,returnAST);
+    maintenance_category_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_1);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=maintenance_category_AST;
+}

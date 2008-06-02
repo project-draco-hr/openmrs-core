@@ -1,0 +1,60 @@
+{
+  Map<Integer,Object> ret=new HashMap<Integer,Object>();
+  className="org.openmrs." + className;
+  Criteria criteria=null;
+  if (className.equals("org.openmrs.Patient"))   criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Patient","patient");
+ else   if (className.equals("org.openmrs.Person"))   criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Person","person");
+ else   criteria=sessionFactory.getCurrentSession().createCriteria(className);
+  criteria.setCacheMode(CacheMode.IGNORE);
+  ProjectionList projectionList=Projections.projectionList();
+  if (className.contains("Person")) {
+    projectionList.add(Projections.property("person.personId"));
+    projectionList.add(Projections.property(property));
+    if (patients != null)     criteria.add(Restrictions.in("person.personId",patients.getMemberIds()));
+    criteria.add(Expression.eq("personVoided",false));
+  }
+ else {
+    projectionList.add(Projections.property("patient.personId"));
+    projectionList.add(Projections.property(property));
+    if (patients != null)     criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
+    criteria.add(Expression.eq("voided",false));
+  }
+  criteria.setProjection(projectionList);
+  try {
+    boolean hasPreferred=false;
+    for (    Field f : Class.forName(className).getDeclaredFields()) {
+      if (f.getName().equals("preferred"))       hasPreferred=true;
+    }
+    if (hasPreferred)     criteria.addOrder(org.hibernate.criterion.Order.desc("preferred"));
+  }
+ catch (  ClassNotFoundException e) {
+    log.warn("Class not found: " + className);
+  }
+  criteria.addOrder(org.hibernate.criterion.Order.desc("dateCreated"));
+  List<Object[]> rows=criteria.list();
+  if (returnAll) {
+    for (    Object[] row : rows) {
+      Integer ptId=(Integer)row[0];
+      Object columnValue=row[1];
+      if (!ret.containsKey(ptId)) {
+        Object[] arr={columnValue};
+        ret.put(ptId,arr);
+      }
+ else {
+        Object[] oldArr=(Object[])ret.get(ptId);
+        Object[] newArr=new Object[oldArr.length + 1];
+        System.arraycopy(oldArr,0,newArr,0,oldArr.length);
+        newArr[oldArr.length]=columnValue;
+        ret.put(ptId,newArr);
+      }
+    }
+  }
+ else {
+    for (    Object[] row : rows) {
+      Integer ptId=(Integer)row[0];
+      Object columnValue=row[1];
+      if (!ret.containsKey(ptId))       ret.put(ptId,columnValue);
+    }
+  }
+  return ret;
+}

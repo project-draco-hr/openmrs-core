@@ -1,0 +1,13 @@
+{
+  Set<String> attributes=new HashSet<String>();
+  for (  Annotation annotation : target.getAnnotations()) {
+    if (annotation instanceof Authorized) {
+      Authorized attr=(Authorized)annotation;
+      for (      String privilege : attr.value()) {
+        attributes.add(privilege);
+      }
+      break;
+    }
+  }
+  return attributes;
+}

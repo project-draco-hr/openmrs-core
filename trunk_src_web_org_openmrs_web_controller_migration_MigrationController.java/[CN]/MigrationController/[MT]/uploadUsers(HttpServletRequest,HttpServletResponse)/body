@@ -1,0 +1,6 @@
+{
+  String xml=request.getParameter("user_xml");
+  log.debug("xml to upload = " + xml);
+  int numAdded=MigrationHelper.importUsers(MigrationHelper.parseXml(xml));
+  return new ModelAndView(new RedirectView("migration.form?message=" + URLEncoder.encode("Added " + numAdded + " users","UTF-8")));
+}

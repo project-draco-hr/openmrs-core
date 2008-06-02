@@ -1,0 +1,19 @@
+{
+  Locale locale=Context.getLocale();
+  ConceptService cs=Context.getConceptService();
+  FormService fs=Context.getFormService();
+  Concept concept=cs.getConcept(conceptId);
+  List<Object> returnList=new Vector<Object>();
+  if (concept.isSet()) {
+    for (    ConceptSet set : concept.getConceptSets()) {
+      Field field=null;
+      for (      Field f : fs.findFields(set.getConcept())) {
+        ConceptName cn=set.getConcept().getName(locale);
+        if (f.getName().equals(cn.getName()) && f.getDescription().equals(cn.getDescription()) && f.isSelectMultiple().equals(false))         field=f;
+      }
+      if (field == null)       returnList.add(new ConceptListItem(set.getConcept(),locale));
+ else       returnList.add(new FieldListItem(field,locale));
+    }
+  }
+  return returnList;
+}

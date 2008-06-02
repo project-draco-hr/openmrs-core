@@ -1,0 +1,16 @@
+{
+  File file=new File(datasetFilename);
+  if (file.exists()) {
+    executeDataSet(new FlatXmlDataSet(new FileInputStream(datasetFilename)));
+  }
+ else {
+    InputStream stream=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+    if (stream == null)     throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
+    try {
+      executeDataSet(new FlatXmlDataSet(stream));
+    }
+  finally {
+      stream.close();
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    Privilege privilege=(Privilege)obj;
+    Context.getAdministrationService().updatePrivilege(privilege);
+    view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Privilege.saved");
+  }
+  return new ModelAndView(new RedirectView(view));
+}

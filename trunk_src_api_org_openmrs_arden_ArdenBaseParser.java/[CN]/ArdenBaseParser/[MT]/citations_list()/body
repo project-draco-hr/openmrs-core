@@ -1,0 +1,47 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST citations_list_AST=null;
+  try {
+    if ((LA(1) == ENDBLOCK)) {
+      citations_list_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == ENDBLOCK)) {
+      citations_list_AST=(AST)currentAST.root;
+    }
+ else     if ((_tokenSet_31.member(LA(1)))) {
+      single_citation();
+      astFactory.addASTChild(currentAST,returnAST);
+{
+        _loop86:         do {
+          if ((LA(1) == SEMI)) {
+            AST tmp357_AST=null;
+            tmp357_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp357_AST);
+            match(SEMI);
+            single_citation();
+            astFactory.addASTChild(currentAST,returnAST);
+          }
+ else {
+            break _loop86;
+          }
+        }
+ while (true);
+      }
+      citations_list_AST=(AST)currentAST.root;
+    }
+ else {
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_26);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=citations_list_AST;
+}

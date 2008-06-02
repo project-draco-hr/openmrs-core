@@ -1,0 +1,22 @@
+{
+  Context.getPersonService().setCollectionProperties(patient);
+  User currentUser=Context.getAuthenticatedUser();
+  Date currentTime=new Date();
+  if (patient.getCreator() == null)   patient.setCreator(currentUser);
+  if (patient.getDateCreated() == null)   patient.setDateCreated(currentTime);
+  if (patient.getPatientId() != null) {
+    patient.setChangedBy(currentUser);
+    patient.setDateChanged(currentTime);
+  }
+  if (patient.getIdentifiers() != null) {
+    for (    PatientIdentifier pIdentifier : patient.getIdentifiers()) {
+      if (pIdentifier.getDateCreated() == null)       pIdentifier.setDateCreated(currentTime);
+      if (pIdentifier.getCreator() == null)       pIdentifier.setCreator(currentUser);
+      if (pIdentifier.getPatient() == null)       pIdentifier.setPatient(patient);
+      if (pIdentifier.isVoided()) {
+        if (pIdentifier.getVoidedBy() == null)         pIdentifier.setVoidedBy(currentUser);
+        if (pIdentifier.getDateVoided() == null)         pIdentifier.setDateVoided(currentTime);
+      }
+    }
+  }
+}

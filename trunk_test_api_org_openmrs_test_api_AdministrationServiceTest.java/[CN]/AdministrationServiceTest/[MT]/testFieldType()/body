@@ -1,0 +1,26 @@
+{
+  FieldType fieldType=new FieldType();
+  fieldType.setName("testing");
+  fieldType.setDescription("desc");
+  fieldType.setIsSet(true);
+  as.createFieldType(fieldType);
+  FieldType newFieldType=formService.getFieldType(fieldType.getFieldTypeId());
+  assertNotNull(newFieldType);
+  List<FieldType> fieldTypes=formService.getFieldTypes();
+  assertNotNull(fieldTypes);
+  assertNotNull(fieldType);
+  boolean found=false;
+  for (Iterator<FieldType> i=fieldTypes.iterator(); i.hasNext(); ) {
+    FieldType fieldType2=i.next();
+    assertNotNull(fieldType2);
+    assertTrue(fieldType.equals(fieldType2) == (fieldType.getFieldTypeId().equals(fieldType2.getFieldTypeId())));
+    if (fieldType.equals(fieldType2))     found=true;
+  }
+  assertTrue(found);
+  newFieldType.setName("another test");
+  as.updateFieldType(newFieldType);
+  FieldType newerFieldType=formService.getFieldType(newFieldType.getFieldTypeId());
+  assertTrue(newerFieldType.getName().equals(newFieldType.getName()));
+  as.deleteFieldType(newFieldType);
+  assertNull(formService.getFieldType(newFieldType.getFieldTypeId()));
+}

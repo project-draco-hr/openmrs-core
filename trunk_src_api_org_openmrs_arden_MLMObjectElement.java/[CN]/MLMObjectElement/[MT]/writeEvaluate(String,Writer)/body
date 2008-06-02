@@ -1,0 +1,12 @@
+{
+  boolean retVal=true;
+  if (conceptEvalWritten) {
+    return true;
+  }
+  String cn=getConcept();
+  if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
+    w.append("\n\t\truleResult.add(logicService.eval(\n\t\t\t\tpatient,\n\t\t\t\tnew LogicCriteria(\"" + cn + "\").contains(\n\t\t\t\t\t");
+    w.append("\"" + getAnswerStr() + "\").last()));");
+  }
+  return retVal;
+}

@@ -1,0 +1,10 @@
+{
+  List<Parameter> parameters=new Vector<Parameter>();
+  if (getFilter() != null)   parameters.addAll(getFilter().getParameters());
+  if (getDataSetDefinitions() != null) {
+    for (    DataSetDefinition dataSetDef : getDataSetDefinitions()) {
+      parameters.addAll(dataSetDef.getParameters());
+    }
+  }
+  return parameters;
+}

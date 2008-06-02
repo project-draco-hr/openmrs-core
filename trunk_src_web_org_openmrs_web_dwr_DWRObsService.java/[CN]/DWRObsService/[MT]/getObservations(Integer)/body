@@ -1,0 +1,17 @@
+{
+  log.info("Get observations for encounter " + encounterId);
+  Vector<Object> obsList=new Vector<Object>();
+  HttpServletRequest request=WebContextFactory.get().getHttpServletRequest();
+  try {
+    Encounter encounter=Context.getEncounterService().getEncounter(encounterId);
+    Set<Obs> observations=encounter.getAllObs();
+    if (observations != null)     for (    Obs obs : observations) {
+      obsList.add(new ObsListItem(obs,request.getLocale()));
+    }
+  }
+ catch (  Exception e) {
+    log.error(e);
+    obsList.add("Error while attempting to find obs - " + e.getMessage());
+  }
+  return obsList;
+}

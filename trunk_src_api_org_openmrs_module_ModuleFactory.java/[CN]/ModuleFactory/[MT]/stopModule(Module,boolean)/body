@@ -1,0 +1,86 @@
+{
+  if (mod != null) {
+    String moduleId=mod.getModuleId();
+    String modulePackage=mod.getPackageName();
+    List<Module> startedModulesCopy=new ArrayList<Module>();
+    startedModulesCopy.addAll(getStartedModules());
+    for (    Module dependentModule : startedModulesCopy) {
+      if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage))       stopModule(dependentModule,isShuttingDown);
+    }
+    getStartedModulesMap().remove(moduleId);
+    if (isShuttingDown == false && !Context.isRefreshingContext()) {
+      Context.addProxyPrivilege("");
+      AdministrationService as=Context.getAdministrationService();
+      GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
+      as.saveGlobalProperty(gp);
+      Context.removeProxyPrivilege("");
+    }
+    if (getModuleClassLoaderMap().containsKey(mod)) {
+      log.debug("Mod was in classloader map.  Removing advice and extensions.");
+      try {
+        for (        AdvicePoint advice : mod.getAdvicePoints()) {
+          Class cls=null;
+          try {
+            cls=Class.forName(advice.getPoint());
+            Object aopObject=advice.getClassInstance();
+            if (Advisor.class.isInstance(aopObject)) {
+              log.debug("adding advisor: " + aopObject.getClass());
+              Context.removeAdvisor(cls,(Advisor)aopObject);
+            }
+ else {
+              log.debug("Adding advice: " + aopObject.getClass());
+              Context.removeAdvice(cls,(Advice)aopObject);
+            }
+          }
+ catch (          ClassNotFoundException e) {
+            log.warn("Could not remove advice point: " + advice.getPoint(),e);
+          }
+        }
+      }
+ catch (      Throwable t) {
+        log.warn("Error while getting advicePoints from module: " + moduleId,t);
+      }
+      try {
+        for (        Extension ext : mod.getExtensions()) {
+          String extId=ext.getExtensionId();
+          try {
+            List<Extension> tmpExtensions=getExtensions(extId);
+            if (tmpExtensions == null)             tmpExtensions=new Vector<Extension>();
+            tmpExtensions.remove(ext);
+            getExtensionMap().put(extId,tmpExtensions);
+          }
+ catch (          Exception exterror) {
+            log.warn("Error while getting extension: " + ext,exterror);
+          }
+        }
+      }
+ catch (      Throwable t) {
+        log.warn("Error while getting extensions from module: " + moduleId,t);
+      }
+    }
+    try {
+      mod.getActivator().shutdown();
+    }
+ catch (    ModuleException me) {
+      log.debug("Exception encountered while calling module's activator.shutdown()",me);
+    }
+catch (    Throwable t) {
+      log.warn("Unable to call module's Activator.shutdown() method",t);
+    }
+    ModuleClassLoader cl=removeClassLoader(mod);
+    if (cl != null) {
+      cl.dispose();
+      cl=null;
+      File folder=OpenmrsClassLoader.getLibCacheFolder();
+      File tmpModuleDir=new File(folder,moduleId);
+      try {
+        System.gc();
+        OpenmrsUtil.deleteDirectory(tmpModuleDir);
+      }
+ catch (      IOException e) {
+        log.warn("Unable to delete libcachefolder for " + moduleId);
+      }
+    }
+    System.gc();
+  }
+}
