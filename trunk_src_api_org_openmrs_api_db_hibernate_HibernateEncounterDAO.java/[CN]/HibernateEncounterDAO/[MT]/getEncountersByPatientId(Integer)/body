@@ -1,4 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class).createAlias("patient","p").add(Expression.eq("p.patientId",patientId)).add(Expression.eq("voided",false)).addOrder(Order.desc("encounterDatetime"));
-  return crit.list();
-}

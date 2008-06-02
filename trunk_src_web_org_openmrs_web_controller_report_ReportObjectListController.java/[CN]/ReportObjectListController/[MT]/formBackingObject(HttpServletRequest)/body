@@ -1,9 +1,0 @@
-{
-  List<AbstractReportObject> reportObjects=new Vector<AbstractReportObject>();
-  if (Context.isAuthenticated()) {
-    ReportObjectService rs=Context.getReportObjectService();
-    reportObjects=rs.getAllReportObjects();
-  }
-  ReportObjectList reportObjectList=new ReportObjectList(reportObjects);
-  return reportObjectList;
-}

@@ -1,9 +1,0 @@
-{
-  List<DrugOrder> patientOrders=getDrugOrders(drugSetName);
-  if (patientOrders == null)   return null;
-  Date earliest=null;
-  for (  DrugOrder o : patientOrders) {
-    if (earliest == null || OpenmrsUtil.compareWithNullAsLatest(o.getStartDate(),earliest) < 0)     earliest=o.getStartDate();
-  }
-  return earliest;
-}

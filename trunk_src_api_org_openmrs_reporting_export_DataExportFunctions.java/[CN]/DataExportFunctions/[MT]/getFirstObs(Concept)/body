@@ -1,9 +1,0 @@
-{
-  List<List<Object>> obs=getObsWithValues(concept,null);
-  if (obs.size() > 0) {
-    List<Object> o=obs.get(obs.size() - 1);
-    return o.get(0);
-  }
-  log.info("Could not find an Obs with concept " + concept + " for patient "+ patientId);
-  return null;
-}

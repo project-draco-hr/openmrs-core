@@ -1,7 +1,0 @@
-{
-  Criteria criteria=logicToHibernate(logicCriteria);
-  List<Person> results=new ArrayList<Person>();
-  criteria.add(Restrictions.in("personId",personIds));
-  results.addAll(criteria.list());
-  return results;
-}

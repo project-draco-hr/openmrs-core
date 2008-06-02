@@ -1,9 +1,0 @@
-{
-  obs=new LinkedList<Obs>();
-  groupMemberConcepts=new LinkedHashSet<Concept>();
-  this.formField=formField;
-  addObservation(obsToAdd);
-  if (obsToAdd.getObsGroup() != null) {
-    throw new Exception("FieldHolders only contain top-level obs.  This obs is contained in some other group, it is added automagically there. " + obsToAdd);
-  }
-}

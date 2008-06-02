@@ -1,8 +1,0 @@
-{
-  Vector<ConceptListItem> ret=new Vector<ConceptListItem>();
-  Concept c=Context.getConceptService().getConcept(conceptId);
-  Collection<ConceptAnswer> answers=c.getAnswers();
-  Locale locale=Context.getLocale();
-  for (  ConceptAnswer ca : answers)   if (ca.getAnswerConcept() != null)   ret.add(new ConceptListItem(ca.getAnswerConcept(),locale));
-  return ret;
-}

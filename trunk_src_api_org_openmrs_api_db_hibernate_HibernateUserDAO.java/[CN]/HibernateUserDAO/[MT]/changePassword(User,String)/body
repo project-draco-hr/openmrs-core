@@ -1,8 +1,0 @@
-{
-  User authUser=Context.getAuthenticatedUser();
-  if (authUser == null)   authUser=u;
-  log.debug("updating password");
-  String salt=Security.getRandomToken();
-  String newPassword=Security.encodeString(pw + salt);
-  updateUserPassword(newPassword,salt,authUser.getUserId(),new Date(),u.getUserId());
-}

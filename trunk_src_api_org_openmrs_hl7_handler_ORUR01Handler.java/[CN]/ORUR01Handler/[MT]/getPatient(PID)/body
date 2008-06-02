@@ -1,7 +1,0 @@
-{
-  Integer patientId=Context.getHL7Service().resolvePatientId(pid);
-  if (patientId == null)   throw new HL7Exception("Could not resolve patient");
-  Patient patient=new Patient();
-  patient.setPatientId(patientId);
-  return patient;
-}

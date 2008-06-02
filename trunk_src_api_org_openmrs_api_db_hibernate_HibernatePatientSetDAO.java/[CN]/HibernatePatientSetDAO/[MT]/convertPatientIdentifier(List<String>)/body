@@ -1,9 +1,0 @@
-{
-  StringBuffer sb=new StringBuffer();
-  sb.append("select distinct(patient_id) from patient_identifier p ");
-  sb.append("where identifier in (:identifiers)");
-  Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
-  query.setCacheMode(CacheMode.IGNORE);
-  query.setParameterList("identifiers",identifiers,new StringType());
-  return new Cohort(query.list());
-}

@@ -1,6 +1,0 @@
-{
-  if (token == null)   throw new LogicException("Token cannot be null");
-  if (token.startsWith("%%"))   return new ReferenceRule(token.substring(2));
-  if (!getRuleMap().containsKey(token))   throw new LogicException("No token \"" + token + "\" registered");
-  return getRuleMap().get(token);
-}

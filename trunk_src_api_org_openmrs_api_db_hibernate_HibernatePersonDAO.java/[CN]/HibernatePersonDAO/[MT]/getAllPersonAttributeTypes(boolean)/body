@@ -1,8 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PersonAttributeType.class,"r");
-  if (!includeRetired) {
-    criteria.add(Expression.eq("retired",false));
-  }
-  criteria.addOrder(Order.asc("name"));
-  return criteria.list();
-}

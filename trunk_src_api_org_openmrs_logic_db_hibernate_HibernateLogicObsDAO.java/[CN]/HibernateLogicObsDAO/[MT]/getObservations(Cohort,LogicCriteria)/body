@@ -1,9 +1,0 @@
-{
-  log.debug("*** Reading observations ***");
-  Criteria criteria=logicToHibernate(logicCriteria);
-  List<Obs> results=new ArrayList<Obs>();
-  criteria.add(Restrictions.eq("voided",false));
-  criteria.add(Restrictions.in("person.personId",who.getMemberIds()));
-  results.addAll(criteria.list());
-  return results;
-}

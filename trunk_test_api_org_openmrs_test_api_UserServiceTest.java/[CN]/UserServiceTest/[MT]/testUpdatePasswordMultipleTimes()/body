@@ -1,7 +1,0 @@
-{
-  UserService us=Context.getUserService();
-  User u=us.getUserByUsername("admin");
-  assertNotNull("There needs to be a user with username 'admin' in the database",u);
-  us.changePassword("test","test2");
-  us.changePassword("test2","test");
-}

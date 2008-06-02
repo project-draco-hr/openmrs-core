@@ -1,9 +1,0 @@
-{
-  Cohort ps=null;
-  if (Context.isAuthenticated()) {
-    String source=request.getParameter("source");
-    if ("myPatientSet".equals(source))     ps=Context.getPatientSetService().getMyPatientSet();
-  }
-  if (ps == null)   ps=new Cohort();
-  return ps;
-}

@@ -1,8 +1,0 @@
-{
-  PL hl7Location=pv1.getAssignedPatientLocation();
-  Integer locationId=Context.getHL7Service().resolveLocationId(hl7Location);
-  if (locationId == null)   throw new HL7Exception("Could not resolve location");
-  Location location=new Location();
-  location.setLocationId(locationId);
-  return location;
-}

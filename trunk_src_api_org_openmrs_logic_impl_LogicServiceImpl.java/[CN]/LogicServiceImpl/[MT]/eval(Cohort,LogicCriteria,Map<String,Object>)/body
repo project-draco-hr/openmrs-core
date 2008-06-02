@@ -1,7 +1,0 @@
-{
-  LogicContext context=new LogicContext(who);
-  Map<Integer,Result> resultMap=new Hashtable<Integer,Result>();
-  for (  Integer pid : who.getMemberIds())   resultMap.put(pid,context.eval(new Patient(pid),criteria,parameters));
-  context=null;
-  return resultMap;
-}

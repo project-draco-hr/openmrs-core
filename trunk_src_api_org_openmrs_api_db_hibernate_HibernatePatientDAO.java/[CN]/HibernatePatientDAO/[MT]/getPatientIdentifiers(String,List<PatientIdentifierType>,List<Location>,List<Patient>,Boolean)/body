@@ -1,9 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifier.class);
-  criteria.add(Expression.eq("voided",false));
-  if (identifier != null)   criteria.add(Expression.eq("identifier",identifier));
-  if (patientIdentifierTypes.size() > 0)   criteria.add(Expression.in("identifierType",patientIdentifierTypes));
-  if (patients.size() > 0)   criteria.add(Expression.in("patient",patients));
-  if (isPreferred != null)   criteria.add(Expression.eq("preferred",isPreferred));
-  return criteria.list();
-}

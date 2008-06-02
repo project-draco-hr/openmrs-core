@@ -1,8 +1,0 @@
-{
-  if (anonymousRole != null)   return anonymousRole;
-  anonymousRole=Context.getUserService().getRole(OpenmrsConstants.ANONYMOUS_ROLE);
-  if (anonymousRole == null) {
-    throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.ANONYMOUS_ROLE + " role does not exist");
-  }
-  return anonymousRole;
-}
