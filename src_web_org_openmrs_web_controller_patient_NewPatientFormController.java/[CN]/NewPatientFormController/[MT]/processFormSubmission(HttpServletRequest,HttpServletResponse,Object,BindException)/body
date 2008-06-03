@@ -3,7 +3,6 @@
   log.debug("\nNOW GOING THROUGH PROCESSFORMSUBMISSION METHOD.......................................\n\n");
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
-    EncounterService es=Context.getEncounterService();
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (action == null || action.equals(msa.getMessage("general.save"))) {
@@ -38,7 +37,7 @@
               String msg=getMessageSourceAccessor().getMessage("PatientIdentifier.location.null",args);
               errors.reject(msg);
             }
- else             loc=es.getLocation(Integer.valueOf(locs[i]));
+ else             loc=Context.getLocationService().getLocation(Integer.valueOf(locs[i]));
             PatientIdentifier pi=new PatientIdentifier(id,pit,loc);
             pi.setPreferred(pref.equals(id + types[i]));
             newIdentifiers.add(pi);

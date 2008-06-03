@@ -11,9 +11,9 @@
       if (patient != null) {
         identifiers.addAll(patient.getActiveIdentifiers());
         String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-        Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
-        if (conceptCause != null) {
-          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause,false);
+        Concept conceptCause=Context.getConceptService().getConcept(propCause);
+        if (conceptCause != null && patient.getPatientId() != null) {
+          List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,conceptCause);
           if (obssDeath.size() == 1) {
             Obs obsDeath=obssDeath.iterator().next();
             causeOfDeathOther=obsDeath.getValueText();
