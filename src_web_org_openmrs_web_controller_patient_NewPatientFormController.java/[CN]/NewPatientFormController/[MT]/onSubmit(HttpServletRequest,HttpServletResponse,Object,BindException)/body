@@ -82,13 +82,13 @@
       patient.setDeathDate(null);
       patient.setCauseOfDeath(null);
     }
-    for (    PersonAttributeType type : personService.getPersonAttributeTypes("patient","viewing")) {
+    for (    PersonAttributeType type : personService.getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING)) {
       String value=request.getParameter(type.getPersonAttributeTypeId().toString());
       patient.addAttribute(new PersonAttribute(type,value));
     }
     Patient newPatient=null;
     try {
-      newPatient=ps.updatePatient(patient);
+      newPatient=ps.savePatient(patient);
     }
  catch (    InvalidIdentifierFormatException iife) {
       log.error(iife);
@@ -129,10 +129,10 @@ catch (    PatientIdentifierException pie) {
     if (!isError) {
       String[] personAs=request.getParameterValues("personA");
       String[] types=request.getParameterValues("relationshipType");
-      Person person=personService.getPerson(patient);
+      Person person=personService.getPerson(patient.getPatientId());
       List<Relationship> relationships;
       List<Person> newPersonAs=new Vector<Person>();
-      if (person != null)       relationships=personService.getRelationships(person);
+      if (person != null)       relationships=personService.getRelationshipsByPerson(person);
  else       relationships=new Vector<Relationship>();
       if (personAs != null) {
         for (int x=0; x < personAs.length; x++) {
@@ -158,15 +158,15 @@ catch (    PatientIdentifierException pie) {
         }
       }
       for (      Relationship rel : relationships) {
-        if (newPersonAs.contains(rel.getPersonA()) || person.equals(rel.getPersonA()))         personService.updateRelationship(rel);
- else         personService.deleteRelationship(rel);
+        if (newPersonAs.contains(rel.getPersonA()) || person.equals(rel.getPersonA()))         personService.saveRelationship(rel);
+ else         personService.purgeRelationship(rel);
       }
       if (patient.getDead()) {
         log.debug("Patient is dead, so let's make sure there's an Obs for it");
         String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-        Concept causeOfDeath=Context.getConceptService().getConceptByIdOrName(codProp);
+        Concept causeOfDeath=Context.getConceptService().getConcept(codProp);
         if (causeOfDeath != null) {
-          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath,false);
+          List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,causeOfDeath);
           if (obssDeath != null) {
             if (obssDeath.size() > 1) {
               log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
@@ -182,8 +182,8 @@ catch (    PatientIdentifierException pie) {
                 obsDeath=new Obs();
                 obsDeath.setPerson(patient);
                 obsDeath.setConcept(causeOfDeath);
-                Location loc=Context.getEncounterService().getLocationByName("Unknown Location");
-                if (loc == null)                 loc=Context.getEncounterService().getLocation(new Integer(1));
+                Location loc=Context.getLocationService().getLocation("Unknown Location");
+                if (loc == null)                 loc=Context.getLocationService().getLocation(new Integer(1));
                 if (loc != null)                 obsDeath.setLocation(loc);
  else                 log.error("Could not find a suitable location for which to create this new Obs");
               }
@@ -191,7 +191,7 @@ catch (    PatientIdentifierException pie) {
               if (currCause == null) {
                 log.debug("Current cause is null, attempting to set to NONE");
                 String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
-                currCause=Context.getConceptService().getConceptByIdOrName(noneConcept);
+                currCause=Context.getConceptService().getConcept(noneConcept);
               }
               if (currCause != null) {
                 log.debug("Current cause is not null, setting to value_coded");
@@ -200,7 +200,7 @@ catch (    PatientIdentifierException pie) {
                 if (dateDeath == null)                 dateDeath=new Date();
                 obsDeath.setObsDatetime(dateDeath);
                 String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
-                Concept conceptOther=Context.getConceptService().getConceptByIdOrName(otherConcept);
+                Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
                 if (conceptOther != null) {
                   if (conceptOther.equals(currCause)) {
                     String otherInfo=ServletRequestUtils.getStringParameter(request,"causeOfDeath_other","");
@@ -216,7 +216,7 @@ catch (    PatientIdentifierException pie) {
                   log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
                   obsDeath.setValueText("");
                 }
-                Context.getObsService().updateObs(obsDeath);
+                Context.getObsService().saveObs(obsDeath,null);
               }
  else {
                 log.debug("Current cause is still null - aborting mission");

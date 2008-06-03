@@ -11,7 +11,7 @@
         if (patient == null)         throw new ObjectRetrievalFailureException(Patient.class,id);
       }
  catch (      NumberFormatException numberError) {
-        log.warn("Invalid userId supplied: '" + patientId + "'",numberError);
+        log.warn("Invalid patientId supplied: '" + patientId + "'",numberError);
       }
 catch (      ObjectRetrievalFailureException noPatientEx) {
         try {
