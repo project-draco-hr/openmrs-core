@@ -27,21 +27,15 @@
           isNew=true;
           concept.setConceptId(cs.getNextAvailableId());
           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
-            ConceptNumeric cn=getConceptNumeric(concept,request);
-            cs.createConcept(cn);
+            concept=getConceptNumeric(concept,request);
           }
- else {
-            cs.createConcept(concept);
-          }
+          cs.saveConcept(concept);
         }
  else {
           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
-            ConceptNumeric cn=getConceptNumeric(concept,request);
-            cs.updateConcept(cn);
+            concept=getConceptNumeric(concept,request);
           }
- else {
-            cs.updateConcept(concept);
-          }
+          cs.saveConcept(concept);
         }
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.saved");
       }

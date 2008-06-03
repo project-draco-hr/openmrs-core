@@ -17,7 +17,7 @@
       }
     }
   }
-  for (  ConceptSynonym syn : concept.getSynonyms()) {
+  if (concept.getSynonyms() != null)   for (  ConceptSynonym syn : concept.getSynonyms()) {
     if (syn.getCreator() == null) {
       syn.setCreator(authUser);
       if (syn.getDateCreated() == null)       syn.setDateCreated(timestamp);

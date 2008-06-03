@@ -10,6 +10,7 @@
       if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id)))       requestConceptIds.add(Integer.valueOf(id));
     }
     Collection<ConceptSet> originalConceptSets=(Collection<ConceptSet>)getValue();
+    if (originalConceptSets == null)     originalConceptSets=new Vector<ConceptSet>();
     for (    ConceptSet origConceptSet : originalConceptSets) {
       for (int x=0; x < requestConceptIds.size(); x++) {
         if (requestConceptIds.get(x).equals(origConceptSet.getConcept().getConceptId())) {
