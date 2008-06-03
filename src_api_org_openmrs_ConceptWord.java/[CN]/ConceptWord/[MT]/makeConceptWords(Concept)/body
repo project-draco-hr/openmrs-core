@@ -6,7 +6,7 @@
       words.add(new ConceptWord(part,concept,name.getLocale(),""));
     }
   }
-  for (  ConceptSynonym synonym : concept.getSynonyms()) {
+  if (concept.getSynonyms() != null)   for (  ConceptSynonym synonym : concept.getSynonyms()) {
     String syn=synonym.getSynonym();
     List<String> uniqueParts=getUniqueWords(syn);
     for (    String part : uniqueParts) {

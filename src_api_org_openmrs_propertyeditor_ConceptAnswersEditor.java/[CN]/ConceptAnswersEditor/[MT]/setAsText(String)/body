@@ -8,6 +8,7 @@
       if (!id.equals("") && !requestConceptIds.contains(id))       requestConceptIds.add(id);
     }
     Collection<ConceptAnswer> originalConceptAnswers=(Collection<ConceptAnswer>)getValue();
+    if (originalConceptAnswers == null)     originalConceptAnswers=new HashSet<ConceptAnswer>();
     Collection<ConceptAnswer> deletedConceptAnswers=new HashSet<ConceptAnswer>();
     for (    ConceptAnswer origConceptAnswer : originalConceptAnswers) {
       boolean answerDeleted=true;

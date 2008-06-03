@@ -4,7 +4,10 @@
   String conceptId=request.getParameter("conceptId");
   if (conceptId == null) {
   }
-  if (conceptId != null) {
+ else   if (isFormSubmission(request)) {
+    concept=new Concept(Integer.valueOf(conceptId));
+  }
+ else   if (conceptId != null) {
     concept=cs.getConcept(Integer.valueOf(conceptId));
   }
   if (concept == null)   concept=new Concept();
