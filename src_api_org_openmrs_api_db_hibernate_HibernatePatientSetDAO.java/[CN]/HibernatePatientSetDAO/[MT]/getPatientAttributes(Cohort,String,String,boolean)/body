@@ -11,7 +11,8 @@
     projectionList.add(Projections.property("person.personId"));
     projectionList.add(Projections.property(property));
     if (patients != null)     criteria.add(Restrictions.in("person.personId",patients.getMemberIds()));
-    criteria.add(Expression.eq("personVoided",false));
+    if (className.equals("org.openmrs.Person"))     criteria.add(Expression.eq("personVoided",false));
+ else     criteria.add(Expression.eq("voided",false));
   }
  else {
     projectionList.add(Projections.property("patient.personId"));

@@ -19,8 +19,8 @@
   if (obs.getDateStopped() != null) {
     obsNode.setAttribute("date_stopped",df.format(obs.getDateStopped()));
   }
-  if (obs.getObsGroupId() != null) {
-    obsNode.setAttribute("obs_group_id",obs.getObsGroupId().toString());
+  if (obs.getObsGroup() != null) {
+    obsNode.setAttribute("obs_group_id",obs.getObsGroup().getObsId().toString());
   }
   if (obs.getValueGroupId() != null) {
     obsNode.setAttribute("value_group_id",obs.getValueGroupId().toString());
