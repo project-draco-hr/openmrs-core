@@ -3,7 +3,6 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] conceptClassList=request.getParameterValues("conceptClassId");
-    AdministrationService as=Context.getAdministrationService();
     ConceptService cs=Context.getConceptService();
     String success="";
     String error="";
@@ -12,7 +11,7 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     for (    String cc : conceptClassList) {
       try {
-        as.deleteConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
+        cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
         if (!success.equals(""))         success+="<br/>";
         success+=cc + " " + deleted;
       }
