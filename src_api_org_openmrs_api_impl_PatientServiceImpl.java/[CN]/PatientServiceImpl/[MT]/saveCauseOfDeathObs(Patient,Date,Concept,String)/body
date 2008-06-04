@@ -7,9 +7,9 @@
   patient.setCauseOfDeath(cause);
   log.debug("Patient is dead, so let's make sure there's an Obs for it");
   String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-  Concept causeOfDeath=Context.getConceptService().getConceptByIdOrName(codProp);
+  Concept causeOfDeath=Context.getConceptService().getConcept(codProp);
   if (causeOfDeath != null) {
-    Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath,false);
+    List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,causeOfDeath);
     if (obssDeath != null) {
       if (obssDeath.size() > 1) {
         log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
@@ -26,7 +26,7 @@
           obsDeath.setPerson(patient);
           obsDeath.setConcept(causeOfDeath);
           Location loc=null;
-          if (loc == null)           loc=Context.getEncounterService().getLocationByName("Unknown Location");
+          if (loc == null)           loc=Context.getLocationService().getLocation("Unknown Location");
           if (loc == null)           loc=Context.getLocationService().getLocation(new Integer(1));
           if (loc != null)           obsDeath.setLocation(loc);
  else           log.error("Could not find a suitable location for which to create this new Obs");
@@ -35,7 +35,7 @@
         if (currCause == null) {
           log.debug("Current cause is null, attempting to set to NONE");
           String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
-          currCause=Context.getConceptService().getConceptByIdOrName(noneConcept);
+          currCause=Context.getConceptService().getConcept(noneConcept);
         }
         if (currCause != null) {
           log.debug("Current cause is not null, setting to value_coded");
@@ -44,7 +44,7 @@
           if (dateDeath == null)           dateDeath=new Date();
           obsDeath.setObsDatetime(dateDeath);
           String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
-          Concept conceptOther=Context.getConceptService().getConceptByIdOrName(otherConcept);
+          Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
           if (conceptOther != null) {
             if (conceptOther.equals(currCause)) {
               log.debug("Setting value_text as " + otherReason);

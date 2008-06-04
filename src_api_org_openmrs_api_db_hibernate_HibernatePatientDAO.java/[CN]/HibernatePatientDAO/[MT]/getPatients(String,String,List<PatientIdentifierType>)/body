@@ -1,10 +1,10 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
   criteria.createAlias("names","name");
-  criteria.add(Expression.eq("name.voided",false));
   criteria.addOrder(Order.asc("name.givenName"));
   criteria.addOrder(Order.asc("name.middleName"));
   criteria.addOrder(Order.asc("name.familyName"));
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
   if (name != null) {
     name=name.replaceAll("  "," ");
     name=name.replace(", "," ");

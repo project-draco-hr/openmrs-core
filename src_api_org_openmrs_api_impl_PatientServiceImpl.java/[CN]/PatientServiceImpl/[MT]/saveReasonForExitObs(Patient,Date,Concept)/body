@@ -4,9 +4,9 @@
   if (cause == null)   throw new APIException("Cause supplied to method is null");
   log.debug("Patient is exiting, so let's make sure there's an Obs for it");
   String codProp=Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare");
-  Concept reasonForExit=Context.getConceptService().getConceptByIdOrName(codProp);
+  Concept reasonForExit=Context.getConceptService().getConcept(codProp);
   if (reasonForExit != null) {
-    Set<Obs> obssExit=Context.getObsService().getObservations(patient,reasonForExit,false);
+    List<Obs> obssExit=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExit);
     if (obssExit != null) {
       if (obssExit.size() > 1) {
         log.error("Multiple reasons for exit (" + obssExit.size() + ")?  Shouldn't be...");
@@ -23,7 +23,7 @@
           obsExit.setPerson(patient);
           obsExit.setConcept(reasonForExit);
           Location loc=null;
-          if (loc == null)           loc=Context.getEncounterService().getLocationByName("Unknown Location");
+          if (loc == null)           loc=Context.getLocationService().getLocation("Unknown Location");
           if (loc == null)           loc=Context.getLocationService().getLocation(new Integer(1));
           if (loc != null)           obsExit.setLocation(loc);
  else           log.error("Could not find a suitable location for which to create this new Obs");
