@@ -14,7 +14,7 @@
     program.setChangedBy(currentUser);
     program.setDateChanged(currentDate);
   }
-  for (  ProgramWorkflow workflow : program.getWorkflows()) {
+  for (  ProgramWorkflow workflow : program.getAllWorkflows()) {
     if (workflow.getConcept() == null) {
       throw new APIException("ProgramWorkflow concept is required");
     }

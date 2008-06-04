@@ -5,13 +5,11 @@
   for (  PatientProgram patientProgram : getPatientPrograms(patient,null,null,null,null,null,false)) {
     Set<ProgramWorkflow> workflows=patientProgram.getProgram().getWorkflows();
     for (    ProgramWorkflow workflow : workflows) {
-      if (!workflow.isRetired()) {
-        ProgramWorkflowState currentState=patientProgram.getCurrentState(workflow).getState();
-        ProgramWorkflowState transitionState=workflow.getState(trigger);
-        if (transitionState != null && workflow.isLegalTransition(currentState,transitionState)) {
-          patientProgram.transitionToState(transitionState,dateConverted);
-          log.info("State Conversion Triggered: patientProgram=" + patientProgram + " transition from "+ currentState+ " to "+ transitionState+ " on "+ dateConverted);
-        }
+      ProgramWorkflowState currentState=patientProgram.getCurrentState(workflow).getState();
+      ProgramWorkflowState transitionState=workflow.getState(trigger);
+      if (transitionState != null && workflow.isLegalTransition(currentState,transitionState)) {
+        patientProgram.transitionToState(transitionState,dateConverted);
+        log.info("State Conversion Triggered: patientProgram=" + patientProgram + " transition from "+ currentState+ " to "+ transitionState+ " on "+ dateConverted);
       }
     }
   }
