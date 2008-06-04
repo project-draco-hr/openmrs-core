@@ -8,7 +8,6 @@
   ConceptName defaultName=null;
   if (locale == null)   locale=Context.getLocale();
   String desiredLanguage=locale.getLanguage();
-  String desiredCountry=locale.getCountry();
   for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext(); ) {
     ConceptName possibleName=i.next();
     if (possibleName.getLocale().equals(locale)) {

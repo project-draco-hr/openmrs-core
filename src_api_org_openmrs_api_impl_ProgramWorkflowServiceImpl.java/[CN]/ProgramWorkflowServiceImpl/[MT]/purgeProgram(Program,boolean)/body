@@ -1,5 +1,5 @@
 {
-  if (cascade && !program.getWorkflows().isEmpty()) {
+  if (cascade && !program.getAllWorkflows().isEmpty()) {
     throw new APIException("Cascade purging of Programs is not implemented yet");
   }
   dao.deleteProgram(program);

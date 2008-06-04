@@ -1,7 +1,7 @@
 {
   Date lastModifiedDate=program.getDateChanged();
   program.setRetired(false);
-  for (  ProgramWorkflow workflow : program.getWorkflows()) {
+  for (  ProgramWorkflow workflow : program.getAllWorkflows()) {
     if (lastModifiedDate != null && lastModifiedDate.equals(workflow.getDateChanged())) {
       workflow.setRetired(false);
       for (      ProgramWorkflowState state : workflow.getStates()) {
