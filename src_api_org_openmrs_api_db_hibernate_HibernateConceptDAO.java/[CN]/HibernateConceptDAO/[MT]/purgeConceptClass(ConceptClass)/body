@@ -1,4 +1,3 @@
 {
-  sessionFactory.getCurrentSession().createQuery("delete from ConceptClass where concept_class_id = :c").setInteger("c",cc.getConceptClassId()).executeUpdate();
   sessionFactory.getCurrentSession().delete(cc);
 }
