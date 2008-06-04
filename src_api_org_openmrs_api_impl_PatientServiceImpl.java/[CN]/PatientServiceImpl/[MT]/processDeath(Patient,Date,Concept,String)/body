@@ -6,7 +6,7 @@
     this.updatePatient(patient);
     saveCauseOfDeathObs(patient,dateDied,causeOfDeath,otherReason);
     String strPatientDied=Context.getAdministrationService().getGlobalProperty("concept.patientDied");
-    Concept conceptPatientDied=Context.getConceptService().getConceptByIdOrName(strPatientDied);
+    Concept conceptPatientDied=Context.getConceptService().getConcept(strPatientDied);
     if (conceptPatientDied == null)     log.debug("ConceptPatientDied is null");
     exitFromCare(patient,dateDied,conceptPatientDied);
   }

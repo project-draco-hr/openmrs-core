@@ -2,7 +2,9 @@
   List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
   types.add(type);
   List<Patient> patients=getPatients(null,identifier,types);
-  patients.remove(ignorePatient);
+  while (patients.remove(ignorePatient)) {
+  }
+  ;
   if (patients.size() > 0)   return patients.get(0);
  else   return null;
 }

@@ -1,0 +1,11 @@
+{
+  executeDataSet(FIND_PATIENTS_XML);
+  List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
+  types.add(new PatientIdentifierType(1));
+  List<Patient> patients=Context.getPatientService().getPatients(null,"1234",types);
+  assertEquals(1,patients.size());
+  patients=Context.getPatientService().getPatients(null,"1234",null);
+  assertEquals(1,patients.size());
+  patients=Context.getPatientService().getPatients(null,null,types);
+  assertEquals(2,patients.size());
+}
