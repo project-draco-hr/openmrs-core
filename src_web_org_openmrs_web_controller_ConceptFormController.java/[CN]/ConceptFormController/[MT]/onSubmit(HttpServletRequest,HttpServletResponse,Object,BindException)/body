@@ -7,7 +7,7 @@
     String action=request.getParameter("action");
     if (action.equals(msa.getMessage("Concept.delete"))) {
       try {
-        cs.deleteConcept(concept);
+        cs.purgeConcept(concept);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.deleted");
         return new ModelAndView(new RedirectView("index.htm"));
       }

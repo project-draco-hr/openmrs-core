@@ -48,8 +48,8 @@
         if (answer.getAnswerConcept().isRetired())         name="<span class='retired'>" + name + "</span>";
         conceptAnswers.put(key,name);
       }
-      forms=Context.getFormService().getForms(concept);
-      for (      Concept c : Context.getConceptService().getQuestionsForAnswer(concept)) {
+      forms=Context.getFormService().getFormsContainingConcept(concept);
+      for (      Concept c : Context.getConceptService().getConceptsByAnswer(concept)) {
         ConceptName cn=c.getName(locale);
         if (cn == null)         questionsAnswered.put(c.getConceptId(),"No Name Defined");
  else         questionsAnswered.put(c.getConceptId(),cn.getName());
@@ -83,7 +83,7 @@
   map.put("formsInUse",forms);
   map.put("questionsAnswered",questionsAnswered);
   map.put("containedInSets",containedInSets);
-  map.put("classes",cs.getConceptClasses());
+  map.put("classes",cs.getAllConceptClasses());
   map.put("datatypes",cs.getAllConceptDatatypes());
   map.put("locale",locale.getLanguage().substring(0,2));
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
