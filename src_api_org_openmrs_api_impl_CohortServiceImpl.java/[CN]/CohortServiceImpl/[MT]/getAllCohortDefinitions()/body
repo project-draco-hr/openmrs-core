@@ -1,6 +1,7 @@
 {
-  List<CohortDefinition> ret=new ArrayList<CohortDefinition>();
+  List<CohortDefinitionItemHolder> ret=new ArrayList<CohortDefinitionItemHolder>();
   for (  CohortDefinitionProvider p : cohortDefinitionProviders.values()) {
+    log.info("Getting cohort definitions from " + p.getClass());
     ret.addAll(p.getAllCohortDefinitions());
   }
   return ret;
