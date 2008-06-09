@@ -1,0 +1,6 @@
+{
+  PatientSetService service=Context.getPatientSetService();
+  Cohort nobody=new Cohort();
+  Map<Integer,List<DrugOrder>> results=service.getDrugOrders(nobody,null);
+  assertNotNull(results);
+}
