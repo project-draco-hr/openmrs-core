@@ -14,7 +14,12 @@
     for (    String colKey : colKeys) {
       Object colValue=map.get(colKey);
       writer.write(getBeforeColumnDelimiter());
-      if (colValue != null)       writer.write(escape(colValue.toString()));
+      if (colValue != null)       if (dataset instanceof CohortDataSet) {
+        writer.write(escape(Integer.toString(((Cohort)colValue).size())));
+      }
+ else {
+        writer.write(escape(colValue.toString()));
+      }
       writer.write(getAfterColumnDelimiter());
     }
     writer.write(getAfterRowDelimiter());
