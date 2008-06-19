@@ -60,6 +60,9 @@
               throw new ParameterException("Error parsing dates in expression: " + replacement);
             }
           }
+ else           if (value instanceof Location) {
+            replacement=replacement.replace(parameter.getName(),((Location)value).getLocationId().toString());
+          }
  else {
             replacement=replacement.replace(parameter.getName(),value.toString());
           }
