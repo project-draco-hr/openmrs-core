@@ -71,7 +71,7 @@
     log.debug("Current thread: " + Thread.currentThread());
     log.debug("Creating the encounter object");
   }
-  Context.getEncounterService().createEncounter(encounter);
+  Context.getEncounterService().saveEncounter(encounter);
   hl7Service.encounterCreated(encounter);
   return oru;
 }
