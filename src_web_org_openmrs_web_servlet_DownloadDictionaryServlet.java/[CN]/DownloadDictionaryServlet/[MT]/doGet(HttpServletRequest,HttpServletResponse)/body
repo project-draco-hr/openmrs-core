@@ -1,13 +1,13 @@
 {
-  Locale locale=Context.getLocale();
-  ConceptService cs=Context.getConceptService();
-  String s=new SimpleDateFormat("dMy_Hm").format(new Date());
-  response.setHeader("Content-Type","text/csv");
-  response.setHeader("Content-Disposition","attachment; filename=conceptDictionary" + s + ".csv");
-  String line="Concept Id,Name,Description,Synonyms,Answers,Class,Datatype,Creator,Changed By";
-  response.getOutputStream().println(line);
-  for (  Concept c : cs.getConcepts("conceptId","asc")) {
-    if (c.isRetired() == false) {
+  try {
+    Locale locale=Context.getLocale();
+    ConceptService cs=Context.getConceptService();
+    String s=new SimpleDateFormat("dMy_Hm").format(new Date());
+    response.setHeader("Content-Type","text/csv;charset=UTF-8");
+    response.setHeader("Content-Disposition","attachment; filename=conceptDictionary" + s + ".csv");
+    String line="Concept Id,Name,Description,Synonyms,Answers,Class,Datatype,Changed By,Creator\n";
+    response.getWriter().write(line);
+    for (    Concept c : cs.getAllConcepts("conceptId",true,false)) {
       line=c.getConceptId() + ",";
       String name, description;
       ConceptName cn=c.getName(locale);
@@ -26,8 +26,8 @@
       line+='"' + tmp.trim() + "\",";
       tmp="";
       for (      ConceptAnswer answer : c.getAnswers()) {
-        if (answer.getAnswerConcept() != null)         tmp+=answer.getAnswerConcept().toString() + "\n";
- else         if (answer.getAnswerDrug() != null)         tmp+=answer.getAnswerDrug().toString() + "\n";
+        if (answer.getAnswerConcept() != null)         tmp+=answer.getAnswerConcept().getName() + "\n";
+ else         if (answer.getAnswerDrug() != null)         tmp+=answer.getAnswerDrug().getFullName(Context.getLocale()) + "\n";
       }
       line+='"' + tmp.trim() + "\",";
       line+='"';
@@ -41,8 +41,11 @@
       line+="\",";
       line+='"';
       if (c.getCreator() != null)       line+=c.getCreator().getPersonName();
-      line+="\"";
-      response.getOutputStream().println(line);
+      line+="\"\n";
+      response.getWriter().write(line);
     }
+  }
+ catch (  Throwable t) {
+    log.error("Error while downloading concepts.",t);
   }
 }
