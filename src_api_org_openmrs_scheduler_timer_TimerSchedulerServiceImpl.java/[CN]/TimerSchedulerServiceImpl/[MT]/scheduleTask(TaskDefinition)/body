@@ -2,7 +2,7 @@
   if (taskDefinition != null) {
     TimerSchedulerTask schedulerTask=scheduledTasks.get(taskDefinition.getId());
     if (schedulerTask != null) {
-      schedulerTask.cancel();
+      schedulerTask.shutdown();
     }
     try {
       Task task=TaskFactory.getInstance().createInstance(taskDefinition);
