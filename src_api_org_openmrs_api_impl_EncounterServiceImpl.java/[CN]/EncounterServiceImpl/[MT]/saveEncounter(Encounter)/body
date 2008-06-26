@@ -1,29 +1,31 @@
 {
   Date now=new Date();
   User me=Context.getAuthenticatedUser();
+  boolean isNewEncounter=false;
+  Date newDate=encounter.getEncounterDatetime();
+  Date originalDate=null;
   if (encounter.getEncounterId() == null) {
+    isNewEncounter=true;
     Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_ENCOUNTERS);
-    if (encounter.getDateCreated() == null)     encounter.setDateCreated(now);
-    if (encounter.getCreator() == null)     encounter.setCreator(me);
-    if (encounter.getObsAtTopLevel(false) != null) {
-      for (      Obs o : encounter.getObsAtTopLevel(false)) {
-        if (o.getDateCreated() == null)         o.setDateCreated(now);
-        if (o.getCreator() == null)         o.setCreator(me);
-      }
-    }
-    if (encounter.getOrders() != null) {
-      for (      Order o : encounter.getOrders()) {
-        if (o.getDateCreated() == null)         o.setDateCreated(now);
-        if (o.getCreator() == null)         o.setCreator(me);
-      }
-    }
-    dao.saveEncounter(encounter);
   }
  else {
     Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
-    Date originalDate=dao.getSavedEncounterDatetime(encounter);
-    Date newDate=encounter.getEncounterDatetime();
-    dao.saveEncounter(encounter);
+  }
+  if (encounter.getDateCreated() == null)   encounter.setDateCreated(now);
+  if (encounter.getCreator() == null)   encounter.setCreator(me);
+  for (  Obs o : encounter.getAllObs(true)) {
+    if (o.getDateCreated() == null)     o.setDateCreated(now);
+    if (o.getCreator() == null)     o.setCreator(me);
+  }
+  if (encounter.getOrders() != null) {
+    for (    Order o : encounter.getOrders()) {
+      if (o.getDateCreated() == null)       o.setDateCreated(now);
+      if (o.getCreator() == null)       o.setCreator(me);
+    }
+  }
+  if (isNewEncounter == false)   originalDate=dao.getSavedEncounterDatetime(encounter);
+  dao.saveEncounter(encounter);
+  if (isNewEncounter == false) {
     Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs()) {
       boolean obsWasChanged=false;

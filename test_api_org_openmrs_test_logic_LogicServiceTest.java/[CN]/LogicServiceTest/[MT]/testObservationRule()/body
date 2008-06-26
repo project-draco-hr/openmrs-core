@@ -2,11 +2,11 @@
   LogicService logicService=Context.getLogicService();
   Cohort patients=new Cohort();
   Map<Integer,Result> result=null;
-  patients.addMember(6217);
+  patients.addMember(2);
   try {
     log.error("Evaluating CD4 COUNT");
-    Result r=logicService.eval(new Patient(6217),"CD4 COUNT");
-    log.error("PatientID: 6217 " + r);
+    Result r=logicService.eval(new Patient(2),"CD4 COUNT");
+    log.error("PatientID: 2 " + r);
     log.error("Evaluating CD4 COUNT");
     result=logicService.eval(patients,"CD4 COUNT");
     for (    Integer id : result.keySet()) {
