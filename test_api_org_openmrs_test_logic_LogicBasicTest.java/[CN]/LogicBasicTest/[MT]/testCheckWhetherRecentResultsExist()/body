@@ -1,4 +1,6 @@
 {
+  executeDataSet("org/openmrs/test/logic/include/LogicBasicTest.concepts.xml");
   Patient patient=Context.getPatientService().getPatient(2);
   Result result=Context.getLogicService().eval(patient,new LogicCriteria("CD4 COUNT").within(Duration.months(6)).exists());
+  assertFalse(result.exists());
 }
