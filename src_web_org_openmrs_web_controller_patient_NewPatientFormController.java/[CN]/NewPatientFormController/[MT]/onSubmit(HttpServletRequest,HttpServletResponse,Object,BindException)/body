@@ -57,6 +57,19 @@
     for (    PatientIdentifier pi : patient.getIdentifiers()) {
       pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
     }
+    for (    PersonAttributeType type : personService.getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING)) {
+      String value=request.getParameter(type.getPersonAttributeTypeId().toString());
+      patient.addAttribute(new PersonAttribute(type,value));
+    }
+    for (    PatientIdentifier identifier : newIdentifiers) {
+      identifier.setPatient(patient);
+      for (      PatientIdentifier currentIdentifier : patient.getActiveIdentifiers()) {
+        if (currentIdentifier.equals(identifier)) {
+          patient.removeIdentifier(currentIdentifier);
+          Context.evictFromSession(currentIdentifier);
+        }
+      }
+    }
     patient.addIdentifiers(newIdentifiers);
     List<PatientIdentifier> newIdentifiersList=new Vector<PatientIdentifier>();
     newIdentifiersList.addAll(newIdentifiers);
@@ -81,10 +94,6 @@
  else {
       patient.setDeathDate(null);
       patient.setCauseOfDeath(null);
-    }
-    for (    PersonAttributeType type : personService.getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING)) {
-      String value=request.getParameter(type.getPersonAttributeTypeId().toString());
-      patient.addAttribute(new PersonAttribute(type,value));
     }
     Patient newPatient=null;
     try {
@@ -231,7 +240,9 @@ catch (    PatientIdentifierException pie) {
     }
     if (isError) {
       log.error("Had an error during processing. Redirecting to " + this.getFormView());
-      return this.showForm(request,response,errors);
+      Map<String,Object> model=new HashMap<String,Object>();
+      model.put(getCommandName(),new ShortPatientModel(patient));
+      return this.showForm(request,response,errors,model);
     }
  else {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.saved");
