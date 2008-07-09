@@ -1,6 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(RelationshipType.class,"t");
-  if (!includeRetired)   criteria.add(Expression.eq("retired",false));
   criteria.addOrder(Order.asc("weight"));
   return criteria.list();
 }

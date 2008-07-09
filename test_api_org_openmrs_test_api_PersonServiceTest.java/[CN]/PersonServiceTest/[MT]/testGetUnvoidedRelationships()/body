@@ -42,6 +42,12 @@
   Person p=personService.getPerson(2);
   List<Relationship> aRels=personService.getRelationshipsByPerson(p);
   List<Relationship> bRels=personService.getRelationshipsByPerson(patient);
+  List<RelationshipType> rTmp=personService.getAllRelationshipTypes();
+  assertNotNull(rTmp);
+  RelationshipType rTypeTmp=personService.getRelationshipTypeByName("Doctor/Patient");
+  assertNotNull(rTypeTmp);
+  rTypeTmp=personService.getRelationshipTypeByName("booya");
+  assertNull(rTypeTmp);
   List<Relationship> allRels=personService.getAllRelationships();
   for (  Relationship r : allRels) {
     personService.voidRelationship(r,"Because of a JUnit test.");
