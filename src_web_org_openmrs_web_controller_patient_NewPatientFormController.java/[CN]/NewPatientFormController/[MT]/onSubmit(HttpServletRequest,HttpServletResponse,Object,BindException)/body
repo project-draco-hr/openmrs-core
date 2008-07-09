@@ -242,6 +242,7 @@ catch (      PatientIdentifierException pie) {
       log.error("Had an error during processing. Redirecting to " + this.getFormView());
       Map<String,Object> model=new HashMap<String,Object>();
       model.put(getCommandName(),new ShortPatientModel(patient));
+      Context.evictFromSession(patient);
       return this.showForm(request,response,errors,model);
     }
  else {
