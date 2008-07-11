@@ -3,5 +3,6 @@
   encounterType.setRetiredBy(Context.getAuthenticatedUser());
   encounterType.setDateRetired(new Date());
   encounterType.setRetireReason(reason);
-  dao.saveEncounterType(encounterType);
+  saveEncounterType(encounterType);
+  return encounterType;
 }
