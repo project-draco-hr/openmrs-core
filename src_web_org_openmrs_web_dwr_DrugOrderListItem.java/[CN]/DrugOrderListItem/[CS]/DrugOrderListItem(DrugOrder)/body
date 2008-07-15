@@ -1,7 +1,10 @@
 {
   orderId=drugOrder.getOrderId();
   if (drugOrder.getOrderType() != null)   orderTypeId=drugOrder.getOrderType().getOrderTypeId();
-  if (drugOrder.getConcept() != null)   conceptId=drugOrder.getConcept().getConceptId();
+  if (drugOrder.getConcept() != null) {
+    conceptId=drugOrder.getConcept().getConceptId();
+    conceptName=drugOrder.getConcept().getName().getName();
+  }
   instructions=drugOrder.getInstructions();
   SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
   if (drugOrder.getStartDate() != null)   startDate=sdf.format(drugOrder.getStartDate());
