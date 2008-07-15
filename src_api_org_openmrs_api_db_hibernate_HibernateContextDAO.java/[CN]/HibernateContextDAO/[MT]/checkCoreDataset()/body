@@ -5,8 +5,8 @@
   Map<String,String> map;
   try {
     Connection conn=sessionFactory.getCurrentSession().connection();
-    psSelect=conn.prepareStatement("SELECT * FROM role WHERE UPPER(role) = UPPER(?)");
-    psInsert=conn.prepareStatement("INSERT INTO role VALUES (?, ?)");
+    psSelect=conn.prepareStatement("SELECT role, description FROM role WHERE UPPER(role) = UPPER(?)");
+    psInsert=conn.prepareStatement("INSERT INTO role (role, description) VALUES (?, ?)");
     map=OpenmrsConstants.CORE_ROLES();
     for (    String role : map.keySet()) {
       psSelect.setString(1,role);
@@ -24,8 +24,8 @@
   }
   try {
     Connection conn=sessionFactory.getCurrentSession().connection();
-    psSelect=conn.prepareStatement("SELECT * FROM privilege WHERE UPPER(privilege) = UPPER(?)");
-    psInsert=conn.prepareStatement("INSERT INTO privilege VALUES (?, ?)");
+    psSelect=conn.prepareStatement("SELECT privilege, description FROM privilege WHERE UPPER(privilege) = UPPER(?)");
+    psInsert=conn.prepareStatement("INSERT INTO privilege (privilege, description) VALUES (?, ?)");
     map=OpenmrsConstants.CORE_PRIVILEGES();
     for (    String priv : map.keySet()) {
       psSelect.setString(1,priv);
@@ -43,7 +43,7 @@
   }
   try {
     Connection conn=sessionFactory.getCurrentSession().connection();
-    psSelect=conn.prepareStatement("SELECT * FROM global_property WHERE UPPER(property) = UPPER(?)");
+    psSelect=conn.prepareStatement("SELECT property, property_value, description FROM global_property WHERE UPPER(property) = UPPER(?)");
     psInsert=conn.prepareStatement("INSERT INTO global_property (property, property_value, description) VALUES (?, ?, ?)");
     psUpdate=conn.prepareStatement("UPDATE global_property SET description = ? WHERE UPPER(property) = UPPER(?) AND description IS null");
     for (    GlobalProperty gp : OpenmrsConstants.CORE_GLOBAL_PROPERTIES()) {
