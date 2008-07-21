@@ -1,7 +1,7 @@
 {
-  if (attributeName != null)   for (  PersonAttribute attribute : getActiveAttributes()) {
+  if (attributeName != null)   for (  PersonAttribute attribute : getAttributes()) {
     PersonAttributeType type=attribute.getAttributeType();
-    if (type != null && attributeName.equals(type.getName())) {
+    if (type != null && attributeName.equals(type.getName()) && !attribute.isVoided()) {
       return attribute;
     }
   }

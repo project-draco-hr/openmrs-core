@@ -1,10 +1,10 @@
 {
-  List<PersonAttribute> attributes=new Vector<PersonAttribute>();
+  List<PersonAttribute> ret=new Vector<PersonAttribute>();
   for (  PersonAttribute attribute : getActiveAttributes()) {
     PersonAttributeType type=attribute.getAttributeType();
-    if (type != null && attributeName.equals(type.getName())) {
-      attributes.add(attribute);
+    if (type != null && attributeName.equals(type.getName()) && !attribute.isVoided()) {
+      ret.add(attribute);
     }
   }
-  return attributes;
+  return ret;
 }

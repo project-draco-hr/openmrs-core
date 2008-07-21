@@ -1,6 +1,6 @@
 {
   for (  PersonAttribute attribute : getActiveAttributes()) {
-    if (attributeTypeId.equals(attribute.getAttributeType().getPersonAttributeTypeId())) {
+    if (attributeTypeId.equals(attribute.getAttributeType().getPersonAttributeTypeId()) && !attribute.isVoided()) {
       return attribute;
     }
   }
