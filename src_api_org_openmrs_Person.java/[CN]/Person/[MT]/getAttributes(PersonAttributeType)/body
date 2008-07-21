@@ -1,0 +1,9 @@
+{
+  List<PersonAttribute> ret=new Vector<PersonAttribute>();
+  for (  PersonAttribute attribute : getAttributes()) {
+    if (personAttributeType.equals(attribute.getAttributeType()) && !attribute.isVoided()) {
+      ret.add(attribute);
+    }
+  }
+  return ret;
+}
