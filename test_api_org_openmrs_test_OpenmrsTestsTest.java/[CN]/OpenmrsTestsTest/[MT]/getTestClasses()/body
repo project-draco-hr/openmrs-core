@@ -1,0 +1,12 @@
+{
+  if (testClasses != null)   return testClasses;
+  URL url=classLoader.getResource("org/openmrs/test");
+  File directory=OpenmrsUtil.url2file(url);
+  assertTrue("org.openmrs.test should be a directory",directory.isDirectory());
+  testClasses=getTestClassesInDirectory(directory);
+  url=classLoader.getResource("org/openmrs/web/test");
+  directory=OpenmrsUtil.url2file(url);
+  assertTrue("org.openmrs.web.test should be a directory",directory.isDirectory());
+  testClasses.addAll(getTestClassesInDirectory(directory));
+  return testClasses;
+}
