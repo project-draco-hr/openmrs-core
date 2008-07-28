@@ -53,8 +53,17 @@
         log.debug("Entry name: " + name);
         if (name.startsWith("web/module/")) {
           String filepath=name.substring(11);
-          String absPath=realPath + "/WEB-INF/view/module/" + mod.getModuleId()+ "/"+ filepath;
-          File outFile=new File(absPath.replace("/",File.separator));
+          StringBuffer absPath=new StringBuffer(realPath + "/WEB-INF");
+          if (filepath.startsWith("tags/")) {
+            filepath=filepath.substring(5);
+            absPath.append("/tags/module/");
+          }
+ else {
+            absPath.append("/view/module/");
+          }
+          absPath.append(mod.getModuleId() + "/" + filepath);
+          if (log.isDebugEnabled())           log.debug("Moving file from: " + name + " to "+ absPath);
+          File outFile=new File(absPath.toString().replace("/",File.separator));
           if (entry.isDirectory()) {
             if (!outFile.exists()) {
               outFile.mkdirs();
