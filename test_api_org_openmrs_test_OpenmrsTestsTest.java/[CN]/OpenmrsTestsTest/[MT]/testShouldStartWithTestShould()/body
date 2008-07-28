@@ -1,0 +1,11 @@
+{
+  List<Class<TestCase>> classes=getTestClasses();
+  for (  Class<TestCase> currentClass : classes) {
+    for (    Method method : currentClass.getMethods()) {
+      String methodName=method.getName();
+      if (methodName.startsWith("test")) {
+        assertTrue(currentClass.getName() + "#" + methodName+ " is supposed to start with 'testShould' but it doesn't",methodName.startsWith("testShould"));
+      }
+    }
+  }
+}
