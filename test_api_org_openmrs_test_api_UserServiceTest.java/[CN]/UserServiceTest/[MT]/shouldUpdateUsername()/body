@@ -1,0 +1,9 @@
+{
+  UserService us=Context.getUserService();
+  User u=us.getUserByUsername("admin");
+  assertNotNull("There needs to be a user with username 'admin' in the database",u);
+  u.setUsername("admin2");
+  us.saveUser(u,null);
+  User u2=us.getUserByUsername("admin2");
+  assertEquals("The fetched user should equal the user we tried to update",u,u2);
+}

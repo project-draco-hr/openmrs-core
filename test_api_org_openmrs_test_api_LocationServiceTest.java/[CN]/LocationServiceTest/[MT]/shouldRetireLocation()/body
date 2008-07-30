@@ -1,0 +1,18 @@
+{
+  LocationService locationService=Context.getLocationService();
+  Location location=new Location();
+  location.setName("Junitlandia");
+  location.setDescription("JUnit Test Location");
+  location.setAddress1("JUnit Boulevard");
+  location.setStateProvince("The Great JUnit State");
+  location.setCountry("Niceland");
+  locationService.saveLocation(location);
+  List<Location> locationsBeforeRetired=locationService.getAllLocations(true);
+  List<Location> locationsNotRetiredBefore=locationService.getAllLocations(false);
+  Location oldLocation=locationService.getLocation("Junitlandia");
+  locationService.retireLocation(oldLocation,"Spend more time with its family.");
+  List<Location> locationsAfterRetired=locationService.getAllLocations(true);
+  List<Location> locationsNotRetiredAfter=locationService.getAllLocations(false);
+  assertEquals(locationsBeforeRetired,locationsAfterRetired);
+  assertNotSame(locationsNotRetiredBefore,locationsNotRetiredAfter);
+}

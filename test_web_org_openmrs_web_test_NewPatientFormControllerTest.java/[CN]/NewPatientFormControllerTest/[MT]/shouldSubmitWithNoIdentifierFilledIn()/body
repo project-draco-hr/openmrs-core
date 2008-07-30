@@ -1,0 +1,37 @@
+{
+  PatientService ps=Context.getPatientService();
+  List<Patient> patients=ps.getPatients("Jane");
+  assertTrue(patients.isEmpty());
+  NewPatientFormController controller=new NewPatientFormController();
+  controller.setApplicationContext(applicationContext);
+  controller.setSuccessView("patientDashboard.form");
+  controller.setFormView("newPatient.form");
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  HttpServletResponse response=new MockHttpServletResponse();
+  request.setMethod("POST");
+  request.addParameter("name.givenName","Jane");
+  request.addParameter("name.familyName","Doe");
+  request.addParameter("identifier","");
+  request.addParameter("identifierType","");
+  request.addParameter("location","");
+  request.addParameter("preferred","1");
+  request.addParameter("gender","F");
+  request.addParameter("birthdate","05/05/1959");
+  request.addParameter("birthdateEstimated","0");
+  request.addParameter("tribe","");
+  request.addParameter("address.address1","1234 Somewhere Street");
+  request.addParameter("1","1234");
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  assertEquals("newPatient.form",modelAndView.getViewName());
+  patients=ps.getPatients("Jane");
+  assertTrue(patients.isEmpty());
+  Map<String,Object> model=modelAndView.getModel();
+  ShortPatientModel shortPatient=(ShortPatientModel)model.get(controller.getCommandName());
+  assertNotNull(shortPatient);
+  assertNotNull(shortPatient.getName());
+  assertEquals("Jane",shortPatient.getName().getGivenName());
+  assertEquals("Doe",shortPatient.getName().getFamilyName());
+  assertEquals("F",shortPatient.getGender());
+  assertEquals("1234 Somewhere Street",shortPatient.getAddress().getAddress1());
+  assertEquals("1234",shortPatient.getAttributeMap().get("Phone Number").getValue());
+}
