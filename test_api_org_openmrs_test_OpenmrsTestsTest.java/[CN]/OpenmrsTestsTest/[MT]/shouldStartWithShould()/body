@@ -1,0 +1,11 @@
+{
+  List<Class> classes=getTestClasses();
+  for (  Class<TestCase> currentClass : classes) {
+    for (    Method method : currentClass.getMethods()) {
+      if (method.getAnnotation(Test.class) != null) {
+        String methodName=method.getName();
+        assertTrue(currentClass.getName() + "#" + methodName+ " is supposed to start with 'should' but it doesn't",methodName.startsWith("should"));
+      }
+    }
+  }
+}

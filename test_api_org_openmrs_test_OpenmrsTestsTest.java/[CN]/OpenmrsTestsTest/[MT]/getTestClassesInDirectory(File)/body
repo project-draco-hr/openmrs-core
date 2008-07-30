@@ -1,5 +1,5 @@
 {
-  List<Class<TestCase>> currentDirTestClasses=new ArrayList<Class<TestCase>>();
+  List<Class> currentDirTestClasses=new ArrayList<Class>();
   for (  File currentFile : directory.listFiles()) {
     if (currentFile.isDirectory()) {
       currentDirTestClasses.addAll(getTestClassesInDirectory(currentFile));
@@ -10,9 +10,7 @@
       className=className.substring(className.indexOf("org.openmrs."));
       try {
         Class<?> currentClass=classLoader.loadClass(className);
-        if (TestCase.class.isAssignableFrom(currentClass)) {
-          currentDirTestClasses.add((Class<TestCase>)currentClass);
-        }
+        currentDirTestClasses.add(currentClass);
       }
  catch (      ClassNotFoundException e) {
         System.out.println("Unable to load class: " + className + " error: "+ e.getMessage());
