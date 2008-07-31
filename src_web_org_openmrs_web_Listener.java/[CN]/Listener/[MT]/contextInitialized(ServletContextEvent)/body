@@ -48,14 +48,16 @@ catch (    Throwable t) {
   }
   Context.startup(props);
   loadCoreModules(servletContext);
+  List<Module> startedModules=new ArrayList<Module>();
+  startedModules.addAll(ModuleFactory.getStartedModules());
   boolean someModuleNeedsARefresh=false;
-  for (  Module mod : ModuleFactory.getStartedModules()) {
+  for (  Module mod : startedModules) {
     try {
       boolean thisModuleCausesRefresh=WebModuleUtil.startModule(mod,servletContext,true);
       someModuleNeedsARefresh=someModuleNeedsARefresh || thisModuleCausesRefresh;
     }
  catch (    Throwable t) {
-      mod.setStartupErrorMessage(t.getMessage());
+      mod.setStartupErrorMessage("Unable to start module",t);
     }
   }
   if (someModuleNeedsARefresh) {
