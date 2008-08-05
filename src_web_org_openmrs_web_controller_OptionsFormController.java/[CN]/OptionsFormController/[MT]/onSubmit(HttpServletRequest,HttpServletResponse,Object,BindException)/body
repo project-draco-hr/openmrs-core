@@ -51,17 +51,26 @@
       errors.rejectValue("secretQuestionPassword","error.password.incorrect");
     }
     if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
-      Context.addProxyPrivilege("View Users");
-      if (us.hasDuplicateUsername(user)) {
-        errors.rejectValue("username","error.username.taken");
+      try {
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        if (us.hasDuplicateUsername(user)) {
+          errors.rejectValue("username","error.username.taken");
+        }
+      }
+  finally {
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
       }
     }
     if (!errors.hasErrors()) {
       user.setUsername(opts.getUsername());
       user.setUserProperties(properties);
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-      us.updateUser(user);
-      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      try {
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+        us.saveUser(user,null);
+      }
+  finally {
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+      }
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
     }
  else {

@@ -1,27 +1,31 @@
 {
   if (getLoadedModules().size() > 0) {
-    Context.addProxyPrivilege("");
-    AdministrationService as=Context.getAdministrationService();
     List<Module> leftoverModules=new Vector<Module>();
-    for (    Module mod : getLoadedModules()) {
-      String key=mod.getModuleId() + ".started";
-      String prop=as.getGlobalProperty(key,null);
-      if (prop == null || prop.equals("true")) {
-        if (requiredModulesStarted(mod))         try {
-          if (log.isDebugEnabled())           log.debug("starting module: " + mod.getModuleId());
-          startModule(mod);
-        }
- catch (        Exception e) {
-          log.error("Error while starting module: " + mod.getName(),e);
-          mod.setStartupErrorMessage("Error while starting module: " + e.getMessage());
-        }
+    try {
+      Context.addProxyPrivilege("");
+      AdministrationService as=Context.getAdministrationService();
+      for (      Module mod : getLoadedModules()) {
+        String key=mod.getModuleId() + ".started";
+        String prop=as.getGlobalProperty(key,null);
+        if (prop == null || prop.equals("true")) {
+          if (requiredModulesStarted(mod))           try {
+            if (log.isDebugEnabled())             log.debug("starting module: " + mod.getModuleId());
+            startModule(mod);
+          }
+ catch (          Exception e) {
+            log.error("Error while starting module: " + mod.getName(),e);
+            mod.setStartupErrorMessage("Error while starting module: " + e.getMessage());
+          }
  else {
-          leftoverModules.add(mod);
-          if (log.isDebugEnabled())           log.debug("cannot start because required modules are not started: " + mod.getModuleId());
+            leftoverModules.add(mod);
+            if (log.isDebugEnabled())             log.debug("cannot start because required modules are not started: " + mod.getModuleId());
+          }
         }
       }
     }
-    Context.removeProxyPrivilege("");
+  finally {
+      Context.removeProxyPrivilege("");
+    }
     boolean atLeastOneModuleLoaded=true;
     while (leftoverModules.size() > 0 && atLeastOneModuleLoaded) {
       if (log.isDebugEnabled())       log.debug("Trying to start leftover modules: " + leftoverModules);

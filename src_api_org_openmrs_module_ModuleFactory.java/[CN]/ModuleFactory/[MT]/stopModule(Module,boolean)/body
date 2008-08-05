@@ -9,11 +9,15 @@
     }
     getStartedModulesMap().remove(moduleId);
     if (isShuttingDown == false && !Context.isRefreshingContext()) {
-      Context.addProxyPrivilege("");
-      AdministrationService as=Context.getAdministrationService();
-      GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
-      as.saveGlobalProperty(gp);
-      Context.removeProxyPrivilege("");
+      try {
+        Context.addProxyPrivilege("");
+        AdministrationService as=Context.getAdministrationService();
+        GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
+        as.saveGlobalProperty(gp);
+      }
+  finally {
+        Context.removeProxyPrivilege("");
+      }
     }
     if (getModuleClassLoaderMap().containsKey(mod)) {
       log.debug("Mod was in classloader map.  Removing advice and extensions.");

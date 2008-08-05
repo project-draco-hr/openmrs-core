@@ -1,7 +1,8 @@
 {
   Alert alert=(Alert)obj;
-  Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
   try {
+    if (Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ALERTS) == false)     throw new APIAuthenticationException("Must be logged in as user with alerts privileges");
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
     UserService us=Context.getUserService();
     if (Context.isAuthenticated()) {
       String[] userIdValues=request.getParameter("userIds").split(" ");
