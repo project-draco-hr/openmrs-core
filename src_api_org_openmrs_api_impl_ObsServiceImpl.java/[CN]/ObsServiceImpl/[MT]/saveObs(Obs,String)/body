@@ -17,8 +17,8 @@
     newObs.setDateCreated(null);
     newObs.setRequiredProperties(Context.getAuthenticatedUser(),new Date());
     dao.saveObs(newObs);
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_DELETE_OBS);
     try {
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_DELETE_OBS);
       String reason=changeMessage + " (new obsId: " + newObs.getObsId()+ ")";
       Context.evictFromSession(obs);
       obs=getObs(obs.getObsId());

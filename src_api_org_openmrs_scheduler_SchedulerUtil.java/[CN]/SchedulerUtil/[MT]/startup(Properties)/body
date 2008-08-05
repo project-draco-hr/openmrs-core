@@ -9,7 +9,11 @@
     SchedulerConstants.SCHEDULER_PASSWORD=val;
     log.warn("Deprecated runtime property: scheduler.username. Value set in global_property in database now.");
   }
-  Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
-  Context.getSchedulerService().onStartup();
-  Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+  try {
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+    Context.getSchedulerService().onStartup();
+  }
+  finally {
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+  }
 }

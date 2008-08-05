@@ -19,8 +19,8 @@
         getExtensionMap().put(extId,tmpExtensions);
       }
       SortedMap<String,String> diffs=SqlDiffFileParser.getSqlDiffs(module);
-      Context.addProxyPrivilege("");
       try {
+        Context.addProxyPrivilege("");
         for (        String version : diffs.keySet()) {
           String sql=diffs.get(version);
           if (StringUtils.hasText(sql))           runDiff(module,version,sql);
@@ -30,11 +30,15 @@
         Context.removeProxyPrivilege("");
       }
       getStartedModulesMap().put(module.getModuleId(),module);
-      Context.addProxyPrivilege("");
-      AdministrationService as=Context.getAdministrationService();
-      GlobalProperty gp=new GlobalProperty(module.getModuleId() + ".started","true",getGlobalPropertyStartedDescription(module.getModuleId()));
-      as.setGlobalProperty(gp);
-      Context.removeProxyPrivilege("");
+      try {
+        Context.addProxyPrivilege("");
+        AdministrationService as=Context.getAdministrationService();
+        GlobalProperty gp=new GlobalProperty(module.getModuleId() + ".started","true",getGlobalPropertyStartedDescription(module.getModuleId()));
+        as.setGlobalProperty(gp);
+      }
+  finally {
+        Context.removeProxyPrivilege("");
+      }
       if (module.getPrivileges().size() > 0 || module.getGlobalProperties().size() > 0) {
         log.debug("Updating core dataset");
         Context.checkCoreDataset();
