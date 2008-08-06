@@ -1,6 +1,6 @@
 {
   String extForm=result.toExternalForm();
-  if (OpenmrsConstants.OPERATING_SYSTEM_FREEBSD.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_LINUX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM) || OpenmrsConstants.OPERATING_SYSTEM_OSX.equalsIgnoreCase(OpenmrsConstants.OPERATING_SYSTEM))   extForm=extForm.replaceFirst("jar:file:","").replaceAll("%20"," ");
+  if (OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM)   extForm=extForm.replaceFirst("jar:file:","").replaceAll("%20"," ");
  else   extForm=extForm.replaceFirst("jar:file:/","").replaceAll("%20"," ");
   if (log.isDebugEnabled())   log.debug("url external form: " + extForm);
   int i=extForm.indexOf("!");
