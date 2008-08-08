@@ -1,0 +1,8 @@
+{
+  Encounter encounter=new Encounter();
+  Set<Obs> obsSet=new HashSet<Obs>();
+  obsSet.add(new Obs(1));
+  encounter.setObs(obsSet);
+  encounter.addObs(new Obs(2));
+  assertEquals(2,encounter.getAllObs(true).size());
+}

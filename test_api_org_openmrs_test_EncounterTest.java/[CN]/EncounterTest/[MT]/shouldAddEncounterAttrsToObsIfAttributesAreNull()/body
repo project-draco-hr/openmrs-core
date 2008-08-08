@@ -1,0 +1,15 @@
+{
+  Encounter encounter=new Encounter();
+  Date date=new Date();
+  encounter.setEncounterDatetime(date);
+  Location location=new Location(1);
+  encounter.setLocation(location);
+  Patient patient=new Patient(1);
+  encounter.setPatient(patient);
+  Obs obs=new Obs(123);
+  encounter.addObs(obs);
+  assertEquals(1,encounter.getAllObs(true).size());
+  assertTrue(obs.getObsDatetime().equals(date));
+  assertTrue(obs.getLocation().equals(location));
+  assertTrue(obs.getPerson().equals(patient));
+}

@@ -1,0 +1,27 @@
+{
+  Encounter enc=new Encounter();
+  Obs parentObs=new Obs();
+  enc.addObs(parentObs);
+  Obs childObs=new Obs();
+  parentObs.addGroupMember(childObs);
+  childObs.setEncounter(enc);
+  enc.addObs(childObs);
+  Obs grandChildObsOne=new Obs();
+  Obs grandChildObsTwo=new Obs();
+  Obs greatGrandChildObsOne=new Obs();
+  Obs greatGrandChildObsTwo=new Obs();
+  childObs.addGroupMember(grandChildObsOne);
+  childObs.addGroupMember(grandChildObsTwo);
+  grandChildObsOne.addGroupMember(greatGrandChildObsOne);
+  grandChildObsOne.addGroupMember(greatGrandChildObsTwo);
+  Obs greatGreatGrandChildObsOne=new Obs();
+  Obs greatGreatGrandChildObsTwo=new Obs();
+  greatGrandChildObsTwo.addGroupMember(greatGreatGrandChildObsOne);
+  greatGrandChildObsTwo.addGroupMember(greatGreatGrandChildObsTwo);
+  greatGrandChildObsTwo.setVoided(true);
+  assertEquals(2,enc.getObs().size());
+  assertTrue(enc.getObs().contains(greatGrandChildObsOne));
+  assertTrue(enc.getObs().contains(grandChildObsTwo));
+  assertFalse(enc.getObs().contains(greatGreatGrandChildObsOne));
+  assertFalse(enc.getObs().contains(greatGreatGrandChildObsTwo));
+}

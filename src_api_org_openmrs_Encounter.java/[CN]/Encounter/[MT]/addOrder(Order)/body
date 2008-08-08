@@ -1,5 +1,7 @@
 {
-  order.setEncounter(this);
   if (orders == null)   orders=new HashSet<Order>();
-  if (!orders.contains(order) && order != null)   orders.add(order);
+  if (order != null) {
+    order.setEncounter(this);
+    orders.add(order);
+  }
 }

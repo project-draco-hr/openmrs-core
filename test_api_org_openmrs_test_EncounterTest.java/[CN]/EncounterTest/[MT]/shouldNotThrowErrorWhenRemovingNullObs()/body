@@ -1,0 +1,10 @@
+{
+  Encounter encounterWithoutObsSet=new Encounter();
+  encounterWithoutObsSet.removeObs(null);
+  Encounter encounterWithObsSet=new Encounter();
+  Set<Obs> obsSet=new HashSet<Obs>();
+  obsSet.add(new Obs());
+  encounterWithObsSet.setObs(obsSet);
+  Assert.assertEquals(1,encounterWithObsSet.getAllObs(true).size());
+  encounterWithObsSet.removeObs(null);
+}

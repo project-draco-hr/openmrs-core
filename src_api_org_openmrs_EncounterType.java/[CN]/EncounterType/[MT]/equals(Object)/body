@@ -1,5 +1,6 @@
 {
-  if (encounterTypeId == null || obj == null || !(obj instanceof EncounterType))   return false;
+  if (obj == null || !(obj instanceof EncounterType))   return false;
   EncounterType encounterType=(EncounterType)obj;
-  return (this.encounterTypeId.equals(encounterType.getEncounterTypeId()));
+  if (this.encounterTypeId != null && encounterType.getEncounterTypeId() != null)   return (this.encounterTypeId.equals(encounterType.getEncounterTypeId()));
+ else   return this == encounterType;
 }
