@@ -1,0 +1,13 @@
+{
+  Encounter enc=new Encounter();
+  Obs parentObs=new Obs();
+  enc.addObs(parentObs);
+  Obs childObs=new Obs();
+  parentObs.addGroupMember(childObs);
+  childObs.setEncounter(enc);
+  enc.addObs(childObs);
+  parentObs.removeGroupMember(childObs);
+  assertEquals(2,enc.getObs().size());
+  assertEquals(2,enc.getObsAtTopLevel(false).size());
+  assertEquals(2,enc.getAllObs(true).size());
+}

@@ -1,0 +1,12 @@
+{
+  Encounter encounter=new Encounter();
+  Obs parentObs=new Obs();
+  encounter.addObs(parentObs);
+  Obs childObs=new Obs();
+  parentObs.addGroupMember(childObs);
+  childObs.setEncounter(encounter);
+  encounter.addObs(childObs);
+  assertEquals(1,encounter.getObsAtTopLevel(false).size());
+  Obs obsInEncounter=encounter.getObsAtTopLevel(false).toArray(new Obs[]{})[0];
+  assertTrue(obsInEncounter.isObsGrouping());
+}

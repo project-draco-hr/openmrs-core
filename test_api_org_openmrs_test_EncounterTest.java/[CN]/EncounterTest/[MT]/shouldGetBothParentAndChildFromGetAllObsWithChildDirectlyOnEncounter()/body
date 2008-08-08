@@ -1,0 +1,18 @@
+{
+  Encounter enc=new Encounter();
+  Obs parentObs=new Obs();
+  enc.addObs(parentObs);
+  Obs childObs=new Obs();
+  parentObs.addGroupMember(childObs);
+  childObs.setEncounter(enc);
+  enc.addObs(childObs);
+  assertEquals(2,enc.getAllObs(true).size());
+  int numberOfChildObs=0;
+  int numberofParentObs=0;
+  for (  Obs oTmp : enc.getAllObs(false)) {
+    if (oTmp.isObsGrouping())     numberofParentObs++;
+ else     numberOfChildObs++;
+  }
+  assertEquals(1,numberOfChildObs);
+  assertEquals(1,numberofParentObs);
+}

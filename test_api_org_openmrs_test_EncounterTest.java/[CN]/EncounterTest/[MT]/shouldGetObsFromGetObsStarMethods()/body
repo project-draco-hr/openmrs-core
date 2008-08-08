@@ -1,0 +1,15 @@
+{
+  Encounter encounter=new Encounter();
+  Obs o=new Obs();
+  encounter.addObs(o);
+  assertNotNull(encounter.getObs());
+  assertEquals(1,encounter.getObs().size());
+  assertNotNull(encounter.getObsAtTopLevel(true));
+  assertEquals(1,encounter.getObsAtTopLevel(true).size());
+  assertNotNull(encounter.getObsAtTopLevel(false));
+  assertEquals(1,encounter.getObsAtTopLevel(false).size());
+  assertNotNull(encounter.getAllObs(true));
+  assertEquals(1,encounter.getAllObs(true).size());
+  assertNotNull(encounter.getAllObs(false));
+  assertEquals(1,encounter.getAllObs(false).size());
+}
