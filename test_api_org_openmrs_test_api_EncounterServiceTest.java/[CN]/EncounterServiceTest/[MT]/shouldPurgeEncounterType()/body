@@ -1,0 +1,7 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterTypeToPurge=encounterService.getEncounterType(1);
+  assertNotNull(encounterTypeToPurge);
+  encounterService.purgeEncounterType(encounterTypeToPurge);
+  assertNull(encounterService.getEncounterType(1));
+}

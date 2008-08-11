@@ -1,0 +1,7 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter encounterToDelete=es.getEncounter(1);
+  es.purgeEncounter(encounterToDelete);
+  Encounter e=es.getEncounter(encounterToDelete.getEncounterId());
+  assertNull("We shouldn't find the encounter after deletion",e);
+}

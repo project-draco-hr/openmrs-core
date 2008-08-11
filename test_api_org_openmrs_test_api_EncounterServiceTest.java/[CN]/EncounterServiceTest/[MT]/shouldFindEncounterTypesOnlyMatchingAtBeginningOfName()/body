@@ -1,0 +1,7 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  List<EncounterType> types=encounterService.findEncounterTypes("Test Enc Type");
+  assertEquals(3,types.size());
+  types=encounterService.findEncounterTypes("Enc Type");
+  assertEquals(0,types.size());
+}

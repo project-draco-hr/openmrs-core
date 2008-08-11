@@ -1,0 +1,14 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType type=encounterService.getEncounterType(3);
+  assertTrue(type.isRetired());
+  assertNotNull(type.getRetiredBy());
+  assertNotNull(type.getRetireReason());
+  assertNotNull(type.getDateRetired());
+  EncounterType unretiredEncType=encounterService.unretireEncounterType(type);
+  assertEquals(unretiredEncType,type);
+  assertFalse(unretiredEncType.isRetired());
+  assertNull(unretiredEncType.getDateRetired());
+  assertNull(unretiredEncType.getRetiredBy());
+  assertNull(unretiredEncType.getRetireReason());
+}
