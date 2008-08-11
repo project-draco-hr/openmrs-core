@@ -1,0 +1,9 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterTypeToChange=encounterService.getEncounterType(1);
+  encounterTypeToChange.setName("another test");
+  encounterService.saveEncounterType(encounterTypeToChange);
+  assertEquals(1,encounterTypeToChange.getEncounterTypeId().intValue());
+  EncounterType fetchedEncounterType=encounterService.getEncounterType(1);
+  assertTrue(fetchedEncounterType.getName().equals("another test"));
+}

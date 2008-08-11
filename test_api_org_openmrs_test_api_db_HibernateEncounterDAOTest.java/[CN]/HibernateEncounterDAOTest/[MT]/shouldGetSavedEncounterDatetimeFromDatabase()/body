@@ -1,0 +1,9 @@
+{
+  Encounter encounter=Context.getEncounterService().getEncounter(1);
+  Date newDate=new Date();
+  assertNotSame(encounter.getEncounterDatetime(),newDate);
+  Date origDate=encounter.getEncounterDatetime();
+  encounter.setEncounterDatetime(newDate);
+  Date encounterDateFromDatabase=dao.getSavedEncounterDatetime(encounter);
+  assertEquals(origDate,encounterDateFromDatabase);
+}

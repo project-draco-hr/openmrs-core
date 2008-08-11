@@ -1,0 +1,10 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  boolean foundRetired=false;
+  List<EncounterType> types=encounterService.getAllEncounterTypes(true);
+  assertEquals(4,types.size());
+  for (  EncounterType type : types) {
+    if (type.isRetired())     foundRetired=true;
+  }
+  assertTrue("Retired types should be returned as well",foundRetired);
+}

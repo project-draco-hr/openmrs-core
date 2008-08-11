@@ -1,0 +1,11 @@
+{
+  for (  String tableName : tableNames) {
+    System.out.println("The contents of table: " + tableName);
+    IDatabaseConnection connection=new DatabaseConnection(sqlConnection);
+    DatabaseConfig config=connection.getConfig();
+    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new HsqldbDataTypeFactory());
+    QueryDataSet outputSet=new QueryDataSet(connection);
+    outputSet.addTable(tableName);
+    FlatXmlDataSet.write(outputSet,System.out);
+  }
+}

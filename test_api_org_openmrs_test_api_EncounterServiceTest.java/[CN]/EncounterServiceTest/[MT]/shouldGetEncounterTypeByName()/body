@@ -1,0 +1,19 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  boolean foundRetired=false;
+  boolean foundNonRetired=false;
+  int countOfTestEncType2s=0;
+  for (  EncounterType encType : encounterService.getAllEncounterTypes(true)) {
+    if (encType.getName().equals("Test Enc Type A")) {
+      countOfTestEncType2s++;
+      if (encType.isRetired())       foundRetired=true;
+ else       foundNonRetired=true;
+    }
+  }
+  assertEquals("We are only expecting to have two types: one retired, one not",2,countOfTestEncType2s);
+  assertTrue("No retired type was found in the db",foundRetired);
+  assertTrue("No non-retired type was found in the db",foundNonRetired);
+  EncounterType type=encounterService.getEncounterType("Test Enc Type A");
+  assertEquals(2,type.getEncounterTypeId().intValue());
+  assertFalse(type.isRetired());
+}

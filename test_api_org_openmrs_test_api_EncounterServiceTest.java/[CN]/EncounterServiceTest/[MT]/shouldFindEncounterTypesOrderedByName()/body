@@ -1,0 +1,9 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  List<EncounterType> types=encounterService.findEncounterTypes("Test Enc");
+  assertEquals(2,types.get(0).getEncounterTypeId().intValue());
+  assertEquals(3,types.get(1).getEncounterTypeId().intValue());
+  assertEquals(1,types.get(2).getEncounterTypeId().intValue());
+  assertEquals(types.get(0).getName(),types.get(1).getName());
+  assertTrue(types.get(1).isRetired());
+}

@@ -1,0 +1,7 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType type=encounterService.getEncounterType("Test Enc Type A");
+  assertEquals(2,type.getEncounterTypeId().intValue());
+  EncounterType typeByInExactName=encounterService.getEncounterType("Test Enc");
+  assertNull(typeByInExactName);
+}
