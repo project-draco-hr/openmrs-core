@@ -1,5 +1,5 @@
 {
-  if (url != null && !"file".equalsIgnoreCase(url.getProtocol())) {
+  if (url == null || !"file".equalsIgnoreCase(url.getProtocol())) {
     return null;
   }
   return new File(url.getFile().replaceAll("%20"," "));
