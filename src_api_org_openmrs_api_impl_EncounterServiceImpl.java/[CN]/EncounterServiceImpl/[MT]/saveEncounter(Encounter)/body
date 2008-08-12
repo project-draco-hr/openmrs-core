@@ -26,8 +26,9 @@
   if (isNewEncounter == false)   originalDate=dao.getSavedEncounterDatetime(encounter);
   dao.saveEncounter(encounter);
   if (isNewEncounter == false) {
+    ObsService obsService=Context.getObsService();
     Patient p=encounter.getPatient();
-    for (    Obs obs : encounter.getAllObs()) {
+    for (    Obs obs : encounter.getAllObs(true)) {
       boolean obsWasChanged=false;
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
         if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
@@ -38,13 +39,14 @@
           obs.setPerson(p);
           obsWasChanged=true;
         }
-        if (obsWasChanged)         Context.getObsService().saveObs(obs,"Encounter datetime or person was changed");
+        if (obsWasChanged)         obsService.saveObs(obs,"Encounter datetime or person was changed");
       }
     }
-    for (    Order o : Context.getOrderService().getOrdersByEncounter(encounter)) {
+    OrderService orderService=Context.getOrderService();
+    for (    Order o : encounter.getOrders()) {
       if (!p.equals(o.getPatient())) {
         o.setPatient(p);
-        Context.getOrderService().saveOrder(o);
+        orderService.saveOrder(o);
       }
     }
   }

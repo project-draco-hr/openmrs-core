@@ -1,7 +1,13 @@
 {
   File file=new File(datasetFilename);
   if (file.exists()) {
-    executeDataSet(new FlatXmlDataSet(new FileInputStream(datasetFilename)));
+    InputStream inputStream=new FileInputStream(datasetFilename);
+    try {
+      executeDataSet(new FlatXmlDataSet(inputStream));
+    }
+  finally {
+      inputStream.close();
+    }
   }
  else {
     InputStream stream=getClass().getClassLoader().getResourceAsStream(datasetFilename);

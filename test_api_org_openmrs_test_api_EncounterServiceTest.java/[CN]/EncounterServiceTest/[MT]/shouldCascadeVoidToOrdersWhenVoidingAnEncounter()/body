@@ -1,0 +1,8 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=encounterService.getEncounter(1);
+  encounterService.voidEncounter(encounter,"Just Testing");
+  Order order=Context.getOrderService().getOrder(1);
+  assertTrue(order.isVoided());
+  assertEquals("Just Testing",order.getVoidReason());
+}

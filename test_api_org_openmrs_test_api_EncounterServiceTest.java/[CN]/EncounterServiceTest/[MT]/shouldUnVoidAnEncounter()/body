@@ -1,0 +1,14 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=encounterService.getEncounter(2);
+  assertTrue(encounter.isVoided());
+  assertNotNull(encounter.getVoidedBy());
+  assertNotNull(encounter.getVoidReason());
+  assertNotNull(encounter.getDateVoided());
+  Encounter unvoidedEnc=encounterService.unvoidEncounter(encounter);
+  assertEquals(unvoidedEnc,encounter);
+  assertFalse(unvoidedEnc.isVoided());
+  assertNull(unvoidedEnc.getDateVoided());
+  assertNull(unvoidedEnc.getVoidedBy());
+  assertNull(unvoidedEnc.getVoidReason());
+}

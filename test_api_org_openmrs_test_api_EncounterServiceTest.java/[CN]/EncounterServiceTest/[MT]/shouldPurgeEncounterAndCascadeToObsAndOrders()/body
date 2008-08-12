@@ -1,0 +1,12 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter encounterToDelete=es.getEncounter(1);
+  es.purgeEncounter(encounterToDelete,true);
+  Encounter e=es.getEncounter(encounterToDelete.getEncounterId());
+  assertNull("We shouldn't find the encounter after deletion",e);
+  ObsService obsService=Context.getObsService();
+  assertNull(obsService.getObs(1));
+  assertNull(obsService.getObs(2));
+  assertNull(obsService.getObs(3));
+  assertNull(Context.getOrderService().getOrder(1));
+}
