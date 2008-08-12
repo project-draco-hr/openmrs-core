@@ -3,8 +3,7 @@
   String folderName=as.getGlobalProperty(ModuleConstants.REPOSITORY_FOLDER_PROPERTY,ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
   File folder=new File(folderName);
   if (!folder.exists()) {
-    String filepath=OpenmrsUtil.getApplicationDataDirectory() + folderName;
-    folder=new File(filepath);
+    folder=new File(OpenmrsUtil.getApplicationDataDirectory(),folderName);
   }
   if (!folder.exists()) {
     log.warn("Module repository " + folder.getAbsolutePath() + " doesn't exist.  Creating directories now.");
