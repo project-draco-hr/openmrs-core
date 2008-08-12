@@ -1,0 +1,30 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterType(new EncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(new Patient(2));
+  Date date=new Date(System.currentTimeMillis() - 5000);
+  encounter.setDateCreated(date);
+  User creator=new User(1);
+  encounter.setCreator(creator);
+  Obs obs=new Obs(new Patient(2),new Concept(1),new Date(),new Location(1));
+  obs.setDateCreated(date);
+  obs.setCreator(creator);
+  encounter.addObs(obs);
+  Order order=new Order();
+  order.setConcept(new Concept(1));
+  order.setPatient(new Patient(2));
+  order.setDateCreated(date);
+  order.setCreator(creator);
+  encounter.addOrder(order);
+  assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
+  encounterService.saveEncounter(encounter);
+  Obs createdObs=Context.getObsService().getObs(obs.getObsId());
+  assertEquals(date,createdObs.getDateCreated());
+  assertEquals(creator,createdObs.getCreator());
+  Order createdOrder=Context.getOrderService().getOrder(order.getOrderId());
+  assertEquals(date,createdOrder.getDateCreated());
+  assertEquals(creator,createdOrder.getCreator());
+}

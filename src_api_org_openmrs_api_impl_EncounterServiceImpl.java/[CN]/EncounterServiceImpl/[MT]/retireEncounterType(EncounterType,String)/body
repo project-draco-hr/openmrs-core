@@ -1,4 +1,5 @@
 {
+  if (reason == null)   throw new IllegalArgumentException("The 'reason' argument is required");
   encounterType.setRetired(true);
   encounterType.setRetiredBy(Context.getAuthenticatedUser());
   encounterType.setDateRetired(new Date());

@@ -1,0 +1,6 @@
+{
+  List<Form> forms=new Vector<Form>();
+  forms.add(new Form(1));
+  List<Encounter> encounters=Context.getEncounterService().getEncounters(null,null,null,null,forms,null,true);
+  assertEquals(2,encounters.size());
+}

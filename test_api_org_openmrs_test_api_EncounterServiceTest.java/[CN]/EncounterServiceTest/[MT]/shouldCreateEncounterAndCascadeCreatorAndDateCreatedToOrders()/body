@@ -1,0 +1,21 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterType(new EncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(new Patient(2));
+  Order order=new Order();
+  order.setConcept(new Concept(1));
+  order.setPatient(new Patient(2));
+  encounter.addOrder(order);
+  assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
+  encounterService.saveEncounter(encounter);
+  Order createdOrder=Context.getOrderService().getOrder(order.getOrderId());
+  assertNotNull(encounter.getDateCreated());
+  assertNotNull(createdOrder.getDateCreated());
+  assertEquals(encounter.getDateCreated(),createdOrder.getDateCreated());
+  assertNotNull(encounter.getCreator());
+  assertNotNull(createdOrder.getCreator());
+  assertEquals(encounter.getCreator(),createdOrder.getCreator());
+}

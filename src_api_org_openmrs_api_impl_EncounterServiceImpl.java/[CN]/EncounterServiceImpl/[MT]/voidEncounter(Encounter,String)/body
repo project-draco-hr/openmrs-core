@@ -1,5 +1,5 @@
 {
-  if (reason == null)   reason="";
+  if (reason == null)   throw new IllegalArgumentException("The argument 'reason' is required and so cannot be null");
   ObsService os=Context.getObsService();
   for (  Obs o : encounter.getObsAtTopLevel(false)) {
     if (!o.isVoided()) {

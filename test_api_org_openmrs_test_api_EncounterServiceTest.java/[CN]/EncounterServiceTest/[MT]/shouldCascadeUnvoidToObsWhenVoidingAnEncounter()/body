@@ -1,0 +1,8 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=encounterService.getEncounter(2);
+  encounterService.unvoidEncounter(encounter);
+  Obs obs=Context.getObsService().getObs(4);
+  assertFalse(obs.isVoided());
+  assertNull(obs.getVoidReason());
+}

@@ -2,8 +2,12 @@
   String voidReason=encounter.getVoidReason();
   if (voidReason == null)   voidReason="";
   ObsService os=Context.getObsService();
-  for (  Obs o : encounter.getObsAtTopLevel(false)) {
+  for (  Obs o : encounter.getObsAtTopLevel(true)) {
     if (voidReason.equals(o.getVoidReason()))     os.unvoidObs(o);
+  }
+  OrderService orderService=Context.getOrderService();
+  for (  Order o : encounter.getOrders()) {
+    if (voidReason.equals(o.getVoidReason()))     orderService.unvoidOrder(o);
   }
   encounter.setVoided(false);
   encounter.setVoidedBy(null);
