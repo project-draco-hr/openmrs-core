@@ -8,8 +8,8 @@
     EncounterService es=Context.getEncounterService();
     FormService fs=Context.getFormService();
     Form form=encounter.getForm();
-    map.put("encounterTypes",es.getEncounterTypes());
-    map.put("forms",Context.getFormService().getForms());
+    map.put("encounterTypes",es.getAllEncounterTypes());
+    map.put("forms",Context.getFormService().getAllForms());
     String reason="";
     for (    Obs o : encounter.getObsAtTopLevel(true)) {
       if (o.isVoided()) {
