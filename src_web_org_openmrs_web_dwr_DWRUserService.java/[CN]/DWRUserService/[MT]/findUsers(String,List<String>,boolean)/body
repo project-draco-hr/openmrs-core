@@ -2,12 +2,6 @@
   Vector userList=new Vector();
   try {
     UserService userService=Context.getUserService();
-    String userId="Anonymous";
-    if (Context.isAuthenticated()) {
-      User us=Context.getAuthenticatedUser();
-      userId=us.getUserId().toString();
-    }
-    log.info(userId + "|" + searchValue+ "|"+ rolesStrings.toString());
     if (rolesStrings == null)     rolesStrings=new Vector<String>();
     List<Role> roles=new Vector<Role>();
     for (    String r : rolesStrings) {
