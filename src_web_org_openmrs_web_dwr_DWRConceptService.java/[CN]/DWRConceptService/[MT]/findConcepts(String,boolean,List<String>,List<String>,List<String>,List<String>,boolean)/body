@@ -1,11 +1,6 @@
 {
   Vector<Object> objectList=new Vector<Object>();
   User currentUser=Context.getAuthenticatedUser();
-  if (log.isInfoEnabled()) {
-    Integer userId=-1;
-    if (currentUser != null)     userId=currentUser.getUserId();
-    log.info(userId + "|" + phrase+ "|"+ includeClassNames.toString());
-  }
   Locale defaultLocale=Context.getLocale();
   List<Locale> localesToSearchOn=null;
   if (currentUser != null)   localesToSearchOn=currentUser.getProficientLocales();

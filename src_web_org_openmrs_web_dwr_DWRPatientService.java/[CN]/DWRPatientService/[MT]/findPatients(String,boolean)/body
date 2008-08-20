@@ -1,8 +1,5 @@
 {
   Collection<Object> patientList=new Vector<Object>();
-  Integer userId=-1;
-  if (Context.isAuthenticated())   userId=Context.getAuthenticatedUser().getUserId();
-  log.info(userId + "|" + searchValue);
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
   patients=ps.findPatients(searchValue,includeVoided);
