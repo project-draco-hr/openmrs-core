@@ -1,0 +1,9 @@
+{
+  initializeInMemoryDatabase();
+  authenticate();
+  executeDataSet("org/openmrs/test/include/exampleTestDataset.xml");
+  executeDataSet("org/openmrs/test/api/db/include/contextDAOTest.xml");
+  if (dao == null) {
+    dao=(ContextDAO)applicationContext.getBean("contextDAO");
+  }
+}
