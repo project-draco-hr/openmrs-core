@@ -1,4 +1,6 @@
 {
+  initializeInMemoryDatabase();
+  authenticate();
   assertTrue("The context needs to be correctly authenticated to by a user",Context.isAuthenticated());
   executeDataSet(XML_FILENAME);
   UserService userService=Context.getUserService();

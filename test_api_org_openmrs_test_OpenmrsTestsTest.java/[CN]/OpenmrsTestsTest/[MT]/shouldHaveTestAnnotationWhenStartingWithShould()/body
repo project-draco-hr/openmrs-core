@@ -2,7 +2,7 @@
   for (  Class<TestCase> currentClass : getTestClasses()) {
     for (    Method method : currentClass.getMethods()) {
       String methodName=method.getName();
-      if (methodName.startsWith("should")) {
+      if (methodName.startsWith("should") || methodName.contains("_should")) {
         assertTrue(currentClass.getName() + "#" + methodName+ " does not have the @Test annotation on it even though the method name starts with 'should'",method.getAnnotation(Test.class) != null);
       }
     }

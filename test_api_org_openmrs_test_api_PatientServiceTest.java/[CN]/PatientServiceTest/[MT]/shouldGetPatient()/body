@@ -1,5 +1,7 @@
 {
+  initializeInMemoryDatabase();
   executeDataSet(CREATE_PATIENT_XML);
+  authenticate();
   List<Patient> patientList=ps.getPatients(null,"???",null);
   assertNotNull("an empty list should be returned instead of a null object",patientList);
   assertTrue("There shouldn't be any patients with this weird identifier",patientList.size() == 0);

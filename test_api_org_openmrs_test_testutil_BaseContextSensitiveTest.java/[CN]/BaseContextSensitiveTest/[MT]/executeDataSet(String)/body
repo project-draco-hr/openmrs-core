@@ -1,0 +1,20 @@
+{
+  FlatXmlDataSet xmlDataSetToRun=cachedDatasets.get(datasetFilename);
+  if (xmlDataSetToRun == null) {
+    File file=new File(datasetFilename);
+    InputStream fileInInputStreamFormat=null;
+    if (file.exists())     fileInInputStreamFormat=new FileInputStream(datasetFilename);
+ else {
+      fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+      if (fileInInputStreamFormat == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
+    }
+    try {
+      xmlDataSetToRun=new FlatXmlDataSet(fileInInputStreamFormat);
+    }
+  finally {
+      fileInInputStreamFormat.close();
+    }
+  }
+  cachedDatasets.put(datasetFilename,xmlDataSetToRun);
+  executeDataSet(xmlDataSetToRun);
+}

@@ -1,0 +1,6 @@
+{
+  Assert.assertTrue(Context.isAuthenticated());
+  Assert.assertTrue(Context.getEncounterService().getAllEncounterTypes().size() > 0);
+  Context.authenticate("admin","test");
+  Context.logout();
+}
