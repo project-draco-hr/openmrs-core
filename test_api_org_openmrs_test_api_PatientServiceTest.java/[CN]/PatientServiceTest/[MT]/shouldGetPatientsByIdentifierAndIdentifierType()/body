@@ -1,5 +1,7 @@
 {
+  initializeInMemoryDatabase();
   executeDataSet(FIND_PATIENTS_XML);
+  authenticate();
   List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
   types.add(new PatientIdentifierType(1));
   List<Patient> patients=Context.getPatientService().getPatients(null,"1234",types);

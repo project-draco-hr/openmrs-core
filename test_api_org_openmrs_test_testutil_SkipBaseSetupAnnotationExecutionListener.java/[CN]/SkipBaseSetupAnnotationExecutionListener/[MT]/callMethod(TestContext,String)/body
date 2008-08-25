@@ -1,0 +1,10 @@
+{
+  Method method=null;
+  try {
+    method=testContext.getTestClass().getMethod(methodName);
+  }
+ catch (  NoSuchMethodException e) {
+    throw new Exception("There is no method named '" + methodName + "' on the "+ testContext.getTestClass()+ " class",e);
+  }
+  method.invoke(testContext.getTestInstance());
+}

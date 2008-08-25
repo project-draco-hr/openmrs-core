@@ -1,5 +1,7 @@
 {
+  initializeInMemoryDatabase();
   executeDataSet(CREATE_PATIENT_XML);
+  authenticate();
   CohortDefinition def=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
   Cohort result=service.evaluate(def,null);
   assertNotNull("Should not return null",result);

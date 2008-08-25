@@ -1,18 +1,21 @@
 {
-  System.out.println("Checking the boolean var");
-  assertTrue("This test should not be run without first running 'shouldCreateUserWhoIsPatient' test method",shouldCreateUserWhoIsPatientAlreadyTestWasRun);
-  UserService userService=Context.getUserService();
-  User fetchedUser=userService.getUser(2);
-  User fetchedUser3=userService.getUser(3);
-  if (fetchedUser3 != null)   throw new Exception("There is a user with id #3");
-  assertNotNull("Uh oh, the user object was not created",fetchedUser);
-  assertNotNull("Uh oh, the username was not saved",fetchedUser.getUsername());
-  assertTrue("Uh oh, the username was not saved",fetchedUser.getUsername().equals("bwolfe"));
-  assertTrue("Uh oh, the role was not assigned",fetchedUser.hasRole("Some Role"));
-  Context.clearSession();
-  List<User> allUsers=userService.getAllUsers();
-  assertEquals(2,allUsers.size());
-  Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
-  assertEquals(1,allPatientsSet.getSize());
-  deleteAllData();
+  try {
+    assertTrue("This test should not be run without first running 'shouldCreateUserWhoIsPatient' test method",shouldCreateUserWhoIsPatientAlreadyTestWasRun);
+    UserService userService=Context.getUserService();
+    User fetchedUser=userService.getUser(2);
+    User fetchedUser3=userService.getUser(3);
+    if (fetchedUser3 != null)     throw new Exception("There is a user with id #3");
+    assertNotNull("Uh oh, the user object was not created",fetchedUser);
+    assertNotNull("Uh oh, the username was not saved",fetchedUser.getUsername());
+    assertTrue("Uh oh, the username was not saved",fetchedUser.getUsername().equals("bwolfe"));
+    assertTrue("Uh oh, the role was not assigned",fetchedUser.hasRole("Some Role"));
+    Context.clearSession();
+    List<User> allUsers=userService.getAllUsers();
+    assertEquals(2,allUsers.size());
+    Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
+    assertEquals(1,allPatientsSet.getSize());
+  }
+  finally {
+    deleteAllData();
+  }
 }
