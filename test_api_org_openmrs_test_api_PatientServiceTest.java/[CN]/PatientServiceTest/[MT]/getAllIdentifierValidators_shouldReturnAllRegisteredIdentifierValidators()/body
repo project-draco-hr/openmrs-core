@@ -1,0 +1,7 @@
+{
+  Collection<IdentifierValidator> expectedValidators=new HashSet<IdentifierValidator>();
+  expectedValidators.add(ps.getIdentifierValidator("org.openmrs.patient.impl.LuhnIdentifierValidator"));
+  expectedValidators.add(ps.getIdentifierValidator("org.openmrs.patient.impl.VerhoeffIdentifierValidator"));
+  Assert.assertEquals(2,ps.getAllIdentifierValidators().size());
+  TestUtil.assertCollectionContentsEquals(expectedValidators,ps.getAllIdentifierValidators());
+}
