@@ -15,20 +15,18 @@ catch (    Exception e) {
       log.error("Got regular exception while logging in: '" + login + "'",e);
     }
   }
-  if (candidateUser == null)   throw new ContextAuthenticationException("User not found: " + login);
-  if (log.isDebugEnabled())   log.debug("Candidate user id: " + candidateUser.getUserId());
-  if (password == null)   throw new ContextAuthenticationException("Password cannot be null");
-  String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
-  String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
-  String hashedPassword=Security.encodeString(password + saltOnRecord);
-  User user=null;
-  if (hashedPassword != null && hashedPassword.equals(passwordOnRecord))   user=candidateUser;
-  if (user == null) {
-    log.info("Failed login attempt (login=" + login + ") - "+ errorMsg);
-    throw new ContextAuthenticationException(errorMsg);
+  if (candidateUser != null && password != null) {
+    if (log.isDebugEnabled())     log.debug("Candidate user id: " + candidateUser.getUserId());
+    String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+    String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+    String hashedPassword=Security.encodeString(password + saltOnRecord);
+    if (hashedPassword != null && hashedPassword.equals(passwordOnRecord)) {
+      candidateUser.getAllRoles().size();
+      candidateUser.getUserProperties().size();
+      candidateUser.getPrivileges().size();
+      return candidateUser;
+    }
   }
-  user.getAllRoles().size();
-  user.getUserProperties().size();
-  user.getPrivileges().size();
-  return user;
+  log.info("Failed login attempt (login=" + login + ") - "+ errorMsg);
+  throw new ContextAuthenticationException(errorMsg);
 }

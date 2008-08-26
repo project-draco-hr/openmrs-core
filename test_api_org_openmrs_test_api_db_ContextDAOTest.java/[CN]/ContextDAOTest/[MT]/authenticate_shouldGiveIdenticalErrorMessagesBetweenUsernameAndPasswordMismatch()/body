@@ -1,0 +1,21 @@
+{
+  User user=dao.authenticate("admin","test");
+  Assert.assertNotNull("This test depends on there being an admin:test user",user);
+  String invalidUsernameErrorMessage=null;
+  String invalidPasswordErrorMessage=null;
+  try {
+    dao.authenticate("some invalid username","and an invalid password");
+  }
+ catch (  ContextAuthenticationException authException) {
+    invalidUsernameErrorMessage=authException.getMessage();
+    invalidUsernameErrorMessage=invalidUsernameErrorMessage.replace("some invalid username","");
+  }
+  try {
+    dao.authenticate("admin","and an invalid password");
+  }
+ catch (  ContextAuthenticationException authException) {
+    invalidPasswordErrorMessage=authException.getMessage();
+    invalidPasswordErrorMessage=invalidPasswordErrorMessage.replace("admin","");
+  }
+  Assert.assertEquals(invalidUsernameErrorMessage,invalidPasswordErrorMessage);
+}
