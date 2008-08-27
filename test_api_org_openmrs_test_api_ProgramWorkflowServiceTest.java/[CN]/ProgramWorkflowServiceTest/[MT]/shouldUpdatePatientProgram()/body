@@ -16,7 +16,7 @@
   patientProgram.setDateCompleted(today);
   patientProgram.setChangedBy(Context.getAuthenticatedUser());
   patientProgram.setDateChanged(today);
-  pws.updatePatientProgram(patientProgram);
+  pws.savePatientProgram(patientProgram);
   PatientProgram ptProg=pws.getPatientProgram(1);
   Date dateCompleted2=patientProgram.getDateCompleted();
   Date dateChanged2=patientProgram.getDateChanged();
