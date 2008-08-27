@@ -2,12 +2,12 @@
 {
     PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
     ps.addArgument("gender","m",String.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Male",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Male",ps));
   }
 {
     PatientSearch ps=PatientSearch.createFilterSearch(ProgramStatePatientFilter.class);
     ps.addArgument("untilDate","${date}",Date.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("EnrolledOnDate",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("EnrolledOnDate",ps));
   }
   PatientSearch ps=(PatientSearch)CohortUtil.parse("[Male] and [EnrolledOnDate|untilDate=${report.startDate}]");
   List<Object> list=ps.getParsedComposition();
