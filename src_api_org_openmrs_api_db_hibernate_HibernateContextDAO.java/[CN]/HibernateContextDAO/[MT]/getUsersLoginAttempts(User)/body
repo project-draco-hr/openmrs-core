@@ -1,0 +1,10 @@
+{
+  String attemptsString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+  Integer attempts=0;
+  try {
+    attempts=Integer.valueOf(attemptsString);
+  }
+ catch (  NumberFormatException e) {
+  }
+  return attempts;
+}
