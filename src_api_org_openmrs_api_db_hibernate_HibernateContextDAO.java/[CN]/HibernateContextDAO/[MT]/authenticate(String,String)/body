@@ -17,6 +17,16 @@ catch (    Exception e) {
   }
   if (candidateUser != null && password != null) {
     if (log.isDebugEnabled())     log.debug("Candidate user id: " + candidateUser.getUserId());
+    String lockoutTimeString=candidateUser.getUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,null);
+    Long lockoutTime=null;
+    if (lockoutTimeString != null)     lockoutTime=Long.valueOf(lockoutTimeString);
+    if (lockoutTime != null) {
+      if (new Date().getTime() - lockoutTime > 300000)       candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+ else {
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,String.valueOf(new Date().getTime()));
+        throw new ContextAuthenticationException("Invalid number of connection attempts. Please try again later.");
+      }
+    }
     String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
     String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
     String hashedPassword=Security.encodeString(password + saltOnRecord);
@@ -24,7 +34,24 @@ catch (    Exception e) {
       candidateUser.getAllRoles().size();
       candidateUser.getUserProperties().size();
       candidateUser.getPrivileges().size();
+      Integer attempts=getUsersLoginAttempts(candidateUser);
+      if (attempts > 0) {
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,"0");
+        saveUserProperties(candidateUser);
+      }
       return candidateUser;
+    }
+ else {
+      Integer attempts=getUsersLoginAttempts(candidateUser);
+      attempts++;
+      if (attempts >= 5) {
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,String.valueOf(new Date().getTime()));
+      }
+ else {
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,String.valueOf(attempts));
+      }
+      saveUserProperties(candidateUser);
     }
   }
   log.info("Failed login attempt (login=" + login + ") - "+ errorMsg);

@@ -1,0 +1,19 @@
+{
+  Context.logout();
+  try {
+    dao.authenticate("admin","test");
+  }
+ catch (  ContextAuthenticationException authException) {
+    Assert.fail("There must be an admin:test user for this test to run properly");
+  }
+  Context.logout();
+  for (int x=1; x <= 5; x++) {
+    try {
+      dao.authenticate("admin","not the right password");
+      Assert.fail("Not sure why this username/password combo worked");
+    }
+ catch (    ContextAuthenticationException authException) {
+    }
+  }
+  dao.authenticate("admin","test");
+}
