@@ -6,8 +6,6 @@
   obs.setConcept(new Concept(1));
   obs.setValueNumeric(50d);
   encounter.addObs(obs);
-  assertTrue(obs.getEncounter().equals(encounter));
-  assertNull(obs.getObsId());
   es.saveEncounter(encounter);
   assertNotNull(obs.getObsId());
   assertTrue(encounter.getEncounterDatetime().equals(obs.getObsDatetime()));
