@@ -6,4 +6,5 @@
   ModelAndView modelAndView=controller.handleRequest(request,response);
   Map<String,Object> model=(Map<String,Object>)modelAndView.getModel().get("model");
   Map<Integer,List<FieldHolder>> pages=(Map<Integer,List<FieldHolder>>)model.get("pages");
+  Assert.assertNotNull(pages);
 }

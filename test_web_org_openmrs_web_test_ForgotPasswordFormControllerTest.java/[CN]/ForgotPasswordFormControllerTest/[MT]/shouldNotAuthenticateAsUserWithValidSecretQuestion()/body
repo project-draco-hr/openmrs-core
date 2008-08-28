@@ -1,0 +1,10 @@
+{
+  ForgotPasswordFormController controller=new ForgotPasswordFormController();
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  request.setMethod("POST");
+  request.addParameter("uname","validuser");
+  request.addParameter("secretAnswer","invalid secret answer");
+  HttpServletResponse response=new MockHttpServletResponse();
+  controller.handleRequest(request,response);
+  Assert.assertFalse(Context.isAuthenticated());
+}
