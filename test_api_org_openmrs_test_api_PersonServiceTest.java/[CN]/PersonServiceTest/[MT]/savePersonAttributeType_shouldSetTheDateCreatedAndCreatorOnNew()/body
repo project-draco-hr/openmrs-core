@@ -1,0 +1,8 @@
+{
+  PersonService service=Context.getPersonService();
+  PersonAttributeType pat=new PersonAttributeType();
+  pat.setName("attr type name");
+  service.savePersonAttributeType(pat);
+  assertEquals(new User(1),pat.getCreator());
+  assertNotNull(pat.getDateCreated());
+}
