@@ -1,6 +1,6 @@
 {
-  Vector<Object> personList=new Vector<Object>();
-  roles=roles.trim();
+  Vector<PersonListItem> personList=new Vector<PersonListItem>();
+  if (roles != null)   roles=roles.trim();
   if (roles != null && roles.length() > 0) {
     UserService us=Context.getUserService();
     List<Role> roleList=new Vector<Role>();
@@ -18,6 +18,12 @@
     PersonService ps=Context.getPersonService();
     for (    Person p : ps.getPeople(searchPhrase,null)) {
       personList.add(new PersonListItem(p));
+    }
+    if (searchPhrase.matches(".*\\d+.*")) {
+      PatientService patientService=Context.getPatientService();
+      for (      Patient p : patientService.getPatients(null,searchPhrase,null,false)) {
+        personList.add(new PersonListItem(p));
+      }
     }
   }
   return personList;
