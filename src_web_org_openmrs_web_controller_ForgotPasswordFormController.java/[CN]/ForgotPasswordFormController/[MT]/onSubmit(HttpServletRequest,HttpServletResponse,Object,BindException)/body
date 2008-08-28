@@ -1,43 +1,70 @@
 {
   HttpSession httpSession=request.getSession();
   String username=request.getParameter("uname");
-  Integer loginAttempts=(Integer)httpSession.getAttribute("forgotPasswordAttempts");
-  if (loginAttempts == null)   loginAttempts=0;
-  try {
+  String ipAddress=request.getLocalAddr();
+  Integer forgotPasswordAttempts=loginAttemptsByIP.get(ipAddress);
+  if (forgotPasswordAttempts == null)   forgotPasswordAttempts=1;
+  boolean lockedOut=false;
+  if (forgotPasswordAttempts > 5) {
+    lockedOut=true;
+    Date lockedOutTime=lockoutDateByIP.get(ipAddress);
+    if (lockedOutTime != null && new Date().getTime() - lockedOutTime.getTime() > 300000) {
+      lockedOut=false;
+      forgotPasswordAttempts=0;
+      lockoutDateByIP.put(ipAddress,null);
+    }
+ else {
+      lockoutDateByIP.put(ipAddress,new Date());
+    }
+  }
+  if (lockedOut) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.forgotPassword.tooManyAttempts");
+  }
+ else {
+    forgotPasswordAttempts++;
     String secretAnswer=request.getParameter("secretAnswer");
     if (secretAnswer == null) {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
       User user=null;
-      if (username != null && username.length() > 0)       user=Context.getUserService().getUserByUsername(username);
-      httpSession.setAttribute("loginAttempts",loginAttempts++);
+      try {
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        if (username != null && username.length() > 0)         user=Context.getUserService().getUserByUsername(username);
+      }
+  finally {
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      }
       if (user == null || user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.question.empty");
-        request.setAttribute("uname",username);
-        return showForm(request,response,errors);
       }
  else {
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.question.fill");
-        request.setAttribute("uname",username);
         request.setAttribute("secretQuestion",user.getSecretQuestion());
-        return showForm(request,response,errors);
+        forgotPasswordAttempts=0;
       }
     }
  else     if (secretAnswer != null) {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-      User user=Context.getUserService().getUserByUsername(username);
-      httpSession.setAttribute("loginAttempts",loginAttempts++);
+      User user=null;
+      try {
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        user=Context.getUserService().getUserByUsername(username);
+      }
+  finally {
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      }
       if (user == null || user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.question.empty");
-        request.setAttribute("uname",username);
-        return showForm(request,response,errors);
       }
  else       if (user.getSecretQuestion() != null && Context.getUserService().isSecretAnswer(user,secretAnswer)) {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
         String randomPassword="";
         for (int i=0; i < 8; i++) {
           randomPassword+=String.valueOf((Math.random() * (127 - 48) + 48));
         }
-        Context.getUserService().changePassword(user,randomPassword);
+        try {
+          Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+          Context.getUserService().changePassword(user,randomPassword);
+        }
+  finally {
+          Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+        }
         httpSession.setAttribute("resetPassword",randomPassword);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.password.reset");
         Context.authenticate(username,randomPassword);
@@ -47,16 +74,11 @@
  else {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.answer.invalid");
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.question.fill");
-        request.setAttribute("uname",username);
         request.setAttribute("secretQuestion",user.getSecretQuestion());
-        return showForm(request,response,errors);
       }
     }
   }
-  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-  }
-  String view=getFormView();
-  return new ModelAndView(new RedirectView(view));
+  loginAttemptsByIP.put(ipAddress,forgotPasswordAttempts);
+  request.setAttribute("uname",username);
+  return showForm(request,response,errors);
 }
