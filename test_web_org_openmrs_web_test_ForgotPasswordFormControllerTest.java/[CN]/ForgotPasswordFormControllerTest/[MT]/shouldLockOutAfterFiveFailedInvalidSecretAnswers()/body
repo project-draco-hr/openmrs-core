@@ -6,7 +6,6 @@
     request.addParameter("secretAnswer","invalid secret answer");
     controller.handleRequest(request,new MockHttpServletResponse());
   }
-  Thread.currentThread().wait(5000);
   MockHttpServletRequest request=new MockHttpServletRequest("POST","/forgotPassword.form");
   request.addParameter("uname","validuser");
   request.addParameter("secretAnswer","valid secret answer");
