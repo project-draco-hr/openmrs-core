@@ -1,8 +1,8 @@
 {
-  Collection<Object> patientList=new Vector<Object>();
+  List<Object> patientList=new Vector<Object>();
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
-  patients=ps.findPatients(searchValue,includeVoided);
+  patients=ps.getPatients(searchValue);
   patientList=new Vector<Object>(patients.size());
   for (  Patient p : patients)   patientList.add(new PatientListItem(p));
   if (patientList.size() < 3 && !searchValue.matches(".*\\d+.*")) {
@@ -13,7 +13,7 @@
       newSearch+=" " + name;
     }
     newSearch=newSearch.trim();
-    Collection<Patient> newPatients=ps.findPatients(newSearch,includeVoided);
+    Collection<Patient> newPatients=ps.getPatients(newSearch);
     newPatients.removeAll(patients);
     if (newPatients.size() > 0) {
       patientList.add("Minimal patients returned. Results for <b>" + newSearch + "</b>");
