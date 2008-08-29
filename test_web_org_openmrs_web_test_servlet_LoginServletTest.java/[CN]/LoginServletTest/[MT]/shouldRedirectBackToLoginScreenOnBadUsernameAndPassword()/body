@@ -1,0 +1,10 @@
+{
+  LoginServlet loginServlet=new LoginServlet();
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","/loginServlet");
+  request.setContextPath("/somecontextpath");
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  request.setParameter("uname","some wrong username");
+  request.setParameter("pw","some wrong password");
+  loginServlet.service(request,response);
+  Assert.assertEquals("/somecontextpath/login.htm",response.getRedirectedUrl());
+}

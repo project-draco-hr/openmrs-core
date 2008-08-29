@@ -1,0 +1,21 @@
+{
+  Context.logout();
+  Context.authenticate("admin","test");
+  Assert.assertTrue(Context.isAuthenticated());
+  LoginServlet loginServlet=new LoginServlet();
+  for (int x=1; x < 4; x++) {
+    MockHttpServletRequest request=new MockHttpServletRequest("POST","/loginServlet");
+    request.setContextPath("/somecontextpath");
+    MockHttpServletResponse response=new MockHttpServletResponse();
+    request.setParameter("uname","wrong username" + x);
+    request.setParameter("pw","wrong password");
+    loginServlet.service(request,response);
+  }
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","/loginServlet");
+  request.setContextPath("/somecontextpath");
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  request.setParameter("uname","admin");
+  request.setParameter("pw","test");
+  loginServlet.service(request,response);
+  Assert.assertNotSame("/somecontextpath/login.htm",response.getRedirectedUrl());
+}

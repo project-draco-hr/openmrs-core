@@ -1,0 +1,25 @@
+{
+  String redirect=request.getParameter("redirect");
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getParameter("refererURL");
+    if (redirect != null) {
+      int index=redirect.indexOf(request.getContextPath(),9);
+      if (index != -1)       redirect=redirect.substring(index);
+    }
+  }
+  if (redirect == null || redirect.equals("")) {
+    redirect=request.getContextPath();
+  }
+  log.debug("Going to use redirect: '" + redirect + "'");
+  if (redirect != null) {
+    if (redirect.contains("login.")) {
+      log.debug("Redirect contains 'login.', redirecting to main page");
+      redirect=request.getContextPath();
+    }
+    if (!redirect.startsWith(request.getContextPath())) {
+      log.debug("redirect is outside of openmrs, redirecting to main page");
+      redirect=request.getContextPath();
+    }
+  }
+  return redirect;
+}
