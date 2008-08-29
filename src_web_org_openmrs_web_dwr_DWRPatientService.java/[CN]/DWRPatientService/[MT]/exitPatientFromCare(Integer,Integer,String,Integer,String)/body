@@ -40,7 +40,7 @@
     String deathProp=Context.getAdministrationService().getGlobalProperty("concept.patientDied");
     Concept deathConcept=null;
     if (deathProp != null) {
-      deathConcept=cs.getConceptByIdOrName(deathProp);
+      deathConcept=cs.getConcept(deathProp);
     }
     if (deathConcept != null) {
       if (c.equals(deathConcept)) {
