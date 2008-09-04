@@ -19,7 +19,7 @@
     }
     Integer newLocationId=Integer.parseInt(dischargeToLocation);
     patient=Context.getPatientService().getPatient(patient.getPatientId());
-    PersonAttributeType healthCenterAttrType=Context.getPersonService().getPersonAttributeType("Health Center");
+    PersonAttributeType healthCenterAttrType=Context.getPersonService().getPersonAttributeTypeByName("Health Center");
     if (healthCenterAttrType == null) {
       log.error("A person attribute type with name 'Health Center' is not defined but patient " + patient.getPatientId() + " is trying to change their health center to "+ newLocationId);
       return;
@@ -29,7 +29,7 @@
       PersonAttribute newHealthCenter=new PersonAttribute(healthCenterAttrType,newLocationId.toString());
       log.debug("Updating patient's location from " + currentHealthCenter + " to "+ newLocationId);
       patient.addAttribute(newHealthCenter);
-      Context.getPatientService().updatePatient(patient);
+      Context.getPatientService().savePatient(patient);
     }
   }
   log.debug("finished discharge to location method");

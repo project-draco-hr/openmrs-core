@@ -48,6 +48,10 @@
         log.debug("Parsing observation");
         Obs obs=parseObs(encounter,obx,obr);
         if (obs != null) {
+          if (encounter.getEncounterId() != null) {
+            obs.setCreator(getEnterer(orc));
+            obs.setDateCreated(new Date());
+          }
           if (obsGrouper != null)           obsGrouper.addGroupMember(obs);
  else {
             log.debug("Obs is not null. Adding to encounter object");
@@ -62,7 +66,7 @@
         hl7InError.setError(e.getMessage());
         hl7InError.setErrorDetails(PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")));
         hl7InError.setHL7SourceKey(messageControlId);
-        hl7Service.createHL7InError(hl7InError);
+        hl7Service.saveHL7InError(hl7InError);
       }
     }
   }
