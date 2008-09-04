@@ -1,0 +1,65 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String[] reportList=request.getParameterValues("dataExportId");
+    String action=request.getParameter("action");
+    AdministrationService as=Context.getAdministrationService();
+    String success="";
+    String error="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String deleted=msa.getMessage("general.deleted");
+    String notDeleted=msa.getMessage("general.cannot.delete");
+    String textDataExport=msa.getMessage("DataExport.dataExport");
+    String noneDeleted=msa.getMessage("DataExport.nonedeleted");
+    String generated=msa.getMessage("DataExport.generated");
+    String notGenerated=msa.getMessage("DataExport.notGenerated");
+    String noneGenerated=msa.getMessage("DataExport.noneGenerated");
+    if (msa.getMessage("DataExport.generate").equals(action)) {
+      if (reportList == null)       success=noneGenerated;
+ else {
+        ReportObjectService rs=Context.getReportObjectService();
+        EvaluationContext evalContext=new EvaluationContext();
+        evalContext.addParameterValue(new Parameter("general.user","Authenticated User",org.openmrs.User.class,null),Context.getAuthenticatedUser());
+        for (        String id : reportList) {
+          DataExportReportObject report=null;
+          try {
+            report=(DataExportReportObject)rs.getReportObject(Integer.valueOf(id));
+            DataExportUtil.generateExport(report,null,evalContext);
+            if (!success.equals(""))             success+="<br/>";
+            success+=textDataExport + " '" + report.getName()+ "' "+ generated;
+          }
+ catch (          Exception e) {
+            log.warn("Error generating report object",e);
+            if (!error.equals(""))             error+="<br/>";
+            if (report == null)             error+=textDataExport + " #" + id+ " "+ notGenerated;
+ else             error+=textDataExport + " '" + report.getName()+ "' "+ notGenerated;
+          }
+        }
+      }
+    }
+ else     if (msa.getMessage("DataExport.delete").equals(action)) {
+      if (reportList != null) {
+        for (        String p : reportList) {
+          try {
+            as.deleteReportObject(Integer.valueOf(p));
+            if (!success.equals(""))             success+="<br/>";
+            success+=textDataExport + " " + p+ " "+ deleted;
+          }
+ catch (          APIException e) {
+            log.warn("Error deleting report object",e);
+            if (!error.equals(""))             error+="<br/>";
+            error+=textDataExport + " " + p+ " "+ notDeleted;
+          }
+        }
+      }
+ else {
+        success+=noneDeleted;
+      }
+    }
+    view=getSuccessView();
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
+  return new ModelAndView(new RedirectView(view));
+}
