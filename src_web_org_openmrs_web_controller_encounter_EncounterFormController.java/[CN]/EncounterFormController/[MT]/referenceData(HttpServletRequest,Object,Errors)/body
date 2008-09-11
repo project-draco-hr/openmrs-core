@@ -2,7 +2,10 @@
   Encounter encounter=(Encounter)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   List<Integer> editedObs=new Vector<Integer>();
-  SortedMap<FormField,List<Obs>> obsMapToReturn=new TreeMap<FormField,List<Obs>>();
+  SortedMap<FormField,List<Obs>> obsMapToReturn=null;
+  String sortType=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_FORM_OBS_SORT_ORDER);
+  if ("weight".equals(sortType))   obsMapToReturn=new TreeMap<FormField,List<Obs>>();
+ else   obsMapToReturn=new TreeMap<FormField,List<Obs>>(new NumberingFormFieldComparator());
   Map<Obs,FormField> otherFormFields=new HashMap<Obs,FormField>();
   if (Context.isAuthenticated()) {
     EncounterService es=Context.getEncounterService();
