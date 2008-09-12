@@ -1,0 +1,12 @@
+{
+  String className="org.openmrs.scheduler.tasks.TestTask";
+  try {
+    Class c=OpenmrsClassLoader.getInstance().loadClass(className);
+    Object o=c.newInstance();
+    if (o instanceof Task)     assertTrue("Class " + className + " is a valid Task",true);
+ else     fail("Class " + className + " is not a valid Task");
+  }
+ catch (  ClassNotFoundException e) {
+    fail(e.getMessage());
+  }
+}

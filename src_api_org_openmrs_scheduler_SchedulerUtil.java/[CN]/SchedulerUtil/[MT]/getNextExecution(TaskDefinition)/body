@@ -12,9 +12,7 @@
       long lastTime=(betweenTime % (repeatInterval * 1000));
       long additional=((repeatInterval * 1000) - lastTime);
       nextTime.setTime(new Date(currentTime.getTime() + additional));
-      log.info("Start time: " + firstTime);
-      log.info("Curr time : " + currentTime);
-      log.info("Next time : " + nextTime.getTime());
+      log.debug("The task " + taskDefinition.getName() + " will start at "+ nextTime.getTime());
     }
   }
  catch (  Exception e) {

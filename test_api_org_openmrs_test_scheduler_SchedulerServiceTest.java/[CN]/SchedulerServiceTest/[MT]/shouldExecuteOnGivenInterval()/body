@@ -1,0 +1,10 @@
+{
+  Calendar startTime=Calendar.getInstance();
+  Long repeatInterval=new Long(4 * 60);
+  TaskDefinition taskDefinition=new TaskDefinition();
+  taskDefinition.setStartTime(startTime.getTime());
+  taskDefinition.setRepeatInterval(repeatInterval);
+  startTime.add(Calendar.MINUTE,4);
+  Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
+  assertEquals(startTime.getTime(),nextTime);
+}

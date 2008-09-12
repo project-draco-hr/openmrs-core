@@ -2,6 +2,7 @@
   if (taskDefinition != null) {
     TimerSchedulerTask schedulerTask=scheduledTasks.get(taskDefinition.getId());
     if (schedulerTask != null) {
+      log.info("Shutting down the existing instance of this task to avoid conflicts!!");
       schedulerTask.shutdown();
     }
     try {
@@ -10,8 +11,8 @@
         schedulerTask=new TimerSchedulerTask(task);
         long repeatInterval=taskDefinition.getRepeatInterval() * SchedulerConstants.SCHEDULER_MILLIS_PER_SECOND;
         if (taskDefinition.getStartTime() != null) {
-          log.info("Starting task at " + taskDefinition.getStartTime());
           Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
+          log.info("Starting task ... the task will execute for the first time at " + nextTime);
           timerScheduler.scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
         }
  else {

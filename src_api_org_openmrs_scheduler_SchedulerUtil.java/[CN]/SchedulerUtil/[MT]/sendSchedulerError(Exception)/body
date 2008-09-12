@@ -1,0 +1,24 @@
+{
+  try {
+    Boolean emailIsEnabled=Boolean.valueOf(Context.getAdministrationService().getGlobalProperty(SchedulerConstants.SCHEDULER_ADMIN_EMAIL_ENABLED_PROPERTY));
+    if (emailIsEnabled) {
+      String recipients=Context.getAdministrationService().getGlobalProperty(SchedulerConstants.SCHEDULER_ADMIN_EMAIL_PROPERTY);
+      if (recipients != null) {
+        String sender=SchedulerConstants.SCHEDULER_DEFAULT_FROM;
+        String subject=SchedulerConstants.SCHEDULER_DEFAULT_SUBJECT + " : " + error.getClass().getName();
+        String message=new String();
+        message+="\n\nStacktrace\n============================================\n";
+        message+=SchedulerUtil.getExceptionAsString(error);
+        message+="\n\nSystem Variables\n============================================\n";
+        for (        Map.Entry<String,String> entry : Context.getAdministrationService().getSystemVariables().entrySet()) {
+          message+=entry.getKey() + " = " + entry.getValue()+ "\n";
+        }
+        log.info("Sending scheduler error email to [" + recipients + "] from ["+ sender+ "] with subject ["+ subject+ "]:\n"+ message);
+        Context.getMessageService().sendMessage(recipients,sender,subject,message);
+      }
+    }
+  }
+ catch (  Exception e) {
+    log.warn("Could not send scheduler error email: ",e);
+  }
+}
