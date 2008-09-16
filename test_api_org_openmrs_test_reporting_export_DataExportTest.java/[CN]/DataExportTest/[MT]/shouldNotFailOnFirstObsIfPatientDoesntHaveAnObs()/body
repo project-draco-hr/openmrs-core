@@ -1,0 +1,16 @@
+{
+  DataExportReportObject export=new DataExportReportObject();
+  export.setName("FIRST WEIGHT");
+  SimpleColumn patientId=new SimpleColumn("PATIENT_ID","$!{fn.patientId}");
+  export.getColumns().add(patientId);
+  ConceptColumn firstObs=new ConceptColumn("WEIGHT",DataExportReportObject.MODIFIER_FIRST,1,"5089",null);
+  export.getColumns().add(firstObs);
+  Cohort patients=new Cohort();
+  patients.addMember(6);
+  DataExportUtil.generateExport(export,patients,"\t",null);
+  File exportFile=DataExportUtil.getGeneratedFile(export);
+  String expectedOutput="PATIENT_ID\tWEIGHT\n6\t\n";
+  String output=OpenmrsUtil.getFileAsString(exportFile);
+  exportFile.delete();
+  assertEquals("The output is not right.",expectedOutput,output);
+}
