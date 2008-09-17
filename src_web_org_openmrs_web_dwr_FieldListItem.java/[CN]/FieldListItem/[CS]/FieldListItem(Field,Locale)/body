@@ -11,7 +11,9 @@
     table=field.getTableName();
     attribute=field.getAttributeName();
     selectMultiple=field.isSelectMultiple() == true ? "yes" : "no";
-    numForms=field.getForms().size();
+    List<Field> fields=new Vector<Field>();
+    fields.add(field);
+    numForms=Context.getFormService().getForms(null,null,null,null,null,null,fields).size();
     defaultValue=field.getDefaultValue();
   }
 }
