@@ -17,6 +17,8 @@
   person.setPersonVoidReason(reason);
   savePerson(person);
   Context.getPatientService().voidPatient(Context.getPatientService().getPatient(person.getPersonId()),reason);
-  Context.getUserService().voidUser(Context.getUserService().getUser(person.getPersonId()),reason);
+  UserService us=Context.getUserService();
+  User user=us.getUser(person.getPersonId());
+  if (user != null)   us.voidUser(user,reason);
   return person;
 }
