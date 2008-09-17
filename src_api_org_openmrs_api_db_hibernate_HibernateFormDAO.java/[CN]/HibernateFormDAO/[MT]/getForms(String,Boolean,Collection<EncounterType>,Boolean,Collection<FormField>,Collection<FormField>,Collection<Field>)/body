@@ -11,5 +11,10 @@
     detachedCrit.add(Expression.eqProperty("ff.formId","form.formId"));
     crit.add(Subqueries.eq(containingAllFormFields.size(),detachedCrit));
   }
+  if (!fields.isEmpty()) {
+    Criteria crit2=crit.createCriteria("formFields","ff");
+    crit2.add(Expression.eqProperty("ff.form.formId","form.formId"));
+    crit2.add(Expression.in("ff.field",fields));
+  }
   return crit.list();
 }
