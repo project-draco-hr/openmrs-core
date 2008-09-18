@@ -5,10 +5,12 @@
   List<ReportObjectWrapper> wrappedObjects=query.list();
   for (  ReportObjectWrapper wrappedObject : wrappedObjects) {
     AbstractReportObject reportObject=wrappedObject.getReportObject();
-    if (reportObject.getReportObjectId() == null) {
-      reportObject.setReportObjectId(wrappedObject.getReportObjectId());
+    if (reportObject != null) {
+      if (reportObject.getReportObjectId() == null) {
+        reportObject.setReportObjectId(wrappedObject.getReportObjectId());
+      }
+      reportObjects.add(reportObject);
     }
-    reportObjects.add(reportObject);
   }
   return reportObjects;
 }
