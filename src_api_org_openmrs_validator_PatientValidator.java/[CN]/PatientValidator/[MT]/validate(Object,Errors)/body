@@ -1,4 +1,9 @@
 {
   Patient patient=(Patient)obj;
-  checkIdentifiers(patient.getIdentifiers(),errors);
+  PatientIdentifierValidator piv=new PatientIdentifierValidator();
+  if (patient != null && patient.getIdentifiers() != null) {
+    for (    PatientIdentifier identifier : patient.getIdentifiers()) {
+      piv.validate(identifier,errors);
+    }
+  }
 }
