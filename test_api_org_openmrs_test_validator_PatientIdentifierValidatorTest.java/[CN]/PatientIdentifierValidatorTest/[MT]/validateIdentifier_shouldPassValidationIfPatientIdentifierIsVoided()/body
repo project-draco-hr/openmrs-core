@@ -1,0 +1,14 @@
+{
+  PatientIdentifier pi=Context.getPatientService().getPatientIdentifiers("7TU-8",null,null,null,null).get(0);
+  pi.setIdentifier("7TU-4");
+  try {
+    PatientIdentifierValidator.validateIdentifier(pi);
+    Assert.fail("The patient identifier should be invalid prior to voiding");
+  }
+ catch (  Exception e) {
+  }
+  pi.setVoided(true);
+  pi.setVoidedBy(Context.getAuthenticatedUser());
+  pi.setVoidReason("Testing");
+  PatientIdentifierValidator.validateIdentifier(pi);
+}

@@ -1,0 +1,5 @@
+{
+  PatientIdentifier pi=Context.getPatientService().getPatientIdentifiers("7TU-8",null,null,null,null).get(0);
+  pi.setIdentifier("101-6");
+  PatientIdentifierValidator.validateIdentifier(pi);
+}
