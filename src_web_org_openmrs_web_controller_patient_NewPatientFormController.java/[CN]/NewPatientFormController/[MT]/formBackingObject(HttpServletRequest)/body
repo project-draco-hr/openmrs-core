@@ -16,15 +16,15 @@
 catch (      ObjectRetrievalFailureException noUserEx) {
       }
     }
-  }
-  if (p == null) {
-    try {
-      Person person=Context.getPersonService().getPerson(id);
-      if (person != null)       p=new Patient(person);
-    }
- catch (    ObjectRetrievalFailureException noPersonEx) {
-      log.warn("There is no patient or person with id: '" + id + "'",noPersonEx);
-      throw new ServletException("There is no patient or person with id: '" + id + "'");
+    if (p == null) {
+      try {
+        Person person=Context.getPersonService().getPerson(id);
+        if (person != null)         p=new Patient(person);
+      }
+ catch (      ObjectRetrievalFailureException noPersonEx) {
+        log.warn("There is no patient or person with id: '" + id + "'",noPersonEx);
+        throw new ServletException("There is no patient or person with id: '" + id + "'");
+      }
     }
   }
   ShortPatientModel patient=new ShortPatientModel(p);

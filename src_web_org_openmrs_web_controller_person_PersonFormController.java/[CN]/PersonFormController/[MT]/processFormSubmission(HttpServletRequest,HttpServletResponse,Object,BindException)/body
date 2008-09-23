@@ -8,8 +8,27 @@
     if (person.getPersonName().getFamilyName() == "")     errors.rejectValue("names[0].familyName","Person.name.required");
     if (person.getGender() == null || person.getGender().equals(""))     errors.rejectValue("gender","Person.gender.required");
     for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PERSON,null)) {
-      String value=request.getParameter(type.getPersonAttributeTypeId().toString());
-      if (value != null)       person.addAttribute(new PersonAttribute(type,value));
+      String paramName=type.getPersonAttributeTypeId().toString();
+      String value=request.getParameter(paramName);
+      if (value != null) {
+        PersonAttribute attribute=new PersonAttribute(type,value);
+        try {
+          Object hydratedObject=attribute.getHydratedObject();
+          if (hydratedObject == null || "".equals(hydratedObject.toString())) {
+            attribute.setValue("");
+          }
+ else           if (hydratedObject instanceof Attributable) {
+            attribute.setValue(((Attributable)hydratedObject).serialize());
+          }
+ else           if (!hydratedObject.getClass().getName().equals(type.getFormat()))           throw new APIException();
+        }
+ catch (        APIException e) {
+          errors.rejectValue("attributes","Invalid value for " + type.getName() + ": '"+ value+ "'");
+          log.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
+          attribute.setValue("");
+        }
+        person.addAttribute(attribute);
+      }
     }
     if (person.getBirthdate() != null) {
       if (person.getBirthdate().after(new Date()))       errors.rejectValue("birthdate","error.date.future");

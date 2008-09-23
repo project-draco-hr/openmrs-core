@@ -1,0 +1,13 @@
+{
+  try {
+    return new AttributableDate(((Date)Context.getDateFormat().parseObject(s)).getTime());
+  }
+ catch (  ParseException e) {
+    try {
+      return new AttributableDate(((Date)new SimpleDateFormat(dateFormat).parseObject(s)).getTime());
+    }
+ catch (    ParseException e2) {
+      throw new APIException("Unable to parse the given string: '" + s + "' as a date object");
+    }
+  }
+}

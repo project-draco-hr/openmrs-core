@@ -58,8 +58,27 @@
       pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
     }
     for (    PersonAttributeType type : personService.getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING)) {
-      String value=request.getParameter(type.getPersonAttributeTypeId().toString());
-      patient.addAttribute(new PersonAttribute(type,value));
+      String paramName=type.getPersonAttributeTypeId().toString();
+      String value=request.getParameter(paramName);
+      if (value != null) {
+        PersonAttribute attribute=new PersonAttribute(type,value);
+        try {
+          Object hydratedObject=attribute.getHydratedObject();
+          if (hydratedObject == null || "".equals(hydratedObject.toString())) {
+            attribute.setValue("");
+          }
+ else           if (hydratedObject instanceof Attributable) {
+            attribute.setValue(((Attributable)hydratedObject).serialize());
+          }
+ else           if (!hydratedObject.getClass().getName().equals(type.getFormat()))           throw new APIException();
+        }
+ catch (        APIException e) {
+          errors.rejectValue("attributeMap[" + type.getName() + "]","Invalid value for " + type.getName() + ": '"+ value+ "'");
+          log.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
+          attribute.setValue("");
+        }
+        patient.addAttribute(attribute);
+      }
     }
     for (    PatientIdentifier identifier : newIdentifiers) {
       identifier.setPatient(patient);
