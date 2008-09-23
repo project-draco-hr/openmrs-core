@@ -8,6 +8,7 @@
     }
   }
  catch (  Throwable t) {
+    log.warn("Unable to hydrate value: " + getValue() + " for type: "+ getAttributeType(),t);
   }
   log.debug("Returning value: '" + getValue() + "'");
   return getValue();
