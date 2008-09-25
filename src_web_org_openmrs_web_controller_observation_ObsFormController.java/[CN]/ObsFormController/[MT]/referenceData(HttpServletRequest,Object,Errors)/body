@@ -3,7 +3,7 @@
   Map<String,Object> map=new HashMap<String,Object>();
   String defaultVerbose="false";
   if (Context.isAuthenticated()) {
-    map.put("forms",Context.getFormService().getForms());
+    map.put("forms",Context.getFormService().getAllForms());
     if (obs.getConcept() != null)     map.put("conceptName",obs.getConcept().getName(request.getLocale()));
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
   }
