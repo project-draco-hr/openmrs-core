@@ -1,8 +1,0 @@
-{
-  Obs obs=(Obs)obj;
-  obs=setObjects(obs,request);
-  String reason=request.getParameter("editReason");
-  if (obs.getObsId() != null && (reason == null || reason.length() == 0))   errors.reject("editReason","Obs.edit.reason.empty");
-  if (obs.getConcept() == null)   errors.rejectValue("concept","error.null");
-  return super.processFormSubmission(request,reponse,obs,errors);
-}

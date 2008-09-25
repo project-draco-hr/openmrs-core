@@ -4,15 +4,34 @@
   if (Context.isAuthenticated()) {
     Obs obs=(Obs)obj;
     ObsService os=Context.getObsService();
-    String reason=request.getParameter("editReason");
     try {
-      os.saveObs(obs,reason);
+      if (request.getParameter("saveObs") != null) {
+        String reason=request.getParameter("editReason");
+        if (obs.getObsId() != null && (reason == null || reason.length() == 0)) {
+          errors.reject("editReason","Obs.edit.reason.empty");
+          return showForm(request,response,errors);
+        }
+        os.saveObs(obs,reason);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
+      }
+ else       if (request.getParameter("voidObs") != null) {
+        String voidReason=request.getParameter("voidReason");
+        if (obs.getObsId() != null && (voidReason == null || voidReason.length() == 0)) {
+          errors.reject("voidReason","Obs.void.reason.empty");
+          return showForm(request,response,errors);
+        }
+        os.voidObs(obs,voidReason);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.voidedSuccessfully");
+      }
+ else       if (request.getParameter("unvoidObs") != null) {
+        os.unvoidObs(obs);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.unvoidedSuccessfully");
+      }
     }
  catch (    APIException e) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
       return showForm(request,response,errors);
     }
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
     if (obs.getEncounter() != null)     view=getSuccessView() + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
   }
   return new ModelAndView(new RedirectView(view));
