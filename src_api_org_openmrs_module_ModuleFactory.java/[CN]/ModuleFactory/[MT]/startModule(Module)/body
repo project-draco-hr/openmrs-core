@@ -31,13 +31,13 @@
       }
       getStartedModulesMap().put(module.getModuleId(),module);
       try {
-        Context.addProxyPrivilege("");
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
         AdministrationService as=Context.getAdministrationService();
         GlobalProperty gp=new GlobalProperty(module.getModuleId() + ".started","true",getGlobalPropertyStartedDescription(module.getModuleId()));
         as.setGlobalProperty(gp);
       }
   finally {
-        Context.removeProxyPrivilege("");
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       }
       if (module.getPrivileges().size() > 0 || module.getGlobalProperties().size() > 0) {
         log.debug("Updating core dataset");
