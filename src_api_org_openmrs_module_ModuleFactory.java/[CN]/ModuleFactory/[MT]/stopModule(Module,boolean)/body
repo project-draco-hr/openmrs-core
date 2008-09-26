@@ -10,13 +10,13 @@
     getStartedModulesMap().remove(moduleId);
     if (isShuttingDown == false && !Context.isRefreshingContext()) {
       try {
-        Context.addProxyPrivilege("");
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
         AdministrationService as=Context.getAdministrationService();
         GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
         as.saveGlobalProperty(gp);
       }
   finally {
-        Context.removeProxyPrivilege("");
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       }
     }
     if (getModuleClassLoaderMap().containsKey(mod)) {
