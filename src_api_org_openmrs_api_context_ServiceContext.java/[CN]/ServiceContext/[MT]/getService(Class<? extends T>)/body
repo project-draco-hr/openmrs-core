@@ -12,5 +12,5 @@ synchronized (refreshingContext) {
   }
   ProxyFactory factory=proxyFactories.get(cls);
   if (factory == null)   throw new APIException("Service not found: " + cls);
-  return factory.getProxy(OpenmrsClassLoader.getInstance());
+  return (T)factory.getProxy(OpenmrsClassLoader.getInstance());
 }
