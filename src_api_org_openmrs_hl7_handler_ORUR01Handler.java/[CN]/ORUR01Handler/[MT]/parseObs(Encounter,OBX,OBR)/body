@@ -35,8 +35,7 @@
     log.debug("    value name = " + valueName);
     if (isConceptProposal(valueIdentifier)) {
       if (log.isDebugEnabled())       log.debug("Proposing concept");
-      proposeConcept(encounter,concept,valueName);
-      return null;
+      throw new ProposingConceptException(concept,valueName);
     }
  else {
       log.debug("    not proposal");
@@ -60,7 +59,9 @@
     CE value=(CE)obx5;
     String valueIdentifier=value.getIdentifier().getValue();
     String valueName=value.getText().getValue();
-    if (isConceptProposal(valueIdentifier))     proposeConcept(encounter,concept,valueName);
+    if (isConceptProposal(valueIdentifier)) {
+      throw new ProposingConceptException(concept,valueName);
+    }
  else {
       try {
         Concept valueCoded=new Concept();

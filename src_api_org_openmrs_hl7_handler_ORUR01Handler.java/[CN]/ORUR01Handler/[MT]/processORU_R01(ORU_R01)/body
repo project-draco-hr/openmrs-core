@@ -16,6 +16,7 @@
  catch (  Exception e) {
     log.error("Error while processing Discharge To Location (" + messageControlId + ")",e);
   }
+  List<ConceptProposal> conceptProposals=new ArrayList<ConceptProposal>();
   if (log.isDebugEnabled())   log.debug("Creating observations for message " + messageControlId + "...");
   String ignoreOBRConceptId=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MEDICAL_RECORD_OBSERVATIONS,"1238");
   Concept ignoreOBRConcept=null;
@@ -60,7 +61,12 @@
           }
         }
       }
- catch (      HL7Exception e) {
+ catch (      ProposingConceptException proposingException) {
+        Concept questionConcept=proposingException.getConcept();
+        String value=proposingException.getValueName();
+        conceptProposals.add(createConceptProposal(encounter,questionConcept,value));
+      }
+catch (      HL7Exception e) {
         log.warn("HL7Exception",e);
         HL7InError hl7InError=new HL7InError();
         hl7InError.setError(e.getMessage());
@@ -77,5 +83,8 @@
   }
   Context.getEncounterService().saveEncounter(encounter);
   hl7Service.encounterCreated(encounter);
+  for (  ConceptProposal proposal : conceptProposals) {
+    Context.getConceptService().saveConceptProposal(proposal);
+  }
   return oru;
 }
