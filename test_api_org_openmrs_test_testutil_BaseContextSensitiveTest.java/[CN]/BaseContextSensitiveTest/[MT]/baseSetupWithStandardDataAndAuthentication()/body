@@ -1,5 +1,5 @@
 {
-  if (skipBaseSetup == false) {
+  if (skipBaseSetup == false && useInMemoryDatabase()) {
     initializeInMemoryDatabase();
     executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
     authenticate();
