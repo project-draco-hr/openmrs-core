@@ -1,0 +1,7 @@
+{
+  Locale primaryLocale=Locale.US;
+  Concept testConcept=createMockConcept(1,primaryLocale);
+  ConceptName shortName=testConcept.getBestShortName(primaryLocale);
+  assertFalse(shortName.isShort());
+  assertNotNull(shortName);
+}

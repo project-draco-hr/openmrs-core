@@ -1,0 +1,11 @@
+{
+  if (log.isDebugEnabled())   log.debug("get task " + name);
+  TaskDefinition foundTask=null;
+  try {
+    foundTask=getSchedulerDAO().getTaskByName(name);
+  }
+ catch (  ObjectRetrievalFailureException orfe) {
+    log.warn("getTaskByName(" + name + ") failed, because: "+ orfe);
+  }
+  return foundTask;
+}

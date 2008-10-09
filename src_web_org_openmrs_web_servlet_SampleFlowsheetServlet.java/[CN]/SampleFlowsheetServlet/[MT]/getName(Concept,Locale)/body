@@ -1,5 +1,12 @@
 {
-  ConceptName name=concept.getName(locale);
-  if (name.getShortName() != null && name.getShortName().length() > 0)   return name.getShortName();
-  return name.getName();
+  String foundName="";
+  ConceptName shortName=concept.getBestShortName(locale);
+  if (shortName != null) {
+    foundName=shortName.getName();
+  }
+ else {
+    ConceptName name=concept.getName(locale);
+    if (name != null)     foundName=name.getName();
+  }
+  return foundName;
 }

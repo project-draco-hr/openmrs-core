@@ -1,0 +1,8 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptNameTag.class).add(Expression.eq("tag",name));
+  if (crit.list().size() < 1) {
+    log.warn("No concept name tag found with name: " + name);
+    return null;
+  }
+  return (ConceptNameTag)crit.list().get(0);
+}

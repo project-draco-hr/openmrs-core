@@ -1,0 +1,4 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("select min(conceptId) from Concept");
+  return (Integer)query.uniqueResult();
+}

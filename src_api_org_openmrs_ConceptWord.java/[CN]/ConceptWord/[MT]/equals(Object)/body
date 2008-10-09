@@ -3,7 +3,7 @@
     ConceptWord c=(ConceptWord)obj;
     boolean matches=true;
     if (concept != null && c.getConcept() != null)     matches=matches && concept.equals(c.getConcept());
-    if (word != null && c.getWord() != null)     matches=matches && word.equals(c.getWord());
+    if (word != null && c.getWord() != null)     matches=matches && word.equalsIgnoreCase(c.getWord());
     if (locale != null && c.getLocale() != null)     matches=matches && locale.equals(c.getLocale());
     if (synonym != null && c.getSynonym() != null)     matches=matches && synonym.equals(c.getSynonym());
     return (matches);

@@ -1,0 +1,49 @@
+{
+  OutputStreamWriter wr=null;
+  BufferedReader rd=null;
+  String response="";
+  StringBuffer data=null;
+  try {
+    for (    Map.Entry<String,String> entry : dataToPost.entrySet()) {
+      if (entry.getKey() == null || entry.getValue() == null)       continue;
+      if (data == null)       data=new StringBuffer();
+ else       data.append("&");
+      data.append(URLEncoder.encode(entry.getKey(),"UTF-8"));
+      data.append("=");
+      data.append(URLEncoder.encode(entry.getValue(),"UTF-8"));
+    }
+    URL url=new URL(urlString);
+    HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+    conn.setDoOutput(true);
+    conn.setDoInput(true);
+    conn.setRequestMethod("POST");
+    conn.setRequestProperty("Content-Length",String.valueOf(data.length()));
+    conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+    wr=new OutputStreamWriter(conn.getOutputStream());
+    wr.write(data.toString());
+    wr.flush();
+    wr.close();
+    rd=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+    String line;
+    while ((line=rd.readLine()) != null) {
+      response=response + line + "\n";
+    }
+  }
+ catch (  Exception e) {
+    log.warn("Exception while posting to : " + urlString,e);
+    log.warn("Reponse from server was: " + response);
+  }
+ finally {
+    if (wr != null)     try {
+      wr.close();
+    }
+ catch (    Exception e) {
+    }
+    if (rd != null)     try {
+      rd.close();
+    }
+ catch (    Exception e) {
+    }
+  }
+  return response;
+}

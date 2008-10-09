@@ -5,32 +5,54 @@
   ConceptService cs=Context.getConceptService();
   String conceptId=request.getParameter("conceptId");
   ConceptName conceptName=new ConceptName();
-  Collection<ConceptSynonym> conceptSynonyms=new Vector<ConceptSynonym>();
+  Collection<ConceptName> conceptSynonyms=new Vector<ConceptName>();
   Map<String,ConceptName> conceptNamesByLocale=new HashMap<String,ConceptName>();
-  Map<Locale,Collection<ConceptSynonym>> conceptSynonymsByLocale=new HashMap<Locale,Collection<ConceptSynonym>>();
+  Map<String,ConceptName> conceptShortNamesByLocale=new HashMap<String,ConceptName>();
+  HashMap<String,ConceptDescription> conceptDescriptionsByLocale=new HashMap<String,ConceptDescription>();
+  Map<Locale,Collection<ConceptName>> conceptSynonymsByLocale=new HashMap<Locale,Collection<ConceptName>>();
   Map<Double,Object[]> conceptSets=new TreeMap<Double,Object[]>();
   Map<String,String> conceptAnswers=new TreeMap<String,String>();
   Collection<Form> forms=new HashSet<Form>();
   Map<Integer,String> questionsAnswered=new TreeMap<Integer,String>();
   Map<Integer,String> containedInSets=new TreeMap<Integer,String>();
   boolean isNew=true;
+  Collection<Locale> conceptLocales=cs.getLocalesOfConceptNames();
   if (conceptId != null) {
-    Concept concept=cs.getConcept(Integer.valueOf(conceptId));
+    Concept concept=null;
+    try {
+      concept=cs.getConcept(Integer.valueOf(conceptId));
+    }
+ catch (    APIAuthenticationException ex) {
+    }
     if (concept != null) {
       isNew=false;
-      for (      Locale l : OPENMRS_CONCEPT_LOCALES()) {
+      for (      Locale l : conceptLocales) {
         ConceptName cn=concept.getName(l,true);
         if (cn == null) {
           cn=new ConceptName();
         }
         conceptNamesByLocale.put(l.toString(),cn);
       }
-      for (      Locale l : OPENMRS_CONCEPT_LOCALES()) {
-        conceptSynonymsByLocale.put(l,concept.getSynonyms(l));
+      for (      Locale l : conceptLocales) {
+        ConceptName cn=concept.getBestShortName(l);
+        if (cn == null) {
+          cn=new ConceptName();
+        }
+        conceptShortNamesByLocale.put(l.toString(),cn);
+      }
+      for (      Locale l : conceptLocales) {
+        ConceptDescription cd=concept.getDescription(l,true);
+        if (cd == null) {
+          cd=new ConceptDescription();
+        }
+        conceptDescriptionsByLocale.put(l.toString(),cd);
+      }
+      for (      Locale l : conceptLocales) {
+        conceptSynonymsByLocale.put(l,concept.getNames(l));
       }
       conceptName=concept.getName(locale);
       if (conceptName == null)       conceptName=new ConceptName();
-      conceptSynonyms=concept.getSynonyms(locale);
+      conceptSynonyms=concept.getNames(locale);
       for (      ConceptSet set : concept.getConceptSets()) {
         Object[] arr={set.getConcept().getConceptId().toString(),set.getConcept().getName(locale)};
         conceptSets.put(set.getSortWeight(),arr);
@@ -48,8 +70,8 @@
         if (answer.getAnswerConcept().isRetired())         name="<span class='retired'>" + name + "</span>";
         conceptAnswers.put(key,name);
       }
-      forms=Context.getFormService().getFormsContainingConcept(concept);
-      for (      Concept c : Context.getConceptService().getConceptsByAnswer(concept)) {
+      forms=Context.getFormService().getForms(concept);
+      for (      Concept c : Context.getConceptService().getQuestionsForAnswer(concept)) {
         ConceptName cn=c.getName(locale);
         if (cn == null)         questionsAnswered.put(c.getConceptId(),"No Name Defined");
  else         questionsAnswered.put(c.getConceptId(),cn.getName());
@@ -64,17 +86,25 @@
     if (Context.isAuthenticated())     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
   }
   if (isNew) {
-    for (    Locale l : OPENMRS_CONCEPT_LOCALES()) {
+    for (    Locale l : conceptLocales) {
       conceptNamesByLocale.put(l.toString(),new ConceptName());
+      conceptShortNamesByLocale.put(l.toString(),new ConceptName());
+      conceptDescriptionsByLocale.put(l.toString(),new ConceptDescription());
     }
-    for (    Locale l : OPENMRS_CONCEPT_LOCALES()) {
-      conceptSynonymsByLocale.put(l,new HashSet<ConceptSynonym>());
+    for (    Locale l : conceptLocales) {
+      conceptSynonymsByLocale.put(l,new HashSet<ConceptName>());
     }
   }
-  map.put("locales",OPENMRS_CONCEPT_LOCALES());
+  map.put("locales",conceptLocales);
   map.put("conceptName",conceptName);
   for (  Map.Entry<String,ConceptName> e : conceptNamesByLocale.entrySet()) {
     map.put("conceptName_" + e.getKey(),e.getValue());
+  }
+  for (  Map.Entry<String,ConceptName> e : conceptShortNamesByLocale.entrySet()) {
+    map.put("conceptShortName_" + e.getKey(),e.getValue());
+  }
+  for (  Map.Entry<String,ConceptDescription> e : conceptDescriptionsByLocale.entrySet()) {
+    map.put("conceptDescription_" + e.getKey(),e.getValue());
   }
   map.put("conceptSynonyms",conceptSynonyms);
   map.put("conceptSynonymsByLocale",conceptSynonymsByLocale);

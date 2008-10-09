@@ -4,7 +4,7 @@
   for (  String part : parts) {
     String p=part.trim();
     String upper=p.toUpperCase();
-    if (!p.equals("") && !OpenmrsConstants.STOP_WORDS().contains(upper) && !uniqueParts.contains(upper))     uniqueParts.add(p);
+    if (!p.equals("") && !OpenmrsConstants.STOP_WORDS().contains(upper) && !uniqueParts.contains(upper))     uniqueParts.add(upper);
   }
   return uniqueParts;
 }

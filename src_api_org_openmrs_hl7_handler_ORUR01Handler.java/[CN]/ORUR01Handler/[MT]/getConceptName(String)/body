@@ -1,0 +1,14 @@
+{
+  ConceptName specifiedConceptName=null;
+  if (hl7ConceptNameId != null) {
+    try {
+      Integer conceptNameId=new Integer(hl7ConceptNameId);
+      specifiedConceptName=new ConceptName();
+      specifiedConceptName.setConceptNameId(conceptNameId);
+    }
+ catch (    NumberFormatException e) {
+      log.debug("Invalid concept name ID '" + hl7ConceptNameId + "'",e);
+    }
+  }
+  return specifiedConceptName;
+}

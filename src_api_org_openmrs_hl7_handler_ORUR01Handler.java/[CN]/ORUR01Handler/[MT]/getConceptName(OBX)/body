@@ -1,0 +1,5 @@
+{
+  ST altIdentifier=obx.getObservationIdentifier().getAlternateIdentifier();
+  String hl7ConceptNameId=(altIdentifier != null) ? altIdentifier.getValue() : null;
+  return getConceptName(hl7ConceptNameId);
+}

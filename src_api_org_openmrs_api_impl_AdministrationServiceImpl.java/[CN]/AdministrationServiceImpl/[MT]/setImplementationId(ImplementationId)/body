@@ -1,0 +1,35 @@
+{
+  if (implementationId == null)   return;
+  String description=implementationId.getDescription();
+  try {
+    description=checkImplementationIdValidity(implementationId.getImplementationId(),description,implementationId.getPassphrase());
+    implementationId.setDescription(description);
+    boolean foundMatchingSource=false;
+    List<ConceptSource> sources=Context.getConceptService().getAllConceptSources();
+    if (sources != null) {
+      for (      ConceptSource source : sources) {
+        if (implementationId.getImplementationId().equals(source.getHl7Code())) {
+          foundMatchingSource=true;
+        }
+      }
+    }
+    if (!foundMatchingSource) {
+      ConceptSource newConceptSource=new ConceptSource();
+      newConceptSource.setName(implementationId.getName());
+      newConceptSource.setDescription(implementationId.getDescription());
+      newConceptSource.setHl7Code(implementationId.getImplementationId());
+      Context.getConceptService().saveConceptSource(newConceptSource);
+    }
+    StringWriter stringWriter=new StringWriter();
+    OpenmrsUtil.getSerializer().write(implementationId,stringWriter);
+    saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID,stringWriter.toString()));
+  }
+ catch (  APIException e) {
+    throw e;
+  }
+catch (  Exception e) {
+    throw new APIException(e);
+  }
+ finally {
+  }
+}

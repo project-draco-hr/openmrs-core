@@ -1,0 +1,12 @@
+{
+  Collection<Locale> foundLocales=new HashSet<Locale>();
+  for (  File propertiesFile : findPropertiesFiles()) {
+    String filename=propertiesFile.getName();
+    Locale parsedLocale=parseLocaleFrom(filename);
+    foundLocales.add(parsedLocale);
+  }
+  if (foundLocales.size() == 0) {
+    log.warn("no locales found.");
+  }
+  return foundLocales;
+}

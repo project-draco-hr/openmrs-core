@@ -1,0 +1,21 @@
+{
+  Properties props=new Properties();
+  File foundFile=null;
+  for (  File propertiesFile : findPropertiesFiles()) {
+    props.clear();
+    try {
+      props.load(new FileInputStream(propertiesFile));
+    }
+ catch (    FileNotFoundException e) {
+      log.error("Error generated",e);
+    }
+catch (    IOException e) {
+      log.error("Error generated",e);
+    }
+    if (props.containsKey(code)) {
+      foundFile=propertiesFile;
+      break;
+    }
+  }
+  return foundFile;
+}

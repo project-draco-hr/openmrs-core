@@ -1,0 +1,21 @@
+{
+  File propertyFile=findPropertiesFileFor(message.getCode());
+  if (propertyFile != null) {
+    Properties props=new Properties();
+    try {
+      FileInputStream fis=new FileInputStream(propertyFile);
+      props.load(fis);
+      fis.close();
+      props.setProperty(message.getCode(),message.getMessage());
+      FileOutputStream fos=new FileOutputStream(propertyFile);
+      props.store(fos,"OpenMRS Application Messages");
+      fos.close();
+    }
+ catch (    FileNotFoundException e) {
+      log.error("Error generated",e);
+    }
+catch (    IOException e) {
+      log.error("Error generated",e);
+    }
+  }
+}

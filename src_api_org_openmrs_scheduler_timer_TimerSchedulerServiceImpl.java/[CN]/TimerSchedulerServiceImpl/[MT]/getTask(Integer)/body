@@ -1,4 +1,4 @@
 {
-  log.debug("get task " + id);
+  if (log.isDebugEnabled())   log.debug("get task " + id);
   return getSchedulerDAO().getTask(id);
 }

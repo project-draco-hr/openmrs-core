@@ -1,4 +1,5 @@
 {
+  Task clientTask=null;
   if (taskDefinition != null) {
     TimerSchedulerTask schedulerTask=scheduledTasks.get(taskDefinition.getId());
     if (schedulerTask != null) {
@@ -6,18 +7,23 @@
       schedulerTask.shutdown();
     }
     try {
-      Task task=TaskFactory.getInstance().createInstance(taskDefinition);
-      if (task != null) {
-        schedulerTask=new TimerSchedulerTask(task);
+      clientTask=TaskFactory.getInstance().createInstance(taskDefinition);
+      if (clientTask != null) {
+        schedulerTask=new TimerSchedulerTask(clientTask);
+        taskDefinition.setTaskInstance(clientTask);
         long repeatInterval=taskDefinition.getRepeatInterval() * SchedulerConstants.SCHEDULER_MILLIS_PER_SECOND;
         if (taskDefinition.getStartTime() != null) {
           Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
           log.info("Starting task ... the task will execute for the first time at " + nextTime);
           timerScheduler.scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
         }
- else {
+ else         if (repeatInterval > 0) {
           log.info("Delaying start time by " + SchedulerConstants.SCHEDULER_DEFAULT_DELAY + " seconds");
           timerScheduler.scheduleAtFixedRate(schedulerTask,SchedulerConstants.SCHEDULER_DEFAULT_DELAY,repeatInterval);
+        }
+ else {
+          log.info("Starting one-shot task");
+          timerScheduler.schedule(schedulerTask,new Date());
         }
         log.debug("Registering timer for task " + taskDefinition.getId());
         scheduledTasks.put(taskDefinition.getId(),schedulerTask);
@@ -30,4 +36,5 @@
       throw new SchedulerException(e);
     }
   }
+  return clientTask;
 }

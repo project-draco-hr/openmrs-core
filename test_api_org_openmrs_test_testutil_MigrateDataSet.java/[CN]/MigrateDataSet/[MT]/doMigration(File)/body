@@ -1,0 +1,42 @@
+{
+  String filename=fileOrDirectory.getName();
+  if (filename.startsWith(".svn") || filename.endsWith("TestingApplicationContext.xml")) {
+  }
+ else   if (fileOrDirectory.isDirectory()) {
+    for (    File innerFile : fileOrDirectory.listFiles()) {
+      doMigration(innerFile);
+    }
+  }
+ else   if (filename.endsWith(".xml")) {
+    InputStream fileOrDirectoryStream=new FileInputStream(fileOrDirectory);
+    System.out.println("Migrating " + fileOrDirectory.getAbsolutePath());
+    System.out.println(execMysqlCmd("DROP DATABASE IF EXISTS " + tempDatabaseName,null,false));
+    System.out.println(execMysqlCmd("CREATE DATABASE " + tempDatabaseName + " DEFAULT CHARACTER SET utf8",null,false));
+    System.out.println(execMysqlCmd(null,OLD_SCHEMA_FILE,true));
+    System.out.println(execMysqlCmd(null,OLD_UPDATE_FILE,true));
+    String url="jdbc:mysql://localhost/" + tempDatabaseName;
+    Class.forName("com.mysql.jdbc.Driver");
+    Connection con=DriverManager.getConnection(url,credentials[0],credentials[1]);
+    IDatabaseConnection dbunitConnection=new DatabaseConnection(con);
+    try {
+      PreparedStatement ps=con.prepareStatement("SET FOREIGN_KEY_CHECKS=0;");
+      ps.execute();
+      ps.close();
+      IDataSet dataset=new FlatXmlDataSet(fileOrDirectoryStream);
+      DatabaseOperation.REFRESH.execute(dbunitConnection,dataset);
+      System.out.println(execMysqlCmd("SET FOREIGN_KEY_CHECKS=0",NEW_UPDATE_FILE,true));
+      System.out.println("Dumping new xml file");
+      dbunitConnection=new DatabaseConnection(con);
+      FlatXmlWriter datasetWriter=new FlatXmlWriter(new FileOutputStream(fileOrDirectory));
+      datasetWriter.write(dbunitConnection.createDataSet());
+    }
+ catch (    Exception e) {
+      System.err.println("Unable to convert: " + filename + " Error: "+ e.getMessage());
+    }
+ finally {
+      fileOrDirectoryStream.close();
+      dbunitConnection=null;
+    }
+    System.out.println("Finished!");
+  }
+}

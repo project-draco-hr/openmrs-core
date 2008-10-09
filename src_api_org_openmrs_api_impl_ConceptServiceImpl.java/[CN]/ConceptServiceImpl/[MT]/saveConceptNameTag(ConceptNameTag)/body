@@ -1,0 +1,10 @@
+{
+  checkIfLocked();
+  if (nameTag.getDateCreated() == null) {
+    nameTag.setDateCreated(new Date());
+  }
+  if (nameTag.getCreator() == null) {
+    nameTag.setCreator(Context.getAuthenticatedUser());
+  }
+  return dao.saveConceptNameTag(nameTag);
+}

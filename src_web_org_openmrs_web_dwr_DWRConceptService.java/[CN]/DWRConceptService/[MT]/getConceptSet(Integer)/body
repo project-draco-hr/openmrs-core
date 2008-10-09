@@ -7,11 +7,12 @@
   if (concept.isSet()) {
     for (    ConceptSet set : concept.getConceptSets()) {
       Field field=null;
+      ConceptName cn=set.getConcept().getName(locale);
+      ConceptDescription description=set.getConcept().getDescription(locale);
       for (      Field f : fs.findFields(set.getConcept())) {
-        ConceptName cn=set.getConcept().getName(locale);
-        if (f.getName().equals(cn.getName()) && f.getDescription().equals(cn.getDescription()) && f.isSelectMultiple().equals(false))         field=f;
+        if (f.getName().equals(cn.getName()) && f.getDescription().equals(description.getDescription()) && f.isSelectMultiple().equals(false))         field=f;
       }
-      if (field == null)       returnList.add(new ConceptListItem(set.getConcept(),locale));
+      if (field == null)       returnList.add(new ConceptListItem(set.getConcept(),cn,locale));
  else       returnList.add(new FieldListItem(field,locale));
     }
   }

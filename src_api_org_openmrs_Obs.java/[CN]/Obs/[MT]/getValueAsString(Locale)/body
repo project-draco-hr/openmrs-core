@@ -5,7 +5,21 @@
  else     if (abbrev.equals("CWE")) {
       if (getValueCoded() == null)       return "";
       if (getValueDrug() != null)       return getValueDrug().getFullName(locale);
- else       return getValueCoded().getName(locale).getName();
+ else {
+        ConceptName valueCodedName=getValueCodedName();
+        if (valueCodedName != null) {
+          return valueCodedName.getName();
+        }
+ else {
+          ConceptName fallbackName=getValueCoded().getName();
+          if (fallbackName != null) {
+            return fallbackName.getName();
+          }
+ else {
+            return "";
+          }
+        }
+      }
     }
  else     if (abbrev.equals("NM") || abbrev.equals("SN"))     return getValueNumeric() == null ? "" : getValueNumeric().toString();
  else     if (abbrev.equals("DT"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE));
@@ -16,7 +30,15 @@
   if (getValueNumeric() != null)   return getValueNumeric().toString();
  else   if (getValueCoded() != null) {
     if (getValueDrug() != null)     return getValueDrug().getFullName(locale);
- else     return getValueCoded().getName(locale).getName();
+ else {
+      ConceptName valudeCodedName=getValueCodedName();
+      if (valudeCodedName != null) {
+        return valudeCodedName.getName();
+      }
+ else {
+        return "";
+      }
+    }
   }
  else   if (getValueDatetime() != null)   return Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE);
  else   if (getValueText() != null)   return getValueText();

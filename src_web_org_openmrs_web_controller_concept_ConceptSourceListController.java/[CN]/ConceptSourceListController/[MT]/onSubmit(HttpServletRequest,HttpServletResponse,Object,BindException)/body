@@ -1,0 +1,29 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    String[] conceptSourceIdList=request.getParameterValues("conceptSourceId");
+    ConceptService cs=Context.getConceptService();
+    String success="";
+    String error="";
+    MessageSourceAccessor msa=getMessageSourceAccessor();
+    String deleted=msa.getMessage("general.deleted");
+    String notDeleted=msa.getMessage("general.cannot.delete");
+    for (    String conceptSourceId : conceptSourceIdList) {
+      try {
+        cs.purgeConceptSource(new ConceptSource(Integer.valueOf(conceptSourceId)));
+        if (!success.equals(""))         success+="<br>";
+        success+=conceptSourceId + " " + deleted;
+      }
+ catch (      APIException e) {
+        log.warn("Error deleting concept source",e);
+        if (!error.equals(""))         error+="<br>";
+        error+=conceptSourceId + " " + notDeleted;
+      }
+    }
+    view=getSuccessView();
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

@@ -1,0 +1,11 @@
+{
+  List<ConceptSource> conceptSources=(List<ConceptSource>)command;
+  Map<String,Object> map=new HashMap<String,Object>();
+  ImplementationId implId=Context.getAdministrationService().getImplementationId();
+  if (implId != null) {
+    for (    ConceptSource conceptSource : conceptSources) {
+      if (conceptSource.getHl7Code().equals(implId.getImplementationId()))       map.put("implIdSource",conceptSource);
+    }
+  }
+  return map;
+}

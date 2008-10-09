@@ -1,6 +1,7 @@
 {
   if (obj instanceof ConceptMap) {
     ConceptMap c=(ConceptMap)obj;
+    if (getConceptMapId() == null)     return false;
     return (this.conceptMapId.equals(c.getConceptMapId()));
   }
   return false;

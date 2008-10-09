@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptSource.class);
+  criteria.add(Expression.eq("voided",false));
+  return criteria.list();
+}

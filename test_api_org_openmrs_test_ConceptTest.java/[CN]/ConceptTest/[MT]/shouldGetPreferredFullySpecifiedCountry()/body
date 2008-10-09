@@ -1,0 +1,6 @@
+{
+  Locale primaryLocale=Locale.US;
+  Concept testConcept=createMockConcept(1,primaryLocale);
+  ConceptName preferredName=testConcept.getName(primaryLocale);
+  assertTrue(preferredName.isPreferredInCountry(primaryLocale.getCountry()));
+}

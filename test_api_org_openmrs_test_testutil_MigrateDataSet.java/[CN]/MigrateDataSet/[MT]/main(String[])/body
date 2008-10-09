@@ -1,0 +1,16 @@
+{
+  System.out.println("Starting...");
+  String wd="./test";
+  JFileChooser chooser=new JFileChooser();
+  chooser.setCurrentDirectory(new File(wd));
+  chooser.setMultiSelectionEnabled(true);
+  chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+  int result=chooser.showOpenDialog(null);
+  if (result == JFileChooser.APPROVE_OPTION) {
+    File[] dirs=chooser.getSelectedFiles();
+    for (    File directory : dirs) {
+      System.out.println("Doing migration on directory: " + directory.getAbsolutePath());
+      doMigration(directory);
+    }
+  }
+}

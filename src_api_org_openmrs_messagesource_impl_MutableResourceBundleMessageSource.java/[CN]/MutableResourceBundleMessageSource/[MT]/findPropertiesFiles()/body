@@ -1,0 +1,30 @@
+{
+  Collection<File> propertiesFiles=new Vector<File>();
+  try {
+    for (    String basename : basenames) {
+      File basefilename=new File(basename);
+      basename=basefilename.getPath();
+      int nameIndex=basename.lastIndexOf(File.separatorChar) + 1;
+      String basedir=(nameIndex > 0) ? basename.substring(0,nameIndex) : "";
+      String namePrefix=basename.substring(nameIndex);
+      Resource propertiesDir=applicationContext.getResource(basedir);
+      boolean filesFound=false;
+      for (      File possibleFile : propertiesDir.getFile().listFiles()) {
+        if (possibleFile.getName().startsWith(namePrefix) && possibleFile.getName().endsWith(".properties")) {
+          propertiesFiles.add(possibleFile);
+          filesFound=true;
+        }
+      }
+      if (log.isDebugEnabled() && !filesFound) {
+        log.debug("No messages for basename " + basename);
+      }
+    }
+  }
+ catch (  IOException e) {
+    log.error("Error generated",e);
+  }
+  if (log.isWarnEnabled() && (propertiesFiles.size() == 0)) {
+    log.warn("No properties files found.");
+  }
+  return propertiesFiles;
+}

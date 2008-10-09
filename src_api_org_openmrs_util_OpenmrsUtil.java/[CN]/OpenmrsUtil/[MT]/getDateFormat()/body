@@ -1,6 +1,6 @@
 {
   String localeKey=Context.getLocale().toString().toLowerCase();
   String pattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(localeKey);
-  if (pattern == null)   pattern=OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(0);
+  if (pattern == null)   pattern=(String)OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().values().toArray()[0];
   return new SimpleDateFormat(pattern,Context.getLocale());
 }

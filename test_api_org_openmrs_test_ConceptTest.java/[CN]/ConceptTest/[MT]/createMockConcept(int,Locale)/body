@@ -1,0 +1,10 @@
+{
+  Concept mockConcept=new Concept();
+  mockConcept.setConceptId(conceptId);
+  ConceptName primaryName=ConceptNameTest.createMockConceptName(1,primaryLocale);
+  mockConcept.setPreferredName(primaryLocale,primaryName);
+  Locale generalLocale=new Locale(primaryLocale.getLanguage());
+  ConceptName generalName=ConceptNameTest.createMockConceptName(2,generalLocale);
+  mockConcept.addName(generalName);
+  return mockConcept;
+}

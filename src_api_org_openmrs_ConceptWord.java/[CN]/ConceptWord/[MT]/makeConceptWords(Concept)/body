@@ -3,14 +3,7 @@
   for (  ConceptName name : concept.getNames()) {
     List<String> uniqueParts=getUniqueWords(name.getName());
     for (    String part : uniqueParts) {
-      words.add(new ConceptWord(part,concept,name.getLocale(),""));
-    }
-  }
-  if (concept.getSynonyms() != null)   for (  ConceptSynonym synonym : concept.getSynonyms()) {
-    String syn=synonym.getSynonym();
-    List<String> uniqueParts=getUniqueWords(syn);
-    for (    String part : uniqueParts) {
-      words.add(new ConceptWord(part,concept,synonym.getLocale(),syn));
+      words.add(new ConceptWord(part,concept,name,name.getLocale(),""));
     }
   }
   return words;

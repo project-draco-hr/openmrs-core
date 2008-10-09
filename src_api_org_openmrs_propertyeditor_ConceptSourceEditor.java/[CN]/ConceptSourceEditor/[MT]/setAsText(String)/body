@@ -1,0 +1,15 @@
+{
+  log.debug("Setting text: " + text);
+  ConceptService cs=Context.getConceptService();
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(cs.getConceptSource(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      throw new IllegalArgumentException("ConceptSource not found: " + text,ex);
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

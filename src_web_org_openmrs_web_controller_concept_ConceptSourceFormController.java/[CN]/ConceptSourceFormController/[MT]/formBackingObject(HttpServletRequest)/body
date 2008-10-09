@@ -1,0 +1,10 @@
+{
+  ConceptSource conceptSource=null;
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
+    String conceptSourceId=request.getParameter("conceptSourceId");
+    if (conceptSourceId != null)     conceptSource=cs.getConceptSource(Integer.valueOf(conceptSourceId));
+  }
+  if (conceptSource == null)   conceptSource=new ConceptSource();
+  return conceptSource;
+}

@@ -1,3 +1,4 @@
 {
-  return concept.getConceptId() + "^" + concept.getName(locale).getName()+ "^"+ FormConstants.HL7_LOCAL_CONCEPT;
+  ConceptName localizedName=concept.getName(locale);
+  return concept.getConceptId() + "^" + localizedName.getName()+ "^"+ FormConstants.HL7_LOCAL_CONCEPT+ "^"+ localizedName.getConceptNameId()+ "^"+ localizedName.getName()+ "^"+ FormConstants.HL7_LOCAL_CONCEPT;
 }
