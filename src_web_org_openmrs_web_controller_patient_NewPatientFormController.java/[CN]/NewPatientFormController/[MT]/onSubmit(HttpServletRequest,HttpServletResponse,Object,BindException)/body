@@ -161,40 +161,6 @@ catch (      PatientIdentifierException pie) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PatientIdentifier.error.general");
         isError=true;
       }
-      String[] personAs=request.getParameterValues("personA");
-      String[] types=request.getParameterValues("relationshipType");
-      Person person=personService.getPerson(patient.getPatientId());
-      List<Relationship> relationships;
-      List<Person> newPersonAs=new Vector<Person>();
-      if (person != null)       relationships=personService.getRelationshipsByPerson(person);
- else       relationships=new Vector<Relationship>();
-      if (personAs != null) {
-        for (int x=0; x < personAs.length; x++) {
-          String personAString=personAs[x];
-          String typeString=types[x];
-          if (personAString != null && personAString.length() > 0 && typeString != null && typeString.length() > 0) {
-            Person personA=personService.getPerson(Integer.valueOf(personAString));
-            RelationshipType type=personService.getRelationshipType(Integer.valueOf(typeString));
-            newPersonAs.add(personA);
-            boolean found=false;
-            for (            Relationship rel : relationships) {
-              if (rel.getPersonA().equals(person))               found=true;
-              if (rel.getPersonA().equals(personA)) {
-                rel.setRelationshipType(type);
-                found=true;
-              }
-            }
-            if (!found) {
-              Relationship r=new Relationship(personA,person,type);
-              relationships.add(r);
-            }
-          }
-        }
-      }
-      for (      Relationship rel : relationships) {
-        if (newPersonAs.contains(rel.getPersonA()) || person.equals(rel.getPersonA()))         personService.saveRelationship(rel);
- else         personService.purgeRelationship(rel);
-      }
       if (patient.getDead()) {
         log.debug("Patient is dead, so let's make sure there's an Obs for it");
         String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
@@ -263,6 +229,12 @@ catch (      PatientIdentifierException pie) {
  else {
           log.debug("Cause of death is null - should not have gotten here without throwing an error on the form.");
         }
+      }
+    }
+    if (!isError && !errors.hasErrors()) {
+      Map<String,Relationship> relationships=getRelationshipsMap(patient,request);
+      for (      Relationship relationship : relationships.values()) {
+        if (relationship.getPersonA() != null && relationship.getPersonB() != null)         personService.saveRelationship(relationship);
       }
     }
     if (isError || errors.hasErrors()) {

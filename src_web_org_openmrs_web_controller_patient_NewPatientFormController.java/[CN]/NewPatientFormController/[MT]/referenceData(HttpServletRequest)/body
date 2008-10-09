@@ -34,6 +34,8 @@
         }
       }
     }
+    Map<String,Relationship> relationships=getRelationshipsMap(patient,request);
+    map.put("relationships",relationships);
   }
   for (  PatientIdentifier identifier : newIdentifiers) {
     identifier.setPatient(patient);
