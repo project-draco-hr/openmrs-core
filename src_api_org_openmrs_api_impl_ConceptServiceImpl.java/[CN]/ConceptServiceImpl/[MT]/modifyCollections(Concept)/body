@@ -1,53 +1,44 @@
 {
   User authUser=Context.getAuthenticatedUser();
   Date timestamp=new Date();
-  if (concept.getCreator() == null) {
-    concept.setCreator(authUser);
-    if (concept.getDateCreated() == null)     concept.setDateCreated(timestamp);
-  }
- else {
+  if (concept.getCreator() == null)   concept.setCreator(authUser);
+  if (concept.getDateCreated() == null)   concept.setDateCreated(timestamp);
+  if (concept.getConceptId() != null) {
     concept.setChangedBy(authUser);
     concept.setDateChanged(timestamp);
   }
   if (concept.getNames() != null) {
     for (    ConceptName cn : concept.getNames()) {
-      if (cn.getCreator() == null) {
-        cn.setCreator(authUser);
-        if (cn.getDateCreated() == null)         cn.setDateCreated(timestamp);
-      }
+      if (cn.getCreator() == null)       cn.setCreator(authUser);
+      if (cn.getDateCreated() == null)       cn.setDateCreated(timestamp);
+      cn.setConcept(concept);
       if (cn.getTags() != null) {
-        Collection<ConceptNameTag> savedTags=new Vector<ConceptNameTag>();
-        for (        ConceptNameTag cnt : cn.getTags()) {
-          savedTags.add(saveConceptNameTag(cnt));
+        for (        ConceptNameTag tag : cn.getTags()) {
+          if (tag.getCreator() == null)           tag.setCreator(authUser);
+          if (tag.getDateCreated() == null)           tag.setDateCreated(timestamp);
         }
-        cn.setTags(savedTags);
       }
     }
   }
   if (concept.getConceptSets() != null) {
     for (    ConceptSet set : concept.getConceptSets()) {
-      if (set.getCreator() == null) {
-        set.setCreator(authUser);
-        if (set.getDateCreated() == null)         set.setDateCreated(timestamp);
-      }
+      if (set.getCreator() == null)       set.setCreator(authUser);
+      if (set.getDateCreated() == null)       set.setDateCreated(timestamp);
       set.setConceptSet(concept);
     }
   }
   if (concept.getAnswers(true) != null) {
     for (    ConceptAnswer ca : concept.getAnswers(true)) {
-      if (ca.getCreator() == null) {
-        ca.setCreator(authUser);
-        if (ca.getDateCreated() == null)         ca.setDateCreated(timestamp);
-      }
+      if (ca.getCreator() == null)       ca.setCreator(authUser);
+      if (ca.getDateCreated() == null)       ca.setDateCreated(timestamp);
       ca.setConcept(concept);
     }
   }
   if (concept.getDescriptions() != null) {
     for (    ConceptDescription cd : concept.getDescriptions()) {
-      if (cd.getCreator() == null) {
-        cd.setCreator(authUser);
-        if (cd.getDateCreated() == null)         cd.setDateCreated(timestamp);
-      }
+      if (cd.getCreator() == null)       cd.setCreator(authUser);
+      if (cd.getDateCreated() == null)       cd.setDateCreated(timestamp);
+      cd.setConcept(concept);
     }
   }
 }
