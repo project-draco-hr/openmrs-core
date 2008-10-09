@@ -1,14 +1,15 @@
 {
   ConceptService cs=Context.getConceptService();
   for (  ConceptName cn : conceptNames) {
-    for (    ConceptNameTag tag : cn.getTags()) {
-      ConceptNameTag existingTag=cs.getConceptNameTagByName(tag.getTag());
-      if (existingTag == null) {
-        cs.saveConceptNameTag(tag);
-      }
+    if (cn.getTags() != null) {
+      for (      ConceptNameTag tag : cn.getTags()) {
+        ConceptNameTag existingTag=cs.getConceptNameTagByName(tag.getTag());
+        if (existingTag == null) {
+        }
  else {
-        cn.removeTag(tag);
-        cn.addTag(existingTag);
+          cn.removeTag(tag);
+          cn.addTag(existingTag);
+        }
       }
     }
   }
