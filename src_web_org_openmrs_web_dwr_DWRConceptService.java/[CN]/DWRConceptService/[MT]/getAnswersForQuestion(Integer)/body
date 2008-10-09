@@ -3,6 +3,9 @@
   Concept c=Context.getConceptService().getConcept(conceptId);
   Collection<ConceptAnswer> answers=c.getAnswers();
   Locale locale=Context.getLocale();
-  for (  ConceptAnswer ca : answers)   if (ca.getAnswerConcept() != null)   ret.add(new ConceptListItem(ca.getAnswerConcept(),locale));
+  for (  ConceptAnswer ca : answers)   if (ca.getAnswerConcept() != null) {
+    ConceptName cn=ca.getAnswerConcept().getName(locale);
+    ret.add(new ConceptListItem(ca.getAnswerConcept(),cn,locale));
+  }
   return ret;
 }

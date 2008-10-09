@@ -1,0 +1,22 @@
+{
+  if (!StringUtils.hasLength(implementationId))   throw new APIException("The implementationid cannot be empty");
+  if (!StringUtils.hasLength(description))   throw new APIException("The description cannot be empty");
+  if (!StringUtils.hasLength(passphrase))   throw new APIException("The passphrase cannot be empty");
+  Map<String,String> data=new HashMap<String,String>();
+  data.put("implementationId",implementationId);
+  data.put("description",description);
+  data.put("passphrase",passphrase);
+  String response=OpenmrsUtil.postToUrl(OpenmrsConstants.IMPLEMENTATION_ID_REMOTE_CONNECTION_URL,data);
+  response=response.trim();
+  if ("".equals(response)) {
+    String ms=Context.getMessageSourceService().getMessage("ImplementationId.connectionError",new String[]{implementationId},Context.getLocale());
+    throw new APIException("Error while connecting to the implementation id server to verify implementation id: " + implementationId);
+  }
+  if (log.isDebugEnabled())   log.debug("Response: " + response);
+  if (response.startsWith("Success")) {
+    response=response.replace("Success","");
+    return response.trim();
+  }
+  String ms=Context.getMessageSourceService().getMessage("ImplementationId.invalidIdorPassphrase",new String[]{description},Context.getLocale());
+  throw new APIException(ms);
+}

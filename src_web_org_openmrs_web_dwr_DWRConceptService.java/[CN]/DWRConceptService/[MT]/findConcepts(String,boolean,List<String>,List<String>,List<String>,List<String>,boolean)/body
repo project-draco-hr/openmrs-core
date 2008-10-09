@@ -27,8 +27,9 @@
     List<ConceptWord> words=new Vector<ConceptWord>();
     if (phrase.matches("\\d+")) {
       Concept c=cs.getConcept(Integer.valueOf(phrase));
+      ConceptName cn=c.getName(defaultLocale);
       if (c != null) {
-        ConceptWord word=new ConceptWord(phrase,c,defaultLocale,"Concept Id #" + phrase);
+        ConceptWord word=new ConceptWord(phrase,c,cn,defaultLocale,"Concept Id #" + phrase);
         words.add(word);
       }
     }
@@ -43,7 +44,7 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      words.addAll(cs.getConceptWords(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,null,null));
+      words.addAll(cs.findConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
     }
     if (words.size() == 0) {
       objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ OpenmrsUtil.join(localesToSearchOn,", "));

@@ -15,14 +15,14 @@
         cn.setCreator(authUser);
         if (cn.getDateCreated() == null)         cn.setDateCreated(timestamp);
       }
+      if (cn.getTags() != null) {
+        Collection<ConceptNameTag> savedTags=new Vector<ConceptNameTag>();
+        for (        ConceptNameTag cnt : cn.getTags()) {
+          savedTags.add(saveConceptNameTag(cnt));
+        }
+        cn.setTags(savedTags);
+      }
     }
-  }
-  if (concept.getSynonyms() != null)   for (  ConceptSynonym syn : concept.getSynonyms()) {
-    if (syn.getCreator() == null) {
-      syn.setCreator(authUser);
-      if (syn.getDateCreated() == null)       syn.setDateCreated(timestamp);
-    }
-    syn.setConcept(concept);
   }
   if (concept.getConceptSets() != null) {
     for (    ConceptSet set : concept.getConceptSets()) {
@@ -40,6 +40,14 @@
         if (ca.getDateCreated() == null)         ca.setDateCreated(timestamp);
       }
       ca.setConcept(concept);
+    }
+  }
+  if (concept.getDescriptions() != null) {
+    for (    ConceptDescription cd : concept.getDescriptions()) {
+      if (cd.getCreator() == null) {
+        cd.setCreator(authUser);
+        if (cd.getDateCreated() == null)         cd.setDateCreated(timestamp);
+      }
     }
   }
 }

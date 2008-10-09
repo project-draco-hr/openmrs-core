@@ -1,0 +1,51 @@
+{
+  Collection<File> propertiesFiles=findPropertiesFiles();
+  Map<Locale,List<File>> localeToFilesMap=new HashMap<Locale,List<File>>();
+  Map<File,Properties> fileToPropertiesMap=new HashMap<File,Properties>();
+  for (  File propertiesFile : propertiesFiles) {
+    Properties props=new Properties();
+    Locale propsLocale=parseLocaleFrom(propertiesFile.getName());
+    List<File> propList=localeToFilesMap.get(propsLocale);
+    if (propList == null) {
+      propList=new ArrayList<File>();
+      localeToFilesMap.put(propsLocale,propList);
+    }
+    try {
+      props.load(new FileInputStream(propertiesFile));
+      fileToPropertiesMap.put(propertiesFile,props);
+    }
+ catch (    FileNotFoundException e) {
+      log.error("Error generated",e);
+    }
+catch (    IOException e) {
+      log.error("Error generated",e);
+    }
+  }
+  for (  PresentationMessage message : fromSource.getPresentations()) {
+    Locale messageLocale=message.getLocale();
+    Properties existingPropSource=null;
+    List<File> filelist=localeToFilesMap.get(messageLocale);
+    if (filelist != null) {
+      for (      File propertiesFile : filelist) {
+        Properties props=fileToPropertiesMap.get(propertiesFile);
+        if (props.containsKey(message.getCode())) {
+          existingPropSource=props;
+          if (overwrite) {
+            props.put(message.getCode(),message.getMessage());
+          }
+          break;
+        }
+      }
+    }
+    if (existingPropSource == null) {
+      File newPropertiesFile=new File(basenames[0] + "_" + messageLocale.toString());
+      Properties newProperties=new Properties();
+      fileToPropertiesMap.put(newPropertiesFile,newProperties);
+      newProperties.put(message.getCode(),message.getMessage());
+      List<File> newFilelist=new ArrayList<File>();
+      newFilelist.add(newPropertiesFile);
+      localeToFilesMap.put(messageLocale,newFilelist);
+    }
+    message.getCode();
+  }
+}

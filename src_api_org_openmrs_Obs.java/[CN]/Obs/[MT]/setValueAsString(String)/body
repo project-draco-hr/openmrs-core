@@ -1,5 +1,5 @@
 {
-  log.debug("getConcept() == " + getConcept());
+  if (log.isDebugEnabled())   log.debug("getConcept() == " + getConcept());
   if (getConcept() != null) {
     String abbrev=getConcept().getDatatype().getHl7Abbreviation();
     if (abbrev.equals("BIT")) {

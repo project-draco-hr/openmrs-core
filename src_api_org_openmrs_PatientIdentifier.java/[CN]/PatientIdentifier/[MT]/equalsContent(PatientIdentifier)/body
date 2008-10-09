@@ -1,7 +1,7 @@
 {
   boolean returnValue=true;
   String[] methods={"getIdentifier","getIdentifierType","getLocation"};
-  Class identifierClass=this.getClass();
+  Class<? extends PatientIdentifier> identifierClass=this.getClass();
   for (  String methodName : methods) {
     try {
       Method method=identifierClass.getMethod(methodName,new Class[]{});

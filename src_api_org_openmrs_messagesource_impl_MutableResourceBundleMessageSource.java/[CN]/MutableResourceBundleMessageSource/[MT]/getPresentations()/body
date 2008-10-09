@@ -1,0 +1,20 @@
+{
+  Collection<PresentationMessage> presentations=new Vector<PresentationMessage>();
+  for (  File propertiesFile : findPropertiesFiles()) {
+    Locale currentLocale=parseLocaleFrom(propertiesFile.getName());
+    Properties props=new Properties();
+    try {
+      props.load(new FileInputStream(propertiesFile));
+      for (      Map.Entry<Object,Object> property : props.entrySet()) {
+        presentations.add(new PresentationMessage(property.getKey().toString(),currentLocale,property.getValue().toString(),""));
+      }
+    }
+ catch (    FileNotFoundException e) {
+      log.error("Error generated",e);
+    }
+catch (    IOException e) {
+      log.error("Error generated",e);
+    }
+  }
+  return presentations;
+}

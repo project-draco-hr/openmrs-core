@@ -1,0 +1,13 @@
+{
+  ImplementationId implId=(ImplementationId)object;
+  try {
+    Context.getAdministrationService().setImplementationId(implId);
+    req.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ImplementationId.validatedId");
+  }
+ catch (  APIException e) {
+    log.warn("Unable to set implementation id",e);
+    req.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+    return showForm(req,response,exceptions);
+  }
+  return new ModelAndView(new RedirectView(getSuccessView()));
+}

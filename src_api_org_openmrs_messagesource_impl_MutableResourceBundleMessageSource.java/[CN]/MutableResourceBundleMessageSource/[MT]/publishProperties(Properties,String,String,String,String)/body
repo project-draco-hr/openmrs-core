@@ -1,0 +1,25 @@
+{
+  String filePrefix=(namespace.length() > 0) ? (namespace + "_") : "";
+  String propertiesPath="/WEB-INF/" + filePrefix + "messages"+ locale+ ".properties";
+  OutputStream outStream=null;
+  try {
+    Resource propertiesResource=applicationContext.getResource(propertiesPath);
+    File propertiesFile=propertiesResource.getFile();
+    if (!propertiesFile.exists())     propertiesFile.createNewFile();
+    outStream=new FileOutputStream(propertiesFile,true);
+    props.store(outStream,namespace + ": " + name+ " v"+ version);
+  }
+ catch (  IOException e) {
+    log.error("Unable to load in locale: '" + locale + "' properties for "+ namespace+ ": "+ name,e);
+  }
+ finally {
+    if (outStream != null) {
+      try {
+        outStream.close();
+      }
+ catch (      IOException e) {
+        log.warn("Couldn't close outStream",e);
+      }
+    }
+  }
+}

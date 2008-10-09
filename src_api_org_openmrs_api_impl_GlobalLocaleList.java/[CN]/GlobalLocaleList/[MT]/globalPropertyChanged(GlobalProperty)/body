@@ -1,0 +1,13 @@
+{
+  allowedLocales=new ArrayList<Locale>();
+  for (  String allowedLocaleString : newValue.getPropertyValue().split(",")) {
+    try {
+      Locale allowedLocale=LocaleUtility.fromSpecification(allowedLocaleString.trim());
+      if (allowedLocale != null) {
+        allowedLocales.add(allowedLocale);
+      }
+    }
+ catch (    Exception e) {
+    }
+  }
+}

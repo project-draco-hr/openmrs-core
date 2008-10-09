@@ -1,0 +1,21 @@
+{
+  if (presentationLocales == null) {
+    presentationLocales=new HashSet<Locale>();
+    Collection<Locale> messageLocales=Context.getMessageSourceService().getLocales();
+    List<Locale> allowedLocales=getAllowedLocales();
+    for (    Locale possibleLocale : messageLocales) {
+      if (allowedLocales.contains(possibleLocale)) {
+        presentationLocales.add(possibleLocale);
+      }
+ else {
+        for (        Locale allowedLocale : allowedLocales) {
+          if ((allowedLocale.getCountry() == "") && (allowedLocale.getLanguage() == possibleLocale.getLanguage())) {
+            presentationLocales.add(possibleLocale);
+            break;
+          }
+        }
+      }
+    }
+  }
+  return presentationLocales;
+}

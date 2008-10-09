@@ -1,0 +1,8 @@
+{
+  Set<Locale> locales=new HashSet<Locale>();
+  Query query=sessionFactory.getCurrentSession().createQuery("select distinct locale from ConceptName");
+  for (  Object locale : query.list()) {
+    locales.add((Locale)locale);
+  }
+  return locales;
+}

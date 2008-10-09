@@ -1,0 +1,12 @@
+{
+  boolean foundTag=false;
+  if (tags != null) {
+    for (    ConceptNameTag nameTag : getTags()) {
+      if (nameTag.getTag().equals(tagToFind)) {
+        foundTag=true;
+        break;
+      }
+    }
+  }
+  return foundTag;
+}

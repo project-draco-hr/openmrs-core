@@ -42,11 +42,17 @@
     if (shortPatient.getAddress() != null && !shortPatient.getAddress().isBlank()) {
       duplicate=false;
       for (      PersonAddress pa : patient.getAddresses()) {
-        if (pa.toString().equals(shortPatient.getAddress().toString()))         duplicate=true;
+        if (pa.toString().equals(shortPatient.getAddress().toString())) {
+          duplicate=true;
+          pa.setPreferred(true);
+        }
+ else {
+          pa.setPreferred(false);
+        }
       }
       if (log.isDebugEnabled())       log.debug("The duplicate address:  " + duplicate);
       if (!duplicate) {
-        PersonAddress newAddress=shortPatient.getAddress();
+        PersonAddress newAddress=(PersonAddress)shortPatient.getAddress().clone();
         newAddress.setPersonAddressId(null);
         newAddress.setPreferred(true);
         patient.addAddress(newAddress);
@@ -210,8 +216,9 @@ catch (      PatientIdentifierException pie) {
                 obsDeath=new Obs();
                 obsDeath.setPerson(patient);
                 obsDeath.setConcept(causeOfDeath);
-                Location loc=Context.getLocationService().getLocation("Unknown Location");
-                if (loc == null)                 loc=Context.getLocationService().getLocation(new Integer(1));
+                obsDeath.setConceptName(causeOfDeath.getName());
+                Location loc=Context.getEncounterService().getLocationByName("Unknown Location");
+                if (loc == null)                 loc=Context.getEncounterService().getLocation(new Integer(1));
                 if (loc != null)                 obsDeath.setLocation(loc);
  else                 log.error("Could not find a suitable location for which to create this new Obs");
               }
@@ -224,6 +231,7 @@ catch (      PatientIdentifierException pie) {
               if (currCause != null) {
                 log.debug("Current cause is not null, setting to value_coded");
                 obsDeath.setValueCoded(currCause);
+                obsDeath.setValueCodedName(currCause.getName());
                 Date dateDeath=patient.getDeathDate();
                 if (dateDeath == null)                 dateDeath=new Date();
                 obsDeath.setObsDatetime(dateDeath);

@@ -1,0 +1,9 @@
+{
+  ConceptSource conceptSource=(ConceptSource)command;
+  Map<String,Object> map=new HashMap<String,Object>();
+  ImplementationId implId=Context.getAdministrationService().getImplementationId();
+  if (implId != null && implId.getImplementationId().equals(conceptSource.getHl7Code())) {
+    map.put("isImplementationId",true);
+  }
+  return map;
+}

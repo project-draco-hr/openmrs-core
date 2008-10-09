@@ -2,9 +2,9 @@
   HttpSession httpSession=request.getSession();
   Map<String,Object> map=new HashMap<String,Object>();
   if (Context.isAuthenticated()) {
-    EncounterService es=Context.getEncounterService();
-    map.put("locations",es.getLocations());
-    map.put("languages",OpenmrsConstants.OPENMRS_LOCALES());
+    LocationService ls=Context.getLocationService();
+    map.put("locations",ls.getAllLocations());
+    map.put("languages",Context.getAdministrationService().getPresentationLocales());
     String resetPassword=(String)httpSession.getAttribute("resetPassword");
     if (resetPassword == null)     resetPassword="";
  else     httpSession.removeAttribute("resetPassword");

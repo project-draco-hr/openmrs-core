@@ -25,6 +25,10 @@
     List<Cohort> cohorts=Context.getCohortService().getCohorts();
     records=cohorts.iterator();
   }
+ else   if (name.equals("conceptSource")) {
+    List<ConceptSource> conceptSources=Context.getConceptService().getAllConceptSources();
+    records=conceptSources.iterator();
+  }
  else   if (name.equals("form")) {
     List<Form> forms=Context.getFormService().getForms();
     records=forms.iterator();

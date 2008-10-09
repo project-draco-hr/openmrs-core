@@ -13,52 +13,69 @@
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (!action.equals(msa.getMessage("Concept.delete"))) {
+      Collection<Locale> conceptLocales=cs.getLocalesOfConceptNames();
+      String newLocaleSpec=request.getParameter("newLocaleAdded");
+      if (newLocaleSpec != null) {
+        Locale newLocale=LocaleUtility.fromSpecification(newLocaleSpec);
+        conceptLocales.add(newLocale);
+      }
       String isSet=ServletRequestUtils.getStringParameter(request,"conceptSet","");
       if (isSet.equals(""))       concept.setSet(false);
  else       concept.setSet(true);
       log.debug("isSet: '" + isSet + "' ");
       log.debug("concept.set: '" + concept.isSet() + "'");
-      Collection<ConceptSynonym> originalSyns=concept.getSynonyms();
-      if (originalSyns == null)       originalSyns=new HashSet<ConceptSynonym>();
-      for (      Locale l : OPENMRS_CONCEPT_LOCALES()) {
+      int numberOfNewConceptNames=0;
+      Collection<ConceptName> originalSyns=concept.getNames();
+      if (originalSyns == null)       originalSyns=new HashSet<ConceptName>();
+      for (      Locale l : conceptLocales) {
         String localeName=l.toString();
         log.debug("newSynonyms: " + request.getParameter("newSynonyms_" + localeName));
         String[] tempSyns=request.getParameter("newSynonyms_" + localeName).split(",");
         log.debug("tempSyns: ");
         for (        String s : tempSyns)         log.debug(s);
-        Set<ConceptSynonym> parameterSyns=new HashSet<ConceptSynonym>();
+        Set<ConceptName> parameterSyns=new HashSet<ConceptName>();
         for (        String syn : tempSyns) {
           syn=syn.trim();
-          if (!syn.equals(""))           parameterSyns.add(new ConceptSynonym(concept,syn.toUpperCase(),l));
+          if (!syn.equals("")) {
+            ConceptName anotherSynonym=new ConceptName(syn.toUpperCase(),l);
+            anotherSynonym.setConcept(concept);
+            parameterSyns.add(anotherSynonym);
+          }
         }
         if (log.isDebugEnabled()) {
           log.debug("initial originalSyns: ");
-          for (          ConceptSynonym s : originalSyns)           log.debug(s);
+          for (          ConceptName s : originalSyns)           log.debug(s);
         }
-        Set<ConceptSynonym> originalSynsCopy=new HashSet<ConceptSynonym>();
+        Set<ConceptName> originalSynsCopy=new HashSet<ConceptName>();
         originalSynsCopy.addAll(originalSyns);
-        for (        ConceptSynonym o : originalSynsCopy) {
-          if (o.getLocale().equals(l.getLanguage().substring(0,2)) && !parameterSyns.contains(o)) {
+        for (        ConceptName o : originalSynsCopy) {
+          if (o.getLocale().equals(l) && !parameterSyns.contains(o)) {
             originalSyns.remove(o);
           }
-        }
-        for (        ConceptSynonym p : parameterSyns) {
-          if (!originalSyns.contains(p)) {
-            originalSyns.add(p);
+          if (log.isDebugEnabled()) {
+            log.debug("evaluated parameterSyns: ");
+            for (            ConceptName s : parameterSyns)             log.debug(s);
+            log.debug("evaluated originalSyns: ");
+            for (            ConceptName s : originalSyns)             log.debug(s);
           }
         }
-        if (log.isDebugEnabled()) {
-          log.debug("evaluated parameterSyns: ");
-          for (          ConceptSynonym s : parameterSyns)           log.debug(s);
-          log.debug("evaluated originalSyns: ");
-          for (          ConceptSynonym s : originalSyns)           log.debug(s);
+        for (        ConceptName p : parameterSyns) {
+          if (!originalSyns.contains(p)) {
+            originalSyns.add(p);
+            ++numberOfNewConceptNames;
+          }
         }
+        log.debug("evaluated parameterSyns: ");
+        for (        ConceptName s : parameterSyns)         log.debug(s);
+        log.debug("evaluated originalSyns: ");
+        for (        ConceptName s : originalSyns)         log.debug(s);
       }
-      concept.setSynonyms(originalSyns);
+      concept.setNames(originalSyns);
       String conceptSets=request.getParameter("conceptSets");
       if (conceptSets == null)       concept.setConceptSets(null);
+      User currentUser=Context.getAuthenticatedUser();
       int numberOfNamesSpecified=0;
-      for (      Locale l : OPENMRS_CONCEPT_LOCALES()) {
+      for (      Locale l : conceptLocales) {
         String localeName=l.toString();
         String conceptName=request.getParameter("name_" + localeName).toUpperCase();
         String shortName=request.getParameter("shortName_" + localeName);
@@ -66,28 +83,76 @@
         if ((shortName.length() > 0 || description.length() > 0) && conceptName.length() < 1) {
           errors.reject("dictionary.error.needName");
         }
-        ConceptName cn=concept.getName(l,true);
-        if (cn != null) {
+        ConceptName preferredName=concept.getName(l,true);
+        if (preferredName != null) {
           if (conceptName.length() > 0) {
             ++numberOfNamesSpecified;
-            cn.setName(conceptName);
-            cn.setShortName(shortName);
-            cn.setDescription(description);
+            preferredName.setName(conceptName);
           }
  else {
-            concept.removeName(cn);
+            concept.removeName(preferredName);
           }
         }
  else {
           if (conceptName.length() > 0) {
             ++numberOfNamesSpecified;
-            concept.addName(new ConceptName(conceptName,shortName,description,l));
+            preferredName=new ConceptName(conceptName,l);
+            concept.setPreferredName(l,preferredName);
+            ++numberOfNewConceptNames;
+          }
+        }
+        if (shortName.length() > 0) {
+          ConceptName conceptShortName=new ConceptName(shortName,l);
+          concept.setShortName(l,conceptShortName);
+          ++numberOfNewConceptNames;
+        }
+        if (description.length() > 0) {
+          ConceptDescription cd=concept.getDescription(l,true);
+          if (cd != null) {
+            if (!cd.getDescription().equals(description)) {
+              cd.setDescription(description);
+              cd.setChangedBy(currentUser);
+              cd.setDateChanged(new Date());
+            }
+          }
+ else {
+            cd=new ConceptDescription(description,l);
+            concept.addDescription(cd);
           }
         }
       }
       if (numberOfNamesSpecified == 0) {
         errors.reject("error.names.length");
       }
+      int i=0;
+      List<ConceptMap> conceptMappingsToDelete=new ArrayList<ConceptMap>();
+      Collection<ConceptMap> currentConceptMappings=concept.getConceptMappings();
+      if (currentConceptMappings != null) {
+        for (        ConceptMap mapping : currentConceptMappings) {
+          String sourceCode=request.getParameter("conceptMappings[" + i++ + "].sourceCode");
+          if (sourceCode == null) {
+            if (currentConceptMappings.contains(mapping))             conceptMappingsToDelete.add(mapping);
+          }
+        }
+      }
+      String[] sourceCodes=ServletRequestUtils.getStringParameters(request,"newConceptMappingSourceCode");
+      String[] sources=ServletRequestUtils.getStringParameters(request,"newConceptMappingSource");
+      for (int x=0; x < sourceCodes.length; x++) {
+        String sourceCode=sourceCodes[x];
+        if (sourceCode.length() == 0)         break;
+        String sourceString=sources[x];
+        if (sourceCode.length() < 1 || sourceString.length() < 1)         continue;
+        ConceptMap newConceptMap=new ConceptMap();
+        newConceptMap.setSourceCode(sourceCode);
+        ConceptSource source=cs.getConceptSource(Integer.valueOf(sourceString));
+        newConceptMap.setSource(source);
+        concept.addConceptMapping(newConceptMap);
+      }
+      currentConceptMappings=concept.getConceptMappings();
+      if (currentConceptMappings != null) {
+        concept.getConceptMappings().removeAll(conceptMappingsToDelete);
+      }
+      resolveConceptNameTags(originalSyns);
     }
   }
  else {

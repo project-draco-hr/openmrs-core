@@ -1,0 +1,13 @@
+{
+  if (description != null) {
+    if (descriptions == null) {
+      descriptions=new HashSet<ConceptDescription>();
+      description.setConcept(this);
+      descriptions.add(description);
+    }
+ else     if (!descriptions.contains(description)) {
+      description.setConcept(this);
+      descriptions.add(description);
+    }
+  }
+}

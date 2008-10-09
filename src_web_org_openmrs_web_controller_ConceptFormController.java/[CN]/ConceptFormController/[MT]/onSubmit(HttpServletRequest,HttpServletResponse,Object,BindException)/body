@@ -25,7 +25,6 @@
       try {
         if (concept.getConceptId() == null) {
           isNew=true;
-          concept.setConceptId(cs.getNextAvailableId());
           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
             concept=getConceptNumeric(concept,request);
           }

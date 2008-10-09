@@ -1,34 +1,50 @@
 {
-  if (getNames() == null || getNames().size() == 0) {
-    log.debug("there are no names defined for: " + conceptId);
+  if (names == null || names.size() == 0) {
+    if (log.isDebugEnabled())     log.debug("there are no names defined for: " + conceptId);
     return null;
   }
-  log.debug("Getting conceptName for locale: " + locale);
+  if (log.isDebugEnabled())   log.debug("Getting conceptName for locale: " + locale);
+  ConceptName exactMatch=null;
   ConceptName bestMatch=null;
-  ConceptName defaultName=null;
   if (locale == null)   locale=Context.getLocale();
-  String desiredLanguage=locale.getLanguage();
-  for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext(); ) {
-    ConceptName possibleName=i.next();
-    if (possibleName.getLocale().equals(locale)) {
-      bestMatch=possibleName;
+  ConceptNameTag desiredLanguageTag=ConceptNameTag.preferredLanguageTagFor(locale);
+  ConceptNameTag desiredCountryTag=ConceptNameTag.preferredCountryTagFor(locale);
+  for (  ConceptName possibleName : getCompatibleNames(locale)) {
+    if (locale.equals(possibleName.getLocale()) && possibleName.hasTag(ConceptNameTag.PREFERRED)) {
+      exactMatch=possibleName;
       break;
     }
+    if (desiredCountryTag != null) {
+      if (possibleName.hasTag(desiredCountryTag)) {
+        exactMatch=possibleName;
+        break;
+      }
+ else       if (possibleName.hasTag(desiredLanguageTag)) {
+        bestMatch=possibleName;
+      }
+ else       if (bestMatch == null) {
+        bestMatch=possibleName;
+      }
+    }
  else {
-      if (defaultName == null)       defaultName=possibleName;
-      if (bestMatch == null) {
-        if (possibleName.getLocale().getLanguage().equals(desiredLanguage)) {
-          bestMatch=possibleName;
-        }
+      if (possibleName.hasTag(desiredLanguageTag)) {
+        exactMatch=possibleName;
+        break;
+      }
+ else       if (bestMatch == null) {
+        bestMatch=possibleName;
       }
     }
   }
   if (exact) {
-    if (bestMatch == null)     log.warn("No concept name found for concept id " + conceptId + " for locale "+ locale.toString());
-    return bestMatch;
+    if (exactMatch == null)     log.warn("No concept name found for concept id " + conceptId + " for locale "+ locale.toString());
+    return exactMatch;
   }
+  if (exactMatch != null)   return exactMatch;
   if (bestMatch != null)   return bestMatch;
   log.warn("No compatible concept name found for default locale for concept id " + conceptId);
+  ConceptName defaultName=null;
+  if (getNames() != null && getNames().size() > 0)   defaultName=(ConceptName)getNames().toArray()[0];
   if (defaultName == null) {
     log.error("No concept names exist for concept id: " + conceptId);
   }

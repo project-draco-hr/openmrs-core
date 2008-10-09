@@ -1,0 +1,8 @@
+{
+  List<ConceptSource> conceptSourceList=new Vector<ConceptSource>();
+  if (Context.isAuthenticated()) {
+    ConceptService cs=Context.getConceptService();
+    conceptSourceList=cs.getAllConceptSources();
+  }
+  return conceptSourceList;
+}

@@ -7,7 +7,10 @@
       fieldTypeName=field.getFieldType().getName();
       fieldTypeId=field.getFieldType().getFieldTypeId();
     }
-    if (field.getConcept() != null)     concept=new ConceptListItem(field.getConcept(),locale);
+    if (field.getConcept() != null) {
+      ConceptName cn=field.getConcept().getName(locale);
+      concept=new ConceptListItem(field.getConcept(),cn,locale);
+    }
     table=field.getTableName();
     attribute=field.getAttributeName();
     selectMultiple=field.isSelectMultiple() == true ? "yes" : "no";

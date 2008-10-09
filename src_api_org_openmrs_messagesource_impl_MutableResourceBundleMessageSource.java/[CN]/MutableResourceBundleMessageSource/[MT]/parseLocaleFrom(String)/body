@@ -1,0 +1,21 @@
+{
+  Locale parsedLocale=null;
+  for (  String basename : basenames) {
+    File basefilename=new File(basename);
+    basename=basefilename.getPath();
+    int indexOfLastPart=basename.lastIndexOf(File.separatorChar) + 1;
+    if (indexOfLastPart > 0)     basename=basename.substring(indexOfLastPart);
+    if (filename.startsWith(basename)) {
+      filename=filename.substring(basename.length());
+    }
+  }
+  String localespec=filename.substring(0,filename.indexOf('.'));
+  if (localespec.equals("")) {
+    parsedLocale=Locale.getDefault();
+  }
+ else {
+    localespec=localespec.substring(1);
+    parsedLocale=LocaleUtility.fromSpecification(localespec);
+  }
+  return parsedLocale;
+}

@@ -1,7 +1,7 @@
 {
-  if (obj instanceof ConceptName) {
-    ConceptName c=(ConceptName)obj;
-    return (this.concept.equals(c.getConcept()) && this.name.equals(c.getName()) && this.locale.equals(c.getLocale()));
+  if (!(obj instanceof ConceptName)) {
+    return false;
   }
-  return false;
+  ConceptName rhs=(ConceptName)obj;
+  return (this.conceptNameId == rhs.conceptNameId);
 }

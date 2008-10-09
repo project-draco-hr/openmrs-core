@@ -1,0 +1,34 @@
+{
+  if (concept != null) {
+    conceptId=concept.getConceptId();
+    conceptNameId=conceptName.getConceptNameId();
+    ConceptName conceptShortName=concept.getBestShortName(locale);
+    name=shortName=description="";
+    if (conceptName != null) {
+      name=WebUtil.escapeHTML(conceptName.getName());
+    }
+    if (conceptShortName != null) {
+      shortName=WebUtil.escapeHTML(conceptShortName.getName());
+    }
+    ConceptDescription conceptDescription=concept.getDescription(locale,true);
+    if (conceptDescription != null) {
+      description=WebUtil.escapeHTML(conceptDescription.getDescription());
+    }
+    synonym="";
+    retired=concept.isRetired();
+    hl7Abbreviation=concept.getDatatype().getHl7Abbreviation();
+    className=concept.getConceptClass().getName();
+    isSet=concept.isSet();
+    isNumeric=concept.isNumeric();
+    if (isNumeric) {
+      ConceptNumeric num=Context.getConceptService().getConceptNumeric(concept.getConceptId());
+      hiAbsolute=num.getHiAbsolute();
+      hiCritical=num.getHiCritical();
+      hiNormal=num.getHiNormal();
+      lowAbsolute=num.getLowAbsolute();
+      lowCritical=num.getLowCritical();
+      lowNormal=num.getLowNormal();
+      units=num.getUnits();
+    }
+  }
+}

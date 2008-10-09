@@ -1,4 +1,5 @@
 {
+  log.debug("updateConceptWord(" + concept + ")");
   if (concept != null) {
     if (concept.getConceptId() != null && concept.getConceptId() > 0)     deleteConceptWord(concept);
     Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);

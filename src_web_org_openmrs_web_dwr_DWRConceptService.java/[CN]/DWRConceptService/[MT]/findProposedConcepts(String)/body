@@ -3,6 +3,9 @@
   ConceptService cs=Context.getConceptService();
   List<Concept> concepts=cs.findProposedConcepts(text);
   List<ConceptListItem> cli=new Vector<ConceptListItem>();
-  for (  Concept c : concepts)   cli.add(new ConceptListItem(c,locale));
+  for (  Concept c : concepts) {
+    ConceptName cn=c.getName(locale);
+    cli.add(new ConceptListItem(c,cn,locale));
+  }
   return cli;
 }

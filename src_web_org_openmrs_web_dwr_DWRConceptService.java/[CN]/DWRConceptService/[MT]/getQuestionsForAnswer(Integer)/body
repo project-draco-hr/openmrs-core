@@ -5,7 +5,8 @@
   List<Concept> concepts=cs.getQuestionsForAnswer(concept);
   List<ConceptListItem> items=new Vector<ConceptListItem>();
   for (  Concept c : concepts) {
-    items.add(new ConceptListItem(c,locale));
+    ConceptName cn=c.getName(locale);
+    items.add(new ConceptListItem(c,cn,locale));
   }
   return items;
 }

@@ -1,0 +1,9 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(TaskDefinition.class).add(Expression.eq("name",name));
+  TaskDefinition task=(TaskDefinition)crit.uniqueResult();
+  if (task == null) {
+    log.warn("Task '" + name + "' not found");
+    throw new ObjectRetrievalFailureException(TaskDefinition.class,name);
+  }
+  return task;
+}
