@@ -1,0 +1,49 @@
+{
+  Map<String,Relationship> relationshipMap=new LinkedHashMap<String,Relationship>();
+  String relationshipsString=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEWPATIENTFORM_RELATIONSHIPS,"");
+  relationshipsString=relationshipsString.trim();
+  if (relationshipsString.length() > 0) {
+    String[] showRelations=relationshipsString.split(",");
+    for (    String showRelation : showRelations) {
+      showRelation=showRelation.trim();
+      boolean aIsToB=true;
+      if (showRelation.endsWith("b")) {
+        aIsToB=false;
+      }
+      String showRelationId=showRelation.replace("a","");
+      showRelationId=showRelationId.replace("b","");
+      RelationshipType relationshipType=Context.getPersonService().getRelationshipType(Integer.valueOf(showRelationId));
+      boolean relationshipFound=false;
+      if (person != null && person.getPersonId() != null) {
+        if (aIsToB) {
+          List<Relationship> relationships=Context.getPersonService().getRelationships(null,person,relationshipType);
+          if (relationships.size() > 0) {
+            relationshipMap.put(showRelation,relationships.get(0));
+            relationshipFound=true;
+          }
+        }
+ else {
+          List<Relationship> relationships=Context.getPersonService().getRelationships(person,null,relationshipType);
+          if (relationships.size() > 0) {
+            relationshipMap.put(showRelation,relationships.get(0));
+            relationshipFound=true;
+          }
+        }
+      }
+      if (relationshipFound == false) {
+        Relationship relationshipStub=new Relationship();
+        relationshipStub.setRelationshipType(relationshipType);
+        if (aIsToB)         relationshipStub.setPersonB(person);
+ else         relationshipStub.setPersonA(person);
+        relationshipMap.put(showRelation,relationshipStub);
+      }
+      String submittedPersonId=request.getParameter(showRelation);
+      if (submittedPersonId != null && submittedPersonId.length() > 0) {
+        Person submittedPerson=Context.getPersonService().getPerson(Integer.valueOf(submittedPersonId));
+        if (aIsToB)         relationshipMap.get(showRelation).setPersonA(submittedPerson);
+ else         relationshipMap.get(showRelation).setPersonB(submittedPerson);
+      }
+    }
+  }
+  return relationshipMap;
+}
