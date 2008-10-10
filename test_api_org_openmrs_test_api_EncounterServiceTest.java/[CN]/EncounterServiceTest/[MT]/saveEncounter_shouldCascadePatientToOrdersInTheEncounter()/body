@@ -1,0 +1,7 @@
+{
+  Encounter enc=Context.getEncounterService().getEncounter(1);
+  Order existing=enc.getOrders().iterator().next();
+  Assert.assertNotSame(enc.getPatient(),existing.getPatient());
+  Context.getEncounterService().saveEncounter(enc);
+  Assert.assertEquals(enc.getPatient(),existing.getPatient());
+}
