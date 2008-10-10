@@ -23,32 +23,25 @@
       if (o.getCreator() == null)       o.setCreator(me);
     }
   }
-  if (isNewEncounter == false)   originalDate=dao.getSavedEncounterDatetime(encounter);
-  dao.saveEncounter(encounter);
-  if (isNewEncounter == false) {
-    ObsService obsService=Context.getObsService();
+  if (!isNewEncounter) {
+    originalDate=dao.getSavedEncounterDatetime(encounter);
     Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs(true)) {
-      boolean obsWasChanged=false;
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
         if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
           obs.setObsDatetime(newDate);
-          obsWasChanged=true;
         }
         if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
           obs.setPerson(p);
-          obsWasChanged=true;
         }
-        if (obsWasChanged)         obsService.saveObs(obs,"Encounter datetime or person was changed");
       }
     }
-    OrderService orderService=Context.getOrderService();
     for (    Order o : encounter.getOrders()) {
       if (!p.equals(o.getPatient())) {
         o.setPatient(p);
-        orderService.saveOrder(o);
       }
     }
   }
+  dao.saveEncounter(encounter);
   return encounter;
 }
