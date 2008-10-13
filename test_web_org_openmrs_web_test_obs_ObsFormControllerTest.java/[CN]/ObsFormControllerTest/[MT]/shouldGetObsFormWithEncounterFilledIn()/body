@@ -1,0 +1,9 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
+  request.setParameter("encounterId","3");
+  HttpServletResponse response=new MockHttpServletResponse();
+  ObsFormController controller=new ObsFormController();
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  Obs commandObs=(Obs)modelAndView.getModel().get("command");
+  Assert.assertNotNull(commandObs.getEncounter());
+}
