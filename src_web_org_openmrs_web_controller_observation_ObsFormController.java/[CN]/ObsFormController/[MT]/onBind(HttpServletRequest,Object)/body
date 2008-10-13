@@ -1,0 +1,10 @@
+{
+  Obs obs=(Obs)command;
+  if (obs.getConcept() == null && obs.getConceptName() != null) {
+    obs.setConcept(obs.getConceptName().getConcept());
+  }
+  if (obs.getValueCoded() == null && obs.getValueCodedName() != null) {
+    obs.setValueCoded(obs.getValueCodedName().getConcept());
+  }
+  super.onBind(request,command);
+}
