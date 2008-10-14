@@ -77,13 +77,13 @@
       int numberOfNamesSpecified=0;
       for (      Locale l : conceptLocales) {
         String localeName=l.toString();
-        String conceptName=request.getParameter("name_" + localeName).toUpperCase();
+        String conceptName=request.getParameter("name_" + localeName);
         String shortName=request.getParameter("shortName_" + localeName);
         String description=request.getParameter("description_" + localeName);
         if ((shortName.length() > 0 || description.length() > 0) && conceptName.length() < 1) {
           errors.reject("dictionary.error.needName");
         }
-        ConceptName preferredName=concept.getName(l,true);
+        ConceptName preferredName=concept.getPreferredName(l);
         if (preferredName != null) {
           if (conceptName.length() > 0) {
             ++numberOfNamesSpecified;
@@ -152,7 +152,6 @@
       if (currentConceptMappings != null) {
         concept.getConceptMappings().removeAll(conceptMappingsToDelete);
       }
-      resolveConceptNameTags(originalSyns);
     }
   }
  else {

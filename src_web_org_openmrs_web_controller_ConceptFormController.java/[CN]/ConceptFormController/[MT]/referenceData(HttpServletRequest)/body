@@ -34,7 +34,7 @@
         conceptNamesByLocale.put(l.toString(),cn);
       }
       for (      Locale l : conceptLocales) {
-        ConceptName cn=concept.getBestShortName(l);
+        ConceptName cn=concept.getShortNameInLocale(l);
         if (cn == null) {
           cn=new ConceptName();
         }

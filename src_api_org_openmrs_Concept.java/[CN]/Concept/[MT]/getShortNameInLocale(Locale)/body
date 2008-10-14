@@ -1,0 +1,11 @@
+{
+  ConceptName shortName=null;
+  String country=l.getCountry();
+  if (country.length() != 0) {
+    shortName=getShortNameForCountry(country);
+  }
+ else {
+    shortName=getShortNameInLanguage(l.getLanguage());
+  }
+  return shortName;
+}
