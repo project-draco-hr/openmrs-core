@@ -14,16 +14,9 @@
   Person person=Context.getPersonService().getPerson(personId);
   Concept concept=Context.getConceptService().getConcept(conceptId);
   Encounter encounter=(encounterId == null) ? null : Context.getEncounterService().getEncounter(encounterId);
-  ConceptName conceptName=(conceptNameId == null) ? null : Context.getConceptService().getConceptName(conceptNameId);
   Obs obs=new Obs();
   obs.setPerson(person);
   obs.setConcept(concept);
-  if ((conceptName != null) && (conceptName.getConcept().equals(concept))) {
-    obs.setConceptName(conceptName);
-  }
- else {
-    obs.setConceptName(null);
-  }
   obs.setObsDatetime(obsDate);
   if (encounter != null) {
     obs.setEncounter(encounter);
