@@ -87,8 +87,10 @@
  else           error=msa.getMessage("Module.not.started",args);
         }
  else         if ("unload".equals(action)) {
-          ModuleFactory.stopModule(mod);
-          WebModuleUtil.stopModule(mod,getServletContext());
+          if (ModuleFactory.isModuleStarted(mod)) {
+            ModuleFactory.stopModule(mod);
+            WebModuleUtil.stopModule(mod,getServletContext());
+          }
           ModuleFactory.unloadModule(mod);
           success=msa.getMessage("Module.unloaded",args);
         }

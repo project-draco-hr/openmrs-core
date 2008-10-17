@@ -15,7 +15,10 @@
         GlobalProperty gp=new GlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
         as.saveGlobalProperty(gp);
       }
-  finally {
+ catch (      Throwable t) {
+        log.warn("Unable to save the global property while shutting down",t);
+      }
+ finally {
         Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       }
     }
@@ -36,8 +39,8 @@
               Context.removeAdvice(cls,(Advice)aopObject);
             }
           }
- catch (          ClassNotFoundException e) {
-            log.warn("Could not remove advice point: " + advice.getPoint(),e);
+ catch (          Throwable t) {
+            log.warn("Could not remove advice point: " + advice.getPoint(),t);
           }
         }
       }
@@ -78,13 +81,11 @@ catch (    Throwable t) {
       File folder=OpenmrsClassLoader.getLibCacheFolder();
       File tmpModuleDir=new File(folder,moduleId);
       try {
-        System.gc();
         OpenmrsUtil.deleteDirectory(tmpModuleDir);
       }
  catch (      IOException e) {
         log.warn("Unable to delete libcachefolder for " + moduleId);
       }
     }
-    System.gc();
   }
 }

@@ -150,7 +150,7 @@
       }
  catch (      Exception e) {
         String msg="Unable to refresh the WebApplicationContext";
-        mod.setStartupErrorMessage(msg + " : " + e.getMessage());
+        mod.setStartupErrorMessage(msg,e);
         if (log.isWarnEnabled())         log.warn(msg + " for module: " + mod.getModuleId(),e);
         try {
           ModuleFactory.stopModule(mod);
@@ -159,10 +159,9 @@
  catch (        Exception e2) {
           if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
         }
-        System.gc();
         refreshWAC(servletContext);
       }
-      loadServlets(mod);
+      if (ModuleFactory.isModuleStarted(mod))       loadServlets(mod);
       return false;
     }
     return (moduleNeedsContextRefresh && delayContextRefresh == true);
