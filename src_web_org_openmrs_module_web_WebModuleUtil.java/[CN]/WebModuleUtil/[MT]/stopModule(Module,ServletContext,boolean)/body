@@ -15,40 +15,6 @@
       log.warn("Couldn't delete: " + moduleWebFolder.getAbsolutePath(),io);
     }
   }
-  JarFile jarFile=null;
-  try {
-    File modFile=mod.getFile();
-    jarFile=new JarFile(modFile);
-    Enumeration<JarEntry> entries=jarFile.entries();
-    while (entries.hasMoreElements()) {
-      JarEntry entry=entries.nextElement();
-      log.debug("Entry name: " + entry.getName());
-      if (entry.getName().endsWith(".xml") && !entry.getName().equals("config.xml") && !entry.getName().endsWith("moduleApplicationContext.xml")) {
-        absPath=realPath + "/WEB-INF/" + entry.getName();
-        File moduleXmlFile=new File(absPath.replace("/",File.separator));
-        if (moduleXmlFile.exists()) {
-          System.gc();
-          if (!moduleXmlFile.delete()) {
-            moduleXmlFile.deleteOnExit();
-            log.warn("Unable to delete xml file: " + moduleXmlFile.getAbsolutePath());
-          }
-        }
-      }
-    }
-  }
- catch (  IOException io) {
-    log.warn("Unable to delete files from module " + moduleId + " in the web layer",io);
-  }
- finally {
-    if (jarFile != null) {
-      try {
-        jarFile.close();
-      }
- catch (      IOException io) {
-        log.warn("Couldn't close jar file: " + jarFile.getName(),io);
-      }
-    }
-  }
   moduleServlets.remove(mod);
   InputStream inputStream=null;
   try {

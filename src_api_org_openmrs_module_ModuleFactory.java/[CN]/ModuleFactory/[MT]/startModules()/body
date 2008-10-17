@@ -14,7 +14,7 @@
           }
  catch (          Exception e) {
             log.error("Error while starting module: " + mod.getName(),e);
-            mod.setStartupErrorMessage("Error while starting module: " + e.getMessage());
+            mod.setStartupErrorMessage("Error while starting module",e);
           }
  else {
             leftoverModules.add(mod);
