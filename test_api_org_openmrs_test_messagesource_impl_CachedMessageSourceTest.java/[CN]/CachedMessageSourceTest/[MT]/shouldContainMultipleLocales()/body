@@ -1,0 +1,7 @@
+{
+  CachedMessageSource testPmc=new CachedMessageSource();
+  testPmc.addPresentation(MockPresentationMessage.createMockPresentationMessage("en"));
+  testPmc.addPresentation(MockPresentationMessage.createMockPresentationMessage("fr"));
+  testPmc.addPresentation(MockPresentationMessage.createMockPresentationMessage("pt"));
+  assertEquals(3,testPmc.getLocales().size());
+}

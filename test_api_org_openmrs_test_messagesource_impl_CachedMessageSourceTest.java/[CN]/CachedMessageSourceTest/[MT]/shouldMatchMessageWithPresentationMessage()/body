@@ -1,0 +1,8 @@
+{
+  CachedMessageSource testPmc=new CachedMessageSource();
+  MockPresentationMessage mockPM=MockPresentationMessage.createMockPresentationMessage();
+  testPmc.addPresentation(mockPM);
+  String valueAsString=testPmc.getMessage(mockPM.getCode(),null,mockPM.getLocale());
+  PresentationMessage valueAsPM=testPmc.getPresentation(mockPM.getCode(),mockPM.getLocale());
+  assertEquals(valueAsString,valueAsPM.getMessage());
+}
