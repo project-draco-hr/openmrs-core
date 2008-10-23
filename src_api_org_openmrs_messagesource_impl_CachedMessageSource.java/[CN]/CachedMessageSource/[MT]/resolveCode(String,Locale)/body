@@ -1,0 +1,8 @@
+{
+  MessageFormat resolvedMessageFormatForCode=null;
+  PresentationMessage pmForCode=getPresentation(code,locale);
+  if (pmForCode != null) {
+    resolvedMessageFormatForCode=new MessageFormat(pmForCode.getMessage());
+  }
+  return resolvedMessageFormatForCode;
+}

@@ -1,0 +1,7 @@
+{
+  String code="mock." + codeGenerator.generate();
+  Locale locale=new Locale(localeGenerator.generate());
+  String message=messageGenerator.generate();
+  String description="described mockingly as " + descriptionGenerator.generate();
+  return new MockPresentationMessage(code,locale,message,description);
+}

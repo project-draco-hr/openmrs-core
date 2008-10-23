@@ -1,0 +1,8 @@
+{
+  Collection<PresentationMessage> allMessages=new Vector<PresentationMessage>();
+  for (  Locale locale : localizedMap.keySet()) {
+    PresentationMessageMap codeMessageMap=localizedMap.get(locale);
+    allMessages.addAll(codeMessageMap.values());
+  }
+  return allMessages;
+}

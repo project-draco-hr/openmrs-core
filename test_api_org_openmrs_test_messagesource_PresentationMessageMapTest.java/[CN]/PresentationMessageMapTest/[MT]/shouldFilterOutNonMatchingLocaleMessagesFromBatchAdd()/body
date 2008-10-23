@@ -1,0 +1,8 @@
+{
+  Map<String,PresentationMessage> mockMessageMap=new HashMap<String,PresentationMessage>();
+  mockMessageMap.put("right_locale",MockPresentationMessage.createMockPresentationMessage("en"));
+  mockMessageMap.put("wrong_locale",MockPresentationMessage.createMockPresentationMessage(Locale.GERMAN));
+  PresentationMessageMap testPmm=new PresentationMessageMap(Locale.ENGLISH);
+  testPmm.putAll(mockMessageMap);
+  assertEquals(1,testPmm.size());
+}

@@ -22,6 +22,9 @@
  else       if (possibleName.hasTag(desiredLanguageTag)) {
         bestMatch=possibleName;
       }
+ else       if (possibleName.hasTag(ConceptNameTag.PREFERRED)) {
+        bestMatch=possibleName;
+      }
  else       if (bestMatch == null) {
         bestMatch=possibleName;
       }
@@ -30,6 +33,9 @@
       if (possibleName.hasTag(desiredLanguageTag)) {
         exactMatch=possibleName;
         break;
+      }
+ else       if (possibleName.hasTag(ConceptNameTag.PREFERRED)) {
+        bestMatch=possibleName;
       }
  else       if (bestMatch == null) {
         bestMatch=possibleName;

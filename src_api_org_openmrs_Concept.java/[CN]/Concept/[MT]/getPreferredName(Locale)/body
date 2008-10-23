@@ -25,6 +25,9 @@
         break;
       }
     }
+    if ((preferredName == null) && possibleName.hasTag(ConceptNameTag.PREFERRED)) {
+      preferredName=possibleName;
+    }
   }
   if (log.isDebugEnabled()) {
     if (preferredName == null) {
