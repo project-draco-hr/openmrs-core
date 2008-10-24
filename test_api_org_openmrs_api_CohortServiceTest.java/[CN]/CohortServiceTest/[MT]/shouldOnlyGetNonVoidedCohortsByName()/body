@@ -1,0 +1,12 @@
+{
+  executeDataSet("org/openmrs/api/include/CohortServiceTest-cohort.xml");
+  List<Cohort> allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(2,allCohorts.size());
+  assertTrue(allCohorts.get(0).isVoided());
+  assertFalse(allCohorts.get(1).isVoided());
+  Cohort exampleCohort=service.getCohort("Example Cohort");
+  assertNotNull(exampleCohort);
+  assertEquals(2,exampleCohort.size());
+  assertFalse(exampleCohort.isVoided());
+}

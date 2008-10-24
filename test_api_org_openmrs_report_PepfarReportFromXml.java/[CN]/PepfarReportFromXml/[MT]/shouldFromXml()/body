@@ -1,0 +1,76 @@
+{
+  executeDataSet("org/openmrs/report/include/PepfarReportTest.xml");
+  StringBuilder xml=new StringBuilder();
+  xml.append("<reportSchema id=\"1\">\n");
+  xml.append("    <name>PEPFAR report</name>\n");
+  xml.append("	<description>\n");
+  xml.append("		Sample monthly PEPFAR report, modelled after the lesotho one\n");
+  xml.append("	</description>\n");
+  xml.append("	<parameters class=\"java.util.ArrayList\">\n");
+  xml.append("		<parameter clazz=\"java.util.Date\"><name>report.startDate</name><label>When does the report period start?</label></parameter>/>\n");
+  xml.append("		<parameter clazz=\"java.util.Date\"><name>report.endDate</name><label>When does the report period end?</label></parameter>\n");
+  xml.append("		<parameter clazz=\"org.openmrs.Location\"><name>report.location</name><label>For which clinic is this report?</label></parameter>\n");
+  xml.append("	</parameters>\n");
+  xml.append("	<dataSets class=\"java.util.ArrayList\">\n");
+  xml.append("		<dataSetDefinition class=\"org.openmrs.report.CohortDataSetDefinition\" name=\"Cohorts\">\n");
+  xml.append("			<strategies class=\"java.util.LinkedHashMap\">\n");
+  xml.append("				<entry>\n");
+  xml.append("					<string>1.a</string>\n");
+  xml.append("					<cohortDefinition class=\"org.openmrs.reporting.PatientSearch\">\n");
+  xml.append("						<specification>[Male]</specification>\n");
+  xml.append("					</cohortDefinition>\n");
+  xml.append("				</entry>\n");
+  xml.append("				<entry>\n");
+  xml.append("					<string>1.b</string>\n");
+  xml.append("					<cohortDefinition class=\"org.openmrs.reporting.PatientSearch\">\n");
+  xml.append("						<specification>[Male] and [Adult] and [EnrolledOnDate|untilDate=${report.startDate-1d}]</specification>\n");
+  xml.append("					</cohortDefinition>\n");
+  xml.append("				</entry>\n");
+  xml.append("			</strategies>\n");
+  xml.append("		</dataSetDefinition>\n");
+  xml.append("	</dataSets>\n");
+  xml.append("</reportSchema>\n");
+  System.out.println("xml\n" + xml);
+  Program hivProgram=Context.getProgramWorkflowService().getProgram("HIV PROGRAM");
+  if (hivProgram == null)   hivProgram=Context.getProgramWorkflowService().getProgram(1);
+  assertNotNull("Need at least one program defined to run this test",hivProgram);
+  if (Context.getReportObjectService().getPatientSearch("Male") == null) {
+    PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+    ps.addArgument("gender","m",String.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Male",ps));
+  }
+  if (Context.getReportObjectService().getPatientSearch("Female") == null) {
+    PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+    ps.addArgument("gender","f",String.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Female",ps));
+  }
+  if (Context.getReportObjectService().getPatientSearch("Adult") == null) {
+    PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+    ps.addArgument("minAge","15",Integer.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Adult",ps));
+  }
+  if (Context.getReportObjectService().getPatientSearch("Child") == null) {
+    PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
+    ps.addArgument("maxAge","15",Integer.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Child",ps));
+  }
+  if (Context.getReportObjectService().getPatientSearch("EnrolledOnDate") == null) {
+    PatientSearch ps=PatientSearch.createFilterSearch(ProgramStatePatientFilter.class);
+    ps.addArgument("program",hivProgram.getProgramId().toString(),Integer.class);
+    ps.addArgument("untilDate","${date}",Date.class);
+    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("EnrolledOnDate",ps));
+  }
+  Serializer serializer=new Persister(new OpenmrsCycleStrategy());
+  ReportSchema schema=serializer.read(ReportSchema.class,xml.toString());
+  log.info("Creating EvaluationContext");
+  EvaluationContext evalContext=new EvaluationContext();
+  for (  Map.Entry<Parameter,Object> e : getUserEnteredParameters(schema.getReportParameters()).entrySet()) {
+    log.info("adding parameter value " + e.getKey());
+    evalContext.addParameterValue(e.getKey(),e.getValue());
+  }
+  ReportService rs=(ReportService)Context.getService(ReportService.class);
+  ReportData data=rs.evaluate(schema,null,evalContext);
+  TsvReportRenderer renderer=new TsvReportRenderer();
+  System.out.println("Rendering output as TSV:");
+  renderer.render(data,null,System.out);
+}
