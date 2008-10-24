@@ -36,7 +36,10 @@
         GlobalProperty gp=new GlobalProperty(module.getModuleId() + ".started","true",getGlobalPropertyStartedDescription(module.getModuleId()));
         as.setGlobalProperty(gp);
       }
-  finally {
+ catch (      Exception e) {
+        log.debug("Got an error when trying to set the global property on module startup",e);
+      }
+ finally {
         Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       }
       if (module.getPrivileges().size() > 0 || module.getGlobalProperties().size() > 0) {

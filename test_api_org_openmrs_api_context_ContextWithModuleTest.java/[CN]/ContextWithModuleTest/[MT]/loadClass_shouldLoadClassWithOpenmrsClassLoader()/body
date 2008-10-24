@@ -1,0 +1,5 @@
+{
+  log.error("ASDFASDF");
+  Class<?> c=Context.loadClass("org.openmrs.module.dssmodule.DssService");
+  Assert.assertTrue("Should be loaded by OpenmrsClassLoader",c.getClassLoader() instanceof ModuleClassLoader);
+}
