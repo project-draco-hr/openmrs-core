@@ -5,7 +5,9 @@
   if (type != field || !node.getName().equals(simpleName)) {
     String realClassName=real.getName();
     if (value instanceof PersistentCollection)     realClassName=getHibernateInstanceClass(type.getName());
-    if (!realClassName.contains("CGLIB"))     if (type != field)     return realClassName;
+    if (!realClassName.contains("CGLIB")) {
+      if (type != field)       return realClassName;
+    }
  else {
       for (      String objectName : new String[]{"User","Patient","ComplexObs","ConceptNumeric"}) {
         String className="org.openmrs." + objectName;
@@ -13,6 +15,7 @@
           if (!field.getName().equals(className))           return className;
         }
       }
+      return realClassName.substring(0,realClassName.indexOf("$$EnhancerByCGLIB"));
     }
   }
   return null;
