@@ -1,9 +1,9 @@
 {
   FormService formService=Context.getFormService();
-  List<Form> forms=formService.getForms();
+  List<Form> forms=formService.getAllForms();
   assertNotNull(forms);
   assertTrue(forms.size() > 2);
-  List<Field> fields=formService.getFields();
+  List<Field> fields=formService.getAllFields();
   assertNotNull(fields);
   assertTrue(fields.size() > 2);
   FormField subFormField1=null;

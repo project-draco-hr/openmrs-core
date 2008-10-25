@@ -5,7 +5,7 @@
   Concept concept1=conceptService.getConcept(1);
   String name1="name1";
   String descript1="descript1";
-  FieldType fieldtype1=formService.getFieldTypes().get(0);
+  FieldType fieldtype1=formService.getAllFieldTypes().get(0);
   String table1="table1";
   String attr1="attr1";
   Boolean multi1=true;
@@ -17,12 +17,12 @@
   field1.setTableName(table1);
   field1.setAttributeName(attr1);
   field1.setSelectMultiple(multi1);
-  formService.updateField(field1);
+  formService.saveField(field1);
   Field field2=formService.getField(field1.getFieldId());
   Concept concept2=conceptService.getConcept(2);
   String name2="name2";
   String descript2="descript2";
-  FieldType fieldtype2=formService.getFieldTypes().get(1);
+  FieldType fieldtype2=formService.getAllFieldTypes().get(1);
   String table2="table2";
   String attr2="attr2";
   Boolean multi2=false;
@@ -33,7 +33,7 @@
   field2.setTableName(table2);
   field2.setAttributeName(attr2);
   field2.setSelectMultiple(multi2);
-  formService.updateField(field2);
+  formService.saveField(field2);
   Field field3=formService.getField(field2.getFieldId());
   assertTrue(field3.equals(field1));
   assertTrue(field1.getConcept().equals(concept2));
@@ -43,6 +43,7 @@
   assertTrue(field1.getTableName().equals(table2));
   assertTrue(field1.getAttributeName().equals(attr2));
   assertTrue(field1.getSelectMultiple().equals(multi2));
-  formService.deleteField(field3);
+  formService.saveField(field3);
+  formService.purgeField(field3);
   assertNull(formService.getField(field3.getFieldId()));
 }

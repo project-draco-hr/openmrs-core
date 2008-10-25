@@ -1,5 +1,7 @@
 {
-  ps=Context.getPatientService();
-  adminService=Context.getAdministrationService();
-  locationService=Context.getLocationService();
+  if (patientService == null) {
+    patientService=Context.getPatientService();
+    adminService=Context.getAdministrationService();
+    locationService=Context.getLocationService();
+  }
 }

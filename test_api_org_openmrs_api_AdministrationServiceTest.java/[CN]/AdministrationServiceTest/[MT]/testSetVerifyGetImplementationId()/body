@@ -1,54 +1,54 @@
 {
-  ImplementationId currentImplId=as.getImplementationId();
+  ImplementationId currentImplId=adminService.getImplementationId();
   assertNull("There shouldn't be an impl id defined alread",currentImplId);
-  as.setImplementationId(null);
-  ImplementationId afterNull=as.getImplementationId();
+  adminService.setImplementationId(null);
+  ImplementationId afterNull=adminService.getImplementationId();
   assertNull("There shouldn't be an impl id defined after setting a null impl id",afterNull);
   ImplementationId blankId=new ImplementationId();
   try {
-    as.setImplementationId(blankId);
+    adminService.setImplementationId(blankId);
     fail("An exception should be thrown on a blank impl id save");
   }
  catch (  APIException e) {
   }
-  ImplementationId afterBlank=as.getImplementationId();
+  ImplementationId afterBlank=adminService.getImplementationId();
   assertNull("There shouldn't be an impl id defined after setting a blank impl id",afterBlank);
   ImplementationId invalidId=new ImplementationId();
   invalidId.setImplementationId("caret^caret");
   invalidId.setPassphrase("some valid passphrase");
   invalidId.setDescription("Some valid description");
   try {
-    as.setImplementationId(invalidId);
+    adminService.setImplementationId(invalidId);
     fail("An exception should be thrown on an invalid impl id save");
   }
  catch (  APIException e) {
   }
-  ImplementationId afterInvalid=as.getImplementationId();
+  ImplementationId afterInvalid=adminService.getImplementationId();
   assertNull("There shouldn't be an impl id defined after setting an invalid impl id",afterInvalid);
   ImplementationId invalidId2=new ImplementationId();
   invalidId.setImplementationId("pipe|pipe");
   invalidId.setPassphrase("some valid passphrase");
   invalidId.setDescription("Some valid description");
   try {
-    as.setImplementationId(invalidId2);
+    adminService.setImplementationId(invalidId2);
     fail("An exception should be thrown on an invalid impl id save");
   }
  catch (  APIException e) {
   }
-  ImplementationId afterInvalid2=as.getImplementationId();
+  ImplementationId afterInvalid2=adminService.getImplementationId();
   assertNull("There shouldn't be an impl id defined after setting an invalid impl id",afterInvalid2);
   ImplementationId validId=new ImplementationId();
   validId.setImplementationId("JUNIT-TEST");
   validId.setPassphrase("This is the junit test passphrase");
   validId.setDescription("This is the junit impl id used for testing of the openmrs API only.");
-  as.setImplementationId(validId);
-  ImplementationId afterValid=as.getImplementationId();
+  adminService.setImplementationId(validId);
+  ImplementationId afterValid=adminService.getImplementationId();
   assertEquals(validId,afterValid);
   ImplementationId validId2=new ImplementationId();
   validId2.setImplementationId("JUNIT-TEST 2");
   validId2.setPassphrase("This is the junit test passphrase 2");
   validId2.setDescription("This is the junit impl id (2) used for testing of the openmrs API only.");
-  as.setImplementationId(validId2);
-  ImplementationId afterValid2=as.getImplementationId();
+  adminService.setImplementationId(validId2);
+  ImplementationId afterValid2=adminService.getImplementationId();
   assertEquals(validId2,afterValid2);
 }

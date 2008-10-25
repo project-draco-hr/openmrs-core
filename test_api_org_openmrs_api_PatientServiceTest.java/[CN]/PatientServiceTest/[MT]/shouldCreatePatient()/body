@@ -19,7 +19,7 @@
   patient.setBirthdate(new Date());
   patient.setBirthdateEstimated(true);
   patient.setGender("male");
-  List<PatientIdentifierType> patientIdTypes=ps.getAllPatientIdentifierTypes();
+  List<PatientIdentifierType> patientIdTypes=patientService.getAllPatientIdentifierTypes();
   assertNotNull(patientIdTypes);
   PatientIdentifier patientIdentifier=new PatientIdentifier();
   patientIdentifier.setIdentifier("123-0");
@@ -28,10 +28,10 @@
   Set<PatientIdentifier> patientIdentifiers=new TreeSet<PatientIdentifier>();
   patientIdentifiers.add(patientIdentifier);
   patient.setIdentifiers(patientIdentifiers);
-  ps.savePatient(patient);
-  Patient createdPatient=ps.getPatient(patient.getPatientId());
+  patientService.savePatient(patient);
+  Patient createdPatient=patientService.getPatient(patient.getPatientId());
   assertNotNull(createdPatient);
   assertNotNull(createdPatient.getPatientId());
-  Patient createdPatientById=ps.getPatient(createdPatient.getPatientId());
+  Patient createdPatientById=patientService.getPatient(createdPatient.getPatientId());
   assertNotNull(createdPatientById);
 }
