@@ -1,0 +1,9 @@
+{
+  FormService formService=Context.getFormService();
+  FieldType fieldType=formService.getFieldType(1);
+  Assert.assertNotNull(fieldType);
+  fieldType.setName("SOME OTHER NEW NAME");
+  formService.saveFieldType(fieldType);
+  FieldType refetchedFieldType=formService.getFieldType(1);
+  Assert.assertEquals("SOME OTHER NEW NAME",refetchedFieldType.getName());
+}

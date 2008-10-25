@@ -1,0 +1,5 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  String propertyValue=adminService.getGlobalProperty("a_valid_gp_key");
+  Assert.assertEquals("correct-value",propertyValue);
+}

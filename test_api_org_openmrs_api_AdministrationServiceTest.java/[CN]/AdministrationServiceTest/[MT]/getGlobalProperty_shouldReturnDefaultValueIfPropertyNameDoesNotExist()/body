@@ -1,0 +1,7 @@
+{
+  String invalidKey="asdfasdf";
+  String propertyValue=adminService.getGlobalProperty(invalidKey);
+  Assert.assertNull(propertyValue);
+  String value=adminService.getGlobalProperty(invalidKey,"default");
+  Assert.assertEquals("default",value);
+}

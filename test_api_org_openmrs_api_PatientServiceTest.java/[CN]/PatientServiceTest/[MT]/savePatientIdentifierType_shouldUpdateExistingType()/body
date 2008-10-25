@@ -1,0 +1,7 @@
+{
+  PatientIdentifierType type=patientService.getPatientIdentifierType(1);
+  type.setName("SOME NEW NAME");
+  patientService.savePatientIdentifierType(type);
+  PatientIdentifierType newerPatientIdentifierType=patientService.getPatientIdentifierType(1);
+  assertEquals("SOME NEW NAME",newerPatientIdentifierType.getName());
+}
