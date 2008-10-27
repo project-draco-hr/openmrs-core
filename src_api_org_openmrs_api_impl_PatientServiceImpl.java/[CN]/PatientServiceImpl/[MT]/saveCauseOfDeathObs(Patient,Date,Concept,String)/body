@@ -2,9 +2,11 @@
   if (patient == null)   throw new APIException("Patient supplied to method is null");
   if (deathDate == null)   throw new APIException("Death date supplied to method is null");
   if (cause == null)   throw new APIException("Cause supplied to method is null");
-  if (!patient.getDead())   patient.setDead(true);
-  patient.setDeathDate(deathDate);
-  patient.setCauseOfDeath(cause);
+  if (!patient.getDead()) {
+    patient.setDead(true);
+    patient.setDeathDate(deathDate);
+    patient.setCauseOfDeath(cause);
+  }
   log.debug("Patient is dead, so let's make sure there's an Obs for it");
   String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
   Concept causeOfDeath=Context.getConceptService().getConcept(codProp);
@@ -25,11 +27,13 @@
           obsDeath=new Obs();
           obsDeath.setPerson(patient);
           obsDeath.setConcept(causeOfDeath);
-          Location loc=null;
-          if (loc == null)           loc=Context.getLocationService().getLocation("Unknown Location");
-          if (loc == null)           loc=Context.getLocationService().getLocation(new Integer(1));
-          if (loc != null)           obsDeath.setLocation(loc);
- else           log.error("Could not find a suitable location for which to create this new Obs");
+          Location location=Context.getLocationService().getDefaultLocation();
+          if (location != null) {
+            obsDeath.setLocation(location);
+          }
+ else {
+            log.error("Could not find a suitable location for which to create this new Obs");
+          }
         }
         Concept currCause=patient.getCauseOfDeath();
         if (currCause == null) {

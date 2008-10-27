@@ -20,7 +20,7 @@
  else {
       boolean isError=false;
       try {
-        Context.getPatientService().updatePatient(patient);
+        Context.getPatientService().savePatient(patient);
       }
  catch (      InvalidIdentifierFormatException iife) {
         log.error(iife);
@@ -54,8 +54,8 @@ catch (      PatientIdentifierException pie) {
       }
       if (patient.getDead() && !isError) {
         log.debug("Patient is dead, so let's make sure there's an Obs for it");
-        String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-        Concept causeOfDeath=Context.getConceptService().getConceptByIdOrName(codProp);
+        String causeOfDeathConceptId=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+        Concept causeOfDeath=Context.getConceptService().getConcept(causeOfDeathConceptId);
         if (causeOfDeath != null) {
           Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath,false);
           if (obssDeath != null) {
@@ -73,9 +73,8 @@ catch (      PatientIdentifierException pie) {
                 obsDeath=new Obs();
                 obsDeath.setPerson(patient);
                 obsDeath.setConcept(causeOfDeath);
-                Location loc=Context.getEncounterService().getLocationByName("Unknown Location");
-                if (loc == null)                 loc=Context.getEncounterService().getLocation(new Integer(1));
-                if (loc != null)                 obsDeath.setLocation(loc);
+                Location location=Context.getLocationService().getDefaultLocation();
+                if (location != null)                 obsDeath.setLocation(location);
  else                 log.error("Could not find a suitable location for which to create this new Obs");
               }
               Concept currCause=patient.getCauseOfDeath();

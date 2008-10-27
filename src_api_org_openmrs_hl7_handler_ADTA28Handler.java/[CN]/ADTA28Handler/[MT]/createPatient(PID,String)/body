@@ -24,10 +24,9 @@
         }
         pi.setIdentifierType(pit);
         pi.setIdentifier(hl7PatientId);
-        String unknownLocation="Unknown Location";
-        Location location=Context.getEncounterService().getLocationByName(unknownLocation);
+        Location location=Context.getLocationService().getDefaultLocation();
         if (location == null) {
-          throw new HL7Exception("Cannot find location: " + unknownLocation);
+          throw new HL7Exception("Cannot find default location");
         }
         pi.setLocation(location);
         try {
