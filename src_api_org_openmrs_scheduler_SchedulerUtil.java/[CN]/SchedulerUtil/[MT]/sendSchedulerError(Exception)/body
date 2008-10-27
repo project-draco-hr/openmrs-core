@@ -13,7 +13,7 @@
         for (        Map.Entry<String,String> entry : Context.getAdministrationService().getSystemVariables().entrySet()) {
           message+=entry.getKey() + " = " + entry.getValue()+ "\n";
         }
-        log.info("Sending scheduler error email to [" + recipients + "] from ["+ sender+ "] with subject ["+ subject+ "]:\n"+ message);
+        log.debug("Sending scheduler error email to [" + recipients + "] from ["+ sender+ "] with subject ["+ subject+ "]:\n"+ message);
         Context.getMessageService().sendMessage(recipients,sender,subject,message);
       }
     }
