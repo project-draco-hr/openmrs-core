@@ -4,22 +4,22 @@
   String a="", b="";
   try {
 {
-      AST __t485=_t;
-      AST tmp108_AST_in=(AST)_t;
+      AST __t540=_t;
+      AST tmp117_AST_in=(AST)_t;
       match(_t,KNOWLEDGE);
       _t=_t.getFirstChild();
 {
-        _loop492:         do {
+        _loop549:         do {
           if (_t == null)           _t=ASTNULL;
           if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
 {
               if (_t == null)               _t=ASTNULL;
               if ((_t.getType() == DATA)) {
-                AST __t488=_t;
-                AST tmp109_AST_in=(AST)_t;
+                AST __t543=_t;
+                AST tmp118_AST_in=(AST)_t;
                 match(_t,DATA);
                 _t=_t.getFirstChild();
-                AST tmp110_AST_in=(AST)_t;
+                AST tmp119_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting Data -------");
@@ -27,15 +27,15 @@
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Data -------");
-                _t=__t488;
+                _t=__t543;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == PRIORITY)) {
-                AST __t489=_t;
-                AST tmp111_AST_in=(AST)_t;
+                AST __t544=_t;
+                AST tmp120_AST_in=(AST)_t;
                 match(_t,PRIORITY);
                 _t=_t.getFirstChild();
-                AST tmp112_AST_in=(AST)_t;
+                AST tmp121_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Priority: ";
@@ -44,15 +44,15 @@
                 obj.setPriority(b);
                 s+=b;
                 s+="\n";
-                _t=__t489;
+                _t=__t544;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == LOGIC)) {
-                AST __t490=_t;
-                AST tmp113_AST_in=(AST)_t;
+                AST __t545=_t;
+                AST tmp122_AST_in=(AST)_t;
                 match(_t,LOGIC);
                 _t=_t.getFirstChild();
-                AST tmp114_AST_in=(AST)_t;
+                AST tmp123_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting Logic -------");
@@ -60,15 +60,15 @@
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Logic -------");
-                _t=__t490;
+                _t=__t545;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == ACTION)) {
-                AST __t491=_t;
-                AST tmp115_AST_in=(AST)_t;
+                AST __t546=_t;
+                AST tmp124_AST_in=(AST)_t;
                 match(_t,ACTION);
                 _t=_t.getFirstChild();
-                AST tmp116_AST_in=(AST)_t;
+                AST tmp125_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting ACTION -------");
@@ -76,14 +76,48 @@
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Action -------");
-                _t=__t491;
+                _t=__t546;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == AGE_MIN)) {
+                AST __t547=_t;
+                AST tmp126_AST_in=(AST)_t;
+                match(_t,AGE_MIN);
+                _t=_t.getFirstChild();
+                AST tmp127_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Age_Min: ";
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setAgeMin(b);
+                s+=b;
+                s+="\n";
+                _t=__t547;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == AGE_MAX)) {
+                AST __t548=_t;
+                AST tmp128_AST_in=(AST)_t;
+                match(_t,AGE_MAX);
+                _t=_t.getFirstChild();
+                AST tmp129_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                s+=" Age_Max: ";
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setAgeMax(b);
+                s+=b;
+                s+="\n";
+                _t=__t548;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
                 s+=a;
-                AST tmp117_AST_in=(AST)_t;
+                AST tmp130_AST_in=(AST)_t;
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
                 s+="\n";
@@ -94,12 +128,12 @@
             }
           }
  else {
-            break _loop492;
+            break _loop549;
           }
         }
  while (true);
       }
-      _t=__t485;
+      _t=__t540;
       _t=_t.getNextSibling();
     }
   }

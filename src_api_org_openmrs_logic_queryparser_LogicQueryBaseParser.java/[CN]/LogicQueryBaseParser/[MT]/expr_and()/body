@@ -1,0 +1,31 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_and_AST=null;
+  try {
+    expr_not();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop70:       do {
+        if ((LA(1) == AND)) {
+          AST tmp209_AST=null;
+          tmp209_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp209_AST);
+          match(AND);
+          expr_not();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop70;
+        }
+      }
+ while (true);
+    }
+    expr_and_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    recover(ex,_tokenSet_20);
+  }
+  returnAST=expr_and_AST;
+}

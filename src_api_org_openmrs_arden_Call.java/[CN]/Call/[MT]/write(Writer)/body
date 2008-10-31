@@ -1,0 +1,15 @@
+{
+  try {
+    for (int i=0; i < parameters.size(); i++) {
+      String currParam=parameters.get(i);
+      w.append("parameters.put(\"param" + (i + 1) + "\",\""+ currParam+ "\");");
+    }
+    w.append("\t\t\t\t");
+    if (getCallVar() != null && getCallVar().length() > 0) {
+      w.append("Result " + getCallVar() + " = ");
+    }
+    w.append("logicService.eval(patient, \"" + getCallMethod() + "\",parameters);");
+  }
+ catch (  Exception e) {
+  }
+}

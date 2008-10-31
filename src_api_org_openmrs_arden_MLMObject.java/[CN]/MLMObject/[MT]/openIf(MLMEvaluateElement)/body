@@ -1,0 +1,21 @@
+{
+  if (mEvalElem == null) {
+    return false;
+  }
+  Iterator iter=mEvalElem.iterator();
+  int numOpen=0;
+  int numClosed=0;
+  while (iter.hasNext()) {
+    String currKey=(String)iter.next();
+    if (currKey.equalsIgnoreCase("If") || currKey.startsWith("Else")) {
+      numOpen++;
+    }
+    if (currKey.startsWith("Conclude") || currKey.equalsIgnoreCase("endif") || currKey.equalsIgnoreCase("logic_assignment")) {
+      numClosed++;
+    }
+  }
+  if (numOpen > numClosed) {
+    return true;
+  }
+  return false;
+}

@@ -4,13 +4,13 @@
   AST title_slot_AST=null;
   try {
 {
-      AST tmp166_AST=null;
-      tmp166_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp166_AST);
+      AST tmp185_AST=null;
+      tmp185_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp185_AST);
       match(TITLE);
-      AST tmp167_AST=null;
-      tmp167_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp167_AST);
+      AST tmp186_AST=null;
+      tmp186_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp186_AST);
       match(COLON);
 {
         _loop13:         do {
@@ -24,20 +24,22 @@
         }
  while (true);
       }
-      AST tmp168_AST=null;
-      tmp168_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp168_AST);
+      AST tmp187_AST=null;
+      tmp187_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp187_AST);
       match(ENDBLOCK);
     }
     title_slot_AST=(AST)currentAST.root;
   }
- catch (  RecognitionException ex) {
+ catch (  MismatchedTokenException mv) {
     if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_5);
+      reportError(mv);
+      System.err.println("***Rule Priority NOT SET***");
+      consumeUntil(ENDBLOCK);
+      consume();
     }
  else {
-      throw ex;
+      throw mv;
     }
   }
   returnAST=title_slot_AST;

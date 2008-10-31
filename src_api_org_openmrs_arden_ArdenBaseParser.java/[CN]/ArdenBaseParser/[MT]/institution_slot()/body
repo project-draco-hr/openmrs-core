@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST institution_slot_AST=null;
   try {
-    AST tmp187_AST=null;
-    tmp187_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp187_AST);
+    AST tmp206_AST=null;
+    tmp206_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp206_AST);
     match(INSTITUTION);
-    AST tmp188_AST=null;
-    tmp188_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp188_AST);
+    AST tmp207_AST=null;
+    tmp207_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp207_AST);
     match(COLON);
 {
       _loop33:       do {
@@ -23,16 +23,16 @@
       }
  while (true);
     }
-    AST tmp189_AST=null;
-    tmp189_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp189_AST);
+    AST tmp208_AST=null;
+    tmp208_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp208_AST);
     match(ENDBLOCK);
     institution_slot_AST=(AST)currentAST.root;
   }
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_9);
+      recover(ex,_tokenSet_8);
     }
  else {
       throw ex;

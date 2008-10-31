@@ -1,0 +1,144 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST duration_op_AST=null;
+  try {
+switch (LA(1)) {
+case YEAR:
+{
+        AST tmp153_AST=null;
+        tmp153_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp153_AST);
+        match(YEAR);
+        duration_op_AST=(AST)currentAST.root;
+        break;
+      }
+case YEARS:
+{
+      AST tmp154_AST=null;
+      tmp154_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp154_AST);
+      match(YEARS);
+      duration_op_AST=(AST)currentAST.root;
+      break;
+    }
+case MONTH:
+{
+    AST tmp155_AST=null;
+    tmp155_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp155_AST);
+    match(MONTH);
+    duration_op_AST=(AST)currentAST.root;
+    break;
+  }
+case MONTHS:
+{
+  AST tmp156_AST=null;
+  tmp156_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp156_AST);
+  match(MONTHS);
+  duration_op_AST=(AST)currentAST.root;
+  break;
+}
+case WEEK:
+{
+AST tmp157_AST=null;
+tmp157_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp157_AST);
+match(WEEK);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case WEEKS:
+{
+AST tmp158_AST=null;
+tmp158_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp158_AST);
+match(WEEKS);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case DAY:
+{
+AST tmp159_AST=null;
+tmp159_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp159_AST);
+match(DAY);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case DAYS:
+{
+AST tmp160_AST=null;
+tmp160_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp160_AST);
+match(DAYS);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_hour:
+{
+AST tmp161_AST=null;
+tmp161_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp161_AST);
+match(LITERAL_hour);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_hours:
+{
+AST tmp162_AST=null;
+tmp162_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp162_AST);
+match(LITERAL_hours);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_minute:
+{
+AST tmp163_AST=null;
+tmp163_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp163_AST);
+match(LITERAL_minute);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_minutes:
+{
+AST tmp164_AST=null;
+tmp164_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp164_AST);
+match(LITERAL_minutes);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case SECOND:
+{
+AST tmp165_AST=null;
+tmp165_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp165_AST);
+match(SECOND);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_seconds:
+{
+AST tmp166_AST=null;
+tmp166_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp166_AST);
+match(LITERAL_seconds);
+duration_op_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_9);
+}
+returnAST=duration_op_AST;
+}

@@ -4,7 +4,7 @@
   AST data_if_then_else2_AST=null;
   try {
 {
-      if ((_tokenSet_36.member(LA(1)))) {
+      if ((_tokenSet_34.member(LA(1)))) {
         expr();
         astFactory.addASTChild(currentAST,returnAST);
       }
@@ -22,9 +22,9 @@
         throw new NoViableAltException(LT(1),getFilename());
       }
     }
-    AST tmp387_AST=null;
-    tmp387_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp387_AST);
+    AST tmp445_AST=null;
+    tmp445_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp445_AST);
     match(THEN);
     data_statement();
     astFactory.addASTChild(currentAST,returnAST);
@@ -33,7 +33,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_33);
+      recover(ex,_tokenSet_30);
     }
  else {
       throw ex;

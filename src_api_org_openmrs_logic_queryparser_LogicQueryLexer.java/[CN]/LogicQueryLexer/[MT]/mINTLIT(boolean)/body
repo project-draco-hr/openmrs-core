@@ -1,0 +1,77 @@
+{
+  int _ttype;
+  Token _token=null;
+  int _begin=text.length();
+  _ttype=INTLIT;
+  int _saveIndex;
+{
+{
+      _loop185:       do {
+        if (((LA(1) >= '0' && LA(1) <= '9'))) {
+{
+            int _cnt183=0;
+            _loop183:             do {
+              if (((LA(1) >= '0' && LA(1) <= '9')) && (true)) {
+                mDIGIT(false);
+              }
+ else {
+                if (_cnt183 >= 1) {
+                  break _loop183;
+                }
+ else {
+                  throw new NoViableAltForCharException((char)LA(1),getFilename(),getLine(),getColumn());
+                }
+              }
+              _cnt183++;
+            }
+ while (true);
+          }
+{
+            if ((LA(1) == ',')) {
+              mCOMMA(false);
+            }
+ else {
+            }
+          }
+        }
+ else {
+          break _loop185;
+        }
+      }
+ while (true);
+    }
+{
+      if ((LA(1) == '(')) {
+{
+          mLPAREN(false);
+{
+            int _cnt189=0;
+            _loop189:             do {
+              if (((LA(1) >= '0' && LA(1) <= '9'))) {
+                mDIGIT(false);
+              }
+ else {
+                if (_cnt189 >= 1) {
+                  break _loop189;
+                }
+ else {
+                  throw new NoViableAltForCharException((char)LA(1),getFilename(),getLine(),getColumn());
+                }
+              }
+              _cnt189++;
+            }
+ while (true);
+          }
+          mRPAREN(false);
+        }
+      }
+ else {
+      }
+    }
+  }
+  if (_createToken && _token == null && _ttype != Token.SKIP) {
+    _token=makeToken(_ttype);
+    _token.setText(new String(text.getBuffer(),_begin,text.length() - _begin));
+  }
+  _returnToken=_token;
+}

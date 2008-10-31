@@ -4,21 +4,21 @@
   AST single_citation_AST=null;
   try {
 {
-      _loop89:       do {
+      _loop92:       do {
         if ((LA(1) == INTLIT)) {
-          AST tmp358_AST=null;
-          tmp358_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp358_AST);
+          AST tmp419_AST=null;
+          tmp419_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp419_AST);
           match(INTLIT);
-          AST tmp359_AST=null;
-          tmp359_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp359_AST);
+          AST tmp420_AST=null;
+          tmp420_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp420_AST);
           match(DOT);
           citation_type();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop89;
+          break _loop92;
         }
       }
  while (true);
@@ -27,13 +27,13 @@
     astFactory.addASTChild(currentAST,returnAST);
     single_citation_AST=(AST)currentAST.root;
   }
- catch (  RecognitionException ex) {
+ catch (  NoViableAltException nv) {
     if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_32);
+      reportError(nv);
+      consumeUntil(ENDBLOCK);
     }
  else {
-      throw ex;
+      throw nv;
     }
   }
   returnAST=single_citation_AST;

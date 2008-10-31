@@ -6,27 +6,27 @@
 switch (LA(1)) {
 case LITERAL_SUPPORT:
 {
-        AST tmp360_AST=null;
-        tmp360_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp360_AST);
+        AST tmp421_AST=null;
+        tmp421_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp421_AST);
         match(LITERAL_SUPPORT);
         citation_type_AST=(AST)currentAST.root;
         break;
       }
 case LITERAL_REFUTE:
 {
-      AST tmp361_AST=null;
-      tmp361_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp361_AST);
+      AST tmp422_AST=null;
+      tmp422_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp422_AST);
       match(LITERAL_REFUTE);
       citation_type_AST=(AST)currentAST.root;
       break;
     }
 default :
-  if ((_tokenSet_31.member(LA(1)))) {
+  if ((_tokenSet_28.member(LA(1)))) {
     citation_type_AST=(AST)currentAST.root;
   }
- else   if ((_tokenSet_31.member(LA(1)))) {
+ else   if ((_tokenSet_28.member(LA(1)))) {
     citation_type_AST=(AST)currentAST.root;
   }
  else {
@@ -37,7 +37,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_31);
+recover(ex,_tokenSet_28);
 }
  else {
 throw ex;

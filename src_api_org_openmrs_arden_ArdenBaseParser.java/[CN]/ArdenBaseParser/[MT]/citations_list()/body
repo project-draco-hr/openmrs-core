@@ -9,21 +9,21 @@
  else     if ((LA(1) == ENDBLOCK)) {
       citations_list_AST=(AST)currentAST.root;
     }
- else     if ((_tokenSet_31.member(LA(1)))) {
+ else     if ((_tokenSet_28.member(LA(1)))) {
       single_citation();
       astFactory.addASTChild(currentAST,returnAST);
 {
-        _loop86:         do {
+        _loop89:         do {
           if ((LA(1) == SEMI)) {
-            AST tmp357_AST=null;
-            tmp357_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp357_AST);
+            AST tmp418_AST=null;
+            tmp418_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp418_AST);
             match(SEMI);
             single_citation();
             astFactory.addASTChild(currentAST,returnAST);
           }
  else {
-            break _loop86;
+            break _loop89;
           }
         }
  while (true);
@@ -37,7 +37,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_26);
+      recover(ex,_tokenSet_25);
     }
  else {
       throw ex;

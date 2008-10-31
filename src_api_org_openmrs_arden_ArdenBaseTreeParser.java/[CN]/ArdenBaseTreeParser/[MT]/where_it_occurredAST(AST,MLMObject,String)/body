@@ -9,6 +9,7 @@
     if (_t == null)     _t=ASTNULL;
 switch (_t.getType()) {
 case COUNT:
+case NOT:
 case MINIMUM:
 case MIN:
 case MAXIMUM:
@@ -28,10 +29,11 @@ case FALSE:
 case OF:
 case WITHIN:
 case ANY:
+case NULL:
 case INTLIT:
 case ID:
-case ACTION_OP:
 case STRING_LITERAL:
+case ACTION_OP:
 case TERM_LITERAL:
 {
 {
@@ -39,12 +41,12 @@ case TERM_LITERAL:
 switch (_t.getType()) {
 case WITHIN:
 {
-              AST tmp27_AST_in=(AST)_t;
+              AST tmp29_AST_in=(AST)_t;
               match(_t,WITHIN);
               _t=_t.getNextSibling();
               obj.setWhere("withinPreceding",key);
 {
-                AST tmp28_AST_in=(AST)_t;
+                AST tmp30_AST_in=(AST)_t;
                 match(_t,PAST);
                 _t=_t.getNextSibling();
               }
@@ -61,6 +63,7 @@ case WITHIN:
               break;
             }
 case COUNT:
+case NOT:
 case MINIMUM:
 case MIN:
 case MAXIMUM:
@@ -79,18 +82,19 @@ case TRUE:
 case FALSE:
 case OF:
 case ANY:
+case NULL:
 case INTLIT:
 case ID:
-case ACTION_OP:
 case STRING_LITERAL:
+case ACTION_OP:
 case TERM_LITERAL:
 {
-            a=exprAST(_t,obj);
+            a=exprAST(_t,"data",obj);
             _t=_retTree;
-            AST tmp29_AST_in=(AST)_t;
+            AST tmp31_AST_in=(AST)_t;
             match(_t,TO);
             _t=_t.getNextSibling();
-            b=exprAST(_t,obj);
+            b=exprAST(_t,"data",obj);
             _t=_retTree;
             break;
           }
@@ -105,7 +109,7 @@ default :
 case AFTER:
 {
 {
-  AST tmp30_AST_in=(AST)_t;
+  AST tmp32_AST_in=(AST)_t;
   match(_t,AFTER);
   _t=_t.getNextSibling();
 }

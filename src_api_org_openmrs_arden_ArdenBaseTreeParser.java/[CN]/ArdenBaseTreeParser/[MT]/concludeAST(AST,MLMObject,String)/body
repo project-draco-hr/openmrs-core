@@ -4,22 +4,17 @@
   String a, b;
   try {
 {
-      AST __t465=_t;
-      AST tmp73_AST_in=(AST)_t;
+      AST __t519=_t;
+      AST tmp71_AST_in=(AST)_t;
       match(_t,CONCLUDE);
       _t=_t.getFirstChild();
 {
         a="Conclude";
-        obj.SetConceptVar(key);
-        obj.AddConcept(key);
         if (key.startsWith("Conclude_")) {
-          obj.AddToEvaluateList(key);
+          obj.AddToEvaluateList("logic",key);
         }
  else {
-          obj.AddToEvaluateList(a);
-        }
-        if (key.startsWith("Func_")) {
-          obj.SetDBAccess(false,key);
+          obj.AddToEvaluateList("logic",a);
         }
       }
 {
@@ -27,20 +22,20 @@
 switch (_t.getType()) {
 case FALSE:
 {
-            AST tmp74_AST_in=(AST)_t;
+            AST tmp72_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getNextSibling();
             System.err.println("***CONCLUDE FALSE ");
-            obj.SetConcludeVal(false,key);
+            obj.addConcludeVal(false);
             break;
           }
 case TRUE:
 {
-          AST tmp75_AST_in=(AST)_t;
+          AST tmp73_AST_in=(AST)_t;
           match(_t,TRUE);
           _t=_t.getNextSibling();
           System.err.println("***CONCLUDE TRUE ");
-          obj.SetConcludeVal(true,key);
+          obj.addConcludeVal(true);
           break;
         }
 default :
@@ -49,7 +44,7 @@ default :
       }
   }
 }
-_t=__t465;
+_t=__t519;
 _t=_t.getNextSibling();
 }
 }

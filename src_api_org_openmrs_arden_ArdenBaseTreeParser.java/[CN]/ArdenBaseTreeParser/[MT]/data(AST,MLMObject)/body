@@ -4,7 +4,7 @@
   String a, b;
   try {
 {
-      _loop327:       do {
+      _loop343:       do {
         if (_t == null)         _t=ASTNULL;
 switch (_t.getType()) {
 case IF:
@@ -16,23 +16,24 @@ case IF:
             System.err.println("-----------End Data If -------");
             break;
           }
-case ELSE:
-case ELSEIF:
-case ENDIF:
+case CALL:
 {
-          System.err.println("----------------Starting Data Else If-------");
-          data_elseifAST(_t,obj);
+          System.err.println("-----------Starting Data CALL -------");
+          a="";
+          callSectionAST(_t,obj,a,"data");
           _t=_retTree;
           System.err.println("\n");
-          System.err.println("-----------End Data Else If -------");
+          System.err.println("-----------End CALL -------");
           break;
         }
 default :
       if (_t == null)       _t=ASTNULL;
     if ((_tokenSet_0.member(_t.getType()))) {
       System.err.println("-----------Starting Read -------");
+      obj.InitEvaluateList("data",null);
       s=readAST(_t,obj,s);
       _t=_retTree;
+      obj.AddToEvaluateList("data",s);
       System.err.println("\n");
       System.err.println("-----------End Read -------");
     }
@@ -43,15 +44,33 @@ default :
       System.err.println("\n");
       System.err.println("-----------End Event -------");
     }
+ else     if ((_t.getType() == ENDIF)) {
+      AST __t342=_t;
+      AST tmp1_AST_in=(AST)_t;
+      match(_t,ENDIF);
+      _t=_t.getFirstChild();
+      System.err.println("ENDIF FOUND");
+      a="ENDIF";
+      obj.AddToEvaluateList("data",a);
+      _t=__t342;
+      _t=_t.getNextSibling();
+    }
+ else     if (((_t.getType() >= ELSE && _t.getType() <= ENDIF))) {
+      System.err.println("----------------Starting Data Else If-------");
+      data_elseifAST(_t,obj);
+      _t=_retTree;
+      System.err.println("\n");
+      System.err.println("-----------End Data Else If -------");
+    }
  else {
-      break _loop327;
+      break _loop343;
     }
 }
 }
  while (true);
 }
 {
-AST tmp1_AST_in=(AST)_t;
+AST tmp2_AST_in=(AST)_t;
 match(_t,ENDBLOCK);
 _t=_t.getNextSibling();
 }

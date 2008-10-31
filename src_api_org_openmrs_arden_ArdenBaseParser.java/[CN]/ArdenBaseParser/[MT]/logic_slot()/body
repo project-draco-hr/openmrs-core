@@ -3,41 +3,64 @@
   ASTPair currentAST=new ASTPair();
   AST logic_slot_AST=null;
   try {
-    AST tmp232_AST=null;
-    tmp232_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp232_AST);
+    AST tmp257_AST=null;
+    tmp257_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp257_AST);
     match(LOGIC);
-    AST tmp233_AST=null;
-    tmp233_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp233_AST);
+    AST tmp258_AST=null;
+    tmp258_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp258_AST);
     match(COLON);
 {
-      _loop215:       do {
-        if ((_tokenSet_22.member(LA(1)))) {
-          logic_statement();
+      _loop219:       do {
+switch (LA(1)) {
+case CONCLUDE:
+case CALL:
+case SEMI:
+case ID:
+case ACTION_OP:
+{
+            logic_statement();
+            astFactory.addASTChild(currentAST,returnAST);
+            match(SEMI);
+            break;
+          }
+case IF:
+{
+          if_statement();
           astFactory.addASTChild(currentAST,returnAST);
-          match(SEMI);
+          break;
         }
- else {
-          break _loop215;
-        }
+case ELSE:
+case ELSEIF:
+case ENDIF:
+{
+        logic_elseif();
+        astFactory.addASTChild(currentAST,returnAST);
+        break;
       }
+default :
+{
+      break _loop219;
+    }
+}
+}
  while (true);
-    }
-    AST tmp235_AST=null;
-    tmp235_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp235_AST);
-    match(ENDBLOCK);
-    logic_slot_AST=(AST)currentAST.root;
-  }
- catch (  RecognitionException ex) {
-    if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_23);
-    }
+}
+AST tmp260_AST=null;
+tmp260_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp260_AST);
+match(ENDBLOCK);
+logic_slot_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_18);
+}
  else {
-      throw ex;
-    }
-  }
-  returnAST=logic_slot_AST;
+throw ex;
+}
+}
+returnAST=logic_slot_AST;
 }

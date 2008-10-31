@@ -3,37 +3,45 @@
   ASTPair currentAST=new ASTPair();
   AST action_slot_AST=null;
   try {
-    AST tmp236_AST=null;
-    tmp236_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp236_AST);
+    AST tmp261_AST=null;
+    tmp261_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp261_AST);
     match(ACTION);
-    AST tmp237_AST=null;
-    tmp237_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp237_AST);
+    AST tmp262_AST=null;
+    tmp262_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp262_AST);
     match(COLON);
 {
-      _loop250:       do {
-        if ((LA(1) == WRITE)) {
+      _loop254:       do {
+        if ((_tokenSet_19.member(LA(1)))) {
           action_statement();
           astFactory.addASTChild(currentAST,returnAST);
           match(SEMI);
         }
+ else         if ((LA(1) == IF)) {
+          if_statement();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else         if (((LA(1) >= ELSE && LA(1) <= ENDIF))) {
+          logic_elseif();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
  else {
-          break _loop250;
+          break _loop254;
         }
       }
  while (true);
     }
-    AST tmp239_AST=null;
-    tmp239_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp239_AST);
+    AST tmp264_AST=null;
+    tmp264_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp264_AST);
     match(ENDBLOCK);
     action_slot_AST=(AST)currentAST.root;
   }
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_24);
+      recover(ex,_tokenSet_20);
     }
  else {
       throw ex;

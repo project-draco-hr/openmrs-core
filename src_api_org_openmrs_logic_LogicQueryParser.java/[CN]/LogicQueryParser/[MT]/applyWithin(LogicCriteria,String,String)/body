@@ -1,0 +1,17 @@
+{
+  Double durationValue=0d;
+  try {
+    durationValue=Double.parseDouble(duration);
+  }
+ catch (  Exception e) {
+    throw new LogicQueryParseException("Unable to parse value for logic query within statement duration: " + duration);
+  }
+  if (units.equalsIgnoreCase("SECONDS"))   return criteria.within(Duration.seconds(durationValue));
+ else   if (units.equalsIgnoreCase("MINUTES"))   return criteria.within(Duration.minutes(durationValue));
+ else   if (units.equalsIgnoreCase("HOURS"))   return criteria.within(Duration.hours(durationValue));
+ else   if (units.equalsIgnoreCase("DAYS"))   return criteria.within(Duration.days(durationValue));
+ else   if (units.equalsIgnoreCase("WEEKS"))   return criteria.within(Duration.weeks(durationValue));
+ else   if (units.equalsIgnoreCase("MONTHS"))   return criteria.within(Duration.months(durationValue));
+ else   if (units.equalsIgnoreCase("YEARS"))   return criteria.within(Duration.years(durationValue));
+  return criteria;
+}

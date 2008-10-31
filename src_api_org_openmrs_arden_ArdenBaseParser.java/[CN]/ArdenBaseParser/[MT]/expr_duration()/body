@@ -15,11 +15,11 @@ case MONTH:
 case MONTHS:
 case WEEK:
 case WEEKS:
+case SECOND:
 case LITERAL_hour:
 case LITERAL_hours:
 case LITERAL_minute:
 case LITERAL_minutes:
-case LITERAL_second:
 case LITERAL_seconds:
 {
           duration_op();
@@ -37,8 +37,6 @@ case BEFORE:
 case AFTER:
 case AGO:
 case AT:
-case IF:
-case NOT:
 case OR:
 case THEN:
 case MINIMUM:
@@ -51,26 +49,22 @@ case EARLIEST:
 case LATEST:
 case WHERE:
 case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
+case CALL:
 case SEMI:
 case ID:
+case GT:
+case GTE:
+case LT:
+case LTE:
+case COMMA:
 case LPAREN:
 case RPAREN:
-case 115:
-case 116:
-case COMMA:
 case ARDEN_CURLY_BRACKETS:
 case EQUALS:
 case LITERAL_EQ:
-case LT:
 case LITERAL_LT:
-case GT:
 case LITERAL_GT:
-case LTE:
 case LITERAL_LE:
-case GTE:
 case LITERAL_GE:
 case NE:
 case LITERAL_NE:
@@ -78,8 +72,10 @@ case ACTION_OP:
 case LITERAL_MERGE:
 case LITERAL_SORT:
 case LITERAL_SEQTO:
-case 174:
-case 175:
+case 178:
+case 179:
+case 180:
+case 181:
 {
         break;
       }
@@ -94,7 +90,7 @@ expr_duration_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_49);
+recover(ex,_tokenSet_47);
 }
  else {
 throw ex;

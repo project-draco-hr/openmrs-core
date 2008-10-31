@@ -3,44 +3,101 @@
   try {
     String key;
     ListIterator<MLMEvaluateElement> thisList;
-    thisList=evaluateList.listIterator(0);
+    LinkedList<MLMEvaluateElement> evalListBySection=evaluateList.get("data");
+    if (evalListBySection == null) {
+      evalListBySection=new LinkedList<MLMEvaluateElement>();
+      this.evaluateList.put("data",evalListBySection);
+    }
+    thisList=evalListBySection.listIterator(0);
     if (retValEval == false) {
       return false;
     }
-    w.append("\npublic Result eval(LogicContext context, Patient patient,\n" + "Map<String, Object> parameters) throws LogicException {\n");
-    w.append("\tString actionStr = \"\";\n");
-    w.append("\tResult ruleResult = new Result();\n");
-    w.append("\tBoolean ageOK = null;\n\n\n\ttry {\n");
-    w.append("\tuserVarMap = new HashMap <String, String>();\n");
-    w.append("\tfirstname = patient.getPersonName().getGivenName();\n");
-    w.append("\tuserVarMap.put(\"firstname\", firstname);\n");
-    w.append("\tinitAction();\n");
+    w.append("\n\tpublic Result eval(LogicContext context, Patient patient,\n" + "\t\t\tMap<String, Object> parameters) throws LogicException {\n\n");
+    w.append("\t\tString actionStr = \"\";\n");
+    w.append("\t\tHashMap resultLookup = new HashMap();\n");
+    w.append("\t\tBoolean ageOK = null;\n\n\t\ttry {\n");
+    w.append("\t\t\tthis.patient=patient;\n");
+    w.append("\t\t\tuserVarMap = new HashMap <String, String>();\n");
+    w.append("\t\t\tfirstname = patient.getPersonName().getGivenName();\n");
+    w.append("\t\t\tuserVarMap.put(\"firstname\", toProperCase(firstname));\n");
+    w.append("\t\t\tString lastName = patient.getFamilyName();\n");
+    w.append("\t\t\tuserVarMap.put(\"lastName\", lastName);\n");
+    w.append("\t\t\tString gender = patient.getGender();\n");
+    w.append("\t\t\tuserVarMap.put(\"Gender\", gender);\n");
+    w.append("\t\t\tif(gender.equalsIgnoreCase(\"M\")){\n");
+    w.append("\t\t\t\tuserVarMap.put(\"gender\",\"his\");\n");
+    w.append("\t\t\t\tuserVarMap.put(\"hisher\",\"his\");\n");
+    w.append("\t\t\t}else{\n");
+    w.append("\t\t\t\tuserVarMap.put(\"gender\",\"her\");\n");
+    w.append("\t\t\t\tuserVarMap.put(\"hisher\",\"her\");\n");
+    w.append("\t\t\t}\n");
+    w.append("\t\t\tinitAction();\n");
+    Iterator<Map.Entry<String,Comparison>> comparisonIterator=null;
+    if (this.comparisons.get("data") != null) {
+      comparisonIterator=this.comparisons.get("data").entrySet().iterator();
+    }
     while (thisList.hasNext()) {
-      Iterator iter1=thisList.next().iterator();
-      while (iter1.hasNext()) {
-        key=(String)iter1.next();
-        retVal=writeEvaluateConcept(key,w);
-        if (retVal == false) {
-          retValEval=false;
-        }
+      WriteData(thisList.next(),w,comparisonIterator);
+      w.flush();
+    }
+    Set<String> uniqueKeys=this.conceptMap.keySet();
+    uniqueKeys.remove("Gender");
+    w.append("\n\n\t\t\tif(evaluate_logic(resultLookup,parameters)){\n");
+    w.append("\t\t\t\tResult ruleResult = new Result();\n");
+    if (this.calls.get("action") != null) {
+      for (      Call currCall : this.calls.get("action")) {
+        currCall.write(w);
       }
     }
-    w.append("\n\tif(evaluate_logic(ruleResult)){\n");
-    w.append("\t\tactionStr = doAction();\n");
-    w.append("\t\truleResult.clear();\n");
-    w.append("\t\truleResult.add(new Result(actionStr));\n");
-    w.append("\t\treturn ruleResult;\n");
-    w.append("\n\t}\n\n");
-    w.append("\n} catch (LogicException e) {\n");
-    w.append("\t\treturn Result.emptyResult();");
-    w.append("\n}\n\treturn ruleResult;\n}\n\n");
+    w.append("\t\t\t\tfor(String currAction:actions){\n");
+    w.append("\t\t\t\t\tcurrAction = doAction(currAction);\n");
+    w.append("\t\t\t\t\truleResult.add(new Result(currAction));\n");
+    w.append("\t\t\t\t}\n");
+    w.append("\t\t\t\treturn ruleResult;\n");
+    w.append("\t\t\t}\n");
+    w.append("\t\t} catch (Exception e) {\n");
+    w.append("\t\t\treturn Result.emptyResult();");
+    w.append("\n\t\t}\n\t\treturn Result.emptyResult();\n\t}\n\n");
+    LinkedHashMap<String,Comparison> compListBySection=comparisons.get("logic");
+    Iterator<Map.Entry<String,Comparison>> comparisonIteratorLogic=compListBySection.entrySet().iterator();
+    while (comparisonIteratorLogic.hasNext()) {
+      Comparison comparison=comparisonIteratorLogic.next().getValue();
+      comparison.writeComparisonList(w);
+    }
+    w.append("\tprivate boolean evaluate_logic(HashMap resultLookup,Map<String, Object> parameters) throws LogicException {\n\n");
+    evalListBySection=evaluateList.get("logic");
+    if (evalListBySection == null) {
+      evalListBySection=new LinkedList<MLMEvaluateElement>();
+      this.evaluateList.put("logic",evalListBySection);
+    }
+    thisList=evalListBySection.listIterator(0);
+    w.append("\t\tResult Gender = new Result(userVarMap.get(\"Gender\"));\n");
+    for (    String uniqueKey : uniqueKeys) {
+      w.append("\t\tResult " + uniqueKey + " = (Result) resultLookup.get(\""+ uniqueKey+ "\");\n");
+    }
     w.append("\n");
-    w.append("private boolean evaluate_logic(Result valueMap) {\n");
-    w.append("\tboolean retVal = false;\n");
-    w.append("\tif(valueMap.exists())\n\t{\n");
-    w.append("\t\t//conclude here\n\t\tretVal = true;\n\t\treturn retVal;\n\t}\n\t\treturn retVal;");
-    w.append("\n\t}");
-    w.append("\n");
+    boolean skipReturn=false;
+    Iterator<LogicAssignment> logicIterator=this.logicAssignments.iterator();
+    if (compListBySection == null) {
+      compListBySection=new LinkedHashMap<String,Comparison>();
+      this.comparisons.put("logic",compListBySection);
+    }
+    ArrayList<Call> callBySection=this.calls.get("logic");
+    Iterator<Call> callIterator=null;
+    if (callBySection != null) {
+      callIterator=callBySection.iterator();
+    }
+    Iterator<Conclude> concludeIterator=this.concludes.iterator();
+    comparisonIteratorLogic=compListBySection.entrySet().iterator();
+    while (thisList.hasNext()) {
+      skipReturn=WriteLogic(thisList.next(),w,logicIterator,comparisonIteratorLogic,concludeIterator,callIterator);
+      w.flush();
+    }
+    if (!skipReturn) {
+      w.append("\treturn false;");
+    }
+    w.append("\t}");
+    w.append("\n\n");
   }
  catch (  Exception e) {
     System.err.println("Write Evaluate: " + e);

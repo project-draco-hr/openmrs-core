@@ -1,0 +1,26 @@
+{
+  String s="";
+  AST doubleAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST val2=null;
+  String a="", b="";
+  try {
+    AST __t139=_t;
+    AST tmp257_AST_in=(AST)_t;
+    match(_t,DOT);
+    _t=_t.getFirstChild();
+    val2=(AST)_t;
+    match(_t,INTLIT);
+    _t=_t.getNextSibling();
+    s=val2.getText();
+    _t=__t139;
+    _t=_t.getNextSibling();
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

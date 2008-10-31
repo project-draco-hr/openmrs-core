@@ -4,22 +4,22 @@
   String a="", b="";
   try {
 {
-      AST __t495=_t;
-      AST tmp118_AST_in=(AST)_t;
+      AST __t552=_t;
+      AST tmp131_AST_in=(AST)_t;
       match(_t,KNOWLEDGE);
       _t=_t.getFirstChild();
 {
-        _loop502:         do {
+        _loop561:         do {
           if (_t == null)           _t=ASTNULL;
           if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
 {
               if (_t == null)               _t=ASTNULL;
               if ((_t.getType() == DATA)) {
-                AST __t498=_t;
-                AST tmp119_AST_in=(AST)_t;
+                AST __t555=_t;
+                AST tmp132_AST_in=(AST)_t;
                 match(_t,DATA);
                 _t=_t.getFirstChild();
-                AST tmp120_AST_in=(AST)_t;
+                AST tmp133_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 b=textAST(_t,obj);
@@ -27,15 +27,15 @@
                 obj.setData(b);
                 s+=b;
                 s+="\n";
-                _t=__t498;
+                _t=__t555;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == PRIORITY)) {
-                AST __t499=_t;
-                AST tmp121_AST_in=(AST)_t;
+                AST __t556=_t;
+                AST tmp134_AST_in=(AST)_t;
                 match(_t,PRIORITY);
                 _t=_t.getFirstChild();
-                AST tmp122_AST_in=(AST)_t;
+                AST tmp135_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 b=doubleAST(_t,obj);
@@ -43,15 +43,15 @@
                 obj.setPriority(b);
                 s+=b;
                 s+="\n";
-                _t=__t499;
+                _t=__t556;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == LOGIC)) {
-                AST __t500=_t;
-                AST tmp123_AST_in=(AST)_t;
+                AST __t557=_t;
+                AST tmp136_AST_in=(AST)_t;
                 match(_t,LOGIC);
                 _t=_t.getFirstChild();
-                AST tmp124_AST_in=(AST)_t;
+                AST tmp137_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 b=textAST(_t,obj);
@@ -59,15 +59,15 @@
                 obj.setLogic(b);
                 s+=b;
                 s+="\n";
-                _t=__t500;
+                _t=__t557;
                 _t=_t.getNextSibling();
               }
  else               if ((_t.getType() == ACTION)) {
-                AST __t501=_t;
-                AST tmp125_AST_in=(AST)_t;
+                AST __t558=_t;
+                AST tmp138_AST_in=(AST)_t;
                 match(_t,ACTION);
                 _t=_t.getFirstChild();
-                AST tmp126_AST_in=(AST)_t;
+                AST tmp139_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 b=textAST(_t,obj);
@@ -75,14 +75,46 @@
                 obj.setAction(b);
                 s+=b;
                 s+="\n";
-                _t=__t501;
+                _t=__t558;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == AGE_MIN)) {
+                AST __t559=_t;
+                AST tmp140_AST_in=(AST)_t;
+                match(_t,AGE_MIN);
+                _t=_t.getFirstChild();
+                AST tmp141_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setAgeMin(b);
+                s+=b;
+                s+="\n";
+                _t=__t559;
+                _t=_t.getNextSibling();
+              }
+ else               if ((_t.getType() == AGE_MAX)) {
+                AST __t560=_t;
+                AST tmp142_AST_in=(AST)_t;
+                match(_t,AGE_MAX);
+                _t=_t.getFirstChild();
+                AST tmp143_AST_in=(AST)_t;
+                match(_t,COLON);
+                _t=_t.getNextSibling();
+                b=doubleAST(_t,obj);
+                _t=_retTree;
+                obj.setAgeMax(b);
+                s+=b;
+                s+="\n";
+                _t=__t560;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
                 s+=a;
-                AST tmp127_AST_in=(AST)_t;
+                AST tmp144_AST_in=(AST)_t;
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
                 s+="\n";
@@ -93,12 +125,12 @@
             }
           }
  else {
-            break _loop502;
+            break _loop561;
           }
         }
  while (true);
       }
-      _t=__t495;
+      _t=__t552;
       _t=_t.getNextSibling();
     }
   }

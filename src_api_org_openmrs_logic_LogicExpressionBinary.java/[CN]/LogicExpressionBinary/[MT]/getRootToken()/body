@@ -1,0 +1,13 @@
+{
+  for (  Object operand : operands) {
+    if (operand != null) {
+      if (operand instanceof LogicExpression) {
+        return ((LogicExpression)operand).getRootToken();
+      }
+ else {
+        return operand.toString();
+      }
+    }
+  }
+  return null;
+}

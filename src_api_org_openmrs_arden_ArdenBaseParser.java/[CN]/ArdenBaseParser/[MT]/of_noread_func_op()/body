@@ -6,18 +6,18 @@
 switch (LA(1)) {
 case TIME:
 {
-        AST tmp568_AST=null;
-        tmp568_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp568_AST);
+        AST tmp634_AST=null;
+        tmp634_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp634_AST);
         match(TIME);
         of_noread_func_op_AST=(AST)currentAST.root;
         break;
       }
 case ANY:
 {
-      AST tmp569_AST=null;
-      tmp569_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp569_AST);
+      AST tmp635_AST=null;
+      tmp635_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp635_AST);
       match(ANY);
       of_noread_func_op_AST=(AST)currentAST.root;
       break;
@@ -31,7 +31,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_72);
+recover(ex,_tokenSet_73);
 }
  else {
 throw ex;

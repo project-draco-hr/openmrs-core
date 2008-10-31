@@ -18,8 +18,11 @@ case NOW:
 case SEMI:
 case ID:
 {
-        data_assignment();
-        astFactory.addASTChild(currentAST,returnAST);
+{
+          data_assignment();
+          astFactory.addASTChild(currentAST,returnAST);
+          match(SEMI);
+        }
         break;
       }
 case ELSE:
@@ -41,7 +44,7 @@ data_statement_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_33);
+recover(ex,_tokenSet_30);
 }
  else {
 throw ex;

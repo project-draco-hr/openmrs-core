@@ -1,0 +1,97 @@
+{
+  String s="";
+  AST callSectionAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  String a="", b="";
+  try {
+{
+      AST __t439=_t;
+      AST tmp27_AST_in=(AST)_t;
+      match(_t,CALL);
+      _t=_t.getFirstChild();
+{
+        a=callStringAST(_t,section,obj,key);
+        _t=_retTree;
+      }
+{
+        if (_t == null)         _t=ASTNULL;
+switch (_t.getType()) {
+case TRUE:
+case FALSE:
+case NULL:
+case INTLIT:
+case ID:
+case STRING_LITERAL:
+case ACTION_OP:
+case TERM_LITERAL:
+{
+            b=callStringAST(_t,section,obj,a);
+            _t=_retTree;
+            break;
+          }
+case 3:
+case WITH:
+{
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(_t);
+      }
+  }
+}
+if (b.equals("")) {
+  b=a;
+  a="";
+}
+obj.AddToEvaluateList(section,"call");
+obj.addCall(section,a,b);
+{
+  if (_t == null)   _t=ASTNULL;
+switch (_t.getType()) {
+case WITH:
+{
+{
+        AST tmp28_AST_in=(AST)_t;
+        match(_t,WITH);
+        _t=_t.getNextSibling();
+        b=callStringAST(_t,section,obj,a);
+        _t=_retTree;
+      }
+{
+        _loop445:         do {
+          if (_t == null)           _t=ASTNULL;
+          if ((_tokenSet_1.member(_t.getType()))) {
+            a=callStringAST(_t,section,obj,a);
+            _t=_retTree;
+          }
+ else {
+            break _loop445;
+          }
+        }
+ while (true);
+      }
+      break;
+    }
+case 3:
+{
+    break;
+  }
+default :
+{
+  throw new NoViableAltException(_t);
+}
+}
+}
+_t=__t439;
+_t=_t.getNextSibling();
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

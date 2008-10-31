@@ -1,22 +1,18 @@
 {
   try {
-    ConceptClass cc=Context.getConceptService().getConceptClassByName("Test");
-    List<Concept> testConcepts=Context.getConceptService().getConceptsByClass(cc);
-    for (    Concept c : testConcepts) {
-      String name=c.getName().getName();
-      ruleMap.put(name,new ReferenceRule("obs." + name));
-    }
-    cc=Context.getConceptService().getConceptClassByName("Finding");
-    List<Concept> findingConcepts=Context.getConceptService().getConceptsByClass(cc);
-    for (    Concept c : findingConcepts) {
-      String name=c.getName().getName();
-      ruleMap.put(name,new ReferenceRule("obs." + name));
-    }
-    cc=Context.getConceptService().getConceptClassByName("Question");
-    List<Concept> questionConcepts=Context.getConceptService().getConceptsByClass(cc);
-    for (    Concept c : questionConcepts) {
-      String name=c.getName().getName();
-      ruleMap.put(name,new ReferenceRule("obs." + name));
+    ObsDataSource obsdatasource=(ObsDataSource)Context.getLogicService().getLogicDataSource("obs");
+    ArrayList<String> classes=new ArrayList<String>();
+    classes.add("Test");
+    classes.add("Finding");
+    classes.add("Question");
+    for (    String currClass : classes) {
+      ConceptClass cc=Context.getConceptService().getConceptClassByName(currClass);
+      List<Concept> classConcepts=Context.getConceptService().getConceptsByClass(cc);
+      for (      Concept c : classConcepts) {
+        String name=c.getBestName(Context.getLocale()).getName();
+        obsdatasource.addKey(name);
+        ruleMap.put(name,new ReferenceRule("obs." + name));
+      }
     }
     ruleMap.put("HIV POSITIVE",new HIVPositiveRule());
     ruleMap.put("GENDER",getRule("%%person.gender"));

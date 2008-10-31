@@ -127,6 +127,9 @@
             ed.setAsText(valueAsString);
             value=ed.getValue();
           }
+ else           if (LogicCriteria.class.equals(valueClass)) {
+            value=Context.getLogicService().parseString(valueAsString);
+          }
  else {
             value=valueAsString;
           }

@@ -1,0 +1,52 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class);
+  Date indexDate=Calendar.getInstance().getTime();
+  Operator transformOperator=null;
+  LogicTransform transform=expression.getTransform();
+  Integer numResults=null;
+  if (transform != null) {
+    transformOperator=transform.getTransformOperator();
+    numResults=transform.getNumResults();
+  }
+  if (numResults == null) {
+    numResults=1;
+  }
+  if (transformOperator == Operator.LAST) {
+    criteria.addOrder(Order.desc("obsDatetime")).addOrder(Order.desc("dateCreated")).addOrder(Order.desc("obsId"));
+  }
+ else   if (transformOperator == Operator.FIRST) {
+    criteria.addOrder(Order.asc("obsDatetime")).addOrder(Order.asc("dateCreated")).addOrder(Order.asc("obsId"));
+  }
+ else   if (transformOperator == Operator.DISTINCT) {
+    criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  }
+  Criterion c=this.getCriterion(expression,indexDate);
+  if (c != null) {
+    criteria.add(c);
+  }
+  List<Obs> results=new ArrayList<Obs>();
+  criteria.add(Restrictions.eq("voided",false));
+  criteria.add(Restrictions.in("person.personId",who.getMemberIds()));
+  results.addAll(criteria.list());
+  if (transformOperator == Operator.FIRST || transformOperator == Operator.LAST) {
+    HashMap<Integer,ArrayList<Obs>> nResultMap=new HashMap<Integer,ArrayList<Obs>>();
+    for (    Obs currResult : results) {
+      Integer currPersonId=currResult.getPersonId();
+      ArrayList<Obs> prevResults=nResultMap.get(currPersonId);
+      if (prevResults == null) {
+        prevResults=new ArrayList<Obs>();
+        nResultMap.put(currPersonId,prevResults);
+      }
+      if (prevResults.size() < numResults) {
+        prevResults.add(currResult);
+      }
+    }
+    if (nResultMap.values().size() > 0) {
+      results.clear();
+      for (      ArrayList<Obs> currPatientObs : nResultMap.values()) {
+        results.addAll(currPatientObs);
+      }
+    }
+  }
+  return results;
+}

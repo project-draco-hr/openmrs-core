@@ -4,36 +4,51 @@
   String a, b;
   try {
 {
-      _loop474:       do {
+      _loop528:       do {
         if (_t == null)         _t=ASTNULL;
-        if ((_t.getType() == WRITE)) {
-          System.err.println("-----------Starting Write -------");
-          s=writeAST(_t,obj);
-          _t=_retTree;
-          obj.setActionStr(s);
-          System.err.println("\n");
-          System.err.println("-----------End Write -------");
-        }
- else {
-          break _loop474;
-        }
-      }
- while (true);
-    }
+switch (_t.getType()) {
+case WRITE:
 {
-      AST tmp104_AST_in=(AST)_t;
-      match(_t,ENDBLOCK);
-      _t=_t.getNextSibling();
-    }
-    System.err.println("\n");
-    System.err.println("-----------End Action -------");
+            System.err.println("-----------Starting Write -------");
+            s=writeAST(_t,obj);
+            _t=_retTree;
+            System.err.println("\n");
+            System.err.println("-----------End Write -------");
+            break;
+          }
+case CALL:
+{
+          System.err.println("-----------Starting CALL -------");
+          obj.InitEvaluateList("action",null);
+          a="";
+          callSectionAST(_t,obj,a,"action");
+          _t=_retTree;
+          System.err.println("\n");
+          System.err.println("-----------End CALL -------");
+          break;
+        }
+default :
+{
+        break _loop528;
+      }
   }
- catch (  RecognitionException ex) {
-    reportError(ex);
-    if (_t != null) {
-      _t=_t.getNextSibling();
-    }
-  }
-  _retTree=_t;
-  return s;
+}
+ while (true);
+}
+{
+AST tmp112_AST_in=(AST)_t;
+match(_t,ENDBLOCK);
+_t=_t.getNextSibling();
+}
+System.err.println("\n");
+System.err.println("-----------End Action -------");
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
 }

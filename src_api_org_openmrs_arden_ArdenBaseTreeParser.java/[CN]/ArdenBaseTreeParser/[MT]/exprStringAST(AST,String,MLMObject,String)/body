@@ -1,0 +1,262 @@
+{
+  String s="";
+  AST exprStringAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST ift=null;
+  AST val=null;
+  AST val2=null;
+  AST strlit=null;
+  AST termlit=null;
+  AST nulllit=null;
+  AST id=null;
+  AST str=null;
+  String a="", b="";
+  try {
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case ID:
+{
+          AST __t492=_t;
+          ift=_t == ASTNULL ? null : (AST)_t;
+          match(_t,ID);
+          _t=_t.getFirstChild();
+          a=ift.getText();
+          System.err.println("text = " + a);
+          if (instr.equals("")) {
+            obj.AddToEvaluateList(section,a);
+            s=a;
+          }
+ else           if (instr.startsWith("__Temp__")) {
+            obj.SetAnswerListKey(section,a);
+            obj.AddToEvaluateList(section,a);
+          }
+ else           if (instr.equals("CTX")) {
+            s=a;
+          }
+ else           if (instr.equals("notnull")) {
+            obj.AddToEvaluateList(section,a);
+            if (obj.GetMLMObjectElement(a) == null) {
+              s="Func_1";
+            }
+ else {
+              s=a;
+            }
+          }
+ else {
+            obj.SetAnswer(section,a,instr);
+            s=a;
+          }
+          _t=__t492;
+          _t=_t.getNextSibling();
+          break;
+        }
+case TRUE:
+case FALSE:
+{
+{
+          if (_t == null)           _t=ASTNULL;
+switch (_t.getType()) {
+case TRUE:
+{
+              AST __t494=_t;
+              AST tmp82_AST_in=(AST)_t;
+              match(_t,TRUE);
+              _t=_t.getFirstChild();
+              obj.SetAnswer(section,true,instr);
+              _t=__t494;
+              _t=_t.getNextSibling();
+              break;
+            }
+case FALSE:
+{
+            AST __t495=_t;
+            AST tmp83_AST_in=(AST)_t;
+            match(_t,FALSE);
+            _t=_t.getFirstChild();
+            obj.SetAnswer(section,false,instr);
+            _t=__t495;
+            _t=_t.getNextSibling();
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(_t);
+        }
+    }
+  }
+  break;
+}
+case INTLIT:
+{
+{
+  val=(AST)_t;
+  match(_t,INTLIT);
+  _t=_t.getNextSibling();
+  b=val.getText();
+  Integer i=Integer.parseInt(b);
+  Double idbl=null;
+{
+{
+      if (_t == null)       _t=ASTNULL;
+switch (_t.getType()) {
+case DOT:
+{
+          AST tmp84_AST_in=(AST)_t;
+          match(_t,DOT);
+          _t=_t.getNextSibling();
+          val2=(AST)_t;
+          match(_t,INTLIT);
+          _t=_t.getNextSibling();
+          a=val2.getText();
+          String dbl=b + "." + a;
+          idbl=Double.parseDouble(dbl);
+          break;
+        }
+case 3:
+case AND:
+case COUNT:
+case IN:
+case LESS:
+case GREATER:
+case IF:
+case OR:
+case THEN:
+case READ:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EVENT:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case CONCLUDE:
+case ELSE:
+case ELSEIF:
+case ENDIF:
+case TRUE:
+case FALSE:
+case CALL:
+case TO:
+case NULL:
+case ENDBLOCK:
+case INTLIT:
+case ID:
+case GT:
+case GTE:
+case LT:
+case LTE:
+case COMMA:
+case STRING_LITERAL:
+case ARDEN_CURLY_BRACKETS:
+case EQUALS:
+case ACTION_OP:
+case TERM_LITERAL:
+{
+        break;
+      }
+default :
+{
+      throw new NoViableAltException(_t);
+    }
+}
+}
+}
+if (idbl == null) {
+obj.SetAnswer(section,i,instr);
+}
+ else {
+obj.SetAnswer(section,idbl,instr);
+}
+}
+break;
+}
+case STRING_LITERAL:
+{
+{
+strlit=(AST)_t;
+match(_t,STRING_LITERAL);
+_t=_t.getNextSibling();
+b=strlit.getText();
+obj.SetAnswer(section,b,instr);
+}
+break;
+}
+case TERM_LITERAL:
+{
+{
+termlit=(AST)_t;
+match(_t,TERM_LITERAL);
+_t=_t.getNextSibling();
+if (instr.equals("")) {
+b=termlit.getText();
+s=obj.SetAnswerList(section,b,instr);
+}
+ else if (instr.equals("CTX")) {
+s=a;
+}
+ else if (instr.equals("notnull")) {
+}
+ else {
+b=termlit.getText();
+obj.SetAnswer(section,b,instr);
+}
+}
+break;
+}
+case NULL:
+{
+{
+nulllit=(AST)_t;
+match(_t,NULL);
+_t=_t.getNextSibling();
+b=nulllit.getText();
+obj.SetAnswer(section,null,instr);
+}
+break;
+}
+case ACTION_OP:
+{
+AST __t502=_t;
+AST tmp85_AST_in=(AST)_t;
+match(_t,ACTION_OP);
+_t=_t.getFirstChild();
+id=(AST)_t;
+match(_t,ID);
+_t=_t.getNextSibling();
+a=id.getText();
+AST tmp86_AST_in=(AST)_t;
+match(_t,ACTION_OP);
+_t=_t.getNextSibling();
+str=(AST)_t;
+match(_t,STRING_LITERAL);
+_t=_t.getNextSibling();
+b=str.getText();
+obj.addLogicAssignment(a,b);
+_t=__t502;
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

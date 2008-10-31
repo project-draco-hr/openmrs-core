@@ -4,48 +4,108 @@
   AST datepart_AST=null;
   try {
 {
-      AST tmp327_AST=null;
-      tmp327_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp327_AST);
+      AST tmp395_AST=null;
+      tmp395_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp395_AST);
       match(INTLIT);
+      AST tmp396_AST=null;
+      tmp396_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp396_AST);
+      match(MINUS);
+      AST tmp397_AST=null;
+      tmp397_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp397_AST);
+      match(INTLIT);
+      AST tmp398_AST=null;
+      tmp398_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp398_AST);
+      match(MINUS);
+      AST tmp399_AST=null;
+      tmp399_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp399_AST);
+      match(INTLIT);
+    }
 {
-        int _cnt59=0;
-        _loop59:         do {
-          if ((LA(1) == MINUS)) {
-            AST tmp328_AST=null;
-            tmp328_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp328_AST);
-            match(MINUS);
-            AST tmp329_AST=null;
-            tmp329_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp329_AST);
+switch (LA(1)) {
+case ID:
+{
+{
+            AST tmp400_AST=null;
+            tmp400_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp400_AST);
+            match(ID);
+          }
+{
+            AST tmp401_AST=null;
+            tmp401_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp401_AST);
+            match(COLON);
+            AST tmp402_AST=null;
+            tmp402_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp402_AST);
+            match(INTLIT);
+            AST tmp403_AST=null;
+            tmp403_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp403_AST);
+            match(COLON);
+            AST tmp404_AST=null;
+            tmp404_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp404_AST);
             match(INTLIT);
           }
- else {
-            if (_cnt59 >= 1) {
-              break _loop59;
+{
+switch (LA(1)) {
+case DOT:
+{
+                AST tmp405_AST=null;
+                tmp405_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp405_AST);
+                match(DOT);
+                AST tmp406_AST=null;
+                tmp406_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp406_AST);
+                match(DIGIT);
+                break;
+              }
+case EOF:
+case ENDBLOCK:
+case MINUS:
+case ID:
+case PLUS:
+{
+              break;
             }
- else {
-              throw new NoViableAltException(LT(1),getFilename());
-            }
+default :
+{
+            throw new NoViableAltException(LT(1),getFilename());
           }
-          _cnt59++;
-        }
- while (true);
       }
     }
-    timepart_opt();
+    time_zone();
     astFactory.addASTChild(currentAST,returnAST);
-    datepart_AST=(AST)currentAST.root;
+    break;
   }
- catch (  RecognitionException ex) {
-    if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_27);
-    }
+case EOF:
+case ENDBLOCK:
+{
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+datepart_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_26);
+}
  else {
-      throw ex;
-    }
-  }
-  returnAST=datepart_AST;
+throw ex;
+}
+}
+returnAST=datepart_AST;
 }

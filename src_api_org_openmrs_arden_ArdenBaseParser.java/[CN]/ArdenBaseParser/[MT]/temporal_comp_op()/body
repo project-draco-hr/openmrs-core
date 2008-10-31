@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case WITHIN:
 {
-        AST tmp429_AST=null;
-        tmp429_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp429_AST);
+        AST tmp487_AST=null;
+        tmp487_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp487_AST);
         match(WITHIN);
 {
 switch (LA(1)) {
@@ -27,9 +27,9 @@ default :
         }
     }
   }
-  AST tmp430_AST=null;
-  tmp430_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp430_AST);
+  AST tmp488_AST=null;
+  tmp488_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp488_AST);
   match(PAST);
   expr_string();
   astFactory.addASTChild(currentAST,returnAST);
@@ -38,10 +38,21 @@ default :
 }
 case AFTER:
 {
-AST tmp431_AST=null;
-tmp431_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp431_AST);
+AST tmp489_AST=null;
+tmp489_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp489_AST);
 match(AFTER);
+expr_string();
+astFactory.addASTChild(currentAST,returnAST);
+temporal_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case BEFORE:
+{
+AST tmp490_AST=null;
+tmp490_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp490_AST);
+match(BEFORE);
 expr_string();
 astFactory.addASTChild(currentAST,returnAST);
 temporal_comp_op_AST=(AST)currentAST.root;
@@ -56,7 +67,7 @@ throw new NoViableAltException(LT(1),getFilename());
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_44);
+recover(ex,_tokenSet_42);
 }
  else {
 throw ex;

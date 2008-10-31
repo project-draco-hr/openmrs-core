@@ -1,0 +1,11 @@
+{
+  if (dateText.equalsIgnoreCase("TODAY"))   return new Date();
+  DateFormat fmt=new SimpleDateFormat("yyyy-MM-dd");
+  Date dateValue=null;
+  try {
+    dateValue=fmt.parse(dateText);
+  }
+ catch (  Exception e) {
+  }
+  return dateValue;
+}

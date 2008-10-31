@@ -4,18 +4,51 @@
   String a, b;
   try {
 {
-      AST __t331=_t;
-      AST tmp20_AST_in=(AST)_t;
+      AST __t347=_t;
+      AST tmp21_AST_in=(AST)_t;
       match(_t,IF);
       _t=_t.getFirstChild();
-      obj.ResetConceptVar();
-      obj.InitEvaluateList();
-      s=exprAST(_t,obj);
+      obj.InitEvaluateList("data","IF");
+      obj.AddToEvaluateList("data","IF");
+      s=exprAST(_t,"data",obj);
       _t=_retTree;
-      AST tmp21_AST_in=(AST)_t;
+      AST tmp22_AST_in=(AST)_t;
       match(_t,THEN);
       _t=_t.getNextSibling();
-      _t=__t331;
+      obj.AddToEvaluateList("data","THEN");
+{
+        _loop349:         do {
+          if (_t == null)           _t=ASTNULL;
+          if ((_tokenSet_0.member(_t.getType()))) {
+            System.err.println("-----------Starting Read -------");
+            s=readAST(_t,obj,s);
+            _t=_retTree;
+            obj.AddToEvaluateList("data",s);
+            System.err.println("\n");
+            System.err.println("-----------End Read -------");
+          }
+ else           if ((_t.getType() == EVENT || _t.getType() == ID)) {
+            System.err.println("----------------Starting Event-------");
+            eventAST(_t);
+            _t=_retTree;
+            System.err.println("\n");
+            System.err.println("-----------End Event -------");
+          }
+ else           if ((_t.getType() == CALL)) {
+            System.err.println("-----------Starting Data CALL -------");
+            a="";
+            callSectionAST(_t,obj,a,"data");
+            _t=_retTree;
+            System.err.println("\n");
+            System.err.println("-----------End CALL -------");
+          }
+ else {
+            break _loop349;
+          }
+        }
+ while (true);
+      }
+      _t=__t347;
       _t=_t.getNextSibling();
     }
   }

@@ -1,0 +1,19 @@
+{
+  int unitIndex=ageMin.indexOf("days");
+  if (unitIndex < 0) {
+    unitIndex=ageMin.indexOf("weeks");
+  }
+  if (unitIndex < 0) {
+    unitIndex=ageMin.indexOf("months");
+  }
+  if (unitIndex < 0) {
+    unitIndex=ageMin.indexOf("years");
+  }
+  if (unitIndex > 0) {
+    this.ageMinUnits=ageMin.substring(unitIndex,ageMin.length());
+    this.ageMin=Integer.parseInt(ageMin.substring(0,unitIndex));
+  }
+ else {
+    this.ageMin=Integer.parseInt(ageMin);
+  }
+}

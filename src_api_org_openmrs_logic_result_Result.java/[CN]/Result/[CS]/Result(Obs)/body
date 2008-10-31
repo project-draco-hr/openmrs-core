@@ -1,12 +1,11 @@
 {
-  this(obs.getObsDatetime(),null,obs.getValueAsBoolean(),obs.getValueCoded(),obs.getValueDatetime(),obs.getValueNumeric(),obs.getValueText());
+  this(obs.getObsDatetime(),null,obs.getValueAsBoolean(),obs.getValueCoded(),obs.getValueDatetime(),obs.getValueNumeric(),obs.getValueText(),obs);
   Concept concept=obs.getConcept();
   ConceptDatatype conceptDatatype=null;
   if (concept != null) {
     conceptDatatype=concept.getDatatype();
     if (conceptDatatype == null) {
-      concept=Context.getConceptService().getConcept(concept.getConceptId());
-      conceptDatatype=concept.getDatatype();
+      return;
     }
     if (conceptDatatype.isCoded())     this.datatype=Datatype.CODED;
  else     if (conceptDatatype.isNumeric())     this.datatype=Datatype.NUMERIC;

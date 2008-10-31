@@ -6,9 +6,9 @@
 switch (LA(1)) {
 case INTLIT:
 {
-        AST tmp541_AST=null;
-        tmp541_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp541_AST);
+        AST tmp600_AST=null;
+        tmp600_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp600_AST);
         match(INTLIT);
         urgency_val_AST=(AST)currentAST.root;
         break;
@@ -27,7 +27,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_26);
+recover(ex,_tokenSet_25);
 }
  else {
 throw ex;

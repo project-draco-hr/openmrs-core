@@ -6,31 +6,31 @@
     expr_where();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop271:       do {
+      _loop284:       do {
         if ((LA(1) == LITERAL_MERGE || LA(1) == LITERAL_SORT)) {
 {
 switch (LA(1)) {
 case LITERAL_MERGE:
 {
-                AST tmp542_AST=null;
-                tmp542_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp542_AST);
+                AST tmp605_AST=null;
+                tmp605_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp605_AST);
                 match(LITERAL_MERGE);
                 break;
               }
 case LITERAL_SORT:
 {
 {
-                AST tmp543_AST=null;
-                tmp543_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp543_AST);
+                AST tmp606_AST=null;
+                tmp606_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp606_AST);
                 match(LITERAL_SORT);
 {
                   if ((LA(1) == TIME || LA(1) == LITERAL_DATA)) {
                     sort_option();
                     astFactory.addASTChild(currentAST,returnAST);
                   }
- else                   if ((_tokenSet_63.member(LA(1)))) {
+ else                   if ((_tokenSet_64.member(LA(1)))) {
                   }
  else {
                     throw new NoViableAltException(LT(1),getFilename());
@@ -49,7 +49,7 @@ default :
     astFactory.addASTChild(currentAST,returnAST);
   }
  else {
-    break _loop271;
+    break _loop284;
   }
 }
  while (true);
@@ -59,7 +59,7 @@ expr_sort_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_64);
+recover(ex,_tokenSet_65);
 }
  else {
 throw ex;

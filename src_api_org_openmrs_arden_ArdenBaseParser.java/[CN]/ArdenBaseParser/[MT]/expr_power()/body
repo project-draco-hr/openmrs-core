@@ -6,31 +6,31 @@
     expr_duration();
     astFactory.addASTChild(currentAST,returnAST);
 {
-      _loop306:       do {
+      _loop317:       do {
         if (((LA(1) >= FROM && LA(1) <= AFTER))) {
 {
 switch (LA(1)) {
 case BEFORE:
 {
-                AST tmp555_AST=null;
-                tmp555_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp555_AST);
+                AST tmp618_AST=null;
+                tmp618_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp618_AST);
                 match(BEFORE);
                 break;
               }
 case AFTER:
 {
-              AST tmp556_AST=null;
-              tmp556_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp556_AST);
+              AST tmp619_AST=null;
+              tmp619_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp619_AST);
               match(AFTER);
               break;
             }
 case FROM:
 {
-            AST tmp557_AST=null;
-            tmp557_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp557_AST);
+            AST tmp620_AST=null;
+            tmp620_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp620_AST);
             match(FROM);
             break;
           }
@@ -44,7 +44,7 @@ default :
   astFactory.addASTChild(currentAST,returnAST);
 }
  else {
-  break _loop306;
+  break _loop317;
 }
 }
  while (true);
@@ -53,9 +53,9 @@ default :
 switch (LA(1)) {
 case AGO:
 {
-  AST tmp558_AST=null;
-  tmp558_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp558_AST);
+  AST tmp621_AST=null;
+  tmp621_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp621_AST);
   match(AGO);
   break;
 }
@@ -66,8 +66,6 @@ case ARE:
 case WAS:
 case WERE:
 case AT:
-case IF:
-case NOT:
 case OR:
 case THEN:
 case MINIMUM:
@@ -80,26 +78,22 @@ case EARLIEST:
 case LATEST:
 case WHERE:
 case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
+case CALL:
 case SEMI:
 case ID:
+case GT:
+case GTE:
+case LT:
+case LTE:
+case COMMA:
 case LPAREN:
 case RPAREN:
-case 115:
-case 116:
-case COMMA:
 case ARDEN_CURLY_BRACKETS:
 case EQUALS:
 case LITERAL_EQ:
-case LT:
 case LITERAL_LT:
-case GT:
 case LITERAL_GT:
-case LTE:
 case LITERAL_LE:
-case GTE:
 case LITERAL_GE:
 case NE:
 case LITERAL_NE:
@@ -107,8 +101,10 @@ case ACTION_OP:
 case LITERAL_MERGE:
 case LITERAL_SORT:
 case LITERAL_SEQTO:
-case 174:
-case 175:
+case 178:
+case 179:
+case 180:
+case 181:
 {
 break;
 }
@@ -123,7 +119,7 @@ expr_power_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_70);
+recover(ex,_tokenSet_71);
 }
  else {
 throw ex;

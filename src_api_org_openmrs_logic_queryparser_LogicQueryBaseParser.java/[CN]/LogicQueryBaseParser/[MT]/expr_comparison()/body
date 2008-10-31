@@ -1,0 +1,71 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_comparison_AST=null;
+  try {
+    expr_string();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+switch (LA(1)) {
+case EQUALS:
+case LITERAL_EQ:
+case LT:
+case LITERAL_LT:
+case GT:
+case LITERAL_GT:
+case LTE:
+case LITERAL_LE:
+case GTE:
+case LITERAL_GE:
+case NE:
+case LITERAL_NE:
+{
+{
+            simple_comp_op();
+            astFactory.addASTChild(currentAST,returnAST);
+            expr_string();
+            astFactory.addASTChild(currentAST,returnAST);
+          }
+          break;
+        }
+case IS:
+case ARE:
+case WAS:
+case WERE:
+{
+{
+          is();
+          main_comp_op();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+        break;
+      }
+case AND:
+case BEFORE:
+case AFTER:
+case OR:
+case WHERE:
+case WITHIN:
+case COMMA:
+case RPAREN:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case LITERAL_SEQTO:
+case SEMI:
+{
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+expr_comparison_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_12);
+}
+returnAST=expr_comparison_AST;
+}

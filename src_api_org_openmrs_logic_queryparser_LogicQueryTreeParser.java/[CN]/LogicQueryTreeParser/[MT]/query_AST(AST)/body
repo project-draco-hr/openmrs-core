@@ -1,0 +1,267 @@
+{
+  LogicCriteria lc_return=null;
+  AST query_AST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST ift=null;
+  AST ifst=null;
+  AST val=null;
+  AST idt=null;
+  AST idstr=null;
+  AST valstr=null;
+  AST val1=null;
+  AST val2=null;
+  String a="", b="";
+  Operator transform=null, comp_op=null, temporal_op=null;
+  boolean lcFormed=false;
+  LogicCriteria lc=null;
+  try {
+{
+{
+        if (_t == null)         _t=ASTNULL;
+switch (_t.getType()) {
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+{
+            transform=of_from_AST(_t);
+            _t=_retTree;
+            break;
+          }
+case ID:
+case INTLIT:
+case STRING_LITERAL:
+{
+          break;
+        }
+default :
+{
+        throw new NoViableAltException(_t);
+      }
+  }
+}
+{
+  if (_t == null)   _t=ASTNULL;
+switch (_t.getType()) {
+case ID:
+{
+      AST __t124=_t;
+      ift=_t == ASTNULL ? null : (AST)_t;
+      match(_t,ID);
+      _t=_t.getFirstChild();
+      a=ift.getText();
+      _t=__t124;
+      _t=_t.getNextSibling();
+      break;
+    }
+case STRING_LITERAL:
+{
+    AST __t125=_t;
+    ifst=_t == ASTNULL ? null : (AST)_t;
+    match(_t,STRING_LITERAL);
+    _t=_t.getFirstChild();
+    a=ifst.getText();
+    _t=__t125;
+    _t=_t.getNextSibling();
+    break;
+  }
+case INTLIT:
+{
+  AST __t126=_t;
+  val=_t == ASTNULL ? null : (AST)_t;
+  match(_t,INTLIT);
+  _t=_t.getFirstChild();
+  a=val.getText();
+  _t=__t126;
+  _t=_t.getNextSibling();
+  break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+if ((_tokenSet_0.member(_t.getType()))) {
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case EQUALS:
+case LT:
+case GT:
+case LTE:
+case GTE:
+{
+  comp_op=simple_comp_op(_t);
+  _t=_retTree;
+{
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case ID:
+{
+        AST __t130=_t;
+        idt=_t == ASTNULL ? null : (AST)_t;
+        match(_t,ID);
+        _t=_t.getFirstChild();
+        b+=idt.getText();
+        lc=new LogicCriteria(null,a);
+        lc.appendExpression(comp_op,b);
+        lcFormed=true;
+        _t=__t130;
+        _t=_t.getNextSibling();
+        break;
+      }
+case STRING_LITERAL:
+{
+      AST __t131=_t;
+      idstr=_t == ASTNULL ? null : (AST)_t;
+      match(_t,STRING_LITERAL);
+      _t=_t.getFirstChild();
+      b+=idstr.getText();
+      lc=new LogicCriteria(null,a);
+      lc.appendExpression(comp_op,b);
+      lcFormed=true;
+      _t=__t131;
+      _t=_t.getNextSibling();
+      break;
+    }
+case INTLIT:
+{
+    AST __t132=_t;
+    valstr=_t == ASTNULL ? null : (AST)_t;
+    match(_t,INTLIT);
+    _t=_t.getFirstChild();
+    b+=valstr.getText();
+    Integer i=null;
+    i=Integer.parseInt(b);
+    lc=new LogicCriteria(null,a);
+    lc.appendExpression(comp_op,i);
+    lcFormed=true;
+    _t=__t132;
+    _t=_t.getNextSibling();
+    break;
+  }
+case DOT:
+{
+  AST __t133=_t;
+  AST tmp240_AST_in=(AST)_t;
+  match(_t,DOT);
+  _t=_t.getFirstChild();
+  val1=(AST)_t;
+  match(_t,INTLIT);
+  _t=_t.getNextSibling();
+  b=val1.getText();
+  val2=(AST)_t;
+  match(_t,INTLIT);
+  _t=_t.getNextSibling();
+  Double idbl=null;
+  String dbl=b + "." + val2.getText();
+  idbl=Double.parseDouble(dbl);
+  lc=new LogicCriteria(null,a);
+  lc.appendExpression(comp_op,idbl);
+  lcFormed=true;
+  _t=__t133;
+  _t=_t.getNextSibling();
+  break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case BEFORE:
+case AFTER:
+{
+temporal_op=temporal_comp_op(_t);
+_t=_retTree;
+{
+GregorianCalendar gc=new GregorianCalendar();
+b=dateAST(_t,gc);
+_t=_retTree;
+lc.appendExpression(temporal_op,gc.getTime());
+lcFormed=true;
+}
+break;
+}
+case 3:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+break;
+}
+case 3:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+ else if ((_t.getType() == 3 || _t.getType() == BEFORE || _t.getType() == AFTER)) {
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case BEFORE:
+case AFTER:
+{
+temporal_op=temporal_comp_op(_t);
+_t=_retTree;
+{
+GregorianCalendar gc=new GregorianCalendar();
+b=dateAST(_t,gc);
+_t=_retTree;
+lc=new LogicCriteria(null,a);
+lc.appendExpression(temporal_op,gc.getTime());
+lcFormed=true;
+}
+break;
+}
+case 3:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+}
+ else {
+throw new NoViableAltException(_t);
+}
+}
+if (lcFormed == false) {
+lc_return=new LogicCriteria(null,a);
+}
+ else {
+lc_return=lc.applyTransform(transform);
+}
+return lc_return;
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return lc_return;
+}

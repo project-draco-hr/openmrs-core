@@ -4,6 +4,8 @@
   AST urgency_slot_AST=null;
   try {
 switch (LA(1)) {
+case AGE_MIN:
+case AGE_MAX:
 case LITERAL_end:
 {
         urgency_slot_AST=(AST)currentAST.root;
@@ -11,19 +13,19 @@ case LITERAL_end:
       }
 case LITERAL_urgency:
 {
-      AST tmp240_AST=null;
-      tmp240_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp240_AST);
+      AST tmp265_AST=null;
+      tmp265_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp265_AST);
       match(LITERAL_urgency);
-      AST tmp241_AST=null;
-      tmp241_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp241_AST);
+      AST tmp266_AST=null;
+      tmp266_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp266_AST);
       match(COLON);
       urgency_val();
       astFactory.addASTChild(currentAST,returnAST);
-      AST tmp242_AST=null;
-      tmp242_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp242_AST);
+      AST tmp267_AST=null;
+      tmp267_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp267_AST);
       match(ENDBLOCK);
       urgency_slot_AST=(AST)currentAST.root;
       break;
@@ -37,7 +39,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_3);
+recover(ex,_tokenSet_21);
 }
  else {
 throw ex;

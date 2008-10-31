@@ -1,8 +1,3 @@
 {
-  Criteria criteria=logicToHibernate(logicCriteria);
-  List<Encounter> results=new ArrayList<Encounter>();
-  criteria.add(Restrictions.eq("voided",false));
-  criteria.add(Restrictions.in("patient.patientId",who.getMemberIds()));
-  results.addAll(criteria.list());
-  return results;
+  return logicToHibernate(logicCriteria.getExpression(),who);
 }

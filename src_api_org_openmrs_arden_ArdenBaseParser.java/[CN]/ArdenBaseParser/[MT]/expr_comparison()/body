@@ -7,15 +7,15 @@
     astFactory.addASTChild(currentAST,returnAST);
 {
 switch (LA(1)) {
+case GT:
+case GTE:
+case LT:
+case LTE:
 case EQUALS:
 case LITERAL_EQ:
-case LT:
 case LITERAL_LT:
-case GT:
 case LITERAL_GT:
-case LTE:
 case LITERAL_LE:
-case GTE:
 case LITERAL_GE:
 case NE:
 case LITERAL_NE:
@@ -42,19 +42,15 @@ case WERE:
       }
 case AND:
 case AT:
-case IF:
-case NOT:
 case OR:
 case THEN:
 case WHERE:
 case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
+case CALL:
 case SEMI:
 case ID:
-case RPAREN:
 case COMMA:
+case RPAREN:
 case ACTION_OP:
 case LITERAL_MERGE:
 case LITERAL_SORT:
