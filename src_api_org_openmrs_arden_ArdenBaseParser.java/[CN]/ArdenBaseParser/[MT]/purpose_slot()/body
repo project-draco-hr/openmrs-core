@@ -3,39 +3,40 @@
   ASTPair currentAST=new ASTPair();
   AST purpose_slot_AST=null;
   try {
-    AST tmp203_AST=null;
-    tmp203_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp203_AST);
+    AST tmp222_AST=null;
+    tmp222_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp222_AST);
     match(PURPOSE);
-    AST tmp204_AST=null;
-    tmp204_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp204_AST);
+    AST tmp223_AST=null;
+    tmp223_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp223_AST);
     match(COLON);
 {
-      _loop69:       do {
+      _loop72:       do {
         if ((_tokenSet_4.member(LA(1)))) {
           text();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop69;
+          break _loop72;
         }
       }
  while (true);
     }
-    AST tmp205_AST=null;
-    tmp205_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp205_AST);
+    AST tmp224_AST=null;
+    tmp224_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp224_AST);
     match(ENDBLOCK);
     purpose_slot_AST=(AST)currentAST.root;
   }
- catch (  RecognitionException ex) {
+ catch (  MismatchedTokenException mv) {
     if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_13);
+      reportError(mv);
+      consumeUntil(ENDBLOCK);
+      consume();
     }
  else {
-      throw ex;
+      throw mv;
     }
   }
   returnAST=purpose_slot_AST;

@@ -1,0 +1,20 @@
+{
+  LinkedHashMap<String,Comparison> compBySection=this.comparisons.get(section);
+  if (compBySection == null) {
+    compBySection=new LinkedHashMap<String,Comparison>();
+    this.comparisons.put(section,compBySection);
+  }
+  Comparison thisComparison=compBySection.get(key);
+  if (thisComparison != null) {
+    if (operator != null && operator == org.openmrs.arden.ArdenBaseParserTokenTypes.IN) {
+      thisComparison.setOperator(operator);
+    }
+ else {
+      compBySection.put(key + "__" + compKeyId,new Comparison(key,operator));
+      compKeyIdUsed=true;
+    }
+  }
+ else {
+    compBySection.put(key,new Comparison(key,operator));
+  }
+}

@@ -8,7 +8,8 @@
       result=new Result();
       finalResult.put(personId,result);
     }
-    result.add(new Result(encounter.getEncounterDatetime(),Datatype.DATETIME,false,null,encounter.getEncounterDatetime(),null,null));
+    result.add(new Result(encounter.getEncounterDatetime(),Datatype.DATETIME,false,null,encounter.getEncounterDatetime(),null,null,encounter));
   }
+  Util.applyAggregators(finalResult,criteria,patients);
   return finalResult;
 }

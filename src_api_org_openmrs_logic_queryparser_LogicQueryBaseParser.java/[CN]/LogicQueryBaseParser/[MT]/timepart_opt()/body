@@ -1,0 +1,37 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST timepart_opt_AST=null;
+  try {
+switch (LA(1)) {
+case SEMI:
+{
+        timepart_opt_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_T:
+case LITERAL_t:
+{
+{
+        timepart();
+        astFactory.addASTChild(currentAST,returnAST);
+      }
+      AST tmp89_AST=null;
+      tmp89_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp89_AST);
+      match(ENDBLOCK);
+      timepart_opt_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_3);
+}
+returnAST=timepart_opt_AST;
+}

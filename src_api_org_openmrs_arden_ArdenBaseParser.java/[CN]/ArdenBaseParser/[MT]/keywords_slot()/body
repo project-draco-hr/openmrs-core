@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST keywords_slot_AST=null;
   try {
-    AST tmp210_AST=null;
-    tmp210_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp210_AST);
+    AST tmp229_AST=null;
+    tmp229_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp229_AST);
     match(KEYWORDS);
-    AST tmp211_AST=null;
-    tmp211_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp211_AST);
+    AST tmp230_AST=null;
+    tmp230_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp230_AST);
     match(COLON);
 {
       keyword_text();
@@ -20,7 +20,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_15);
+      recover(ex,_tokenSet_12);
     }
  else {
       throw ex;

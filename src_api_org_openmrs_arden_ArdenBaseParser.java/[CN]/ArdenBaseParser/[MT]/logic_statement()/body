@@ -4,39 +4,35 @@
   AST logic_statement_AST=null;
   try {
 {
-      _loop218:       do {
+      _loop222:       do {
 switch (LA(1)) {
-case IF:
+case CONCLUDE:
 {
-            if_statement();
+            conclude_statement();
             astFactory.addASTChild(currentAST,returnAST);
             break;
           }
-case CONCLUDE:
-{
-          conclude_statement();
-          astFactory.addASTChild(currentAST,returnAST);
-          break;
-        }
 case ID:
 case ACTION_OP:
 {
-        logic_assignment();
+          logic_assignment();
+          astFactory.addASTChild(currentAST,returnAST);
+          break;
+        }
+case CALL:
+{
+        AST tmp561_AST=null;
+        tmp561_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp561_AST);
+        match(CALL);
+        call_phrase();
         astFactory.addASTChild(currentAST,returnAST);
         break;
       }
-case ELSE:
-case ELSEIF:
-case ENDIF:
-{
-      logic_elseif();
-      astFactory.addASTChild(currentAST,returnAST);
-      break;
-    }
 default :
 {
-    break _loop218;
-  }
+      break _loop222;
+    }
 }
 }
  while (true);

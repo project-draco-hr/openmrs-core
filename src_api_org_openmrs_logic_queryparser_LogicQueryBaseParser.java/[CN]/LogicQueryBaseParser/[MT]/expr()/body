@@ -1,0 +1,28 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_AST=null;
+  try {
+    expr_sort();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop51:       do {
+        if ((LA(1) == COMMA)) {
+          match(COMMA);
+          expr_sort();
+          astFactory.addASTChild(currentAST,returnAST);
+        }
+ else {
+          break _loop51;
+        }
+      }
+ while (true);
+    }
+    expr_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    recover(ex,_tokenSet_14);
+  }
+  returnAST=expr_AST;
+}

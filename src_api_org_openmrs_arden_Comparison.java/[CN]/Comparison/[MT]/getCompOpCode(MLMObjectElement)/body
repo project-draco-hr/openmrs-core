@@ -1,0 +1,77 @@
+{
+  String retStr="";
+  if (objElement != null) {
+    String readType=objElement.getReadType();
+    if (readType != null && readType.equalsIgnoreCase("Exist")) {
+      retStr+=key + ".exists()";
+      if (this.answer.toString().equalsIgnoreCase("false")) {
+        return "!" + retStr;
+      }
+      return retStr;
+    }
+  }
+  if (this.answer instanceof Boolean && objElement == null) {
+    retStr+="userVarMap.containsKey(\"" + key + "\")";
+    if (this.answer.toString().equalsIgnoreCase("false")) {
+      return "!" + retStr;
+    }
+    return retStr;
+  }
+  retStr+="(";
+  if (operator != null) {
+    if (this.answer != null || (answerList != null && !answerList.isEmpty())) {
+      retStr+="!" + key + ".isNull()&&";
+switch (operator) {
+case IN:
+        if (keyList != null) {
+          retStr+=key + ".contains(getResultList_" + keyList+ "())";
+        }
+ else {
+          retStr+=key + ".contains(getResultList_" + key+ "())";
+        }
+      break;
+case EQUALS:
+    if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
+      retStr+=key + ".toNumber() ==  " + this.answer;
+    }
+ else {
+      retStr+=key + ".toString().equalsIgnoreCase(\"" + this.answer+ "\")";
+    }
+  break;
+case GTE:
+if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
+  retStr+=key + ".toNumber() >= " + this.answer;
+}
+break;
+case GT:
+if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
+retStr+=key + ".toNumber() > " + this.answer;
+}
+break;
+case LT:
+if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
+retStr+=key + ".toNumber() < " + this.answer;
+}
+break;
+case LTE:
+if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
+retStr+=key + ".toNumber() <= " + this.answer;
+}
+break;
+default :
+break;
+}
+}
+ else {
+switch (operator) {
+case EQUALS:
+retStr+=key + ".isNull()";
+break;
+default :
+break;
+}
+}
+}
+retStr+=")";
+return retStr;
+}

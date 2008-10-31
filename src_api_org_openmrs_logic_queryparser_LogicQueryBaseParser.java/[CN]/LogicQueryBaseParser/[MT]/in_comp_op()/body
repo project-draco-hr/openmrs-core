@@ -1,0 +1,17 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST in_comp_op_AST=null;
+  try {
+    AST tmp114_AST=null;
+    tmp114_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp114_AST);
+    match(IN);
+    in_comp_op_AST=(AST)currentAST.root;
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    recover(ex,_tokenSet_2);
+  }
+  returnAST=in_comp_op_AST;
+}

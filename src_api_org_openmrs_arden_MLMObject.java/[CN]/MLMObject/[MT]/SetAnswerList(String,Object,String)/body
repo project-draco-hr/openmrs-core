@@ -1,0 +1,27 @@
+{
+  String retStr="";
+  LinkedHashMap<String,Comparison> compBySection=this.comparisons.get(section);
+  if (compBySection == null) {
+    compBySection=new LinkedHashMap<String,Comparison>();
+    this.comparisons.put(section,compBySection);
+  }
+  if (key.compareTo("") == 0) {
+    Comparison thisComparison=compBySection.get("__Temp__" + keyId);
+    if (thisComparison == null) {
+      Comparison c=new Comparison("__Temp__" + keyId,null);
+      c.addAnswerToList(answer);
+      compBySection.put("__Temp__" + keyId,c);
+      retStr="__Temp__" + keyId;
+    }
+ else {
+      thisComparison.addAnswerToList(answer);
+      retStr=key;
+    }
+  }
+ else {
+    Comparison lastComparison=compBySection.get(key);
+    lastComparison.setAnswer(answer);
+    retStr=key;
+  }
+  return retStr;
+}

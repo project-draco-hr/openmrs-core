@@ -1,0 +1,63 @@
+{
+  String s="";
+  AST expr_notAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  try {
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case COUNT:
+case MINIMUM:
+case MIN:
+case MAXIMUM:
+case MAX:
+case LAST:
+case FIRST:
+case EARLIEST:
+case LATEST:
+case EXIST:
+case EXISTS:
+case AVG:
+case AVERAGE:
+case SUM:
+case MEDIAN:
+case TRUE:
+case FALSE:
+case OF:
+case ANY:
+case NULL:
+case INTLIT:
+case ID:
+case STRING_LITERAL:
+case ACTION_OP:
+case TERM_LITERAL:
+{
+        expr_comparisonAST(_t,section,obj);
+        _t=_retTree;
+        break;
+      }
+case NOT:
+{
+{
+        AST tmp109_AST_in=(AST)_t;
+        match(_t,NOT);
+        _t=_t.getNextSibling();
+        obj.AddToEvaluateList(section,"NOT");
+        expr_comparisonAST(_t,section,obj);
+        _t=_retTree;
+      }
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(_t);
+  }
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

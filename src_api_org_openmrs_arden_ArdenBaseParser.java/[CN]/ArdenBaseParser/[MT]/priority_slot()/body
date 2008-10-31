@@ -10,21 +10,21 @@
       priority_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == PRIORITY)) {
-      AST tmp225_AST=null;
-      tmp225_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp225_AST);
+      AST tmp250_AST=null;
+      tmp250_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp250_AST);
       match(PRIORITY);
-      AST tmp226_AST=null;
-      tmp226_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp226_AST);
+      AST tmp251_AST=null;
+      tmp251_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp251_AST);
       match(COLON);
-      AST tmp227_AST=null;
-      tmp227_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp227_AST);
+      AST tmp252_AST=null;
+      tmp252_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp252_AST);
       match(INTLIT);
-      AST tmp228_AST=null;
-      tmp228_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp228_AST);
+      AST tmp253_AST=null;
+      tmp253_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp253_AST);
       match(ENDBLOCK);
       priority_slot_AST=(AST)currentAST.root;
     }
@@ -32,13 +32,15 @@
       throw new NoViableAltException(LT(1),getFilename());
     }
   }
- catch (  RecognitionException ex) {
+ catch (  MismatchedTokenException mv) {
     if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_20);
+      reportError(mv);
+      System.err.println("***Rule Priority NOT SET***");
+      consumeUntil(ENDBLOCK);
+      consume();
     }
  else {
-      throw ex;
+      throw mv;
     }
   }
   returnAST=priority_slot_AST;

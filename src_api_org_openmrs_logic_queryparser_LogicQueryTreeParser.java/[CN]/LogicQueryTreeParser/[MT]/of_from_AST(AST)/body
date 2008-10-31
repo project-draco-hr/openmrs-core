@@ -1,0 +1,114 @@
+{
+  Operator s=null;
+  AST of_from_AST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  try {
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case LAST:
+case LATEST:
+{
+{
+{
+            if (_t == null)             _t=ASTNULL;
+switch (_t.getType()) {
+case LAST:
+{
+                AST tmp241_AST_in=(AST)_t;
+                match(_t,LAST);
+                _t=_t.getNextSibling();
+                break;
+              }
+case LATEST:
+{
+              AST tmp242_AST_in=(AST)_t;
+              match(_t,LATEST);
+              _t=_t.getNextSibling();
+              break;
+            }
+default :
+{
+            throw new NoViableAltException(_t);
+          }
+      }
+    }
+    s=Operator.LAST;
+  }
+  break;
+}
+case FIRST:
+case EARLIEST:
+{
+{
+{
+    if (_t == null)     _t=ASTNULL;
+switch (_t.getType()) {
+case FIRST:
+{
+        AST tmp243_AST_in=(AST)_t;
+        match(_t,FIRST);
+        _t=_t.getNextSibling();
+        break;
+      }
+case EARLIEST:
+{
+      AST tmp244_AST_in=(AST)_t;
+      match(_t,EARLIEST);
+      _t=_t.getNextSibling();
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(_t);
+  }
+}
+}
+s=Operator.FIRST;
+}
+break;
+}
+case EXIST:
+case EXISTS:
+{
+{
+{
+if (_t == null) _t=ASTNULL;
+switch (_t.getType()) {
+case EXIST:
+{
+AST tmp245_AST_in=(AST)_t;
+match(_t,EXIST);
+_t=_t.getNextSibling();
+break;
+}
+case EXISTS:
+{
+AST tmp246_AST_in=(AST)_t;
+match(_t,EXISTS);
+_t=_t.getNextSibling();
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+s=Operator.EXISTS;
+}
+break;
+}
+default :
+{
+throw new NoViableAltException(_t);
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+if (_t != null) {
+_t=_t.getNextSibling();
+}
+}
+_retTree=_t;
+return s;
+}

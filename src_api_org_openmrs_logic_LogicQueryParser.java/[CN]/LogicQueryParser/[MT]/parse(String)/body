@@ -1,0 +1,33 @@
+{
+  Matcher queryMatcher=queryPattern.matcher(query);
+  if (!queryMatcher.matches())   throw new LogicQueryParseException("Invalid or unsupported logic query: " + query);
+  String aggregator=queryMatcher.group(2);
+  String token=queryMatcher.group(3);
+  String condition=queryMatcher.group(5);
+  LogicCriteria criteria=new LogicCriteria(token);
+  if (condition != null) {
+    boolean conditionMatched=false;
+    for (    Entry<Pattern,Condition> entry : conditions.entrySet()) {
+      Matcher match=entry.getKey().matcher(condition);
+      if (match.matches()) {
+        conditionMatched=true;
+        criteria=entry.getValue().apply(criteria,match);
+        break;
+      }
+    }
+    if (!conditionMatched)     throw new LogicQueryParseException("Logic query unrecognized or invalid condition: " + condition);
+  }
+  if (aggregator != null) {
+    boolean aggregatorMatched=false;
+    for (    Entry<Pattern,Aggregator> entry : aggregators.entrySet()) {
+      Matcher match=entry.getKey().matcher(aggregator);
+      if (match.matches()) {
+        aggregatorMatched=true;
+        criteria=entry.getValue().apply(criteria,match);
+        break;
+      }
+    }
+    if (!aggregatorMatched)     throw new LogicQueryParseException("Logic query unrecognized or invalid aggregator: " + aggregator);
+  }
+  return criteria;
+}

@@ -1,0 +1,19 @@
+{
+  int unitIndex=ageMax.indexOf("days");
+  if (unitIndex < 0) {
+    unitIndex=ageMax.indexOf("weeks");
+  }
+  if (unitIndex < 0) {
+    unitIndex=ageMax.indexOf("months");
+  }
+  if (unitIndex < 0) {
+    unitIndex=ageMax.indexOf("years");
+  }
+  if (unitIndex > 0) {
+    this.ageMaxUnits=ageMax.substring(unitIndex,ageMax.length());
+    this.ageMax=Integer.parseInt(ageMax.substring(0,unitIndex));
+  }
+ else {
+    this.ageMax=Integer.parseInt(ageMax);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  String result="";
+  if (this.transform != null) {
+    result+=transform.toString() + " {";
+  }
+  result+=operator + " " + operand;
+  if (this.transform != null) {
+    result+=transform.toString() + "}";
+  }
+  return "(" + result + ")";
+}

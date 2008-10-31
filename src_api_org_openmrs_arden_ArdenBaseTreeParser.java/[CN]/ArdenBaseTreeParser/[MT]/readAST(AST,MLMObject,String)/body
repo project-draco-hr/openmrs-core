@@ -18,17 +18,17 @@
 switch (_t.getType()) {
 case READ:
 {
-          AST __t346=_t;
-          AST tmp2_AST_in=(AST)_t;
+          AST __t366=_t;
+          AST tmp3_AST_in=(AST)_t;
           match(_t,READ);
           _t=_t.getFirstChild();
           a=readAST(_t,obj,instr);
           _t=_retTree;
           b=readAST(_t,obj,a);
           _t=_retTree;
-          _t=__t346;
+          _t=__t366;
           _t=_t.getNextSibling();
-          s+=ret_val;
+          s+=a;
           break;
         }
 case LAST:
@@ -40,14 +40,14 @@ case LATEST:
 switch (_t.getType()) {
 case LAST:
 {
-                AST tmp3_AST_in=(AST)_t;
+                AST tmp4_AST_in=(AST)_t;
                 match(_t,LAST);
                 _t=_t.getNextSibling();
                 break;
               }
 case LATEST:
 {
-              AST tmp4_AST_in=(AST)_t;
+              AST tmp5_AST_in=(AST)_t;
               match(_t,LATEST);
               _t=_t.getNextSibling();
               break;
@@ -95,14 +95,14 @@ case EARLIEST:
 switch (_t.getType()) {
 case FIRST:
 {
-        AST tmp5_AST_in=(AST)_t;
+        AST tmp6_AST_in=(AST)_t;
         match(_t,FIRST);
         _t=_t.getNextSibling();
         break;
       }
 case EARLIEST:
 {
-      AST tmp6_AST_in=(AST)_t;
+      AST tmp7_AST_in=(AST)_t;
       match(_t,EARLIEST);
       _t=_t.getNextSibling();
       break;
@@ -156,14 +156,14 @@ if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case MAXIMUM:
 {
-    AST tmp7_AST_in=(AST)_t;
+    AST tmp8_AST_in=(AST)_t;
     match(_t,MAXIMUM);
     _t=_t.getNextSibling();
     break;
   }
 case MAX:
 {
-  AST tmp8_AST_in=(AST)_t;
+  AST tmp9_AST_in=(AST)_t;
   match(_t,MAX);
   _t=_t.getNextSibling();
   break;
@@ -235,14 +235,14 @@ if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case MINIMUM:
 {
-AST tmp9_AST_in=(AST)_t;
+AST tmp10_AST_in=(AST)_t;
 match(_t,MINIMUM);
 _t=_t.getNextSibling();
 break;
 }
 case MIN:
 {
-AST tmp10_AST_in=(AST)_t;
+AST tmp11_AST_in=(AST)_t;
 match(_t,MIN);
 _t=_t.getNextSibling();
 break;
@@ -290,14 +290,14 @@ if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case EXIST:
 {
-AST tmp11_AST_in=(AST)_t;
+AST tmp12_AST_in=(AST)_t;
 match(_t,EXIST);
 _t=_t.getNextSibling();
 break;
 }
 case EXISTS:
 {
-AST tmp12_AST_in=(AST)_t;
+AST tmp13_AST_in=(AST)_t;
 match(_t,EXISTS);
 _t=_t.getNextSibling();
 break;
@@ -309,7 +309,7 @@ throw new NoViableAltException(_t);
 }
 }
 s+=b;
-obj.setReadType("last");
+obj.setReadType("exist");
 obj.setHowMany("1");
 System.err.println("ReadType = Exist");
 b=readAST(_t,obj,instr);
@@ -326,14 +326,14 @@ if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case AVERAGE:
 {
-AST tmp13_AST_in=(AST)_t;
+AST tmp14_AST_in=(AST)_t;
 match(_t,AVERAGE);
 _t=_t.getNextSibling();
 break;
 }
 case AVG:
 {
-AST tmp14_AST_in=(AST)_t;
+AST tmp15_AST_in=(AST)_t;
 match(_t,AVG);
 _t=_t.getNextSibling();
 break;
@@ -348,26 +348,28 @@ b=readAST(_t,obj,instr);
 _t=_retTree;
 }
 s+=b;
+obj.setReadType("average");
 System.err.println("ReadType = Average");
 break;
 }
 case COUNT:
 {
 {
-AST tmp15_AST_in=(AST)_t;
+AST tmp16_AST_in=(AST)_t;
 match(_t,COUNT);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
 _t=_retTree;
 }
 s+=b;
+obj.setReadType("count");
 System.err.println("ReadType = Count");
 break;
 }
 case SUM:
 {
 {
-AST tmp16_AST_in=(AST)_t;
+AST tmp17_AST_in=(AST)_t;
 match(_t,SUM);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
@@ -380,7 +382,7 @@ break;
 case MEDIAN:
 {
 {
-AST tmp17_AST_in=(AST)_t;
+AST tmp18_AST_in=(AST)_t;
 match(_t,MEDIAN);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
@@ -413,7 +415,7 @@ if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case WHERE:
 {
-AST tmp18_AST_in=(AST)_t;
+AST tmp19_AST_in=(AST)_t;
 match(_t,WHERE);
 _t=_t.getNextSibling();
 System.err.println("Where=TRUE");
@@ -445,6 +447,7 @@ case ELSEIF:
 case ENDIF:
 case TRUE:
 case FALSE:
+case CALL:
 case ENDBLOCK:
 case INTLIT:
 case ID:
@@ -477,8 +480,6 @@ t=(AST)_t;
 match(_t,TRUE);
 _t=_t.getNextSibling();
 s="true";
-obj.AddConcept(s);
-obj.SetDBAccess(false,instr);
 break;
 }
 case FALSE:
@@ -487,8 +488,6 @@ f=(AST)_t;
 match(_t,FALSE);
 _t=_t.getNextSibling();
 s="false";
-obj.AddConcept(s);
-obj.SetDBAccess(false,instr);
 break;
 }
 default :

@@ -1,0 +1,119 @@
+{
+  Operator operator=logicExpression.getOperator();
+  Object rightOperand=logicExpression.getRightOperand();
+  Object leftOperand=null;
+  if (logicExpression instanceof LogicExpressionBinary) {
+    leftOperand=((LogicExpressionBinary)logicExpression).getLeftOperand();
+  }
+  List<Criterion> criterion=new ArrayList<Criterion>();
+  if (leftOperand instanceof LogicExpression) {
+    String conceptName=logicExpression.getRootToken();
+    Concept concept=Context.getConceptService().getConceptByIdOrName(conceptName);
+    criterion.add(Restrictions.eq("concept",concept));
+  }
+  if (operator == null) {
+    String conceptName=logicExpression.getRootToken();
+    Concept concept=Context.getConceptService().getConceptByIdOrName(conceptName);
+    criterion.add(Restrictions.eq("concept",concept));
+  }
+ else   if (operator == Operator.BEFORE) {
+    criterion.add(Restrictions.lt("encounterDatetime",rightOperand));
+  }
+ else   if (operator == Operator.AFTER) {
+    criterion.add(Restrictions.gt("encounterDatetime",rightOperand));
+  }
+ else   if (operator == Operator.AND || operator == Operator.OR) {
+    Criterion leftCriteria=null;
+    Criterion rightCriteria=null;
+    if (leftOperand instanceof LogicExpression) {
+      leftCriteria=this.getCriterion((LogicExpression)leftOperand,indexDate);
+    }
+    if (rightOperand instanceof LogicExpression) {
+      rightCriteria=this.getCriterion((LogicExpression)rightOperand,indexDate);
+    }
+    if (leftCriteria != null && rightCriteria != null) {
+      if (operator == Operator.AND) {
+        criterion.add(Restrictions.and(leftCriteria,rightCriteria));
+      }
+      if (operator == Operator.OR) {
+        criterion.add(Restrictions.or(leftCriteria,rightCriteria));
+      }
+    }
+  }
+ else   if (operator == Operator.NOT) {
+    Criterion rightCriteria=null;
+    if (rightOperand instanceof LogicExpression) {
+      rightCriteria=this.getCriterion((LogicExpression)rightOperand,indexDate);
+    }
+    if (rightCriteria != null) {
+      criterion.add(Restrictions.not(rightCriteria));
+    }
+  }
+ else   if (operator == Operator.CONTAINS) {
+  }
+ else   if (operator == Operator.EQUALS) {
+    if (rightOperand instanceof Date)     criterion.add(Restrictions.eq("encounterDatetime",rightOperand));
+ else     log.error("Invalid operand value for EQUALS operation");
+  }
+ else   if (operator == Operator.LTE) {
+    if (rightOperand instanceof Date)     criterion.add(Restrictions.le("encounterDatetime",rightOperand));
+ else     log.error("Invalid operand value for LESS THAN EQUAL operation");
+  }
+ else   if (operator == Operator.GTE) {
+    if (rightOperand instanceof Date)     criterion.add(Restrictions.ge("encounterDatetime",rightOperand));
+ else     log.error("Invalid operand value for GREATER THAN EQUAL operation");
+  }
+ else   if (operator == Operator.LT) {
+    if (rightOperand instanceof Date)     criterion.add(Restrictions.lt("encounterDatetime",rightOperand));
+ else     log.error("Invalid operand value for LESS THAN operation");
+  }
+ else   if (operator == Operator.GT) {
+    if (rightOperand instanceof Date)     criterion.add(Restrictions.gt("encounterDatetime",rightOperand));
+ else     log.error("Invalid operand value for GREATER THAN operation");
+  }
+ else   if (operator == Operator.EXISTS) {
+  }
+ else   if (operator == Operator.ASOF && rightOperand instanceof Date) {
+    indexDate=(Date)rightOperand;
+    criterion.add(Restrictions.le("encounterDatetime",indexDate));
+  }
+ else   if (operator == Operator.WITHIN && rightOperand instanceof Duration) {
+    Duration duration=(Duration)rightOperand;
+    Calendar within=Calendar.getInstance();
+    within.setTime(indexDate);
+    if (duration.getUnits() == Duration.Units.YEARS) {
+      within.add(Calendar.YEAR,duration.getDuration().intValue());
+    }
+ else     if (duration.getUnits() == Duration.Units.MONTHS) {
+      within.add(Calendar.MONTH,duration.getDuration().intValue());
+    }
+ else     if (duration.getUnits() == Duration.Units.WEEKS) {
+      within.add(Calendar.WEEK_OF_YEAR,duration.getDuration().intValue());
+    }
+ else     if (duration.getUnits() == Duration.Units.DAYS) {
+      within.add(Calendar.DAY_OF_YEAR,duration.getDuration().intValue());
+    }
+ else     if (duration.getUnits() == Duration.Units.MINUTES) {
+      within.add(Calendar.MINUTE,duration.getDuration().intValue());
+    }
+ else     if (duration.getUnits() == Duration.Units.SECONDS) {
+      within.add(Calendar.SECOND,duration.getDuration().intValue());
+    }
+    if (indexDate.compareTo(within.getTime()) > 0) {
+      criterion.add(Restrictions.between("encounterDatetime",within.getTime(),indexDate));
+    }
+ else {
+      criterion.add(Restrictions.between("encounterDatetime",indexDate,within.getTime()));
+    }
+  }
+  Criterion c=null;
+  for (  Criterion crit : criterion) {
+    if (c == null) {
+      c=crit;
+    }
+ else {
+      c=Restrictions.and(c,crit);
+    }
+  }
+  return c;
+}

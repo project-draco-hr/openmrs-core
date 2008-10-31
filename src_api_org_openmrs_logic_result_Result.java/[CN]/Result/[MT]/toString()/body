@@ -7,7 +7,7 @@ switch (datatype) {
 case BOOLEAN:
       return (valueBoolean ? "true" : "false");
 case CODED:
-    return (valueCoded == null ? "" : valueCoded.getName(Context.getLocale()).getName());
+    return (valueCoded == null ? "" : valueCoded.getBestName(Context.getLocale()).getName());
 case DATETIME:
   return (valueDatetime == null ? "" : OpenmrsUtil.getDateFormat().format(valueDatetime));
 case NUMERIC:

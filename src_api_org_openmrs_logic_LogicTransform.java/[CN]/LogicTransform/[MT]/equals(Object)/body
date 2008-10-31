@@ -1,0 +1,16 @@
+{
+  if (!(obj instanceof LogicTransform)) {
+    return false;
+  }
+  LogicTransform compTransform=(LogicTransform)obj;
+  if (!safeEquals(this.transformOperator,compTransform.getTransformOperator())) {
+    return false;
+  }
+  if (!safeEquals(numResults,compTransform.getNumResults())) {
+    return false;
+  }
+  if (!safeEquals(sortColumn,compTransform.getSortColumn())) {
+    return false;
+  }
+  return true;
+}

@@ -1,0 +1,47 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST age_max_slot_AST=null;
+  try {
+    if ((LA(1) == LITERAL_end)) {
+      age_max_slot_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == LITERAL_end)) {
+      age_max_slot_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == AGE_MAX)) {
+      AST tmp272_AST=null;
+      tmp272_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp272_AST);
+      match(AGE_MAX);
+      AST tmp273_AST=null;
+      tmp273_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp273_AST);
+      match(COLON);
+      AST tmp274_AST=null;
+      tmp274_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp274_AST);
+      match(INTLIT);
+      age_code();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp275_AST=null;
+      tmp275_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp275_AST);
+      match(ENDBLOCK);
+      age_max_slot_AST=(AST)currentAST.root;
+    }
+ else {
+      throw new NoViableAltException(LT(1),getFilename());
+    }
+  }
+ catch (  RecognitionException ex) {
+    if (inputState.guessing == 0) {
+      reportError(ex);
+      recover(ex,_tokenSet_3);
+    }
+ else {
+      throw ex;
+    }
+  }
+  returnAST=age_max_slot_AST;
+}

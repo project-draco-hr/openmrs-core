@@ -6,18 +6,18 @@
 switch (LA(1)) {
 case ELSE:
 {
-        AST tmp511_AST=null;
-        tmp511_AST=astFactory.create(LT(1));
-        astFactory.makeASTRoot(currentAST,tmp511_AST);
+        AST tmp563_AST=null;
+        tmp563_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp563_AST);
         match(ELSE);
         logic_elseif_AST=(AST)currentAST.root;
         break;
       }
 case ELSEIF:
 {
-      AST tmp512_AST=null;
-      tmp512_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp512_AST);
+      AST tmp564_AST=null;
+      tmp564_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp564_AST);
       match(ELSEIF);
       logic_if_then_else2();
       astFactory.addASTChild(currentAST,returnAST);
@@ -27,9 +27,9 @@ case ELSEIF:
 case ENDIF:
 {
 {
-      AST tmp513_AST=null;
-      tmp513_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp513_AST);
+      AST tmp565_AST=null;
+      tmp565_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp565_AST);
       match(ENDIF);
     }
     logic_elseif_AST=(AST)currentAST.root;
@@ -44,7 +44,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_22);
+recover(ex,_tokenSet_54);
 }
  else {
 throw ex;

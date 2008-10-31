@@ -6,18 +6,18 @@
 switch (LA(1)) {
 case TIME:
 {
-        AST tmp545_AST=null;
-        tmp545_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp545_AST);
+        AST tmp608_AST=null;
+        tmp608_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp608_AST);
         match(TIME);
         sort_option_AST=(AST)currentAST.root;
         break;
       }
 case LITERAL_DATA:
 {
-      AST tmp546_AST=null;
-      tmp546_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp546_AST);
+      AST tmp609_AST=null;
+      tmp609_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp609_AST);
       match(LITERAL_DATA);
       sort_option_AST=(AST)currentAST.root;
       break;
@@ -31,7 +31,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_63);
+recover(ex,_tokenSet_64);
 }
  else {
 throw ex;

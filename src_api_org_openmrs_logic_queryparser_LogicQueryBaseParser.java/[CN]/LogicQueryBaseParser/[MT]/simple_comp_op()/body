@@ -1,0 +1,130 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST simple_comp_op_AST=null;
+  try {
+switch (LA(1)) {
+case EQUALS:
+{
+{
+          AST tmp173_AST=null;
+          tmp173_AST=astFactory.create(LT(1));
+          astFactory.makeASTRoot(currentAST,tmp173_AST);
+          match(EQUALS);
+        }
+        simple_comp_op_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_EQ:
+{
+{
+        AST tmp174_AST=null;
+        tmp174_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp174_AST);
+        match(LITERAL_EQ);
+      }
+      simple_comp_op_AST=(AST)currentAST.root;
+      break;
+    }
+case LT:
+{
+    AST tmp175_AST=null;
+    tmp175_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp175_AST);
+    match(LT);
+    simple_comp_op_AST=(AST)currentAST.root;
+    break;
+  }
+case LITERAL_LT:
+{
+  AST tmp176_AST=null;
+  tmp176_AST=astFactory.create(LT(1));
+  astFactory.makeASTRoot(currentAST,tmp176_AST);
+  match(LITERAL_LT);
+  simple_comp_op_AST=(AST)currentAST.root;
+  break;
+}
+case GT:
+{
+AST tmp177_AST=null;
+tmp177_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp177_AST);
+match(GT);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_GT:
+{
+AST tmp178_AST=null;
+tmp178_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp178_AST);
+match(LITERAL_GT);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LTE:
+{
+AST tmp179_AST=null;
+tmp179_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp179_AST);
+match(LTE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_LE:
+{
+AST tmp180_AST=null;
+tmp180_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp180_AST);
+match(LITERAL_LE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case GTE:
+{
+AST tmp181_AST=null;
+tmp181_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp181_AST);
+match(GTE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_GE:
+{
+AST tmp182_AST=null;
+tmp182_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp182_AST);
+match(LITERAL_GE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case NE:
+{
+AST tmp183_AST=null;
+tmp183_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp183_AST);
+match(NE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+case LITERAL_NE:
+{
+AST tmp184_AST=null;
+tmp184_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp184_AST);
+match(LITERAL_NE);
+simple_comp_op_AST=(AST)currentAST.root;
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_8);
+}
+returnAST=simple_comp_op_AST;
+}

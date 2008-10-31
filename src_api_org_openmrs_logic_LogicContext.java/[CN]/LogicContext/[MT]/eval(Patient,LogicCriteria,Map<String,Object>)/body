@@ -8,13 +8,18 @@
     Map<Integer,Result> resultMap=new Hashtable<Integer,Result>();
     for (    Integer pid : patients.getMemberIds()) {
       Patient currPatient=patientService.getPatient(pid);
-      Result r=rule.eval(this,currPatient,parameters);
+      Result r=Result.emptyResult();
+      if (rule instanceof ReferenceRule) {
+        r=((ReferenceRule)rule).eval(this,currPatient,criteria);
+      }
+ else {
+        r=rule.eval(this,currPatient,parameters);
+        r=applyCriteria(r,criteria);
+      }
       resultMap.put(pid,r);
-      if (pid.equals(targetPatientId))       result=r;
+      if (pid.equals(targetPatientId))       result=resultMap.get(pid);
     }
     getCache().put(criteria,parameters,rule.getTTL(),resultMap);
   }
-  result=applyCriteria(result,criteria);
-  if (result == null)   result=Result.emptyResult();
   return result;
 }

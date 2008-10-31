@@ -6,24 +6,24 @@
 switch (LA(1)) {
 case LPAREN:
 {
-        AST tmp501_AST=null;
-        tmp501_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp501_AST);
+        AST tmp558_AST=null;
+        tmp558_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp558_AST);
         match(LPAREN);
         event_or();
         astFactory.addASTChild(currentAST,returnAST);
-        AST tmp502_AST=null;
-        tmp502_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp502_AST);
+        AST tmp559_AST=null;
+        tmp559_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp559_AST);
         match(RPAREN);
         event_factor_AST=(AST)currentAST.root;
         break;
       }
 case ID:
 {
-      AST tmp503_AST=null;
-      tmp503_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp503_AST);
+      AST tmp560_AST=null;
+      tmp560_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp560_AST);
       match(ID);
       event_factor_AST=(AST)currentAST.root;
       break;
@@ -37,7 +37,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_54);
+recover(ex,_tokenSet_52);
 }
  else {
 throw ex;

@@ -4,9 +4,9 @@
   AST occur_AST=null;
   try {
 switch (LA(1)) {
+case OCCUR:
 case LITERAL_OCCUR:
 case LITERAL_Occur:
-case LITERAL_occur:
 {
 {
 switch (LA(1)) {
@@ -20,9 +20,9 @@ case LITERAL_Occur:
             match(LITERAL_Occur);
             break;
           }
-case LITERAL_occur:
+case OCCUR:
 {
-          match(LITERAL_occur);
+          match(OCCUR);
           break;
         }
 default :
@@ -93,7 +93,7 @@ throw new NoViableAltException(LT(1),getFilename());
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_43);
+recover(ex,_tokenSet_41);
 }
  else {
 throw ex;

@@ -7,9 +7,9 @@
 switch (LA(1)) {
 case ACTION_OP:
 {
-          AST tmp506_AST=null;
-          tmp506_AST=astFactory.create(LT(1));
-          astFactory.makeASTRoot(currentAST,tmp506_AST);
+          AST tmp567_AST=null;
+          tmp567_AST=astFactory.create(LT(1));
+          astFactory.makeASTRoot(currentAST,tmp567_AST);
           match(ACTION_OP);
           break;
         }
@@ -29,9 +29,9 @@ astFactory.addASTChild(currentAST,returnAST);
 switch (LA(1)) {
 case ACTION_OP:
 {
-    AST tmp507_AST=null;
-    tmp507_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp507_AST);
+    AST tmp568_AST=null;
+    tmp568_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp568_AST);
     match(ACTION_OP);
     break;
   }
@@ -65,65 +65,22 @@ throw new NoViableAltException(LT(1),getFilename());
 }
 }
 {
-switch (LA(1)) {
-case COUNT:
-case THE:
-case NOW:
-case IF:
-case MINIMUM:
-case MIN:
-case MAXIMUM:
-case MAX:
-case LAST:
-case FIRST:
-case EARLIEST:
-case LATEST:
-case EXIST:
-case EXISTS:
-case AVG:
-case AVERAGE:
-case SUM:
-case MEDIAN:
-case CONCLUDE:
-case ELSE:
-case ELSEIF:
-case ENDIF:
-case TRUE:
-case FALSE:
-case OF:
-case TIME:
-case ANY:
-case INTLIT:
-case SEMI:
-case ID:
-case LPAREN:
-case COMMA:
-case ACTION_OP:
-case LITERAL_MERGE:
-case LITERAL_SORT:
-case STRING_LITERAL:
-case TERM_LITERAL:
-{
+if ((_tokenSet_55.member(LA(1)))) {
 expr();
 astFactory.addASTChild(currentAST,returnAST);
-break;
 }
-case CALL:
+ else if ((LA(1) == CALL)) {
 {
-{
-AST tmp510_AST=null;
-tmp510_AST=astFactory.create(LT(1));
-astFactory.makeASTRoot(currentAST,tmp510_AST);
+AST tmp571_AST=null;
+tmp571_AST=astFactory.create(LT(1));
+astFactory.makeASTRoot(currentAST,tmp571_AST);
 match(CALL);
 }
 call_phrase();
 astFactory.addASTChild(currentAST,returnAST);
-break;
 }
-default :
-{
+ else {
 throw new NoViableAltException(LT(1),getFilename());
-}
 }
 }
 logic_assignment_AST=(AST)currentAST.root;
@@ -131,7 +88,7 @@ logic_assignment_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_22);
+recover(ex,_tokenSet_43);
 }
  else {
 throw ex;

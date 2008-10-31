@@ -1,0 +1,17 @@
+{
+  HashMap<String,Comparison> compBySection=this.comparisons.get(section);
+  if (compBySection == null) {
+    return;
+  }
+  Comparison lastComparison;
+  if (compKeyIdUsed == true) {
+    lastComparison=compBySection.get(key + "__" + compKeyId);
+    lastComparison.setAnswer(answer);
+    compKeyIdUsed=false;
+    compKeyId++;
+  }
+ else {
+    lastComparison=compBySection.get(key);
+    lastComparison.setAnswer(answer);
+  }
+}

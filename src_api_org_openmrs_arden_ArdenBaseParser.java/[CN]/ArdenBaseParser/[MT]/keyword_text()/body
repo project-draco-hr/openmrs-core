@@ -4,53 +4,53 @@
   AST keyword_text_AST=null;
   try {
 {
-      _loop77:       do {
+      _loop80:       do {
         if ((_tokenSet_4.member(LA(1)))) {
           text();
           astFactory.addASTChild(currentAST,returnAST);
         }
  else {
-          break _loop77;
+          break _loop80;
         }
       }
  while (true);
     }
 {
-      _loop81:       do {
+      _loop84:       do {
         if ((LA(1) == SEMI)) {
-          AST tmp355_AST=null;
-          tmp355_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp355_AST);
+          AST tmp416_AST=null;
+          tmp416_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp416_AST);
           match(SEMI);
 {
-            _loop80:             do {
+            _loop83:             do {
               if ((_tokenSet_4.member(LA(1)))) {
                 text();
                 astFactory.addASTChild(currentAST,returnAST);
               }
  else {
-                break _loop80;
+                break _loop83;
               }
             }
  while (true);
           }
         }
  else {
-          break _loop81;
+          break _loop84;
         }
       }
  while (true);
     }
-    AST tmp356_AST=null;
-    tmp356_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp356_AST);
+    AST tmp417_AST=null;
+    tmp417_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp417_AST);
     match(ENDBLOCK);
     keyword_text_AST=(AST)currentAST.root;
   }
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_15);
+      recover(ex,_tokenSet_12);
     }
  else {
       throw ex;

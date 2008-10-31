@@ -3,91 +3,96 @@
   ASTPair currentAST=new ASTPair();
   AST time_zone_AST=null;
   try {
+{
 switch (LA(1)) {
+case EOF:
 case ENDBLOCK:
 {
-        time_zone_AST=(AST)currentAST.root;
+          break;
+        }
+case ID:
+{
+        AST tmp407_AST=null;
+        tmp407_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp407_AST);
+        match(ID);
         break;
       }
-case LITERAL_Z:
-case LITERAL_z:
+case PLUS:
 {
-      zulu();
-      astFactory.addASTChild(currentAST,returnAST);
-      time_zone_AST=(AST)currentAST.root;
+      AST tmp408_AST=null;
+      tmp408_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp408_AST);
+      match(PLUS);
+      AST tmp409_AST=null;
+      tmp409_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp409_AST);
+      match(INTLIT);
+{
+        _loop67:         do {
+          if ((LA(1) == COLON)) {
+            AST tmp410_AST=null;
+            tmp410_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp410_AST);
+            match(COLON);
+            AST tmp411_AST=null;
+            tmp411_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp411_AST);
+            match(INTLIT);
+          }
+ else {
+            break _loop67;
+          }
+        }
+ while (true);
+      }
       break;
     }
-case 115:
+case MINUS:
 {
-    AST tmp341_AST=null;
-    tmp341_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp341_AST);
-    match(115);
-    AST tmp342_AST=null;
-    tmp342_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp342_AST);
-    match(DIGIT);
-    AST tmp343_AST=null;
-    tmp343_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp343_AST);
-    match(DIGIT);
-    AST tmp344_AST=null;
-    tmp344_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp344_AST);
-    match(111);
-    AST tmp345_AST=null;
-    tmp345_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp345_AST);
-    match(DIGIT);
-    AST tmp346_AST=null;
-    tmp346_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp346_AST);
-    match(DIGIT);
-    time_zone_AST=(AST)currentAST.root;
+    AST tmp412_AST=null;
+    tmp412_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp412_AST);
+    match(MINUS);
+    AST tmp413_AST=null;
+    tmp413_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp413_AST);
+    match(INTLIT);
+{
+      _loop69:       do {
+        if ((LA(1) == COLON)) {
+          AST tmp414_AST=null;
+          tmp414_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp414_AST);
+          match(COLON);
+          AST tmp415_AST=null;
+          tmp415_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp415_AST);
+          match(INTLIT);
+        }
+ else {
+          break _loop69;
+        }
+      }
+ while (true);
+    }
     break;
   }
-case 116:
-{
-  AST tmp347_AST=null;
-  tmp347_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp347_AST);
-  match(116);
-  AST tmp348_AST=null;
-  tmp348_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp348_AST);
-  match(DIGIT);
-  AST tmp349_AST=null;
-  tmp349_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp349_AST);
-  match(DIGIT);
-  AST tmp350_AST=null;
-  tmp350_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp350_AST);
-  match(111);
-  AST tmp351_AST=null;
-  tmp351_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp351_AST);
-  match(DIGIT);
-  AST tmp352_AST=null;
-  tmp352_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp352_AST);
-  match(DIGIT);
-  time_zone_AST=(AST)currentAST.root;
-  break;
-}
 default :
 {
-throw new NoViableAltException(LT(1),getFilename());
+  throw new NoViableAltException(LT(1),getFilename());
 }
 }
 }
- catch (RecognitionException ex) {
+time_zone_AST=(AST)currentAST.root;
+}
+ catch (NoViableAltException nv) {
 if (inputState.guessing == 0) {
-reportError(ex);
-recover(ex,_tokenSet_26);
+reportError(nv);
+consumeUntil(ENDBLOCK);
 }
  else {
-throw ex;
+throw nv;
 }
 }
 returnAST=time_zone_AST;

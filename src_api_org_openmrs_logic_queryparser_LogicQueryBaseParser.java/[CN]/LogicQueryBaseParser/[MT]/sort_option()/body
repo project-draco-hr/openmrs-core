@@ -1,0 +1,36 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST sort_option_AST=null;
+  try {
+switch (LA(1)) {
+case TIME:
+{
+        AST tmp205_AST=null;
+        tmp205_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp205_AST);
+        match(TIME);
+        sort_option_AST=(AST)currentAST.root;
+        break;
+      }
+case LITERAL_DATA:
+{
+      AST tmp206_AST=null;
+      tmp206_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp206_AST);
+      match(LITERAL_DATA);
+      sort_option_AST=(AST)currentAST.root;
+      break;
+    }
+default :
+{
+    throw new NoViableAltException(LT(1),getFilename());
+  }
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_15);
+}
+returnAST=sort_option_AST;
+}

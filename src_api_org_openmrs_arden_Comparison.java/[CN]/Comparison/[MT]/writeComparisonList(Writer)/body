@@ -1,0 +1,35 @@
+{
+  try {
+    String retStr="";
+    if (this.operator != null && this.operator == org.openmrs.arden.ArdenBaseParserTokenTypes.IN) {
+      if (answerList == null) {
+        return;
+      }
+      Iterator<Object> itr=answerList.iterator();
+      Object answer=null;
+      if (itr.hasNext()) {
+        if (keyList != null) {
+          retStr="\n\tprivate Result getResultList_" + this.keyList + "(){";
+        }
+ else {
+          retStr="\n\tprivate Result getResultList_" + this.key + "(){";
+        }
+        while (itr.hasNext()) {
+          answer=itr.next();
+          if (answer instanceof Integer || answer instanceof Double || answer instanceof Float) {
+            retStr+="\n\t\tResult aList = new Result();";
+            retStr+="\n\t\taList.put(new Result(" + answer + "));";
+          }
+ else {
+            retStr+="\n\t\tConceptService conceptService = Context.getConceptService();";
+            retStr+="\n\t\tResult aList = new Result(conceptService.getConcept(\"" + answer + "\"));";
+          }
+        }
+        retStr+="\n\t\treturn aList;\n\t}\n";
+      }
+    }
+    w.append(retStr);
+  }
+ catch (  Exception e) {
+  }
+}

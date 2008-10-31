@@ -1,0 +1,112 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST expr_power_AST=null;
+  try {
+    expr_duration();
+    astFactory.addASTChild(currentAST,returnAST);
+{
+      _loop90:       do {
+        if (((LA(1) >= FROM && LA(1) <= AFTER))) {
+{
+switch (LA(1)) {
+case BEFORE:
+{
+                AST tmp215_AST=null;
+                tmp215_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp215_AST);
+                match(BEFORE);
+                break;
+              }
+case AFTER:
+{
+              AST tmp216_AST=null;
+              tmp216_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp216_AST);
+              match(AFTER);
+              break;
+            }
+case FROM:
+{
+            AST tmp217_AST=null;
+            tmp217_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp217_AST);
+            match(FROM);
+            break;
+          }
+default :
+{
+          throw new NoViableAltException(LT(1),getFilename());
+        }
+    }
+  }
+  expr_duration();
+  astFactory.addASTChild(currentAST,returnAST);
+}
+ else {
+  break _loop90;
+}
+}
+ while (true);
+}
+{
+switch (LA(1)) {
+case AGO:
+{
+  AST tmp218_AST=null;
+  tmp218_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp218_AST);
+  match(AGO);
+  break;
+}
+case AND:
+case IS:
+case ARE:
+case WAS:
+case WERE:
+case BEFORE:
+case AFTER:
+case OR:
+case WHERE:
+case WITHIN:
+case INTLIT:
+case COMMA:
+case RPAREN:
+case 117:
+case 118:
+case EQUALS:
+case LITERAL_EQ:
+case LT:
+case LITERAL_LT:
+case GT:
+case LITERAL_GT:
+case LTE:
+case LITERAL_LE:
+case GTE:
+case LITERAL_GE:
+case NE:
+case LITERAL_NE:
+case LITERAL_MERGE:
+case LITERAL_SORT:
+case LITERAL_SEQTO:
+case ACTION_OP:
+case 159:
+case 160:
+case SEMI:
+{
+break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+expr_power_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_22);
+}
+returnAST=expr_power_AST;
+}

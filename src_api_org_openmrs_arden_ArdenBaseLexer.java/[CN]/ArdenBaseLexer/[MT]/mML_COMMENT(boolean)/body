@@ -6,7 +6,7 @@
   int _saveIndex;
   match("/*");
 {
-    _loop549:     do {
+    _loop618:     do {
       if (((LA(1) == '*') && ((LA(2) >= '\u0000' && LA(2) <= '\u00ff'))) && (LA(2) != '/')) {
         match('*');
       }
@@ -23,13 +23,13 @@
         match('\n');
         newline();
       }
- else       if ((_tokenSet_1.member(LA(1)))) {
+ else       if ((_tokenSet_2.member(LA(1)))) {
 {
-          match(_tokenSet_1);
+          match(_tokenSet_2);
         }
       }
  else {
-        break _loop549;
+        break _loop618;
       }
     }
  while (true);

@@ -1,0 +1,34 @@
+{
+  if (!evaluateList.isEmpty()) {
+    LinkedList<MLMEvaluateElement> evalListBySection=evaluateList.get(section);
+    MLMEvaluateElement mEvalElem=null;
+    if (evalListBySection == null) {
+      evalListBySection=new LinkedList<MLMEvaluateElement>();
+      this.evaluateList.put(section,evalListBySection);
+    }
+ else {
+      mEvalElem=evalListBySection.getLast();
+    }
+    if (mEvalElem != null && mEvalElem.getLast().equals("ELSEIF")) {
+      return;
+    }
+ else     if (mEvalElem != null && mEvalElem.getLast().equals("ELSE")) {
+      return;
+    }
+ else {
+      if (openIf(mEvalElem)) {
+        return;
+      }
+ else {
+        MLMEvaluateElement mEvalElemNew=new MLMEvaluateElement();
+        evalListBySection.add(mEvalElemNew);
+      }
+    }
+  }
+ else {
+    MLMEvaluateElement mEvalElemNew=new MLMEvaluateElement();
+    LinkedList<MLMEvaluateElement> evalListBySection=new LinkedList<MLMEvaluateElement>();
+    this.evaluateList.put(section,evalListBySection);
+    evalListBySection.add(mEvalElemNew);
+  }
+}

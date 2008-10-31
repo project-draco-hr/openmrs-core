@@ -1,4 +1,5 @@
 {
+  executeDataSet("org/openmrs/logic/include/LogicBasicTest.concepts.xml");
   Cohort cohort=new Cohort();
   ArrayList<Integer> ids=new java.util.ArrayList(Context.getPatientSetService().getAllPatients().getMemberIds());
   for (int i=1; i < ids.size(); i++) {

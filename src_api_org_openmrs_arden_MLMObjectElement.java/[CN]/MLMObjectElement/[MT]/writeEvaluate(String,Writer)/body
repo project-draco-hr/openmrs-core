@@ -1,12 +1,23 @@
 {
   boolean retVal=true;
-  if (conceptEvalWritten) {
-    return true;
-  }
-  String cn=getConcept();
-  if (!key.startsWith("Conclude") && !key.startsWith("ELSE") && !key.startsWith("ENDIF")&& !key.equals("AND")) {
-    w.append("\n\t\truleResult.add(logicService.eval(\n\t\t\t\tpatient,\n\t\t\t\tnew LogicCriteria(\"" + cn + "\").contains(\n\t\t\t\t\t");
-    w.append("\"" + getAnswerStr() + "\").last()));");
+  String cn=conceptName;
+  if (cn != null) {
+    if (this.datasource.equalsIgnoreCase(PARAMETERS_DATASOURCE)) {
+      w.append("\n\t\t\tResult " + key + "=new Result((String) parameters.get(\""+ key+ "\")");
+    }
+ else {
+      w.append("\n\t\t\tResult " + key + "=context.read(\n\t\t\t\tpatient,context.getLogicDataSource(\""+ this.datasource+ "\"),\n\t\t\t\tnew LogicCriteria(\""+ cn.trim()+ "\")");
+    }
+    if (hasWhere) {
+      if (whereType.equals("withinPreceding")) {
+        w.append(".within(Duration." + durationOp + "(-"+ durationVal+ "))");
+      }
+    }
+    if (readType != null && readType.length() > 0) {
+      w.append(this.getReadTypeAsString());
+    }
+    w.append(");");
+    w.append("\n\t\t\tresultLookup.put(\"" + key + "\","+ key+ ");");
   }
   return retVal;
 }

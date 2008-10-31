@@ -6,13 +6,13 @@
 switch (LA(1)) {
 case MLMNAME:
 {
-        AST tmp169_AST=null;
-        tmp169_AST=astFactory.create(LT(1));
-        astFactory.makeASTRoot(currentAST,tmp169_AST);
+        AST tmp188_AST=null;
+        tmp188_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp188_AST);
         match(MLMNAME);
-        AST tmp170_AST=null;
-        tmp170_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp170_AST);
+        AST tmp189_AST=null;
+        tmp189_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp189_AST);
         match(COLON);
         mlmname_text();
         astFactory.addASTChild(currentAST,returnAST);
@@ -21,13 +21,13 @@ case MLMNAME:
       }
 case FILENAME:
 {
-      AST tmp171_AST=null;
-      tmp171_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp171_AST);
+      AST tmp190_AST=null;
+      tmp190_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp190_AST);
       match(FILENAME);
-      AST tmp172_AST=null;
-      tmp172_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp172_AST);
+      AST tmp191_AST=null;
+      tmp191_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp191_AST);
       match(COLON);
       mlmname_text();
       astFactory.addASTChild(currentAST,returnAST);
@@ -43,7 +43,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_6);
+recover(ex,_tokenSet_5);
 }
  else {
 throw ex;

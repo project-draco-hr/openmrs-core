@@ -146,6 +146,30 @@ mTIMES(true);
 theRetToken=_returnToken;
 break;
 }
+case '&':
+{
+mAMPERSAND(true);
+theRetToken=_returnToken;
+break;
+}
+case '%':
+{
+mPERCENT(true);
+theRetToken=_returnToken;
+break;
+}
+case '#':
+{
+mPOUND(true);
+theRetToken=_returnToken;
+break;
+}
+case '?':
+{
+mQUESTION(true);
+theRetToken=_returnToken;
+break;
+}
 case '|':
 {
 mACTION_OP(true);
@@ -155,6 +179,10 @@ break;
 default :
 if ((LA(1) == '{') && ((LA(2) >= '\u0000' && LA(2) <= '\u00ff'))) {
 mARDEN_CURLY_BRACKETS(true);
+theRetToken=_returnToken;
+}
+ else if ((LA(1) == ':') && (LA(2) == '/')) {
+mNOT_COMMENT(true);
 theRetToken=_returnToken;
 }
  else if ((LA(1) == '/') && (LA(2) == '/')) {
@@ -227,6 +255,10 @@ theRetToken=_returnToken;
 }
  else if ((LA(1) == '>') && (true)) {
 mGT(true);
+theRetToken=_returnToken;
+}
+ else if ((LA(1) == '\'') && (true)) {
+mAPOSTROPHE(true);
 theRetToken=_returnToken;
 }
  else if ((LA(1) == '\'') && (true)) {

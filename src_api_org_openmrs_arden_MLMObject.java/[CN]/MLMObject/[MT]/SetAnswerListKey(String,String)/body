@@ -1,0 +1,31 @@
+{
+  LinkedHashMap<String,Comparison> compBySection=this.comparisons.get(section);
+  boolean retVal=false;
+  if (compBySection == null) {
+    compBySection=new LinkedHashMap<String,Comparison>();
+    this.comparisons.put(section,compBySection);
+  }
+  if (key.compareTo("") != 0) {
+    Comparison keyComparison=compBySection.get(key);
+    Comparison thisComparison=compBySection.get("__Temp__" + keyId);
+    if (keyComparison != null) {
+      if (thisComparison != null) {
+        retVal=true;
+        thisComparison.setKey(key,key + "__" + keyId);
+        compBySection.put(key + "__" + keyId,thisComparison);
+        compBySection.remove("__Temp__" + keyId);
+        if (keyId > 100)         keyId=1;
+ else         keyId++;
+      }
+    }
+ else     if (thisComparison != null) {
+      thisComparison.setKey(key,null);
+      compBySection.put(key,thisComparison);
+      compBySection.remove("__Temp__" + keyId);
+      retVal=false;
+      if (keyId > 100)       keyId=1;
+ else       keyId++;
+    }
+  }
+  return retVal;
+}

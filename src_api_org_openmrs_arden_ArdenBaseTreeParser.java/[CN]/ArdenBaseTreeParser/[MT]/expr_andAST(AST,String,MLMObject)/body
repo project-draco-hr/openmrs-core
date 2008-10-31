@@ -1,0 +1,33 @@
+{
+  String s="";
+  AST expr_andAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  try {
+    expr_notAST(_t,section,obj);
+    _t=_retTree;
+{
+      _loop466:       do {
+        if (_t == null)         _t=ASTNULL;
+        if ((_t.getType() == AND)) {
+          AST tmp110_AST_in=(AST)_t;
+          match(_t,AND);
+          _t=_t.getNextSibling();
+          obj.AddToEvaluateList(section,"AND");
+          expr_notAST(_t,section,obj);
+          _t=_retTree;
+        }
+ else {
+          break _loop466;
+        }
+      }
+ while (true);
+    }
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

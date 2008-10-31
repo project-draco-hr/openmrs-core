@@ -1,0 +1,8 @@
+{
+  try {
+    return LogicQueryParser.parse(query);
+  }
+ catch (  LogicQueryParseException e) {
+    return new LogicCriteria(query);
+  }
+}

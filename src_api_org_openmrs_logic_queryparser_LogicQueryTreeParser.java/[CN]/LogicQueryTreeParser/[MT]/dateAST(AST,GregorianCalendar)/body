@@ -1,0 +1,53 @@
+{
+  String s="";
+  AST dateAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  AST tyear=null;
+  AST tmonth=null;
+  AST tday=null;
+  String year="", month="", day="";
+  try {
+    AST __t141=_t;
+    AST tmp255_AST_in=(AST)_t;
+    match(_t,MINUS);
+    _t=_t.getFirstChild();
+    AST __t142=_t;
+    AST tmp256_AST_in=(AST)_t;
+    match(_t,MINUS);
+    _t=_t.getFirstChild();
+    calendar.clear();
+{
+      tyear=(AST)_t;
+      match(_t,INTLIT);
+      _t=_t.getNextSibling();
+      year=tyear.getText();
+      s+=year;
+      s+="-";
+      calendar.set(calendar.YEAR,Integer.valueOf(year));
+      tmonth=(AST)_t;
+      match(_t,INTLIT);
+      _t=_t.getNextSibling();
+      month=tmonth.getText();
+      s+=month;
+      s+="-";
+      calendar.set(calendar.MONTH,Integer.valueOf(month) - 1);
+    }
+    _t=__t142;
+    _t=_t.getNextSibling();
+    tday=(AST)_t;
+    match(_t,INTLIT);
+    _t=_t.getNextSibling();
+    day=tday.getText();
+    s+=day;
+    calendar.set(calendar.DAY_OF_MONTH,Integer.valueOf(day));
+    _t=__t141;
+    _t=_t.getNextSibling();
+  }
+ catch (  RecognitionException ex) {
+    reportError(ex);
+    if (_t != null) {
+      _t=_t.getNextSibling();
+    }
+  }
+  _retTree=_t;
+  return s;
+}

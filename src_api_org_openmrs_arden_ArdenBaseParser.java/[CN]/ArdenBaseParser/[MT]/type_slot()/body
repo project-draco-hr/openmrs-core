@@ -3,26 +3,26 @@
   ASTPair currentAST=new ASTPair();
   AST type_slot_AST=null;
   try {
-    AST tmp218_AST=null;
-    tmp218_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp218_AST);
+    AST tmp244_AST=null;
+    tmp244_AST=astFactory.create(LT(1));
+    astFactory.makeASTRoot(currentAST,tmp244_AST);
     match(TYPE);
-    AST tmp219_AST=null;
-    tmp219_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp219_AST);
+    AST tmp245_AST=null;
+    tmp245_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp245_AST);
     match(COLON);
     type_code();
     astFactory.addASTChild(currentAST,returnAST);
-    AST tmp220_AST=null;
-    tmp220_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp220_AST);
+    AST tmp246_AST=null;
+    tmp246_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp246_AST);
     match(ENDBLOCK);
     type_slot_AST=(AST)currentAST.root;
   }
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_17);
+      recover(ex,_tokenSet_14);
     }
  else {
       throw ex;

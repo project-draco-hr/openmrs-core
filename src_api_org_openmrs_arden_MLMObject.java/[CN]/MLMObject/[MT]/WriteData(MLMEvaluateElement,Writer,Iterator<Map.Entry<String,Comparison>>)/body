@@ -1,0 +1,114 @@
+{
+  LinkedList<Integer> openParens=new LinkedList<Integer>();
+  LinkedList<Integer> openBrackets=new LinkedList<Integer>();
+  Integer openParen=0;
+  Integer openBracket=0;
+  try {
+    String key="";
+    Iterator iter=el.iterator();
+    while (iter.hasNext()) {
+      key=(String)iter.next();
+      if (openParens.size() > 0) {
+        openParen=openParens.getLast();
+      }
+      if (openBrackets.size() > 0) {
+        openBracket=openBrackets.getLast();
+        if (!(key.equalsIgnoreCase("ELSEIF") || key.startsWith("ELSE"))) {
+          if (openBracket == 0) {
+            openBrackets.removeLast();
+            if (openBrackets.size() > 0) {
+              openBracket=openBrackets.getLast();
+            }
+          }
+        }
+      }
+      if (key.equalsIgnoreCase("IF")) {
+        w.append("\t\tif(");
+        openParen=1;
+        openParens.add(openParen);
+      }
+ else       if (key.equalsIgnoreCase("ELSEIF")) {
+        while (openBracket > 0) {
+          w.append("}");
+          openBracket--;
+        }
+        if (openBrackets.size() > 0) {
+          openBrackets.removeLast();
+        }
+        w.append("\t\telse if(");
+        openParen=1;
+        openParens.add(openParen);
+      }
+ else       if (key.startsWith("ENDIF")) {
+        while (openBracket > 0) {
+          w.append("}");
+          openBracket--;
+        }
+        if (openBrackets.size() > 0) {
+          openBrackets.removeLast();
+        }
+      }
+ else       if (key.startsWith("ELSE")) {
+        while (openBracket > 0) {
+          w.append("}");
+          openBracket--;
+        }
+        if (openBrackets.size() > 0) {
+          openBrackets.removeLast();
+        }
+        openBracket=1;
+        openBrackets.add(openBracket);
+        w.append("\t\telse{\n");
+      }
+ else       if (key.equalsIgnoreCase("THEN")) {
+        while (openParen > 0) {
+          w.append(")");
+          openParen--;
+        }
+        if (openParens.size() > 0) {
+          openParens.removeLast();
+        }
+        w.append("{\n");
+        openBracket=1;
+        openBrackets.add(openBracket);
+      }
+ else       if (key.equalsIgnoreCase("AND")) {
+        w.append("&&\n\t\t\t");
+      }
+ else       if (key.equalsIgnoreCase("OR")) {
+        w.append("||\n\t\t\t");
+      }
+ else       if (key.equalsIgnoreCase("NOT")) {
+        w.append("!");
+      }
+ else {
+        MLMObjectElement objElement=this.conceptMap.get(key);
+        if (openParen > 0) {
+          if (comparisonIterator != null && comparisonIterator.hasNext()) {
+            Comparison comparison=comparisonIterator.next().getValue();
+            ;
+            if (comparison != null) {
+              comparison.write(w,objElement);
+            }
+          }
+        }
+ else {
+          if (!key.equalsIgnoreCase("gender")) {
+            writeEvaluateConcept(key,w);
+          }
+        }
+      }
+    }
+    while (openBrackets.size() > 0 && openBrackets.getLast() != null) {
+      openBracket=openBrackets.removeLast();
+      while (openBracket > 0) {
+        w.append("}");
+        openBracket--;
+      }
+    }
+  }
+ catch (  Exception e) {
+    System.err.println("Write Evaluate: " + e);
+    e.printStackTrace();
+  }
+}

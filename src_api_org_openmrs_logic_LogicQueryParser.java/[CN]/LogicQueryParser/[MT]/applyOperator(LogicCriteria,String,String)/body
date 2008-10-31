@@ -1,0 +1,16 @@
+{
+  Double operandValue=0d;
+  try {
+    operandValue=Double.parseDouble(operand);
+  }
+ catch (  Exception e) {
+    throw new LogicQueryParseException("Unable to parse value for logic query condition: " + operand,e);
+  }
+  if (op.equals(">") || op.equals("GT"))   return criteria.gt(operandValue);
+ else   if (op.equals("<") || op.equals("LT"))   return criteria.lt(operandValue);
+ else   if (op.equals("=") || op.equals("=="))   return criteria.equalTo(operandValue);
+ else   if (op.equals("<>") || op.equals("!="))   return criteria.equalTo(operandValue).not();
+ else   if (op.equals(">=") || op.equals("GTE"))   return criteria.gte(operandValue);
+ else   if (op.equals("<=") || op.equals("LTE"))   return criteria.lte(operandValue);
+  return criteria;
+}

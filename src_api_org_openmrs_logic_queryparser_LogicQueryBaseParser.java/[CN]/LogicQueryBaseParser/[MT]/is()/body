@@ -1,0 +1,54 @@
+{
+  returnAST=null;
+  ASTPair currentAST=new ASTPair();
+  AST is_AST=null;
+  try {
+switch (LA(1)) {
+case IS:
+{
+        AST tmp188_AST=null;
+        tmp188_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp188_AST);
+        match(IS);
+        is_AST=(AST)currentAST.root;
+        break;
+      }
+case ARE:
+{
+      AST tmp189_AST=null;
+      tmp189_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp189_AST);
+      match(ARE);
+      is_AST=(AST)currentAST.root;
+      break;
+    }
+case WERE:
+{
+    AST tmp190_AST=null;
+    tmp190_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp190_AST);
+    match(WERE);
+    is_AST=(AST)currentAST.root;
+    break;
+  }
+case WAS:
+{
+  AST tmp191_AST=null;
+  tmp191_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp191_AST);
+  match(WAS);
+  is_AST=(AST)currentAST.root;
+  break;
+}
+default :
+{
+throw new NoViableAltException(LT(1),getFilename());
+}
+}
+}
+ catch (RecognitionException ex) {
+reportError(ex);
+recover(ex,_tokenSet_13);
+}
+returnAST=is_AST;
+}
