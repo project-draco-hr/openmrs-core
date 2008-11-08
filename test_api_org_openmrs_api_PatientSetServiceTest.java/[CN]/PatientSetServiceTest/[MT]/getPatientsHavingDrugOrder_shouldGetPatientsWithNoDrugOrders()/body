@@ -1,0 +1,6 @@
+{
+  Cohort cohort=service.getPatientsHavingDrugOrder(null,null,GroupMethod.NONE,null,null);
+  Assert.assertEquals(2,cohort.size());
+  Assert.assertTrue(cohort.contains(6));
+  Assert.assertTrue(cohort.contains(8));
+}

@@ -1,0 +1,9 @@
+{
+  ProgramWorkflowService pws=Context.getProgramWorkflowService();
+  List<ProgramWorkflowState> list=new ArrayList<ProgramWorkflowState>();
+  list.add(pws.getState(2));
+  list.add(pws.getState(4));
+  Cohort cohort=service.getPatientsByProgramAndState(pws.getProgram(1),list,null,null);
+  Assert.assertEquals(1,cohort.size());
+  Assert.assertTrue(cohort.contains(2));
+}
