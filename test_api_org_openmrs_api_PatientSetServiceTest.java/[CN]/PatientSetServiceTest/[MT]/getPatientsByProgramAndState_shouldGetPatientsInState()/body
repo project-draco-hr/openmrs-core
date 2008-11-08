@@ -1,0 +1,8 @@
+{
+  ProgramWorkflowService pws=Context.getProgramWorkflowService();
+  Cohort cohort=service.getPatientsByProgramAndState(pws.getProgram(1),Collections.singletonList(pws.getState(2)),null,null);
+  Assert.assertEquals(1,cohort.size());
+  Assert.assertTrue(cohort.contains(2));
+  cohort=service.getPatientsByProgramAndState(pws.getProgram(1),Collections.singletonList(pws.getState(4)),null,null);
+  Assert.assertEquals(0,cohort.size());
+}

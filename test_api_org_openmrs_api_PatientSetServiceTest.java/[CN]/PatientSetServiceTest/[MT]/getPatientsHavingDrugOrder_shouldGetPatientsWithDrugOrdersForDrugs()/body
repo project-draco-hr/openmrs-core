@@ -1,0 +1,7 @@
+{
+  List<Integer> drugIds=new ArrayList<Integer>();
+  drugIds.add(2);
+  Cohort cohort=service.getPatientsHavingDrugOrder(drugIds,null,null,null,null);
+  Assert.assertEquals(1,cohort.size());
+  Assert.assertTrue(cohort.contains(2));
+}

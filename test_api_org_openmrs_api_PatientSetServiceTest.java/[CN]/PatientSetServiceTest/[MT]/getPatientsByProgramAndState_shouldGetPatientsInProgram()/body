@@ -1,0 +1,5 @@
+{
+  Cohort cohort=service.getPatientsByProgramAndState(Context.getProgramWorkflowService().getProgram(1),null,null,null);
+  Assert.assertEquals(1,cohort.size());
+  Assert.assertTrue(cohort.contains(2));
+}
