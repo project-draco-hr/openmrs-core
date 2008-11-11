@@ -11,13 +11,13 @@
     handlerClassName=factory.getHandlerByClassName(className);
     if (handlerClassName != null) {
       try {
-        Class cls=Class.forName(handlerClassName);
-        Constructor ct=cls.getConstructor();
+        Class<?> cls=Context.loadClass(handlerClassName);
+        Constructor<?> ct=cls.getConstructor();
         FieldGenHandler handler=(FieldGenHandler)ct.newInstance();
         return handler;
       }
  catch (      Exception e) {
-        log.error("Unable to handle type [" + className + "] with handler ["+ handlerClassName+ "].");
+        log.error("Unable to handle type [" + className + "] with handler ["+ handlerClassName+ "]. "+ e);
         return null;
       }
     }

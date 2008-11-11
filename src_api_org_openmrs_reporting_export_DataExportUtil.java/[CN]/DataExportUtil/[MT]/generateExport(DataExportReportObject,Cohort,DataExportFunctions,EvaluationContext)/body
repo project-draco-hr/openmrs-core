@@ -27,6 +27,9 @@
   }
   velocityContext.put("patientSet",patientSet);
   String template=dataExport.generateTemplate();
+  if (template.contains("fn.getPatientAttr('Patient', 'tribe')")) {
+    throw new APIException("Unable to generate export: " + dataExport.getName() + " because it contains a reference to an outdated 'tribe' column.  You must install the 'Tribe Module' into OpenMRS to continue to reference tribes in OpenMRS.");
+  }
   if (log.isDebugEnabled())   log.debug("Template: " + template.substring(0,template.length() < 3500 ? template.length() : 3500) + "...");
   try {
     velocityEngine.evaluate(velocityContext,report,DataExportUtil.class.getName(),template);
