@@ -106,11 +106,6 @@
     patient.setBirthdate(shortPatient.getBirthdate());
     patient.setBirthdateEstimated(shortPatient.getBirthdateEstimated());
     patient.setGender(shortPatient.getGender());
-    if (shortPatient.getTribe() == "" || shortPatient.getTribe() == null)     patient.setTribe(null);
- else {
-      Tribe t=ps.getTribe(Integer.valueOf(shortPatient.getTribe()));
-      patient.setTribe(t);
-    }
     patient.setDead(shortPatient.getDead());
     if (patient.isDead()) {
       patient.setDeathDate(shortPatient.getDeathDate());

@@ -3,7 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     PersonAttributeType identifierType=(PersonAttributeType)obj;
-    Context.getPersonService().updatePersonAttributeType(identifierType);
+    Context.getPersonService().savePersonAttributeType(identifierType);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PersonAttributeType.saved");
   }

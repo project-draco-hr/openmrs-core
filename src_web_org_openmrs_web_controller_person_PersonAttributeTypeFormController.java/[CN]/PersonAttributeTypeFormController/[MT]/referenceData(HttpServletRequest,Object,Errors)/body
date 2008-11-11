@@ -1,0 +1,9 @@
+{
+  Map<String,Object> map=new HashMap<String,Object>();
+  List<Privilege> privileges=new ArrayList<Privilege>();
+  if (Context.isAuthenticated()) {
+    privileges=Context.getUserService().getAllPrivileges();
+  }
+  map.put("privileges",privileges);
+  return map;
+}
