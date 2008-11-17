@@ -34,7 +34,7 @@
         if (setIdToUse == null && includeOther)         setIdToUse="*";
         if (setIdToUse != null) {
           helper(patientDrugOrderSets,setIdToUse,order);
-          if (order.isCurrent())           helper(currentDrugOrderSets,setIdToUse,order);
+          if (order.isCurrent() || order.isFuture())           helper(currentDrugOrderSets,setIdToUse,order);
  else           helper(completedDrugOrderSets,setIdToUse,order);
         }
       }
