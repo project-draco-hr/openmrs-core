@@ -14,22 +14,9 @@
   }
   if (clas == null) {
     try {
-      ClassLoader parent=Thread.currentThread().getContextClassLoader();
-      clas=parent.loadClass(name);
+      clas=OpenmrsClassLoader.getInstance().loadClass(name);
     }
  catch (    Exception e) {
-    }
-  }
-  if (clas == null) {
-    Collection<ModuleClassLoader> moduleClassLoaders=ModuleFactory.getModuleClassLoaders();
-    Iterator<ModuleClassLoader> iter=moduleClassLoaders.iterator();
-    while (iter.hasNext() && clas == null) {
-      ModuleClassLoader currClassLoader=iter.next();
-      try {
-        clas=currClassLoader.loadClass(name);
-      }
- catch (      Exception e) {
-      }
     }
   }
   return clas;
