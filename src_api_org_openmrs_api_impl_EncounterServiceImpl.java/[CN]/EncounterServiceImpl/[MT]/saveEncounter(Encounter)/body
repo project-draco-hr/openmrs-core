@@ -31,9 +31,9 @@
         if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
           obs.setObsDatetime(newDate);
         }
-        if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
-          obs.setPerson(p);
-        }
+      }
+      if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
+        obs.setPerson(p);
       }
     }
     for (    Order o : encounter.getOrders()) {
