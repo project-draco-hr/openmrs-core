@@ -34,7 +34,7 @@
         Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
         AdministrationService as=Context.getAdministrationService();
         GlobalProperty gp=new GlobalProperty(module.getModuleId() + ".started","true",getGlobalPropertyStartedDescription(module.getModuleId()));
-        as.setGlobalProperty(gp);
+        as.saveGlobalProperty(gp);
       }
  catch (      Exception e) {
         log.debug("Got an error when trying to set the global property on module startup",e);
