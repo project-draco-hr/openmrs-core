@@ -1,16 +1,15 @@
 {
   AdministrationService as=Context.getAdministrationService();
   String key=module.getModuleId() + ".database_version";
-  String select="select property_value from global_property where property = '" + key + "'";
-  List<List<Object>> results=as.executeSQL(select,true);
+  GlobalProperty gp=as.getGlobalPropertyObject(key);
   boolean executeSQL=false;
-  if (results.size() > 0) {
-    for (    List<Object> row : results) {
-      String column=(String)row.get(0);
-      log.debug("version:column " + version + ":"+ column);
-      log.debug("compare: " + ModuleUtil.compareVersion(version,column));
-      if (ModuleUtil.compareVersion(version,column) > 0)       executeSQL=true;
+  if (gp != null && StringUtils.hasLength(gp.getPropertyValue())) {
+    String currentDbVersion=gp.getPropertyValue();
+    if (log.isDebugEnabled()) {
+      log.debug("version:column " + version + ":"+ currentDbVersion);
+      log.debug("compare: " + ModuleUtil.compareVersion(version,currentDbVersion));
     }
+    if (ModuleUtil.compareVersion(version,currentDbVersion) > 0)     executeSQL=true;
   }
  else {
     executeSQL=true;
@@ -24,17 +23,20 @@
     try {
       Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       String description="DO NOT MODIFY.  Current database version number for the " + module.getModuleId() + " module.";
-      GlobalProperty gp=as.getGlobalPropertyObject(key);
-      System.out.println("Global property key is " + key);
       if (gp == null) {
+        log.info("Global property " + key + " was not found. Creating one now.");
         gp=new GlobalProperty(key,version,description);
-        System.out.println("Global property not found!!");
+        as.saveGlobalProperty(gp);
       }
- else {
+ else       if (gp.getPropertyValue().equals(version) == false) {
+        log.info("Updating global property " + key + " to version: "+ version);
         gp.setDescription(description);
         gp.setPropertyValue(version);
+        as.saveGlobalProperty(gp);
       }
-      if (gp != null && !(gp.getPropertyValue().equals(version)))       as.saveGlobalProperty(gp);
+ else {
+        log.error("Should not be here. GP property valueand sqldiff version should not be equal");
+      }
     }
   finally {
       Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
