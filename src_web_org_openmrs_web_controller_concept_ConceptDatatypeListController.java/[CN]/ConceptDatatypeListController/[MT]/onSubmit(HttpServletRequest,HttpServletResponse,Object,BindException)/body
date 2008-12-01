@@ -3,7 +3,6 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] cdList=request.getParameterValues("conceptDatatypeId");
-    AdministrationService as=Context.getAdministrationService();
     ConceptService cs=Context.getConceptService();
     String success="";
     String error="";
@@ -12,7 +11,7 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     for (    String cd : cdList) {
       try {
-        as.deleteConceptDatatype(cs.getConceptDatatype(Integer.valueOf(cd)));
+        cs.purgeConceptDatatype(cs.getConceptDatatype(Integer.valueOf(cd)));
         if (!success.equals(""))         success+="<br/>";
         success+=cd + " " + deleted;
       }

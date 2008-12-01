@@ -6,7 +6,7 @@
     ConceptService cs=Context.getConceptService();
     cp.setCreator(Context.getAuthenticatedUser());
     cp.setDateCreated(new Date());
-    cs.proposeConcept(cp);
+    cs.saveConceptProposal(cp);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptProposal.proposed");
   }

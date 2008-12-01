@@ -1,5 +1,5 @@
 {
-  PatientIdentifierType pihIdentifierType=Context.getPatientService().getPatientIdentifierType("HIVEMR-V1");
+  PatientIdentifierType pihIdentifierType=Context.getPatientService().getPatientIdentifierTypeByName("HIVEMR-V1");
   OrderType orderType=Context.getOrderService().getOrderType(1);
   if (!orderType.getName().equals("Drug Order")) {
     throw new RuntimeException("ERROR! ASSUMED THAT ORDER TYPE 1 IS DRUG ORDER, BUT IT'S NOT");
@@ -10,7 +10,6 @@
   for (String s=r.readLine(); s != null; s=r.readLine()) {
     String[] st=s.split(",");
     Integer patientId=Integer.valueOf(st[0]);
-    String drugName=st[1];
     String formulationName=st[2];
     Date startDate=parseDate(st[3]);
     Date autoExpireDate=parseDate(st[4]);

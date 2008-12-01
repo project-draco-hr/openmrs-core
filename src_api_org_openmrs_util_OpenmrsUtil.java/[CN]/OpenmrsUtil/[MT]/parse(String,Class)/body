@@ -25,7 +25,7 @@
         return ed.getValue();
       }
  catch (      NumberFormatException ex) {
-        return Context.getEncounterService().getLocationByName(string);
+        return Context.getLocationService().getLocation(string);
       }
     }
  else     if (Concept.class.equals(clazz)) {

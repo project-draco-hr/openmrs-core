@@ -1,7 +1,7 @@
 {
   List<Concept> drugConcepts=null;
   if (drugSet != null) {
-    List<ConceptSet> concepts=Context.getConceptService().getConceptSets(drugSet);
+    List<ConceptSet> concepts=Context.getConceptService().getConceptSetsByConcept(drugSet);
     drugConcepts=new ArrayList<Concept>();
     for (    ConceptSet cs : concepts) {
       drugConcepts.add(cs.getConcept());

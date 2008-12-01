@@ -3,7 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     Location location=(Location)obj;
-    Context.getAdministrationService().updateLocation(location);
+    Context.getLocationService().saveLocation(location);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Location.saved");
   }

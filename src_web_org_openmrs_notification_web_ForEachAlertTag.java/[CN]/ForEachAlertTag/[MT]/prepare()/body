@@ -3,7 +3,7 @@
   try {
     AlertService as=Context.getAlertService();
     if (user == null) {
-      List<Alert> alertList=as.getAlerts();
+      List<Alert> alertList=as.getAlertsByUser(null);
       log.debug("alertList.size: " + alertList.size());
       alerts=alertList.iterator();
     }

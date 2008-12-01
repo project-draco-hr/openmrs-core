@@ -8,7 +8,7 @@
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"taskClass","Scheduler.taskForm.required",new Object[]{"Task class",taskDefinition.getTaskClass()});
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"repeatInterval","Scheduler.taskForm.required",new Object[]{"Repeat interval",taskDefinition.getRepeatInterval()});
     try {
-      Class taskClass=OpenmrsClassLoader.getInstance().loadClass(taskDefinition.getTaskClass());
+      Class<?> taskClass=OpenmrsClassLoader.getInstance().loadClass(taskDefinition.getTaskClass());
       Object o=taskClass.newInstance();
       if (!(o instanceof Task)) {
         errors.rejectValue("taskClass","Scheduler.taskForm.classDoesNotImplementTask",new Object[]{taskDefinition.getTaskClass(),Task.class.getName()},"Class does not implement Task interface");

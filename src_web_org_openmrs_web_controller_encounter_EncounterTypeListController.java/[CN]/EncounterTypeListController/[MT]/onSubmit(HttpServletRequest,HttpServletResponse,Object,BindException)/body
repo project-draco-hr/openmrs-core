@@ -3,8 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] encounterTypeList=request.getParameterValues("encounterTypeId");
-    AdministrationService as=Context.getAdministrationService();
-    EncounterService os=Context.getEncounterService();
+    EncounterService es=Context.getEncounterService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
@@ -12,7 +11,7 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     for (    String p : encounterTypeList) {
       try {
-        as.deleteEncounterType(os.getEncounterType(Integer.valueOf(p)));
+        es.purgeEncounterType(es.getEncounterType(Integer.valueOf(p)));
         if (!success.equals(""))         success+="<br/>";
         success+=p + " " + deleted;
       }

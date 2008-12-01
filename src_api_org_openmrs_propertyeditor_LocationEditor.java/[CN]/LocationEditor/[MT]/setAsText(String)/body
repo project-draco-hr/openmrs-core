@@ -1,8 +1,8 @@
 {
-  EncounterService es=Context.getEncounterService();
+  LocationService ls=Context.getLocationService();
   if (StringUtils.hasText(text)) {
     try {
-      setValue(es.getLocation(Integer.valueOf(text)));
+      setValue(ls.getLocation(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
       log.error("Error setting text: " + text,ex);

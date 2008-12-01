@@ -2,7 +2,7 @@
   List<Drug> conceptDrugList=new Vector<Drug>();
   if (Context.isAuthenticated()) {
     ConceptService cs=Context.getConceptService();
-    conceptDrugList=cs.getDrugs();
+    conceptDrugList=cs.getAllDrugs();
   }
   return conceptDrugList;
 }

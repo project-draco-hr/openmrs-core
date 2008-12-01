@@ -4,7 +4,7 @@
   List<PatientProgram> patientPrograms=new ArrayList<PatientProgram>();
   Map<String,PatientProgram> knownPatientPrograms=new HashMap<String,PatientProgram>();
   Map<String,Program> programsByName=new HashMap<String,Program>();
-  for (  Program program : pws.getPrograms()) {
+  for (  Program program : pws.getAllPrograms()) {
     programsByName.put(program.getConcept().getName(Context.getLocale(),false).getName(),program);
   }
   for (  String s : programWorkflow) {
@@ -12,7 +12,7 @@
     if (s.startsWith("ENROLLMENT:")) {
       s=s.substring(s.indexOf(":") + 1);
       String[] temp=s.split(",");
-      PatientIdentifierType pit=ps.getPatientIdentifierType(temp[0]);
+      PatientIdentifierType pit=ps.getPatientIdentifierTypeByName(temp[0]);
       String identifier=temp[1];
       List<PatientIdentifier> pis=ps.getPatientIdentifiers(identifier,pit);
       if (pis.size() != 1)       throw new IllegalArgumentException("Found " + pis.size() + " instances of identifier "+ identifier+ " of type "+ pit);
@@ -51,7 +51,7 @@
   }
   int numAdded=0;
   for (  PatientProgram pp : knownPatientPrograms.values()) {
-    pws.createPatientProgram(pp);
+    pws.savePatientProgram(pp);
     ++numAdded;
   }
   return numAdded;

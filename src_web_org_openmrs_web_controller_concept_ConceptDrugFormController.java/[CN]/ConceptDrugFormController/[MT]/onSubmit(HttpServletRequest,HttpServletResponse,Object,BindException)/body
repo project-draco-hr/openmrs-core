@@ -4,7 +4,7 @@
   if (Context.isAuthenticated()) {
     Drug drug=(Drug)obj;
     drug.setConcept(Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
-    Context.getConceptService().updateDrug(drug);
+    Context.getConceptService().saveDrug(drug);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.saved");
   }
