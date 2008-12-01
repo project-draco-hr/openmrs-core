@@ -42,15 +42,15 @@
     HL7InQueue hl7InQueue=new HL7InQueue();
     hl7InQueue.setHL7Data(oneMessage);
     HL7Service hs=Context.getHL7Service();
-    if (hs.getHL7Sources().isEmpty()) {
+    if (hs.getAllHL7Sources().isEmpty()) {
       HL7Source hl7Source=new HL7Source();
       hl7Source.setName("MigrationTestTool");
       hl7Source.setDescription("Testing migrating data, from MigrationController.");
-      hs.createHL7Source(hl7Source);
+      hs.saveHL7Source(hl7Source);
     }
     hl7InQueue.setHL7Source(Context.getHL7Service().getHL7Source(1));
     log.debug("hl7InQueue.hl7Data: " + hl7InQueue.getHL7Data());
-    Context.getHL7Service().createHL7InQueue(hl7InQueue);
+    Context.getHL7Service().saveHL7InQueue(hl7InQueue);
   }
   return new ModelAndView(new RedirectView("migration.form"));
 }

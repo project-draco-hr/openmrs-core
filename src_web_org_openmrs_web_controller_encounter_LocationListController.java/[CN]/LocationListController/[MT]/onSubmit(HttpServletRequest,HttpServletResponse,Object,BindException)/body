@@ -3,8 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] locationList=request.getParameterValues("locationId");
-    AdministrationService as=Context.getAdministrationService();
-    EncounterService es=Context.getEncounterService();
+    LocationService ls=Context.getLocationService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
@@ -12,7 +11,7 @@
     String notDeleted=msa.getMessage("general.cannot.delete");
     for (    String p : locationList) {
       try {
-        as.deleteLocation(es.getLocation(Integer.valueOf(p)));
+        ls.purgeLocation(ls.getLocation(Integer.valueOf(p)));
         if (!success.equals(""))         success+="<br/>";
         success+=p + " " + deleted;
       }

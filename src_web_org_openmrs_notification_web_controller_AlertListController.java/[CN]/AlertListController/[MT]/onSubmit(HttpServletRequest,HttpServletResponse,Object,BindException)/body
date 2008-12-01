@@ -8,7 +8,7 @@
       Integer alertId=Integer.parseInt(alertIdString);
       Alert a=as.getAlert(alertId);
       a.setDateToExpire(new Date());
-      as.updateAlert(a);
+      as.saveAlert(a);
     }
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String msg=msa.getMessage("Alert.expired",new Object[]{alertIds.length},locale);

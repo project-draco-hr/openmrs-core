@@ -6,7 +6,7 @@
     log.debug("tmp value: " + request.getParameter("includeCompleted"));
     boolean b=new Boolean(request.getParameter("includeCompleted"));
     log.debug("b value: " + b);
-    cpList=cs.getConceptProposals(b);
+    cpList=cs.getAllConceptProposals(b);
   }
   for (  ConceptProposal cp : cpList) {
     List<ConceptProposal> matchingProposals=origText.get(cp.getOriginalText());

@@ -1,6 +1,6 @@
 {
   try {
-    Class taskClass=OpenmrsClassLoader.getInstance().loadClass(taskDefinition.getTaskClass());
+    Class<?> taskClass=OpenmrsClassLoader.getInstance().loadClass(taskDefinition.getTaskClass());
     Task task=(Task)taskClass.newInstance();
     if (log.isDebugEnabled()) {
       log.debug("initializing " + taskClass.getName());

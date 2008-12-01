@@ -5,10 +5,10 @@
     if (message == null || message.length() == 0) {
       message="Paste some xml";
     }
-    EncounterService es=Context.getEncounterService();
-    List<Location> locations=es.getLocations();
+    LocationService ls=Context.getLocationService();
+    List<Location> locations=ls.getAllLocations();
     UserService us=Context.getUserService();
-    List<User> users=us.getUsers();
+    List<User> users=us.getAllUsers();
     myModel.put("message",message);
     myModel.put("locations",locations);
     myModel.put("users",users);

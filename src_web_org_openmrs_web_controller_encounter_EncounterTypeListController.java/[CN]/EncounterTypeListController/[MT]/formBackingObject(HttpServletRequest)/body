@@ -1,8 +1,8 @@
 {
   List<EncounterType> encounterTypeList=new Vector<EncounterType>();
   if (Context.isAuthenticated()) {
-    EncounterService os=Context.getEncounterService();
-    encounterTypeList=os.getEncounterTypes();
+    EncounterService es=Context.getEncounterService();
+    encounterTypeList=es.getAllEncounterTypes();
   }
   return encounterTypeList;
 }

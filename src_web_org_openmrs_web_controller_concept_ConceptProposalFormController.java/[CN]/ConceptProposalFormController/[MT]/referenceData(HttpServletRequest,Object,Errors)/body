@@ -12,7 +12,7 @@
   if (Context.isAuthenticated() && cp.getConceptProposalId() != null) {
     ConceptService cs=Context.getConceptService();
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
-    matchingProposals=cs.findMatchingConceptProposals(cp.getOriginalText());
+    matchingProposals=cs.getConceptProposals(cp.getOriginalText());
     String phrase=cp.getOriginalText();
     if (phrase.length() > 3)     phrase=phrase.substring(0,3);
     List<ConceptWord> possibleConcepts=cs.findConcepts(phrase,locale,false);

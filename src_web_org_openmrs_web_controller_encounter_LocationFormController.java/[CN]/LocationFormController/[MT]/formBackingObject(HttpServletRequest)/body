@@ -1,9 +1,9 @@
 {
   Location location=null;
   if (Context.isAuthenticated()) {
-    EncounterService os=Context.getEncounterService();
+    LocationService ls=Context.getLocationService();
     String locationId=request.getParameter("locationId");
-    if (locationId != null)     location=os.getLocation(Integer.valueOf(locationId));
+    if (locationId != null)     location=ls.getLocation(Integer.valueOf(locationId));
   }
   if (location == null)   location=new Location();
   return location;

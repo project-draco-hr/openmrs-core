@@ -1,7 +1,7 @@
 {
   Map<Integer,Collection<Integer>> activeDrugs=getPatientSetDAO().getActiveDrugIds(patientIds,fromDate,toDate);
   Set<Integer> ret=new HashSet<Integer>();
-  if (drugIds == null)   drugIds=new ArrayList();
+  if (drugIds == null)   drugIds=new ArrayList<Integer>();
   if (drugIds.size() == 0) {
     if (groupMethod == GroupMethod.NONE) {
       if (patientIds == null) {

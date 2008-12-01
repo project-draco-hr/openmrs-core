@@ -9,7 +9,7 @@
       String userName="an Anonymous User";
       if (Context.isAuthenticated())       userName=Context.getAuthenticatedUser().getPersonName().toString();
       content+="\n\n This email sent from: " + referer + " by: "+ userName;
-      messageService.send(recipients,sender,subject,content);
+      messageService.sendMessage(recipients,sender,subject,content);
       return true;
     }
  catch (    Exception e) {
