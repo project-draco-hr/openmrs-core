@@ -14,7 +14,7 @@
     }
     w.append("\n\tpublic Result eval(LogicContext context, Patient patient,\n" + "\t\t\tMap<String, Object> parameters) throws LogicException {\n\n");
     w.append("\t\tString actionStr = \"\";\n");
-    w.append("\t\tHashMap resultLookup = new HashMap();\n");
+    w.append("\t\tresultLookup = new HashMap <String, Result>();\n");
     w.append("\t\tBoolean ageOK = null;\n\n\t\ttry {\n");
     w.append("\t\t\tthis.patient=patient;\n");
     w.append("\t\t\tuserVarMap = new HashMap <String, String>();\n");
@@ -42,7 +42,7 @@
     }
     Set<String> uniqueKeys=this.conceptMap.keySet();
     uniqueKeys.remove("Gender");
-    w.append("\n\n\t\t\tif(evaluate_logic(resultLookup,parameters)){\n");
+    w.append("\n\n\t\t\tif(evaluate_logic(parameters)){\n");
     w.append("\t\t\t\tResult ruleResult = new Result();\n");
     if (this.calls.get("action") != null) {
       for (      Call currCall : this.calls.get("action")) {
@@ -64,7 +64,7 @@
       Comparison comparison=comparisonIteratorLogic.next().getValue();
       comparison.writeComparisonList(w);
     }
-    w.append("\tprivate boolean evaluate_logic(HashMap resultLookup,Map<String, Object> parameters) throws LogicException {\n\n");
+    w.append("\tprivate boolean evaluate_logic(Map<String, Object> parameters) throws LogicException {\n\n");
     evalListBySection=evaluateList.get("logic");
     if (evalListBySection == null) {
       evalListBySection=new LinkedList<MLMEvaluateElement>();
