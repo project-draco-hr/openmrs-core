@@ -33,7 +33,7 @@
   reportSchemaXml.setXml(xml.toString());
   assertEquals(xml.toString(),reportSchemaXml.getXml());
   ReportService rs=(ReportService)Context.getService(ReportService.class);
-  rs.updateReportSchemaXml(reportSchemaXml);
+  rs.saveReportSchemaXml(reportSchemaXml);
   ReportSchemaXml reportSchemaXmlFromDB=rs.getReportSchemaXml(2);
   ReportSchemaXml reportSchemaXmlJodion=rs.getReportSchemaXml(2);
   assertEquals(xml.toString(),reportSchemaXmlFromDB.getXml());
@@ -78,7 +78,7 @@
   String newDescription="Sample monthly PEPFAR report changed again";
   reportSchemaXmlFromDB.setName(newName);
   reportSchemaXmlFromDB.setDescription(newDescription);
-  rs.updateReportSchemaXml(reportSchemaXmlFromDB);
+  rs.saveReportSchemaXml(reportSchemaXmlFromDB);
   ReportSchemaXml reportSchemaXmlUpdateFromDB=rs.getReportSchemaXml(reportSchemaXmlFromDB.getReportSchemaId());
   assertEquals(xml2.toString(),reportSchemaXmlUpdateFromDB.getXml());
   assertEquals(newName,reportSchemaXmlUpdateFromDB.getName());
