@@ -33,7 +33,7 @@
   reportSchemaXml.setXml(xml.toString());
   assertEquals(xml.toString(),reportSchemaXml.getXml());
   ReportService rs=(ReportService)Context.getService(ReportService.class);
-  rs.createReportSchemaXml(reportSchemaXml);
+  rs.saveReportSchemaXml(reportSchemaXml);
   Context.clearSession();
   ReportSchemaXml reportSchemaXmlFromDB=rs.getReportSchemaXml(1);
   assertNotNull("The schema xml was not saved correctly, none found in the db",reportSchemaXmlFromDB);

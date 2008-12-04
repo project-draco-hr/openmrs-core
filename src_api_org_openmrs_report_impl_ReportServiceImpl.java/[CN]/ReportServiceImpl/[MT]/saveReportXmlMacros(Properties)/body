@@ -2,7 +2,8 @@
   try {
     ByteArrayOutputStream out=new ByteArrayOutputStream();
     macros.store(out,null);
-    Context.getAdministrationService().setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS,out.toString());
+    GlobalProperty prop=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS,out.toString());
+    Context.getAdministrationService().saveGlobalProperty(prop);
   }
  catch (  Exception ex) {
     throw new APIException(ex);
