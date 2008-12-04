@@ -5,7 +5,7 @@
   for (Iterator<DrugOrder> i=patientOrders.iterator(); i.hasNext(); ) {
     DrugOrder o=i.next();
     if (o.getDrug() != null)     ret.append(o.getDrug().getName());
- else     ret.append(o.getConcept().getBestName(Context.getLocale()));
+ else     ret.append(o.getConcept().getBestName(Context.getLocale()).getName());
     if (i.hasNext())     ret.append(" ");
   }
   return ret.toString();
