@@ -1,7 +1,12 @@
 {
-  String[] mlmNames={"leadspecpws2.mlm"};
-  String defaultPath="asd fasdf asdf test/arden test/";
-  for (int i=0; i < mlmNames.length; i++) {
-    Context.getArdenService().compileFile(defaultPath + mlmNames[i],"output");
+  String mlmDirectory="c:\\mlm\\";
+  String javaDirectory="c:\\mlm\\";
+  File mlmDir=new File(mlmDirectory);
+  String[] mlmFiles=mlmDir.list();
+  for (  String mlmFile : mlmFiles) {
+    if (mlmFile.endsWith(".mlm")) {
+      System.out.println("Parsing: " + mlmFile);
+      Context.getArdenService().compileFile(mlmDirectory + mlmFile,javaDirectory);
+    }
   }
 }
