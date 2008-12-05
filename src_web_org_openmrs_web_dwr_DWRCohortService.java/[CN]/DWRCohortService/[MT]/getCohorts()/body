@@ -1,6 +1,6 @@
 {
   Vector<ListItem> ret=new Vector<ListItem>();
-  for (  Cohort c : Context.getCohortService().getCohorts()) {
+  for (  Cohort c : Context.getCohortService().getAllCohorts()) {
     ret.add(new ListItem(c.getCohortId(),c.getName(),c.getDescription()));
   }
   return ret;

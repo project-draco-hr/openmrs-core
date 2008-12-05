@@ -1,0 +1,11 @@
+{
+  CohortDefinition def=CohortUtil.parse(cohortSpecification);
+  EvaluationContext evalContext=new EvaluationContext();
+  if (parameterValues != null) {
+    for (    Parameter p : parameterValues.keySet()) {
+      Object v=parameterValues.get(p);
+      evalContext.addParameterValue(p,v);
+    }
+  }
+  return Context.getCohortService().evaluate(def,evalContext);
+}

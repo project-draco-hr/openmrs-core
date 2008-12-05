@@ -1,0 +1,73 @@
+{
+  CommandObject command=new CommandObject();
+  if (Context.isAuthenticated() && !isFormSubmission(request)) {
+    String idString=request.getParameter("reportId");
+    if (idString != null) {
+      Integer id=Integer.valueOf(idString);
+      ReportSchemaXml schemaXml=Context.getReportService().getReportSchemaXml(id);
+      ReportSchema schema=Context.getReportService().getReportSchema(schemaXml);
+      CohortDataSetDefinition cohorts=null;
+      if (schema.getDataSetDefinitions() == null)       schema.setDataSetDefinitions(new ArrayList<DataSetDefinition>());
+      if (schema.getDataSetDefinitions().size() == 0)       schema.getDataSetDefinitions().add(new CohortDataSetDefinition());
+      for (      DataSetDefinition d : schema.getDataSetDefinitions()) {
+        if (d instanceof CohortDataSetDefinition) {
+          if (cohorts != null)           throw new Exception("You may not edit a report that contains more than one Cohort Dataset Definition");
+          cohorts=(CohortDataSetDefinition)d;
+        }
+ else {
+          throw new Exception("You may not edit a report that contains datasets besides Cohort Dataset Definition");
+        }
+      }
+      if (cohorts == null)       throw new Exception("You may only edit a report that has exactly one Cohort Dataset Definition");
+      command.setReportId(id);
+      command.setName(schema.getName());
+      command.setDescription(schema.getDescription());
+      command.getParameters().addAll(schema.getReportParameters());
+      Document xml=DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new InputSource(new StringReader(schemaXml.getXml())));
+      Node temp=findChild(xml,"reportSchema");
+      temp=findChild(temp,"dataSets");
+      temp=findChildWithAttribute(temp,"dataSetDefinition","class","org.openmrs.report.CohortDataSetDefinition");
+      Map<String,String> nameToStrategy=new LinkedHashMap<String,String>();
+      Node strategies=findChild(temp,"strategies");
+      if (strategies != null) {
+        NodeList nl=strategies.getChildNodes();
+        for (int i=0; i < nl.getLength(); ++i) {
+          Node node=nl.item(i);
+          if ("entry".equals(node.getNodeName())) {
+            String name=findChild(node,"string").getFirstChild().getNodeValue();
+            String strategy=findChild(findChild(node,"cohort"),"specification").getFirstChild().getNodeValue();
+            nameToStrategy.put(name,strategy);
+          }
+        }
+      }
+      Map<String,String> nameToDescription=new LinkedHashMap<String,String>();
+      Node descriptions=findChild(temp,"descriptions");
+      if (descriptions != null) {
+        NodeList nl=descriptions.getChildNodes();
+        for (int i=0; i < nl.getLength(); ++i) {
+          Node node=nl.item(i);
+          if ("entry".equals(node.getNodeName())) {
+            String name=findChild(node,"string").getFirstChild().getNodeValue();
+            String descr=findChild(node,"string",2).getFirstChild().getNodeValue();
+            nameToDescription.put(name,descr);
+          }
+        }
+      }
+      LinkedHashSet<String> names=new LinkedHashSet<String>();
+      names.addAll(nameToStrategy.keySet());
+      names.addAll(nameToDescription.keySet());
+      List<CohortReportRow> rows=new ArrayList<CohortReportRow>();
+      for (      String name : names) {
+        String descr=nameToDescription.get(name);
+        String strat=nameToStrategy.get(name);
+        CohortReportRow row=new CohortReportRow();
+        row.setName(name);
+        row.setDescription(descr);
+        row.setQuery(strat);
+        rows.add(row);
+      }
+      command.setRows(rows);
+    }
+  }
+  return command;
+}
