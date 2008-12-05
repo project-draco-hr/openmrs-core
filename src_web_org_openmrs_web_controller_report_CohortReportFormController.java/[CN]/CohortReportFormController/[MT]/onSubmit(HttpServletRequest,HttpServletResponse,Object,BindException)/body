@@ -1,0 +1,83 @@
+{
+  CommandObject command=(CommandObject)commandObj;
+  ReportSchema rs=new ReportSchema();
+  rs.setReportSchemaId(command.getReportId());
+  rs.setName(command.getName());
+  rs.setDescription(command.getDescription());
+  rs.setReportParameters(command.getParameters());
+  rs.setDataSetDefinitions(new ArrayList<DataSetDefinition>());
+  Serializer serializer=OpenmrsUtil.getSerializer();
+  StringWriter sw=new StringWriter();
+  serializer.write(rs,sw);
+  DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+  dbf.setValidating(false);
+  DocumentBuilder db=dbf.newDocumentBuilder();
+  Document xml=db.parse(new InputSource(new StringReader("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>" + sw.toString())));
+  Node node=findChild(xml,"reportSchema");
+  node=findChild(node,"dataSets");
+  Element dsd=xml.createElement("dataSetDefinition");
+  dsd.setAttribute("name","cohorts");
+  dsd.setAttribute("class","org.openmrs.report.CohortDataSetDefinition");
+  node.appendChild(dsd);
+  Element strategies=xml.createElement("strategies");
+  strategies.setAttribute("class","java.util.LinkedHashMap");
+  dsd.appendChild(strategies);
+  Element descriptions=xml.createElement("descriptions");
+  descriptions.setAttribute("class","java.util.LinkedHashMap");
+  dsd.appendChild(descriptions);
+  for (  CohortReportRow row : command.getRows()) {
+    if (StringUtils.hasText(row.getQuery())) {
+      Element entry=xml.createElement("entry");
+      strategies.appendChild(entry);
+      Element nameEl=xml.createElement("string");
+      Text val=xml.createTextNode(row.getName());
+      val.setNodeValue(row.getName());
+      nameEl.appendChild(val);
+      entry.appendChild(nameEl);
+      Element cohort=xml.createElement("cohort");
+      entry.appendChild(cohort);
+      cohort.setAttribute("class","org.openmrs.reporting.PatientSearch");
+      Element strategyEl=xml.createElement("specification");
+      val=xml.createTextNode(row.getQuery());
+      val.setNodeValue(row.getQuery());
+      strategyEl.appendChild(val);
+      cohort.appendChild(strategyEl);
+    }
+    if (StringUtils.hasText(row.getDescription())) {
+      Element entry=xml.createElement("entry");
+      descriptions.appendChild(entry);
+      Element el=xml.createElement("string");
+      Text val=xml.createTextNode(row.getName());
+      val.setNodeValue(row.getName());
+      el.appendChild(val);
+      entry.appendChild(el);
+      el=xml.createElement("string");
+      val=xml.createTextNode(row.getDescription());
+      val.setNodeValue(row.getDescription());
+      el.appendChild(val);
+      entry.appendChild(el);
+    }
+  }
+  System.setProperty("javax.xml.transform.TransformerFactory","com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl");
+  TransformerFactory transfac=TransformerFactory.newInstance();
+  Transformer trans=transfac.newTransformer();
+  trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION,"yes");
+  trans.setOutputProperty(OutputKeys.INDENT,"yes");
+  trans.setOutputProperty(OutputKeys.METHOD,"xml");
+  StringWriter out=new StringWriter();
+  StreamResult result=new StreamResult(out);
+  DOMSource source=new DOMSource(xml);
+  trans.transform(source,result);
+  String schemaXml=out.toString();
+  ReportSchemaXml rsx=new ReportSchemaXml();
+  rsx.populateFromReportSchema(rs);
+  rsx.setXml(schemaXml);
+  rsx.updateXmlFromAttributes();
+  if (rsx.getReportSchemaId() != null) {
+    Context.getReportService().saveReportSchemaXml(rsx);
+  }
+ else {
+    Context.getReportService().saveReportSchemaXml(rsx);
+  }
+  return new ModelAndView(new RedirectView(getSuccessView() + "?reportId=" + rsx.getReportSchemaId()));
+}

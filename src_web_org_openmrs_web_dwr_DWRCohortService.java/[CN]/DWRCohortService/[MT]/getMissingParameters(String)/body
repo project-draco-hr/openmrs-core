@@ -1,0 +1,8 @@
+{
+  Vector<Parameter> ret=new Vector<Parameter>();
+  CohortDefinition def=CohortUtil.parse(cohortSpecification);
+  for (  Parameter p : def.getParameters()) {
+    ret.add(p);
+  }
+  return ret;
+}
