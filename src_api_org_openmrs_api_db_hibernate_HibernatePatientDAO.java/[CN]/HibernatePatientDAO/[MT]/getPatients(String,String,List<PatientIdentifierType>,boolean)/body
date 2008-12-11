@@ -33,15 +33,22 @@
       if (matchIdentifierExactly) {
         criteria.add(Expression.eq("ids.identifier",identifier));
       }
- else       if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
-        String prefix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_PREFIX,"");
-        String suffix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX,"%");
-        StringBuffer likeString=new StringBuffer(prefix).append(identifier).append(suffix);
-        criteria.add(Expression.like("ids.identifier",likeString.toString()));
-      }
  else {
-        regex=regex.replace("@SEARCH@",identifier);
-        criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+        if (Pattern.matches("^\\^.{1}\\*.*$",regex)) {
+          String padding=regex.substring(regex.indexOf("^") + 1,regex.indexOf("*"));
+          Pattern pattern=Pattern.compile("^" + padding + "+");
+          identifier=pattern.matcher(identifier).replaceFirst("");
+        }
+        if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+          String prefix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_PREFIX,"");
+          String suffix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX,"%");
+          StringBuffer likeString=new StringBuffer(prefix).append(identifier).append(suffix);
+          criteria.add(Expression.like("ids.identifier",likeString.toString()));
+        }
+ else {
+          regex=regex.replace("@SEARCH@",identifier);
+          criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+        }
       }
     }
     if (identifierTypes.size() > 0) {
