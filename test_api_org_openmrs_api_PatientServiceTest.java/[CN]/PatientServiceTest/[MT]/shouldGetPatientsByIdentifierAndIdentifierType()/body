@@ -10,4 +10,6 @@
   assertEquals(1,patients.size());
   patients=patientService.getPatients(null,null,types);
   assertEquals(2,patients.size());
+  patients=patientService.getPatients(null,"00000001234",null,false);
+  assertEquals(1,patients.size());
 }
