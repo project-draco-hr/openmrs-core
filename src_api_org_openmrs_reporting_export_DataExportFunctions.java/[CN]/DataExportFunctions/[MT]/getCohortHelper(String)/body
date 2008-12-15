@@ -1,5 +1,6 @@
 {
   if (cohortMap.containsKey(key))   return cohortMap.get(key).contains(getPatientId());
+  EvaluationContext context=new EvaluationContext();
   log.debug("getting cohort/definition for key: " + key);
   Cohort ps=null;
   if (key.startsWith("C.")) {
