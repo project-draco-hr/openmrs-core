@@ -1,0 +1,21 @@
+{
+  executeDataSet(COMPLEX_OBS_XML);
+  ObsService os=Context.getObsService();
+  ConceptService cs=Context.getConceptService();
+  AdministrationService as=Context.getAdministrationService();
+  File complexObsDir=OpenmrsUtil.getDirectoryInApplicationDataDirectory(as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
+  File createdFile=new File(complexObsDir,"nameOfFile.txt");
+  Assert.assertFalse(createdFile.exists());
+  InputStream inputStream=new ByteArrayInputStream("This is a string to save to a file".getBytes());
+  ComplexData complexData=new ComplexData("nameOfFile.txt",inputStream);
+  Concept questionConcept=cs.getConcept(8474);
+  Obs obsToSave=new Obs(new Person(1),questionConcept,new Date(),new Location(1));
+  obsToSave.setComplexData(complexData);
+  try {
+    os.saveObs(obsToSave,null);
+    Assert.assertTrue(createdFile.exists());
+  }
+  finally {
+    createdFile.delete();
+  }
+}

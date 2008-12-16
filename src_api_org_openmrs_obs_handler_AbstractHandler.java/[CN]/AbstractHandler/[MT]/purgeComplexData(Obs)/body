@@ -1,0 +1,9 @@
+{
+  File file=getComplexDataFile(obs);
+  if (file.exists() && file.delete()) {
+    obs.setComplexData(null);
+    return true;
+  }
+  log.warn("Could not delete complex data object for obsId=" + obs.getObsId() + " located at "+ file.getAbsolutePath());
+  return false;
+}

@@ -10,7 +10,22 @@
           errors.reject("editReason","Obs.edit.reason.empty");
           return showForm(request,response,errors);
         }
-        os.saveObs(obs,reason);
+        if (obs.getConcept().isComplex()) {
+          if (request instanceof MultipartHttpServletRequest) {
+            MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
+            MultipartFile complexDataFile=multipartRequest.getFile("complexDataFile");
+            if (complexDataFile != null && !complexDataFile.isEmpty()) {
+              InputStream complexDataInputStream=complexDataFile.getInputStream();
+              ComplexData complexData=new ComplexData(complexDataFile.getOriginalFilename(),complexDataInputStream);
+              obs.setComplexData(complexData);
+              os.saveObs(obs,reason);
+              complexDataInputStream.close();
+            }
+          }
+        }
+ else {
+          os.saveObs(obs,reason);
+        }
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
       }
  else       if (request.getParameter("voidObs") != null) {

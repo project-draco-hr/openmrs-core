@@ -1,0 +1,16 @@
+{
+  if (WebConstants.HYPERLINK_VIEW.equals(view)) {
+    ComplexData cd=new ComplexData(obs.getValueAsString(null),getHyperlink(obs));
+    obs.setComplexData(cd);
+    return obs;
+  }
+ else   if (WebConstants.HTML_VIEW.equals(view)) {
+    String imgtag="<img src='" + getHyperlink(obs) + "'/>";
+    ComplexData cd=new ComplexData(obs.getValueAsString(null),imgtag);
+    obs.setComplexData(cd);
+    return obs;
+  }
+ else {
+  }
+  return super.getObs(obs,view);
+}

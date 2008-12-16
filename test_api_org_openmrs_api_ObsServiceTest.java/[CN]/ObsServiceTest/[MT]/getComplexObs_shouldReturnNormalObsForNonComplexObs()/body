@@ -1,0 +1,6 @@
+{
+  executeDataSet(COMPLEX_OBS_XML);
+  ObsService os=Context.getObsService();
+  Obs normalObs=os.getComplexObs(7,OpenmrsConstants.RAW_VIEW);
+  Assert.assertFalse(normalObs.isComplex());
+}

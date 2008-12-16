@@ -26,6 +26,14 @@
  else     if (abbrev.equals("TM"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIME));
  else     if (abbrev.equals("TS"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIMESTAMP));
  else     if (abbrev.equals("ST"))     return getValueText();
+ else     if (abbrev.equals("ED") && getValueComplex() != null) {
+      String[] valueComplex=getValueComplex().split("\\|");
+      for (int i=0; i < valueComplex.length; i++) {
+        if (!"".equals(valueComplex[i])) {
+          return valueComplex[i].trim();
+        }
+      }
+    }
   }
   if (getValueNumeric() != null)   return getValueNumeric().toString();
  else   if (getValueCoded() != null) {
@@ -49,6 +57,14 @@
       sb.append(groupMember.getValueAsString(locale));
     }
     return sb.toString();
+  }
+  if (getValueComplex() != null) {
+    String[] valueComplex=getValueComplex().split("\\|");
+    for (int i=0; i < valueComplex.length; i++) {
+      if (!"".equals(valueComplex[i])) {
+        return valueComplex[i].trim();
+      }
+    }
   }
   return "";
 }
