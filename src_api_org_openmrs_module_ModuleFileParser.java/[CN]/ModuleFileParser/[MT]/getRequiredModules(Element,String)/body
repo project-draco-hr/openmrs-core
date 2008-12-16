@@ -1,15 +1,20 @@
 {
   NodeList requiredModulesParents=root.getElementsByTagName("require_modules");
-  List<String> packageNames=new Vector<String>();
+  Map<String,String> packageNamesToVersion=new HashMap<String,String>();
   if (requiredModulesParents.getLength() > 0) {
     Node requiredModulesParent=requiredModulesParents.item(0);
     NodeList requiredModules=requiredModulesParent.getChildNodes();
     int i=0;
     while (i < requiredModules.getLength()) {
       Node n=requiredModules.item(i);
-      if (n != null && "require_module".equals(n.getNodeName()))       packageNames.add(n.getTextContent());
+      if (n != null && "require_module".equals(n.getNodeName())) {
+        NamedNodeMap attributes=n.getAttributes();
+        Node versionNode=attributes.getNamedItem("version");
+        String reqVersion=versionNode == null ? null : versionNode.getNodeValue();
+        packageNamesToVersion.put(n.getTextContent(),reqVersion);
+      }
       i++;
     }
   }
-  return packageNames;
+  return packageNamesToVersion;
 }

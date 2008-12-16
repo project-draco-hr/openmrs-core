@@ -1,13 +1,14 @@
 {
   for (  String reqModPackage : module.getRequiredModules()) {
-    boolean found=false;
+    boolean started=false;
     for (    Module mod : getStartedModules()) {
       if (mod.getPackageName().equals(reqModPackage)) {
-        found=true;
+        String reqVersion=module.getRequiredModuleVersion(reqModPackage);
+        if (reqVersion == null || ModuleUtil.compareVersion(mod.getVersion(),reqVersion) >= 0)         started=true;
         break;
       }
     }
-    if (!found)     return false;
+    if (!started)     return false;
   }
   return true;
 }
