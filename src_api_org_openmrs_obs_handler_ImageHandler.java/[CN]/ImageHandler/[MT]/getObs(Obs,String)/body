@@ -1,0 +1,13 @@
+{
+  File file=getComplexDataFile(obs);
+  BufferedImage img=null;
+  try {
+    img=ImageIO.read(file);
+  }
+ catch (  IOException e) {
+    log.error("Trying to read file: " + file.getAbsolutePath(),e);
+  }
+  ComplexData complexData=new ComplexData(file.getName(),img);
+  obs.setComplexData(complexData);
+  return obs;
+}

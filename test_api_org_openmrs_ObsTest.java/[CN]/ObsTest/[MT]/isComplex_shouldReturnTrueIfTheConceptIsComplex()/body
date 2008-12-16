@@ -1,0 +1,10 @@
+{
+  ConceptDatatype cd=new ConceptDatatype();
+  cd.setName("Complex");
+  cd.setHl7Abbreviation("ED");
+  ConceptComplex complexConcept=new ConceptComplex();
+  complexConcept.setDatatype(cd);
+  Obs obs=new Obs();
+  obs.setConcept(complexConcept);
+  Assert.assertTrue(obs.isComplex());
+}

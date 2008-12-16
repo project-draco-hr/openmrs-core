@@ -28,11 +28,17 @@
           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
             concept=getConceptNumeric(concept,request);
           }
+ else           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Complex")) {
+            concept=getConceptComplex(concept,request);
+          }
           cs.saveConcept(concept);
         }
  else {
           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
             concept=getConceptNumeric(concept,request);
+          }
+ else           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Complex")) {
+            concept=getConceptComplex(concept,request);
           }
           cs.saveConcept(concept);
         }

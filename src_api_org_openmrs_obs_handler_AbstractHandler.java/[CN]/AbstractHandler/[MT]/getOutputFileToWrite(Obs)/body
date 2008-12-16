@@ -1,0 +1,24 @@
+{
+  String t=obs.getComplexData().getTitle();
+  String extension=getExtension(t);
+  String title=obs.getComplexData().getTitle().replace("." + extension,"");
+  File dir=OpenmrsUtil.getDirectoryInApplicationDataDirectory(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
+  File outputfile=null;
+  if (null == title) {
+    String now=longfmt.format(new Date());
+    outputfile=new File(dir,now);
+  }
+ else {
+    outputfile=new File(dir,title + "." + extension);
+  }
+  int i=0;
+  String tmp=null;
+  while (obs.getObsId() == null && outputfile.exists() && i < 100) {
+    tmp=null;
+    tmp=new String(outputfile.getAbsolutePath().replace("." + extension,""));
+    outputfile=null;
+    String filename=(i < 1) ? tmp + "_" + nf.format(Integer.valueOf(++i)) : tmp.replace(nf.format(Integer.valueOf(i)),nf.format(Integer.valueOf(++i)));
+    outputfile=new File(filename + "." + extension);
+  }
+  return outputfile;
+}

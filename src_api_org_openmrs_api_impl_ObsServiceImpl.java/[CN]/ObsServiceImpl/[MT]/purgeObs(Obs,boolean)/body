@@ -1,4 +1,7 @@
 {
+  if (purgeComplexData(obs) == false) {
+    throw new APIException("Unable to purge complex data for obs: " + obs);
+  }
   if (cascade) {
     throw new APIException("Cascading purge of obs not yet implemented");
   }

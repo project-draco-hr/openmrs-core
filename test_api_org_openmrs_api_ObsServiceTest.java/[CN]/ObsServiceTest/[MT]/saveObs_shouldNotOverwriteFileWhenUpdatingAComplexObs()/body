@@ -1,0 +1,34 @@
+{
+  executeDataSet(COMPLEX_OBS_XML);
+  ObsService os=Context.getObsService();
+  ConceptService cs=Context.getConceptService();
+  AdministrationService as=Context.getAdministrationService();
+  File complexObsDir=OpenmrsUtil.getDirectoryInApplicationDataDirectory(as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
+  File previouslyCreatedFile=new File(complexObsDir,"nameOfFile.txt");
+  InputStream inputStream=new ByteArrayInputStream("a string to save to a file".getBytes());
+  OpenmrsUtil.copyFile(inputStream,new FileOutputStream(previouslyCreatedFile));
+  inputStream.close();
+  File newComplexFile=null;
+  try {
+    long oldFileSize=previouslyCreatedFile.length();
+    InputStream inputStream2=new ByteArrayInputStream("diff string to save to a file with the same name".getBytes());
+    ComplexData complexData=new ComplexData("nameOfFile.txt",inputStream2);
+    Concept questionConcept=cs.getConcept(8474);
+    Obs obsToSave=new Obs(new Person(1),questionConcept,new Date(),new Location(1));
+    obsToSave.setComplexData(complexData);
+    os.saveObs(obsToSave,null);
+    Assert.assertEquals(oldFileSize,previouslyCreatedFile.length());
+    String valueComplex=obsToSave.getValueComplex();
+    String filename=valueComplex.substring(valueComplex.indexOf("|") + 1).trim();
+    newComplexFile=new File(complexObsDir,filename);
+    Assert.assertTrue(newComplexFile.length() > oldFileSize);
+  }
+  finally {
+    newComplexFile.delete();
+    try {
+      previouslyCreatedFile.delete();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}

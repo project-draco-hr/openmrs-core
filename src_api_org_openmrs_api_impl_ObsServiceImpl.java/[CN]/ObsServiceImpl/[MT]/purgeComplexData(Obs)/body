@@ -1,0 +1,9 @@
+{
+  if (obs.isComplex()) {
+    ComplexObsHandler handler=getHandler(obs);
+    if (null != handler) {
+      return handler.purgeComplexData(obs);
+    }
+  }
+  return true;
+}

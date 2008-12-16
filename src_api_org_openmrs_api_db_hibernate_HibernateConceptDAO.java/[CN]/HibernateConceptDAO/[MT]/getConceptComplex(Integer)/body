@@ -1,0 +1,11 @@
+{
+  ConceptComplex cc;
+  Object obj=sessionFactory.getCurrentSession().get(ConceptComplex.class,conceptId);
+  if (obj != null && !obj.getClass().equals(ConceptComplex.class)) {
+    sessionFactory.getCurrentSession().evict(obj);
+    Query query=sessionFactory.getCurrentSession().createQuery("from ConceptComplex where conceptId = :conceptId").setParameter("conceptId",conceptId);
+    obj=query.uniqueResult();
+  }
+  cc=(ConceptComplex)obj;
+  return cc;
+}

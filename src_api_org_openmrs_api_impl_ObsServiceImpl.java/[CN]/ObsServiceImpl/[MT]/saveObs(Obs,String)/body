@@ -1,4 +1,13 @@
 {
+  if (null != obs && null != obs.getConcept() && obs.getConcept().isComplex() && null != obs.getComplexData().getData()) {
+    ComplexObsHandler handler=getHandler(obs);
+    if (null != handler) {
+      handler.saveObs(obs);
+    }
+ else {
+      throw new APIException("Unknown handler for " + obs.getConcept());
+    }
+  }
   if (obs.getObsId() == null) {
     Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_OBS);
     obs.setRequiredProperties(Context.getAuthenticatedUser(),new Date());

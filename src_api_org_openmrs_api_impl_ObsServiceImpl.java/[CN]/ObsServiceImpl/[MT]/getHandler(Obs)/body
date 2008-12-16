@@ -1,0 +1,9 @@
+{
+  if (obs.getConcept().isComplex()) {
+    if (obs.getConcept() == null)     throw new APIException("Unable to get the handler for obs: " + obs + " because the concept is null");
+    String handlerString=Context.getConceptService().getConceptComplex(obs.getConcept().getConceptId()).getHandler();
+    if (handlerString == null)     throw new APIException("Unable to get the handler for obs: " + obs + " and concept: "+ obs.getConcept()+ " because the handler is null");
+    return this.getHandler(handlerString);
+  }
+  return null;
+}

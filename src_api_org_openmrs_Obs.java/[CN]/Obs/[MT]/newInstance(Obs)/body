@@ -20,6 +20,8 @@
   newObs.setVoidedBy(obsToCopy.getVoidedBy());
   newObs.setDateVoided(obsToCopy.getDateVoided());
   newObs.setVoidReason(obsToCopy.getVoidReason());
+  newObs.setValueComplex(obsToCopy.getValueComplex());
+  newObs.setComplexData(obsToCopy.getComplexData());
   if (obsToCopy.getGroupMembers() != null)   for (  Obs member : obsToCopy.getGroupMembers()) {
     if (member.getObsId() == null)     newObs.addGroupMember(member);
  else     newObs.addGroupMember(Obs.newInstance(member));

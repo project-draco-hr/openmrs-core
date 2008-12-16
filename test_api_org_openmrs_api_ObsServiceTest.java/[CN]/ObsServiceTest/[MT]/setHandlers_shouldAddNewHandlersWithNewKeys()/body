@@ -1,0 +1,11 @@
+{
+  ObsService os=Context.getObsService();
+  Map<String,ComplexObsHandler> handlers=new HashMap<String,ComplexObsHandler>();
+  handlers.put("DummyHandler4",new ImageHandler());
+  handlers.put("DummyHandler5",new TextHandler());
+  os.setHandlers(handlers);
+  ComplexObsHandler dummyHandler4=os.getHandler("DummyHandler4");
+  Assert.assertNotNull(dummyHandler4);
+  ComplexObsHandler dummyHandler5=os.getHandler("DummyHandler5");
+  Assert.assertNotNull(dummyHandler5);
+}

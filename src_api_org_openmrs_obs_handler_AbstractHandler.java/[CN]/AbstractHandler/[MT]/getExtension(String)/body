@@ -1,0 +1,7 @@
+{
+  String[] filenameParts=filename.split("\\.");
+  log.debug("titles length: " + filenameParts.length);
+  String extension=(filenameParts.length < 2) ? filenameParts[0] : filenameParts[filenameParts.length - 1];
+  extension=(null != extension && !"".equals(extension)) ? extension : "raw";
+  return extension;
+}

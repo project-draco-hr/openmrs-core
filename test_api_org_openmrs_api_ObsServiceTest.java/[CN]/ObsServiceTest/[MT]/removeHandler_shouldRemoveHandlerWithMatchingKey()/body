@@ -1,0 +1,9 @@
+{
+  ObsService os=Context.getObsService();
+  os.registerHandler("DummyHandler3","org.openmrs.obs.handler.ImageHandler");
+  ComplexObsHandler dummyHandler=os.getHandler("DummyHandler3");
+  Assert.assertNotNull(dummyHandler);
+  os.removeHandler("DummyHandler3");
+  ComplexObsHandler dummyHandlerAgain=os.getHandler("DummyHandler3");
+  Assert.assertNull(dummyHandlerAgain);
+}

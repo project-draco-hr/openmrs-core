@@ -1,0 +1,13 @@
+{
+  ObsService os=Context.getObsService();
+  Map<String,ComplexObsHandler> handlers=new HashMap<String,ComplexObsHandler>();
+  handlers.put("DummyHandlerToOverride",new ImageHandler());
+  os.setHandlers(handlers);
+  ComplexObsHandler dummyHandlerToOverride=os.getHandler("DummyHandlerToOverride");
+  Assert.assertTrue(dummyHandlerToOverride instanceof ImageHandler);
+  Map<String,ComplexObsHandler> handlersAgain=new HashMap<String,ComplexObsHandler>();
+  handlersAgain.put("DummyHandlerToOverride",new TextHandler());
+  os.setHandlers(handlersAgain);
+  ComplexObsHandler dummyHandlerToOverrideAgain=os.getHandler("DummyHandlerToOverride");
+  Assert.assertTrue(dummyHandlerToOverrideAgain instanceof TextHandler);
+}

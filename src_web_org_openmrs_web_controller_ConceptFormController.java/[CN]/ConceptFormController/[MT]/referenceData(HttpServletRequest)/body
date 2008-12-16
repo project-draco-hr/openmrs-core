@@ -115,6 +115,7 @@
   map.put("containedInSets",containedInSets);
   map.put("classes",cs.getAllConceptClasses());
   map.put("datatypes",cs.getAllConceptDatatypes());
+  map.put("handlers",Context.getObsService().getHandlers());
   map.put("locale",locale.getLanguage().substring(0,2));
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
   return map;

@@ -1,0 +1,7 @@
+{
+  Obs obs=dao.getObs(obsId);
+  if (obs != null && obs.isComplex()) {
+    return getHandler(obs).getObs(obs,view);
+  }
+  return obs;
+}
