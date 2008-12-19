@@ -11,10 +11,15 @@
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.deleted");
         return new ModelAndView(new RedirectView("index.htm"));
       }
- catch (      APIException e) {
-        log.error(e);
+ catch (      DataIntegrityViolationException e) {
+        log.error("Unable to delete a concept because it is in use: " + concept,e);
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.delete");
-        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId().toString()));
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+      }
+catch (      Exception e) {
+        log.error("Unable to delete concept because an error occurred: " + concept,e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.delete");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
       }
     }
  else {
