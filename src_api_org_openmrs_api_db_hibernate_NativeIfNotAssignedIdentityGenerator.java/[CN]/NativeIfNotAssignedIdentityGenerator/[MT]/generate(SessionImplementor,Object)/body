@@ -1,0 +1,9 @@
+{
+  Serializable id;
+  EntityPersister persister=session.getEntityPersister(entityName,entity);
+  id=persister.getIdentifier(entity,session.getEntityMode());
+  if (id == null) {
+    id=IdentifierGeneratorFactory.POST_INSERT_INDICATOR;
+  }
+  return id;
+}
