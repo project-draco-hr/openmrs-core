@@ -2,25 +2,29 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String[] locationList=request.getParameterValues("locationId");
-    LocationService ls=Context.getLocationService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    String deleted=msa.getMessage("general.deleted");
-    String notDeleted=msa.getMessage("general.cannot.delete");
-    for (    String p : locationList) {
-      try {
-        ls.purgeLocation(ls.getLocation(Integer.valueOf(p)));
-        if (!success.equals(""))         success+="<br/>";
-        success+=p + " " + deleted;
-      }
- catch (      APIException e) {
-        log.warn("Error deleting location",e);
-        if (!error.equals(""))         error+="<br/>";
-        error+=p + " " + notDeleted;
+    String[] locationList=request.getParameterValues("locationId");
+    if (locationList != null) {
+      LocationService ls=Context.getLocationService();
+      String deleted=msa.getMessage("general.deleted");
+      String notDeleted=msa.getMessage("Location.cannot.delete");
+      for (      String p : locationList) {
+        try {
+          ls.purgeLocation(ls.getLocation(Integer.valueOf(p)));
+          if (!success.equals(""))           success+="<br/>";
+          success+=p + " " + deleted;
+        }
+ catch (        DataIntegrityViolationException e) {
+          error=handleLocationIntegrityException(e,error,notDeleted);
+        }
+catch (        APIException e) {
+          error=handleLocationIntegrityException(e,error,notDeleted);
+        }
       }
     }
+ else     error=msa.getMessage("Location.select");
     view=getSuccessView();
     if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
     if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);

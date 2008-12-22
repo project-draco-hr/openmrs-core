@@ -3,15 +3,19 @@
   Locale locale=Context.getLocale();
   if (Context.isAuthenticated()) {
     AlertService as=Context.getAlertService();
-    String[] alertIds=request.getParameterValues("alertId");
-    for (    String alertIdString : alertIds) {
-      Integer alertId=Integer.parseInt(alertIdString);
-      Alert a=as.getAlert(alertId);
-      a.setDateToExpire(new Date());
-      as.saveAlert(a);
-    }
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    String msg=msa.getMessage("Alert.expired",new Object[]{alertIds.length},locale);
+    String msg="";
+    String[] alertIds=request.getParameterValues("alertId");
+    if (alertIds != null) {
+      for (      String alertIdString : alertIds) {
+        Integer alertId=Integer.parseInt(alertIdString);
+        Alert a=as.getAlert(alertId);
+        a.setDateToExpire(new Date());
+        as.saveAlert(a);
+      }
+      msg=msa.getMessage("Alert.expired",new Object[]{alertIds.length},locale);
+    }
+ else     msg=msa.getMessage("Alert.select");
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,msg);
     return new ModelAndView(new RedirectView(getSuccessView()));
   }

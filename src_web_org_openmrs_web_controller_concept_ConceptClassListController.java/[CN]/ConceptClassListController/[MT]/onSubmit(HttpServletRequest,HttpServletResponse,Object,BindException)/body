@@ -2,25 +2,29 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String[] conceptClassList=request.getParameterValues("conceptClassId");
-    ConceptService cs=Context.getConceptService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    String deleted=msa.getMessage("general.deleted");
-    String notDeleted=msa.getMessage("general.cannot.delete");
-    for (    String cc : conceptClassList) {
-      try {
-        cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
-        if (!success.equals(""))         success+="<br/>";
-        success+=cc + " " + deleted;
-      }
- catch (      APIException e) {
-        log.warn("Error deleting concept class",e);
-        if (!error.equals(""))         error+="<br/>";
-        error+=cc + " " + notDeleted;
+    String[] conceptClassList=request.getParameterValues("conceptClassId");
+    if (conceptClassList != null) {
+      ConceptService cs=Context.getConceptService();
+      String deleted=msa.getMessage("general.deleted");
+      String notDeleted=msa.getMessage("ConceptClass.cannot.delete");
+      for (      String cc : conceptClassList) {
+        try {
+          cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
+          if (!success.equals(""))           success+="<br/>";
+          success+=cc + " " + deleted;
+        }
+ catch (        DataIntegrityViolationException e) {
+          error=handleConceptClassIntegrityException(e,error,notDeleted);
+        }
+catch (        APIException e) {
+          error=handleConceptClassIntegrityException(e,error,notDeleted);
+        }
       }
     }
+ else     error=msa.getMessage("ConceptClass.select");
     view=getSuccessView();
     if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
     if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);

@@ -2,7 +2,7 @@
   List<PersonAttributeType> attributeTypeList=new Vector<PersonAttributeType>();
   if (Context.isAuthenticated()) {
     PersonService ps=Context.getPersonService();
-    attributeTypeList=ps.getPersonAttributeTypes();
+    attributeTypeList=ps.getAllPersonAttributeTypes();
   }
   return attributeTypeList;
 }

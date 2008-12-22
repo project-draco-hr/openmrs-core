@@ -2,7 +2,7 @@
   List<PatientIdentifierType> identifierTypeList=new Vector<PatientIdentifierType>();
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
-    identifierTypeList=ps.getPatientIdentifierTypes();
+    identifierTypeList=ps.getAllPatientIdentifierTypes();
   }
   return identifierTypeList;
 }
