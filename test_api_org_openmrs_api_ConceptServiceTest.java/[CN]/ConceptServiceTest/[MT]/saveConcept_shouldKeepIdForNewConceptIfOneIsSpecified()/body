@@ -1,0 +1,9 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("Weight",Locale.US));
+  concept.setConceptId(5089);
+  concept.setDatatype(Context.getConceptService().getConceptDatatypeByName("Numeric"));
+  concept.setConceptClass(Context.getConceptService().getConceptClassByName("Finding"));
+  concept=Context.getConceptService().saveConcept(concept);
+  assertTrue(concept.getConceptId().equals(5089));
+}
