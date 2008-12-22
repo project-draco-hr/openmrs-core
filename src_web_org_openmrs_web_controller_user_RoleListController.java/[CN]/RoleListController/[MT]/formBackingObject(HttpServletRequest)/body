@@ -1,9 +1,8 @@
 {
-  HttpSession httpSession=request.getSession();
   Map<Role,Boolean> roleList=new LinkedHashMap<Role,Boolean>();
   if (Context.isAuthenticated()) {
     UserService us=Context.getUserService();
-    for (    Role r : us.getRoles()) {
+    for (    Role r : us.getAllRoles()) {
       if (OpenmrsConstants.CORE_ROLES().keySet().contains(r.getRole()))       roleList.put(r,true);
  else       roleList.put(r,false);
     }

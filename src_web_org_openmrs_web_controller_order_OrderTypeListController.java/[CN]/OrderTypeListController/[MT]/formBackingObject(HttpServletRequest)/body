@@ -1,9 +1,8 @@
 {
-  HttpSession httpSession=request.getSession();
   List<OrderType> orderTypeList=new Vector<OrderType>();
   if (Context.isAuthenticated()) {
     OrderService os=Context.getOrderService();
-    orderTypeList=os.getOrderTypes();
+    orderTypeList=os.getAllOrderTypes();
   }
   return orderTypeList;
 }
