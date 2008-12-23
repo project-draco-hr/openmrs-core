@@ -1,0 +1,34 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  StringBuffer success=new StringBuffer();
+  StringBuffer error=new StringBuffer();
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String[] queueList=request.getParameterValues("queueId");
+  HL7Service hL7Service=Context.getHL7Service();
+  if (queueList != null) {
+    for (    String queueId : queueList) {
+      Object[] args=new Object[]{queueId};
+      try {
+        HL7InQueue hl7InQueue=hL7Service.getHL7InQueue(Integer.valueOf(queueId));
+        HL7InArchive hl7InArchive=new HL7InArchive(hl7InQueue);
+        hl7InArchive.setMessageState(HL7Constants.HL7_STATUS_DELETED);
+        hL7Service.createHL7InArchive(hl7InArchive);
+        hL7Service.deleteHL7InQueue(hl7InQueue);
+        success.append(msa.getMessage("Hl7inQueue.queueList.deleted",args) + "<br/>");
+      }
+ catch (      APIException e) {
+        log.warn("Error deleting a queue entry",e);
+        error.append(msa.getMessage("Hl7inQueue.queueList..error",args) + "<br/>");
+      }
+    }
+  }
+  view=getSuccessView();
+  if (!success.toString().equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+  }
+  if (!error.toString().equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+  }
+  return new ModelAndView(new RedirectView(view));
+}
