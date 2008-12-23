@@ -5,7 +5,7 @@
     String s=new SimpleDateFormat("dMy_Hm").format(new Date());
     response.setHeader("Content-Type","text/csv;charset=UTF-8");
     response.setHeader("Content-Disposition","attachment; filename=conceptDictionary" + s + ".csv");
-    String line="Concept Id,Name,Description,Synonyms,Answers,Class,Datatype,Changed By,Creator\n";
+    String line="Concept Id,Name,Description,Synonyms,Answers,Set Members,Class,Datatype,Changed By,Creator\n";
     response.getWriter().write(line);
     int listIndex=0;
     Iterator<Concept> conceptIterator=cs.conceptIterator();
@@ -32,6 +32,14 @@
         for (        ConceptAnswer answer : c.getAnswers()) {
           if (answer.getAnswerConcept() != null)           tmp+=answer.getAnswerConcept().getName() + "\n";
  else           if (answer.getAnswerDrug() != null)           tmp+=answer.getAnswerDrug().getFullName(Context.getLocale()) + "\n";
+        }
+        line+='"' + tmp.trim() + "\",";
+        tmp="";
+        for (        ConceptSet set : c.getConceptSets()) {
+          if (set.getConcept() != null) {
+            name=set.getConcept().getName().toString();
+            tmp+=name.replace("\"","\"\"") + "\n";
+          }
         }
         line+='"' + tmp.trim() + "\",";
         line+='"';
