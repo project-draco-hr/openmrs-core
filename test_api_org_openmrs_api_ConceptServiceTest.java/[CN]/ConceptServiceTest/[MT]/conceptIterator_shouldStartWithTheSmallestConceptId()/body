@@ -1,0 +1,12 @@
+{
+  List<Concept> allConcepts=Context.getConceptService().getAllConcepts();
+  int numberofconcepts=allConcepts.size();
+  Assert.assertTrue(numberofconcepts > 0);
+  int iteratorCount=0;
+  Iterator<Concept> iterator=Context.getConceptService().conceptIterator();
+  while (iterator.hasNext() && iteratorCount < numberofconcepts + 5) {
+    iterator.next();
+    iteratorCount++;
+  }
+  Assert.assertEquals(numberofconcepts,iteratorCount);
+}
