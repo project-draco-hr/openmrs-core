@@ -1,0 +1,7 @@
+{
+  List<HL7InArchive> hl7InArchive=new Vector<HL7InArchive>();
+  if (Context.isAuthenticated()) {
+    hl7InArchive=Context.getHL7Service().getHL7InArchiveByState(HL7Constants.HL7_STATUS_DELETED);
+  }
+  return hl7InArchive;
+}

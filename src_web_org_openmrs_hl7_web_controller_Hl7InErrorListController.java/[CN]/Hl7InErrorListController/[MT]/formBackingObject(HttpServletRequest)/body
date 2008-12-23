@@ -1,0 +1,7 @@
+{
+  List<HL7InError> hl7InError=new Vector<HL7InError>();
+  if (Context.isAuthenticated()) {
+    hl7InError=Context.getHL7Service().getAllHL7InErrors();
+  }
+  return hl7InError;
+}
