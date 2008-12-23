@@ -2,7 +2,7 @@
   if (currentConcept != null) {
     sessionFactory.getCurrentSession().evict(currentConcept);
   }
- else   currentConcept=nextConcept;
+  currentConcept=nextConcept;
   nextConcept=getNextConcept(currentConcept);
   return currentConcept;
 }
