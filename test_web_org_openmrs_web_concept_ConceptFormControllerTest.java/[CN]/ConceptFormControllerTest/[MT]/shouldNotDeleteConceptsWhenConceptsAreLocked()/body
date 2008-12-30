@@ -1,0 +1,17 @@
+{
+  executeDataSet("org/openmrs/web/include/ConceptFormControllerTest.xml");
+  ConceptService cs=Context.getConceptService();
+  ConceptFormController controller=new ConceptFormController();
+  controller.setApplicationContext(applicationContext);
+  controller.setSuccessView("index.htm");
+  controller.setFormView("concept.form");
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","/dictionary/concept.form?conceptId=3");
+  request.setSession(new MockHttpSession(null));
+  HttpServletResponse response=new MockHttpServletResponse();
+  controller.handleRequest(request,response);
+  request.setMethod("POST");
+  request.addParameter("action","Delete Concept");
+  ModelAndView mav=controller.handleRequest(request,response);
+  Assert.assertNotSame("The purge attempt should have failed!","index.htm",mav.getViewName());
+  Assert.assertNotNull(cs.getConcept(3));
+}

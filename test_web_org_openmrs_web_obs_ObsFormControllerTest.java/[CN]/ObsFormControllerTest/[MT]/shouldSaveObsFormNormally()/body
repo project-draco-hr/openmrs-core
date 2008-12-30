@@ -16,8 +16,7 @@
   request.addParameter("concept","4");
   request.addParameter("valueCoded","5");
   request.addParameter("saveObs","Save Obs");
-  ModelAndView mav=controller.handleRequest(request,response);
-  TestUtil.printOutTableContents(getConnection(),"obs");
+  controller.handleRequest(request,response);
   List<Obs> obsForPatient=os.getObservationsByPerson(new Person(2));
   assertEquals(1,obsForPatient.size());
   assertEquals(new Encounter(3),obsForPatient.get(0).getEncounter());
