@@ -12,7 +12,7 @@
   if (Context.isAuthenticated()) {
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
-    if (!action.equals(msa.getMessage("Concept.delete"))) {
+    if (!action.equals(msa.getMessage("Concept.delete","Delete Concept"))) {
       Collection<Locale> conceptLocales=cs.getLocalesOfConceptNames();
       String newLocaleSpec=request.getParameter("newLocaleAdded");
       if (newLocaleSpec != null) {
