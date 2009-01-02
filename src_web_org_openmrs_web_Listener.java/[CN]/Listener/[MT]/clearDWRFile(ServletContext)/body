@@ -1,0 +1,33 @@
+{
+  String realPath=servletContext.getRealPath("");
+  String absPath=realPath + "/WEB-INF/dwr-modules.xml";
+  File dwrFile=new File(absPath.replace("/",File.separator));
+  if (dwrFile.exists()) {
+    try {
+      DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+      DocumentBuilder db=dbf.newDocumentBuilder();
+      db.setEntityResolver(new EntityResolver(){
+        public InputSource resolveEntity(        String publicId,        String systemId) throws SAXException, IOException {
+          return new InputSource(new StringReader(""));
+        }
+      }
+);
+      Document doc=db.parse(dwrFile);
+      Element elem=doc.getDocumentElement();
+      elem.setTextContent("");
+      OpenmrsUtil.saveDocument(doc,dwrFile);
+    }
+ catch (    IOException io) {
+      log.warn("Unable to parse the simple xml string",io);
+    }
+catch (    ParserConfigurationException parseError) {
+      log.warn("Unable to clear the dwr document",parseError);
+    }
+catch (    SAXException sax) {
+      log.warn("Unable to clear the dwr document",sax);
+    }
+catch (    Throwable t) {
+      log.debug("Error clearing dwr-modules.xml",t);
+    }
+  }
+}

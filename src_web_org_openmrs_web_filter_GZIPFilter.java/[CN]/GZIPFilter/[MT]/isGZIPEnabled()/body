@@ -1,4 +1,13 @@
 {
-  String gzipEnabled=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED,"");
-  return gzipEnabled.toLowerCase().equals("true");
+  if (cachedGZipEnabledFlag != null)   return cachedGZipEnabledFlag;
+  try {
+    String gzipEnabled=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED,"");
+    boolean isEnabled=gzipEnabled.toLowerCase().equals("true");
+    cachedGZipEnabledFlag=isEnabled;
+    return cachedGZipEnabledFlag;
+  }
+ catch (  Throwable t) {
+    log.warn("Unable to get the global property: " + OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ENABLED,t);
+    return false;
+  }
 }

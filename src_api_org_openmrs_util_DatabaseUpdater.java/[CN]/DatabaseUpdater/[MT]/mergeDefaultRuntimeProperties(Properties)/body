@@ -1,0 +1,29 @@
+{
+  Set<Object> runtimePropertyKeys=new HashSet<Object>();
+  runtimePropertyKeys.addAll(runtimeProperties.keySet());
+  for (  Object key : runtimePropertyKeys) {
+    String prop=(String)key;
+    String value=(String)runtimeProperties.get(key);
+    log.trace("Setting property: " + prop + ":"+ value);
+    if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop))     runtimeProperties.setProperty("hibernate." + prop,value);
+  }
+  InputStream propertyStream=null;
+  try {
+    Properties props=new Properties();
+    propertyStream=DatabaseUpdater.class.getClassLoader().getResourceAsStream("hibernate.default.properties");
+    props.load(propertyStream);
+    for (    Map.Entry<Object,Object> entry : props.entrySet()) {
+      if (!runtimeProperties.containsKey(entry.getKey()))       runtimeProperties.put(entry.getKey(),entry.getValue());
+    }
+  }
+ catch (  IOException e) {
+    log.fatal("Unable to load default hibernate properties",e);
+  }
+ finally {
+    try {
+      propertyStream.close();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}

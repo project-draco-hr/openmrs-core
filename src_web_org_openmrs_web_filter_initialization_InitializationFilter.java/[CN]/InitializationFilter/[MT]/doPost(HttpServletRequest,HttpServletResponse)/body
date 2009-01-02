@@ -1,0 +1,143 @@
+{
+  String page=httpRequest.getParameter("page");
+  Map<String,Object> referenceMap=new HashMap<String,Object>();
+  Writer writer=httpResponse.getWriter();
+  if ("databasesetup.vm".equals(page)) {
+    wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
+    if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
+      wizardModel.databaseName=httpRequest.getParameter("openmrs_current_database_name");
+      wizardModel.hasCurrentOpenmrsDatabase=true;
+    }
+ else {
+      wizardModel.hasCurrentOpenmrsDatabase=false;
+      wizardModel.createTables=true;
+      wizardModel.databaseName=httpRequest.getParameter("openmrs_new_database_name");
+      wizardModel.createDatabaseUsername=httpRequest.getParameter("create_database_username");
+      wizardModel.createDatabasePassword=httpRequest.getParameter("create_database_password");
+    }
+    renderTemplate("databasetablesanduser.vm",referenceMap,writer);
+  }
+ else   if ("databasetablesanduser.vm".equals(page)) {
+    if (wizardModel.hasCurrentOpenmrsDatabase)     wizardModel.createTables="yes".equals(httpRequest.getParameter("create_tables"));
+    if ("yes".equals(httpRequest.getParameter("current_database_user"))) {
+      wizardModel.currentDatabaseUsername=httpRequest.getParameter("current_database_username");
+      wizardModel.currentDatabasePassword=httpRequest.getParameter("current_database_password");
+      wizardModel.hasCurrentDatabaseUser=true;
+    }
+ else {
+      wizardModel.hasCurrentDatabaseUser=false;
+      wizardModel.createDatabaseUser=true;
+      wizardModel.createUserUsername=httpRequest.getParameter("create_user_username");
+      wizardModel.createUserPassword=httpRequest.getParameter("create_user_password");
+    }
+    renderTemplate("otherruntimeproperties.vm",referenceMap,writer);
+  }
+ else   if ("otherruntimeproperties.vm".equals(page)) {
+    wizardModel.moduleWebAdmin="yes".equals(httpRequest.getParameter("module_web_admin"));
+    wizardModel.autoUpdateDatabase="yes".equals(httpRequest.getParameter("auto_update_database"));
+    renderTemplate("adminusersetup.vm",referenceMap,writer);
+  }
+ else   if ("adminusersetup.vm".equals(page)) {
+    wizardModel.adminUserPassword=httpRequest.getParameter("new_admin_password");
+    String adminUserConfirm=httpRequest.getParameter("new_admin_password_confirm");
+    if (!wizardModel.adminUserPassword.equals(adminUserConfirm)) {
+      wizardModel.errorMessage="Admin passwords don't match";
+      renderTemplate("adminusersetup.vm",referenceMap,writer);
+      return;
+    }
+    renderTemplate("wizardcomplete.vm",referenceMap,writer);
+  }
+ else   if ("wizardcomplete.vm".equals(page)) {
+    Properties runtimeProperties=new Properties();
+    String connectionUsername;
+    String connectionPassword;
+    if (!wizardModel.hasCurrentOpenmrsDatabase) {
+      String sql="create database ? default character set utf8";
+      int result=executeStatement(wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+      if (result < 0) {
+        renderTemplate(DEFAULT_PAGE,null,writer);
+        return;
+      }
+    }
+    if (wizardModel.createDatabaseUser) {
+      connectionUsername="openmrs_user";
+      connectionPassword="";
+      String chars="acdeghijklmonpqrtvwxyzACDEGHIJKLMNOPQRTVWXYZ0123456789.|~@#^&";
+      Random r=new Random();
+      for (int x=0; x < 12; x++) {
+        connectionPassword+=chars.charAt(r.nextInt(chars.length()));
+      }
+      String sql="drop user ?";
+      int errMessageSize=wizardModel.errorMessage.length();
+      executeStatement(wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
+      if (errMessageSize != wizardModel.errorMessage.length())       wizardModel.errorMessage=wizardModel.errorMessage.substring(0,errMessageSize);
+      sql="create user ? identified by '?'";
+      executeStatement(wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword);
+      sql="GRANT ALL ON ?.* TO ?";
+      executeStatement(wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
+    }
+ else {
+      connectionUsername=wizardModel.currentDatabaseUsername;
+      connectionPassword=wizardModel.currentDatabasePassword;
+    }
+    String databaseConnectionFinalUrl=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
+    runtimeProperties.put("connection.url",databaseConnectionFinalUrl);
+    runtimeProperties.put("connection.username",connectionUsername);
+    runtimeProperties.put("connection.password",connectionPassword);
+    runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
+    runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
+    runtimeProperties.put(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY,"admin");
+    runtimeProperties.put(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY,wizardModel.adminUserPassword);
+    Context.setRuntimeProperties(runtimeProperties);
+    if (wizardModel.createTables) {
+      try {
+        DatabaseUpdater.executeChangelog(LIQUIBASE_SCHEMA_DATA,null);
+        DatabaseUpdater.executeChangelog(LIQUIBASE_CORE_DATA,null);
+        DatabaseUpdater.executeChangelog(LIQUIBASE_DEMO_DATA,null);
+      }
+ catch (      Exception e) {
+        wizardModel.errorMessage+="<br/>" + e.getMessage();
+        wizardModel.errorMessage+="<br/>See the error log for more details";
+        log.warn("Error while trying to create tables and demo data",e);
+      }
+    }
+    try {
+      DatabaseUpdater.update();
+    }
+ catch (    Exception e) {
+      wizardModel.errorMessage+="<br/>" + e.getMessage();
+      log.warn("Error while trying to update to the latest database version",e);
+    }
+    if (wizardModel.errorMessage != null && !wizardModel.errorMessage.equals("")) {
+      renderTemplate(DEFAULT_PAGE,null,writer);
+      return;
+    }
+    Writer runtimeWriter=new FileWriter(getRuntimePropertiesFile());
+    runtimeProperties.store(runtimeWriter,"Auto generated by OpenMRS initialization wizard");
+    new ContextLoader().initWebApplicationContext(filterConfig.getServletContext());
+    try {
+      Context.startup(runtimeProperties);
+    }
+ catch (    DatabaseUpdateException updateEx) {
+      log.warn("Error while running the database update file",updateEx);
+      wizardModel.errorMessage="There was an error while running the database update file: " + updateEx.getMessage();
+      renderTemplate(DEFAULT_PAGE,null,writer);
+      return;
+    }
+catch (    InputRequiredException inputRequiredEx) {
+      log.warn("Unable to continue because user input is required for the db updates, but I am not doing anything about that right now");
+      wizardModel.errorMessage="Unable to continue because user input is required for the db updates, but I am not doing anything about that right now";
+      renderTemplate(DEFAULT_PAGE,null,writer);
+      return;
+    }
+    if (wizardModel.createTables) {
+      Context.authenticate("admin","test");
+      Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
+      Context.logout();
+    }
+    Listener.loadCoreModules(filterConfig.getServletContext());
+    Listener.performWebStartOfModules(filterConfig.getServletContext());
+    initializationComplete=true;
+    httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
+  }
+}

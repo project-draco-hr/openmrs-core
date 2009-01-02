@@ -1,0 +1,18 @@
+{
+  Writer writer=httpResponse.getWriter();
+  Map<String,Object> referenceMap=new HashMap<String,Object>();
+  File runtimeProperties=getRuntimePropertiesFile();
+  try {
+    runtimeProperties.createNewFile();
+    wizardModel.canCreate=true;
+  }
+ catch (  IOException io) {
+    wizardModel.cannotCreateErrorMessage=io.getMessage();
+  }
+  if (runtimeProperties.canWrite()) {
+    wizardModel.canWrite=true;
+  }
+  wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
+  runtimeProperties.delete();
+  renderTemplate(DEFAULT_PAGE,referenceMap,writer);
+}

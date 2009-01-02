@@ -46,7 +46,8 @@
     log.warn("Using runtime properties file: " + filepath);
   }
  catch (  Throwable t) {
-    log.warn("Unable to load properties file. Starting with default properties.",t);
+    log.warn("Unable to find a runtime properties file. Initial setup is needed",t);
+    return null;
   }
   return props;
 }
