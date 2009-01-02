@@ -1,0 +1,28 @@
+{
+  VelocityContext velocityContext=new VelocityContext();
+  if (referenceMap != null) {
+    for (    Map.Entry<String,Object> entry : referenceMap.entrySet()) {
+      velocityContext.put(entry.getKey(),entry.getValue());
+    }
+  }
+  for (  Field field : InitializationWizardModel.class.getDeclaredFields()) {
+    try {
+      velocityContext.put(field.getName(),field.get(wizardModel));
+    }
+ catch (    IllegalArgumentException e) {
+      log.error("Error generated while getting field value: " + field.getName(),e);
+    }
+catch (    IllegalAccessException e) {
+      log.error("Error generated while getting field value: " + field.getName(),e);
+    }
+  }
+  String fullTemplatePath="org/openmrs/web/filter/initialization/" + templateName;
+  InputStream templateInputStream=getClass().getClassLoader().getResourceAsStream(fullTemplatePath);
+  if (templateInputStream == null)   throw new IOException("Unable to find " + fullTemplatePath);
+  try {
+    velocityEngine.evaluate(velocityContext,writer,this.getClass().getName(),new InputStreamReader(templateInputStream));
+  }
+ catch (  Exception e) {
+    throw new IOException("Unable to process template: " + fullTemplatePath,e);
+  }
+}

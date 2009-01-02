@@ -1,0 +1,16 @@
+{
+  if (velocityEngine == null) {
+    velocityEngine=new VelocityEngine();
+    Properties props=new Properties();
+    props.setProperty(RuntimeConstants.RUNTIME_LOG,"initial_wizard_vel.log");
+    props.setProperty(RuntimeConstants.RESOURCE_LOADER,"class");
+    props.setProperty("class.resource.loader.description","Velocity Classpath Resource Loader");
+    props.setProperty("class.resource.loader.class","org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
+    try {
+      velocityEngine.init(props);
+    }
+ catch (    Exception e) {
+      log.error("velocity init failed, because: " + e);
+    }
+  }
+}

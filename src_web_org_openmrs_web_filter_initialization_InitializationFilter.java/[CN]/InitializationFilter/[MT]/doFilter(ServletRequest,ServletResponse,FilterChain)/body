@@ -1,0 +1,21 @@
+{
+  if (Listener.runtimePropertiesFound() || isInitializationComplete()) {
+    chain.doFilter(request,response);
+  }
+ else {
+    HttpServletRequest httpRequest=(HttpServletRequest)request;
+    HttpServletResponse httpResponse=(HttpServletResponse)response;
+    if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL)) {
+      httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
+    }
+ else {
+      wizardModel.errorMessage="";
+      if (httpRequest.getMethod().equals("GET")) {
+        doGet(httpRequest,httpResponse);
+      }
+ else       if (httpRequest.getMethod().equals("POST")) {
+        doPost(httpRequest,httpResponse);
+      }
+    }
+  }
+}

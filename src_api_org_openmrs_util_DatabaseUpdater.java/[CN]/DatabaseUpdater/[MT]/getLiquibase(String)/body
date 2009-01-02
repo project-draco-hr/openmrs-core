@@ -1,0 +1,28 @@
+{
+  Connection connection=null;
+  try {
+    Properties props=Context.getRuntimeProperties();
+    mergeDefaultRuntimeProperties(props);
+    String driver=props.getProperty("hibernate.connection.driver_class");
+    String username=props.getProperty("hibernate.connection.username");
+    String password=props.getProperty("hibernate.connection.password");
+    String url=props.getProperty("hibernate.connection.url");
+    Class.forName(driver);
+    connection=DriverManager.getConnection(url,username,password);
+    Database database=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);
+    database.setDatabaseChangeLogTableName("liquibasechangelog");
+    database.setDatabaseChangeLogLockTableName("liquibasechangeloglock");
+    if (driver.startsWith("org.hsqldb")) {
+      database.setDatabaseChangeLogTableName(database.getDatabaseChangeLogTableName().toUpperCase());
+      database.setDatabaseChangeLogLockTableName(database.getDatabaseChangeLogLockTableName().toUpperCase());
+    }
+    FileOpener clFO=new ClassLoaderFileOpener();
+    FileOpener fsFO=new FileSystemFileOpener();
+    if (changeLogFile == null)     changeLogFile=CHANGE_LOG_FILE;
+    return new Liquibase(changeLogFile,new CompositeFileOpener(clFO,fsFO),database);
+  }
+ catch (  Exception e) {
+    if (connection != null)     connection.close();
+    throw e;
+  }
+}

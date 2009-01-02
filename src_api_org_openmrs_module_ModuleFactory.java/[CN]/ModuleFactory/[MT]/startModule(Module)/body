@@ -3,8 +3,6 @@
     try {
       String requireVersion=module.getRequireOpenmrsVersion();
       if (requireVersion != null && !requireVersion.equals(""))       if (ModuleUtil.compareVersion(OpenmrsConstants.OPENMRS_VERSION_SHORT,requireVersion) < 0)       throw new ModuleException("Module requires at least version '" + requireVersion + "'.  Current code version is only '"+ OpenmrsConstants.OPENMRS_VERSION_SHORT+ "'",module.getName());
-      String requireDBVersion=module.getRequireDatabaseVersion();
-      if (requireDBVersion != null && !requireDBVersion.equals(""))       if (ModuleUtil.compareVersion(OpenmrsConstants.DATABASE_VERSION,requireDBVersion) < 0)       throw new ModuleException("Module requires at least database version '" + requireDBVersion + "'. Current database version is only '"+ OpenmrsConstants.DATABASE_VERSION+ "'",module.getName());
       if (!requiredModulesStarted(module)) {
         throw new ModuleException("Not all required modules are started: " + OpenmrsUtil.join(getMissingRequiredModules(module),", ") + ". ",module.getName());
       }

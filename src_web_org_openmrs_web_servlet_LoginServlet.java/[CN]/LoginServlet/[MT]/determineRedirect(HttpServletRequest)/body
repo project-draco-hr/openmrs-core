@@ -20,6 +20,10 @@
       log.debug("redirect is outside of openmrs, redirecting to main page");
       redirect=request.getContextPath();
     }
+    if (redirect.endsWith(WebConstants.SETUP_PAGE_URL)) {
+      log.debug("redirect is back to the setup page because this is their first ever login");
+      redirect=request.getContextPath();
+    }
   }
   return redirect;
 }
