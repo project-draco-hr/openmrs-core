@@ -23,6 +23,6 @@ catch (    IllegalAccessException e) {
     velocityEngine.evaluate(velocityContext,writer,this.getClass().getName(),new InputStreamReader(templateInputStream));
   }
  catch (  Exception e) {
-    throw new IOException("Unable to process template: " + fullTemplatePath,e);
+    throw new RuntimeException("Unable to process template: " + fullTemplatePath,e);
   }
 }
