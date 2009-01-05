@@ -1,0 +1,32 @@
+{
+  List<ModuleFilterMapping> mappings=new Vector<ModuleFilterMapping>();
+  try {
+    Element rootNode=module.getConfig().getDocumentElement();
+    NodeList mappingNodes=rootNode.getElementsByTagName("filter-mapping");
+    if (mappingNodes.getLength() > 0) {
+      for (int i=0; i < mappingNodes.getLength(); i++) {
+        ModuleFilterMapping mapping=new ModuleFilterMapping(module);
+        Node node=mappingNodes.item(i);
+        NodeList configNodes=node.getChildNodes();
+        for (int j=0; j < configNodes.getLength(); j++) {
+          Node configNode=configNodes.item(j);
+          if ("filter-name".equals(configNode.getNodeName())) {
+            mapping.setFilterName(configNode.getTextContent());
+          }
+ else           if ("url-pattern".equals(configNode.getNodeName())) {
+            mapping.addUrlPattern(configNode.getTextContent());
+          }
+ else           if ("servlet-name".equals(configNode.getNodeName())) {
+            mapping.addServletName(configNode.getTextContent());
+          }
+        }
+        mappings.add(mapping);
+      }
+    }
+  }
+ catch (  Exception e) {
+    throw new ModuleException("Unable to parse filters in module configuration.",e);
+  }
+  log.debug("Retrieved " + mappings.size() + " filter-mappings for "+ module.getModuleId()+ ": "+ mappings);
+  return mappings;
+}

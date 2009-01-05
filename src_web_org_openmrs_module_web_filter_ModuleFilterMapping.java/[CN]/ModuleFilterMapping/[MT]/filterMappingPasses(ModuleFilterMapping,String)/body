@@ -1,0 +1,16 @@
+{
+  if (requestPath == null) {
+    return false;
+  }
+  for (  String patternToCheck : filterMapping.getUrlPatterns()) {
+    if (urlPatternMatches(patternToCheck,requestPath)) {
+      return true;
+    }
+  }
+  for (  String patternToCheck : filterMapping.getServletNames()) {
+    if (servletNameMatches(patternToCheck,requestPath)) {
+      return true;
+    }
+  }
+  return false;
+}

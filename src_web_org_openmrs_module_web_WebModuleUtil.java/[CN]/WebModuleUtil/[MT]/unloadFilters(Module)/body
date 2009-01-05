@@ -1,0 +1,29 @@
+{
+  for (java.util.Iterator<ModuleFilterMapping> mapIter=moduleFilterMappings.iterator(); mapIter.hasNext(); ) {
+    ModuleFilterMapping mapping=mapIter.next();
+    if (module.equals(mapping.getModule())) {
+      mapIter.remove();
+      log.debug("Removed ModuleFilterMapping: " + mapping);
+    }
+  }
+  Collection<Filter> filters=moduleFilters.get(module);
+  if (filters != null) {
+    try {
+      for (      Filter f : filters) {
+        f.destroy();
+      }
+    }
+ catch (    Exception e) {
+      log.warn("An error occurred while trying to destroy and remove module Filter.",e);
+    }
+    log.debug("Module: " + module.getModuleId() + " successfully unloaded "+ filters.size()+ " filters.");
+    moduleFilters.remove(module);
+    for (Iterator<String> i=moduleFiltersByName.keySet().iterator(); i.hasNext(); ) {
+      String filterName=i.next();
+      Filter filterVal=moduleFiltersByName.get(filterName);
+      if (filters.contains(filterVal)) {
+        i.remove();
+      }
+    }
+  }
+}
