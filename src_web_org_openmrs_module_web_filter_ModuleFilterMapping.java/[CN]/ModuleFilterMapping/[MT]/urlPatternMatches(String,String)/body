@@ -1,0 +1,31 @@
+{
+  if (patternToCheck == null) {
+    return false;
+  }
+  log.debug("Checking URL <" + requestPath + "> against pattern <"+ patternToCheck+ ">");
+  if (patternToCheck.equals("*") || patternToCheck.equals("/*") || patternToCheck.equals(requestPath)) {
+    return true;
+  }
+  if (patternToCheck.endsWith("/*")) {
+    int patternLength=patternToCheck.length() - 2;
+    if (patternToCheck.regionMatches(0,requestPath,0,patternLength)) {
+      if (requestPath.length() == patternLength) {
+        return true;
+      }
+ else       if ('/' == requestPath.charAt(patternLength)) {
+        return true;
+      }
+    }
+    return false;
+  }
+  if (patternToCheck.startsWith("*.")) {
+    int slash=requestPath.lastIndexOf('/');
+    int period=requestPath.lastIndexOf('.');
+    int reqLen=requestPath.length();
+    int patLen=patternToCheck.length();
+    if (slash >= 0 && period > slash && period != reqLen - 1 && reqLen - period == patLen - 1) {
+      return (patternToCheck.regionMatches(2,requestPath,period + 1,patLen - 2));
+    }
+  }
+  return false;
+}

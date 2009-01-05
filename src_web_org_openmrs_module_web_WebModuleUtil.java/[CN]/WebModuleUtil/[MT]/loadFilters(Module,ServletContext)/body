@@ -1,0 +1,26 @@
+{
+  Map<String,Filter> filters=new HashMap<String,Filter>();
+  try {
+    for (    ModuleFilterDefinition def : ModuleFilterDefinition.retrieveFilterDefinitions(module)) {
+      if (moduleFiltersByName.containsKey(def.getFilterName())) {
+        throw new ModuleException("A filter with name <" + def.getFilterName() + "> has already been registered.");
+      }
+      ModuleFilterConfig config=ModuleFilterConfig.getInstance(def,servletContext);
+      Filter f=(Filter)ModuleFactory.getModuleClassLoader(module).loadClass(def.getFilterClass()).newInstance();
+      f.init(config);
+      filters.put(def.getFilterName(),f);
+    }
+  }
+ catch (  ModuleException e) {
+    throw e;
+  }
+catch (  Exception e) {
+    throw new ModuleException("An error occurred initializing Filters for module: " + module.getModuleId(),e);
+  }
+  moduleFilters.put(module,filters.values());
+  moduleFiltersByName.putAll(filters);
+  log.debug("Module: " + module.getModuleId() + " successfully loaded "+ filters.size()+ " filters.");
+  List<ModuleFilterMapping> modMappings=ModuleFilterMapping.retrieveFilterMappings(module);
+  moduleFilterMappings.addAll(modMappings);
+  log.debug("Module: " + module.getModuleId() + " successfully loaded "+ modMappings.size()+ " filter mappings.");
+}

@@ -1,0 +1,10 @@
+{
+  if (servletName == null) {
+    return false;
+  }
+  log.debug("Checking servlet <" + servletName + "> against pattern <"+ patternToCheck+ ">");
+  if (("*").equals(patternToCheck) || servletName.equals(patternToCheck)) {
+    return true;
+  }
+  return false;
+}

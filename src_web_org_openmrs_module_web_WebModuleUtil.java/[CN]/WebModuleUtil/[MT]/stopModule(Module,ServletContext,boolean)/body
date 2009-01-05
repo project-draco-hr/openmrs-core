@@ -16,6 +16,7 @@
     }
   }
   moduleServlets.remove(mod);
+  unloadFilters(mod);
   InputStream inputStream=null;
   try {
     Document config=mod.getConfig();

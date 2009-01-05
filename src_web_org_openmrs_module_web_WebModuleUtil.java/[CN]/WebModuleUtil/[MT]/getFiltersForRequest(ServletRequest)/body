@@ -1,0 +1,21 @@
+{
+  List<Filter> filters=new Vector<Filter>();
+  if (request != null) {
+    HttpServletRequest httpRequest=(HttpServletRequest)request;
+    String requestPath=httpRequest.getRequestURI();
+    if (requestPath != null) {
+      for (      ModuleFilterMapping filterMapping : WebModuleUtil.getFilterMappings()) {
+        if (ModuleFilterMapping.filterMappingPasses(filterMapping,requestPath)) {
+          Filter passedFilter=moduleFiltersByName.get(filterMapping.getFilterName());
+          if (passedFilter != null) {
+            filters.add(passedFilter);
+          }
+ else {
+            log.warn("Unable to retrieve filter that has a name of " + filterMapping.getFilterName() + " in filter mapping.");
+          }
+        }
+      }
+    }
+  }
+  return filters;
+}
