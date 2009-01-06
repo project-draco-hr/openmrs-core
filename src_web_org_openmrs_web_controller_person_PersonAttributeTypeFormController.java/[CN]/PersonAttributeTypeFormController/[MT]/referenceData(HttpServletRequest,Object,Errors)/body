@@ -4,6 +4,8 @@
   if (Context.isAuthenticated()) {
     privileges=Context.getUserService().getAllPrivileges();
   }
+  Set<String> formats=FieldGenHandlerFactory.getSingletonInstance().getHandlers().keySet();
   map.put("privileges",privileges);
+  map.put("formats",formats);
   return map;
 }
