@@ -5,7 +5,15 @@
   Calendar bday=new GregorianCalendar();
   bday.setTime(birthdate);
   int age=today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
-  bday.set(Calendar.YEAR,today.get(Calendar.YEAR));
-  if (today.before(bday))   age=age - 1;
+  int todaysMonth=today.get(Calendar.MONTH);
+  int bdayMonth=bday.get(Calendar.MONTH);
+  int todaysDay=today.get(Calendar.DAY_OF_MONTH);
+  int bdayDay=bday.get(Calendar.DAY_OF_MONTH);
+  if (todaysMonth < bdayMonth) {
+    age--;
+  }
+ else   if (todaysMonth == bdayMonth && todaysDay < bdayDay) {
+    age--;
+  }
   return age;
 }
