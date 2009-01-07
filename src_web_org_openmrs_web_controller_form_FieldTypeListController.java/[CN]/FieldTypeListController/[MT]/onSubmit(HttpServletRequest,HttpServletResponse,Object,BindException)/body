@@ -3,8 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     String[] fieldTypeList=request.getParameterValues("fieldTypeId");
-    AdministrationService as=Context.getAdministrationService();
-    FormService rs=Context.getFormService();
+    FormService fs=Context.getFormService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
@@ -15,7 +14,7 @@
     if (fieldTypeList != null) {
       for (      String p : fieldTypeList) {
         try {
-          as.deleteFieldType(rs.getFieldType(Integer.valueOf(p)));
+          fs.purgeFieldType(fs.getFieldType(Integer.valueOf(p)));
           if (!success.equals(""))           success+="<br/>";
           success+=textFieldType + " " + p+ " "+ deleted;
         }

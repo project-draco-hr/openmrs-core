@@ -3,7 +3,7 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     Privilege privilege=(Privilege)obj;
-    Context.getAdministrationService().updatePrivilege(privilege);
+    Context.getUserService().savePrivilege(privilege);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Privilege.saved");
   }

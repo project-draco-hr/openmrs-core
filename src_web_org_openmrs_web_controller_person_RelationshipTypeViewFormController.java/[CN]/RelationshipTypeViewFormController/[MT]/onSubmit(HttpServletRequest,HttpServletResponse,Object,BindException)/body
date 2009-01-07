@@ -15,7 +15,7 @@
       RelationshipType type=ps.getRelationshipType(Integer.valueOf(id));
       type.setWeight(Integer.valueOf(displayOrder));
       type.setPreferred(preferred);
-      ps.updateRelationshipType(type);
+      ps.saveRelationshipType(type);
     }
     String success=getMessageSourceAccessor().getMessage("RelationshipType.views.saved");
     view=getSuccessView();

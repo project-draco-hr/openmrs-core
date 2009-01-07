@@ -14,7 +14,7 @@
     if (formList != null) {
       for (      String p : formList) {
         try {
-          fs.deleteForm(fs.getForm(Integer.valueOf(p)));
+          fs.purgeForm(fs.getForm(Integer.valueOf(p)));
           if (!success.equals(""))           success+="<br/>";
           success+=textForm + " " + p+ " "+ deleted;
         }

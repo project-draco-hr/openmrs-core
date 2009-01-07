@@ -2,7 +2,7 @@
   List<Program> programList=new Vector<Program>();
   if (Context.isAuthenticated()) {
     ProgramWorkflowService ps=Context.getProgramWorkflowService();
-    programList=ps.getPrograms();
+    programList=ps.getAllPrograms();
   }
   return programList;
 }

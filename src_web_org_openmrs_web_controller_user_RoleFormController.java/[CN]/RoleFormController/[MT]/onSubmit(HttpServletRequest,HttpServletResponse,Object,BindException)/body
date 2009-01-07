@@ -4,7 +4,7 @@
   if (Context.isAuthenticated()) {
     Role role=(Role)obj;
     try {
-      Context.getAdministrationService().updateRole(role);
+      Context.getUserService().saveRole(role);
       view=getSuccessView();
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Role.saved");
     }

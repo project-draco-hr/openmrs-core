@@ -7,7 +7,7 @@
     report.setPatientIds(new Vector<Integer>());
     if (patientIds != null)     for (    String patientId : patientIds)     if (patientId != null && !patientId.equals(""))     report.addPatientId(Integer.valueOf(patientId));
     Integer location=ServletRequestUtils.getIntParameter(request,"location",0);
-    if (location > 0)     report.setLocation(Context.getEncounterService().getLocation(location));
+    if (location > 0)     report.setLocation(Context.getLocationService().getLocation(location));
     String[] columnIds=request.getParameterValues("columnId");
     report.setColumns(new Vector<ExportColumn>());
     if (columnIds != null) {
@@ -75,7 +75,7 @@
     }
     String saveAsNew=ServletRequestUtils.getStringParameter(request,"saveAsNew","");
     if (!saveAsNew.equals(""))     report.setReportObjectId(null);
-    Context.getReportObjectService().updateReportObject(report);
+    Context.getReportObjectService().saveReportObject(report);
     String action=ServletRequestUtils.getRequiredStringParameter(request,"action");
     MessageSourceAccessor msa=getMessageSourceAccessor();
     if (action.equals(msa.getMessage("DataExport.save"))) {

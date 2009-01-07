@@ -7,15 +7,14 @@
   List<Encounter> encounters=new Vector<Encounter>();
   String causeOfDeathOther="";
   if (Context.isAuthenticated()) {
-    boolean onlyPublishedForms=true;
-    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_UNPUBLISHED_FORMS))     onlyPublishedForms=false;
-    forms.addAll(Context.getFormService().getForms(onlyPublishedForms));
-    List<Encounter> encs=Context.getEncounterService().getEncounters(patient);
+    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_UNPUBLISHED_FORMS))     forms.addAll(Context.getFormService().getAllForms());
+ else     forms.addAll(Context.getFormService().getPublishedForms());
+    List<Encounter> encs=Context.getEncounterService().getEncountersByPatient(patient);
     if (encs != null && encs.size() > 0)     encounters.addAll(encs);
     String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-    Concept conceptCause=Context.getConceptService().getConceptByIdOrName(propCause);
+    Concept conceptCause=Context.getConceptService().getConcept(propCause);
     if (conceptCause != null) {
-      Set<Obs> obssDeath=Context.getObsService().getObservations(patient,conceptCause,false);
+      List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,conceptCause);
       if (obssDeath.size() == 1) {
         Obs obsDeath=obssDeath.iterator().next();
         causeOfDeathOther=obsDeath.getValueText();
@@ -36,9 +35,9 @@
     }
   }
   String patientVariation="";
-  Concept reasonForExitConcept=Context.getConceptService().getConceptByIdOrName(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
+  Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null) {
-    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept,false);
+    List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);
     if (patientExitObs != null) {
       log.debug("Exit obs is size " + patientExitObs.size());
       if (patientExitObs.size() == 1) {

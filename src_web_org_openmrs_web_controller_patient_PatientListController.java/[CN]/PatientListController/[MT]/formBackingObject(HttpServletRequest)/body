@@ -1,7 +1,7 @@
 {
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
-    return ps.getPatientsByName("");
+    return ps.getPatients("",null,null,false);
   }
   return new HashSet<Patient>();
 }

@@ -14,7 +14,7 @@
     return new ModelAndView(new RedirectView(request.getContextPath() + "/index.htm"));
   }
  else   if (msa.getMessage("User.delete").equals(action)) {
-    us.deleteUser(user);
+    us.purgeUser(user);
     return new ModelAndView(new RedirectView(getSuccessView()));
   }
  else {

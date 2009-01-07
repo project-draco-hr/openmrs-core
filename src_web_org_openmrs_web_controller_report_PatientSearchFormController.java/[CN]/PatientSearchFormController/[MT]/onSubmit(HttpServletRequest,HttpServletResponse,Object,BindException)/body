@@ -81,7 +81,7 @@
           log.debug("Patient Search now has arguments: " + psroBinded.getPatientSearch().getArguments());
         }
         if (testXMLerror != 1 || hasNewSearchArg) {
-          Context.getReportObjectService().updateReportObject(psroBinded);
+          Context.getReportObjectService().saveReportObject(psroBinded);
           success=saved;
         }
       }
