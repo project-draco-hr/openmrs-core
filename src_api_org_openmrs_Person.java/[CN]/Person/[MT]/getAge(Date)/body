@@ -2,7 +2,7 @@
   if (birthdate == null)   return null;
   Calendar today=Calendar.getInstance();
   if (onDate != null)   today.setTime(onDate);
-  Calendar bday=new GregorianCalendar();
+  Calendar bday=Calendar.getInstance();
   bday.setTime(birthdate);
   int age=today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
   int todaysMonth=today.get(Calendar.MONTH);

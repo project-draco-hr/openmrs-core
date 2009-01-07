@@ -29,7 +29,7 @@
             replacement=replacement.replace(parameter.getName(),df.format((Date)value));
             log.debug("Modified to: " + replacement);
             Matcher m=DATE_OPERATION_PATTERN.matcher(replacement);
-            Calendar cal=new GregorianCalendar();
+            Calendar cal=Calendar.getInstance();
             try {
               while (m.find()) {
                 log.debug("Found date expression of: " + m.group());
