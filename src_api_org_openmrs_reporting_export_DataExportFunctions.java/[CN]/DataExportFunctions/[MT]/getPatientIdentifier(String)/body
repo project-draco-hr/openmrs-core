@@ -13,7 +13,7 @@
  catch (    NumberFormatException ex) {
     }
     if (type == null) {
-      type=patientService.getPatientIdentifierType(typeName);
+      type=patientService.getPatientIdentifierTypeByName(typeName);
     }
     patientIdentifiers=patientSetService.getPatientIdentifiersByType(getPatientSetIfNotAllPatients(),type);
     log.debug("Found identifiers for patient identifier " + type + " = "+ patientIdentifiers);
