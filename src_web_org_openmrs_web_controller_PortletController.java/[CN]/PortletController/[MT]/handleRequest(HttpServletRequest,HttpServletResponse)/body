@@ -47,16 +47,16 @@
         if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
           Patient p=Context.getPatientService().getPatient(patientId);
           model.put("patient",p);
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncounters(p));
+          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
           if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS)) {
-            Set<Obs> patientObs=Context.getObsService().getObservations(p,false);
+            List<Obs> patientObs=Context.getObsService().getObservationsByPerson(p);
             model.put("patientObs",patientObs);
             Obs latestWeight=null;
             Obs latestHeight=null;
             String bmiAsString="?";
             try {
-              ConceptNumeric weightConcept=cs.getConceptNumeric(cs.getConceptByIdOrName(as.getGlobalProperty("concept.weight")).getConceptId());
-              ConceptNumeric heightConcept=cs.getConceptNumeric(cs.getConceptByIdOrName(as.getGlobalProperty("concept.height")).getConceptId());
+              ConceptNumeric weightConcept=cs.getConceptNumeric(cs.getConcept(as.getGlobalProperty("concept.weight")).getConceptId());
+              ConceptNumeric heightConcept=cs.getConceptNumeric(cs.getConcept(as.getGlobalProperty("concept.height")).getConceptId());
               for (              Obs obs : patientObs) {
                 if (obs.getConcept().equals(weightConcept)) {
                   if (latestWeight == null || obs.getObsDatetime().compareTo(latestWeight.getObsDatetime()) > 0)                   latestWeight=obs;
@@ -92,9 +92,9 @@
             model.put("patientObs",new HashSet<Obs>());
           }
           Obs reasonForExitObs=null;
-          Concept reasonForExitConcept=cs.getConceptByIdOrName(as.getGlobalProperty("concept.reasonExitedCare"));
+          Concept reasonForExitConcept=cs.getConcept(as.getGlobalProperty("concept.reasonExitedCare"));
           if (reasonForExitConcept != null) {
-            Set<Obs> patientExitObs=Context.getObsService().getObservations(p,reasonForExitConcept,false);
+            List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(p,reasonForExitConcept);
             if (patientExitObs != null) {
               log.debug("Exit obs is size " + patientExitObs.size());
               if (patientExitObs.size() == 1) {
@@ -158,7 +158,7 @@
         model.put("person",p);
         if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_RELATIONSHIPS)) {
           List<Relationship> relationships=new ArrayList<Relationship>();
-          relationships.addAll(Context.getPersonService().getRelationships(p,false));
+          relationships.addAll(Context.getPersonService().getRelationshipsByPerson(p));
           Map<RelationshipType,List<Relationship>> relationshipsByType=new HashMap<RelationshipType,List<Relationship>>();
           for (          Relationship rel : relationships) {
             List<Relationship> list=relationshipsByType.get(rel.getRelationshipType());
@@ -179,7 +179,7 @@
         if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS)) {
           Encounter e=Context.getEncounterService().getEncounter((Integer)o);
           model.put("encounter",e);
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS))           model.put("encounterObs",Context.getObsService().getObservations(e));
+          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS))           model.put("encounterObs",e.getObs());
         }
         model.put("encounterId",(Integer)o);
       }

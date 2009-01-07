@@ -7,7 +7,7 @@
     PatientService ps=Context.getPatientService();
     if (action.equals(msa.getMessage("Patient.delete"))) {
       try {
-        ps.deletePatient(patient);
+        ps.purgePatient(patient);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.deleted");
         return new ModelAndView(new RedirectView("index.htm"));
       }
@@ -57,7 +57,7 @@ catch (      PatientIdentifierException pie) {
         String causeOfDeathConceptId=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
         Concept causeOfDeath=Context.getConceptService().getConcept(causeOfDeathConceptId);
         if (causeOfDeath != null) {
-          Set<Obs> obssDeath=Context.getObsService().getObservations(patient,causeOfDeath,false);
+          List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,causeOfDeath);
           if (obssDeath != null) {
             if (obssDeath.size() > 1) {
               log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
@@ -81,7 +81,7 @@ catch (      PatientIdentifierException pie) {
               if (currCause == null) {
                 log.debug("Current cause is null, attempting to set to NONE");
                 String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
-                currCause=Context.getConceptService().getConceptByIdOrName(noneConcept);
+                currCause=Context.getConceptService().getConcept(noneConcept);
               }
               if (currCause != null) {
                 log.debug("Current cause is not null, setting to value_coded");
@@ -91,7 +91,7 @@ catch (      PatientIdentifierException pie) {
                 if (dateDeath == null)                 dateDeath=new Date();
                 obsDeath.setObsDatetime(dateDeath);
                 String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
-                Concept conceptOther=Context.getConceptService().getConceptByIdOrName(otherConcept);
+                Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
                 if (conceptOther != null) {
                   if (conceptOther.equals(currCause)) {
                     String otherInfo=ServletRequestUtils.getStringParameter(request,"causeOfDeath_other","");
@@ -107,7 +107,7 @@ catch (      PatientIdentifierException pie) {
                   log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
                   obsDeath.setValueText("");
                 }
-                Context.getObsService().updateObs(obsDeath);
+                Context.getObsService().saveObs(obsDeath,obsDeath.getVoidReason());
               }
  else {
                 log.debug("Current cause is still null - aborting mission");

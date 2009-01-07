@@ -3,8 +3,8 @@
   Person person=(Person)obj;
   if (Context.isAuthenticated()) {
     PersonService ps=Context.getPersonService();
-    map.put("relationships",ps.getRelationships(person));
-    map.put("relationshipTypes",ps.getRelationshipTypes());
+    map.put("relationships",ps.getRelationshipsByPerson(person));
+    map.put("relationshipTypes",ps.getAllRelationshipTypes());
   }
   return map;
 }

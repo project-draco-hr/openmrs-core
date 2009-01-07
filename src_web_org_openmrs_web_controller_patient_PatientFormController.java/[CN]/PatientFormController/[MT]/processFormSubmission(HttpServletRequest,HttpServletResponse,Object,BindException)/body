@@ -2,7 +2,7 @@
   Patient patient=(Patient)object;
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
-    EncounterService es=Context.getEncounterService();
+    LocationService ls=Context.getLocationService();
     Object[] objs=null;
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
@@ -22,7 +22,7 @@
             PatientIdentifier pi=new PatientIdentifier();
             pi.setIdentifier(id);
             pi.setIdentifierType(ps.getPatientIdentifierType(Integer.valueOf(idTypes[i])));
-            pi.setLocation(es.getLocation(Integer.valueOf(locs[i])));
+            pi.setLocation(ls.getLocation(Integer.valueOf(locs[i])));
             if (idPrefStatus != null && idPrefStatus.length > i)             pi.setPreferred(new Boolean(idPrefStatus[i]));
             patient.addIdentifier(pi);
           }

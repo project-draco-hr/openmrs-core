@@ -4,7 +4,7 @@
   if (Context.isAuthenticated()) {
     Field field=(Field)obj;
     field=setObjects(field,request);
-    Context.getFormService().updateField(field);
+    Context.getFormService().saveField(field);
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Field.saved");
     view=view + "?phrase=" + request.getParameter("phrase");

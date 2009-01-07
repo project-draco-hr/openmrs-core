@@ -2,7 +2,7 @@
   Map<String,Object> map=new HashMap<String,Object>();
   Role role=(Role)object;
   if (Context.isAuthenticated()) {
-    List<Role> allRoles=Context.getUserService().getRoles();
+    List<Role> allRoles=Context.getUserService().getAllRoles();
     Set<Role> inheritingRoles=new HashSet<Role>();
     allRoles.remove(role);
     for (    Role r : allRoles) {
@@ -14,7 +14,7 @@
     }
     map.put("allRoles",allRoles);
     map.put("inheritingRoles",inheritingRoles);
-    map.put("privileges",Context.getUserService().getPrivileges());
+    map.put("privileges",Context.getUserService().getAllPrivileges());
     map.put("superuser",OpenmrsConstants.SUPERUSER_ROLE);
   }
   return map;

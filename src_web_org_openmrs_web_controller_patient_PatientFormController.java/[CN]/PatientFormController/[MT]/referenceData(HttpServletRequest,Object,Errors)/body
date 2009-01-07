@@ -11,9 +11,9 @@
     if (encs != null && encs.size() > 0)     encounters.addAll(encs);
   }
   String patientVariation="";
-  Concept reasonForExitConcept=Context.getConceptService().getConceptByIdOrName(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
+  Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null && patient.getPatientId() != null) {
-    Set<Obs> patientExitObs=Context.getObsService().getObservations(patient,reasonForExitConcept,false);
+    List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);
     if (patientExitObs != null) {
       log.debug("Exit obs is size " + patientExitObs.size());
       if (patientExitObs.size() == 1) {

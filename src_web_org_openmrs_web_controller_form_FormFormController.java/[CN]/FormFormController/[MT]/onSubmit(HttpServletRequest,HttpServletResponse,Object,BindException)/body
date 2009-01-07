@@ -19,7 +19,7 @@
               form.setXslt(xslt);
             }
           }
-          Context.getFormService().updateForm(form);
+          Context.getFormService().saveForm(form);
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Form.saved");
         }
  catch (        Exception e) {
@@ -31,7 +31,7 @@
       }
  else       if (action.equals(msa.getMessage("Form.delete"))) {
         try {
-          Context.getFormService().deleteForm(form);
+          Context.getFormService().purgeForm(form);
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Form.deleted");
         }
  catch (        Exception e) {
@@ -48,7 +48,7 @@
           float sortWeight=0;
           for (          FormField formField : treeMap.get(parentFormFieldId)) {
             formField.setSortWeight(sortWeight);
-            fs.updateFormField(formField);
+            fs.saveFormField(formField);
             sortWeight+=50;
           }
         }

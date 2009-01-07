@@ -18,9 +18,9 @@
       properties.put(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD,newChangePassword.toString());
     }
     user.setUserProperties(properties);
-    if (isNewUser(user))     us.createUser(user,password);
+    if (isNewUser(user))     us.saveUser(user,password);
  else {
-      us.updateUser(user);
+      us.saveUser(user,null);
       if (!password.equals("") && Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS)) {
         if (log.isDebugEnabled())         log.debug("calling changePassword for user " + user + " by user "+ Context.getAuthenticatedUser());
         us.changePassword(user,password);
