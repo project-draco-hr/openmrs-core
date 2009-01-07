@@ -6,7 +6,7 @@
   if (date != null && !date.equals("")) {
     try {
       if (date.length() < 5) {
-        Calendar c=new GregorianCalendar();
+        Calendar c=Calendar.getInstance();
         c.set(Calendar.YEAR,Integer.valueOf(date));
         c.set(Calendar.MONTH,0);
         c.set(Calendar.DATE,1);

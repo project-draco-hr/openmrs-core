@@ -1,7 +1,7 @@
 {
   Date ret=null;
   if (untilDaysAgo != null || untilMonthsAgo != null) {
-    Calendar gc=new GregorianCalendar();
+    Calendar gc=Calendar.getInstance();
     if (untilDaysAgo != null)     gc.add(Calendar.DAY_OF_MONTH,-untilDaysAgo);
     if (untilMonthsAgo != null)     gc.add(Calendar.MONTH,-untilMonthsAgo);
     ret=gc.getTime();

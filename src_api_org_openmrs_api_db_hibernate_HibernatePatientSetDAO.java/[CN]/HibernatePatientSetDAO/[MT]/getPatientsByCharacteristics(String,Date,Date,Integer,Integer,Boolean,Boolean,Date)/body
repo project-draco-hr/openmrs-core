@@ -23,7 +23,7 @@
   }
   Date maxBirthFromAge=null;
   if (minAge != null) {
-    Calendar cal=new GregorianCalendar();
+    Calendar cal=Calendar.getInstance();
     cal.setTime(effectiveDate);
     cal.add(Calendar.YEAR,-minAge);
     maxBirthFromAge=cal.getTime();
@@ -31,7 +31,7 @@
   }
   Date minBirthFromAge=null;
   if (maxAge != null) {
-    Calendar cal=new GregorianCalendar();
+    Calendar cal=Calendar.getInstance();
     cal.setTime(effectiveDate);
     cal.add(Calendar.YEAR,-(maxAge + 1));
     minBirthFromAge=cal.getTime();

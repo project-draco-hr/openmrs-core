@@ -8,7 +8,7 @@
   Cohort ps=new Cohort();
   if ((startDateString.length() != 0) || (endDateString.length() != 0)) {
     Concept c=Context.getConceptService().getConcept(new Integer("5096"));
-    Calendar cal=new GregorianCalendar();
+    Calendar cal=Calendar.getInstance();
     Date startDate;
     Date endDate;
     if (startDateString.length() != 0) {
