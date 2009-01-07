@@ -1,5 +1,5 @@
 {
-  FlatXmlDataSet xmlDataSetToRun=cachedDatasets.get(datasetFilename);
+  IDataSet xmlDataSetToRun=cachedDatasets.get(datasetFilename);
   if (xmlDataSetToRun == null) {
     File file=new File(datasetFilename);
     InputStream fileInInputStreamFormat=null;
@@ -9,7 +9,9 @@
       if (fileInInputStreamFormat == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
     }
     try {
-      xmlDataSetToRun=new FlatXmlDataSet(fileInInputStreamFormat);
+      ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(fileInInputStreamFormat));
+      replacementDataSet.addReplacementObject("[NULL]",null);
+      xmlDataSetToRun=replacementDataSet;
     }
   finally {
       fileInInputStreamFormat.close();
