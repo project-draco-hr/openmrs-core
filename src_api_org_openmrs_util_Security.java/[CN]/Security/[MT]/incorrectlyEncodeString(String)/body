@@ -9,5 +9,5 @@
     throw new APIException("System cannot find password encryption algorithm",e);
   }
   byte[] input=strToEncode.getBytes();
-  return hexString(md.digest(input));
+  return incorrectHexString(md.digest(input));
 }

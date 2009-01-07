@@ -1,0 +1,7 @@
+{
+  executeDataSet(XML_FILENAME);
+  Context.logout();
+  Context.authenticate("incorrectlyhashed","test");
+  UserService us=Context.getUserService();
+  us.changePassword("test","test2");
+}

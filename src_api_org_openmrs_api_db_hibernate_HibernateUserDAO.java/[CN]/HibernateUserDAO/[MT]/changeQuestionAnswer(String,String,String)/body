@@ -3,18 +3,20 @@
   String passwordOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
   String saltOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
   try {
-    String hashedPassword=Security.encodeString(pw + saltOnRecord);
-    if (!passwordOnRecord.equals(hashedPassword)) {
+    if (!Security.hashMatches(passwordOnRecord,pw + saltOnRecord)) {
       throw new DAOException("Passwords don't match");
     }
   }
  catch (  APIException e) {
-    log.error(e);
-    throw new DAOException(e);
+    log.error("Unable to check the password",e);
+    throw new DAOException("Unable to check the password",e);
   }
   Connection connection=sessionFactory.getCurrentSession().connection();
   try {
-    PreparedStatement ps=connection.prepareStatement("UPDATE `users` SET secret_question = ?, secret_answer = ?, date_changed = ?, changed_by = ? WHERE user_id = ?");
+    String sql="UPDATE `users` SET secret_question = ?, secret_answer = ?, date_changed = ?, changed_by = ? WHERE user_id = ?";
+    Dialect dialect=HibernateUtil.getDialect(sessionFactory);
+    if (HSQLDialect.class.getName().equals(dialect.getClass().getName()))     sql=sql.replace("`","");
+    PreparedStatement ps=connection.prepareStatement(sql);
     ps.setString(1,question);
     ps.setString(2,answer);
     ps.setDate(3,new java.sql.Date(new Date().getTime()));
@@ -23,6 +25,6 @@
     ps.executeUpdate();
   }
  catch (  SQLException e) {
-    log.warn("SQL Exception while trying to update a user's password",e);
+    throw new DAOException("SQL Exception while trying to update a user's secret question",e);
   }
 }

@@ -29,8 +29,7 @@ catch (    Exception e) {
     }
     String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
     String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
-    String hashedPassword=Security.encodeString(password + saltOnRecord);
-    if (hashedPassword != null && hashedPassword.equals(passwordOnRecord)) {
+    if (passwordOnRecord != null && Security.hashMatches(passwordOnRecord,password + saltOnRecord)) {
       candidateUser.getAllRoles().size();
       candidateUser.getUserProperties().size();
       candidateUser.getPrivileges().size();
