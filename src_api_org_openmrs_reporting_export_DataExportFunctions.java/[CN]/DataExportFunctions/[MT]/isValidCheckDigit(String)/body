@@ -1,6 +1,6 @@
 {
   try {
-    return OpenmrsUtil.isValidCheckDigit(id);
+    return Context.getPatientService().getDefaultIdentifierValidator().isValid(id);
   }
  catch (  Exception e) {
     log.error("Error evaluating identifier during report",e);
