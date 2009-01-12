@@ -59,11 +59,11 @@
           randomPassword+=String.valueOf((Math.random() * (127 - 48) + 48));
         }
         try {
-          Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+          Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
           Context.getUserService().changePassword(user,randomPassword);
         }
   finally {
-          Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+          Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
         }
         httpSession.setAttribute("resetPassword",randomPassword);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.password.reset");
