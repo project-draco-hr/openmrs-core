@@ -16,7 +16,7 @@
       }
     }
  else {
-      log.warn("Couldn't find an environment variable named " + env);
+      log.info("Couldn't find an environment variable named " + env);
       log.debug("Available environment variables are named: " + System.getenv().keySet());
     }
     String filename=webapp + "-runtime.properties";
@@ -26,8 +26,8 @@
       try {
         propertyStream=new FileInputStream(filepath);
       }
- catch (      IOException e) {
-        log.warn("Unable to load properties file: " + filepath,e);
+ catch (      FileNotFoundException e) {
+        log.warn("Unable to find properties file: " + filepath);
       }
     }
     if (propertyStream == null) {
@@ -36,17 +36,17 @@
       try {
         propertyStream=new FileInputStream(filepath);
       }
- catch (      IOException e) {
-        log.warn("Unable to load properties file: " + new File(filepath).getAbsolutePath(),e);
+ catch (      FileNotFoundException e) {
+        log.warn("Also unable to find a runtime properties file named " + new File(filepath).getAbsolutePath());
       }
     }
     if (propertyStream == null)     throw new IOException("Could not open '" + filename + "' in user or local directory.");
     props.load(propertyStream);
     propertyStream.close();
-    log.warn("Using runtime properties file: " + filepath);
+    log.info("Using runtime properties file: " + filepath);
   }
  catch (  Throwable t) {
-    log.warn("Unable to find a runtime properties file. Initial setup is needed",t);
+    log.warn("Unable to find a runtime properties file. Initial setup is needed");
     return null;
   }
   return props;
