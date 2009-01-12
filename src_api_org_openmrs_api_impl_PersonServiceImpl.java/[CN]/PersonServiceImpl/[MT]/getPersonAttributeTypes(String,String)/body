@@ -7,6 +7,7 @@
   ATTR_VIEW_TYPE attrDisplayType=null;
   if ("listing".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.LISTING;
  else   if ("viewing".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.VIEWING;
+ else   if ("header".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.HEADER;
  else   if ("all".equals(displayTypeStr))   attrDisplayType=null;
  else   throw new APIException(displayTypeStr + " is an invalid value for 'displayType' attribute");
   return getPersonAttributeTypes(personType,attrDisplayType);
