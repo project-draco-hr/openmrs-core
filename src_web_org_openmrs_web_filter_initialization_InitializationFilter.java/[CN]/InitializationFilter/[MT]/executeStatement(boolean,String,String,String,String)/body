@@ -13,8 +13,10 @@
     return statement.executeUpdate(replacedSql);
   }
  catch (  SQLException sqlex) {
-    log.warn("error executing sql: " + sql,sqlex);
-    wizardModel.errorMessage+="<br/>Error executing sql: " + sql + " - "+ sqlex.getMessage();
+    if (!silent) {
+      log.warn("error executing sql: " + sql,sqlex);
+      wizardModel.errorMessage+="<br/>Error executing sql: " + sql + " - "+ sqlex.getMessage();
+    }
   }
 catch (  InstantiationException e) {
     log.error("Error generated",e);

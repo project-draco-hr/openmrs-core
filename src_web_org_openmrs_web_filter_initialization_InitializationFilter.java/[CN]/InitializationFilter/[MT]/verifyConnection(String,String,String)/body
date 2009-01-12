@@ -1,0 +1,13 @@
+{
+  try {
+    Class.forName("com.mysql.jdbc.Driver").newInstance();
+    DriverManager.getConnection(databaseConnectionFinalUrl,connectionUsername,connectionPassword);
+    return true;
+  }
+ catch (  Exception e) {
+    wizardModel.errorMessage+="<br/>User account " + connectionUsername + " does not work. "+ e.getMessage();
+    wizardModel.errorMessage+="<br/>See the error log for more details";
+    log.warn("Error while checking the connection user account",e);
+    return false;
+  }
+}
