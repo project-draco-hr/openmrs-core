@@ -5,8 +5,7 @@
     return true;
   }
  catch (  Exception e) {
-    wizardModel.errorMessage+="<br/>User account " + connectionUsername + " does not work. "+ e.getMessage();
-    wizardModel.errorMessage+="<br/>See the error log for more details";
+    wizardModel.errors.add("User account " + connectionUsername + " does not work. "+ e.getMessage()+ " See the error log for more details");
     log.warn("Error while checking the connection user account",e);
     return false;
   }
