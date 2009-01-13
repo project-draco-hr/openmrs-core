@@ -2,7 +2,7 @@
   Role role=null;
   if (Context.isAuthenticated()) {
     UserService us=Context.getUserService();
-    String r=request.getParameter("role");
+    String r=request.getParameter("roleName");
     if (r != null)     role=us.getRole(r);
   }
   if (role == null)   role=new Role();

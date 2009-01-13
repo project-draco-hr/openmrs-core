@@ -6,5 +6,8 @@
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"role","error.role");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description","error.description");
+    if (!role.getRole().equals(role.getRole().trim())) {
+      errors.rejectValue("role","error.trailingSpaces");
+    }
   }
 }
