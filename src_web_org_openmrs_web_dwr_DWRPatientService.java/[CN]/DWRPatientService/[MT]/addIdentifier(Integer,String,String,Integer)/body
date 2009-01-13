@@ -2,10 +2,10 @@
   String ret="";
   if (identifier == null || identifier.length() == 0)   return "PatientIdentifier.error.general";
   PatientService ps=Context.getPatientService();
-  EncounterService es=Context.getEncounterService();
+  LocationService ls=Context.getLocationService();
   Patient p=ps.getPatient(patientId);
-  PatientIdentifierType idType=ps.getPatientIdentifierType(identifierType);
-  Location location=es.getLocation(identifierLocationId);
+  PatientIdentifierType idType=ps.getPatientIdentifierTypeByName(identifierType);
+  Location location=ls.getLocation(identifierLocationId);
   log.debug("idType=" + identifierType + "->"+ idType+ " , location="+ identifierLocationId+ "->"+ location+ " identifier="+ identifier);
   PatientIdentifier id=new PatientIdentifier();
   id.setIdentifierType(idType);

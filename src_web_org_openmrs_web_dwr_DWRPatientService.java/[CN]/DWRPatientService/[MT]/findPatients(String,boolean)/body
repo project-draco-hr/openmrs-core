@@ -2,7 +2,13 @@
   List<Object> patientList=new Vector<Object>();
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
-  patients=ps.getPatients(searchValue);
+  try {
+    patients=ps.getPatients(searchValue);
+  }
+ catch (  APIAuthenticationException e) {
+    patientList.add("Error while attempting to find patients - " + e.getMessage());
+    return patientList;
+  }
   patientList=new Vector<Object>(patients.size());
   for (  Patient p : patients)   patientList.add(new PatientListItem(p));
   if (patientList.size() < 3 && !searchValue.matches(".*\\d+.*")) {
