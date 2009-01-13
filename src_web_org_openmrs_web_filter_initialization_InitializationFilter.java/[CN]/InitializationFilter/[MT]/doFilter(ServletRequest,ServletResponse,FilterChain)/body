@@ -9,8 +9,8 @@
       httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
     }
  else {
-      wizardModel.errorMessage="";
       wizardModel.workLog.clear();
+      wizardModel.errors.clear();
       if (httpRequest.getMethod().equals("GET")) {
         doGet(httpRequest,httpResponse);
       }

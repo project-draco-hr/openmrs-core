@@ -15,7 +15,7 @@
  catch (  SQLException sqlex) {
     if (!silent) {
       log.warn("error executing sql: " + sql,sqlex);
-      wizardModel.errorMessage+="<br/>Error executing sql: " + sql + " - "+ sqlex.getMessage();
+      wizardModel.errors.add("Error executing sql: " + sql + " - "+ sqlex.getMessage());
     }
   }
 catch (  InstantiationException e) {
@@ -29,7 +29,9 @@ catch (  ClassNotFoundException e) {
   }
  finally {
     try {
-      connection.close();
+      if (connection != null) {
+        connection.close();
+      }
     }
  catch (    Throwable t) {
       log.warn("Error while closing connection",t);
