@@ -10,5 +10,5 @@
     }
   }
   Order o=Context.getOrderService().getOrder(orderId);
-  Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConceptByIdOrName(discontinueReason),dDiscDate);
+  Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
 }
