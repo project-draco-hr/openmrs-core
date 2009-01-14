@@ -14,7 +14,7 @@
   Patient p=Context.getPatientService().getPatient(patientId);
   List<DrugOrder> currentOrders=Context.getOrderService().getDrugOrdersByPatient(p,OrderService.SHOW_CURRENT);
   for (  DrugOrder o : currentOrders) {
-    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConceptByIdOrName(discontinueReason),discDate);
+    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),discDate);
   }
   return ret;
 }

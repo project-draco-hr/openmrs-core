@@ -26,7 +26,7 @@
   drugOrder.setStartDate(dStartDate);
   drugOrder.setDateCreated(new Date());
   drugOrder.setVoided(new Boolean(false));
-  Context.getOrderService().updateOrder(drugOrder);
+  Context.getOrderService().saveOrder(drugOrder);
   log.debug("Finished creating new drug order");
   return ret;
 }
