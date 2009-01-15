@@ -1,4 +1,11 @@
 {
+  if (Context.isAuthenticated())   return;
+  try {
+    Context.authenticate("admin","test");
+    return;
+  }
+ catch (  ContextAuthenticationException wrongCredentialsError) {
+  }
   Integer attempts=0;
   String message=null;
   while (Context.isAuthenticated() == false && attempts < 3) {
