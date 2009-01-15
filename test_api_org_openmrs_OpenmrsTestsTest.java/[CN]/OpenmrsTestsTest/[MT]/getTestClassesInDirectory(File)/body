@@ -6,7 +6,7 @@
     }
     if (currentFile.getName().endsWith("class")) {
       String className=currentFile.getAbsolutePath().replace(".class","");
-      className=className.replace("/",".");
+      className=className.replace(File.separator,".");
       className=className.substring(className.indexOf("org.openmrs."));
       try {
         Class<?> currentClass=classLoader.loadClass(className);
