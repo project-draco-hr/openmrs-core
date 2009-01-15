@@ -5,7 +5,18 @@
  else {
     HttpServletRequest httpRequest=(HttpServletRequest)request;
     HttpServletResponse httpResponse=(HttpServletResponse)response;
-    if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL)) {
+    if (httpRequest.getServletPath().startsWith("/images")) {
+      File imageFile=new File(filterConfig.getServletContext().getRealPath(httpRequest.getServletPath()));
+      try {
+        InputStream imageFileInputStream=new FileInputStream(imageFile);
+        OpenmrsUtil.copyFile(imageFileInputStream,httpResponse.getOutputStream());
+        imageFileInputStream.close();
+      }
+ catch (      FileNotFoundException e) {
+        log.error("Unable to find image file: " + imageFile.getAbsolutePath());
+      }
+    }
+ else     if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL)) {
       httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
     }
  else {
