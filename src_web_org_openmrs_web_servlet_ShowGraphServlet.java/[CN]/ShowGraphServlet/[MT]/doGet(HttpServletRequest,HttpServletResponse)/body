@@ -75,10 +75,14 @@
       }
     }
  catch (    IOException e) {
-      log.error(e);
+      if (e.getClass().getName().equals("ClientAbortException")) {
+      }
+ else {
+        log.error("Unable to write chart",e);
+      }
     }
   }
  catch (  Exception e) {
-    log.error(e);
+    log.error("An unknown expected exception was thrown while rendering a graph",e);
   }
 }
