@@ -4,7 +4,13 @@
     String initialValue="";
     checkEmptyVal((Location)null);
     Location l=(Location)this.fieldGenTag.getVal();
-    if (l != null)     if (l.getLocationId() != null)     initialValue=l.getLocationId().toString();
+    if (l != null) {
+      if (l.getLocationId() != null)       initialValue=l.getLocationId().toString();
+    }
+ else     if (fieldGenTag.getAllowUserDefault()) {
+      String userDefaultLocation=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
+      initialValue=userDefaultLocation;
+    }
     String optionHeader="";
     if (this.fieldGenTag.getParameterMap() != null) {
       optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
