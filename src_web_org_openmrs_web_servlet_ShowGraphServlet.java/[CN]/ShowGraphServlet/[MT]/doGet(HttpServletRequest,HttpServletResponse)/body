@@ -35,6 +35,7 @@
       }
     }
     dataset.addSeries(series);
+    ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
     JFreeChart chart=ChartFactory.createTimeSeriesChart(chartTitle,null,null,dataset,false,false,false);
     Font font=new Font("Arial",Font.BOLD,12);
     TextTitle title=chart.getTitle();

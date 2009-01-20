@@ -28,6 +28,7 @@
     }
   }
   dataset.addSeries(series);
+  ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
   JFreeChart chart=ChartFactory.createXYBarChart(chartTitle,domainAxisTitle,true,rangeAxisTitle,dataset,PlotOrientation.VERTICAL,true,false,false);
   XYPlot plot=chart.getXYPlot();
   DateAxis axis=(DateAxis)plot.getDomainAxis();
