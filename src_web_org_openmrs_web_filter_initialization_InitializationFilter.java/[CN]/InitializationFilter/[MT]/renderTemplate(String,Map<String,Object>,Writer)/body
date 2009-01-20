@@ -18,7 +18,9 @@ catch (    IllegalAccessException e) {
   }
   String fullTemplatePath="org/openmrs/web/filter/initialization/" + templateName;
   InputStream templateInputStream=getClass().getClassLoader().getResourceAsStream(fullTemplatePath);
-  if (templateInputStream == null)   throw new IOException("Unable to find " + fullTemplatePath);
+  if (templateInputStream == null) {
+    throw new IOException("Unable to find " + fullTemplatePath);
+  }
   try {
     velocityEngine.evaluate(velocityContext,writer,this.getClass().getName(),new InputStreamReader(templateInputStream));
   }
