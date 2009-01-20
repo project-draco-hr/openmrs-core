@@ -3,8 +3,19 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     Drug drug=(Drug)obj;
-    drug.setConcept(Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId"))));
-    Context.getConceptService().saveDrug(drug);
+    ConceptService conceptService=Context.getConceptService();
+    drug.setConcept(conceptService.getConcept(Integer.valueOf(request.getParameter("conceptId"))));
+    if (drug.isRetired() && drug.getRetiredBy() == null) {
+      drug.setRetired(false);
+      conceptService.retireDrug(drug,drug.getRetireReason());
+    }
+ else     if (!drug.isRetired() && drug.getRetiredBy() != null) {
+      drug.setRetired(true);
+      conceptService.unretireDrug(drug);
+    }
+ else {
+      conceptService.saveDrug(drug);
+    }
     view=getSuccessView();
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.saved");
   }
