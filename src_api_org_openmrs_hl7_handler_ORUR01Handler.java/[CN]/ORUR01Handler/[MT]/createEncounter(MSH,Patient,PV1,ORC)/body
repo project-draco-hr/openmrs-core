@@ -1,9 +1,9 @@
 {
   Encounter encounter=null;
-  SI idType=pv1.getSetIDPV1();
+  CX visitNumber=pv1.getVisitNumber();
   Integer encounterId=null;
   try {
-    encounterId=Integer.valueOf(idType.getValue());
+    encounterId=Integer.valueOf(visitNumber.getIDNumber().getValue());
   }
  catch (  NumberFormatException e) {
   }
