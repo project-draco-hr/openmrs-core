@@ -1,0 +1,10 @@
+{
+  FormService formService=Context.getFormService();
+  Form form=formService.getForm(1);
+  Form dupForm=formService.duplicateForm(form);
+  Assert.assertNull(dupForm.getChangedBy());
+  Assert.assertNull(dupForm.getDateChanged());
+  Assert.assertEquals(Context.getAuthenticatedUser(),dupForm.getCreator());
+  long oneMinuteDelta=60 * 1000;
+  Assert.assertEquals(new Date().getTime(),dupForm.getDateCreated().getTime(),oneMinuteDelta);
+}
