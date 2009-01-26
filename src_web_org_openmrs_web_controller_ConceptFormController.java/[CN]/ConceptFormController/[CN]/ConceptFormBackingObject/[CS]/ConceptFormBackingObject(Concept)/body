@@ -1,0 +1,30 @@
+{
+  this.concept=concept;
+  this.locales=Context.getAdministrationService().getAllowedLocales();
+  for (  Locale locale : locales) {
+    namesByLocale.put(locale,concept.getPreferredName(locale));
+    shortNamesByLocale.put(locale,concept.getShortNameInLocale(locale));
+    synonymsByLocale.put(locale,(List<ConceptName>)concept.getSynonyms(locale));
+    descriptionsByLocale.put(locale,concept.getDescription(locale,true));
+    if (namesByLocale.get(locale) == null)     namesByLocale.put(locale,new ConceptName(null,locale));
+    if (shortNamesByLocale.get(locale) == null)     shortNamesByLocale.put(locale,new ConceptName(null,locale));
+    if (descriptionsByLocale.get(locale) == null)     descriptionsByLocale.put(locale,new ConceptDescription(null,locale));
+    synonymsByLocale.put(locale,ListUtils.lazyList(synonymsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
+  }
+  mappings=ListUtils.lazyList(new Vector(concept.getConceptMappings()),FactoryUtils.instantiateFactory(ConceptMap.class));
+  if (concept.isNumeric()) {
+    ConceptNumeric cn=(ConceptNumeric)concept;
+    this.hiAbsolute=cn.getHiAbsolute();
+    this.lowAbsolute=cn.getLowAbsolute();
+    this.lowCritical=cn.getLowCritical();
+    this.hiCritical=cn.getHiCritical();
+    this.lowNormal=cn.getLowNormal();
+    this.hiNormal=cn.getLowNormal();
+    this.precise=cn.getPrecise();
+    this.units=cn.getUnits();
+  }
+ else   if (concept.isComplex()) {
+    ConceptComplex complex=(ConceptComplex)concept;
+    this.handlerKey=complex.getHandler();
+  }
+}

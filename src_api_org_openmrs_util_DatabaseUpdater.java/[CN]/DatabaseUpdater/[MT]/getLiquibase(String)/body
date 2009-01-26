@@ -7,6 +7,9 @@
     String username=props.getProperty("hibernate.connection.username");
     String password=props.getProperty("hibernate.connection.password");
     String url=props.getProperty("hibernate.connection.url");
+    if (url.contains("mysql") && !url.contains("InnoDB")) {
+      url=url + "&sessionVariables=storage_engine=InnoDB";
+    }
     Class.forName(driver);
     connection=DriverManager.getConnection(url,username,password);
     Database database=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);

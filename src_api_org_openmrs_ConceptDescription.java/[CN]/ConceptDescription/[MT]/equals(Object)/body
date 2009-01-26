@@ -3,5 +3,6 @@
     return false;
   }
   ConceptDescription rhs=(ConceptDescription)object;
-  return (this.conceptDescriptionId == rhs.conceptDescriptionId);
+  if (conceptDescriptionId != null && rhs.conceptDescriptionId != null)   return this.conceptDescriptionId == rhs.conceptDescriptionId;
+ else   return this == object;
 }

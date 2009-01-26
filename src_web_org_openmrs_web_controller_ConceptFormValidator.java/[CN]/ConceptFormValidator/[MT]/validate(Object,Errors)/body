@@ -1,8 +1,32 @@
 {
-  Concept concept=(Concept)obj;
-  if (concept == null) {
+  ConceptFormBackingObject backingObject=(ConceptFormBackingObject)obj;
+  if (backingObject.getConcept() == null) {
     errors.rejectValue("concept","error.general");
   }
  else {
+    for (int x=0; x < backingObject.getMappings().size(); x++) {
+      ConceptMap map=backingObject.getMappings().get(x);
+      if (map.getSourceCode() != null && map.getSourceCode().length() == 0) {
+        errors.rejectValue("mappings[" + x + "].sourceCode","Concept.mappings.sourceCodeRequired");
+      }
+    }
+    boolean foundAtLeastOnePreferredName=false;
+    for (    Locale locale : backingObject.getLocales()) {
+      for (int x=0; x < backingObject.getSynonymsByLocale().get(locale).size(); x++) {
+        ConceptName synonym=backingObject.getSynonymsByLocale().get(locale).get(x);
+        if (synonym.isVoided() && !StringUtils.hasLength(synonym.getVoidReason())) {
+          errors.rejectValue("synonymsByLocale[" + locale + "]["+ x+ "].voidReason","Concept.synonyms.voidReasonRequired");
+        }
+        if (synonym.getName() != null && synonym.getName().length() == 0) {
+          errors.rejectValue("synonymsByLocale[" + locale + "]["+ x+ "].name","Concept.synonyms.textRequired");
+        }
+      }
+      if (StringUtils.hasLength(backingObject.getNamesByLocale().get(locale).getName())) {
+        foundAtLeastOnePreferredName=true;
+      }
+    }
+    if (foundAtLeastOnePreferredName == false) {
+      errors.rejectValue("namesByLocale[" + backingObject.getLocales().get(0) + "].name","Concept.name.atLeastOneRequired");
+    }
   }
 }

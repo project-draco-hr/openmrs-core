@@ -1,12 +1,11 @@
 {
-  Concept concept=null;
-  ConceptService cs=Context.getConceptService();
   String conceptId=request.getParameter("conceptId");
   if (conceptId == null) {
+    return new ConceptFormBackingObject(new Concept());
   }
- else   if (conceptId != null) {
-    concept=cs.getConcept(Integer.valueOf(conceptId));
+ else {
+    ConceptService cs=Context.getConceptService();
+    Concept concept=cs.getConcept(Integer.valueOf(conceptId));
+    return new ConceptFormBackingObject(concept);
   }
-  if (concept == null)   concept=new Concept();
-  return concept;
 }
