@@ -3,5 +3,6 @@
     return false;
   }
   ConceptName rhs=(ConceptName)obj;
-  return (this.conceptNameId == rhs.conceptNameId);
+  if (this.conceptNameId != null && rhs.conceptNameId != null)   return (this.conceptNameId == rhs.conceptNameId);
+ else   return this == obj;
 }

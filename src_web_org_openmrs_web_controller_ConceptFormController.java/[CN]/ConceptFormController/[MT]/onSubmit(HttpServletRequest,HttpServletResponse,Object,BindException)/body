@@ -2,7 +2,8 @@
   HttpSession httpSession=request.getSession();
   ConceptService cs=Context.getConceptService();
   if (Context.isAuthenticated()) {
-    Concept concept=(Concept)obj;
+    ConceptFormBackingObject conceptBackingObject=(ConceptFormBackingObject)obj;
+    Concept concept=conceptBackingObject.getConceptFromFormData();
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (action.equals(msa.getMessage("Concept.delete","Delete Concept"))) {
@@ -26,49 +27,22 @@ catch (      Exception e) {
       return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
     }
  else {
-      String isSet=ServletRequestUtils.getStringParameter(request,"conceptSet","");
-      if (isSet.equals(""))       concept.setSet(false);
- else       concept.setSet(true);
-      boolean isNew=false;
       try {
-        if (concept.getConceptId() == null) {
-          isNew=true;
-          if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
-            concept=getConceptNumeric(concept,request);
-          }
- else           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Complex")) {
-            concept=getConceptComplex(concept,request);
-          }
-          cs.saveConcept(concept);
-        }
- else {
-          if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Numeric")) {
-            concept=getConceptNumeric(concept,request);
-          }
- else           if (concept.getDatatype() != null && concept.getDatatype().getName().equals("Complex")) {
-            concept=getConceptComplex(concept,request);
-          }
-          cs.saveConcept(concept);
-        }
+        cs.saveConcept(concept);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.saved");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
       }
  catch (      ConceptsLockedException cle) {
         log.error("Tried to save concept while concepts were locked",cle);
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.concepts.locked");
-        if (isNew) {
-          errors.reject("concept","Concept.concepts.locked");
-          return new ModelAndView(new RedirectView(getSuccessView()));
-        }
+        errors.reject("concept","Concept.concepts.locked");
       }
 catch (      APIException e) {
         log.error("Error while trying to save concept",e);
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.save");
-        if (isNew) {
-          errors.reject("concept","Concept.cannot.save");
-          return new ModelAndView(new RedirectView(getSuccessView()));
-        }
+        errors.reject("concept","Concept.cannot.save");
       }
-      return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+      return showForm(request,response,errors);
     }
   }
   return new ModelAndView(new RedirectView(getFormView()));

@@ -14,9 +14,25 @@
       cn.setConcept(concept);
       if (cn.getTags() != null) {
         for (        ConceptNameTag tag : cn.getTags()) {
+          if (tag.getConceptNameTagId() == null) {
+            ConceptNameTag possibleReplacementTag=getConceptNameTagByName(tag.getTag());
+            if (possibleReplacementTag != null) {
+              cn.removeTag(tag);
+              cn.addTag(possibleReplacementTag);
+            }
+          }
           if (tag.getCreator() == null)           tag.setCreator(authUser);
           if (tag.getDateCreated() == null)           tag.setDateCreated(timestamp);
         }
+      }
+      if (cn.isVoided()) {
+        if (cn.getVoidedBy() == null)         cn.setVoidedBy(authUser);
+        if (cn.getDateVoided() == null)         cn.setDateVoided(timestamp);
+      }
+ else {
+        cn.setVoidReason(null);
+        cn.setDateVoided(null);
+        cn.setVoidedBy(null);
       }
     }
   }
@@ -39,6 +55,13 @@
       if (cd.getCreator() == null)       cd.setCreator(authUser);
       if (cd.getDateCreated() == null)       cd.setDateCreated(timestamp);
       cd.setConcept(concept);
+    }
+  }
+  if (concept.getConceptMappings() != null) {
+    for (    ConceptMap map : concept.getConceptMappings()) {
+      if (map.getCreator() == null)       map.setCreator(authUser);
+      if (map.getDateCreated() == null)       map.setDateCreated(timestamp);
+      map.setConcept(concept);
     }
   }
 }

@@ -1,0 +1,65 @@
+{
+  ConceptNameTag preferredTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.PREFERRED);
+  ConceptNameTag shortTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.SHORT);
+  ConceptNameTag synonymTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.SYNONYM);
+  for (  Locale locale : locales) {
+    ConceptName preferredNameInLocale=namesByLocale.get(locale);
+    if (StringUtils.hasLength(preferredNameInLocale.getName()) && !concept.getNames().contains(preferredNameInLocale)) {
+      preferredNameInLocale.addTag(preferredTag);
+      concept.addName(preferredNameInLocale);
+    }
+    ConceptName shortNameInLocale=shortNamesByLocale.get(locale);
+    if (StringUtils.hasLength(shortNameInLocale.getName()) && !concept.getNames().contains(shortNameInLocale)) {
+      shortNameInLocale.addTag(shortTag);
+      concept.addName(shortNameInLocale);
+    }
+    for (    ConceptName synonym : synonymsByLocale.get(locale)) {
+      if (synonym != null && synonym.getName() != null && !concept.getNames().contains(synonym)) {
+        synonym.addTag(synonymTag);
+        synonym.setLocale(locale);
+        concept.addName(synonym);
+      }
+    }
+    ConceptDescription descInLocale=descriptionsByLocale.get(locale);
+    if (StringUtils.hasLength(descInLocale.getDescription()) && !concept.getDescriptions().contains(descInLocale)) {
+      concept.addDescription(descInLocale);
+    }
+  }
+  for (  ConceptMap map : mappings) {
+    if (map != null) {
+      if (map.getSourceCode() == null) {
+        concept.removeConceptMapping(map);
+      }
+ else       if (!concept.getConceptMappings().contains(map)) {
+        concept.addConceptMapping(map);
+      }
+    }
+  }
+  if (!concept.isSet())   concept.setConceptSets(null);
+  if (concept.getDatatype().getName().equals("Numeric")) {
+    ConceptNumeric cn;
+    if (concept instanceof ConceptNumeric)     cn=(ConceptNumeric)concept;
+ else {
+      cn=new ConceptNumeric(concept);
+    }
+    cn.setHiAbsolute(hiAbsolute);
+    cn.setLowAbsolute(lowAbsolute);
+    cn.setHiCritical(hiCritical);
+    cn.setLowCritical(lowCritical);
+    cn.setHiNormal(hiNormal);
+    cn.setLowNormal(lowNormal);
+    cn.setPrecise(precise);
+    cn.setUnits(units);
+    concept=cn;
+  }
+ else   if (concept.getDatatype().getName().equals("Complex")) {
+    ConceptComplex complexConcept;
+    if (concept instanceof ConceptNumeric)     complexConcept=(ConceptComplex)concept;
+ else {
+      complexConcept=new ConceptComplex(concept);
+    }
+    complexConcept.setHandler(handlerKey);
+    concept=complexConcept;
+  }
+  return concept;
+}

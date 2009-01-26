@@ -6,7 +6,7 @@
   binder.registerCustomEditor(java.util.Date.class,new CustomDateEditor(SimpleDateFormat.getDateInstance(SimpleDateFormat.SHORT,Context.getLocale()),true));
   binder.registerCustomEditor(org.openmrs.ConceptClass.class,new ConceptClassEditor());
   binder.registerCustomEditor(org.openmrs.ConceptDatatype.class,new ConceptDatatypeEditor());
-  binder.registerCustomEditor(java.util.Collection.class,"conceptSets",new ConceptSetsEditor());
-  binder.registerCustomEditor(java.util.Collection.class,"answers",new ConceptAnswersEditor());
+  binder.registerCustomEditor(java.util.Collection.class,"concept.conceptSets",new ConceptSetsEditor());
+  binder.registerCustomEditor(java.util.Collection.class,"concept.answers",new ConceptAnswersEditor());
   binder.registerCustomEditor(org.openmrs.ConceptSource.class,new ConceptSourceEditor());
 }
