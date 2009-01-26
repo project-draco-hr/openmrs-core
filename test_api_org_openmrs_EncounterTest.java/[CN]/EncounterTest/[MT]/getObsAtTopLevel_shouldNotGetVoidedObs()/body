@@ -3,13 +3,8 @@
   Obs o=new Obs();
   o.setVoided(true);
   enc.addObs(o);
-  assertEquals(0,enc.getObs().size());
   assertNotNull(enc.getObsAtTopLevel(true));
   assertEquals(1,enc.getObsAtTopLevel(true).size());
   assertNotNull(enc.getObsAtTopLevel(false));
   assertEquals(0,enc.getObsAtTopLevel(false).size());
-  assertNotNull(enc.getAllObs(true));
-  assertEquals(1,enc.getAllObs(true).size());
-  assertNotNull(enc.getAllObs(false));
-  assertEquals(0,enc.getAllObs(false).size());
 }
