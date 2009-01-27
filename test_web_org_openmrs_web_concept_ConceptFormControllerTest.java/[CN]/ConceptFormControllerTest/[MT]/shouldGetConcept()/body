@@ -4,6 +4,6 @@
   HttpServletResponse response=new MockHttpServletResponse();
   ConceptFormController controller=new ConceptFormController();
   ModelAndView modelAndView=controller.handleRequest(request,response);
-  Concept commandConcept=(Concept)modelAndView.getModel().get("command");
-  Assert.assertNotNull(commandConcept.getConceptId());
+  ConceptFormBackingObject command=(ConceptFormBackingObject)modelAndView.getModel().get("command");
+  Assert.assertNotNull(command.getConcept().getConceptId());
 }
