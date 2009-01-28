@@ -1,0 +1,22 @@
+{
+  final String EXPECTED_PREFERRED_NAME="no such concept";
+  ConceptService cs=Context.getConceptService();
+  Concept conceptToAdd=cs.getConceptByName(EXPECTED_PREFERRED_NAME);
+  assertNull(conceptToAdd);
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("namesByLocale[en].name",EXPECTED_PREFERRED_NAME);
+  mockRequest.setParameter("concept.datatype","1");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  Concept actualConcept=cs.getConceptByName(EXPECTED_PREFERRED_NAME);
+  assertNotNull(actualConcept);
+  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getPreferredName(Locale.ENGLISH).getName());
+  Collection<ConceptName> actualNames=actualConcept.getNames();
+  assertEquals(1,actualNames.size());
+  assertNull(actualConcept.getShortNameInLocale(Locale.ENGLISH));
+  assertNull(actualConcept.getDescription(Locale.ENGLISH));
+}

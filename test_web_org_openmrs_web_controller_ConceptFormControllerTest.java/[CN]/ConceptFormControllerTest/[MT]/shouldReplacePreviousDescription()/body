@@ -1,0 +1,35 @@
+{
+  final String EXPECTED_PREFERRED_NAME="no such concept";
+  final String EXPECTED_SHORT_NAME="nonesuch";
+  final String ORIGINAL_DESCRIPTION="this is indescribable";
+  final String EXPECTED_DESCRIPTION="this is not really a concept";
+  final String EXPECTED_SYNONYM_A="phantom";
+  final String EXPECTED_SYNONYM_B=EXPECTED_SHORT_NAME;
+  final String EXPECTED_SYNONYM_C="mock";
+  ConceptService cs=Context.getConceptService();
+  Concept conceptToUpdate=new Concept();
+  ConceptDescription originalConceptDescription=new ConceptDescription();
+  originalConceptDescription.setLocale(Locale.ENGLISH);
+  originalConceptDescription.setDescription(ORIGINAL_DESCRIPTION);
+  conceptToUpdate.addDescription(originalConceptDescription);
+  cs.saveConcept(conceptToUpdate);
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("synonymsByLocale[en][0].name",EXPECTED_SYNONYM_A);
+  mockRequest.setParameter("synonymsByLocale[en][1].name",EXPECTED_SYNONYM_B);
+  mockRequest.setParameter("synonymsByLocale[en][2].name",EXPECTED_SYNONYM_C);
+  mockRequest.setParameter("shortNamesByLocale[en].name",EXPECTED_SHORT_NAME);
+  mockRequest.setParameter("descriptionsByLocale[en].description",EXPECTED_DESCRIPTION);
+  mockRequest.setParameter("namesByLocale[en].name",EXPECTED_PREFERRED_NAME);
+  mockRequest.setParameter("concept.datatype","1");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,response);
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  Concept actualConcept=cs.getConceptByName(EXPECTED_PREFERRED_NAME);
+  assertNotNull(actualConcept);
+  assertNotNull(actualConcept.getDescription(Locale.ENGLISH));
+  assertEquals(EXPECTED_DESCRIPTION,actualConcept.getDescription(Locale.ENGLISH).getDescription());
+}
