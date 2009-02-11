@@ -1,0 +1,11 @@
+{
+  Timer timer;
+  if (taskDefinitionTimerMap.containsKey(taskDefinition)) {
+    timer=taskDefinitionTimerMap.get(taskDefinition);
+  }
+ else {
+    timer=new Timer(true);
+    taskDefinitionTimerMap.put(taskDefinition,timer);
+  }
+  return timer;
+}

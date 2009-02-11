@@ -15,15 +15,15 @@
         if (taskDefinition.getStartTime() != null) {
           Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
           log.info("Starting task ... the task will execute for the first time at " + nextTime);
-          timerScheduler.scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
+          getTimer(taskDefinition).scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
         }
  else         if (repeatInterval > 0) {
           log.info("Delaying start time by " + SchedulerConstants.SCHEDULER_DEFAULT_DELAY + " seconds");
-          timerScheduler.scheduleAtFixedRate(schedulerTask,SchedulerConstants.SCHEDULER_DEFAULT_DELAY,repeatInterval);
+          getTimer(taskDefinition).scheduleAtFixedRate(schedulerTask,SchedulerConstants.SCHEDULER_DEFAULT_DELAY,repeatInterval);
         }
  else {
           log.info("Starting one-shot task");
-          timerScheduler.schedule(schedulerTask,new Date());
+          getTimer(taskDefinition).schedule(schedulerTask,new Date());
         }
         log.debug("Registering timer for task " + taskDefinition.getId());
         scheduledTasks.put(taskDefinition.getId(),schedulerTask);

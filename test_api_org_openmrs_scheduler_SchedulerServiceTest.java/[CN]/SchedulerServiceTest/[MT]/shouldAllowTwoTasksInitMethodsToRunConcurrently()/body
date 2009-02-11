@@ -1,0 +1,26 @@
+{
+  SchedulerService schedulerService=Context.getSchedulerService();
+  TaskDefinition t3=new TaskDefinition();
+  t3.setId(3);
+  t3.setStartOnStartup(false);
+  t3.setRepeatInterval(10L);
+  t3.setTaskClass(SampleTask3.class.getName());
+  TaskDefinition t4=new TaskDefinition();
+  t4.setId(4);
+  t4.setStartOnStartup(false);
+  t4.setRepeatInterval(10L);
+  t4.setTaskClass(SampleTask4.class.getName());
+  Calendar startTime3=Calendar.getInstance();
+  startTime3.add(Calendar.SECOND,1);
+  t3.setStartTime(startTime3.getTime());
+  Calendar startTime4=Calendar.getInstance();
+  startTime4.setTime(startTime3.getTime());
+  startTime4.add(Calendar.SECOND,1);
+  t4.setStartTime(startTime4.getTime());
+  schedulerService.scheduleTask(t3);
+  schedulerService.scheduleTask(t4);
+  Thread.sleep(4000);
+  schedulerService.shutdownTask(t3);
+  schedulerService.shutdownTask(t4);
+  assertEquals(Arrays.asList("INIT-START-3","INIT-START-4","INIT-END-4","INIT-END-3"),outputForConcurrentInit);
+}
