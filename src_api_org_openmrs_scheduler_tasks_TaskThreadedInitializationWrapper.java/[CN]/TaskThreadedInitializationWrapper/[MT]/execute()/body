@@ -1,0 +1,13 @@
+{
+  lock.lock();
+  try {
+    while (!initialized) {
+      initializedCond.await();
+    }
+    task.execute();
+  }
+ catch (  InterruptedException e) {
+    log.error("Task could not be initialized hence not be executed.",e);
+  }
+  lock.unlock();
+}

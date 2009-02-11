@@ -2,7 +2,7 @@
   log.debug("Gracefully shutting down scheduler service ...");
   try {
     shutdownAllTasks();
-    timerScheduler.cancel();
+    cancelAllTimers();
   }
  catch (  APIException e) {
     log.error("Failed to stop all tasks due to API exception",e);

@@ -1,0 +1,14 @@
+{
+synchronized (outputForConcurrentTasks) {
+    outputForConcurrentTasks.add("START-2");
+  }
+  try {
+    Thread.sleep(1000);
+  }
+ catch (  InterruptedException e) {
+    log.error("Error generated",e);
+  }
+synchronized (outputForConcurrentTasks) {
+    outputForConcurrentTasks.add("END-2");
+  }
+}
