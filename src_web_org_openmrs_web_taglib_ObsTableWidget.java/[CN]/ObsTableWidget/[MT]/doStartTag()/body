@@ -104,7 +104,7 @@
         List<Obs> list=groupedObs.get(key);
         if (list != null) {
           if (combineEqualResults) {
-            List<String> unique=new ArrayList<String>();
+            Collection<String> unique=new LinkedHashSet<String>();
             for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
             for (            String s : unique)             ret.append(s).append("<br/>");
           }
@@ -146,7 +146,7 @@
         List<Obs> list=groupedObs.get(key);
         if (list != null) {
           if (combineEqualResults) {
-            List<String> unique=new ArrayList<String>();
+            Collection<String> unique=new LinkedHashSet<String>();
             for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
             for (            String s : unique)             ret.append(s).append("<br/>");
           }
