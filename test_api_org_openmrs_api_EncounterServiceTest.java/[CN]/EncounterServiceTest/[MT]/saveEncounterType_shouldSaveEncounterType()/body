@@ -1,0 +1,8 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterType=new EncounterType("testing","desc");
+  encounterService.saveEncounterType(encounterType);
+  assertNotNull(encounterType.getEncounterTypeId());
+  EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
+  assertNotNull(newEncounterType);
+}

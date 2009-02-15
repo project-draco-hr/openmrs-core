@@ -1,0 +1,16 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter enc=es.getEncounter(1);
+  Date newDate=new Date();
+  enc.setEncounterDatetime(newDate);
+  es.saveEncounter(enc);
+  boolean foundObs3=false;
+  for (  Obs obs : enc.getAllObs()) {
+    if (obs.getObsId().equals(3)) {
+      assertNotSame(newDate,obs.getObsDatetime());
+      foundObs3=true;
+    }
+ else     assertEquals(newDate,obs.getObsDatetime());
+  }
+  assertTrue(foundObs3);
+}

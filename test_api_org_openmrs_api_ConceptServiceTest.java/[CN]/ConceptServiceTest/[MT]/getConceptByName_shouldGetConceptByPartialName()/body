@@ -1,0 +1,6 @@
+{
+  executeDataSet(INITIAL_CONCEPTS_XML);
+  String partialNameToFetch="So";
+  List<Concept> firstConceptsByPartialNameList=conceptService.getConceptsByName(partialNameToFetch);
+  assertTrue("You should be able to get the concept by partial name",firstConceptsByPartialNameList.contains(new Concept(1)));
+}

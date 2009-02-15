@@ -1,0 +1,16 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterType(new EncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(new Patient(2));
+  encounter.setCreator(new User(4));
+  assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
+  encounterService.saveEncounter(encounter);
+  assertEquals(encounter.getCreator(),new User(4));
+  Encounter newEncounter=encounterService.getEncounter(encounter.getEncounterId());
+  assertNotNull(newEncounter);
+  assertEquals(encounter.getCreator(),new User(4));
+  assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
+}

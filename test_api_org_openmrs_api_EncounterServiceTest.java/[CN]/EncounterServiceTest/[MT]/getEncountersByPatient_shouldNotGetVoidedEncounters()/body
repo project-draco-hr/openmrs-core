@@ -1,0 +1,5 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  List<Encounter> encounters=encounterService.getEncountersByPatient(new Patient(3));
+  assertEquals(1,encounters.size());
+}
