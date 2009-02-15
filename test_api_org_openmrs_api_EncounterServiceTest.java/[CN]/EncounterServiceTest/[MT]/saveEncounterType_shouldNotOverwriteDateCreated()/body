@@ -1,0 +1,13 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterType=new EncounterType();
+  encounterType.setName("testing");
+  encounterType.setDescription("desc");
+  Date date=new Date(System.currentTimeMillis() - 5000);
+  encounterType.setDateCreated(date);
+  encounterService.saveEncounterType(encounterType);
+  assertEquals(date,encounterType.getDateCreated());
+  EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
+  assertNotNull(newEncounterType);
+  assertEquals(date,encounterType.getDateCreated());
+}

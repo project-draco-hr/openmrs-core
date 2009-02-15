@@ -1,8 +1,0 @@
-{
-  EncounterService encounterService=Context.getEncounterService();
-  List<Encounter> encounters=encounterService.getEncountersByPatient(new Patient(3));
-  assertEquals(1,encounters.size());
-  Encounter voidedEncounter=encounterService.getEncounter(2);
-  assertTrue(voidedEncounter.isVoided());
-  assertEquals(new Patient(3),voidedEncounter.getPatient());
-}

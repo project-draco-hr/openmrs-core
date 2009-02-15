@@ -1,0 +1,17 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterType=new EncounterType("testing","desc");
+  encounterType.setCreator(new User(4));
+  Date date=new Date(System.currentTimeMillis() - 5000);
+  encounterType.setDateCreated(date);
+  assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
+  encounterService.saveEncounterType(encounterType);
+  assertEquals(encounterType.getCreator(),new User(4));
+  assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
+  assertEquals(date,encounterType.getDateCreated());
+  EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
+  assertNotNull(newEncounterType);
+  assertEquals(encounterType.getCreator(),new User(4));
+  assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
+  assertEquals(date,encounterType.getDateCreated());
+}

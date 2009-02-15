@@ -1,0 +1,12 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(INITIAL_CONCEPTS_XML);
+  authenticate();
+  Concept c2=new Concept(2);
+  c2.addName(new ConceptName("not a numeric anymore",Locale.US));
+  c2.setDatatype(new ConceptDatatype(3));
+  conceptService.saveConcept(c2);
+  Concept secondConcept=conceptService.getConcept(2);
+  assertFalse(secondConcept.isNumeric());
+  assertEquals("not a numeric anymore",secondConcept.getName(Locale.US).getName());
+}

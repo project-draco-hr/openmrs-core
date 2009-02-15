@@ -1,0 +1,13 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter encounter=es.getEncounter(1);
+  assertNotNull(encounter.getEncounterDatetime());
+  Obs obs=new Obs();
+  obs.setConcept(new Concept(1));
+  obs.setValueNumeric(50d);
+  obs.setObsDatetime(new Date());
+  encounter.addObs(obs);
+  assertNull(obs.getObsId());
+  es.saveEncounter(encounter);
+  assertNotNull(obs.getObsId());
+}
