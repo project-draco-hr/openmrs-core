@@ -3,7 +3,12 @@
   if (Context.isAuthenticated()) {
     FormService fs=Context.getFormService();
     String formId=request.getParameter("formId");
-    if (formId != null)     form=fs.getForm(Integer.valueOf(formId));
+    if (formId != null)     try {
+      form=fs.getForm(Integer.valueOf(formId));
+    }
+ catch (    NumberFormatException e) {
+      ;
+    }
   }
   if (form == null)   form=new Form();
   return form;
