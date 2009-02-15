@@ -1,8 +1,45 @@
 {
   ObsService os=Context.getObsService();
-  velocityContext.put("date",OpenmrsUtil.getDateFormat());
-  velocityContext.put("locale",Context.getLocale());
-  List<Obs> obs=os.getVoidedObservations();
+  DateFormat dateFormat=OpenmrsUtil.getDateFormat();
+  velocityContext.put("date",dateFormat);
+  Calendar cal=Calendar.getInstance();
+  Date start=new Date();
+  Date end=new Date();
+  String startDate=request.getParameter("startDate");
+  String endDate=request.getParameter("endDate");
+  if (startDate != null && startDate.length() != 0) {
+    try {
+      cal.setTime(dateFormat.parse(startDate));
+    }
+ catch (    ParseException e) {
+      throw new ServletException("Error parsing 'Start Date'",e);
+    }
+  }
+ else   cal.setTime(new Date());
+  if (endDate == null || endDate.equals("")) {
+    while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+      cal.add(Calendar.DAY_OF_MONTH,-1);
+    }
+    start=cal.getTime();
+    cal.add(Calendar.DAY_OF_MONTH,7);
+    end=cal.getTime();
+  }
+ else {
+    start=cal.getTime();
+    try {
+      cal.setTime(dateFormat.parse(endDate));
+    }
+ catch (    ParseException e) {
+      throw new ServletException("Error parsing 'End Date'",e);
+    }
+    end=cal.getTime();
+  }
+  List<Obs> allObs=null;
+  allObs=os.getObservations(null,null,null,null,null,null,null,null,null,start,end,true);
+  List<Obs> obs=new Vector<Obs>();
+  for (  Obs o : allObs) {
+    if (o.getVoided() == true)     obs.add(o);
+  }
   if (obs != null) {
     velocityContext.put("observations",obs);
   }
