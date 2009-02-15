@@ -1,0 +1,8 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  List<GlobalProperty> properties=adminService.getGlobalPropertiesByPrefix("fake.module.");
+  for (  GlobalProperty property : properties) {
+    Assert.assertTrue(property.getProperty().startsWith("fake.module."));
+    Assert.assertTrue(property.getPropertyValue().startsWith("correct-value"));
+  }
+}
