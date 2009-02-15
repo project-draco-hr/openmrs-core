@@ -1,5 +1,9 @@
 {
   log.debug("Merging patients: (preferred)" + preferred.getPatientId() + ", (notPreferred) "+ notPreferred.getPatientId());
+  if (preferred.getPatientId().equals(notPreferred.getPatientId())) {
+    log.debug("Merge operation cancelled: Cannot merge user" + preferred.getPatientId() + " to self");
+    throw new APIException("Merge operation cancelled: Cannot merge user " + preferred.getPatientId() + " to self");
+  }
   EncounterService es=Context.getEncounterService();
   for (  Encounter e : es.getEncountersByPatient(notPreferred)) {
     e.setPatient(preferred);
