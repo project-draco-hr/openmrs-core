@@ -1,0 +1,15 @@
+{
+synchronized (outputForInitExecSync) {
+    outputForInitExecSync.add("INIT-START-5");
+  }
+  super.initialize(config);
+  try {
+    Thread.sleep(2000);
+  }
+ catch (  InterruptedException e) {
+    log.error("Error generated",e);
+  }
+synchronized (outputForInitExecSync) {
+    outputForInitExecSync.add("INIT-END-5");
+  }
+}

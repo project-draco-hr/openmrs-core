@@ -1,0 +1,15 @@
+{
+  SchedulerService schedulerService=Context.getSchedulerService();
+  TaskDefinition t5=new TaskDefinition();
+  t5.setId(5);
+  t5.setStartOnStartup(false);
+  t5.setRepeatInterval(10L);
+  t5.setTaskClass(SampleTask5.class.getName());
+  Calendar startTime5=Calendar.getInstance();
+  startTime5.add(Calendar.SECOND,1);
+  t5.setStartTime(startTime5.getTime());
+  schedulerService.scheduleTask(t5);
+  Thread.sleep(5000);
+  schedulerService.shutdownTask(t5);
+  assertEquals(Arrays.asList("INIT-START-5","INIT-END-5","START-5","END-5"),outputForInitExecSync);
+}
