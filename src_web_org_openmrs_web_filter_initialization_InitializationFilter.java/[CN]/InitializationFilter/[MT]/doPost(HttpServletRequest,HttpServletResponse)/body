@@ -218,6 +218,7 @@ catch (    InputRequiredException inputRequiredEx) {
     }
     Listener.loadCoreModules(filterConfig.getServletContext());
     Listener.performWebStartOfModules(filterConfig.getServletContext());
+    SchedulerUtil.startup(runtimeProperties);
     initializationComplete=true;
     httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
   }
