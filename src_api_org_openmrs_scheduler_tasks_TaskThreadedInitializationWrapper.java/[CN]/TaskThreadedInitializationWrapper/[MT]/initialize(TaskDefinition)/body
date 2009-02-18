@@ -2,10 +2,14 @@
   Runnable r=new Runnable(){
     public void run(){
       lock.lock();
-      task.initialize(config);
-      initialized=true;
-      initializedCond.signalAll();
-      lock.unlock();
+      try {
+        task.initialize(config);
+        initialized=true;
+        initializedCond.signalAll();
+      }
+  finally {
+        lock.unlock();
+      }
     }
   }
 ;
