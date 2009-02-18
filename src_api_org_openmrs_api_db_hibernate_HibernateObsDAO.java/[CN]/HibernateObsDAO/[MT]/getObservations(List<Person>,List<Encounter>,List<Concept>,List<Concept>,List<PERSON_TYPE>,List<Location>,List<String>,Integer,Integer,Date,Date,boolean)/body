@@ -16,8 +16,8 @@
     criteria.createAlias("obsGroup","og");
     criteria.add(Restrictions.eq("og.obsId",obsGroupId));
   }
-  if (fromDate != null)   criteria.add(Restrictions.gt("obsDatetime",fromDate));
-  if (toDate != null)   criteria.add(Restrictions.lt("obsDatetime",toDate));
+  if (fromDate != null)   criteria.add(Restrictions.ge("obsDatetime",fromDate));
+  if (toDate != null)   criteria.add(Restrictions.le("obsDatetime",toDate));
   if (includeVoidedObs == false)   criteria.add(Restrictions.eq("voided",false));
   return criteria.list();
 }
