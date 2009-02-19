@@ -117,7 +117,7 @@
       for (int x=0; x < 12; x++) {
         connectionPassword+=chars.charAt(r.nextInt(chars.length()));
       }
-      String sql="drop user ?";
+      String sql="drop user ?@'localhost'";
       executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
       sql="create user ?@'localhost' identified by '?'";
       if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
