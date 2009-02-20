@@ -99,7 +99,7 @@
     String connectionUsername;
     String connectionPassword;
     if (!wizardModel.hasCurrentOpenmrsDatabase) {
-      String sql="create database ? default character set utf8";
+      String sql="create database `?` default character set utf8";
       int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
       if (result < 0) {
         renderTemplate(DEFAULT_PAGE,null,writer);
@@ -109,6 +109,7 @@
         wizardModel.workLog.add("Created database " + wizardModel.databaseName);
       }
     }
+    wizardModel.databaseConnection=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
     if (wizardModel.createDatabaseUser) {
       connectionUsername="openmrs_user";
       connectionPassword="";
@@ -127,7 +128,7 @@
         renderTemplate(DEFAULT_PAGE,null,writer);
         return;
       }
-      sql="GRANT ALL ON ?.* TO ?@'localhost'";
+      sql="GRANT ALL ON `?`.* TO ?@'localhost'";
       int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
       if (result < 0) {
         renderTemplate(DEFAULT_PAGE,null,writer);
@@ -141,8 +142,7 @@
       connectionUsername=wizardModel.currentDatabaseUsername;
       connectionPassword=wizardModel.currentDatabasePassword;
     }
-    String databaseConnectionFinalUrl=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-    runtimeProperties.put("connection.url",databaseConnectionFinalUrl);
+    runtimeProperties.put("connection.url",wizardModel.databaseConnection);
     runtimeProperties.put("connection.username",connectionUsername);
     runtimeProperties.put("connection.password",connectionPassword);
     runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
@@ -150,7 +150,7 @@
     runtimeProperties.put(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY,"admin");
     runtimeProperties.put(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY,wizardModel.adminUserPassword);
     Context.setRuntimeProperties(runtimeProperties);
-    if (!verifyConnection(connectionUsername,connectionPassword,databaseConnectionFinalUrl)) {
+    if (!verifyConnection(connectionUsername,connectionPassword,wizardModel.databaseConnection)) {
       renderTemplate(DEFAULT_PAGE,null,writer);
       return;
     }
