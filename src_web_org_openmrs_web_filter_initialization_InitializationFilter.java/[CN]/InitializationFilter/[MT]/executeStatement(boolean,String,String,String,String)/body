@@ -1,10 +1,15 @@
 {
   Connection connection=null;
   try {
-    Class.forName("com.mysql.jdbc.Driver").newInstance();
+    String replacedSql=sql;
+    if (wizardModel.databaseConnection.contains("mysql")) {
+      Class.forName("com.mysql.jdbc.Driver").newInstance();
+    }
+ else {
+      replacedSql=replacedSql.replaceAll("`","\"");
+    }
     String tempDatabaseConnection=wizardModel.databaseConnection.replace("@DBNAME@","");
     connection=DriverManager.getConnection(tempDatabaseConnection,user,pw);
-    String replacedSql=sql;
     for (    String arg : args) {
       arg=arg.replace(";","&#094");
       replacedSql=replacedSql.replaceFirst("\\?",arg);
