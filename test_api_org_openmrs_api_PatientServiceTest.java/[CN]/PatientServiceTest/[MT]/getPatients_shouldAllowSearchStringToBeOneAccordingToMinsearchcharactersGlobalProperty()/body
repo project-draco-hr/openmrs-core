@@ -1,5 +1,6 @@
 {
   assertEquals(0,Context.getPatientService().getPatients("Co").size());
+  Context.clearSession();
   Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,"1"));
   assertEquals(1,Context.getPatientService().getPatients("Co").size());
 }
