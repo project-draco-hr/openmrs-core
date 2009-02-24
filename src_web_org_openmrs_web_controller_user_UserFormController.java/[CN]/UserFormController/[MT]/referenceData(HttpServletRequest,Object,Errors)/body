@@ -1,7 +1,7 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
   User user=(User)obj;
-  List<Role> roles=Context.getUserService().getRoles();
+  List<Role> roles=Context.getUserService().getAllRoles();
   if (roles == null)   roles=new Vector<Role>();
   for (  String s : OpenmrsConstants.AUTO_ROLES()) {
     Role r=new Role(s);
