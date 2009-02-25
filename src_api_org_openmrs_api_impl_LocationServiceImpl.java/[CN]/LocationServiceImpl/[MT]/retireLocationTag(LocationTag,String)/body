@@ -1,0 +1,13 @@
+{
+  if (tag.isRetired()) {
+    return tag;
+  }
+ else {
+    if (reason == null)     throw new APIException("Reason is required");
+    tag.setRetired(true);
+    tag.setRetireReason(reason);
+    tag.setRetiredBy(Context.getAuthenticatedUser());
+    tag.setDateRetired(new Date());
+    return saveLocationTag(tag);
+  }
+}

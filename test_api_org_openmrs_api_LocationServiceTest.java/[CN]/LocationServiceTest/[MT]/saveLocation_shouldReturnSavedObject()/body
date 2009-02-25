@@ -1,0 +1,7 @@
+{
+  Location location=new Location();
+  location.setName("Some name");
+  location.setDescription("Some description");
+  Location savedLocation=Context.getLocationService().saveLocation(location);
+  Assert.assertEquals(location,savedLocation);
+}

@@ -1,0 +1,11 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=new Location();
+  location.setName("name");
+  location.addTag(new LocationTag("General Hospital",null));
+  ls.saveLocation(location);
+  Location newSavedLocation=ls.getLocation(location.getLocationId());
+  assertEquals(1,newSavedLocation.getTags().size());
+  assertNotNull("Location tag should have an ID now",newSavedLocation.getTags().iterator().next().getLocationTagId());
+  assertEquals(1,newSavedLocation.getTags().iterator().next().getLocationTagId().intValue());
+}

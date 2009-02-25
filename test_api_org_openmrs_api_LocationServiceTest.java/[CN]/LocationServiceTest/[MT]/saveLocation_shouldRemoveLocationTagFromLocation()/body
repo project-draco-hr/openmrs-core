@@ -1,0 +1,8 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=ls.getLocation(1);
+  location.removeTag(location.getTags().iterator().next());
+  ls.saveLocation(location);
+  Location newSavedLocation=ls.getLocation(location.getLocationId());
+  assertEquals(2,newSavedLocation.getTags().size());
+}

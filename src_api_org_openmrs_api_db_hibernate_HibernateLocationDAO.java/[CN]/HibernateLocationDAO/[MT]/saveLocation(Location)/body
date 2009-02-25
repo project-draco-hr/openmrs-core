@@ -1,4 +1,7 @@
 {
+  if (location.getChildLocations() != null && location.getLocationId() != null) {
+    for (    Location child : location.getChildLocations())     if (child.getLocationId() == null)     saveLocation(child);
+  }
   sessionFactory.getCurrentSession().saveOrUpdate(location);
   return location;
 }

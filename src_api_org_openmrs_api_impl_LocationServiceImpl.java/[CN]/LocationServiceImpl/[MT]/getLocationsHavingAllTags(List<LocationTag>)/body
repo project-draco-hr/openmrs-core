@@ -1,0 +1,5 @@
+{
+  List<Location> locations=new ArrayList<Location>();
+  for (  Location loc : dao.getAllLocations(false))   if (loc.getTags().containsAll(tags))   locations.add(loc);
+  return locations;
+}

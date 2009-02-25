@@ -1,0 +1,23 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=new Location();
+  location.setName("parent");
+  ls.saveLocation(location);
+  Location childA=new Location();
+  childA.setName("level A child");
+  location.addChildLocation(childA);
+  Location childB=new Location();
+  childB.setName("level B child");
+  childA.addChildLocation(childB);
+  ls.saveLocation(location);
+  Location newSavedLocation=ls.getLocation(location.getLocationId());
+  assertNotNull(childA.getLocationId());
+  assertNotNull(childB.getLocationId());
+  assertNotNull("newSavedLocation.childLocations must be not null",newSavedLocation.getChildLocations());
+  assertEquals(1,newSavedLocation.getChildLocations().size());
+  Location newChildA=newSavedLocation.getChildLocations().iterator().next();
+  assertTrue("Child location must be the previously created childA",newChildA.equals(childA));
+  assertNotNull("newSavedLocation.childLocations must be not null",newChildA.getChildLocations());
+  assertEquals(1,newSavedLocation.getChildLocations().size());
+  assertTrue("Level B child location must be the previously created childB",newChildA.getChildLocations().iterator().next().equals(childB));
+}

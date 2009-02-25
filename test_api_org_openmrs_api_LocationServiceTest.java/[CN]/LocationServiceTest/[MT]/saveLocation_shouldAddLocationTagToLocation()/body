@@ -1,0 +1,15 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=new Location();
+  location.setName("name");
+  ls.saveLocation(location);
+  LocationTag tag=new LocationTag();
+  tag.setTag("tag name");
+  ls.saveLocationTag(tag);
+  location.addTag(tag);
+  ls.saveLocation(location);
+  Location newSavedLocation=ls.getLocation(location.getLocationId());
+  assertNotNull("newSavedLocation.tags must be not null",newSavedLocation.getTags());
+  assertEquals(1,newSavedLocation.getTags().size());
+  assertTrue("Tag must be the previously added tag",newSavedLocation.getTags().iterator().next().equals(tag));
+}

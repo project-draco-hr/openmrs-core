@@ -1,0 +1,8 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=ls.getLocation(1);
+  location.removeChildLocation(location.getChildLocations().iterator().next());
+  ls.saveLocation(location);
+  Location newSavedLocation=ls.getLocation(location.getLocationId());
+  assertEquals(1,newSavedLocation.getChildLocations().size());
+}

@@ -1,0 +1,10 @@
+{
+  Set<Location> ret=new HashSet<Location>();
+  if (includeRetired)   ret=getChildLocations();
+ else   if (getChildLocations() != null) {
+    for (    Location l : getChildLocations()) {
+      if (!l.isRetired())       ret.add(l);
+    }
+  }
+  return ret;
+}

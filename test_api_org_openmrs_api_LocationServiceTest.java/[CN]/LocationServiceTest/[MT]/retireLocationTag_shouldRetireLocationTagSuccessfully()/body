@@ -1,0 +1,16 @@
+{
+  LocationService ls=Context.getLocationService();
+  List<LocationTag> tagsBeforeRetired=ls.getAllLocationTags(true);
+  List<LocationTag> tagsNotRetiredBefore=ls.getAllLocationTags(false);
+  LocationTag tag=ls.getLocationTag(1);
+  LocationTag retiredTag=ls.retireLocationTag(tag,"Just Testing");
+  assertEquals(retiredTag,tag);
+  List<LocationTag> tagsAfterRetired=ls.getAllLocationTags(true);
+  List<LocationTag> tagsNotRetiredAfter=ls.getAllLocationTags(false);
+  assertTrue(retiredTag.isRetired());
+  assertNotNull(retiredTag.getDateRetired());
+  assertEquals(Context.getAuthenticatedUser(),retiredTag.getRetiredBy());
+  assertEquals("Just Testing",retiredTag.getRetireReason());
+  assertEquals(tagsBeforeRetired,tagsAfterRetired);
+  assertNotSame(tagsNotRetiredBefore,tagsNotRetiredAfter);
+}
