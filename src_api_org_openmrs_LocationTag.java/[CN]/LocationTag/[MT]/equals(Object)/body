@@ -1,0 +1,6 @@
+{
+  if (obj == null || !(obj instanceof LocationTag))   return false;
+  LocationTag locationTag=(LocationTag)obj;
+  if (this.locationTagId != null && locationTag.getLocationTagId() != null)   return (this.locationTagId.equals(locationTag.getLocationTagId()));
+ else   return this == locationTag;
+}

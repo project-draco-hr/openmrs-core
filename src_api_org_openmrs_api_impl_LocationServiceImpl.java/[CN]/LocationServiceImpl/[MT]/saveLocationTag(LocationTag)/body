@@ -1,0 +1,12 @@
+{
+  if (tag.getTag() == null) {
+    throw new APIException("Tag name is required");
+  }
+  if (tag.getDateCreated() == null) {
+    tag.setDateCreated(new Date());
+  }
+  if (tag.getCreator() == null) {
+    tag.setCreator(Context.getAuthenticatedUser());
+  }
+  return dao.saveLocationTag(tag);
+}

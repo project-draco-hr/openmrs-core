@@ -1,0 +1,7 @@
+{
+  LocationService ls=Context.getLocationService();
+  LocationTag tag=ls.getLocationTag(1);
+  ls.purgeLocationTag(tag);
+  LocationTag t=ls.getLocationTag(tag.getLocationTagId());
+  assertNull("We shouldn't find the tag after deletion",t);
+}

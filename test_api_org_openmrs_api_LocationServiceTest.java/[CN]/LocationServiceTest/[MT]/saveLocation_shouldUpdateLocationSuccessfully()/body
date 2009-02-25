@@ -1,0 +1,16 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=ls.getLocation(1);
+  String origName=location.getName();
+  String origDesc=location.getDescription();
+  String newName="new name";
+  String newDesc="new desc";
+  location.setName(newName);
+  location.setDescription(newDesc);
+  ls.saveLocation(location);
+  Location newestLoc=ls.getLocation(location.getLocationId());
+  assertFalse("The name should be different",origName.equals(newName));
+  assertTrue("The name should be the same",newestLoc.getName().equals(newName));
+  assertFalse("The name should be different",origDesc.equals(newDesc));
+  assertTrue("The name should be the same",newestLoc.getDescription().equals(newDesc));
+}

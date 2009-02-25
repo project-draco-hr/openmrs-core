@@ -1,0 +1,20 @@
+{
+  LocationService ls=Context.getLocationService();
+  List<LocationTag> list1=new ArrayList<LocationTag>();
+  list1.add(ls.getLocationTag(1));
+  list1.add(ls.getLocationTag(2));
+  List<LocationTag> list2=new ArrayList<LocationTag>();
+  list2.add(ls.getLocationTag(3));
+  list2.add(ls.getLocationTag(4));
+  List<LocationTag> list3=new ArrayList<LocationTag>();
+  list3.add(ls.getLocationTag(1));
+  list3.add(ls.getLocationTag(2));
+  list3.add(ls.getLocationTag(3));
+  list3.add(ls.getLocationTag(4));
+  List<LocationTag> list4=new ArrayList<LocationTag>();
+  list4.add(ls.getLocationTag(4));
+  assertEquals(1,ls.getLocationsHavingAllTags(list1).size());
+  assertEquals(2,ls.getLocationsHavingAllTags(list2).size());
+  assertEquals(0,ls.getLocationsHavingAllTags(list3).size());
+  assertEquals(4,ls.getLocationsHavingAllTags(list4).size());
+}

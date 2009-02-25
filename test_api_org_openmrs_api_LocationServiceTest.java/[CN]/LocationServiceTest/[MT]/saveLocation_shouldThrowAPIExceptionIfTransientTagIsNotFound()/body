@@ -1,0 +1,8 @@
+{
+  LocationTag tagWithoutName=new LocationTag("some random tag name","a nonexistant tag");
+  Location location=new Location();
+  location.setName("Some name");
+  location.setDescription("Some description");
+  location.addTag(tagWithoutName);
+  Context.getLocationService().saveLocation(location);
+}

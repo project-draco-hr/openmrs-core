@@ -1,0 +1,10 @@
+{
+  if (child == null)   return;
+  if (getChildLocations() == null)   childLocations=new HashSet<Location>();
+  if (child.equals(this))   throw new APIException("A location cannot be its own child!");
+  Location root=this;
+  while (root.getParentLocation() != null)   root=root.getParentLocation();
+  if (isInHierarchy(child,root))   throw new APIException("Location hierarchy loop detected! You cannot add: '" + child + "' to the parent: '"+ this+ "' because it is in the parent hierarchy somewhere already and a location cannot be its own parent.");
+  child.setParentLocation(this);
+  childLocations.add(child);
+}

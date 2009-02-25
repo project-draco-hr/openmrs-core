@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createCriteria(LocationTag.class).add(Expression.ilike("tag",search,MatchMode.START)).addOrder(Order.asc("tag")).list();
+}
