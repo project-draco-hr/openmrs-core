@@ -1,3 +1,7 @@
 {
-  return Expression.and(Expression.eq("name.voided",false),Expression.or(Expression.like("name.familyName",name,MatchMode.START),Expression.or(Expression.like("name.middleName",name,MatchMode.START),Expression.like("name.givenName",name,MatchMode.START))));
+  SimpleExpression givenName=Expression.like("name.givenName",name,MatchMode.START);
+  SimpleExpression middleName=Expression.like("name.middleName",name,MatchMode.START);
+  SimpleExpression familyName=Expression.like("name.familyName",name,MatchMode.START);
+  SimpleExpression familyName2=Expression.like("name.familyName2",name,MatchMode.START);
+  return Expression.and(Expression.eq("name.voided",false),Expression.or(familyName2,Expression.or(familyName,Expression.or(middleName,givenName))));
 }
