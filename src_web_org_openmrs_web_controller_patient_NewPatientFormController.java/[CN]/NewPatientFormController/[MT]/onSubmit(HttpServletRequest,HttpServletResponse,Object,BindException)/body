@@ -19,6 +19,7 @@
       if (patient == null) {
         try {
           Person p=personService.getPerson(shortPatient.getPatientId());
+          Context.clearSession();
           patient=new Patient(p);
         }
  catch (        ObjectRetrievalFailureException noUserEx) {
