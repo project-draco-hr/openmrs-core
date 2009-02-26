@@ -1,0 +1,9 @@
+{
+  executeDataSet(USERS_WHO_ARE_PATIENTS_XML);
+  Patient patient2=patientService.getPatient(2);
+  assertTrue("When getting a patient, it should be of the class patient, not: " + patient2.getClass(),patient2.getClass().equals(Patient.class));
+  Patient patient3=patientService.getPatient(3);
+  assertTrue("When getting a patient, it should be of the class patient, not: " + patient3.getClass(),patient3.getClass().equals(Patient.class));
+  User user2=Context.getUserService().getUser(2);
+  assertTrue("When getting a user, it should be of the class user, not: " + user2.getClass(),User.class.isAssignableFrom(user2.getClass()));
+}
