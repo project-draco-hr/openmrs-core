@@ -1,0 +1,28 @@
+{
+  Connection connection=sessionFactory.getCurrentSession().connection();
+  boolean stubInsertNeeded=false;
+  if (patient.getPatientId() != null) {
+    try {
+      PreparedStatement ps=connection.prepareStatement("SELECT * FROM patient WHERE patient_id = ?");
+      ps.setInt(1,patient.getPatientId());
+      ps.execute();
+      if (ps.getResultSet().next())       stubInsertNeeded=false;
+ else       stubInsertNeeded=true;
+    }
+ catch (    SQLException e) {
+      log.error("Error while trying to see if this person is a patient already",e);
+    }
+  }
+  if (stubInsertNeeded) {
+    try {
+      PreparedStatement ps=connection.prepareStatement("INSERT INTO patient (patient_id, creator, voided, date_created) VALUES (?, ?, 0, ?)");
+      ps.setInt(1,patient.getPatientId());
+      ps.setInt(2,patient.getCreator().getUserId());
+      ps.setDate(3,new java.sql.Date(patient.getDateCreated().getTime()));
+      ps.executeUpdate();
+    }
+ catch (    SQLException e) {
+      log.warn("SQL Exception while trying to create a patient stub",e);
+    }
+  }
+}

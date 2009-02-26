@@ -4,11 +4,8 @@
     return patient;
   }
  else {
-    Object obj=sessionFactory.getCurrentSession().get(Patient.class,patient.getPatientId());
-    if (!(obj instanceof Patient)) {
-      insertPatientStub(patient);
-    }
-    patient=(Patient)sessionFactory.getCurrentSession().merge(patient);
+    insertPatientStubIfNeeded(patient);
+    sessionFactory.getCurrentSession().saveOrUpdate(patient);
     return patient;
   }
 }

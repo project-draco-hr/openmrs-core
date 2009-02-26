@@ -6,7 +6,6 @@
   controller.setApplicationContext(applicationContext);
   controller.setSuccessView("patientDashboard.form");
   controller.setFormView("newPatient.form");
-  controller.setSessionForm(true);
   MockHttpServletRequest request=new MockHttpServletRequest("GET","/admin/patients/newPatient.form?patientId=2");
   request.setSession(new MockHttpSession(null));
   HttpServletResponse response=new MockHttpServletResponse();
