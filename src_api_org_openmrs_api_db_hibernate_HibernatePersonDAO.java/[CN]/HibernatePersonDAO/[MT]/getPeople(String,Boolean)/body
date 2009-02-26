@@ -5,7 +5,7 @@
   criteria.createAlias("names","name");
   for (  String n : names) {
     if (n != null && n.length() > 0) {
-      criteria.add(Expression.or(Expression.like("name.givenName",n,MatchMode.START),Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("systemId",n,MatchMode.START)))));
+      criteria.add(Expression.or(Expression.like("name.givenName",n,MatchMode.START),Expression.or(Expression.like("name.familyName",n,MatchMode.START),Expression.or(Expression.like("name.middleName",n,MatchMode.START),Expression.like("name.familyName2",n,MatchMode.START)))));
     }
   }
   criteria.add(Expression.eq("personVoided",false));

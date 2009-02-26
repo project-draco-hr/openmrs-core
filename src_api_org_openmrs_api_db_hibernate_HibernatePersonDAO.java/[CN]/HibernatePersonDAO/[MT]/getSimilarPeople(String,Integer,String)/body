@@ -4,12 +4,13 @@
   name=name.replaceAll("  "," ");
   name=name.replace(", "," ");
   String[] names=name.split(" ");
-  String q="select p from Person p left join p.names as pname where";
+  String q="select p from Person p left join p.names as pname where p.personVoided = false and pname.voided = false and ";
   if (names.length == 1) {
     q+="(";
     q+=" soundex(pname.givenName) = soundex(:n1)";
     q+=" or soundex(pname.middleName) = soundex(:n1)";
     q+=" or soundex(pname.familyName) = soundex(:n1) ";
+    q+=" or soundex(pname.familyName2) = soundex(:n1) ";
     q+=")";
   }
  else   if (names.length == 2) {
@@ -29,12 +30,20 @@
     q+="  when soundex(pname.middleName) = soundex(:n2) then 4";
     q+="  else 0 ";
     q+=" end";
-    q+=" +";
+    q+=" + ";
     q+=" case";
     q+="  when pname.familyName is null then 1";
     q+="  when pname.familyName = '' then 1";
     q+="  when soundex(pname.familyName) = soundex(:n1) then 3";
     q+="  when soundex(pname.familyName) = soundex(:n2) then 4";
+    q+="  else 0 ";
+    q+=" end";
+    q+=" +";
+    q+=" case";
+    q+="  when pname.familyName2 is null then 1";
+    q+="  when pname.familyName2 = '' then 1";
+    q+="  when soundex(pname.familyName2) = soundex(:n1) then 3";
+    q+="  when soundex(pname.familyName2) = soundex(:n2) then 4";
     q+="  else 0 ";
     q+=" end";
     q+=") >= 5";
@@ -56,12 +65,20 @@
     q+="  when soundex(pname.middleName) = soundex(:n3) then 1";
     q+="  else 0";
     q+=" end";
-    q+=" +";
+    q+=" + ";
     q+=" case";
     q+="  when pname.familyName is null then 0";
     q+="  when soundex(pname.familyName) = soundex(:n1) then 1";
     q+="  when soundex(pname.familyName) = soundex(:n2) then 2";
     q+="  when soundex(pname.familyName) = soundex(:n3) then 3";
+    q+="  else 0";
+    q+=" end";
+    q+=" +";
+    q+=" case";
+    q+="  when pname.familyName2 is null then 0";
+    q+="  when soundex(pname.familyName2) = soundex(:n1) then 1";
+    q+="  when soundex(pname.familyName2) = soundex(:n2) then 2";
+    q+="  when soundex(pname.familyName2) = soundex(:n3) then 3";
     q+="  else 0";
     q+=" end";
     q+=") >= 5";
@@ -95,6 +112,16 @@
     }
     q+="  else 0";
     q+=" end";
+    q+=")";
+    q+="+";
+    q+="(";
+    q+=" case";
+    q+="  when pname.familyName2 is null then 0";
+    for (int i=0; i < names.length; i++) {
+      q+="  when soundex(pname.familyName2) = soundex(:n" + (i + 1) + ") then 1";
+    }
+    q+="  else 0";
+    q+=" end";
     q+=") >= " + (int)(names.length * .75);
   }
   String birthdayMatch=" (year(p.birthdate) between " + (birthyear - 1) + " and "+ (birthyear + 1)+ " or p.birthdate is null) ";
@@ -111,6 +138,7 @@
   q+=" order by pname.givenName asc,";
   q+=" pname.middleName asc,";
   q+=" pname.familyName asc";
+  q+=" pname.familyName2 asc";
   Query query=sessionFactory.getCurrentSession().createQuery(q);
   for (int nameIndex=0; nameIndex < names.length; nameIndex++) {
     query.setString("n" + (nameIndex + 1),names[nameIndex]);
