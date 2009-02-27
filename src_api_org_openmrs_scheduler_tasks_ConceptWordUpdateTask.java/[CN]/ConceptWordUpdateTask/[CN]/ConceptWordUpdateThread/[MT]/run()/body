@@ -1,23 +1,30 @@
 {
-  isExecuting=true;
-  shouldExecute=true;
-  Context.openSession();
-  if (log.isDebugEnabled())   log.debug("Updating concept words ... ");
-  try {
-    if (Context.isAuthenticated() == false)     authenticate();
-    Iterator<Concept> conceptIterator=cs.conceptIterator();
-    while (conceptIterator.hasNext() && shouldExecute) {
-      Concept currentConcept=conceptIterator.next();
-      if (log.isDebugEnabled())       log.debug("updateConceptWords() : current concept: " + currentConcept);
-      cs.updateConceptWord(currentConcept);
+  if (!isExecuting) {
+    isExecuting=true;
+    shouldExecute=true;
+    Context.openSession();
+    if (log.isDebugEnabled())     log.debug("Updating concept words ... ");
+    try {
+      if (Context.isAuthenticated() == false)       authenticate();
+      ConceptService cs=Context.getConceptService();
+      Iterator<Concept> conceptIterator=cs.conceptIterator();
+      while (conceptIterator.hasNext() && shouldExecute) {
+        Concept currentConcept=conceptIterator.next();
+        if (log.isDebugEnabled())         log.debug("updateConceptWords() : current concept: " + currentConcept);
+        cs.updateConceptWord(currentConcept);
+      }
     }
-  }
- catch (  APIException e) {
-    log.error("ConceptWordUpdateTask failed, because:",e);
-    throw e;
-  }
+ catch (    APIException e) {
+      log.error("ConceptWordUpdateTask failed, because:",e);
+      throw e;
+    }
  finally {
-    isExecuting=false;
-    Context.closeSession();
+      isExecuting=false;
+      SchedulerService ss=Context.getSchedulerService();
+      TaskDefinition conceptWordUpdateTaskDef=ss.getTaskByName(ConceptServiceImpl.CONCEPT_WORD_UPDATE_TASK_NAME);
+      conceptWordUpdateTaskDef.setStarted(false);
+      ss.saveTask(conceptWordUpdateTaskDef);
+      Context.closeSession();
+    }
   }
 }
