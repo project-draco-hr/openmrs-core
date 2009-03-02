@@ -1,0 +1,5 @@
+{
+  executeDataSet("org/openmrs/web/controller/include/PortletControllerTest-bmi.xml");
+  Map<String,Object> modelmap=getModelFromController(7);
+  Assert.assertEquals("61.7",modelmap.get("patientBmiAsString"));
+}
