@@ -53,7 +53,11 @@
       }
     }
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"gender","error.null");
-    if (shortPatient.getBirthdate() != null) {
+    if (shortPatient.getBirthdate() == null) {
+      Object[] args={"Birthdate"};
+      errors.rejectValue("birthdate","error.required",args,"");
+    }
+ else {
       if (shortPatient.getBirthdate().after(new Date()))       errors.rejectValue("birthdate","error.date.future");
  else {
         Calendar c=Calendar.getInstance();
