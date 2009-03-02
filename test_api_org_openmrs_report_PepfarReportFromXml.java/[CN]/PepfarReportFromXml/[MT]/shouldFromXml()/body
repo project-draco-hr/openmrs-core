@@ -30,7 +30,6 @@
   xml.append("		</dataSetDefinition>\n");
   xml.append("	</dataSets>\n");
   xml.append("</reportSchema>\n");
-  System.out.println("xml\n" + xml);
   Program hivProgram=Context.getProgramWorkflowService().getProgram("HIV PROGRAM");
   if (hivProgram == null)   hivProgram=Context.getProgramWorkflowService().getProgram(1);
   assertNotNull("Need at least one program defined to run this test",hivProgram);
@@ -71,6 +70,4 @@
   ReportService rs=(ReportService)Context.getService(ReportService.class);
   ReportData data=rs.evaluate(schema,null,evalContext);
   TsvReportRenderer renderer=new TsvReportRenderer();
-  System.out.println("Rendering output as TSV:");
-  renderer.render(data,null,System.out);
 }

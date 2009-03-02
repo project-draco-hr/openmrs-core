@@ -27,7 +27,6 @@
   assertEquals("Testing row-per-obs",rs.getName());
   assertEquals(1,rs.getDataSetDefinitions().size());
   ReportData data=Context.getReportService().evaluate(rs,kidsCohort,evalContext);
-  System.out.println("Result=");
   StringWriter w=new StringWriter();
   new TsvReportRenderer().render(data,null,w);
   expectedOutput="\"patientId\"	\"question\"	\"questionConceptId\"	\"answer\"	\"answerConceptId\"	\"obsDatetime\"	\"encounterId\"	\"obsGroupId\"	\n\"2\"	\"WEIGHT\"	\"5089\"	\"100.0\"	\"\"	\"2005-01-01 00:00:00.0\"	\"1\"	\"\"	\n";
