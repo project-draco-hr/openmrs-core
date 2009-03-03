@@ -1,0 +1,10 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/web/taglib/include/RequireTagTest.xml");
+  Context.authenticate("whirleygiguser","test");
+  RequireTag tag=new RequireTag();
+  tag.setPageContext(new MockPageContext());
+  tag.setAnyPrivileges("Random Privilege, Other Random Privilege");
+  Assert.assertEquals(Tag.SKIP_PAGE,tag.doStartTag());
+  Context.logout();
+}

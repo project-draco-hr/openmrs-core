@@ -10,15 +10,18 @@
     log.error("userContext is null. Did this pass through a filter?");
     throw new APIException("The context is currently null.  Please try reloading the site.");
   }
-  if (!userContext.hasPrivilege(privilege)) {
+  String[] allPrivilegesArray=StringUtils.commaDelimitedListToStringArray(allPrivileges);
+  String[] anyPrivilegeArray=StringUtils.commaDelimitedListToStringArray(anyPrivilege);
+  boolean hasPrivilege=hasPrivileges(userContext,privilege,allPrivilegesArray,anyPrivilegeArray);
+  if (!hasPrivilege) {
     errorOccurred=true;
     if (userContext.isAuthenticated()) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"require.unauthorized");
-      log.warn("The user: '" + Context.getAuthenticatedUser() + "' has attempted to access: "+ redirect+ " which requires privilege: "+ privilege);
+      log.warn("The user: '" + Context.getAuthenticatedUser() + "' has attempted to access: "+ redirect+ " which requires privilege: "+ privilege+ " or one of: "+ allPrivileges+ " or any of "+ anyPrivilege);
     }
  else     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"require.login");
   }
- else   if (userContext.hasPrivilege(privilege) && userContext.isAuthenticated()) {
+ else   if (hasPrivilege && userContext.isAuthenticated()) {
     User user=userContext.getAuthenticatedUser();
     Boolean forcePasswordChange=new Boolean(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
     log.debug("Login redirect: " + redirect);
