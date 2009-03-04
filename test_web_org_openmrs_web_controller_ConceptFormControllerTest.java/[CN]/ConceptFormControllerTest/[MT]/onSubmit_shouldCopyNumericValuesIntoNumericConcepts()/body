@@ -1,0 +1,32 @@
+{
+  final Double EXPECTED_LOW_ABSOLUTE=100.0;
+  final Double EXPECTED_LOW_CRITICAL=103.0;
+  final Double EXPECTED_LOW_NORMAL=105.0;
+  final Double EXPECTED_HI_NORMAL=110.0;
+  final Double EXPECTED_HI_CRITICAL=117.0;
+  final Double EXPECTED_HI_ABSOLUTE=120.0;
+  ConceptService cs=Context.getConceptService();
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("namesByLocale[en].name","WEIGHT (KG)");
+  mockRequest.setParameter("conceptId","5089");
+  mockRequest.setParameter("concept.datatype","1");
+  mockRequest.setParameter("lowAbsolute",EXPECTED_LOW_ABSOLUTE.toString());
+  mockRequest.setParameter("lowCritical",EXPECTED_LOW_CRITICAL.toString());
+  mockRequest.setParameter("lowNormal",EXPECTED_LOW_NORMAL.toString());
+  mockRequest.setParameter("hiNormal",EXPECTED_HI_NORMAL.toString());
+  mockRequest.setParameter("hiCritical",EXPECTED_HI_CRITICAL.toString());
+  mockRequest.setParameter("hiAbsolute",EXPECTED_HI_ABSOLUTE.toString());
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  ConceptNumeric concept=(ConceptNumeric)cs.getConcept(5089);
+  Assert.assertEquals(EXPECTED_LOW_NORMAL,concept.getLowNormal());
+  Assert.assertEquals(EXPECTED_HI_NORMAL,concept.getHiNormal());
+  Assert.assertEquals(EXPECTED_LOW_ABSOLUTE,concept.getLowAbsolute());
+  Assert.assertEquals(EXPECTED_HI_ABSOLUTE,concept.getHiAbsolute());
+  Assert.assertEquals(EXPECTED_LOW_CRITICAL,concept.getLowCritical());
+  Assert.assertEquals(EXPECTED_HI_CRITICAL,concept.getHiCritical());
+}
