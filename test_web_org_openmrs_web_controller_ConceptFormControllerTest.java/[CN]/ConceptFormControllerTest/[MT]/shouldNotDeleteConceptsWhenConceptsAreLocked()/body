@@ -1,7 +1,7 @@
 {
   executeDataSet("org/openmrs/web/include/ConceptFormControllerTest.xml");
   ConceptService cs=Context.getConceptService();
-  ConceptFormController controller=new ConceptFormController();
+  ConceptFormController controller=(ConceptFormController)applicationContext.getBean("conceptForm");
   controller.setApplicationContext(applicationContext);
   controller.setSuccessView("index.htm");
   controller.setFormView("concept.form");

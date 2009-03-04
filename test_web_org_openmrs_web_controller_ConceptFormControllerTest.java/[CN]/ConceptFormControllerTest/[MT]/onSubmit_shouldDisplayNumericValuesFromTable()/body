@@ -1,0 +1,21 @@
+{
+  final Double EXPECTED_LOW_ABSOLUTE=0.0;
+  final Double EXPECTED_LOW_CRITICAL=99.0;
+  final Double EXPECTED_LOW_NORMAL=445.0;
+  final Double EXPECTED_HI_NORMAL=1497.0;
+  final Double EXPECTED_HI_CRITICAL=1800.0;
+  final Double EXPECTED_HI_ABSOLUTE=2500.0;
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("GET");
+  mockRequest.setParameter("conceptId","5497");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  ConceptFormBackingObject formBackingObject=(ConceptFormBackingObject)mav.getModel().get("command");
+  Assert.assertEquals(EXPECTED_LOW_NORMAL,formBackingObject.getLowNormal());
+  Assert.assertEquals(EXPECTED_HI_NORMAL,formBackingObject.getHiNormal());
+  Assert.assertEquals(EXPECTED_LOW_ABSOLUTE,formBackingObject.getLowAbsolute());
+  Assert.assertEquals(EXPECTED_HI_ABSOLUTE,formBackingObject.getHiAbsolute());
+  Assert.assertEquals(EXPECTED_LOW_CRITICAL,formBackingObject.getLowCritical());
+  Assert.assertEquals(EXPECTED_HI_CRITICAL,formBackingObject.getHiCritical());
+}
