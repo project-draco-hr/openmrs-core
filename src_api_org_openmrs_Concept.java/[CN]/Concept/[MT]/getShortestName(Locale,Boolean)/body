@@ -2,7 +2,7 @@
   if (log.isDebugEnabled())   log.debug("Getting shortest conceptName for locale: " + locale);
   ConceptName foundName=null;
   ConceptName shortestName=null;
-  if (locale == null)   locale=Locale.US;
+  if (locale == null)   locale=LocaleUtility.getDefaultLocale();
   String desiredLanguage=locale.getLanguage();
   if (desiredLanguage.length() > 2)   desiredLanguage=desiredLanguage.substring(0,2);
   for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext() && foundName == null; ) {

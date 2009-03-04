@@ -1,14 +1,14 @@
 {
   log.debug("Getting ConceptDescription for locale: " + locale);
   ConceptDescription foundDescription=null;
-  if (locale == null)   locale=LocaleUtility.DEFAULT_LOCALE;
+  if (locale == null)   locale=LocaleUtility.getDefaultLocale();
   Locale desiredLocale=locale;
   ConceptDescription defaultDescription=null;
   for (Iterator<ConceptDescription> i=getDescriptions().iterator(); i.hasNext() && (foundDescription == null); ) {
     ConceptDescription availableDescription=i.next();
     Locale availableLocale=availableDescription.getLocale();
     if (availableLocale.equals(desiredLocale))     foundDescription=availableDescription;
-    if (availableLocale.equals(LocaleUtility.DEFAULT_LOCALE))     defaultDescription=availableDescription;
+    if (availableLocale.equals(locale))     defaultDescription=availableDescription;
   }
   if (foundDescription == null) {
     if (exact) {

@@ -58,6 +58,7 @@
   props.add(new GlobalProperty(GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"en, es, fr, it, pt","Comma delimited list of locales allowed for use on system"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_NEWPATIENTFORM_RELATIONSHIPS,"","Comma separated list of the RelationshipTypes to show on the new/short patient form.  The list is defined like '3a, 4b, 7a'.  The number is the RelationshipTypeId and the 'a' vs 'b' part is which side of the relationship is filled in by the user."));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,"3","Number of characters user must input before searching is started."));
+  props.add(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE,"Specifies the default locale. You can specify both the language code(ISO-639) and the country code(ISO-3166), e.g. 'en_GB' or just country: e.g. 'en'"));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }

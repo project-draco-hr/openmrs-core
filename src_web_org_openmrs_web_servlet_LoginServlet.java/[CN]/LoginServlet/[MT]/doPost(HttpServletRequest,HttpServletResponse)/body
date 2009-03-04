@@ -52,7 +52,7 @@
           redirect=request.getContextPath() + "/options.form#Change Login Info";
         }
         if (Context.getLocale() == null) {
-          Context.setLocale(OpenmrsConstants.GLOBAL_DEFAULT_LOCALE);
+          Context.setLocale(LocaleUtility.getDefaultLocale());
         }
         if (log.isDebugEnabled()) {
           log.debug("Redirecting after login to: " + redirect);
