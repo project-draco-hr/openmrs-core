@@ -18,6 +18,7 @@
       newConceptSource.setName(implementationId.getName());
       newConceptSource.setDescription(implementationId.getDescription());
       newConceptSource.setHl7Code(implementationId.getImplementationId());
+      if (Context.getAuthenticatedUser() == null)       newConceptSource.setCreator(new User(1));
       Context.getConceptService().saveConceptSource(newConceptSource);
     }
     StringWriter stringWriter=new StringWriter();

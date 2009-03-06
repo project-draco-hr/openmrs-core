@@ -8,7 +8,13 @@
  else {
       replacedSql=replacedSql.replaceAll("`","\"");
     }
-    String tempDatabaseConnection=wizardModel.databaseConnection.replace("@DBNAME@","");
+    String tempDatabaseConnection="";
+    if (sql.contains("create database")) {
+      tempDatabaseConnection=wizardModel.databaseConnection.replace("@DBNAME@","");
+    }
+ else {
+      tempDatabaseConnection=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
+    }
     connection=DriverManager.getConnection(tempDatabaseConnection,user,pw);
     for (    String arg : args) {
       arg=arg.replace(";","&#094");

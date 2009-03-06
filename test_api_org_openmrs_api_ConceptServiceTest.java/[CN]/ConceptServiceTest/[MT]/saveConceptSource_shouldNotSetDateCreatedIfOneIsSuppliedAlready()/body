@@ -1,0 +1,10 @@
+{
+  Date expectedDate=new Date(new Date().getTime() - 10000);
+  ConceptSource newConceptSource=new ConceptSource();
+  newConceptSource.setName("name");
+  newConceptSource.setDescription("desc");
+  newConceptSource.setHl7Code("hl7Code");
+  newConceptSource.setDateCreated(expectedDate);
+  Context.getConceptService().saveConceptSource(newConceptSource);
+  Assert.assertEquals(newConceptSource.getDateCreated(),expectedDate);
+}
