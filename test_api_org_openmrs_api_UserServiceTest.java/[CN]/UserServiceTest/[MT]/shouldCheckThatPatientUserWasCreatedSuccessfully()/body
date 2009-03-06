@@ -11,7 +11,7 @@
     assertTrue("Uh oh, the role was not assigned",fetchedUser.hasRole("Some Role"));
     Context.clearSession();
     List<User> allUsers=userService.getAllUsers();
-    assertEquals(4,allUsers.size());
+    assertEquals(5,allUsers.size());
     Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
     assertEquals(1,allPatientsSet.getSize());
   }

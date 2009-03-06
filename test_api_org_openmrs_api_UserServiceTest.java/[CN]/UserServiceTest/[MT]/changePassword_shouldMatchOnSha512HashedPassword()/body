@@ -1,7 +1,7 @@
 {
   executeDataSet(XML_FILENAME);
   Context.logout();
-  Context.authenticate("correctlyhashed","test");
+  Context.authenticate("userWithSha512Hash","test");
   UserService us=Context.getUserService();
   us.changePassword("test","test2");
   Context.logout();
