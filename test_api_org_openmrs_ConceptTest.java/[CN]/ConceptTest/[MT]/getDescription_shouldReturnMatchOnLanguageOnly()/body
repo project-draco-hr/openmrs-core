@@ -1,0 +1,5 @@
+{
+  Concept mockConcept=new Concept();
+  mockConcept.addDescription(new ConceptDescription("en desc",new Locale("en")));
+  Assert.assertEquals("en desc",mockConcept.getDescription(new Locale("en","US"),false).getDescription());
+}

@@ -7,8 +7,12 @@
   for (Iterator<ConceptDescription> i=getDescriptions().iterator(); i.hasNext() && (foundDescription == null); ) {
     ConceptDescription availableDescription=i.next();
     Locale availableLocale=availableDescription.getLocale();
-    if (availableLocale.equals(desiredLocale))     foundDescription=availableDescription;
-    if (availableLocale.equals(locale))     defaultDescription=availableDescription;
+    if (availableLocale.equals(desiredLocale)) {
+      foundDescription=availableDescription;
+      break;
+    }
+    if (!exact && LocaleUtility.areCompatible(availableLocale,desiredLocale))     foundDescription=availableDescription;
+    if (availableLocale.equals(LocaleUtility.getDefaultLocale()))     defaultDescription=availableDescription;
   }
   if (foundDescription == null) {
     if (exact) {
