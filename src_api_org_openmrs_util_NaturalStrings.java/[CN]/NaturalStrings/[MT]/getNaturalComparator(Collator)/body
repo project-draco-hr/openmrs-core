@@ -1,0 +1,11 @@
+{
+  if (collator == null) {
+    throw new NullPointerException("collator must not be null");
+  }
+  return new Comparator<String>(){
+    public int compare(    String o1,    String o2){
+      return compareNatural(collator,o1,o2);
+    }
+  }
+;
+}
