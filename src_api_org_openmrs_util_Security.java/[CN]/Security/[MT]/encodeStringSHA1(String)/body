@@ -9,5 +9,5 @@
     throw new APIException("System cannot find SHA1 encryption algorithm",e);
   }
   byte[] input=strToEncode.getBytes();
-  return incorrectHexString(md.digest(input));
+  return hexString(md.digest(input));
 }
