@@ -10,7 +10,7 @@
       for (      DrugOrder drugOrder : drugOrders) {
         if (orderStatus == ORDER_STATUS.CURRENT && drugOrder.isCurrent())         ret.add(drugOrder);
  else         if (orderStatus == ORDER_STATUS.NOTVOIDED && !drugOrder.getVoided())         ret.add(drugOrder);
- else         if (orderStatus == ORDER_STATUS.COMPLETE && drugOrder.isDiscontinued())         ret.add(drugOrder);
+ else         if (orderStatus == ORDER_STATUS.COMPLETE && drugOrder.isDiscontinuedRightNow())         ret.add(drugOrder);
       }
       return ret;
     }

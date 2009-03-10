@@ -12,6 +12,13 @@
       OrderType ot=os.getOrderType(orderTypeId);
       order.setOrderType(ot);
     }
+    Integer patientId=ServletRequestUtils.getIntParameter(request,"patientId");
+    if (patientId != null) {
+      Patient patient=Context.getPatientService().getPatient(patientId);
+      if (patient != null) {
+        order.setPatient(patient);
+      }
+    }
   }
   return order;
 }

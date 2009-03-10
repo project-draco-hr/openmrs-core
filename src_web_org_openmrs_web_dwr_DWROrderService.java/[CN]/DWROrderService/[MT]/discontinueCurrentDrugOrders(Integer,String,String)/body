@@ -8,13 +8,18 @@
       discDate=sdf.parse(discontinueDate);
     }
  catch (    ParseException e) {
-      discDate=null;
+      throw new DWRException(e.getMessage());
     }
   }
   Patient p=Context.getPatientService().getPatient(patientId);
   List<DrugOrder> currentOrders=Context.getOrderService().getDrugOrdersByPatient(p,OrderService.SHOW_CURRENT);
   for (  DrugOrder o : currentOrders) {
-    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),discDate);
+    try {
+      Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),discDate);
+    }
+ catch (    APIException e) {
+      throw new DWRException(e.getMessage());
+    }
   }
   return ret;
 }

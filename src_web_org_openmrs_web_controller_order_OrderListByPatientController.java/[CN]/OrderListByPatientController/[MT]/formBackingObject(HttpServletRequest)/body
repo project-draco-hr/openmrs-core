@@ -10,7 +10,7 @@
       Patient p=ps.getPatient(patientId);
       if (p != null) {
         OrderService os=Context.getOrderService();
-        orderList=os.getDrugOrdersByPatient(p);
+        orderList=os.getDrugOrdersByPatient(p,ORDER_STATUS.ANY,true);
       }
  else {
         log.error("Could not get a patient corresponding to patientId [" + patientId + "], thus could not get drug orders.");
@@ -21,7 +21,7 @@
       if (showAll) {
         this.setFormView("/admin/orders/orderDrugList");
         OrderService os=Context.getOrderService();
-        orderList=os.getDrugOrders();
+        orderList=os.getOrders(DrugOrder.class,null,null,ORDER_STATUS.ANY,null,null,null);
       }
  else {
         this.setFormView("/admin/orders/choosePatient");

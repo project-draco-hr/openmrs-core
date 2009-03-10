@@ -6,9 +6,14 @@
       dDiscDate=sdf.parse(discontinueDate);
     }
  catch (    ParseException e) {
-      dDiscDate=null;
+      throw new DWRException(e.getMessage());
     }
   }
   Order o=Context.getOrderService().getOrder(orderId);
-  Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
+  try {
+    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
+  }
+ catch (  APIException e) {
+    throw new DWRException(e.getMessage());
+  }
 }

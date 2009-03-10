@@ -2,11 +2,35 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
+    String[] orderList=ServletRequestUtils.getStringParameters(request,"orderId");
+    OrderService os=Context.getOrderService();
+    String success="";
+    String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    String success=msa.getMessage("Order.list.saved");
+    String deleted=msa.getMessage("general.deleted");
+    String notDeleted=msa.getMessage("general.cannot.delete");
+    String ord=msa.getMessage("Order.title");
+    String voidReason=ServletRequestUtils.getRequiredStringParameter(request,"voidReason");
+    if (!StringUtils.hasLength(voidReason)) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"general.voidReason.empty");
+      return showForm(request,response,errors);
+    }
+    for (    String p : orderList) {
+      try {
+        os.voidOrder(os.getOrder(Integer.valueOf(p)),voidReason);
+        if (!success.equals(""))         success+="<br/>";
+        success+=ord + " " + p+ " "+ deleted;
+      }
+ catch (      APIException e) {
+        log.warn("Error deleting order",e);
+        if (!error.equals(""))         error+="<br/>";
+        error+=ord + " " + p+ " "+ notDeleted;
+      }
+    }
     view=getSuccessView();
     if (ServletRequestUtils.getIntParameter(request,"patientId") != null)     view+="?patientId=" + ServletRequestUtils.getIntParameter(request,"patientId");
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
   }
   return new ModelAndView(new RedirectView(view));
 }

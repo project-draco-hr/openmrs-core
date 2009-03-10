@@ -1,0 +1,9 @@
+{
+  List<Validator> matchingValidators=new Vector<Validator>();
+  for (  Validator validator : validators) {
+    if (validator.supports(obj.getClass())) {
+      matchingValidators.add(validator);
+    }
+  }
+  return matchingValidators;
+}

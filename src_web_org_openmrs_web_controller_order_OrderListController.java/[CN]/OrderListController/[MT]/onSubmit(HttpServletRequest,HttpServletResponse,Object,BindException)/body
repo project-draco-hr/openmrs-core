@@ -2,7 +2,7 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String[] orderList=request.getParameterValues("orderId");
+    String[] orderList=ServletRequestUtils.getStringParameters(request,"orderId");
     OrderService os=Context.getOrderService();
     String success="";
     String error="";
@@ -10,9 +10,14 @@
     String deleted=msa.getMessage("general.deleted");
     String notDeleted=msa.getMessage("general.cannot.delete");
     String ord=msa.getMessage("Order.title");
+    String voidReason=ServletRequestUtils.getRequiredStringParameter(request,"voidReason");
+    if (!StringUtils.hasLength(voidReason)) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"general.voidReason.empty");
+      return showForm(request,response,errors);
+    }
     for (    String p : orderList) {
       try {
-        os.deleteOrder(os.getOrder(Integer.valueOf(p)));
+        os.voidOrder(os.getOrder(Integer.valueOf(p)),voidReason);
         if (!success.equals(""))         success+="<br/>";
         success+=ord + " " + p+ " "+ deleted;
       }
