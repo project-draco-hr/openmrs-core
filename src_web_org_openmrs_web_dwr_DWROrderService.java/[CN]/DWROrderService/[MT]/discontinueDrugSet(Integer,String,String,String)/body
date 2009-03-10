@@ -8,8 +8,13 @@
       discDate=sdf.parse(discontinueDate);
     }
  catch (    ParseException e) {
-      discDate=null;
+      throw new DWRException(e.getMessage());
     }
   }
-  Context.getOrderService().discontinueDrugSet(p,drugSetId,Context.getConceptService().getConceptByIdOrName(discontinueReason),discDate);
+  try {
+    Context.getOrderService().discontinueDrugSet(p,drugSetId,Context.getConceptService().getConceptByIdOrName(discontinueReason),discDate);
+  }
+ catch (  APIException e) {
+    throw new DWRException(e.getMessage());
+  }
 }

@@ -1,0 +1,16 @@
+{
+  Order order=new Order();
+  MockPageContext pageCtxt=new MockPageContext();
+  pageCtxt.setAttribute("order",order);
+  ExpressionEvaluator evtr=pageCtxt.getExpressionEvaluator();
+  order.setDiscontinued(true);
+  Object result=evtr.evaluate("${order.discontinued}",Boolean.class,null,null);
+  Assert.assertNotNull(result);
+  Assert.assertTrue(result instanceof Boolean);
+  Assert.assertTrue((Boolean)result);
+  order.setDiscontinued(false);
+  result=evtr.evaluate("${order.discontinued}",Boolean.class,null,null);
+  Assert.assertNotNull(result);
+  Assert.assertTrue(result instanceof Boolean);
+  Assert.assertFalse((Boolean)result);
+}

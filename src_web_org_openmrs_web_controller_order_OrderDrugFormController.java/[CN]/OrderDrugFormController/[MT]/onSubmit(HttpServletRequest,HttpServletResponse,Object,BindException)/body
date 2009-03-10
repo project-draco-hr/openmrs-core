@@ -1,13 +1,14 @@
 {
-  HttpSession httpSession=request.getSession();
-  String view=getFormView();
-  if (Context.isAuthenticated()) {
-    DrugOrder order=(DrugOrder)obj;
-    order.setOrderType(new OrderType(new Integer(2)));
-    if (order.getVoided() == null)     order.setVoided(new Boolean(false));
-    Context.getOrderService().saveOrder(order);
-    view=getSuccessView();
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.drug.saved");
+  String view;
+  DrugOrder order=(DrugOrder)obj;
+  order.setOrderType(new OrderType(new Integer(2)));
+  boolean ok=executeCommand(order,request);
+  if (ok) {
+    int patientId=order.getPatient().getPatientId();
+    view=getSuccessView() + "?patientId=" + patientId;
+  }
+ else {
+    return showForm(request,response,errors);
   }
   return new ModelAndView(new RedirectView(view));
 }

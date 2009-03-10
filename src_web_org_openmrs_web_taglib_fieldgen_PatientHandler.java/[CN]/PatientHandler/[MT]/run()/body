@@ -1,3 +1,8 @@
 {
   setUrl(defaultUrl);
+  checkEmptyVal((Patient)null);
+  if (fieldGenTag != null) {
+    Object initialValue=this.fieldGenTag.getVal();
+    setParameter("initialValue",initialValue == null ? "" : initialValue);
+  }
 }

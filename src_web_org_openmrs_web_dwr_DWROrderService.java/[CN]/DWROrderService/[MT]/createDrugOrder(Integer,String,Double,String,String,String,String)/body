@@ -23,13 +23,18 @@
       dStartDate=sdf.parse(startDate);
     }
  catch (    ParseException e) {
-      dStartDate=null;
+      throw new DWRException(e.getMessage());
     }
   }
   drugOrder.setStartDate(dStartDate);
   drugOrder.setDateCreated(new Date());
   drugOrder.setVoided(new Boolean(false));
-  Context.getOrderService().saveOrder(drugOrder);
+  try {
+    Context.getOrderService().saveOrder(drugOrder);
+  }
+ catch (  APIException e) {
+    throw new DWRException(e.getMessage());
+  }
   log.debug("Finished creating new drug order");
   return ret;
 }

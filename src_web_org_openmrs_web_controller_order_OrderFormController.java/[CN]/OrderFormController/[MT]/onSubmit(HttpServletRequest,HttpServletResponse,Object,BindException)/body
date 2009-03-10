@@ -1,13 +1,12 @@
 {
-  HttpSession httpSession=request.getSession();
-  String view=getFormView();
-  if (Context.isAuthenticated()) {
-    Order order=(Order)obj;
-    if (order.getDateCreated() == null)     order.setDateCreated(new Date());
-    if (order.getVoided() == null)     order.setVoided(new Boolean(false));
-    Context.getOrderService().saveOrder(order);
+  String view;
+  Order order=(Order)obj;
+  boolean ok=executeCommand(order,request);
+  if (ok) {
     view=getSuccessView();
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.saved");
+  }
+ else {
+    return showForm(request,response,errors);
   }
   return new ModelAndView(new RedirectView(view));
 }
