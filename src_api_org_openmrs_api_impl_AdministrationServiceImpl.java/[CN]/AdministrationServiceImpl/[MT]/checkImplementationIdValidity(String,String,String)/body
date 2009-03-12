@@ -10,7 +10,7 @@
   response=response.trim();
   if ("".equals(response)) {
     String ms=Context.getMessageSourceService().getMessage("ImplementationId.connectionError",new String[]{implementationId},Context.getLocale());
-    throw new APIException("Error while connecting to the implementation id server to verify implementation id: " + implementationId);
+    throw new APIException(ms);
   }
   if (log.isDebugEnabled())   log.debug("Response: " + response);
   if (response.startsWith("Success")) {

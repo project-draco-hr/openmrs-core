@@ -1,0 +1,12 @@
+{
+  Locale localeToSearch=new Locale("en","US");
+  Locale definedNameLocale=new Locale("en");
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("some name",definedNameLocale));
+  Assert.assertEquals("some name",concept.getName(localeToSearch,false).getName());
+  definedNameLocale=new Locale("en","US");
+  localeToSearch=new Locale("en");
+  concept=new Concept();
+  concept.addName(new ConceptName("some name",definedNameLocale));
+  Assert.assertEquals("some name",concept.getName(localeToSearch,false).getName());
+}

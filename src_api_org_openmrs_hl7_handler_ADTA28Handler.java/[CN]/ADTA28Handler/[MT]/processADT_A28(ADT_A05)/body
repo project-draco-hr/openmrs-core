@@ -11,7 +11,7 @@
     log.info("Creating new patient in response to ADT_A28 " + messageControlId);
     Patient patient=createPatient(pid,sendingApp);
     if (patient == null)     throw new HL7Exception("Couldn't create Patient object from PID");
-    Context.getPatientService().createPatient(patient);
+    Context.getPatientService().savePatient(patient);
   }
  else {
     log.info("Ignoring ADT_A28 message because patient (" + patientId + ") already exists.");

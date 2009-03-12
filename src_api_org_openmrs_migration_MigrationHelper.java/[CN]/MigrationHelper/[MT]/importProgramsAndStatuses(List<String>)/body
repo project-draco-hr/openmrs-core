@@ -14,7 +14,7 @@
       String[] temp=s.split(",");
       PatientIdentifierType pit=ps.getPatientIdentifierTypeByName(temp[0]);
       String identifier=temp[1];
-      List<PatientIdentifier> pis=ps.getPatientIdentifiers(identifier,pit);
+      List<PatientIdentifier> pis=ps.getPatientIdentifiers(identifier,Collections.singletonList(pit),null,null,null);
       if (pis.size() != 1)       throw new IllegalArgumentException("Found " + pis.size() + " instances of identifier "+ identifier+ " of type "+ pit);
       Patient p=pis.get(0).getPatient();
       Program program=programsByName.get(temp[2]);

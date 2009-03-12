@@ -30,7 +30,7 @@ catch (      Exception e) {
       }
       if (m != null) {
         try {
-          Object fieldObj=m.invoke(reportObj,setterParams);
+          m.invoke(reportObj,setterParams);
         }
  catch (        Exception e) {
           log.error("Could not invoke setter method [" + methodName + "()] for field ["+ key+ "] in class ["+ reportObj.getClass().getName()+ "] while initializing report object fields.");

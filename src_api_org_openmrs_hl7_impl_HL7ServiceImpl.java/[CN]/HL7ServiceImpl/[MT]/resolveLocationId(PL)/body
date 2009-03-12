@@ -3,7 +3,7 @@
   String facility=pl.getFacility().getUniversalID().getValue();
   try {
     Integer locationId=new Integer(pointOfCare);
-    Location l=Context.getEncounterService().getLocation(locationId);
+    Location l=Context.getLocationService().getLocation(locationId);
     return l == null ? null : l.getLocationId();
   }
  catch (  Exception ex) {
@@ -12,7 +12,7 @@
     }
   }
   try {
-    Location l=Context.getEncounterService().getLocationByName(facility);
+    Location l=Context.getLocationService().getLocation(facility);
     if (l == null) {
       log.debug("Couldn't find a location named '" + facility + "'");
     }

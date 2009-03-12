@@ -13,7 +13,7 @@
     log.debug("identifier has id=" + hl7PatientId + " assigningAuthority="+ assigningAuthority);
     if (assigningAuthority != null && assigningAuthority.length() > 0) {
       try {
-        PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierType(assigningAuthority);
+        PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierTypeByName(assigningAuthority);
         if (pit == null) {
           log.warn("Can't find PatientIdentifierType named '" + assigningAuthority + "'");
           continue;
@@ -30,7 +30,7 @@
         }
         pi.setLocation(location);
         try {
-          Context.getPatientService().checkPatientIdentifier(pi);
+          PatientIdentifierValidator.validateIdentifier(pi);
           goodIdentifiers.add(pi);
         }
  catch (        PatientIdentifierException ex) {
