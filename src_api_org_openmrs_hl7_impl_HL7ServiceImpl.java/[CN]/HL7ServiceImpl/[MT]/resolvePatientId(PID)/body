@@ -7,12 +7,12 @@
     String assigningAuthority=identifier.getAssigningAuthority().getNamespaceID().getValue();
     if (assigningAuthority != null && assigningAuthority.length() > 0) {
       try {
-        PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierType(assigningAuthority);
+        PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierTypeByName(assigningAuthority);
         if (pit == null) {
           log.warn("Can't find PatientIdentifierType named '" + assigningAuthority + "'");
           continue;
         }
-        List<PatientIdentifier> matchingIds=Context.getPatientService().getPatientIdentifiers(hl7PatientId,pit);
+        List<PatientIdentifier> matchingIds=Context.getPatientService().getPatientIdentifiers(hl7PatientId,Collections.singletonList(pit),null,null,null);
         if (matchingIds == null || matchingIds.size() < 1) {
           log.warn("NO matches found for " + hl7PatientId);
           continue;

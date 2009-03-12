@@ -6,9 +6,9 @@
     receiver.processMessage(hl7Message);
     if (log.isDebugEnabled())     log.debug("Archiving HL7 inbound queue entry");
     HL7InArchive hl7InArchive=new HL7InArchive(hl7InQueue);
-    Context.getHL7Service().createHL7InArchive(hl7InArchive);
+    Context.getHL7Service().saveHL7InArchive(hl7InArchive);
     if (log.isDebugEnabled())     log.debug("Removing HL7 message from inbound queue");
-    Context.getHL7Service().deleteHL7InQueue(hl7InQueue);
+    Context.getHL7Service().purgeHL7InQueue(hl7InQueue);
   }
  catch (  HL7Exception e) {
     boolean skipError=false;

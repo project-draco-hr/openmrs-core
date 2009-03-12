@@ -1,0 +1,5 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("some name",new Locale("fr")));
+  Assert.assertEquals(0,concept.getCompatibleNames(new Locale("en")).size());
+}
