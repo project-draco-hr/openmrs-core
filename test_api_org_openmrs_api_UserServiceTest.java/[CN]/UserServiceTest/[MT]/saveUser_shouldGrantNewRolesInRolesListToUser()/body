@@ -18,4 +18,8 @@
   role2.setPrivileges(privileges2);
   us.saveUser(u.addRole(role1),null);
   us.saveUser(u.addRole(role2),null);
+  TestUtil.printOutTableContents(getConnection(),"user_role");
+  Context.evictFromSession(u);
+  us.getUser(u.getUserId()).hasRole("test1");
+  us.getUser(u.getUserId()).hasRole("test2");
 }
