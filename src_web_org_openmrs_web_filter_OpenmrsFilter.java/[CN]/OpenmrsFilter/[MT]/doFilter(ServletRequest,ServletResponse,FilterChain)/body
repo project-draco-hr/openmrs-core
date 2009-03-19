@@ -11,7 +11,7 @@
     log.debug("request path info " + httpRequest.getPathInfo());
   }
   if (initialRequest)   httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(new Date().getTime()));
-  if (initialRequest == true) {
+  if (initialRequest) {
     httpSession.setAttribute("username","-anonymous user-");
     userContext=(UserContext)httpSession.getAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR);
     if (userContext == null) {
@@ -31,7 +31,7 @@
     chain.doFilter(request,response);
   }
   finally {
-    if (initialRequest == true) {
+    if (initialRequest) {
       Context.clearUserContext();
       log.debug("This was considered an initial request");
     }
