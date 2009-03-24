@@ -1,0 +1,10 @@
+{
+  boolean result=false;
+  for (ClassLoader classLoader=clazz.getClassLoader(); null != classLoader; classLoader=classLoader.getParent()) {
+    if (classLoader.equals(getInstance())) {
+      result=true;
+      break;
+    }
+  }
+  return result;
+}

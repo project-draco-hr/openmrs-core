@@ -1,7 +1,4 @@
 {
-  if (instance == null) {
-    log.trace("Creating new OpenmrsClassLoader instance");
-    instance=new OpenmrsClassLoader();
-  }
-  return instance;
+  if (OpenmrsClassLoaderHolder.INSTANCE == null)   OpenmrsClassLoaderHolder.INSTANCE=new OpenmrsClassLoader();
+  return OpenmrsClassLoaderHolder.INSTANCE;
 }

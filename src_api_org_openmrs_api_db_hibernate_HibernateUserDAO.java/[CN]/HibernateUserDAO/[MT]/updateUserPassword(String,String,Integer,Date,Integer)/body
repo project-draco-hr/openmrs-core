@@ -1,6 +1,7 @@
 {
+  PreparedStatement ps=null;
   try {
-    PreparedStatement ps=getUpdateUserPasswordStatement();
+    ps=getUpdateUserPasswordStatement();
     if (ps != null) {
       ps.setString(1,newPassword);
       ps.setString(2,salt);
@@ -12,6 +13,16 @@
   }
  catch (  SQLException e) {
     log.warn("SQL Exception while running user-password-update ",e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
   }
   sessionFactory.getCurrentSession().flush();
 }

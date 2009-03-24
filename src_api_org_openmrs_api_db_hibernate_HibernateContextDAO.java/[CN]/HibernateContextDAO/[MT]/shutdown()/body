@@ -2,9 +2,10 @@
   if (log.isInfoEnabled())   showUsageStatistics();
   if (sessionFactory != null) {
     log.debug("Closing any open sessions");
+    closeSession();
     log.debug("Shutting down threadLocalSession factory");
+    if (!sessionFactory.isClosed())     sessionFactory.close();
     log.debug("The threadLocalSession has been closed");
-    log.debug("Setting static variables to null");
   }
  else   log.error("SessionFactory is null");
 }

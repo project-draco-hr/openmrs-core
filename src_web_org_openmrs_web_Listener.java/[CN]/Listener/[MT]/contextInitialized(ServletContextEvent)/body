@@ -1,4 +1,5 @@
 {
+  Log log=LogFactory.getLog(Listener.class);
   log.debug("Starting the OpenMRS webapp");
   try {
     ServletContext servletContext=event.getServletContext();
@@ -11,10 +12,16 @@
       Context.setRuntimeProperties(props);
       copyCustomizationIntoWebapp(servletContext,props);
       super.contextInitialized(event);
-      Context.startup(props);
-      loadCoreModules(servletContext);
-      performWebStartOfModules(servletContext);
-      SchedulerUtil.startup(props);
+      try {
+        Context.openSession();
+        Context.startup(props);
+        loadCoreModules(servletContext);
+        performWebStartOfModules(servletContext);
+        SchedulerUtil.startup(props);
+      }
+  finally {
+        Context.closeSession();
+      }
     }
   }
  catch (  DatabaseUpdateException updateException) {
