@@ -19,8 +19,7 @@
     birthdateEstimated=person.isBirthdateEstimated();
     voided=person.isPersonVoided();
     for (    PersonAttribute attribute : person.getActiveAttributes()) {
-      Object object=attribute.getHydratedObject();
-      if (object != null)       attributes.put(attribute.getAttributeType().getName(),object.toString());
+      attributes.put(attribute.getAttributeType().getName(),attribute.toString());
     }
   }
 }
