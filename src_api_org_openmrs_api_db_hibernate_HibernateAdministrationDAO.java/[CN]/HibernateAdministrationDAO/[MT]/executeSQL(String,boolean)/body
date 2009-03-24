@@ -35,5 +35,15 @@
     log.debug("Error while running sql: " + sql,e);
     throw new DAOException("Error while running sql: " + sql + " . Message: "+ e.getMessage(),e);
   }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
+  }
   return results;
 }

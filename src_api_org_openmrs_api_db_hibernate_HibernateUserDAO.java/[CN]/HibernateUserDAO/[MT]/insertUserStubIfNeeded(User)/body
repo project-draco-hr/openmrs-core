@@ -1,9 +1,10 @@
 {
   Connection connection=sessionFactory.getCurrentSession().connection();
   boolean stubInsertNeeded=false;
+  PreparedStatement ps=null;
   if (user.getUserId() != null) {
     try {
-      PreparedStatement ps=connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
+      ps=connection.prepareStatement("SELECT * FROM users WHERE user_id = ?");
       ps.setInt(1,user.getUserId());
       ps.execute();
       if (ps.getResultSet().next())       stubInsertNeeded=false;
@@ -12,10 +13,20 @@
  catch (    SQLException e) {
       log.error("Error while trying to see if this person is a user already",e);
     }
+ finally {
+      if (ps != null) {
+        try {
+          ps.close();
+        }
+ catch (        SQLException e) {
+          log.error("Error generated while closing statement",e);
+        }
+      }
+    }
   }
   if (stubInsertNeeded) {
     try {
-      PreparedStatement ps=connection.prepareStatement("INSERT INTO users (user_id, system_id, creator, date_created, voided) VALUES (?, ?, ?, ?, ?)");
+      ps=connection.prepareStatement("INSERT INTO users (user_id, system_id, creator, date_created, voided) VALUES (?, ?, ?, ?, ?)");
       ps.setInt(1,user.getUserId());
       ps.setString(2,user.getSystemId());
       ps.setInt(3,user.getCreator().getUserId());
@@ -25,6 +36,16 @@
     }
  catch (    SQLException e) {
       log.warn("SQL Exception while trying to create a user stub",e);
+    }
+ finally {
+      if (ps != null) {
+        try {
+          ps.close();
+        }
+ catch (        SQLException e) {
+          log.error("Error generated while closing statement",e);
+        }
+      }
     }
   }
 }

@@ -1,10 +1,35 @@
 {
   try {
+    Context.openSession();
     Context.shutdown();
     WebModuleUtil.shutdownModules(event.getServletContext());
   }
  catch (  Throwable t) {
-    log.warn("Error while shutting down openmrs",t);
+    System.out.println("Listener.contextDestroyed: Error while shutting down openmrs");
+    t.printStackTrace();
+  }
+ finally {
+    Context.closeSession();
   }
   super.contextDestroyed(event);
+  try {
+    for (Enumeration<Driver> e=DriverManager.getDrivers(); e.hasMoreElements(); ) {
+      Driver driver=e.nextElement();
+      ClassLoader classLoader=driver.getClass().getClassLoader();
+      if (classLoader == null || classLoader == getClass().getClassLoader()) {
+        DriverManager.deregisterDriver(driver);
+      }
+ else {
+        System.err.println("Didn't remove driver class: " + driver.getClass() + " with classloader of: "+ driver.getClass().getClassLoader());
+      }
+    }
+  }
+ catch (  Throwable e) {
+    System.err.println("Listener.contextDestroyed: Failed to cleanup drivers in webapp");
+    e.printStackTrace();
+  }
+  OpenmrsClassLoader.onShutdown();
+  LogManager.shutdown();
+  System.gc();
+  System.gc();
 }

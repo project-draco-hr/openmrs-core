@@ -1,9 +1,10 @@
 {
+  PreparedStatement ps=null;
   try {
     String sql="insert into `";
     sql+=OpenmrsConstants.DATABASE_BUSINESS_NAME + "`.ext_mrn_log ";
     sql+="(date_generated, generated_by, site, mrn_first, mrn_count) values (?, ?, ?, ?, ?)";
-    PreparedStatement ps=sessionFactory.getCurrentSession().connection().prepareStatement(sql);
+    ps=sessionFactory.getCurrentSession().connection().prepareStatement(sql);
     ps.setTimestamp(1,new Timestamp(new Date().getTime()));
     ps.setInt(2,Context.getAuthenticatedUser().getUserId());
     ps.setString(3,site);
@@ -13,5 +14,15 @@
   }
  catch (  Exception e) {
     throw new DAOException("Error generating mrn log",e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
   }
 }

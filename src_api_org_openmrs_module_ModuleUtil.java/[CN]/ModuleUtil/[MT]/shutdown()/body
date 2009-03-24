@@ -6,4 +6,8 @@
     if (mod.isStarted())     ModuleFactory.stopModule(mod,true);
   }
   log.debug("done shutting down modules");
+  ModuleFactory.extensionMap=null;
+  ModuleFactory.loadedModules=null;
+  ModuleFactory.moduleClassLoaders=null;
+  ModuleFactory.startedModules=null;
 }

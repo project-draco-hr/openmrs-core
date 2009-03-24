@@ -1,11 +1,12 @@
 {
-  Collection<Map<String,Object>> log=new Vector<Map<String,Object>>();
+  Collection<Map<String,Object>> logs=new Vector<Map<String,Object>>();
+  PreparedStatement ps=null;
   try {
     Map<String,Object> row;
     String sql="select * from `";
     sql+=OpenmrsConstants.DATABASE_BUSINESS_NAME + "`.ext_mrn_log ";
     sql+="order by mrn_log_id desc";
-    PreparedStatement ps=sessionFactory.getCurrentSession().connection().prepareStatement(sql);
+    ps=sessionFactory.getCurrentSession().connection().prepareStatement(sql);
     ResultSet rs=ps.executeQuery();
     while (rs.next()) {
       row=new HashMap<String,Object>();
@@ -14,11 +15,21 @@
       row.put("site",rs.getString("site"));
       row.put("first",rs.getInt("mrn_first"));
       row.put("count",rs.getInt("mrn_count"));
-      log.add(row);
+      logs.add(row);
     }
   }
  catch (  Exception e) {
     throw new DAOException("Error getting mrn log",e);
   }
-  return log;
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
+  }
+  return logs;
 }

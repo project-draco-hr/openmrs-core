@@ -1,4 +1,7 @@
 {
+  if (!Context.isSessionOpen()) {
+    Context.openSession();
+  }
   if (skipBaseSetup == false && useInMemoryDatabase()) {
     initializeInMemoryDatabase();
     executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
