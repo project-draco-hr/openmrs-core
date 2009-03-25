@@ -88,6 +88,14 @@
       renderTemplate("adminusersetup.vm",referenceMap,writer);
       return;
     }
+    try {
+      OpenmrsUtil.validatePassword("admin",wizardModel.adminUserPassword,"admin");
+    }
+ catch (    PasswordException p) {
+      wizardModel.errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
+      renderTemplate("adminusersetup.vm",referenceMap,writer);
+      return;
+    }
     if (wizardModel.errors.isEmpty()) {
       page="implementationidsetup.vm";
     }

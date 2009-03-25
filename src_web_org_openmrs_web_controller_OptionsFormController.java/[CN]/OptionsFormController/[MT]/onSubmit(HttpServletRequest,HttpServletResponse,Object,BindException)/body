@@ -17,9 +17,12 @@
       try {
         String password=opts.getNewPassword();
         if (password.length() > 0) {
-          if (password.length() < 6)           errors.reject("error.password.length");
-          if (StringUtils.isAlpha(password))           errors.reject("error.password.characters");
-          if (password.equals(user.getUsername()) || password.equals(user.getSystemId()))           errors.reject("error.password.weak");
+          try {
+            OpenmrsUtil.validatePassword(user.getUsername(),password,String.valueOf(user.getUserId()));
+          }
+ catch (          PasswordException e) {
+            errors.reject(e.getMessage());
+          }
           if (password.equals(opts.getOldPassword()) && !errors.hasErrors())           errors.reject("error.password.different");
         }
         if (!errors.hasErrors()) {
