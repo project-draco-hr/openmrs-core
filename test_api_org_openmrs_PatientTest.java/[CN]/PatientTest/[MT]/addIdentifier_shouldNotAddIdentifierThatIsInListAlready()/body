@@ -1,0 +1,12 @@
+{
+  Patient p=new Patient();
+  assertNotNull(p.getIdentifiers());
+  PatientIdentifier pa1=new PatientIdentifier();
+  pa1.setIdentifier("firsttest");
+  pa1.setIdentifierType(new PatientIdentifierType(1));
+  pa1.setDateCreated(new Date());
+  pa1.setVoided(false);
+  p.addIdentifier(pa1);
+  p.addIdentifier(pa1);
+  assertTrue("There should be 1 identifier in the patient object but there is actually : " + p.getIdentifiers().size(),p.getIdentifiers().size() == 1);
+}

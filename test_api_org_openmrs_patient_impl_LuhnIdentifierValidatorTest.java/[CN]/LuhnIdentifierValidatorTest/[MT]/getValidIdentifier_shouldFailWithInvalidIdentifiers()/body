@@ -1,0 +1,10 @@
+{
+  for (int j=0; j < invalidIdentifiers.length; j++) {
+    try {
+      validator.getValidIdentifier(invalidIdentifiers[j]);
+      fail("Identifier " + invalidIdentifiers[j] + " should have failed.");
+    }
+ catch (    UnallowedIdentifierException e) {
+    }
+  }
+}

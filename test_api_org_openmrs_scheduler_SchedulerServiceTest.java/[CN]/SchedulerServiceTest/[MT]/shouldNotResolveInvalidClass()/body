@@ -1,12 +1,7 @@
 {
   String className="org.openmrs.scheduler.tasks.InvalidTask";
-  try {
-    Class c=OpenmrsClassLoader.getInstance().loadClass(className);
-    Object o=c.newInstance();
-    if (o instanceof Task)     fail("Class " + className + " is not supposed to be a valid Task");
- else     assertTrue("Class " + className + " is not a valid Task",true);
-  }
- catch (  ClassNotFoundException e) {
-    assertTrue("Class " + className + " was not found, as expected",true);
-  }
+  Class c=OpenmrsClassLoader.getInstance().loadClass(className);
+  Object o=c.newInstance();
+  if (o instanceof Task)   fail("Class " + className + " is not supposed to be a valid Task");
+ else   assertTrue("Class " + className + " is not a valid Task",true);
 }

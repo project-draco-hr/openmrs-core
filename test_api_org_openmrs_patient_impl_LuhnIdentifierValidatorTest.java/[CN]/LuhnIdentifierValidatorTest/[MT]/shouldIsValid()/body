@@ -1,0 +1,40 @@
+{
+  for (int j=0; j < invalidIdentifiers.length; j++) {
+    try {
+      validator.isValid(invalidIdentifiers[j]);
+      fail("Identifier " + invalidIdentifiers[j] + " should have failed.");
+    }
+ catch (    UnallowedIdentifierException e) {
+    }
+  }
+  for (int j=0; j < invalidIdentifiers.length; j++) {
+    try {
+      validator.isValid(invalidIdentifiers[j] + "-H");
+      fail("Identifier " + invalidIdentifiers[j] + " should have failed.");
+    }
+ catch (    UnallowedIdentifierException e) {
+    }
+  }
+  for (int i=0; i < allowedIdentifiers.length; i++) {
+    try {
+      validator.isValid(allowedIdentifiers[i] + "-X");
+      fail("Identifier " + allowedIdentifiers[i] + " should have failed.");
+    }
+ catch (    UnallowedIdentifierException e) {
+    }
+    try {
+      validator.isValid(allowedIdentifiers[i] + "-10");
+      fail("Identifier " + allowedIdentifiers[i] + " should have failed.");
+    }
+ catch (    UnallowedIdentifierException e) {
+    }
+  }
+  for (int i=0; i < allowedIdentifiers.length; i++) {
+    assertFalse(validator.isValid(allowedIdentifiers[i] + "-" + unusedCheckDigit));
+    assertFalse(validator.isValid(allowedIdentifiers[i] + "-" + unusedCheckDigitInt));
+  }
+  for (int i=0; i < allowedIdentifiers.length; i++) {
+    assertTrue(validator.isValid(allowedIdentifiers[i] + "-" + allowedIdentifiersCheckDigits[i]));
+    assertTrue(validator.isValid(allowedIdentifiers[i] + "-" + allowedIdentifiersCheckDigitsInts[i]));
+  }
+}
