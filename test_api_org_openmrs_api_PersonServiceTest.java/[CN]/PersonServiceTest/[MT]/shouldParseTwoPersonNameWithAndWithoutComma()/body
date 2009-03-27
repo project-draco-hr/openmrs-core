@@ -1,9 +1,0 @@
-{
-  PersonService service=Context.getPersonService();
-  PersonName pname=service.parsePersonName("Doe, John");
-  assertEquals("Doe",pname.getFamilyName());
-  assertEquals("John",pname.getGivenName());
-  PersonName pname2=service.parsePersonName("John Doe");
-  assertEquals("Doe",pname2.getFamilyName());
-  assertEquals("John",pname2.getGivenName());
-}
