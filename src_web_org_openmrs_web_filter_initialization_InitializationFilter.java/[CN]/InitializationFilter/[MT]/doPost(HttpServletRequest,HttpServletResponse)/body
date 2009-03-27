@@ -219,6 +219,7 @@
     ContextLoader contextLoader=new ContextLoader();
     contextLoader.initWebApplicationContext(filterConfig.getServletContext());
     try {
+      Context.openSession();
       Context.startup(runtimeProperties);
     }
  catch (    DatabaseUpdateException updateEx) {
@@ -291,6 +292,7 @@ catch (    InputRequiredException inputRequiredEx) {
       }
     }
     initializationComplete=true;
+    Context.closeSession();
     httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
   }
 }
