@@ -1,0 +1,28 @@
+{
+  Object collection=source;
+  if (source instanceof PersistentCollection) {
+    PersistentCollection col=(PersistentCollection)source;
+    col.forceInitialization();
+    collection=col.getStoredSnapshot();
+  }
+  if (source instanceof PersistentSet) {
+    collection=new HashSet(((HashMap)collection).keySet());
+  }
+  if (listSetConverter.canConvert(collection.getClass())) {
+    listSetConverter.marshal(collection,writer,context);
+    return;
+  }
+  if (mapConverter.canConvert(collection.getClass())) {
+    mapConverter.marshal(collection,writer,context);
+    return;
+  }
+  if (treeMapConverter.canConvert(collection.getClass())) {
+    treeMapConverter.marshal(collection,writer,context);
+    return;
+  }
+  if (treeSetConverter.canConvert(collection.getClass())) {
+    treeSetConverter.marshal(collection,writer,context);
+    return;
+  }
+  defaultConverter.marshal(collection,writer,context);
+}

@@ -1,0 +1,20 @@
+{
+  ConceptAnswer ret=new ConceptAnswer();
+  ConceptService cs=Context.getConceptService();
+  ret.setConceptAnswerId(Integer.valueOf(reader.getAttribute("conceptAnswerId")));
+  while (reader.hasMoreChildren()) {
+    reader.moveDown();
+    if ("concept".equals(reader.getNodeName())) {
+      ret.setConcept(cs.getConcept(Integer.valueOf(reader.getValue())));
+    }
+ else     if ("answerConcept".equals(reader.getNodeName())) {
+      ret.setAnswerConcept(cs.getConcept(Integer.valueOf(reader.getValue())));
+    }
+ else     if ("answerDrug".equals(reader.getNodeName())) {
+      ret.setAnswerDrug((Drug)context.convertAnother(ret,Drug.class));
+    }
+    reader.moveUp();
+  }
+  if (ret.getAnswerConcept() == null && ret.getAnswerDrug() == null)   throw new IllegalArgumentException("Couldn't find answer concept and/or drug for ConceptAnswer " + ret.getConceptAnswerId());
+  return ret;
+}

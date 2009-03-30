@@ -1,0 +1,18 @@
+{
+  ConceptSet ret=new ConceptSet();
+  ConceptService cs=Context.getConceptService();
+  while (reader.hasMoreChildren()) {
+    reader.moveDown();
+    if ("concept".equals(reader.getNodeName())) {
+      ret.setConcept(cs.getConcept(Integer.valueOf(reader.getValue())));
+    }
+ else     if ("conceptSet".equals(reader.getNodeName())) {
+      ret.setConceptSet(cs.getConcept(Integer.valueOf(reader.getValue())));
+    }
+ else     if ("sortWeight".equals(reader.getNodeName())) {
+      ret.setSortWeight(Double.valueOf(reader.getValue()));
+    }
+    reader.moveUp();
+  }
+  return ret;
+}

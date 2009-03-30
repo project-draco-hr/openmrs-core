@@ -1,0 +1,20 @@
+{
+  ConceptDescription ret=new ConceptDescription();
+  while (reader.hasMoreChildren()) {
+    reader.moveDown();
+    if ("locale".equals(reader.getNodeName())) {
+      ret.setLocale((Locale)context.convertAnother(ret,Locale.class));
+    }
+ else     if ("description".equals(reader.getNodeName())) {
+      ret.setDescription(reader.getValue());
+    }
+ else     if ("dateCreated".equals(reader.getNodeName())) {
+      ret.setDateCreated(dateHelper(reader.getValue()));
+    }
+ else     if ("dateChanged".equals(reader.getNodeName())) {
+      ret.setDateChanged(dateHelper(reader.getValue()));
+    }
+    reader.moveUp();
+  }
+  return ret;
+}

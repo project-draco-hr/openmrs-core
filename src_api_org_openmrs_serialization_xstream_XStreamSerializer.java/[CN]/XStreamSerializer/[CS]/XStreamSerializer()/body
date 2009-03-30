@@ -1,0 +1,29 @@
+{
+  xstream=new XStream(new DomDriver());
+  xstream.registerConverter(new UserConverter());
+  xstream.registerConverter(new LocationConverter());
+  xstream.registerConverter(new ConceptDatatypeConverter());
+  xstream.registerConverter(new ConceptClassConverter());
+  xstream.registerConverter(new ConceptNameConverter());
+  xstream.registerConverter(new ConceptDescriptionConverter());
+  xstream.registerConverter(new ConceptNameTagConverter());
+  xstream.registerConverter(new ConceptSetConverter());
+  xstream.registerConverter(new ConceptAnswerConverter());
+  xstream.registerConverter(new DrugConverter());
+  xstream.registerConverter(new HibernateCollectionConverter(xstream.getConverterLookup()));
+  xstream.registerConverter(new CustomSQLTimestampConverter());
+  xstream.registerConverter(new DateConverter());
+  xstream.omitField(Concept.class,"log");
+  xstream.omitField(Concept.class,"creator");
+  xstream.omitField(Concept.class,"changedBy");
+  xstream.useAttributeFor(Concept.class,"conceptId");
+  xstream.useAttributeFor(Concept.class,"set");
+  xstream.useAttributeFor(Concept.class,"retired");
+  xstream.useAttributeFor(Concept.class,"datatype");
+  xstream.useAttributeFor(Concept.class,"conceptClass");
+  xstream.useAttributeFor(Concept.class,"version");
+  xstream.useAttributeFor(Concept.class,"dateCreated");
+  xstream.useAttributeFor(Concept.class,"dateChanged");
+  xstream.useAttributeFor(ConceptDescription.class,"dateCreated");
+  xstream.addDefaultImplementation(HashSet.class,PersistentSet.class);
+}

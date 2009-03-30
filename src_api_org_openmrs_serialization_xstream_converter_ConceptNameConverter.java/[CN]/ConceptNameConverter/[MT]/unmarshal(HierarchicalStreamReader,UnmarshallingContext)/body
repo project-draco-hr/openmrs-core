@@ -1,0 +1,28 @@
+{
+  ConceptName ret=new ConceptName();
+  while (reader.hasMoreChildren()) {
+    reader.moveDown();
+    if ("locale".equals(reader.getNodeName())) {
+      ret.setLocale((Locale)context.convertAnother(ret,Locale.class));
+    }
+ else     if ("name".equals(reader.getNodeName())) {
+      ret.setName(reader.getValue());
+    }
+ else     if ("voided".equals(reader.getNodeName())) {
+      ret.setVoided(Boolean.valueOf(reader.getValue()));
+    }
+ else     if ("voidedBy".equals(reader.getNodeName())) {
+    }
+ else     if ("dateVoided".equals(reader.getNodeName())) {
+      ret.setDateVoided((Date)context.convertAnother(reader,Date.class));
+    }
+ else     if ("voidReason".equals(reader.getNodeName())) {
+      ret.setVoidReason(reader.getValue());
+    }
+ else     if ("tag".equals(reader.getNodeName())) {
+      ret.addTag(Context.getConceptService().getConceptNameTagByName(reader.getValue()));
+    }
+    reader.moveUp();
+  }
+  return ret;
+}
