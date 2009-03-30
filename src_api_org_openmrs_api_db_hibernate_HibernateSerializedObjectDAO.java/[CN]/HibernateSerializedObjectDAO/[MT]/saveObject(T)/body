@@ -1,0 +1,48 @@
+{
+  Class<? extends OpenmrsObject> baseType=getRegisteredTypeForObject(object);
+  if (baseType == null) {
+    throw new DAOException("SerializationDAO does not support saving objects of type <" + object.getClass() + ">");
+  }
+  SerializedObject serializedObject=getSerializedObject(object.getId());
+  if (serializedObject == null) {
+    serializedObject=new SerializedObject();
+  }
+  OpenmrsSerializer serializer=getSerializer(serializedObject);
+  String data=serializer.serialize(object);
+  serializedObject.setType(baseType);
+  serializedObject.setSubtype(object.getClass());
+  serializedObject.setSerializationClass(serializer.getClass());
+  serializedObject.setSerializedData(data);
+  if (object instanceof Auditable) {
+    Auditable auditableObj=(Auditable)object;
+    serializedObject.setCreator(auditableObj.getCreator());
+    serializedObject.setDateCreated(auditableObj.getDateCreated());
+    if (serializedObject.getCreator() == null) {
+      serializedObject.setCreator(Context.getAuthenticatedUser());
+    }
+    if (serializedObject.getDateCreated() == null) {
+      serializedObject.setDateCreated(new Date());
+    }
+    serializedObject.setChangedBy(auditableObj.getChangedBy());
+    serializedObject.setDateChanged(auditableObj.getDateChanged());
+  }
+  if (object instanceof OpenmrsMetadata) {
+    OpenmrsMetadata metaObj=(OpenmrsMetadata)object;
+    serializedObject.setName(metaObj.getName());
+    serializedObject.setDescription(metaObj.getDescription());
+    serializedObject.setRetired(metaObj.isRetired() == Boolean.TRUE);
+    serializedObject.setRetiredBy(metaObj.getRetiredBy());
+    serializedObject.setDateRetired(metaObj.getDateRetired());
+    serializedObject.setRetireReason(metaObj.getRetireReason());
+  }
+  if (object instanceof OpenmrsData) {
+    OpenmrsData dataObj=(OpenmrsData)object;
+    serializedObject.setRetired(dataObj.isVoided() == Boolean.TRUE);
+    serializedObject.setRetiredBy(dataObj.getVoidedBy());
+    serializedObject.setDateRetired(dataObj.getDateVoided());
+    serializedObject.setRetireReason(dataObj.getVoidReason());
+  }
+  sessionFactory.getCurrentSession().saveOrUpdate(serializedObject);
+  object.setId(serializedObject.getId());
+  return object;
+}

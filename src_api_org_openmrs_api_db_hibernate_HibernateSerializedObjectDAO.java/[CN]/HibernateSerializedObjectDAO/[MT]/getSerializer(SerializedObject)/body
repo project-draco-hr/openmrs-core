@@ -1,0 +1,7 @@
+{
+  OpenmrsSerializer s=Context.getSerializationService().getDefaultSerializer();
+  if (o != null && o.getSerializationClass() != null) {
+    s=Context.getSerializationService().getSerializer(o.getSerializationClass());
+  }
+  return s;
+}

@@ -1,0 +1,8 @@
+{
+  for (  Class<? extends OpenmrsObject> clazz : getSupportedTypes()) {
+    if (clazz.isAssignableFrom(object.getClass())) {
+      return clazz;
+    }
+  }
+  return null;
+}

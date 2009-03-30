@@ -1,0 +1,13 @@
+{
+  List<T> ret=new ArrayList<T>();
+  Criteria c=sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
+  c.add(Expression.or(Expression.eq("type",type),Expression.eq("subtype",type)));
+  if (!includeRetired) {
+    c.add(Expression.like("retired",false));
+  }
+  List<SerializedObject> objects=(List<SerializedObject>)c.list();
+  for (  SerializedObject serializedObject : objects) {
+    ret.add(convertSerializedObject(type,serializedObject));
+  }
+  return ret;
+}

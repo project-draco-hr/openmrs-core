@@ -1,0 +1,7 @@
+{
+  OpenmrsSerializer serializer=getSerializer(clazz);
+  if (serializer == null) {
+    throw new APIException("OpenmrsSerializer of class <" + clazz + "> not found.");
+  }
+  return serializer.serialize(o);
+}

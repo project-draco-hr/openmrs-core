@@ -1,0 +1,12 @@
+{
+  if (serializedObject == null) {
+    return null;
+  }
+  OpenmrsSerializer serializer=getSerializer(serializedObject);
+  T obj=(T)serializer.deserialize(serializedObject.getSerializedData(),serializedObject.getSubtype());
+  if (obj == null) {
+    throw new DAOException("Unable to deserialize object: " + serializedObject);
+  }
+  obj.setId(serializedObject.getId());
+  return obj;
+}

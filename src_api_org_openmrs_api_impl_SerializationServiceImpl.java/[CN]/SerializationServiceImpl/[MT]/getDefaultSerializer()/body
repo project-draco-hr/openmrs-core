@@ -1,0 +1,9 @@
+{
+  if (defaultSerializer != null) {
+    return defaultSerializer;
+  }
+  if (serializerMap != null && !serializerMap.isEmpty()) {
+    return serializerMap.values().iterator().next();
+  }
+  return null;
+}

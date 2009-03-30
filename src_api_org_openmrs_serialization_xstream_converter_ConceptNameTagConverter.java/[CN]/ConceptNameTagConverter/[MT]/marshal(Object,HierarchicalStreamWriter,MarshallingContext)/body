@@ -1,0 +1,25 @@
+{
+  ConceptNameTag tag=(ConceptNameTag)obj;
+  writer.startNode("conceptNameTagId");
+  writer.setValue(tag.getConceptNameTagId().toString());
+  writer.endNode();
+  writer.startNode("tag");
+  writer.setValue(tag.getTag());
+  writer.endNode();
+  writer.startNode("description");
+  writer.setValue(tag.getDescription());
+  writer.endNode();
+  writer.startNode("voided");
+  context.convertAnother(tag.getVoided());
+  writer.endNode();
+  if (tag.getDateVoided() != null) {
+    writer.startNode("dateVoided");
+    context.convertAnother(tag.getDateVoided());
+    writer.endNode();
+  }
+  if (tag.getVoidReason() != null) {
+    writer.startNode("voidReason");
+    writer.setValue(tag.getVoidReason());
+    writer.endNode();
+  }
+}
