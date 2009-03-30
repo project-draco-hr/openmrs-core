@@ -1,0 +1,10 @@
+{
+  User evictedUser=Context.getAuthenticatedUser();
+  Context.evictFromSession(evictedUser);
+  User fetchedUser=Context.getUserService().getUser(evictedUser.getUserId());
+  fetchedUser.getPersonName().setGivenName("new username");
+  Context.getUserService().saveUser(fetchedUser,null);
+  Assert.assertNotSame(Context.getAuthenticatedUser().getGivenName(),fetchedUser.getGivenName());
+  Context.refreshAuthenticatedUser();
+  Assert.assertEquals("new username",Context.getAuthenticatedUser().getGivenName());
+}

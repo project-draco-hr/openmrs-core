@@ -10,6 +10,9 @@
     opts.setVerbose(new Boolean(props.get(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE)));
     opts.setUsername(user.getUsername());
     opts.setSecretQuestionNew(user.getSecretQuestion());
+    PersonName personName=PersonName.newInstance(user.getPersonName());
+    personName.setPersonNameId(null);
+    opts.setPersonName(personName);
     opts.setNotification(props.get(OpenmrsConstants.USER_PROPERTY_NOTIFICATION));
     opts.setNotificationAddress(props.get(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));
   }
