@@ -2,8 +2,9 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (!errors.hasErrors()) {
-    User user=Context.getAuthenticatedUser();
+    User loginUser=Context.getAuthenticatedUser();
     UserService us=Context.getUserService();
+    User user=us.getUser(loginUser.getUserId());
     OptionsForm opts=(OptionsForm)obj;
     Map<String,String> properties=user.getUserProperties();
     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,opts.getDefaultLocation());
@@ -67,6 +68,17 @@
     if (!errors.hasErrors()) {
       user.setUsername(opts.getUsername());
       user.setUserProperties(properties);
+      PersonName newPersonName=opts.getPersonName();
+      PersonName existingPersonName=user.getPersonName();
+      if (!existingPersonName.equalsContent(newPersonName)) {
+        existingPersonName.setPreferred(false);
+        existingPersonName.setVoided(true);
+        existingPersonName.setVoidedBy(user);
+        existingPersonName.setDateVoided(new Date());
+        existingPersonName.setVoidReason("Changed name on own options form");
+        newPersonName.setPreferred(true);
+        user.addName(newPersonName);
+      }
       try {
         Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
         us.saveUser(user,null);
@@ -74,6 +86,7 @@
   finally {
         Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
       }
+      Context.refreshAuthenticatedUser();
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
     }
  else {
