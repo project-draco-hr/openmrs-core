@@ -1,0 +1,28 @@
+{
+  Cohort cohort=service.getPatientsHavingObs(18,TimeModifier.ANY,Modifier.EQUAL,Boolean.FALSE,null,null);
+  Assert.assertEquals(0,cohort.size());
+  DateFormat ymd=new SimpleDateFormat("yyyy-MM-dd");
+{
+    Obs obs=new Obs();
+    obs.setPerson(new Person(8));
+    obs.setConcept(Context.getConceptService().getConcept(18));
+    obs.setObsDatetime(ymd.parse("2007-01-01"));
+    obs.setValueNumeric(1.0);
+    obs.setLocation(new Location(1));
+    Context.getObsService().saveObs(obs,null);
+  }
+{
+    Obs obs=new Obs();
+    obs.setPerson(new Person(8));
+    obs.setConcept(Context.getConceptService().getConcept(18));
+    obs.setObsDatetime(ymd.parse("2008-01-01"));
+    obs.setValueNumeric(0.0);
+    obs.setLocation(new Location(1));
+    Context.getObsService().saveObs(obs,null);
+  }
+  cohort=service.getPatientsHavingObs(18,TimeModifier.FIRST,Modifier.EQUAL,Boolean.FALSE,null,null);
+  Assert.assertEquals(0,cohort.size());
+  cohort=service.getPatientsHavingObs(18,TimeModifier.LAST,Modifier.EQUAL,Boolean.FALSE,null,null);
+  Assert.assertEquals(1,cohort.size());
+  Assert.assertTrue(cohort.contains(8));
+}
