@@ -1,8 +1,6 @@
 {
-  initializeInMemoryDatabase();
   executeDataSet("org/openmrs/reporting/export/include/DataExportTest-patients.xml");
   executeDataSet("org/openmrs/reporting/export/include/DataExportTest-obs.xml");
-  authenticate();
   DataExportReportObject export=new DataExportReportObject();
   export.setName("Last 2 Weights");
   SimpleColumn patientId=new SimpleColumn();
@@ -22,7 +20,7 @@
   patients.addMember(2);
   DataExportUtil.generateExport(export,patients,"\t",null);
   File exportFile=DataExportUtil.getGeneratedFile(export);
-  String expectedOutput="PATIENT_ID	WEIGHT	WEIGHT_location 	WEIGHT_(1)	WEIGHT_location_(1)\n2	10.0	Test Location	9.0	Test Location\n";
+  String expectedOutput="PATIENT_ID	\"WEIGHT\"	\"WEIGHT_location\" 	\"WEIGHT_(1)\"	\"WEIGHT_location_(1)\"\n2	10.0	Test Location	9.0	Test Location\n";
   String output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not right.",expectedOutput,output);
@@ -43,7 +41,7 @@
   export.getColumns().add(lastNObs);
   DataExportUtil.generateExport(export,patients,"\t",null);
   exportFile=DataExportUtil.getGeneratedFile(export);
-  expectedOutput="PATIENT_ID	WEIGHT	WEIGHT_location\n2	10.0	Test Location\n";
+  expectedOutput="PATIENT_ID	\"WEIGHT\"	\"WEIGHT_location\"\n2	10.0	Test Location\n";
   output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not right.",expectedOutput,output);

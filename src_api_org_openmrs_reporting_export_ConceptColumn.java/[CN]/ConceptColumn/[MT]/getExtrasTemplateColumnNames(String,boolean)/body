@@ -3,8 +3,10 @@
   if (extras != null) {
     for (    String ext : extras) {
       s+="$!{fn.getSeparator()}";
+      s+="\"";
       s+=columnName + "_" + ext;
       if (appendCount)       s+="_($velocityCount)";
+      s+="\"";
     }
   }
   return s;

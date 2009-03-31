@@ -1,0 +1,15 @@
+{
+  String s="\"" + columnName + "\"";
+  s+=getExtrasTemplateColumnNames(columnName,false);
+  if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier) || DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
+    if (modifierNum == null || modifierNum < 2)     s+="#foreach($o in []) ";
+ else     s+="#foreach($o in [1.." + (modifierNum - 1) + "]) ";
+    s+="$!{fn.getSeparator()}";
+    s+="\"";
+    s+=columnName + "_($velocityCount)";
+    s+="\"";
+    s+=getExtrasTemplateColumnNames(columnName,true);
+    s+="#end\n";
+  }
+  return s;
+}
