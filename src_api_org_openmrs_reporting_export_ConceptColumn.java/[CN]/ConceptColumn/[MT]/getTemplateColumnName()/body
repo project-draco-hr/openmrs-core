@@ -1,13 +1,23 @@
 {
-  String s=columnName;
-  s+=getExtrasTemplateColumnNames(false);
-  if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier) || DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
-    if (modifierNum == null || modifierNum < 2)     s+="#foreach($o in []) ";
- else     s+="#foreach($o in [1.." + (modifierNum - 1) + "]) ";
-    s+="$!{fn.getSeparator()}";
-    s+=columnName + "_($velocityCount)";
-    s+=getExtrasTemplateColumnNames(true);
-    s+="#end\n";
+  Concept concept=Context.getConceptService().getConcept(conceptId);
+  String toReturn;
+  if (!concept.isSet()) {
+    toReturn=getTemplateSingleConceptColumnName(columnName);
   }
-  return s;
+ else {
+    List<Concept> setMembers=Context.getConceptService().getConceptsByConceptSet(concept);
+    toReturn="";
+    boolean firstMember=true;
+    for (    Concept setMember : setMembers) {
+      if (firstMember) {
+        toReturn+=getTemplateSingleConceptColumnName(setMember.getName().getName());
+        firstMember=false;
+      }
+ else {
+        toReturn+="$!{fn.getSeparator()}";
+        toReturn+=getTemplateSingleConceptColumnName(setMember.getName().getName());
+      }
+    }
+  }
+  return toReturn;
 }

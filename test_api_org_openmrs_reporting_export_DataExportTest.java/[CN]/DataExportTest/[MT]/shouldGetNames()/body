@@ -1,7 +1,5 @@
 {
-  initializeInMemoryDatabase();
   executeDataSet("org/openmrs/reporting/export/include/DataExportTest-patients.xml");
-  authenticate();
   DataExportReportObject export=new DataExportReportObject();
   export.setName("Given names export");
   export.addSimpleColumn("PATIENT_ID","$!{fn.patientId}");

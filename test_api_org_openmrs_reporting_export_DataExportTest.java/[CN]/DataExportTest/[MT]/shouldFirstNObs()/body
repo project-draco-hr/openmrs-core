@@ -1,8 +1,7 @@
 {
-  initializeInMemoryDatabase();
+  log.debug("Testing execution time - start");
   executeDataSet("org/openmrs/reporting/export/include/DataExportTest-patients.xml");
   executeDataSet("org/openmrs/reporting/export/include/DataExportTest-obs.xml");
-  authenticate();
   DataExportReportObject export=new DataExportReportObject();
   export.setName("FIRST 2 WEIGHTS");
   SimpleColumn patientId=new SimpleColumn();
@@ -20,9 +19,11 @@
   export.getColumns().add(firstNObs);
   Cohort patients=new Cohort();
   patients.addMember(2);
+  log.debug("Testing execution time - middle");
   DataExportUtil.generateExport(export,patients,"\t",null);
   File exportFile=DataExportUtil.getGeneratedFile(export);
-  String expectedOutput="PATIENT_ID	WEIGHT	WEIGHT_location 	WEIGHT_(1)	WEIGHT_location_(1)\n2	1.0	Test Location	2.0	Test Location\n";
+  log.debug("Testing execution time - end");
+  String expectedOutput="PATIENT_ID	\"WEIGHT\"	\"WEIGHT_location\" 	\"WEIGHT_(1)\"	\"WEIGHT_location_(1)\"\n2	1.0	Test Location	2.0	Test Location\n";
   String output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not right.",expectedOutput,output);
@@ -40,7 +41,7 @@
   export.getColumns().add(firstNObs);
   DataExportUtil.generateExport(export,patients,"\t",null);
   exportFile=DataExportUtil.getGeneratedFile(export);
-  expectedOutput="PATIENT_ID	WEIGHT	WEIGHT_location\n2	1.0	Test Location\n";
+  expectedOutput="PATIENT_ID	\"WEIGHT\"	\"WEIGHT_location\"\n2	1.0	Test Location\n";
   output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not what was expected",expectedOutput,output);
@@ -58,7 +59,7 @@
   export.getColumns().add(firstNObs);
   DataExportUtil.generateExport(export,patients,"\t",null);
   exportFile=DataExportUtil.getGeneratedFile(export);
-  expectedOutput="PATIENT_ID	WEIGHT	WEIGHT_location\n2	10.0	Test Location	9.0	Test Location	8.0	Test Location	7.0	Test Location	6.0	Test Location	5.0	Test Location	4.0	Test Location	3.0	Test Location	2.0	Test Location	1.0	Test Location\n";
+  expectedOutput="PATIENT_ID	\"WEIGHT\"	\"WEIGHT_location\"\n2	10.0	Test Location	9.0	Test Location	8.0	Test Location	7.0	Test Location	6.0	Test Location	5.0	Test Location	4.0	Test Location	3.0	Test Location	2.0	Test Location	1.0	Test Location\n";
   output=OpenmrsUtil.getFileAsString(exportFile);
   exportFile.delete();
   assertEquals("The output is not what was expected",expectedOutput,output);
