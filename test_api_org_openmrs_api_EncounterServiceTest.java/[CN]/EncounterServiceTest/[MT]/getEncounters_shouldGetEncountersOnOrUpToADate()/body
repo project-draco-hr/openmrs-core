@@ -1,6 +1,6 @@
 {
   Date toDate=new SimpleDateFormat("yyyy-dd-MM").parse("2006-01-01");
-  List<Encounter> encounters=Context.getEncounterService().getEncounters(null,null,null,toDate,null,null,true);
+  List<Encounter> encounters=Context.getEncounterService().getEncounters(null,null,null,toDate,null,null,null,true);
   assertEquals(2,encounters.size());
   assertEquals(15,encounters.get(0).getEncounterId().intValue());
   assertEquals(1,encounters.get(1).getEncounterId().intValue());
