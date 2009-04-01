@@ -1,5 +1,5 @@
 {
-  PersonListItem listItem=new PersonListItem(Context.getPersonService().getPerson(2));
+  PersonListItem listItem=PersonListItem.createBestMatch(Context.getPersonService().getPerson(2));
   for (  Map.Entry<String,String> entry : listItem.getAttributes().entrySet()) {
     if (entry.getKey().equals("Civil Status")) {
       Assert.assertEquals("MARRIED",entry.getValue());

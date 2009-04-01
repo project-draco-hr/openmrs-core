@@ -11,18 +11,18 @@
       }
     }
     for (    Person p : us.getUsers(searchPhrase,roleList,includeVoided)) {
-      personList.add(new PersonListItem(p));
+      personList.add(PersonListItem.createBestMatch(p));
     }
   }
  else {
     PersonService ps=Context.getPersonService();
     for (    Person p : ps.getPeople(searchPhrase,null)) {
-      personList.add(new PersonListItem(p));
+      personList.add(PersonListItem.createBestMatch(p));
     }
     if (searchPhrase.matches(".*\\d+.*")) {
       PatientService patientService=Context.getPatientService();
       for (      Patient p : patientService.getPatients(null,searchPhrase,null,false)) {
-        personList.add(new PersonListItem(p));
+        personList.add(PersonListItem.createBestMatch(p));
       }
     }
   }

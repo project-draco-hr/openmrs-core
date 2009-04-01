@@ -1,4 +1,4 @@
 {
   Person p=Context.getPersonService().getPerson(personId);
-  return new PersonListItem(p);
+  return PersonListItem.createBestMatch(p);
 }
