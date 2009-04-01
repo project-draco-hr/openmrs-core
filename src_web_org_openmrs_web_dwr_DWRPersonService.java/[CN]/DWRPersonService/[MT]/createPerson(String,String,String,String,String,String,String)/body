@@ -35,6 +35,6 @@
     return new String("Birthdate cannot be parsed.");
   }
   p.setGender(gender);
-  Person person=Context.getPersonService().createPerson(p);
-  return new PersonListItem(person);
+  Person person=Context.getPersonService().savePerson(p);
+  return PersonListItem.createBestMatch(person);
 }

@@ -31,7 +31,7 @@
   persons.addAll(ps.getSimilarPeople(name,d,gender));
   personList=new Vector<Object>(persons.size());
   for (  Person p : persons) {
-    personList.add(new PersonListItem(p));
+    personList.add(PersonListItem.createBestMatch(p));
   }
   return personList;
 }
