@@ -18,6 +18,9 @@
   if (encounterTypes != null && encounterTypes.size() > 0) {
     crit.add(Expression.in("encounterType",encounterTypes));
   }
+  if (providers != null && providers.size() > 0) {
+    crit.add(Expression.in("provider",providers));
+  }
   if (!includeVoided) {
     crit.add(Expression.eq("voided",false));
   }
