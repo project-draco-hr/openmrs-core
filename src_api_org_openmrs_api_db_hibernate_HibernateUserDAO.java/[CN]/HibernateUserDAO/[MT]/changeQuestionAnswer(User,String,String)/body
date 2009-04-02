@@ -1,0 +1,29 @@
+{
+  Connection connection=sessionFactory.getCurrentSession().connection();
+  PreparedStatement ps=null;
+  try {
+    String sql="UPDATE `users` SET secret_question = ?, secret_answer = ?, date_changed = ?, changed_by = ? WHERE user_id = ?";
+    Dialect dialect=HibernateUtil.getDialect(sessionFactory);
+    if (HSQLDialect.class.getName().equals(dialect.getClass().getName()))     sql=sql.replace("`","");
+    ps=connection.prepareStatement(sql);
+    ps.setString(1,question);
+    ps.setString(2,answer);
+    ps.setDate(3,new java.sql.Date(new Date().getTime()));
+    ps.setInt(4,Context.getAuthenticatedUser().getUserId());
+    ps.setInt(5,u.getUserId());
+    ps.executeUpdate();
+  }
+ catch (  SQLException e) {
+    throw new DAOException("SQL Exception while trying to update a user's secret question",e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
+  }
+}
