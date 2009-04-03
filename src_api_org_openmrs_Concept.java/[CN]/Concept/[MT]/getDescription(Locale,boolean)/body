@@ -16,10 +16,10 @@
   }
   if (foundDescription == null) {
     if (exact) {
-      log.warn("No concept description found for concept id " + conceptId + " for locale "+ desiredLocale.toString());
+      log.debug("No concept description found for concept id " + conceptId + " for locale "+ desiredLocale.toString());
     }
  else {
-      if (defaultDescription == null)       log.warn("No concept description found for default locale for concept id " + conceptId);
+      if (defaultDescription == null)       log.debug("No concept description found for default locale for concept id " + conceptId);
  else {
         foundDescription=defaultDescription;
       }
