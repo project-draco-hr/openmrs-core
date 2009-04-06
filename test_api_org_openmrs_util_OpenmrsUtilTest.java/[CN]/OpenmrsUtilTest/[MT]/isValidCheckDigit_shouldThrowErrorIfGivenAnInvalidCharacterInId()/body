@@ -1,0 +1,11 @@
+{
+  String[] ids4={"#@!","234-3-3","-3","2134"};
+  for (int i=0; i < ids4.length; i++) {
+    try {
+      OpenmrsUtil.isValidCheckDigit(ids4[i]);
+      fail("An exception was not thrown for invalid identifier: " + ids4[i]);
+    }
+ catch (    Exception e) {
+    }
+  }
+}
