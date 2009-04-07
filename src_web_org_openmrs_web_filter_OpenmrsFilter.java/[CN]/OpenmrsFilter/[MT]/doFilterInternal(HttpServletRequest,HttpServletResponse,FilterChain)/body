@@ -1,0 +1,30 @@
+{
+  HttpSession httpSession=httpRequest.getSession();
+  httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(new Date().getTime()));
+  if (log.isDebugEnabled()) {
+    log.debug("requestURI " + httpRequest.getRequestURI());
+    log.debug("requestURL " + httpRequest.getRequestURL());
+    log.debug("request path info " + httpRequest.getPathInfo());
+  }
+  UserContext userContext=(UserContext)httpSession.getAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR);
+  httpSession.setAttribute("username","-anonymous user-");
+  if (userContext == null) {
+    userContext=new UserContext();
+    httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
+    if (log.isDebugEnabled())     log.debug("Just set user context " + userContext + " as attribute on session");
+  }
+ else {
+    User user;
+    if ((user=userContext.getAuthenticatedUser()) != null)     httpSession.setAttribute("username",user.getUsername());
+  }
+  httpSession.setAttribute("locale",userContext.getLocale());
+  Context.setUserContext(userContext);
+  log.debug("before chain.Filter");
+  try {
+    chain.doFilter(httpRequest,httpResponse);
+  }
+  finally {
+    Context.clearUserContext();
+  }
+  log.debug("after chain.doFilter");
+}
