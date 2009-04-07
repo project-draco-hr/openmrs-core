@@ -56,7 +56,7 @@
     }
     Element rootNode=configDoc.getDocumentElement();
     String configVersion=rootNode.getAttribute("configVersion");
-    if (!validConfigVersions().contains(configVersion))     throw new ModuleException("Invalid config version: " + configVersion,moduleFile.getName());
+    if (!validConfigVersions.contains(configVersion))     throw new ModuleException("Invalid config version: " + configVersion,moduleFile.getName());
     String name=getElement(rootNode,configVersion,"name");
     String moduleId=getElement(rootNode,configVersion,"id");
     String packageName=getElement(rootNode,configVersion,"package");
