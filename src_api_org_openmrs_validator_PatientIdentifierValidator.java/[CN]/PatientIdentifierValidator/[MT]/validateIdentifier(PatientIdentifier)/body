@@ -3,11 +3,8 @@
     throw new BlankIdentifierException("Patient Identifier cannot be null.");
   }
   if (!pi.isVoided()) {
-    List<Patient> patsWithId=Context.getPatientService().getPatients(null,pi.getIdentifier(),Arrays.asList(pi.getIdentifierType()),true);
-    for (    Patient pat : patsWithId) {
-      if (!pat.equals(pi.getPatient())) {
-        throw new IdentifierNotUniqueException("Identifier " + pi.getIdentifier() + " already in use by patient #"+ pat.getPatientId());
-      }
+    if (Context.getPatientService().isIdentifierInUseByAnotherPatient(pi)) {
+      throw new IdentifierNotUniqueException("Identifier " + pi.getIdentifier() + " already in use by another patient");
     }
     validateIdentifier(pi.getIdentifier(),pi.getIdentifierType());
   }
