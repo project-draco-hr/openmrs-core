@@ -1,0 +1,17 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(5089));
+  obs.setObsDatetime(new Date());
+  obs.setValueNumeric(1.0);
+  Set<Obs> group=new HashSet<Obs>();
+  group.add(obs);
+  obs.setGroupMembers(group);
+  Errors errors=new BindException(obs,"obs");
+  new ObsValidator().validate(obs,errors);
+  Assert.assertFalse(errors.hasFieldErrors("person"));
+  Assert.assertFalse(errors.hasFieldErrors("concept"));
+  Assert.assertFalse(errors.hasFieldErrors("obsDatetime"));
+  Assert.assertFalse(errors.hasFieldErrors("valueNumeric"));
+  Assert.assertTrue(errors.hasFieldErrors("groupMembers"));
+}

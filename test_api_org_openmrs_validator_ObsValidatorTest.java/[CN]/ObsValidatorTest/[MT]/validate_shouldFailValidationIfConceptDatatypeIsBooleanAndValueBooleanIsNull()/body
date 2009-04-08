@@ -1,0 +1,12 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(18));
+  obs.setObsDatetime(new Date());
+  Errors errors=new BindException(obs,"obs");
+  new ObsValidator().validate(obs,errors);
+  Assert.assertFalse(errors.hasFieldErrors("person"));
+  Assert.assertFalse(errors.hasFieldErrors("concept"));
+  Assert.assertFalse(errors.hasFieldErrors("obsDatetime"));
+  Assert.assertTrue(errors.hasFieldErrors("valueNumeric"));
+}

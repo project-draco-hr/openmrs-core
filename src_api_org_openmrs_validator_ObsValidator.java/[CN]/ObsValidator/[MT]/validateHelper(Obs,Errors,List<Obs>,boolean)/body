@@ -1,5 +1,6 @@
 {
-  if (obs.getPersonId() == null && obs.getPersonId() == null)   errors.rejectValue("person","error.null");
+  if (obs.getPersonId() == null)   errors.rejectValue("person","error.null");
+  if (obs.getObsDatetime() == null)   errors.rejectValue("obsDatetime","error.null");
   Concept c=obs.getConcept();
   if (c == null) {
     errors.rejectValue("concept","error.null");
