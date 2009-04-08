@@ -1,0 +1,14 @@
+{
+  boolean checkPatient=patientIdentifier.getPatient() != null && patientIdentifier.getPatient().getPatientId() != null;
+  String sql="select count(*) from patient_identifier" + " where voided = false" + "   and identifier = :identifier"+ "   and identifier_type = :idType";
+  if (checkPatient) {
+    sql+=" and patient_id != :ptId";
+  }
+  SQLQuery query=sessionFactory.getCurrentSession().createSQLQuery(sql);
+  query.setString("identifier",patientIdentifier.getIdentifier());
+  query.setInteger("idType",patientIdentifier.getIdentifierType().getPatientIdentifierTypeId());
+  if (checkPatient) {
+    query.setInteger("ptId",patientIdentifier.getPatient().getPatientId());
+  }
+  return !query.uniqueResult().toString().equals("0");
+}
