@@ -31,7 +31,7 @@
       }
     }
  else {
-      model.put("patientSetSize",Context.getPatientSetService().getMyPatientSet().size());
+      throw new IllegalArgumentException("You must specify a fromAttribute when using the patientSet portlet");
     }
     model.put("patientSet",patientSet);
     if (Context.isAuthenticated() && !model.containsKey("batchEntryForms") && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_FORMS)) {
