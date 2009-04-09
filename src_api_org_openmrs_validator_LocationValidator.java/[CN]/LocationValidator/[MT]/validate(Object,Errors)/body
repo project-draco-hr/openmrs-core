@@ -6,5 +6,11 @@
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description","error.description");
+    if (location.isRetired()) {
+      if (!StringUtils.hasLength(location.getRetireReason())) {
+        location.setRetired(false);
+        errors.rejectValue("retireReason","error.null");
+      }
+    }
   }
 }
