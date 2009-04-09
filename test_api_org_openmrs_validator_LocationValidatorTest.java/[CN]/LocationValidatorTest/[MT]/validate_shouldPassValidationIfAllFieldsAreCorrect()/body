@@ -1,0 +1,8 @@
+{
+  Location location=new Location();
+  location.setName("County General");
+  location.setDescription("desc");
+  Errors errors=new BindException(location,"location");
+  new LocationValidator().validate(location,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

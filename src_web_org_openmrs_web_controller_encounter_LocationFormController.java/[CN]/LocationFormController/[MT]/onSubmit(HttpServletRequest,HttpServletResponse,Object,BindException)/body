@@ -10,10 +10,6 @@
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Location.saved");
       }
  else       if (request.getParameter("retireLocation") != null) {
-        if (!StringUtils.hasLength(location.getRetireReason())) {
-          errors.reject("retireReason","general.retiredReason.empty");
-          return showForm(request,response,errors);
-        }
         locationService.retireLocation(location,location.getRetireReason());
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Location.retired");
       }
