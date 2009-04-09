@@ -5,6 +5,7 @@
   properties.put("connection.password",password);
   setRuntimeProperties(properties);
   @SuppressWarnings("unused") AbstractApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext-service.xml");
+  openSession();
   startup(properties);
   SchedulerUtil.startup(properties);
 }
