@@ -1,8 +1,12 @@
 {
-  if (addresses != null && addresses.size() > 0) {
-    return (PersonAddress)addresses.toArray()[0];
-  }
- else {
+  if (getAddresses() != null && getAddresses().size() > 0) {
+    for (    PersonAddress addr : getAddresses()) {
+      if (addr.isPreferred() && !addr.isVoided())       return addr;
+    }
+    for (    PersonAddress addr : getAddresses()) {
+      if (!addr.isVoided())       return addr;
+    }
     return null;
   }
+  return null;
 }
