@@ -1,0 +1,11 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  request.setParameter("locationId","1");
+  request.setParameter("retireReason","");
+  request.setParameter("retireLocation","true");
+  HttpServletResponse response=new MockHttpServletResponse();
+  LocationFormController controller=(LocationFormController)applicationContext.getBean("locationForm");
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  BeanPropertyBindingResult bindingResult=(BeanPropertyBindingResult)modelAndView.getModel().get("org.springframework.validation.BindingResult.location");
+  Assert.assertEquals("general.retiredReason.empty",bindingResult.getGlobalError().getDefaultMessage());
+}

@@ -1,0 +1,9 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
+  request.setParameter("locationId","1");
+  HttpServletResponse response=new MockHttpServletResponse();
+  LocationFormController controller=(LocationFormController)applicationContext.getBean("locationForm");
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  Location command=(Location)modelAndView.getModel().get("location");
+  Assert.assertNotNull(command.getLocationId());
+}

@@ -1,0 +1,10 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  request.setParameter("locationId","1");
+  request.setParameter("retireReason","some non-null reason");
+  request.setParameter("retireLocation","true");
+  HttpServletResponse response=new MockHttpServletResponse();
+  ((SimpleFormController)applicationContext.getBean("locationForm")).handleRequest(request,response);
+  Location retiredLocation=Context.getLocationService().getLocation(1);
+  Assert.assertTrue(retiredLocation.isRetired());
+}
