@@ -1,0 +1,11 @@
+{
+  Order order=new Order();
+  order.setConcept(Context.getConceptService().getConcept(88));
+  order.setOrderType(Context.getOrderService().getOrderType(1));
+  Errors errors=new BindException(order,"order");
+  new OrderValidator().validate(order,errors);
+  Assert.assertFalse(errors.hasFieldErrors("discontinued"));
+  Assert.assertFalse(errors.hasFieldErrors("concept"));
+  Assert.assertTrue(errors.hasFieldErrors("patient"));
+  Assert.assertFalse(errors.hasFieldErrors("orderType"));
+}

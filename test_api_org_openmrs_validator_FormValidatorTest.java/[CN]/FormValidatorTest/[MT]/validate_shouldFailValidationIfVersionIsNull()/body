@@ -1,0 +1,8 @@
+{
+  Form form=new Form();
+  form.setName("test");
+  Errors errors=new BindException(form,"form");
+  new FormValidator().validate(form,errors);
+  Assert.assertFalse(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("version"));
+}

@@ -8,7 +8,7 @@
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"version","error.null");
     if (form.getVersion() != null && !form.getVersion().matches("^\\d.*$"))     errors.rejectValue("version","Form.version.invalid");
     if (form.isRetired()) {
-      if (form.getRetiredBy() == null || form.getRetiredReason() == null)       errors.rejectValue("retiredBy","error.retired.requireMetadata");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors,"retireReason","general.retiredReason.empty");
     }
   }
 }
