@@ -1,0 +1,11 @@
+{
+  Form form=new Form();
+  form.setName("test");
+  form.setVersion("1.0");
+  form.setRetired(true);
+  Errors errors=new BindException(form,"form");
+  new FormValidator().validate(form,errors);
+  Assert.assertFalse(errors.hasFieldErrors("name"));
+  Assert.assertFalse(errors.hasFieldErrors("version"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}
