@@ -1,0 +1,8 @@
+{
+  List<T> components=new ArrayList<T>();
+  Map registeredComponents=applicationContext.getBeansOfType(type);
+  if (registeredComponents != null) {
+    components.addAll(registeredComponents.values());
+  }
+  return components;
+}

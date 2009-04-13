@@ -1,0 +1,26 @@
+{
+  List<H> handlers=new ArrayList<H>();
+  for (  H handler : Context.getRegisteredComponents(handlerType)) {
+    Handler handlerAnnotation=handler.getClass().getAnnotation(Handler.class);
+    if (handlerAnnotation != null) {
+      if (type == null) {
+        handlers.add(handler);
+      }
+ else {
+        for (int i=0; i < handlerAnnotation.supports().length; i++) {
+          Class<?> clazz=handlerAnnotation.supports()[i];
+          if (clazz.isAssignableFrom(type)) {
+            handlers.add(handler);
+          }
+        }
+      }
+    }
+  }
+  Collections.sort(handlers,new Comparator<H>(){
+    public int compare(    H o1,    H o2){
+      return getOrderOfHandler(o1.getClass()).compareTo(getOrderOfHandler(o2.getClass()));
+    }
+  }
+);
+  return handlers;
+}

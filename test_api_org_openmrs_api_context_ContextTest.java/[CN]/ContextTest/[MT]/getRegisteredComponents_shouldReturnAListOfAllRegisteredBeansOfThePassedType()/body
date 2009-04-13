@@ -1,0 +1,5 @@
+{
+  List<OpenmrsSerializer> l=Context.getRegisteredComponents(OpenmrsSerializer.class);
+  Assert.assertEquals(1,l.size());
+  Assert.assertEquals(XStreamSerializer.class,l.iterator().next().getClass());
+}
