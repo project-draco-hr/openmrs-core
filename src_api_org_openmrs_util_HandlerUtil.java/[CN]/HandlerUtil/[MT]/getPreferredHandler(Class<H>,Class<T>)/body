@@ -1,0 +1,17 @@
+{
+  if (handlerType == null || type == null) {
+    throw new IllegalArgumentException("You must specify both a handlerType and a type");
+  }
+  List<H> handlers=getHandlersForType(handlerType,type);
+  if (handlers == null || handlers.isEmpty()) {
+    throw new APIException("No " + handlerType + " is found that is able to handle a "+ type);
+  }
+  if (handlers.size() > 1) {
+    int order1=getOrderOfHandler(handlers.get(0).getClass());
+    int order2=getOrderOfHandler(handlers.get(1).getClass());
+    if (order1 == order2) {
+      throw new APIException("No preferred handler specified of type " + handlerType + " for "+ type);
+    }
+  }
+  return handlers.get(0);
+}

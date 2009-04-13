@@ -1,0 +1,7 @@
+{
+  Handler annotation=handlerClass.getAnnotation(Handler.class);
+  if (annotation == null) {
+    throw new APIException("Class " + handlerClass + " is not annotated as a Handler.");
+  }
+  return annotation.order();
+}
