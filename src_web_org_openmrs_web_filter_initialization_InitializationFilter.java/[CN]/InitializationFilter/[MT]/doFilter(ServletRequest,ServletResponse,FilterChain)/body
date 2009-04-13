@@ -6,8 +6,9 @@
     HttpServletRequest httpRequest=(HttpServletRequest)request;
     HttpServletResponse httpResponse=(HttpServletResponse)response;
     String servletPath=httpRequest.getServletPath();
-    if (servletPath.startsWith("/images") || servletPath.startsWith("/scripts")) {
-      File file=new File(filterConfig.getServletContext().getRealPath(httpRequest.getServletPath()));
+    if (servletPath.startsWith("/images") || servletPath.startsWith("/initfilter/scripts")) {
+      servletPath=servletPath.replaceFirst("/initfilter","");
+      File file=new File(filterConfig.getServletContext().getRealPath(servletPath));
       if (httpRequest.getPathInfo() != null)       file=new File(file,httpRequest.getPathInfo());
       try {
         InputStream imageFileInputStream=new FileInputStream(file);
@@ -17,6 +18,9 @@
  catch (      FileNotFoundException e) {
         log.error("Unable to find file: " + file.getAbsolutePath());
       }
+    }
+ else     if (servletPath.startsWith("/scripts")) {
+      log.error("Calling /scripts during the initializationfilter pages will cause the openmrs_static_context-servlet.xml to initialize too early and cause errors after startup.  Use '/initfilter" + servletPath + "' instead.");
     }
  else     if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL)) {
       httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
