@@ -1,0 +1,6 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  HttpServletResponse response=new MockHttpServletResponse();
+  SimpleFormController controller=(SimpleFormController)applicationContext.getBean("encounterTypeList");
+  controller.handleRequest(request,response);
+}
