@@ -2,25 +2,28 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String[] encounterTypeList=request.getParameterValues("encounterTypeId");
-    EncounterService es=Context.getEncounterService();
     String success="";
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
-    String deleted=msa.getMessage("general.deleted");
-    String notDeleted=msa.getMessage("general.cannot.delete");
-    for (    String p : encounterTypeList) {
-      try {
-        es.purgeEncounterType(es.getEncounterType(Integer.valueOf(p)));
-        if (!success.equals(""))         success+="<br/>";
-        success+=p + " " + deleted;
-      }
- catch (      APIException e) {
-        log.warn("Error deleting encounter type",e);
-        if (!error.equals(""))         error+="<br/>";
-        error+=p + " " + notDeleted;
+    String[] encounterTypeList=request.getParameterValues("encounterTypeId");
+    if (encounterTypeList != null) {
+      EncounterService es=Context.getEncounterService();
+      String deleted=msa.getMessage("general.deleted");
+      String notDeleted=msa.getMessage("general.cannot.delete");
+      for (      String p : encounterTypeList) {
+        try {
+          es.purgeEncounterType(es.getEncounterType(Integer.valueOf(p)));
+          if (!success.equals(""))           success+="<br/>";
+          success+=p + " " + deleted;
+        }
+ catch (        APIException e) {
+          log.warn("Error deleting encounter type",e);
+          if (!error.equals(""))           error+="<br/>";
+          error+=p + " " + notDeleted;
+        }
       }
     }
+ else     error=msa.getMessage("EncounterType.select");
     view=getSuccessView();
     if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
     if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
