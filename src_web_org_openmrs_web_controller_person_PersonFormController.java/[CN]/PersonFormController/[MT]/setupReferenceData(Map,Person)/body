@@ -1,6 +1,28 @@
 {
   String causeOfDeathOther="";
   if (Context.isAuthenticated()) {
+    String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+    Concept conceptCause=Context.getConceptService().getConcept(propCause);
+    if (conceptCause != null) {
+      List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(person,conceptCause);
+      if (obssDeath.size() == 1) {
+        Obs obsDeath=obssDeath.iterator().next();
+        causeOfDeathOther=obsDeath.getValueText();
+        if (causeOfDeathOther == null) {
+          log.debug("cod is null, so setting to empty string");
+          causeOfDeathOther="";
+        }
+ else {
+          log.debug("cod is valid: " + causeOfDeathOther);
+        }
+      }
+ else {
+        log.debug("obssDeath is wrong size: " + obssDeath.size());
+      }
+    }
+ else {
+      log.warn("No concept death cause found");
+    }
   }
   map.put("causeOfDeathOther",causeOfDeathOther);
   return map;
