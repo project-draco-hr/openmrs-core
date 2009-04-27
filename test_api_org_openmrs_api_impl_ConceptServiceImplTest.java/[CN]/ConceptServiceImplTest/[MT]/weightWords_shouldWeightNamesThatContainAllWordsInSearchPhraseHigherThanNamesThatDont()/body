@@ -1,0 +1,14 @@
+{
+  Concept c=new Concept(1);
+  ConceptName nameWithAllSearchTerms=new ConceptName("found matching name",new Locale("en"));
+  c.addName(nameWithAllSearchTerms);
+  ConceptName nameWithoutAllSearchTerms=new ConceptName("nonmatching name",new Locale("en"));
+  c.addName(nameWithoutAllSearchTerms);
+  ConceptWord wordWithAllSearchTerms=new ConceptWord("name",c,nameWithAllSearchTerms,new Locale("en"));
+  ConceptWord wordWithoutAllSearchTerms=new ConceptWord("name",c,nameWithoutAllSearchTerms,new Locale("en"));
+  List<ConceptWord> words=new ArrayList<ConceptWord>();
+  words.add(wordWithoutAllSearchTerms);
+  words.add(wordWithAllSearchTerms);
+  List<ConceptWord> weightedWords=new ConceptServiceImpl().weightWords("found name",Collections.singletonList(new Locale("en")),words);
+  Assert.assertEquals("found matching name",weightedWords.get(0).getConceptName().getName());
+}

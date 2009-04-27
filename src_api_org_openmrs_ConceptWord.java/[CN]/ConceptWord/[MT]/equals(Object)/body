@@ -2,10 +2,10 @@
   if (obj instanceof ConceptWord) {
     ConceptWord c=(ConceptWord)obj;
     boolean matches=true;
-    if (concept != null && c.getConcept() != null)     matches=matches && concept.equals(c.getConcept());
-    if (word != null && c.getWord() != null)     matches=matches && word.equalsIgnoreCase(c.getWord());
-    if (locale != null && c.getLocale() != null)     matches=matches && locale.equals(c.getLocale());
-    if (synonym != null && c.getSynonym() != null)     matches=matches && synonym.equals(c.getSynonym());
+    if (getConcept() != null && c.getConcept() != null)     matches=matches && concept.equals(c.getConcept());
+    if (getWord() != null && c.getWord() != null)     matches=matches && word.equalsIgnoreCase(c.getWord());
+    if (getLocale() != null && c.getLocale() != null)     matches=matches && locale.equals(c.getLocale());
+    if (getConceptName() != null && c.getConceptName() != null)     matches=matches && conceptName.equals(c.getConceptName());
     return (matches);
   }
   return false;

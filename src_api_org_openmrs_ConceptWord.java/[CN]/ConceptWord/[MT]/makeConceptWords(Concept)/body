@@ -1,9 +1,11 @@
 {
   Set<ConceptWord> words=new HashSet<ConceptWord>();
   for (  ConceptName name : concept.getNames()) {
-    List<String> uniqueParts=getUniqueWords(name.getName());
-    for (    String part : uniqueParts) {
-      words.add(new ConceptWord(part,concept,name,name.getLocale(),""));
+    if (!name.isVoided()) {
+      List<String> uniqueParts=getUniqueWords(name.getName());
+      for (      String part : uniqueParts) {
+        words.add(new ConceptWord(part,concept,name,name.getLocale()));
+      }
     }
   }
   return words;

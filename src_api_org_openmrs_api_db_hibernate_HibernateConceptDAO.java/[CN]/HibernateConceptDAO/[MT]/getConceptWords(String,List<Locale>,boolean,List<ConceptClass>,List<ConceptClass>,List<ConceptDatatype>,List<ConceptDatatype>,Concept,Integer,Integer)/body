@@ -37,7 +37,6 @@
     if (excludeClasses.size() > 0)     searchCriteria.add(Expression.not(Expression.in("concept.conceptClass",excludeClasses)));
     if (requireDatatypes.size() > 0)     searchCriteria.add(Expression.in("concept.datatype",requireDatatypes));
     if (excludeDatatypes.size() > 0)     searchCriteria.add(Expression.not(Expression.in("concept.datatype",excludeDatatypes)));
-    searchCriteria.addOrder(Order.asc("synonym"));
     conceptWords=searchCriteria.list();
     if (start != null && size != null) {
       List<ConceptWord> subList=conceptWords.subList(start,start + size);
