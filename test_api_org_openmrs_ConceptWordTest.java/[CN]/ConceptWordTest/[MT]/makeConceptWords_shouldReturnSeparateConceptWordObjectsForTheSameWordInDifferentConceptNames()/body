@@ -1,0 +1,7 @@
+{
+  Concept concept=new Concept(1);
+  concept.addName(new ConceptName("name number one",Locale.ENGLISH));
+  concept.addName(new ConceptName("name number two",Locale.ENGLISH));
+  Set<ConceptWord> words=ConceptWord.makeConceptWords(concept);
+  Assert.assertEquals(6,words.size());
+}

@@ -1,0 +1,15 @@
+{
+  Concept c=new Concept(1);
+  ConceptName namePreferred=new ConceptName("name preferred",new Locale("en"));
+  namePreferred.addTag(ConceptNameTag.PREFERRED);
+  c.addName(namePreferred);
+  ConceptName name=new ConceptName("other name",new Locale("en"));
+  c.addName(name);
+  ConceptWord preferred=new ConceptWord("name",c,namePreferred,new Locale("en"));
+  ConceptWord nameword=new ConceptWord("name",c,name,new Locale("en"));
+  List<ConceptWord> words=new ArrayList<ConceptWord>();
+  words.add(nameword);
+  words.add(preferred);
+  List<ConceptWord> weightedWords=new ConceptServiceImpl().weightWords("name",Collections.singletonList(new Locale("en")),words);
+  Assert.assertEquals("name preferred",weightedWords.get(0).getConceptName().getName());
+}
