@@ -1,8 +1,0 @@
-{
-  Set<Integer> ids=new HashSet<Integer>(OpenmrsUtil.delimitedStringToIntegerList(commaSeparatedIds,","));
-  Cohort cohort=new Cohort();
-  cohort.setName(name);
-  cohort.setDescription(description);
-  cohort.setMemberIds(ids);
-  Context.getCohortService().saveCohort(cohort);
-}
