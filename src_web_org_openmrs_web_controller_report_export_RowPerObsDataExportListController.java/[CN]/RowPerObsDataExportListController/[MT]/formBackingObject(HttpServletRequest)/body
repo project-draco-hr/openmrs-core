@@ -1,8 +1,0 @@
-{
-  List<AbstractReportObject> reportList=new Vector<AbstractReportObject>();
-  if (Context.isAuthenticated()) {
-    ReportObjectService rs=Context.getReportObjectService();
-    reportList=rs.getReportObjectsByType(RowPerObsDataExportReportObject.TYPE_NAME);
-  }
-  return reportList;
-}
