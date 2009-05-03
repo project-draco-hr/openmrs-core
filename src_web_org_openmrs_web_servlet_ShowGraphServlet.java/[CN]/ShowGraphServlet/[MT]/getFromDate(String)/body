@@ -1,0 +1,11 @@
+{
+  Date returnedDate=new Date();
+  if (dateFromRequest != null && dateFromRequest.length() > 0)   returnedDate.setTime(Long.parseLong(dateFromRequest));
+ else {
+    Calendar cal=Calendar.getInstance();
+    cal.setTime(returnedDate);
+    cal.set(cal.get(Calendar.YEAR) - 1,cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH),0,0,0);
+    returnedDate=cal.getTime();
+  }
+  return returnedDate;
+}

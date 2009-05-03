@@ -1,0 +1,6 @@
+{
+  Calendar nxtMonth=Calendar.getInstance();
+  nxtMonth.set(nxtMonth.get(Calendar.YEAR),nxtMonth.get(Calendar.MONTH),nxtMonth.get(Calendar.DAY_OF_MONTH) + 1,0,0,0);
+  Date toDate=new ShowGraphServlet().getToDate(null);
+  Assert.assertEquals(nxtMonth.getTimeInMillis(),toDate.getTime(),1000);
+}

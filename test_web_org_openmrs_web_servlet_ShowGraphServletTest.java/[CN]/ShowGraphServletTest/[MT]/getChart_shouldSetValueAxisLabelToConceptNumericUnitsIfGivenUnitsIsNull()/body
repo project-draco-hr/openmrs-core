@@ -1,0 +1,7 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  request.setParameter("patientId","7");
+  request.setParameter("conceptId","5497");
+  JFreeChart chart=new ShowGraphServlet().getChart(request);
+  Assert.assertEquals("cells/mmL",chart.getXYPlot().getRangeAxis().getLabel());
+}

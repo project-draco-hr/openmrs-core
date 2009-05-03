@@ -1,0 +1,9 @@
+{
+  Calendar cal=Calendar.getInstance();
+  Date toDate=new Date();
+  if (dateFromRequest != null && dateFromRequest.length() > 0)   cal.setTimeInMillis(Long.parseLong(dateFromRequest));
+ else   cal.setTime(toDate);
+  cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH) + 1,0,0,0);
+  toDate=cal.getTime();
+  return toDate;
+}
