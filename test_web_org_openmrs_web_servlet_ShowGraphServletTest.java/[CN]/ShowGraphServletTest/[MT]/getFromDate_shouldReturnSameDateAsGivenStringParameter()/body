@@ -1,0 +1,5 @@
+{
+  Long time=new Date().getTime() - 100000;
+  Date fromDate=new ShowGraphServlet().getFromDate(Long.toString(time));
+  Assert.assertEquals(time.longValue(),fromDate.getTime());
+}

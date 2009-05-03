@@ -1,0 +1,6 @@
+{
+  Calendar lastYear=Calendar.getInstance();
+  lastYear.set(lastYear.get(Calendar.YEAR) - 1,lastYear.get(Calendar.MONTH),lastYear.get(Calendar.DAY_OF_MONTH),0,0,0);
+  Date fromDate=new ShowGraphServlet().getFromDate(null);
+  Assert.assertEquals(lastYear.getTimeInMillis(),fromDate.getTime(),1000);
+}
