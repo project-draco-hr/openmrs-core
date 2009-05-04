@@ -1,0 +1,13 @@
+{
+  for (  Class<?> currentClass : getClasses("^.*(?<!Test)\\.class$")) {
+    if (currentClass.getAnnotation(Ignore.class) == null) {
+      boolean foundATestMethod=false;
+      for (      Method method : currentClass.getMethods()) {
+        if (method.getAnnotation(Test.class) != null) {
+          foundATestMethod=true;
+        }
+      }
+      Assert.assertFalse(currentClass.getName() + " does not end with 'Test' but contains @Test annotated methods",foundATestMethod);
+    }
+  }
+}

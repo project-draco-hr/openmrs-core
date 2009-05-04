@@ -2,9 +2,9 @@
   List<Class> currentDirTestClasses=new ArrayList<Class>();
   for (  File currentFile : directory.listFiles()) {
     if (currentFile.isDirectory()) {
-      currentDirTestClasses.addAll(getTestClassesInDirectory(currentFile));
+      currentDirTestClasses.addAll(getClassesInDirectory(currentFile,pattern));
     }
-    if (currentFile.getName().endsWith("class")) {
+    if (pattern.matcher(currentFile.getName()).matches()) {
       String className=currentFile.getAbsolutePath().replace(".class","");
       className=className.replace(File.separator,".");
       className=className.substring(className.indexOf("org.openmrs."));
