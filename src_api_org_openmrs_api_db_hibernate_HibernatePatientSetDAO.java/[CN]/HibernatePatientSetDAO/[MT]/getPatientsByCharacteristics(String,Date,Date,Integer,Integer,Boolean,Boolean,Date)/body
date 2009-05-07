@@ -37,6 +37,7 @@
     minBirthFromAge=cal.getTime();
     clauses.add("patient.birthdate > :minBirthFromAge");
   }
+  clauses.add("(patient.birthdate is null or patient.birthdate <= :effectiveDate)");
   boolean first=true;
   for (  String clause : clauses) {
     if (first) {
@@ -64,5 +65,6 @@
   if (maxAge != null) {
     query.setDate("minBirthFromAge",minBirthFromAge);
   }
+  query.setDate("effectiveDate",effectiveDate);
   return new Cohort(query.list());
 }
