@@ -1,0 +1,12 @@
+{
+  if (!person.isPersonVoided()) {
+    person.setPersonVoided(true);
+    person.setPersonVoidReason(voidReason);
+    if (person.getPersonVoidedBy() == null) {
+      person.setPersonVoidedBy(voidingUser);
+    }
+    if (person.getPersonDateVoided() == null) {
+      person.setPersonDateVoided(voidedDate);
+    }
+  }
+}

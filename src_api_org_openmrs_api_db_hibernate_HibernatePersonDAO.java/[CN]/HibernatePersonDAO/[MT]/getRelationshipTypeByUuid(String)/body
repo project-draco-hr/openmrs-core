@@ -1,0 +1,3 @@
+{
+  return (RelationshipType)sessionFactory.getCurrentSession().createQuery("from RelationshipType rt where rt.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

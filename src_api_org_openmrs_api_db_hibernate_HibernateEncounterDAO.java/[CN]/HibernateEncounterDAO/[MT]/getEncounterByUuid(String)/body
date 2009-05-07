@@ -1,0 +1,3 @@
+{
+  return (Encounter)sessionFactory.getCurrentSession().createQuery("from Encounter e where e.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

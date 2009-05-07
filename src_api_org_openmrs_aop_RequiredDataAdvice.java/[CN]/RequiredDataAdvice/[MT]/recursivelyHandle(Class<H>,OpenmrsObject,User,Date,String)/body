@@ -1,0 +1,19 @@
+{
+  Class<? extends OpenmrsObject> openmrsObjectClass=openmrsObject.getClass();
+  List<H> handlers=HandlerUtil.getHandlersForType(handlerType,openmrsObjectClass);
+  for (  H handler : handlers) {
+    handler.handle(openmrsObject,currentUser,currentDate,other);
+  }
+  List<Field> allInheritedFields=new ArrayList<Field>();
+  getAllInheritedFields(openmrsObjectClass,allInheritedFields);
+  for (  Field field : allInheritedFields) {
+    if (isOpenmrsObjectCollection(field)) {
+      Collection<OpenmrsObject> childCollection=getChildCollection(openmrsObject,field);
+      if (childCollection != null) {
+        for (        Object collectionElement : childCollection) {
+          recursivelyHandle(handlerType,(OpenmrsObject)collectionElement,currentUser,currentDate,other);
+        }
+      }
+    }
+  }
+}

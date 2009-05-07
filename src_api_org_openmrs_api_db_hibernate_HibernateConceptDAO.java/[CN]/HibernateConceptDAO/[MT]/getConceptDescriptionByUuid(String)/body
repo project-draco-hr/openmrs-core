@@ -1,0 +1,3 @@
+{
+  return (ConceptDescription)sessionFactory.getCurrentSession().createQuery("from ConceptDescription cd where cd.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

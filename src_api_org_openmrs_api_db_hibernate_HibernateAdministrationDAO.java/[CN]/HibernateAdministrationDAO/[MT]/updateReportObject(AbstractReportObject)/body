@@ -3,8 +3,10 @@
  else {
     sessionFactory.getCurrentSession().clear();
     ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(ro);
-    wrappedReportObject.setChangedBy(Context.getAuthenticatedUser());
-    wrappedReportObject.setDateChanged(new Date());
+    User user=Context.getAuthenticatedUser();
+    Date now=new Date();
+    wrappedReportObject.setChangedBy(user);
+    wrappedReportObject.setDateChanged(now);
     sessionFactory.getCurrentSession().saveOrUpdate(wrappedReportObject);
   }
 }

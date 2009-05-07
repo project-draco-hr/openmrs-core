@@ -1,28 +1,13 @@
 {
-  PreparedStatement ps=null;
-  try {
-    ps=getUpdateUserPasswordStatement();
-    if (ps != null) {
-      ps.setString(1,newPassword);
-      ps.setString(2,salt);
-      ps.setInt(3,changedBy);
-      ps.setDate(4,new java.sql.Date(dateChanged.getTime()));
-      ps.setInt(5,userIdToChange);
-      ps.executeUpdate();
-    }
-  }
- catch (  SQLException e) {
-    log.warn("SQL Exception while running user-password-update ",e);
-  }
- finally {
-    if (ps != null) {
-      try {
-        ps.close();
-      }
- catch (      SQLException e) {
-        log.error("Error generated while closing statement",e);
-      }
-    }
-  }
-  sessionFactory.getCurrentSession().flush();
+  User changeForUser=getUser(userIdToChange);
+  if (changeForUser == null)   throw new DAOException("Couldn't find user to set password for userId=" + userIdToChange);
+  User changedByUser=getUser(changedBy);
+  LoginCredential credentials=new LoginCredential();
+  credentials.setUserId(userIdToChange);
+  credentials.setHashedPassword(newHashedPassword);
+  credentials.setSalt(salt);
+  credentials.setChangedBy(changedByUser);
+  credentials.setDateChanged(dateChanged);
+  credentials.setUuid(changeForUser.getUuid());
+  sessionFactory.getCurrentSession().merge(credentials);
 }

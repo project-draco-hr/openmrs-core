@@ -1,0 +1,12 @@
+{
+  if (Collection.class.isAssignableFrom(argClass)) {
+    try {
+      @SuppressWarnings("unused") Collection<OpenmrsObject> openmrsObjects=(Collection<OpenmrsObject>)arg;
+      return true;
+    }
+ catch (    ClassCastException ex) {
+      return false;
+    }
+  }
+  return false;
+}

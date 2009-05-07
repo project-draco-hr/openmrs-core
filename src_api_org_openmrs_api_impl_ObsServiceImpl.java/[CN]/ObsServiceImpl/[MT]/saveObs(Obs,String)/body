@@ -10,13 +10,11 @@
   }
   if (obs.getObsId() == null) {
     Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_OBS);
-    obs.setRequiredProperties(Context.getAuthenticatedUser(),new Date());
     return dao.saveObs(obs);
   }
  else {
     Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_OBS);
     if (changeMessage == null)     throw new APIException("ChangeMessage is required when updating an obs in the database");
-    obs.setRequiredProperties(Context.getAuthenticatedUser(),new Date());
     Obs newObs=Obs.newInstance(obs);
     newObs.setVoided(false);
     newObs.setVoidReason(null);
@@ -24,14 +22,14 @@
     newObs.setVoidedBy(null);
     newObs.setCreator(null);
     newObs.setDateCreated(null);
-    newObs.setRequiredProperties(Context.getAuthenticatedUser(),new Date());
+    RequiredDataAdvice.recursivelyHandle(SaveHandler.class,newObs,changeMessage);
     dao.saveObs(newObs);
     try {
       Context.addProxyPrivilege(OpenmrsConstants.PRIV_DELETE_OBS);
       String reason=changeMessage + " (new obsId: " + newObs.getObsId()+ ")";
       Context.evictFromSession(obs);
       obs=getObs(obs.getObsId());
-      voidObs(obs,reason);
+      Context.getObsService().voidObs(obs,reason);
     }
   finally {
       Context.removeProxyPrivilege(OpenmrsConstants.PRIV_DELETE_OBS);

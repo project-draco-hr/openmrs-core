@@ -1,6 +1,8 @@
 {
   ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(reportObj);
-  wrappedReportObject.setCreator(Context.getAuthenticatedUser());
-  wrappedReportObject.setDateCreated(new Date());
+  User user=Context.getAuthenticatedUser();
+  Date now=new Date();
+  wrappedReportObject.setCreator(user);
+  wrappedReportObject.setDateCreated(now);
   sessionFactory.getCurrentSession().delete(wrappedReportObject);
 }

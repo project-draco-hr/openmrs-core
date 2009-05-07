@@ -1,0 +1,4 @@
+{
+  if (uuid == null)   return null;
+ else   return (LoginCredential)sessionFactory.getCurrentSession().createQuery("from LoginCredential where uuid = :uuid").setString("uuid",uuid.trim()).uniqueResult();
+}

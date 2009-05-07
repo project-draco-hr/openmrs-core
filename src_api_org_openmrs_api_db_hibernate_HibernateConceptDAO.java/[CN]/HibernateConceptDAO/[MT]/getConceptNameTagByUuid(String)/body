@@ -1,0 +1,3 @@
+{
+  return (ConceptNameTag)sessionFactory.getCurrentSession().createQuery("from ConceptNameTag cnt where cnt.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

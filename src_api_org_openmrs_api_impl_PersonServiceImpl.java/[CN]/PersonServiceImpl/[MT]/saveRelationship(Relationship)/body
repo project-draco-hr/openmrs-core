@@ -1,8 +1,4 @@
 {
   if (relationship.getPersonA().equals(relationship.getPersonB()))   throw new APIException("Person A and Person B can't be the same");
-  User user=Context.getAuthenticatedUser();
-  Date date=new Date();
-  relationship.setCreator(user);
-  relationship.setDateCreated(date);
   return dao.saveRelationship(relationship);
 }

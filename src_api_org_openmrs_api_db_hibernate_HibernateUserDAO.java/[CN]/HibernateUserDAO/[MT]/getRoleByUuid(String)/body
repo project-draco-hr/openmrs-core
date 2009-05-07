@@ -1,0 +1,3 @@
+{
+  return (Role)sessionFactory.getCurrentSession().createQuery("from Role r where r.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

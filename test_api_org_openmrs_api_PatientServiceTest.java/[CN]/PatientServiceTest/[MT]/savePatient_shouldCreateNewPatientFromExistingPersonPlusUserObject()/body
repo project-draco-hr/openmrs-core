@@ -6,9 +6,6 @@
   patient.addIdentifier(new PatientIdentifier("some identifier",new PatientIdentifierType(2),new Location(1)));
   patientService.savePatient(patient);
   Assert.assertEquals(501,patient.getPatientId().intValue());
-  TestUtil.printOutTableContents(getConnection(),"patient");
-  TestUtil.printOutTableContents(getConnection(),"patient_identifier");
-  TestUtil.printOutTableContents(getConnection(),"person");
   Assert.assertNotNull(patientService.getPatient(501));
   Assert.assertNull(patientService.getPatient(503));
 }

@@ -1,0 +1,4 @@
+{
+  GlobalProperty gp=(GlobalProperty)sessionFactory.getCurrentSession().createQuery("from GlobalProperty t where t.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+  return gp;
+}

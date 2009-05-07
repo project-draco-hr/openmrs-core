@@ -1,21 +1,12 @@
 {
   User u=Context.getAuthenticatedUser();
-  String passwordOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
-  String saltOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
-  try {
-    if (!Security.hashMatches(passwordOnRecord,pw + saltOnRecord)) {
-      throw new DAOException("Passwords don't match");
-    }
+  LoginCredential credentials=getLoginCredential(u);
+  if (!credentials.checkPassword(pw)) {
+    log.error("Passwords don't match");
+    throw new DAOException("Passwords don't match");
   }
- catch (  APIException e) {
-    log.error("Unable to check the password",e);
-    throw new DAOException("Unable to check the password",e);
-  }
-  try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
-    changeQuestionAnswer(u,question,answer);
-  }
-  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
-  }
+  log.info("Updating secret question and answer for " + u.getUsername());
+  credentials.setSecretQuestion(question);
+  credentials.setSecretAnswer(answer);
+  updateLoginCredential(credentials);
 }

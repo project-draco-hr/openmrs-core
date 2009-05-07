@@ -1,0 +1,3 @@
+{
+  return (PatientIdentifierType)sessionFactory.getCurrentSession().createQuery("from PatientIdentifierType pit where pit.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

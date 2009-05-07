@@ -1,0 +1,3 @@
+{
+  return (ProgramWorkflowState)sessionFactory.getCurrentSession().createQuery("from ProgramWorkflowState pws where pws.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

@@ -8,13 +8,16 @@
       fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
       if (fileInInputStreamFormat == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
     }
+    Reader reader=null;
     try {
-      ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(fileInInputStreamFormat));
+      reader=new InputStreamReader(fileInInputStreamFormat);
+      ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(reader,false,true,false));
       replacementDataSet.addReplacementObject("[NULL]",null);
       xmlDataSetToRun=replacementDataSet;
     }
   finally {
       fileInInputStreamFormat.close();
+      if (reader != null)       reader.close();
     }
   }
   cachedDatasets.put(datasetFilename,xmlDataSetToRun);

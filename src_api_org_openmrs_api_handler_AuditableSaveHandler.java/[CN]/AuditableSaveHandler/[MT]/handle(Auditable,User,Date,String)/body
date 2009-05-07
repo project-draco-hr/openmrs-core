@@ -1,0 +1,19 @@
+{
+  if (auditable.getCreator() == null) {
+    auditable.setCreator(currentUser);
+  }
+  if (auditable.getDateCreated() == null) {
+    auditable.setDateCreated(currentDate);
+  }
+  boolean hasId;
+  try {
+    hasId=auditable.getId() != null;
+  }
+ catch (  UnsupportedOperationException e) {
+    hasId=true;
+  }
+  if (hasId) {
+    auditable.setChangedBy(currentUser);
+    auditable.setDateChanged(currentDate);
+  }
+}

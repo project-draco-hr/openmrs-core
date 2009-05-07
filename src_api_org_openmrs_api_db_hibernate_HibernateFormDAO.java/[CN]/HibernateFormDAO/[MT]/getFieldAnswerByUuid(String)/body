@@ -1,0 +1,3 @@
+{
+  return (FieldAnswer)sessionFactory.getCurrentSession().createQuery("from FieldAnswer f where f.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

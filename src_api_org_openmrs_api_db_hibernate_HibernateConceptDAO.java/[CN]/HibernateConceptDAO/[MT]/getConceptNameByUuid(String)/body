@@ -1,0 +1,3 @@
+{
+  return (ConceptName)sessionFactory.getCurrentSession().createQuery("from ConceptName cc where cc.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

@@ -1,0 +1,7 @@
+{
+  Map<Integer,String> ret=new HashMap<Integer,String>();
+  Query q=sessionFactory.getCurrentSession().createQuery("select conceptId, uuid from Concept");
+  List<Object[]> list=q.list();
+  for (  Object[] o : list)   ret.put((Integer)o[0],(String)o[1]);
+  return ret;
+}

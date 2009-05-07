@@ -1,0 +1,8 @@
+{
+  Date d=new Date(new Date().getTime() - 1000);
+  AuditableSaveHandler handler=new AuditableSaveHandler();
+  Auditable auditable=new ConceptName();
+  auditable.setDateCreated(d);
+  handler.handle(auditable,null,new Date(),null);
+  Assert.assertEquals(d,auditable.getDateCreated());
+}

@@ -1,0 +1,29 @@
+{
+  String fieldName=field.getName();
+  String classdotfieldname=field.getDeclaringClass().getSimpleName() + "." + fieldName;
+  String getterName="get" + StringUtils.capitalize(fieldName);
+  try {
+    if (fieldAccess.contains(classdotfieldname)) {
+      boolean previousFieldAccessibility=field.isAccessible();
+      field.setAccessible(true);
+      Collection<OpenmrsObject> childCollection=(Collection<OpenmrsObject>)field.get(openmrsObject);
+      field.setAccessible(previousFieldAccessibility);
+      return childCollection;
+    }
+ else {
+      Class<? extends OpenmrsObject> openmrsObjectClass=openmrsObject.getClass();
+      Method getterMethod=openmrsObjectClass.getMethod(getterName,(Class[])null);
+      return (Collection<OpenmrsObject>)getterMethod.invoke(openmrsObject,new Object[]{});
+    }
+  }
+ catch (  IllegalAccessException e) {
+    if (fieldAccess.contains(classdotfieldname))     throw new APIException("Unable to get field: " + fieldName + " on "+ openmrsObject.getClass());
+ else     throw new APIException("Unable to use getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
+  }
+catch (  InvocationTargetException e) {
+    throw new APIException("Unable to run getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
+  }
+catch (  NoSuchMethodException e) {
+    throw new APIException("Unable to find getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
+  }
+}

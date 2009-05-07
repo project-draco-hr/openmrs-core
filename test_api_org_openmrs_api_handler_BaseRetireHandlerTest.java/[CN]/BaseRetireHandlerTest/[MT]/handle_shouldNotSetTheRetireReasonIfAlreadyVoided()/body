@@ -1,0 +1,8 @@
+{
+  RetireHandler<Retireable> handler=new BaseRetireHandler();
+  Retireable retireable=new Location();
+  retireable.setRetired(true);
+  retireable.setRetiredBy(new User());
+  handler.handle(retireable,null,null,"THE REASON");
+  Assert.assertNull(retireable.getRetireReason());
+}

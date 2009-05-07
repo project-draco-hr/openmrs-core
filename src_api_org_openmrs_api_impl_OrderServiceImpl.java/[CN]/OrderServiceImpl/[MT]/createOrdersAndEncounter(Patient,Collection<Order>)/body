@@ -17,13 +17,8 @@
   e.setLocation(unknownLocation);
   e.setEncounterDatetime(new Date());
   e.setEncounterType(encounterType);
+  RequiredDataAdvice.recursivelyHandle(SaveHandler.class,e,null);
   for (  Order order : orders) {
-    if (order.getCreator() == null) {
-      order.setCreator(Context.getAuthenticatedUser());
-    }
-    if (order.getDateCreated() == null) {
-      order.setDateCreated(new Date());
-    }
     e.addOrder(order);
     order.setEncounter(e);
   }

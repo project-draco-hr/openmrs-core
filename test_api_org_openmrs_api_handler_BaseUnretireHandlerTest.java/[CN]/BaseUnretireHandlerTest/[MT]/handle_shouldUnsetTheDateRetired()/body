@@ -1,0 +1,8 @@
+{
+  UnretireHandler<Retireable> handler=new BaseUnretireHandler();
+  Retireable retireable=new Location();
+  retireable.setRetired(true);
+  retireable.setDateRetired(new Date());
+  handler.handle(retireable,null,null,null);
+  Assert.assertNull(retireable.getDateRetired());
+}

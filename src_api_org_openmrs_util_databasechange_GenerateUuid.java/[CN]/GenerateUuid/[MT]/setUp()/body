@@ -1,0 +1,7 @@
+{
+  tableNamesArray=StringUtils.split(tableNames);
+  genericIdSql="select tablename_id from tablename where columnName is null";
+  genericIdSql=genericIdSql.replace("columnName",columnName);
+  genericUpdateSql="update tablename set columnName = ? where tablename_id = ?";
+  genericUpdateSql=genericUpdateSql.replace("columnName",columnName);
+}

@@ -1,0 +1,3 @@
+{
+  return (PersonAttributeType)sessionFactory.getCurrentSession().createQuery("from PersonAttributeType pat where pat.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

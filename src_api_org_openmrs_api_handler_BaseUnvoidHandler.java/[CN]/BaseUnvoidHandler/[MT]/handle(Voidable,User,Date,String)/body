@@ -1,0 +1,10 @@
+{
+  if (voidableObject.isVoided()) {
+    if (origParentVoidedDate == null || origParentVoidedDate.equals(voidableObject.getDateVoided())) {
+      voidableObject.setVoided(false);
+      voidableObject.setVoidedBy(null);
+      voidableObject.setDateVoided(null);
+      voidableObject.setVoidReason(null);
+    }
+  }
+}

@@ -1,18 +1,3 @@
 {
-  if (obs.isVoided() == false) {
-    return obs;
-  }
-  Set<Obs> obsToUnvoid=new HashSet<Obs>();
-  obsToUnvoid.add(obs);
-  fetchObsMembers(obs,obsToUnvoid);
-  Date originalDateVoided=obs.getDateVoided();
-  for (  Obs o : obsToUnvoid) {
-    if (originalDateVoided.equals(o.getDateVoided())) {
-      o.setVoided(false);
-      o.setVoidReason(null);
-      o.setVoidedBy(null);
-      o.setDateVoided(null);
-    }
-  }
   return dao.saveObs(obs);
 }
