@@ -1,0 +1,7 @@
+{
+  if (Collection.class.isAssignableFrom(field.getType())) {
+    ParameterizedType type=(ParameterizedType)field.getGenericType();
+    if (OpenmrsObject.class.isAssignableFrom((Class)type.getActualTypeArguments()[0]))     return true;
+  }
+  return false;
+}

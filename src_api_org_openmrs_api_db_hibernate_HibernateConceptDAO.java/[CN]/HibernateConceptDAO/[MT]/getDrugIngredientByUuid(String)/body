@@ -1,0 +1,3 @@
+{
+  return (DrugIngredient)sessionFactory.getCurrentSession().createQuery("from DrugIngredient d where d.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

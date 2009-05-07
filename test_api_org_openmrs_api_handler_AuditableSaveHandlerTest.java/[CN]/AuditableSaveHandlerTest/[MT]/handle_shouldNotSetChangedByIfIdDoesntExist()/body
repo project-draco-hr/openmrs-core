@@ -1,0 +1,5 @@
+{
+  Auditable auditable=new ConceptDatatype();
+  new AuditableSaveHandler().handle(auditable,new User(2),null,null);
+  Assert.assertNull(auditable.getChangedBy());
+}

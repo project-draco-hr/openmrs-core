@@ -1,0 +1,27 @@
+{
+  if (concept.getNames() != null) {
+    for (    ConceptName cn : concept.getNames()) {
+      cn.setConcept(concept);
+    }
+  }
+  if (concept.getConceptSets() != null) {
+    for (    ConceptSet set : concept.getConceptSets()) {
+      set.setConceptSet(concept);
+    }
+  }
+  if (concept.getAnswers(true) != null) {
+    for (    ConceptAnswer ca : concept.getAnswers(true)) {
+      ca.setConcept(concept);
+    }
+  }
+  if (concept.getDescriptions() != null) {
+    for (    ConceptDescription cd : concept.getDescriptions()) {
+      cd.setConcept(concept);
+    }
+  }
+  if (concept.getConceptMappings() != null) {
+    for (    ConceptMap map : concept.getConceptMappings()) {
+      map.setConcept(concept);
+    }
+  }
+}

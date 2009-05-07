@@ -1,0 +1,29 @@
+{
+  if (tableNamesArray == null || tableNamesArray.length == 0)   throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
+  DatabaseConnection connection=database.getConnection();
+  for (  String tableName : tableNamesArray) {
+    try {
+      Statement idStatement=null;
+      PreparedStatement updateStatement=null;
+      try {
+        String idSql=genericIdSql.replaceAll("tablename",tableName);
+        idStatement=connection.createStatement();
+        String updateSql=genericUpdateSql.replaceAll("tablename",tableName);
+        updateStatement=connection.prepareStatement(updateSql);
+        ResultSet ids=idStatement.executeQuery(idSql);
+        while (ids.next()) {
+          updateStatement.setInt(2,ids.getInt(1));
+          updateStatement.setString(1,UUID.randomUUID().toString());
+          updateStatement.executeUpdate();
+        }
+      }
+  finally {
+        if (idStatement != null)         idStatement.close();
+        if (updateStatement != null)         updateStatement.close();
+      }
+    }
+ catch (    SQLException e) {
+      throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
+    }
+  }
+}

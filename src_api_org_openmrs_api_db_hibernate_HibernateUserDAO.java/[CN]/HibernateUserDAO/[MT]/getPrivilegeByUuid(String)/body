@@ -1,0 +1,3 @@
+{
+  return (Privilege)sessionFactory.getCurrentSession().createQuery("from Privilege p where p.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

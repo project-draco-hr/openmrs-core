@@ -5,6 +5,7 @@
   Obs savedObs=obsService.saveObs(obs,null);
   assertTrue(savedObs.equals(obs));
   obs.setVoided(Boolean.TRUE);
+  obs.setVoidedBy(new User(1));
   String reason="Testing voiding a voided obs";
   Obs notVoidedObs=obsService.voidObs(obs,reason);
   assertTrue(notVoidedObs.equals(obs));

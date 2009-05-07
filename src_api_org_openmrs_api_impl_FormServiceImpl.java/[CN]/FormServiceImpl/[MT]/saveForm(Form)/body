@@ -1,25 +1,13 @@
 {
-  if (!form.isRetired()) {
-    form.setRetiredBy(null);
-    form.setRetiredReason(null);
-  }
   BindException errors=new BindException(form,"form");
   formValidator.validate(form,errors);
   if (errors.hasErrors()) {
     throw new APIException(errors);
   }
-  Date now=new Date();
-  if (form.getCreator() == null)   form.setCreator(Context.getAuthenticatedUser());
-  if (form.getDateCreated() == null)   form.setDateCreated(now);
-  if (form.getFormId() != null) {
-    form.setChangedBy(Context.getAuthenticatedUser());
-    form.setDateChanged(now);
-  }
   if (form.getFormFields() != null) {
     for (    FormField ff : form.getFormFields()) {
       if (ff.getForm() == null)       ff.setForm(form);
  else       if (!ff.getForm().equals(form))       throw new APIException("Form contains FormField " + ff + " that already belongs to a different form");
-      updateFormFieldProperties(ff,now);
     }
   }
   return dao.saveForm(form);

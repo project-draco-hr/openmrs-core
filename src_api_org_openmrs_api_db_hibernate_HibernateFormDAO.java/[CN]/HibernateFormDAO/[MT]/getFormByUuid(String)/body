@@ -1,0 +1,3 @@
+{
+  return (Form)sessionFactory.getCurrentSession().createQuery("from Form f where f.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

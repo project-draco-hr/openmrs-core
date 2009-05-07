@@ -1,0 +1,8 @@
+{
+  ConceptNameSaveHandler handler=new ConceptNameSaveHandler();
+  ConceptName name=new ConceptName();
+  name.addTag(new ConceptNameTag("Some randome tag name",""));
+  handler.handle(name,null,null,null);
+  ConceptNameTag newTag=name.getTags().iterator().next();
+  Assert.assertNull(newTag.getConceptNameTagId());
+}

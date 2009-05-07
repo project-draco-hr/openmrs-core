@@ -1,5 +1,8 @@
 {
-  if (url == null)   url="";
+  if (url == null) {
+    log.warn("URL came through as NULL to PortletTag - this is a big problem");
+    url="";
+  }
   if (id == null)   id="";
   try {
     if (url.equals(""))     pageContext.getOut().print("Every portlet must be defined with a URI");

@@ -1,0 +1,7 @@
+{
+  UnvoidHandler<Person> handler=new PersonUnvoidHandler();
+  Person person=new Person();
+  person.setPersonVoided(true);
+  handler.handle(person,null,null,null);
+  Assert.assertFalse(person.isPersonVoided());
+}

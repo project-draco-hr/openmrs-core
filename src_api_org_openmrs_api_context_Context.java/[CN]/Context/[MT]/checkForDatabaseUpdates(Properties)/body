@@ -1,4 +1,5 @@
 {
+  DatabaseUpdater.update();
   try {
     Context.addProxyPrivilege("");
     OpenmrsConstants.DATABASE_VERSION=getAdministrationService().getGlobalProperty("database_version");
@@ -6,5 +7,4 @@
   finally {
     Context.removeProxyPrivilege("");
   }
-  DatabaseUpdater.update();
 }

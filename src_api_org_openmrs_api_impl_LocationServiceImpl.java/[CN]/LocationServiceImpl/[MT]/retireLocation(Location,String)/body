@@ -1,13 +1,5 @@
 {
-  if (location.isRetired()) {
-    return location;
-  }
- else {
-    if (reason == null)     throw new APIException("Reason is required");
-    location.setRetired(true);
-    location.setRetireReason(reason);
-    location.setRetiredBy(Context.getAuthenticatedUser());
-    location.setDateRetired(new Date());
-    return saveLocation(location);
-  }
+  location.setRetired(true);
+  location.setRetireReason(reason);
+  return saveLocation(location);
 }

@@ -1,0 +1,13 @@
+{
+  if (retireReason == null || retireReason.equals(""))   throw new IllegalArgumentException("The 'reason' argument is required");
+  if (!retireableObject.isRetired() || retireableObject.getRetiredBy() == null) {
+    retireableObject.setRetired(true);
+    retireableObject.setRetireReason(retireReason);
+    if (retireableObject.getRetiredBy() == null) {
+      retireableObject.setRetiredBy(retiringUser);
+    }
+    if (retireableObject.getDateRetired() == null) {
+      retireableObject.setDateRetired(retireDate);
+    }
+  }
+}

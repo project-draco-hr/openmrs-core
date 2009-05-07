@@ -1,11 +1,5 @@
 {
   if (answer == null || answer.equals(""))   return false;
-  String answerOnRecord="";
-  try {
-    answerOnRecord=(String)sessionFactory.getCurrentSession().createSQLQuery("select secret_answer from users where user_id = ?").addScalar("secret_answer",Hibernate.STRING).setInteger(0,u.getUserId()).uniqueResult();
-  }
- catch (  Exception e) {
-    return false;
-  }
+  String answerOnRecord=getLoginCredential(u).getSecretAnswer();
   return (answer.equals(answerOnRecord));
 }

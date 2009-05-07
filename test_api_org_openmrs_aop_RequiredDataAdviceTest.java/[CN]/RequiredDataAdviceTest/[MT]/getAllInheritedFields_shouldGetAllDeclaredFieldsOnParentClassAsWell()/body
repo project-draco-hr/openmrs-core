@@ -1,0 +1,6 @@
+{
+  List<Field> fields=new ArrayList<Field>();
+  RequiredDataAdvice.getAllInheritedFields(ConceptNumeric.class,fields);
+  Field conceptNamesField=Concept.class.getDeclaredField("names");
+  Assert.assertTrue(fields.contains(conceptNamesField));
+}

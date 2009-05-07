@@ -1,0 +1,8 @@
+{
+  List<GlobalProperty> globalProperties=Context.getAdministrationService().getAllGlobalProperties();
+  globalProperties.add(new GlobalProperty("new prop1","new prop value1","desc"));
+  globalProperties.add(new GlobalProperty("new prop2","new prop value2","desc"));
+  Context.getAdministrationService().saveGlobalProperties(globalProperties);
+  Assert.assertEquals("new prop value1",Context.getAdministrationService().getGlobalProperty("new prop1"));
+  Assert.assertEquals("new prop value2",Context.getAdministrationService().getGlobalProperty("new prop2"));
+}

@@ -1,7 +1,9 @@
 {
   String view;
   DrugOrder order=(DrugOrder)obj;
-  order.setOrderType(new OrderType(new Integer(2)));
+  if (order.getOrderType() == null) {
+    order.setOrderType(Context.getOrderService().getOrderType(OpenmrsConstants.ORDERTYPE_DRUG));
+  }
   boolean ok=executeCommand(order,request);
   if (ok) {
     int patientId=order.getPatient().getPatientId();

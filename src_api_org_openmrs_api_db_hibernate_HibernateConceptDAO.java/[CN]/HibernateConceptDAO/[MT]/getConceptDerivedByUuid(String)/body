@@ -1,0 +1,3 @@
+{
+  return (ConceptDerived)sessionFactory.getCurrentSession().createQuery("from ConceptDerived cc where cc.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

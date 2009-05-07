@@ -1,0 +1,6 @@
+{
+  VoidHandler<Person> handler=new PersonVoidHandler();
+  Person person=new Person();
+  handler.handle(person,new User(2),null," ");
+  Assert.assertEquals(new User(2),person.getPersonVoidedBy());
+}

@@ -1,14 +1,6 @@
 {
   if (patient.getPatientId() == null)   Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_PATIENTS);
  else   Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS);
-  setCollectionProperties(patient);
   checkPatientIdentifiers(patient);
-  Date now=new Date();
-  if (patient.getDateCreated() == null)   patient.setDateCreated(now);
-  if (patient.getCreator() == null)   patient.setCreator(Context.getAuthenticatedUser());
-  if (patient.getPatientId() != null) {
-    patient.setChangedBy(Context.getAuthenticatedUser());
-    patient.setDateChanged(now);
-  }
   return dao.savePatient(patient);
 }

@@ -1,0 +1,3 @@
+{
+  return (Program)sessionFactory.getCurrentSession().createQuery("from Program p where p.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

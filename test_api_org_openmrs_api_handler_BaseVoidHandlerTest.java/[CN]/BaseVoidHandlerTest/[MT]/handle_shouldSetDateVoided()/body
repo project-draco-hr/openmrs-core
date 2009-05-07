@@ -1,0 +1,7 @@
+{
+  Date d=new Date();
+  VoidHandler<Voidable> handler=new BaseVoidHandler();
+  Voidable voidable=new Person();
+  handler.handle(voidable,null,d," ");
+  Assert.assertEquals(d,voidable.getDateVoided());
+}

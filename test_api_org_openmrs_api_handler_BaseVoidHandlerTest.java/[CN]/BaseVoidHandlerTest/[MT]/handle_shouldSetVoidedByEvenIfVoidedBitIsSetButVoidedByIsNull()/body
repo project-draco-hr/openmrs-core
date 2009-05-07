@@ -1,0 +1,7 @@
+{
+  VoidHandler<Voidable> handler=new BaseVoidHandler();
+  Voidable voidable=new Person();
+  voidable.setVoided(true);
+  handler.handle(voidable,null,null,"THE REASON");
+  Assert.assertEquals("THE REASON",voidable.getVoidReason());
+}

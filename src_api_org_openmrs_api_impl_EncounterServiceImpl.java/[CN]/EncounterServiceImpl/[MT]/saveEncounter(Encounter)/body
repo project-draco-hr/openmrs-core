@@ -1,6 +1,4 @@
 {
-  Date now=new Date();
-  User me=Context.getAuthenticatedUser();
   boolean isNewEncounter=false;
   Date newDate=encounter.getEncounterDatetime();
   Date originalDate=null;
@@ -10,18 +8,6 @@
   }
  else {
     Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
-  }
-  if (encounter.getDateCreated() == null)   encounter.setDateCreated(now);
-  if (encounter.getCreator() == null)   encounter.setCreator(me);
-  for (  Obs o : encounter.getAllObs(true)) {
-    if (o.getDateCreated() == null)     o.setDateCreated(now);
-    if (o.getCreator() == null)     o.setCreator(me);
-  }
-  if (encounter.getOrders() != null) {
-    for (    Order o : encounter.getOrders()) {
-      if (o.getDateCreated() == null)       o.setDateCreated(now);
-      if (o.getCreator() == null)       o.setCreator(me);
-    }
   }
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);

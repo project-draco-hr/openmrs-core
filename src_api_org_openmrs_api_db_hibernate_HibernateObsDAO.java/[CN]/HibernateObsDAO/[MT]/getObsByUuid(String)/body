@@ -1,0 +1,3 @@
+{
+  return (Obs)sessionFactory.getCurrentSession().createQuery("from Obs o where o.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

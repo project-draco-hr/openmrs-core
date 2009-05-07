@@ -1,0 +1,7 @@
+{
+  Date d=new Date();
+  RetireHandler<Retireable> handler=new BaseRetireHandler();
+  Retireable retireable=new Location();
+  handler.handle(retireable,null,d," ");
+  Assert.assertEquals(d,retireable.getDateRetired());
+}

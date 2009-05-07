@@ -37,6 +37,7 @@
       if (patient.getPersonName() != null)       patient.getPersonName().setPreferred(false);
       newName.setPersonNameId(null);
       newName.setPreferred(true);
+      newName.setUuid(null);
       patient.addName(newName);
     }
     if (log.isDebugEnabled())     log.debug("The address to add/check: " + shortPatient.getAddress());
@@ -56,6 +57,7 @@
         PersonAddress newAddress=(PersonAddress)shortPatient.getAddress().clone();
         newAddress.setPersonAddressId(null);
         newAddress.setPreferred(true);
+        newAddress.setUuid(null);
         patient.addAddress(newAddress);
       }
     }
@@ -102,6 +104,7 @@
     for (    PatientIdentifier identifier : patient.getIdentifiers()) {
       if (!newIdentifiersList.contains(identifier)) {
         identifier.setVoided(true);
+        identifier.setVoidReason("Removed from new patient screen");
       }
     }
     patient.setBirthdate(shortPatient.getBirthdate());

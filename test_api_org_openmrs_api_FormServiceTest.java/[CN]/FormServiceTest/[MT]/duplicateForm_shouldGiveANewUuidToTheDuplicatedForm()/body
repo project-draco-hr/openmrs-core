@@ -1,0 +1,8 @@
+{
+  FormService formService=Context.getFormService();
+  Form form=formService.getForm(1);
+  String originalUUID=form.getUuid();
+  Form dupForm=formService.duplicateForm(form);
+  Assert.assertNotNull(dupForm.getUuid());
+  Assert.assertNotSame(originalUUID,dupForm.getUuid());
+}

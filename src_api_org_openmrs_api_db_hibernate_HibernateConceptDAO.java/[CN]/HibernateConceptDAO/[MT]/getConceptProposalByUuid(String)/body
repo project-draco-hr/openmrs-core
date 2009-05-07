@@ -1,0 +1,3 @@
+{
+  return (ConceptProposal)sessionFactory.getCurrentSession().createQuery("from ConceptProposal cp where cp.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

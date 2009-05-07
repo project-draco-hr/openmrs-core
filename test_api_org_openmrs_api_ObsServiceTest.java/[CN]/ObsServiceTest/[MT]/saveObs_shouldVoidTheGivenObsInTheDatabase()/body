@@ -1,0 +1,7 @@
+{
+  Obs obs=Context.getObsService().getObs(7);
+  obs.setValueNumeric(1.0);
+  Context.getObsService().saveObs(obs,"just testing");
+  obs=Context.getObsService().getObs(7);
+  Assert.assertTrue(obs.isVoided());
+}

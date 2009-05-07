@@ -1,0 +1,6 @@
+{
+  List<GlobalProperty> globalProperties=Context.getAdministrationService().getAllGlobalProperties();
+  globalProperties.add(new GlobalProperty("new prop","new prop value","desc"));
+  Context.getAdministrationService().saveGlobalProperties(globalProperties);
+  Assert.assertNotNull(Context.getAdministrationService().getGlobalPropertyObject("new prop").getUuid());
+}

@@ -1,0 +1,6 @@
+{
+  List<GlobalProperty> globalProperties=Context.getAdministrationService().getAllGlobalProperties();
+  GlobalProperty firstGlobalProperty=globalProperties.remove(0);
+  Context.getAdministrationService().saveGlobalProperties(globalProperties);
+  Assert.assertNull(Context.getAdministrationService().getGlobalProperty(firstGlobalProperty.getProperty()));
+}

@@ -1,9 +1,7 @@
 {
   Set<ProgramWorkflow> ret=new HashSet<ProgramWorkflow>();
-  if (this.workflows != null) {
-    for (    ProgramWorkflow workflow : this.workflows) {
-      if (workflow.isRetired() == false)       ret.add(workflow);
-    }
+  for (  ProgramWorkflow workflow : getAllWorkflows()) {
+    if (workflow.isRetired() == false)     ret.add(workflow);
   }
   return ret;
 }

@@ -1,0 +1,16 @@
+{
+  if (voidableObject.isVoided()) {
+    if (!StringUtils.hasLength(voidableObject.getVoidReason()))     throw new APIException("The voided bit was set to true, so a void reason is required at save time for object: " + voidableObject + " of class: "+ voidableObject.getClass());
+    if (voidableObject.getVoidedBy() == null) {
+      voidableObject.setVoidedBy(currentUser);
+    }
+    if (voidableObject.getDateVoided() == null) {
+      voidableObject.setDateVoided(currentDate);
+    }
+  }
+ else {
+    voidableObject.setVoidedBy(null);
+    voidableObject.setDateVoided(null);
+    voidableObject.setVoidReason(null);
+  }
+}

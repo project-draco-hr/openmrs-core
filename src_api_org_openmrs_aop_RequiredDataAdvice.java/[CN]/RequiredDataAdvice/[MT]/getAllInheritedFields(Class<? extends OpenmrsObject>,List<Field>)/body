@@ -1,0 +1,7 @@
+{
+  fields.addAll(Arrays.asList(openmrsObjectClass.getDeclaredFields()));
+  Class<?> superClass=openmrsObjectClass.getSuperclass();
+  if (superClass != null) {
+    if (OpenmrsObject.class.isAssignableFrom(superClass))     getAllInheritedFields((Class<OpenmrsObject>)superClass,fields);
+  }
+}

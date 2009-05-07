@@ -1,0 +1,3 @@
+{
+  return (ConceptStateConversion)sessionFactory.getCurrentSession().createQuery("from ConceptStateConversion csc where csc.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

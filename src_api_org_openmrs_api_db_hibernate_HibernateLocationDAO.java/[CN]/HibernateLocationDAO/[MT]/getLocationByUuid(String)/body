@@ -1,0 +1,3 @@
+{
+  return (Location)sessionFactory.getCurrentSession().createQuery("from Location l where l.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

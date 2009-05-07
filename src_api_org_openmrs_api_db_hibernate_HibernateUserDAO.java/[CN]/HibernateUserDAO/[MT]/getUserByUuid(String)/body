@@ -1,0 +1,8 @@
+{
+  User ret=null;
+  if (uuid != null) {
+    uuid=uuid.trim();
+    ret=(User)sessionFactory.getCurrentSession().createQuery("from User u where u.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+  }
+  return ret;
+}

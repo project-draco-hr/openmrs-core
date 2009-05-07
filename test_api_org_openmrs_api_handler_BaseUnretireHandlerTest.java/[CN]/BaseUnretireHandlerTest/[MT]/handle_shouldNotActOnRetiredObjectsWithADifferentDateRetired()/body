@@ -1,0 +1,9 @@
+{
+  Date d=new Date(new Date().getTime() - 1000);
+  UnretireHandler<Retireable> handler=new BaseUnretireHandler();
+  Retireable retireable=new Location();
+  retireable.setRetired(true);
+  retireable.setDateRetired(d);
+  handler.handle(retireable,null,new Date(),"SOME REASON");
+  Assert.assertTrue(retireable.isRetired());
+}

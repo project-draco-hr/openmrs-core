@@ -1,14 +1,17 @@
 {
   for (  FormField formField : form.getFormFields()) {
+    formField.setUuid(null);
     formField.setFormFieldId(null);
   }
   form.setFormFields(new HashSet<FormField>(form.getFormFields()));
+  form.setUuid(null);
   form.setFormId(null);
+  form.setCreator(null);
+  form.setDateCreated(null);
   form.setChangedBy(null);
   form.setDateChanged(null);
-  form.setCreator(Context.getAuthenticatedUser());
-  form.setDateCreated(new Date());
   Context.clearSession();
+  RequiredDataAdvice.recursivelyHandle(SaveHandler.class,form,null);
   Form newForm=dao.duplicateForm(form);
   return newForm;
 }
