@@ -1,0 +1,5 @@
+{
+  PatientIdentifierType pit=patientService.getPatientIdentifierType(1);
+  PatientIdentifier patientIdentifier=new PatientIdentifier("Nobody could possibly have this identifier",pit,null);
+  Assert.assertFalse(patientService.isIdentifierInUseByAnotherPatient(patientIdentifier));
+}
