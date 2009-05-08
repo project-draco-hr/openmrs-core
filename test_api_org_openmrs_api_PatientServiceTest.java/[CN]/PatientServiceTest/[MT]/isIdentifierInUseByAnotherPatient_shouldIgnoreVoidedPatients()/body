@@ -1,7 +1,7 @@
 {
 {
-    Patient p=patientService.getPatient(9);
-    Assert.assertTrue(p.getVoided());
+    Patient p=patientService.getPatient(999);
+    Assert.assertTrue(p.isVoided());
     boolean found=false;
     for (    PatientIdentifier id : p.getIdentifiers()) {
       if (id.getIdentifier().equals("XYZ") && id.getIdentifierType().getId() == 2) {
