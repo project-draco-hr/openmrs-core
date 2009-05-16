@@ -2,7 +2,12 @@
   List<T> ret=new ArrayList<T>();
   Criteria c=sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
   c.add(Expression.or(Expression.eq("type",type),Expression.eq("subtype",type)));
-  c.add(Expression.eq("name",name));
+  if (exactMatchOnly) {
+    c.add(Expression.eq("name",name));
+  }
+ else {
+    c.add(Expression.ilike("name",name,MatchMode.ANYWHERE));
+  }
   List<SerializedObject> objects=(List<SerializedObject>)c.list();
   for (  SerializedObject serializedObject : objects) {
     ret.add(convertSerializedObject(type,serializedObject));
