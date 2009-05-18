@@ -3,7 +3,6 @@
   Integer userId=Context.getAuthenticatedUser().getUserId();
   log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
   PersonService ps=Context.getPersonService();
-  List<Person> persons=new Vector<Person>();
   Integer d=null;
   birthdate=birthdate.trim();
   age=age.trim();
@@ -28,7 +27,10 @@
     d=d - Integer.parseInt(age);
   }
   if (gender.length() < 1)   gender=null;
-  persons.addAll(ps.getSimilarPeople(name,d,gender));
+  if (!StringUtils.hasLength(personType)) {
+    personType="person";
+  }
+  Set<Person> persons=ps.getSimilarPeople(name,d,gender,personType);
   personList=new Vector<Object>(persons.size());
   for (  Person p : persons) {
     personList.add(PersonListItem.createBestMatch(p));
