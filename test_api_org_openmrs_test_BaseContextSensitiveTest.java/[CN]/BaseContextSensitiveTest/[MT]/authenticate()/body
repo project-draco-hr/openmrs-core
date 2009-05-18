@@ -5,7 +5,9 @@
     return;
   }
  catch (  ContextAuthenticationException wrongCredentialsError) {
-    log.error("For some reason we couldn't auth as admin:test ?!",wrongCredentialsError);
+    if (useInMemoryDatabase()) {
+      log.error("For some reason we couldn't auth as admin:test ?!",wrongCredentialsError);
+    }
   }
   Integer attempts=0;
   String message=null;
