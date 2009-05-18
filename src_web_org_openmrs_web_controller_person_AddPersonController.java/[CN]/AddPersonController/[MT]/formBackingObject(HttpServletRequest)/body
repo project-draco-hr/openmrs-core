@@ -21,8 +21,11 @@
         d=d - Integer.parseInt(age);
       }
       if (gender.length() < 1)       gender=null;
+      if (!StringUtils.hasLength(personType)) {
+        personType="person";
+      }
       personList=new Vector<PersonListItem>();
-      for (      Person p : ps.getSimilarPeople(name,d,gender)) {
+      for (      Person p : ps.getSimilarPeople(name,d,gender,personType)) {
         personList.add(PersonListItem.createBestMatch(p));
       }
     }

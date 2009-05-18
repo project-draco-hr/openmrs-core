@@ -135,6 +135,8 @@
  else   if (gender != null) {
     q+=" and " + genderMatch;
   }
+  if (personType.equals("patient"))   q+=" and p.user = 0";
+  if (personType.equals("user"))   q+=" and p.patient = 0";
   q+=" order by pname.givenName asc,";
   q+=" pname.middleName asc,";
   q+=" pname.familyName asc";
