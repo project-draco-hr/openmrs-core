@@ -15,10 +15,16 @@
     executeSQL=true;
   }
   if (executeSQL) {
-    log.debug("Executing sql: " + sql);
-    String[] sqlStatements=sql.split(";");
-    for (    String sqlStatement : sqlStatements) {
-      if (sqlStatement.trim().length() > 0)       as.executeSQL(sqlStatement,false);
+    try {
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_SQL_LEVEL_ACCESS);
+      log.debug("Executing sql: " + sql);
+      String[] sqlStatements=sql.split(";");
+      for (      String sqlStatement : sqlStatements) {
+        if (sqlStatement.trim().length() > 0)         as.executeSQL(sqlStatement,false);
+      }
+    }
+  finally {
+      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_SQL_LEVEL_ACCESS);
     }
     try {
       Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
