@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/UserServiceTest.xml");
+  Context.authenticate("userWithSha512Hash","test");
+  Context.logout();
+  Assert.assertFalse(new UpdateFilter().authenticateAsSuperUser("userWithSha512Hash","test"));
+}

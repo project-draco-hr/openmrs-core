@@ -1,0 +1,25 @@
+{
+  log.debug("Getting unrun changesets");
+  Database database=null;
+  try {
+    Liquibase liquibase=getLiquibase(null);
+    database=liquibase.getDatabase();
+    List<ChangeSet> changeSets=liquibase.listUnrunChangeSets(CONTEXT);
+    List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();
+    for (    ChangeSet changeSet : changeSets) {
+      OpenMRSChangeSet omrschangeset=new OpenMRSChangeSet(changeSet,database);
+      results.add(omrschangeset);
+    }
+    return results;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("error getting unrun updates on the database",e);
+  }
+ finally {
+    try {
+      database.getConnection().close();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  super.init(filterConfig);
+  log.debug("Initializing the UpdateFilter");
+  model=new UpdateFilterModel();
+  Properties properties=Listener.getRuntimeProperties();
+  if (properties != null) {
+    Context.setRuntimeProperties(properties);
+    if (DatabaseUpdater.allowAutoUpdate()) {
+      log.debug("Setting updates required to false because the user has 'allow auto updates' set");
+      updatesRequired=false;
+    }
+ else {
+      try {
+        log.debug("Setting updates required to " + (model.changes.size() > 0) + " because of the size of unrun changes");
+        updatesRequired=model.changes.size() > 0;
+      }
+ catch (      Exception e) {
+        throw new ServletException("Unable to determine if updates are required",e);
+      }
+    }
+  }
+ else {
+    log.debug("Setting updates required to false because the user doesn't have any runtime properties yet");
+    updatesRequired=false;
+  }
+}

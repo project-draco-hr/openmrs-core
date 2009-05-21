@@ -7,12 +7,7 @@
     List<ChangeSet> changeSets=changeLog.getChangeSets();
     List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();
     for (    ChangeSet changeSet : changeSets) {
-      OpenMRSChangeSet omrschangeset=new OpenMRSChangeSet();
-      omrschangeset.setAuthor(changeSet.getAuthor());
-      omrschangeset.setComments(changeSet.getComments());
-      omrschangeset.setDescription(changeSet.getDescription());
-      omrschangeset.setRunStatus(database.getRunStatus(changeSet));
-      omrschangeset.setRanDate(database.getRanDate(changeSet));
+      OpenMRSChangeSet omrschangeset=new OpenMRSChangeSet(changeSet,database);
       results.add(omrschangeset);
     }
     return results;
