@@ -1,0 +1,12 @@
+{
+  Map<String,T> components=new HashMap<String,T>();
+  Map registeredComponents=context.getBeansOfType(type);
+  log.debug("getRegisteredComponents(" + context + ", "+ type+ ") = "+ registeredComponents);
+  if (registeredComponents != null) {
+    components.putAll(registeredComponents);
+  }
+  if (context.getParent() != null) {
+    components.putAll(getRegisteredComponents(context.getParent(),type));
+  }
+  return components;
+}
