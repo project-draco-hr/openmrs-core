@@ -5,9 +5,10 @@
       velocityContext.put(entry.getKey(),entry.getValue());
     }
   }
-  for (  Field field : InitializationWizardModel.class.getDeclaredFields()) {
+  Object model=getModel();
+  for (  Field field : model.getClass().getDeclaredFields()) {
     try {
-      velocityContext.put(field.getName(),field.get(wizardModel));
+      velocityContext.put(field.getName(),field.get(model));
     }
  catch (    IllegalArgumentException e) {
       log.error("Error generated while getting field value: " + field.getName(),e);
@@ -16,11 +17,12 @@ catch (    IllegalAccessException e) {
       log.error("Error generated while getting field value: " + field.getName(),e);
     }
   }
-  String fullTemplatePath="org/openmrs/web/filter/initialization/" + templateName;
+  String fullTemplatePath=getTemplatePrefix() + templateName;
   InputStream templateInputStream=getClass().getClassLoader().getResourceAsStream(fullTemplatePath);
   if (templateInputStream == null) {
     throw new IOException("Unable to find " + fullTemplatePath);
   }
+  velocityContext.put("errors",errors);
   try {
     velocityEngine.evaluate(velocityContext,writer,this.getClass().getName(),new InputStreamReader(templateInputStream));
   }

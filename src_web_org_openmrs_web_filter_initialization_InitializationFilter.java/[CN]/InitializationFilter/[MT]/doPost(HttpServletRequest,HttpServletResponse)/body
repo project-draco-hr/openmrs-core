@@ -2,26 +2,25 @@
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
   Writer writer=httpResponse.getWriter();
-  wizardModel.errors.clear();
   if ("databasesetup.vm".equals(page)) {
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
-    checkForEmptyValue(wizardModel.databaseConnection,wizardModel.errors,"Database connection string");
+    checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
     if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
       wizardModel.databaseName=httpRequest.getParameter("openmrs_current_database_name");
-      checkForEmptyValue(wizardModel.databaseName,wizardModel.errors,"Current database name");
+      checkForEmptyValue(wizardModel.databaseName,errors,"Current database name");
       wizardModel.hasCurrentOpenmrsDatabase=true;
     }
  else {
       wizardModel.hasCurrentOpenmrsDatabase=false;
       wizardModel.createTables=true;
       wizardModel.databaseName=httpRequest.getParameter("openmrs_new_database_name");
-      checkForEmptyValue(wizardModel.databaseName,wizardModel.errors,"New database name");
+      checkForEmptyValue(wizardModel.databaseName,errors,"New database name");
       wizardModel.createDatabaseUsername=httpRequest.getParameter("create_database_username");
-      checkForEmptyValue(wizardModel.createDatabaseUsername,wizardModel.errors,"A user that has 'CREATE DATABASE' privileges");
+      checkForEmptyValue(wizardModel.createDatabaseUsername,errors,"A user that has 'CREATE DATABASE' privileges");
       wizardModel.createDatabasePassword=httpRequest.getParameter("create_database_password");
-      checkForEmptyValue(wizardModel.createDatabasePassword,wizardModel.errors,"Password for user with 'CREATE DATABASE' privileges");
+      checkForEmptyValue(wizardModel.createDatabasePassword,errors,"Password for user with 'CREATE DATABASE' privileges");
     }
-    if (wizardModel.errors.isEmpty()) {
+    if (errors.isEmpty()) {
       page="databasetablesanduser.vm";
     }
     renderTemplate(page,referenceMap,writer);
@@ -37,9 +36,9 @@
     wizardModel.addDemoData="yes".equals(httpRequest.getParameter("add_demo_data"));
     if ("yes".equals(httpRequest.getParameter("current_database_user"))) {
       wizardModel.currentDatabaseUsername=httpRequest.getParameter("current_database_username");
-      checkForEmptyValue(wizardModel.currentDatabaseUsername,wizardModel.errors,"Curent user account");
+      checkForEmptyValue(wizardModel.currentDatabaseUsername,errors,"Curent user account");
       wizardModel.currentDatabasePassword=httpRequest.getParameter("current_database_password");
-      checkForEmptyValue(wizardModel.currentDatabasePassword,wizardModel.errors,"Current user account password");
+      checkForEmptyValue(wizardModel.currentDatabasePassword,errors,"Current user account password");
       wizardModel.hasCurrentDatabaseUser=true;
       wizardModel.createDatabaseUser=false;
     }
@@ -47,11 +46,11 @@
       wizardModel.hasCurrentDatabaseUser=false;
       wizardModel.createDatabaseUser=true;
       wizardModel.createUserUsername=httpRequest.getParameter("create_user_username");
-      checkForEmptyValue(wizardModel.createUserUsername,wizardModel.errors,"A user that has 'CREATE USER' privileges");
+      checkForEmptyValue(wizardModel.createUserUsername,errors,"A user that has 'CREATE USER' privileges");
       wizardModel.createUserPassword=httpRequest.getParameter("create_user_password");
-      checkForEmptyValue(wizardModel.createUserPassword,wizardModel.errors,"Password for user that has 'CREATE USER' privileges");
+      checkForEmptyValue(wizardModel.createUserPassword,errors,"Password for user that has 'CREATE USER' privileges");
     }
-    if (wizardModel.errors.isEmpty()) {
+    if (errors.isEmpty()) {
       page="otherruntimeproperties.vm";
     }
     renderTemplate(page,referenceMap,writer);
@@ -79,12 +78,12 @@
     wizardModel.adminUserPassword=httpRequest.getParameter("new_admin_password");
     String adminUserConfirm=httpRequest.getParameter("new_admin_password_confirm");
     if (!wizardModel.adminUserPassword.equals(adminUserConfirm)) {
-      wizardModel.errors.add("Admin passwords don't match");
+      errors.add("Admin passwords don't match");
       renderTemplate("adminusersetup.vm",referenceMap,writer);
       return;
     }
     if (wizardModel.adminUserPassword.equals("")) {
-      wizardModel.errors.add("An admin password is required");
+      errors.add("An admin password is required");
       renderTemplate("adminusersetup.vm",referenceMap,writer);
       return;
     }
@@ -92,11 +91,11 @@
       OpenmrsUtil.validatePassword("admin",wizardModel.adminUserPassword,"admin");
     }
  catch (    PasswordException p) {
-      wizardModel.errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
+      errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
       renderTemplate("adminusersetup.vm",referenceMap,writer);
       return;
     }
-    if (wizardModel.errors.isEmpty()) {
+    if (errors.isEmpty()) {
       page="implementationidsetup.vm";
     }
     renderTemplate(page,referenceMap,writer);
@@ -112,11 +111,11 @@
     wizardModel.implementationIdPassPhrase=httpRequest.getParameter("pass_phrase");
     wizardModel.implementationIdDescription=httpRequest.getParameter("description");
     if (wizardModel.implementationId.indexOf('^') != -1 || wizardModel.implementationId.indexOf('|') != -1) {
-      wizardModel.errors.add("Implementation ID cannot contain '^' or '|'");
+      errors.add("Implementation ID cannot contain '^' or '|'");
       renderTemplate("implementationidsetup.vm",referenceMap,writer);
       return;
     }
-    if (wizardModel.errors.isEmpty()) {
+    if (errors.isEmpty()) {
       page="wizardcomplete.vm";
     }
     renderTemplate(page,referenceMap,writer);
@@ -193,7 +192,7 @@
         wizardModel.workLog.add("Created database tables and added core data");
       }
  catch (      Exception e) {
-        wizardModel.errors.add(e.getMessage() + " See the error log for more details");
+        errors.add(e.getMessage() + " See the error log for more details");
         log.warn("Error while trying to create tables and demo data",e);
       }
     }
@@ -203,7 +202,7 @@
         wizardModel.workLog.add("Added demo data");
       }
  catch (      Exception e) {
-        wizardModel.errors.add(e.getMessage() + " See the error log for more details");
+        errors.add(e.getMessage() + " See the error log for more details");
         log.warn("Error while trying to add demo data",e);
       }
     }
@@ -211,7 +210,7 @@
       DatabaseUpdater.update();
     }
  catch (    Exception e) {
-      wizardModel.errors.add(e.getMessage() + " Error while trying to update to the latest database version");
+      errors.add(e.getMessage() + " Error while trying to update to the latest database version");
       log.warn("Error while trying to update to the latest database version",e);
       renderTemplate(DEFAULT_PAGE,null,writer);
       return;
@@ -224,13 +223,13 @@
     }
  catch (    DatabaseUpdateException updateEx) {
       log.warn("Error while running the database update file",updateEx);
-      wizardModel.errors.add(updateEx.getMessage() + " There was an error while running the database update file: " + updateEx.getMessage());
+      errors.add(updateEx.getMessage() + " There was an error while running the database update file: " + updateEx.getMessage());
       renderTemplate(DEFAULT_PAGE,null,writer);
       return;
     }
 catch (    InputRequiredException inputRequiredEx) {
-      log.warn("Unable to continue because user input is required for the db updates, but I am not doing anything about that right now");
-      wizardModel.errors.add("Unable to continue because user input is required for the db updates, but I am not doing anything about that right now");
+      log.warn("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
+      errors.add("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
       renderTemplate(DEFAULT_PAGE,null,writer);
       return;
     }
@@ -247,7 +246,7 @@ catch (    InputRequiredException inputRequiredEx) {
         Context.getAdministrationService().setImplementationId(implId);
       }
  catch (      Throwable t) {
-        wizardModel.errors.add(t.getMessage() + " Implementation ID could not be set.");
+        errors.add(t.getMessage() + " Implementation ID could not be set.");
         log.warn("Implementation ID could not be set.",t);
         renderTemplate(DEFAULT_PAGE,null,writer);
         Context.shutdown();
@@ -275,7 +274,7 @@ catch (    InputRequiredException inputRequiredEx) {
       Context.shutdown();
       WebModuleUtil.shutdownModules(filterConfig.getServletContext());
       contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
-      wizardModel.errors.add(t.getMessage() + " Unable to complete the startup.");
+      errors.add(t.getMessage() + " Unable to complete the startup.");
       log.warn("Unable to complete the startup.",t);
       renderTemplate(DEFAULT_PAGE,null,writer);
       return;

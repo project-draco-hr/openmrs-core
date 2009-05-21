@@ -1,0 +1,25 @@
+{
+  try {
+    Context.openSession();
+    Context.startup(getRuntimeProperties());
+  }
+ catch (  DatabaseUpdateException updateEx) {
+    throw new ServletException("Should not be here because updates were run previously",updateEx);
+  }
+catch (  InputRequiredException inputRequiredEx) {
+    throw new ServletException("Should not be here because updates were run previously",inputRequiredEx);
+  }
+  try {
+    Listener.loadCoreModules(servletContext);
+    Listener.performWebStartOfModules(servletContext);
+    SchedulerUtil.startup(getRuntimeProperties());
+  }
+ catch (  Throwable t) {
+    Context.shutdown();
+    WebModuleUtil.shutdownModules(servletContext);
+    throw new ServletException(t);
+  }
+ finally {
+    Context.closeSession();
+  }
+}

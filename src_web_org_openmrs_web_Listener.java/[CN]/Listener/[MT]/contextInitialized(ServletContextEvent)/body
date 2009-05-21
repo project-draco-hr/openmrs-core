@@ -6,29 +6,18 @@
     loadConstants(servletContext);
     clearDWRFile(servletContext);
     Properties props=getRuntimeProperties();
-    Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
     if (props != null) {
       runtimePropertiesFound=true;
       Context.setRuntimeProperties(props);
-      copyCustomizationIntoWebapp(servletContext,props);
+    }
+    Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+    copyCustomizationIntoWebapp(servletContext,props);
+    if (!setupNeeded()) {
       super.contextInitialized(event);
-      try {
-        Context.openSession();
-        Context.startup(props);
-        loadCoreModules(servletContext);
-        performWebStartOfModules(servletContext);
-        SchedulerUtil.startup(props);
-      }
-  finally {
-        Context.closeSession();
-      }
+      startOpenmrs(event.getServletContext());
     }
   }
- catch (  DatabaseUpdateException updateException) {
-    log.error("Unable to update the database to the latest version",updateException);
-    throw new RuntimeException("Unable to update the database to the latest version.  See the logs for more information",updateException);
-  }
-catch (  Throwable t) {
-    log.warn("Got exception while starting up: ",t);
+ catch (  Throwable t) {
+    log.fatal("Got exception while starting up: ",t);
   }
 }
