@@ -9,6 +9,7 @@
   }
   OpenmrsSerializer serializer=getSerializer(serializedObject);
   String data=serializer.serialize(object);
+  serializedObject.setUuid(object.getUuid());
   serializedObject.setType(baseType);
   serializedObject.setSubtype(object.getClass());
   serializedObject.setSerializationClass(serializer.getClass());
