@@ -3,5 +3,11 @@
   if (serializer == null) {
     throw new APIException("OpenmrsSerializer of class <" + serializerClass + "> not found.");
   }
-  return serializer.deserialize(serializedObject,objectClass);
+  try {
+    return (T)serializer.deserialize(serializedObject,objectClass);
+  }
+ catch (  Throwable t) {
+    String msg="An error occurred during deserialization of data <" + serializedObject + ">";
+    throw new SerializationException(msg,t);
+  }
 }
