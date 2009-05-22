@@ -8,7 +8,13 @@
     serializedObject=new SerializedObject();
   }
   OpenmrsSerializer serializer=getSerializer(serializedObject);
-  String data=serializer.serialize(object);
+  String data=null;
+  try {
+    data=serializer.serialize(object);
+  }
+ catch (  SerializationException e) {
+    throw new DAOException("Unable to save object <" + object + "> because serialization failed.",e);
+  }
   serializedObject.setUuid(object.getUuid());
   serializedObject.setType(baseType);
   serializedObject.setSubtype(object.getClass());
