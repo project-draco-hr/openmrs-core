@@ -10,7 +10,7 @@ catch (  InputRequiredException inputRequiredEx) {
     throw new ServletException("Should not be here because updates were run previously",inputRequiredEx);
   }
   try {
-    Listener.loadCoreModules(servletContext);
+    Listener.loadAndStartCoreModules(servletContext);
     Listener.performWebStartOfModules(servletContext);
     SchedulerUtil.startup(getRuntimeProperties());
   }

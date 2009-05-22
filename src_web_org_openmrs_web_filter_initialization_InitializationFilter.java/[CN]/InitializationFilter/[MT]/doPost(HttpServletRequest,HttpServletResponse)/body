@@ -266,7 +266,7 @@ catch (    InputRequiredException inputRequiredEx) {
         Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
         Context.logout();
       }
-      Listener.loadCoreModules(filterConfig.getServletContext());
+      Listener.loadAndStartCoreModules(filterConfig.getServletContext());
       Listener.performWebStartOfModules(filterConfig.getServletContext());
       SchedulerUtil.startup(runtimeProperties);
     }
