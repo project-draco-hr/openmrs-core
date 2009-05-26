@@ -1,0 +1,10 @@
+{
+  SerializationService svc=Context.getSerializationService();
+  EncounterType e=new EncounterType();
+  e.setName("TestType");
+  e.setDescription("A test type");
+  String xml=svc.serialize(e,XStreamSerializer.class);
+  EncounterType hydratedLocation=svc.deserialize(xml,EncounterType.class,XStreamSerializer.class);
+  assertEquals("TestType",hydratedLocation.getName());
+  assertEquals("A test type",hydratedLocation.getDescription());
+}
