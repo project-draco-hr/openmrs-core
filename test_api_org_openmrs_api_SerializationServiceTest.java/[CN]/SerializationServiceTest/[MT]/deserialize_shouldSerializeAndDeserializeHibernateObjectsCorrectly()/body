@@ -1,0 +1,8 @@
+{
+  EncounterType e=Context.getEncounterService().getAllEncounterTypes().iterator().next();
+  e.setDescription("Changed Emergency Visit");
+  e=Context.getEncounterService().saveEncounterType(e);
+  String s=Context.getSerializationService().serialize(e,XStreamSerializer.class);
+  EncounterType e1=Context.getSerializationService().deserialize(s,EncounterType.class,XStreamSerializer.class);
+  assertEquals("Changed Emergency Visit",e1.getDescription());
+}
