@@ -1,8 +1,7 @@
 {
   if (concept != null) {
-    return concept.getDescription().getDescription();
+    ConceptDescription description=concept.getDescription();
+    if (description != null)     return description.getDescription();
   }
- else {
-    return null;
-  }
+  return null;
 }
