@@ -1,8 +1,7 @@
 {
   if (concept != null) {
-    return concept.getBestShortName(Context.getLocale()).getName();
+    ConceptName bestShortName=concept.getBestShortName(Context.getLocale());
+    if (bestShortName != null)     return bestShortName.getName();
   }
- else {
-    return null;
-  }
+  return null;
 }
