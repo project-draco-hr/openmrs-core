@@ -1,0 +1,10 @@
+{
+  StringBuilder sb=new StringBuilder();
+  if (getRelationshipType() != null) {
+    sb.append("t" + getRelationshipType().getRelationshipTypeId() + ".");
+    sb.append(includeAtoB + ".");
+    sb.append(includeBtoA + ".");
+  }
+  if (getPerson() != null)   sb.append("p" + getPerson().getPersonId() + ".");
+  return sb.toString();
+}

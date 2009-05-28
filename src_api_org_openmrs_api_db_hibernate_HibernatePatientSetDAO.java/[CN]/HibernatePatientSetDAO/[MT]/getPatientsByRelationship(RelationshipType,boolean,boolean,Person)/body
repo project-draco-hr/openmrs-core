@@ -1,0 +1,65 @@
+{
+  Cohort allPatients=getAllPatients();
+  if (relType != null) {
+    if (includeAtoB && includeBtoA) {
+      String hql="select personA.id, personB.id from Relationship where relationshipType = :relType";
+      if (target != null)       hql+=" and (personA.id = :targetId or personB.id = :targetId)";
+      Query q=sessionFactory.getCurrentSession().createQuery(hql);
+      q.setParameter("relType",relType);
+      if (target != null)       q.setInteger("targetId",target.getPersonId());
+      Cohort ret=new Cohort();
+      for (      Object[] o : (List<Object[]>)q.list()) {
+        ret.addMember((Integer)o[0]);
+        ret.addMember((Integer)o[1]);
+      }
+      ret.removeMember(target.getPersonId());
+      return Cohort.intersect(allPatients,ret);
+    }
+ else     if (includeAtoB) {
+      String hql="select personA.id from Relationship where relationshipType = :relType";
+      if (target != null)       hql+=" and personB.id = :targetId";
+      Query q=sessionFactory.getCurrentSession().createQuery(hql);
+      q.setParameter("relType",relType);
+      if (target != null)       q.setInteger("targetId",target.getPersonId());
+      Cohort ret=new Cohort();
+      for (      Integer id : (List<Integer>)q.list())       ret.addMember(id);
+      return Cohort.intersect(allPatients,ret);
+    }
+ else     if (includeBtoA) {
+      String hql="select personB.id from Relationship where relationshipType = :relType";
+      if (target != null)       hql+=" and personA.id = :targetId";
+      Query q=sessionFactory.getCurrentSession().createQuery(hql);
+      q.setParameter("relType",relType);
+      if (target != null)       q.setInteger("targetId",target.getPersonId());
+      Cohort ret=new Cohort();
+      for (      Integer id : (List<Integer>)q.list())       ret.addMember(id);
+      return Cohort.intersect(allPatients,ret);
+    }
+ else {
+      return new Cohort();
+    }
+  }
+ else {
+    if (target != null) {
+      Cohort ret=new Cohort();
+      Integer ptId=target.getPersonId();
+      Query query=sessionFactory.getCurrentSession().createSQLQuery("select person_a, person_b from relationship where person_a = :ptId or person_b = :ptId");
+      query.setInteger("ptId",ptId);
+      for (      Object[] o : (List<Object[]>)query.list()) {
+        ret.addMember((Integer)o[0]);
+        ret.addMember((Integer)o[1]);
+      }
+      ret.removeMember(ptId);
+      return Cohort.intersect(allPatients,ret);
+    }
+ else {
+      Cohort ret=new Cohort();
+      Query query=sessionFactory.getCurrentSession().createSQLQuery("select person_a, person_b from relationship");
+      for (      Object[] o : (List<Object[]>)query.list()) {
+        ret.addMember((Integer)o[0]);
+        ret.addMember((Integer)o[1]);
+      }
+      return Cohort.intersect(allPatients,ret);
+    }
+  }
+}
