@@ -3,18 +3,11 @@
   if (propertyFile != null) {
     Properties props=new Properties();
     try {
-      FileInputStream fis=new FileInputStream(propertyFile);
-      props.load(fis);
-      fis.close();
+      OpenmrsUtil.loadProperties(props,new FileInputStream(propertyFile));
       props.remove(message.getCode());
-      FileOutputStream fos=new FileOutputStream(propertyFile);
-      props.store(fos,PROPERTIES_FILE_COMMENT);
-      fos.close();
+      OpenmrsUtil.storeProperties(props,propertyFile,PROPERTIES_FILE_COMMENT);
     }
  catch (    FileNotFoundException e) {
-      log.error("Error generated",e);
-    }
-catch (    IOException e) {
       log.error("Error generated",e);
     }
   }

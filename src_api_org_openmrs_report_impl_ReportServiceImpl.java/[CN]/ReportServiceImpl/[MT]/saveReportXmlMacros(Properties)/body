@@ -1,7 +1,7 @@
 {
   try {
     ByteArrayOutputStream out=new ByteArrayOutputStream();
-    macros.store(out,null);
+    OpenmrsUtil.storeProperties(macros,out,null);
     GlobalProperty prop=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS,out.toString());
     Context.getAdministrationService().saveGlobalProperty(prop);
   }

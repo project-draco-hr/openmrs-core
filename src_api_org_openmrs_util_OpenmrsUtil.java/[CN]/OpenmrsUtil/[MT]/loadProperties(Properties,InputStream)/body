@@ -1,0 +1,26 @@
+{
+  try {
+    BufferedReader reader=new BufferedReader(new InputStreamReader(input,"UTF-8"));
+    while (reader.ready()) {
+      String line=reader.readLine();
+      if (line.length() > 0 && line.charAt(0) != '#') {
+        int pos=line.indexOf("=");
+        if (pos > 0) {
+          String keyString=line.substring(0,pos);
+          String valueString=line.substring(pos + 1);
+          if (keyString != null && keyString.length() > 0) {
+            props.put(keyString,valueString.replace("\n",""));
+          }
+        }
+      }
+    }
+    reader.close();
+  }
+ catch (  UnsupportedEncodingException uee) {
+    log.error("Unsupported encoding used in properties file " + uee);
+  }
+catch (  IOException ioe) {
+    log.error("Unable to read properties from properties file " + ioe);
+  }
+  return props;
+}

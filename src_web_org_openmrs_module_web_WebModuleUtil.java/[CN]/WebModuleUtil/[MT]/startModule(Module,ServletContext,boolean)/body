@@ -11,34 +11,25 @@
       String lang="_" + entry.getKey();
       if (lang.equals("_en") || lang.equals("_"))       lang="";
       String currentPath=path.replace("@LANG@",lang);
-      OutputStream outStream=null;
+      String absolutePath=realPath + currentPath;
+      File file=new File(absolutePath);
       try {
-        String absolutePath=realPath + currentPath;
-        File file=new File(absolutePath);
         if (!file.exists())         file.createNewFile();
-        outStream=new FileOutputStream(file,true);
-        Properties props=entry.getValue();
-        List<Object> keys=new Vector<Object>();
-        keys.addAll(props.keySet());
-        for (        Object obj : keys) {
-          String key=(String)obj;
-          if (!key.startsWith(mod.getModuleId())) {
-            props.put(mod.getModuleId() + "." + key,props.get(key));
-            props.remove(key);
-          }
-        }
-        props.store(outStream,"Module: " + mod.getName() + " v"+ mod.getVersion());
       }
- catch (      IOException e) {
-        log.error("Unable to load in lang: '" + entry.getKey() + "' properties for mod: "+ mod.getName(),e);
+ catch (      IOException ioe) {
+        log.error("Unable to create new file " + file.getAbsolutePath() + " "+ ioe);
       }
- finally {
-        try {
-          outStream.close();
-        }
- catch (        Exception e) {
+      Properties props=entry.getValue();
+      List<Object> keys=new Vector<Object>();
+      keys.addAll(props.keySet());
+      for (      Object obj : keys) {
+        String key=(String)obj;
+        if (!key.startsWith(mod.getModuleId())) {
+          props.put(mod.getModuleId() + "." + key,props.get(key));
+          props.remove(key);
         }
       }
+      OpenmrsUtil.storeProperties(props,file,"Module: " + mod.getName() + " v"+ mod.getVersion());
     }
     log.debug("Done copying messages");
     boolean moduleNeedsContextRefresh=false;

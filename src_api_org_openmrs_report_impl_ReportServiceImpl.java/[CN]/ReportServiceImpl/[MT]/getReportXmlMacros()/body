@@ -3,7 +3,7 @@
     String macrosAsString=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_REPORT_XML_MACROS);
     Properties macros=new Properties();
     if (macrosAsString != null) {
-      macros.load(new ByteArrayInputStream(macrosAsString.getBytes("UTF-8")));
+      OpenmrsUtil.loadProperties(macros,new ByteArrayInputStream(macrosAsString.getBytes("UTF-8")));
     }
     return macros;
   }
