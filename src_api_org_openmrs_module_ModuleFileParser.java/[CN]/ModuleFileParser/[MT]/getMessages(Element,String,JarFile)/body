@@ -22,7 +22,7 @@
           ZipEntry entry=jarfile.getEntry(file);
           inStream=jarfile.getInputStream(entry);
           Properties props=new Properties();
-          props.load(inStream);
+          OpenmrsUtil.loadProperties(props,inStream);
           messages.put(lang,props);
         }
  catch (        IOException e) {

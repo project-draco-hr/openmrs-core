@@ -6,24 +6,7 @@
     Properties emptyProperties=new Properties();
     for (    File f : folder.listFiles()) {
       if (f.getName().startsWith("module_messages")) {
-        OutputStream outStream=null;
-        try {
-          outStream=new FileOutputStream(f,false);
-          emptyProperties.store(outStream,"");
-        }
- catch (        IOException io) {
-          log.warn("Unable to clear module messages: " + f.getAbsolutePath(),io);
-        }
- finally {
-          if (outStream != null) {
-            try {
-              outStream.close();
-            }
- catch (            IOException e) {
-              log.warn("Couldn't close outStream for file: " + f.getName(),e);
-            }
-          }
-        }
+        OpenmrsUtil.storeProperties(emptyProperties,f,"");
       }
     }
   }
