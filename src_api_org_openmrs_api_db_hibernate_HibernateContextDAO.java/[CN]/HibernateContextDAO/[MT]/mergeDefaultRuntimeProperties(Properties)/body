@@ -6,22 +6,16 @@
     if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop))     runtimeProperties.setProperty("hibernate." + prop,value);
   }
   InputStream propertyStream=null;
+  Properties props=new Properties();
+  propertyStream=ConfigHelper.getResourceAsStream("/hibernate.default.properties");
   try {
-    Properties props=new Properties();
-    propertyStream=ConfigHelper.getResourceAsStream("/hibernate.default.properties");
-    props.load(propertyStream);
-    for (    Map.Entry<Object,Object> entry : props.entrySet()) {
-      if (!runtimeProperties.containsKey(entry.getKey()))       runtimeProperties.put(entry.getKey(),entry.getValue());
-    }
+    OpenmrsUtil.loadProperties(props,propertyStream);
+    propertyStream.close();
   }
- catch (  IOException e) {
-    log.fatal("Unable to load default hibernate properties",e);
+ catch (  IOException ex) {
+    log.error("Unable to load default hibernate properties");
   }
- finally {
-    try {
-      propertyStream.close();
-    }
- catch (    Throwable t) {
-    }
+  for (  Map.Entry<Object,Object> entry : props.entrySet()) {
+    if (!runtimeProperties.containsKey(entry.getKey()))     runtimeProperties.put(entry.getKey(),entry.getValue());
   }
 }
