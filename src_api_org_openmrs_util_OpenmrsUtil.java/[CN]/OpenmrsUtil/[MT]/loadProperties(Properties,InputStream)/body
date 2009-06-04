@@ -9,7 +9,7 @@
           String keyString=line.substring(0,pos);
           String valueString=line.substring(pos + 1);
           if (keyString != null && keyString.length() > 0) {
-            props.put(keyString,valueString.replace("\n",""));
+            props.put(keyString,fixPropertiesValueString(valueString));
           }
         }
       }
@@ -22,5 +22,4 @@
 catch (  IOException ioe) {
     log.error("Unable to read properties from properties file " + ioe);
   }
-  return props;
 }
