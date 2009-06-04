@@ -12,12 +12,15 @@
     Properties props=new Properties();
     propertyStream=DatabaseUpdater.class.getClassLoader().getResourceAsStream("hibernate.default.properties");
     OpenmrsUtil.loadProperties(props,propertyStream);
-    propertyStream.close();
     for (    Map.Entry<Object,Object> entry : props.entrySet()) {
       if (!runtimeProperties.containsKey(entry.getKey()))       runtimeProperties.put(entry.getKey(),entry.getValue());
     }
   }
- catch (  IOException e) {
-    log.fatal("Unable to load default hibernate properties",e);
+  finally {
+    try {
+      propertyStream.close();
+    }
+ catch (    Throwable t) {
+    }
   }
 }
