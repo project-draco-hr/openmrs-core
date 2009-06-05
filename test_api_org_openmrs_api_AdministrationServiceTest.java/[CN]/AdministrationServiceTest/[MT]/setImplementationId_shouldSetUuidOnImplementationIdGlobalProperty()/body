@@ -1,0 +1,10 @@
+{
+  ImplementationId validId=new ImplementationId();
+  validId.setImplementationId("JUNIT-TEST");
+  validId.setName("JUNIT-TEST implementation id");
+  validId.setPassphrase("This is the junit test passphrase");
+  validId.setDescription("This is the junit impl id used for testing of the openmrs API only.");
+  adminService.setImplementationId(validId);
+  GlobalProperty gp=adminService.getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID);
+  Assert.assertNotNull(gp.getUuid());
+}

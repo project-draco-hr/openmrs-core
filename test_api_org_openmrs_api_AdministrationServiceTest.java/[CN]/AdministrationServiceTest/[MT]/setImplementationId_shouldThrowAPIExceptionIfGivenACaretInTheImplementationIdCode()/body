@@ -1,0 +1,15 @@
+{
+  ImplementationId invalidId=new ImplementationId();
+  invalidId.setImplementationId("caret^caret");
+  invalidId.setName("an invalid impl id for a unit test");
+  invalidId.setPassphrase("some valid passphrase");
+  invalidId.setDescription("Some valid description");
+  try {
+    adminService.setImplementationId(invalidId);
+    fail("An exception should be thrown on an invalid impl id save");
+  }
+ catch (  APIException e) {
+  }
+  ImplementationId afterInvalid=adminService.getImplementationId();
+  assertNull("There shouldn't be an impl id defined after setting an invalid impl id",afterInvalid);
+}

@@ -1,3 +1,12 @@
 {
-  return dao.getImplementationId();
+  String property=getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID);
+  if (property == null)   return null;
+  try {
+    ImplementationId implId=OpenmrsUtil.getSerializer().read(ImplementationId.class,property);
+    return implId;
+  }
+ catch (  Throwable t) {
+    log.debug("Error while getting implementation id",t);
+  }
+  return null;
 }

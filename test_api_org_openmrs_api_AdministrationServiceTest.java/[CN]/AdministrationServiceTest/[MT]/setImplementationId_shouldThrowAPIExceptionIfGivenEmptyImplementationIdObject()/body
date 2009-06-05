@@ -1,0 +1,10 @@
+{
+  try {
+    adminService.setImplementationId(new ImplementationId());
+    fail("An exception should be thrown on a blank impl id save");
+  }
+ catch (  APIException e) {
+  }
+  ImplementationId afterBlank=adminService.getImplementationId();
+  assertNull("There shouldn't be an impl id defined after setting a blank impl id",afterBlank);
+}

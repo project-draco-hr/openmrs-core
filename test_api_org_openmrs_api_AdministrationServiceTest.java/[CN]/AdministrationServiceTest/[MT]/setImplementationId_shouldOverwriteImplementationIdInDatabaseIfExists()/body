@@ -1,0 +1,12 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-general.xml");
+  Assert.assertNotNull(adminService.getImplementationId());
+  Context.clearSession();
+  ImplementationId validId2=new ImplementationId();
+  validId2.setImplementationId("JUNIT-TEST 2");
+  validId2.setName("JUNIT-TEST (#2) implementation id");
+  validId2.setPassphrase("This is the junit test passphrase 2");
+  validId2.setDescription("This is the junit impl id (2) used for testing of the openmrs API only.");
+  adminService.setImplementationId(validId2);
+  assertEquals(validId2,adminService.getImplementationId());
+}
