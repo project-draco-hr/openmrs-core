@@ -2,8 +2,8 @@
   try {
     task.execute();
   }
- catch (  Exception e) {
-    log.error("FATAL ERROR: Task [" + task.getClass() + "] failed due to exception ["+ e.getClass().getName()+ "]",e);
-    SchedulerUtil.sendSchedulerError(e);
+ catch (  Throwable t) {
+    log.error("FATAL ERROR: Task [" + task.getClass() + "] failed due to exception ["+ t.getClass().getName()+ "]",t);
+    SchedulerUtil.sendSchedulerError(t);
   }
 }

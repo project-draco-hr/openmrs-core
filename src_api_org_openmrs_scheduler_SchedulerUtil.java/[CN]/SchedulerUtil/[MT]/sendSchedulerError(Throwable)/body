@@ -5,10 +5,10 @@
       String recipients=Context.getAdministrationService().getGlobalProperty(SchedulerConstants.SCHEDULER_ADMIN_EMAIL_PROPERTY);
       if (recipients != null) {
         String sender=SchedulerConstants.SCHEDULER_DEFAULT_FROM;
-        String subject=SchedulerConstants.SCHEDULER_DEFAULT_SUBJECT + " : " + error.getClass().getName();
+        String subject=SchedulerConstants.SCHEDULER_DEFAULT_SUBJECT + " : " + throwable.getClass().getName();
         String message=new String();
         message+="\n\nStacktrace\n============================================\n";
-        message+=SchedulerUtil.getExceptionAsString(error);
+        message+=SchedulerUtil.getExceptionAsString(throwable);
         message+="\n\nSystem Variables\n============================================\n";
         for (        Map.Entry<String,String> entry : Context.getAdministrationService().getSystemVariables().entrySet()) {
           message+=entry.getKey() + " = " + entry.getValue()+ "\n";
