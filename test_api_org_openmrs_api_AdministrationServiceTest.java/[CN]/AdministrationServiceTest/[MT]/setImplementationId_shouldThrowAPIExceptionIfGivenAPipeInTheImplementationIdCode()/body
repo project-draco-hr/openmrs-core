@@ -1,0 +1,15 @@
+{
+  ImplementationId invalidId2=new ImplementationId();
+  invalidId2.setImplementationId("pipe|pipe");
+  invalidId2.setName("an invalid impl id for a unit test");
+  invalidId2.setPassphrase("some valid passphrase");
+  invalidId2.setDescription("Some valid description");
+  try {
+    adminService.setImplementationId(invalidId2);
+    fail("An exception should be thrown on an invalid impl id save");
+  }
+ catch (  APIException e) {
+  }
+  ImplementationId afterInvalid2=adminService.getImplementationId();
+  assertNull("There shouldn't be an impl id defined after setting an invalid impl id",afterInvalid2);
+}

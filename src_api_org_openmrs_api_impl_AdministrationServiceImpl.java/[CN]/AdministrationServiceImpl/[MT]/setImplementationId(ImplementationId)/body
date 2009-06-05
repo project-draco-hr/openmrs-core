@@ -23,7 +23,7 @@
     }
     StringWriter stringWriter=new StringWriter();
     OpenmrsUtil.getSerializer().write(implementationId,stringWriter);
-    saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID,stringWriter.toString()));
+    Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID,stringWriter.toString()));
   }
  catch (  APIException e) {
     throw e;
