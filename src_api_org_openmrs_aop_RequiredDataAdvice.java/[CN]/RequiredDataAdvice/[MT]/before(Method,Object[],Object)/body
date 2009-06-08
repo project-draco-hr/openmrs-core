@@ -1,6 +1,6 @@
 {
   String methodName=method.getName();
-  if (methodName.startsWith("save")) {
+  if (methodName.startsWith("save") || methodName.startsWith("create") || methodName.startsWith("update")) {
     Object mainArgument=args[0];
     if (mainArgument == null)     return;
     Class<?> argClass=mainArgument.getClass();
