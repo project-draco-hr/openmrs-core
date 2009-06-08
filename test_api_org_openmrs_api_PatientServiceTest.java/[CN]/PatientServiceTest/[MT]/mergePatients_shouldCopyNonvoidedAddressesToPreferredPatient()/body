@@ -1,0 +1,10 @@
+{
+  Patient preferred=patientService.getPatient(7);
+  Patient notPreferred=patientService.getPatient(8);
+  patientService.mergePatients(preferred,notPreferred);
+  boolean found=false;
+  for (  PersonAddress pa : preferred.getAddresses()) {
+    if (pa.getCityVillage().equals("Jabali"))     found=true;
+  }
+  Assert.assertTrue("odd, user 7 didn't get user 8's address",found);
+}
