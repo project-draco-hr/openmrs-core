@@ -1,0 +1,10 @@
+{
+  Patient preferred=patientService.getPatient(7);
+  Patient notPreferred=patientService.getPatient(8);
+  patientService.mergePatients(preferred,notPreferred);
+  boolean found=false;
+  for (  PersonName pn : preferred.getNames()) {
+    if (pn.getGivenName().equals("Anet"))     found=true;
+  }
+  Assert.assertTrue("odd, user 7 didn't get user 8's names",found);
+}

@@ -59,7 +59,7 @@
       String address1=currentAddress.getAddress1();
       String address2=currentAddress.getAddress2();
       String cityVillage=currentAddress.getCityVillage();
-      if ((address1 != null && address1.equals(newAddress.getAddress1())) || (address2 != null && address2.equals(newAddress.getAddress2())) || (cityVillage != null && cityVillage.equals(newAddress.getCityVillage()))) {
+      if ((address1 != null && address1.equals(newAddress.getAddress1())) && (address2 != null && address2.equals(newAddress.getAddress2())) && (cityVillage != null && cityVillage.equals(newAddress.getCityVillage()))) {
         containsAddress=true;
       }
     }
@@ -69,6 +69,7 @@
       tmpAddress.setVoided(false);
       tmpAddress.setVoidedBy(null);
       tmpAddress.setVoidReason(null);
+      tmpAddress.setUuid(null);
       preferred.addAddress(tmpAddress);
       log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
     }

@@ -1,0 +1,7 @@
+{
+  Patient preferred=patientService.getPatient(7);
+  Patient notPreferred=patientService.getPatient(8);
+  patientService.mergePatients(preferred,notPreferred);
+  PatientIdentifier piToTest=new PatientIdentifier("ABC123",new PatientIdentifierType(2),null);
+  Assert.assertTrue(OpenmrsUtil.collectionContains(preferred.getIdentifiers(),piToTest));
+}
