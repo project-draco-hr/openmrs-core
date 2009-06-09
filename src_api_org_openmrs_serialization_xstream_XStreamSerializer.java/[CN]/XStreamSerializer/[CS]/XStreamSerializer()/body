@@ -1,29 +1,19 @@
 {
-  xstream=new XStream(new DomDriver());
-  xstream.registerConverter(new UserConverter());
-  xstream.registerConverter(new LocationConverter());
-  xstream.registerConverter(new ConceptDatatypeConverter());
-  xstream.registerConverter(new ConceptClassConverter());
-  xstream.registerConverter(new ConceptNameConverter());
-  xstream.registerConverter(new ConceptDescriptionConverter());
-  xstream.registerConverter(new ConceptNameTagConverter());
-  xstream.registerConverter(new ConceptSetConverter());
-  xstream.registerConverter(new ConceptAnswerConverter());
-  xstream.registerConverter(new DrugConverter());
+  xstream=new XStream(new DomDriver()){
+    protected MapperWrapper wrapMapper(    MapperWrapper next){
+      MapperWrapper mapper=new CGLibMapper(next);
+      mapper=new HibernateCollectionMapper(mapper);
+      return mapper;
+    }
+  }
+;
+  xstream.useAttributeFor(BaseOpenmrsObject.class,"uuid");
+  xstream.useAttributeFor(BaseOpenmrsData.class,"voided");
+  xstream.useAttributeFor(BaseOpenmrsMetadata.class,"retired");
+  this.commonConfig();
   xstream.registerConverter(new HibernateCollectionConverter(xstream.getConverterLookup()));
+  xstream.registerConverter(new CustomCGLIBEnhancedConverter(xstream.getMapper(),xstream.getConverterLookup()));
   xstream.registerConverter(new CustomSQLTimestampConverter());
-  xstream.registerConverter(new DateConverter());
-  xstream.omitField(Concept.class,"log");
-  xstream.omitField(Concept.class,"creator");
-  xstream.omitField(Concept.class,"changedBy");
-  xstream.useAttributeFor(Concept.class,"conceptId");
-  xstream.useAttributeFor(Concept.class,"set");
-  xstream.useAttributeFor(Concept.class,"retired");
-  xstream.useAttributeFor(Concept.class,"datatype");
-  xstream.useAttributeFor(Concept.class,"conceptClass");
-  xstream.useAttributeFor(Concept.class,"version");
-  xstream.useAttributeFor(Concept.class,"dateCreated");
-  xstream.useAttributeFor(Concept.class,"dateChanged");
-  xstream.useAttributeFor(ConceptDescription.class,"dateCreated");
-  xstream.addDefaultImplementation(HashSet.class,PersistentSet.class);
+  xstream.registerConverter(new DateConverter("yyyy-MM-dd HH:mm:ss z",new String[]{"yyyy-MM-dd HH:mm:ss.S z","yyyy-MM-dd HH:mm:ssz","yyyy-MM-dd HH:mm:ss.S a","yyyy-MM-dd HH:mm:ssa"}));
+  xstream.setMarshallingStrategy(new CustomReferenceByIdMarshallingStrategy());
 }

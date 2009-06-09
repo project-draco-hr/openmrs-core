@@ -1,0 +1,21 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/PersonAddressSerializationTest.xml");
+  authenticate();
+  PersonAddress pa=Context.getPersonService().getPersonAddressByUuid("921c0e23-d941-4bac-8ce4-ab0d0f7d8123");
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(pa,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("921c0e23-d941-4bac-8ce4-ab0d0f7d8123","/personAddress/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1","/personAddress/personAddressId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/personAddress/@voided",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/personAddress/preferred",xmlOutput);
+  XMLAssert.assertXpathExists("/personAddress/creator",xmlOutput);
+  XMLAssert.assertXpathExists("/personAddress/person/@reference",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1050 Wishard Blvd.","/personAddress/address1",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("RG5","/personAddress/address2",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("New York","/personAddress/stateProvince",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("USA","/personAddress/country",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Kapina","/personAddress/cityVillage",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("46202","/personAddress/postalCode",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(pa.getDateCreated()),"/personAddress/dateCreated",xmlOutput);
+}

@@ -1,0 +1,11 @@
+{
+  String classNameWithoutEnhanced=removeSignature(super.serializedClass(type));
+  Class actualClass=null;
+  try {
+    actualClass=Class.forName(classNameWithoutEnhanced);
+  }
+ catch (  ClassNotFoundException e) {
+    return classNameWithoutEnhanced;
+  }
+  return super.serializedClass(actualClass);
+}

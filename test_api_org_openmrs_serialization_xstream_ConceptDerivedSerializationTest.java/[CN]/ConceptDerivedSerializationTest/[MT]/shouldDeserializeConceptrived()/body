@@ -1,0 +1,25 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/ConceptDerivedSerializationTest.xml");
+  authenticate();
+  ConceptDerived cd=(ConceptDerived)Context.getConceptService().getConcept(3);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(cd,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("0cbe2ed3-cd5f-4f46-9459-26127c9265ab","/conceptDerived/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("3","/conceptDerived/conceptId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/conceptDerived/retired",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("4","/conceptDerived/datatype/conceptDatatypeId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("3","/conceptDerived/conceptClass/conceptClassId",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/conceptDerived/set",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(cd.getDateCreated()),"/conceptDerived/dateCreated",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/names/conceptName[conceptNameId=2456]",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/answers/conceptAnswer[conceptAnswerId=762]",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/conceptSets/conceptSet[conceptSetId=1]",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/descriptions/conceptDescription[conceptDescriptionId=9]",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDerived/conceptMappings/conceptMap[conceptMapId=1]",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("The test rule for serializing conceptderived","/conceptDerived/rule",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(cd.getCompileDate()),"/conceptDerived/compileDate",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("success","/conceptDerived/compileStatus",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("The class test for serializing conceptderived","/conceptDerived/className",xmlOutput);
+}

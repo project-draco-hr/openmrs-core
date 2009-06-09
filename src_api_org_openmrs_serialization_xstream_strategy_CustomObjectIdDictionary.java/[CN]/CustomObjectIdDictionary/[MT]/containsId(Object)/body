@@ -1,0 +1,33 @@
+{
+  boolean contain=false;
+  ++counter;
+  if (isCGlibEhanced(item)) {
+    Iterator it=map.keySet().iterator();
+    while (it.hasNext()) {
+      Object key=it.next();
+      if (item.equals(key)) {
+        contain=true;
+        break;
+      }
+    }
+  }
+ else {
+    Iterator it=map.keySet().iterator();
+    while (it.hasNext()) {
+      Object key=it.next();
+      if (isCGlibEhanced(key)) {
+        if (item.equals(key)) {
+          contain=true;
+          break;
+        }
+      }
+ else {
+        if (item == key) {
+          contain=true;
+          break;
+        }
+      }
+    }
+  }
+  return contain;
+}

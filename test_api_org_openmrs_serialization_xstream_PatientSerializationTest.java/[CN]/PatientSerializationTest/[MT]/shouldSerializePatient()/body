@@ -1,0 +1,21 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/PatientSerializationTest.xml");
+  authenticate();
+  Patient patient=Context.getPatientService().getPatient(999);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(patient,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("86526ed6-3c11-11de-a0ba-001e378eb67e","/patient/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/patient/@voided",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1","/patient/creator/personId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(patient.getDateCreated()),"/patient/dateCreated",xmlOutput);
+  XMLAssert.assertXpathExists("/patient/changedBy/@reference",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(patient.getDateChanged()),"/patient/dateChanged",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("For test purposes","/patient/voidReason",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("999","/patient/personId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("M","/patient/gender",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/patient/dead",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/patient/isPatient",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("999","/patient/patientId",xmlOutput);
+  XMLAssert.assertXpathExists("/patient/identifiers/patientIdentifier[patientIdentifierId=7]",xmlOutput);
+}
