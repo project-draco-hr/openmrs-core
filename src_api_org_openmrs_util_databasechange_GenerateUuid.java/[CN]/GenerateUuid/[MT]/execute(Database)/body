@@ -7,8 +7,12 @@
       PreparedStatement updateStatement=null;
       try {
         String idSql=genericIdSql.replaceAll("tablename",tableName);
-        idStatement=connection.createStatement();
         String updateSql=genericUpdateSql.replaceAll("tablename",tableName);
+        for (        Map.Entry<String,String> idException : idExceptionsMap.entrySet()) {
+          idSql=idSql.replaceFirst(idException.getKey(),idException.getValue());
+          updateSql=updateSql.replaceFirst(idException.getKey(),idException.getValue());
+        }
+        idStatement=connection.createStatement();
         updateStatement=connection.prepareStatement(updateSql);
         ResultSet ids=idStatement.executeQuery(idSql);
         while (ids.next()) {
