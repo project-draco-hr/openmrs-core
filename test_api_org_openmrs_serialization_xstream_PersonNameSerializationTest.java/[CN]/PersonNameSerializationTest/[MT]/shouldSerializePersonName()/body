@@ -1,0 +1,20 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/PersonNameSerializationTest.xml");
+  authenticate();
+  PersonName pn=Context.getPersonService().getPersonNameByUuid("399e3a7b-6482-487d-94ce-c07bb3ca3cc7");
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(pn,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("2","//personName/personNameId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/personName/preferred",xmlOutput);
+  XMLAssert.assertXpathExists("/personName/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("2","/personName/person/personId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Mr.","/personName/prefix",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Horatio","/personName/givenName",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Test","/personName/middleName",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Hornblower","/personName/familyName",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Esq.","/personName/familyNameSuffix",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(pn.getDateCreated()),"/personName/dateCreated",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/personName/voided",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("399e3a7b-6482-487d-94ce-c07bb3ca3cc7","/personName/@uuid",xmlOutput);
+}

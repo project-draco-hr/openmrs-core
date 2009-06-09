@@ -1,0 +1,10 @@
+{
+  if (counter > 10000) {
+    counter=0;
+    for (final Iterator iterator=map.keySet().iterator(); iterator.hasNext(); ) {
+      if (iterator.next() == null) {
+        iterator.remove();
+      }
+    }
+  }
+}

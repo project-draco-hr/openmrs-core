@@ -1,0 +1,27 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/UserSerializaionTest.xml");
+  authenticate();
+  User user=Context.getUserService().getUser(501);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(user,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("df8ae447-6745-45be-b859-403241d9913c","/user/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/user/@voided",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1","/user/creator/personId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(user.getDateCreated()),"/user/dateCreated",xmlOutput);
+  XMLAssert.assertXpathExists("/user/changedBy/@reference",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(user.getDateChanged()),"/user/dateChanged",xmlOutput);
+  XMLAssert.assertXpathExists("/user/voidedBy/@reference",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(user.getDateVoided()),"/user/dateVoided",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Test purposes","/user/voidReason",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("501","/user/personId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("F","/user/gender",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/user/dead",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/user/isUser",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("501","/user/userId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("2-6","/user/systemId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("bruno","/user/username",xmlOutput);
+  XMLAssert.assertXpathExists("/user/roles/role[role='Provider']",xmlOutput);
+  XMLAssert.assertXpathExists("/user/userProperties/entry[string='lockoutTimestamp']",xmlOutput);
+  XMLAssert.assertXpathExists("/user/userProperties/entry[string='loginAttempts']",xmlOutput);
+}

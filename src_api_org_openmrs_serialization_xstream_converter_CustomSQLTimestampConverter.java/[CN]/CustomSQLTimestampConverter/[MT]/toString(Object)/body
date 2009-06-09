@@ -1,6 +1,4 @@
 {
-  Timestamp ts=(Timestamp)o;
-  Calendar cal=Calendar.getInstance();
-  cal.setTime(new Date(ts.getTime()));
-  return String.valueOf(cal.getTimeInMillis());
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  return sdf.format((Timestamp)o);
 }

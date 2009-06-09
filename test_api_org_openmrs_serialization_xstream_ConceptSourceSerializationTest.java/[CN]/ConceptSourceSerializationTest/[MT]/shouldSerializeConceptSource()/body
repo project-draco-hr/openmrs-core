@@ -1,0 +1,16 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/ConceptSourceSerializationTest.xml");
+  authenticate();
+  ConceptSource cs=Context.getConceptService().getConceptSource(1);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(cs,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("14ea70c7-fe49-46ae-9957-8a678c82d1d8","/conceptSource/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1","/conceptSource/conceptSourceId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("SNOMED","/conceptSource/name",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Systematized Nomenclature of Medicine -- Clinical Terms","/conceptSource/description",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("test","/conceptSource/hl7Code",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptSource/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(cs.getDateCreated()),"/conceptSource/dateCreated",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/conceptSource/voided",xmlOutput);
+}

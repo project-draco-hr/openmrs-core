@@ -1,0 +1,22 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/PersonAttributeTypeSerializationTest.xml");
+  authenticate();
+  PersonAttributeType personAttributeType=Context.getPersonService().getPersonAttributeType(1);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(personAttributeType,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("1","/personAttributeType/personAttributeTypeId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("true","/personAttributeType/@retired",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("1053","/personAttributeType/foreignKey",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/personAttributeType/searchable",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("b3b6d540-a32e-44c7-91b3-292d97667518","/personAttributeType/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Race","/personAttributeType/name",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Group of persons related by common descent or heredity","/personAttributeType/description",xmlOutput);
+  XMLAssert.assertXpathExists("/personAttributeType/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(personAttributeType.getDateCreated()),"/personAttributeType/dateCreated",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(personAttributeType.getDateRetired()),"/personAttributeType/dateRetired",xmlOutput);
+  XMLAssert.assertXpathExists("/personAttributeType/retiredBy",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("test","/personAttributeType/retireReason",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("java.lang.String","/personAttributeType/format",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("Delete Cohorts","/personAttributeType/editPrivilege/privilege",xmlOutput);
+}

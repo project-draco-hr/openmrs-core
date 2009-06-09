@@ -1,0 +1,18 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/CohortSerializationTest.xml");
+  authenticate();
+  Cohort cohort=Context.getCohortService().getCohort(1);
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(cohort,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("1","/cohort/cohortId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("57b9e333-751c-4291-80d1-449412ac2cd3","/cohort/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("false","/cohort/@voided",xmlOutput);
+  XMLAssert.assertXpathExists("/cohort/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(cohort.getDateCreated()),"/cohort/dateCreated",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("old cohorts","/cohort/name",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("This is a cohort in which every one's age is above 60","/cohort/description",xmlOutput);
+  XMLAssert.assertXpathExists("/cohort/memberIds[int=6]",xmlOutput);
+  XMLAssert.assertXpathExists("/cohort/memberIds[int=7]",xmlOutput);
+  XMLAssert.assertXpathExists("/cohort/memberIds[int=8]",xmlOutput);
+}

@@ -1,0 +1,15 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet("org/openmrs/serialization/include/ConceptDescriptionSerializationTest.xml");
+  authenticate();
+  ConceptDescription cd=(ConceptDescription)Context.getConceptService().getConceptDescriptionByUuid("79a3efa7-3a43-4b38-ac5d-9b68aee086c6");
+  SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+  String xmlOutput=Context.getSerializationService().serialize(cd,XStreamSerializer.class);
+  XMLAssert.assertXpathEvaluatesTo("79a3efa7-3a43-4b38-ac5d-9b68aee086c6","/conceptDescription/@uuid",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("9","/conceptDescription/conceptDescriptionId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("3","/conceptDescription/concept/conceptId",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("This is used for coughs","/conceptDescription/description",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo("en","/conceptDescription/locale",xmlOutput);
+  XMLAssert.assertXpathExists("/conceptDescription/creator",xmlOutput);
+  XMLAssert.assertXpathEvaluatesTo(sdf.format(cd.getDateCreated()),"/conceptDescription/dateCreated",xmlOutput);
+}

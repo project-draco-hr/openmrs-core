@@ -2,10 +2,15 @@
   Object collection=source;
   if (source instanceof PersistentCollection) {
     PersistentCollection col=(PersistentCollection)source;
-    col.forceInitialization();
+    if (!Hibernate.isInitialized(source)) {
+      col.forceInitialization();
+    }
     collection=col.getStoredSnapshot();
   }
-  if (source instanceof PersistentSet) {
+  if (PersistentSortedSet.class.equals(source.getClass())) {
+    collection=new TreeSet(((HashMap)collection).keySet());
+  }
+ else   if (PersistentSet.class.equals(source.getClass())) {
     collection=new HashSet(((HashMap)collection).keySet());
   }
   if (listSetConverter.canConvert(collection.getClass())) {
@@ -22,6 +27,10 @@
   }
   if (treeSetConverter.canConvert(collection.getClass())) {
     treeSetConverter.marshal(collection,writer,context);
+    return;
+  }
+  if (hashSetConverter.canConvert(collection.getClass())) {
+    hashSetConverter.marshal(collection,writer,context);
     return;
   }
   defaultConverter.marshal(collection,writer,context);

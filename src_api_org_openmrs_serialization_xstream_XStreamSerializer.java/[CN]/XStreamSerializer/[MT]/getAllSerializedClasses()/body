@@ -1,0 +1,11 @@
+{
+  List<Class<?>> allSerializedClasses=new ArrayList<Class<?>>();
+  List<String> packageNames=this.getAllSerializedPackages();
+  for (  String p : packageNames) {
+    List<Class<?>> classes=this.getAllClassesInPackage(p);
+    if ((classes != null) && (classes.size() > 0)) {
+      allSerializedClasses.addAll(classes);
+    }
+  }
+  return allSerializedClasses;
+}
