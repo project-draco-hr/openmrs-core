@@ -6,15 +6,18 @@
     name=shortName=description="";
     if (conceptName != null) {
       name=WebUtil.escapeHTML(conceptName.getName());
+      if (!conceptName.isPreferred()) {
+        ConceptName preferredNameObj=concept.getPreferredName(locale);
+        preferredName=preferredNameObj.getName();
+      }
     }
     if (conceptShortName != null) {
       shortName=WebUtil.escapeHTML(conceptShortName.getName());
     }
-    ConceptDescription conceptDescription=concept.getDescription(locale,true);
+    ConceptDescription conceptDescription=concept.getDescription(locale,false);
     if (conceptDescription != null) {
       description=WebUtil.escapeHTML(conceptDescription.getDescription());
     }
-    synonym="";
     retired=concept.isRetired();
     hl7Abbreviation=concept.getDatatype().getHl7Abbreviation();
     className=concept.getConceptClass().getName();
