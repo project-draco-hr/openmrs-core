@@ -11,8 +11,8 @@
       Context.setRuntimeProperties(props);
     }
     Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-    copyCustomizationIntoWebapp(servletContext,props);
     if (!setupNeeded()) {
+      copyCustomizationIntoWebapp(servletContext,props);
       super.contextInitialized(event);
       startOpenmrs(event.getServletContext());
     }

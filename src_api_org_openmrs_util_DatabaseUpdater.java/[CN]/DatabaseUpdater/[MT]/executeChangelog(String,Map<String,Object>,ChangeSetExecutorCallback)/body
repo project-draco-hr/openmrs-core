@@ -1,0 +1,10 @@
+{
+  log.debug("installing the tables into the database");
+  if (changelog == null)   changelog=CHANGE_LOG_FILE;
+  try {
+    executeChangelog(changelog,CONTEXT,userInput,callback);
+  }
+ catch (  Exception e) {
+    throw new DatabaseUpdateException("There was an error while updating the database to the latest. file: " + changelog,e);
+  }
+}
