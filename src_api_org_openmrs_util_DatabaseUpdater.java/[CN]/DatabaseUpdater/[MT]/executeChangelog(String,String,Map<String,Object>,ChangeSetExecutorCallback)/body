@@ -1,0 +1,45 @@
+{
+final class OpenmrsUpdateVisitor extends UpdateVisitor {
+    private ChangeSetExecutorCallback callback;
+    private int numChangeSetsToRun;
+    public OpenmrsUpdateVisitor(    Database database,    ChangeSetExecutorCallback callback,    int numChangeSetsToRun){
+      super(database);
+      this.callback=callback;
+      this.numChangeSetsToRun=numChangeSetsToRun;
+    }
+    @Override public void visit(    ChangeSet changeSet,    Database database) throws LiquibaseException {
+      callback.executing(changeSet,numChangeSetsToRun);
+      super.visit(changeSet,database);
+    }
+  }
+  Liquibase liquibase=getLiquibase(changeLogFile);
+  int numChangeSetsToRun=liquibase.listUnrunChangeSets(contexts).size();
+  Database database=liquibase.getDatabase();
+  LockHandler lockHandler=LockHandler.getInstance(database);
+  lockHandler.waitForLock();
+  try {
+    database.checkDatabaseChangeLogTable();
+    FileOpener clFO=new ClassLoaderFileOpener();
+    FileOpener fsFO=new FileSystemFileOpener();
+    DatabaseChangeLog changeLog=new ChangeLogParser(new HashMap<String,Object>()).parse(changeLogFile,new CompositeFileOpener(clFO,fsFO));
+    changeLog.validate(database);
+    ChangeLogIterator logIterator=new ChangeLogIterator(changeLog,new ShouldRunChangeSetFilter(database),new ContextChangeSetFilter(contexts),new DbmsChangeSetFilter(database));
+    logIterator.run(new OpenmrsUpdateVisitor(database,callback,numChangeSetsToRun),database);
+  }
+ catch (  LiquibaseException e) {
+    throw e;
+  }
+ finally {
+    try {
+      lockHandler.releaseLock();
+    }
+ catch (    LockException e) {
+      log.error("Could not release lock",e);
+    }
+    try {
+      database.getConnection().close();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}

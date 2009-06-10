@@ -1,0 +1,206 @@
+{
+  Runnable r=new Runnable(){
+    /** 
+ * TODO split this up into multiple testable methods
+ * @see java.lang.Runnable#run()
+ */
+    public void run(){
+      try {
+        String connectionUsername;
+        String connectionPassword;
+        if (!wizardModel.hasCurrentOpenmrsDatabase) {
+          setMessage("Create database");
+          String sql="create database `?` default character set utf8";
+          int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+          if (result < 0) {
+            reportError(null,DEFAULT_PAGE);
+            return;
+          }
+ else {
+            wizardModel.workLog.add("Created database " + wizardModel.databaseName);
+          }
+        }
+        if (wizardModel.createDatabaseUser) {
+          setMessage("Create database user");
+          connectionUsername=wizardModel.databaseName + "_user";
+          if (connectionUsername.length() > 16)           connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
+          connectionPassword="";
+          String chars="acdeghijklmnopqrtvwxyzACDEGHIJKLMNOPQRTVWXYZ0123456789.|~@#^&";
+          Random r=new Random();
+          for (int x=0; x < 12; x++) {
+            connectionPassword+=chars.charAt(r.nextInt(chars.length()));
+          }
+          String sql="drop user '?'@'localhost'";
+          executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
+          sql="create user '?'@'localhost' identified by '?'";
+          if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
+            wizardModel.workLog.add("Created user " + connectionUsername);
+          }
+ else {
+            reportError(null,DEFAULT_PAGE);
+            return;
+          }
+          sql="GRANT ALL ON `?`.* TO '?'@'localhost'";
+          int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
+          if (result < 0) {
+            reportError(null,DEFAULT_PAGE);
+            return;
+          }
+ else {
+            wizardModel.workLog.add("Granted user " + connectionUsername + " all privileges to database "+ wizardModel.databaseName);
+          }
+        }
+ else {
+          connectionUsername=wizardModel.currentDatabaseUsername;
+          connectionPassword=wizardModel.currentDatabasePassword;
+        }
+        String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
+        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+          setMessage("Verify that the database connection works");
+          reportError(null,DEFAULT_PAGE);
+          return;
+        }
+        Properties runtimeProperties=new Properties();
+        runtimeProperties.put("connection.url",finalDatabaseConnectionString);
+        runtimeProperties.put("connection.username",connectionUsername);
+        runtimeProperties.put("connection.password",connectionPassword);
+        runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
+        runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
+        runtimeProperties.put(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY,"admin");
+        runtimeProperties.put(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY,wizardModel.adminUserPassword);
+        Context.setRuntimeProperties(runtimeProperties);
+        /** 
+ * A callback class that prints out info about liquibase changesets
+ */
+class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
+          private int i=1;
+          private String message;
+          public PrintingChangeSetExecutorCallback(          String message){
+            this.message=message;
+          }
+          /** 
+ * @see org.openmrs.util.DatabaseUpdater.ChangeSetExecutorCallback#executing(liquibase.ChangeSet,int)
+ */
+          public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
+            setMessage(message + " (" + i+++ "/"+ numChangeSetsToRun+ "): Author: "+ changeSet.getAuthor()+ " Comments: "+ changeSet.getComments()+ " Description: "+ changeSet.getDescription());
+          }
+        }
+        if (wizardModel.createTables) {
+          try {
+            setMessage("Executing " + LIQUIBASE_SCHEMA_DATA);
+            DatabaseUpdater.executeChangelog(LIQUIBASE_SCHEMA_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS schema file"));
+            DatabaseUpdater.executeChangelog(LIQUIBASE_CORE_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS core data file"));
+            wizardModel.workLog.add("Created database tables and added core data");
+          }
+ catch (          Exception e) {
+            reportError(e.getMessage() + " See the error log for more details",null);
+            log.warn("Error while trying to create tables and demo data",e);
+          }
+        }
+        if (wizardModel.createTables && wizardModel.addDemoData) {
+          try {
+            setMessage("Adding demo data");
+            DatabaseUpdater.executeChangelog(LIQUIBASE_DEMO_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS demo patients, users, and forms"));
+            wizardModel.workLog.add("Added demo data");
+          }
+ catch (          Exception e) {
+            reportError(e.getMessage() + " See the error log for more details",null);
+            log.warn("Error while trying to add demo data",e);
+          }
+        }
+        try {
+          setMessage("Updating the database to the latest version");
+          DatabaseUpdater.executeChangelog(null,null,new PrintingChangeSetExecutorCallback("Updating database tables to latest version "));
+        }
+ catch (        Exception e) {
+          reportError(e.getMessage() + " Error while trying to update to the latest database version",DEFAULT_PAGE);
+          log.warn("Error while trying to update to the latest database version",e);
+          return;
+        }
+        setMessage("Starting OpenMRS");
+        ContextLoader contextLoader=new ContextLoader();
+        contextLoader.initWebApplicationContext(filterConfig.getServletContext());
+        try {
+          Context.openSession();
+          Context.startup(runtimeProperties);
+        }
+ catch (        DatabaseUpdateException updateEx) {
+          log.warn("Error while running the database update file",updateEx);
+          reportError(updateEx.getMessage() + " There was an error while running the database update file: " + updateEx.getMessage(),DEFAULT_PAGE);
+          return;
+        }
+catch (        InputRequiredException inputRequiredEx) {
+          log.warn("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
+          reportError("Unable to continue because user input is required for the db updates and we cannot do anything about that right now",DEFAULT_PAGE);
+          return;
+        }
+        if (!wizardModel.implementationId.equals("")) {
+          try {
+            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
+            Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
+            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+            ImplementationId implId=new ImplementationId();
+            implId.setName(wizardModel.implementationIdName);
+            implId.setImplementationId(wizardModel.implementationId);
+            implId.setPassphrase(wizardModel.implementationIdPassPhrase);
+            implId.setDescription(wizardModel.implementationIdDescription);
+            Context.getAdministrationService().setImplementationId(implId);
+          }
+ catch (          Throwable t) {
+            reportError(t.getMessage() + " Implementation ID could not be set.",DEFAULT_PAGE);
+            log.warn("Implementation ID could not be set.",t);
+            Context.shutdown();
+            WebModuleUtil.shutdownModules(filterConfig.getServletContext());
+            contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
+            return;
+          }
+ finally {
+            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
+            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
+            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+          }
+        }
+        try {
+          if (wizardModel.createTables) {
+            Context.authenticate("admin","test");
+            Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
+            Context.logout();
+          }
+          Listener.loadAndStartCoreModules(filterConfig.getServletContext());
+          Listener.performWebStartOfModules(filterConfig.getServletContext());
+          SchedulerUtil.startup(runtimeProperties);
+        }
+ catch (        Throwable t) {
+          Context.shutdown();
+          WebModuleUtil.shutdownModules(filterConfig.getServletContext());
+          contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
+          reportError(t.getMessage() + " Unable to complete the startup.",DEFAULT_PAGE);
+          log.warn("Unable to complete the startup.",t);
+          return;
+        }
+        FileOutputStream fos=null;
+        try {
+          fos=new FileOutputStream(getRuntimePropertiesFile());
+          runtimeProperties.store(fos,"Auto generated by OpenMRS initialization wizard");
+          wizardModel.workLog.add("Saved runtime properties file " + getRuntimePropertiesFile());
+        }
+  finally {
+          if (fos != null) {
+            fos.close();
+          }
+        }
+        Context.closeSession();
+      }
+ catch (      IOException e) {
+        reportError(e.getMessage() + " Unable to complete the startup.",DEFAULT_PAGE);
+      }
+ finally {
+        setCompleted(true);
+      }
+    }
+  }
+;
+  thread=new Thread(r);
+}

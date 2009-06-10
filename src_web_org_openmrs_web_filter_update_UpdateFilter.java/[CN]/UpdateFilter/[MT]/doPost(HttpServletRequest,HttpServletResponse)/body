@@ -31,7 +31,7 @@
       renderTemplate(DEFAULT_PAGE,referenceMap,writer);
     }
     try {
-      DatabaseUpdater.update();
+      DatabaseUpdater.executeChangelog();
     }
  catch (    InputRequiredException inputRequired) {
       log.error("Not implemented",inputRequired);

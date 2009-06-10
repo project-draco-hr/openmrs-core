@@ -125,175 +125,33 @@
       renderTemplate("implementationidsetup.vm",referenceMap,writer);
       return;
     }
-    Properties runtimeProperties=new Properties();
-    String connectionUsername;
-    String connectionPassword;
-    if (!wizardModel.hasCurrentOpenmrsDatabase) {
-      String sql="create database `?` default character set utf8";
-      int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
-      if (result < 0) {
-        renderTemplate(DEFAULT_PAGE,null,writer);
-        return;
+    initJob=new InitializationCompletion();
+    initJob.start();
+    renderTemplate("progress.vm",referenceMap,writer);
+  }
+ else   if ("progress.vm".equals(page)) {
+    if (initJob != null) {
+      if (initJob.hasErrors()) {
+        initJob.waitForCompletion();
+        page=initJob.getErrorPage();
+        errors.addAll(initJob.getErrors());
+        renderTemplate(page,referenceMap,writer);
+      }
+ else       if (initJob.isCompleted()) {
+        initializationComplete=true;
+        httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
       }
  else {
-        wizardModel.workLog.add("Created database " + wizardModel.databaseName);
+        wizardModel.actionCounter=initJob.getStepsComplete();
+        wizardModel.lastActionMessage=initJob.getMessage();
+        Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+        if (appender instanceof MemoryAppender) {
+          MemoryAppender memoryAppender=(MemoryAppender)appender;
+          wizardModel.logLines=memoryAppender.getLogLines();
+        }
+        page="progress.vm";
+        renderTemplate(page,referenceMap,writer);
       }
     }
-    if (wizardModel.createDatabaseUser) {
-      connectionUsername=wizardModel.databaseName + "_user";
-      if (connectionUsername.length() > 16)       connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
-      connectionPassword="";
-      String chars="acdeghijklmnopqrtvwxyzACDEGHIJKLMNOPQRTVWXYZ0123456789.|~@#^&";
-      Random r=new Random();
-      for (int x=0; x < 12; x++) {
-        connectionPassword+=chars.charAt(r.nextInt(chars.length()));
-      }
-      String sql="drop user '?'@'localhost'";
-      executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
-      sql="create user '?'@'localhost' identified by '?'";
-      if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
-        wizardModel.workLog.add("Created user " + connectionUsername);
-      }
- else {
-        renderTemplate(DEFAULT_PAGE,null,writer);
-        return;
-      }
-      sql="GRANT ALL ON `?`.* TO '?'@'localhost'";
-      int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
-      if (result < 0) {
-        renderTemplate(DEFAULT_PAGE,null,writer);
-        return;
-      }
- else {
-        wizardModel.workLog.add("Granted user " + connectionUsername + " all privileges to database "+ wizardModel.databaseName);
-      }
-    }
- else {
-      connectionUsername=wizardModel.currentDatabaseUsername;
-      connectionPassword=wizardModel.currentDatabasePassword;
-    }
-    String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-    if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
-      renderTemplate(DEFAULT_PAGE,null,writer);
-      return;
-    }
-    runtimeProperties.put("connection.url",finalDatabaseConnectionString);
-    runtimeProperties.put("connection.username",connectionUsername);
-    runtimeProperties.put("connection.password",connectionPassword);
-    runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
-    runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
-    runtimeProperties.put(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY,"admin");
-    runtimeProperties.put(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY,wizardModel.adminUserPassword);
-    Context.setRuntimeProperties(runtimeProperties);
-    if (wizardModel.createTables) {
-      try {
-        DatabaseUpdater.executeChangelog(LIQUIBASE_SCHEMA_DATA,null);
-        DatabaseUpdater.executeChangelog(LIQUIBASE_CORE_DATA,null);
-        wizardModel.workLog.add("Created database tables and added core data");
-      }
- catch (      Exception e) {
-        errors.add(e.getMessage() + " See the error log for more details");
-        log.warn("Error while trying to create tables and demo data",e);
-      }
-    }
-    if (wizardModel.createTables && wizardModel.addDemoData) {
-      try {
-        DatabaseUpdater.executeChangelog(LIQUIBASE_DEMO_DATA,null);
-        wizardModel.workLog.add("Added demo data");
-      }
- catch (      Exception e) {
-        errors.add(e.getMessage() + " See the error log for more details");
-        log.warn("Error while trying to add demo data",e);
-      }
-    }
-    try {
-      DatabaseUpdater.update();
-    }
- catch (    Exception e) {
-      errors.add(e.getMessage() + " Error while trying to update to the latest database version");
-      log.warn("Error while trying to update to the latest database version",e);
-      renderTemplate(DEFAULT_PAGE,null,writer);
-      return;
-    }
-    ContextLoader contextLoader=new ContextLoader();
-    contextLoader.initWebApplicationContext(filterConfig.getServletContext());
-    try {
-      Context.openSession();
-      Context.startup(runtimeProperties);
-    }
- catch (    DatabaseUpdateException updateEx) {
-      log.warn("Error while running the database update file",updateEx);
-      errors.add(updateEx.getMessage() + " There was an error while running the database update file: " + updateEx.getMessage());
-      renderTemplate(DEFAULT_PAGE,null,writer);
-      return;
-    }
-catch (    InputRequiredException inputRequiredEx) {
-      log.warn("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
-      errors.add("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
-      renderTemplate(DEFAULT_PAGE,null,writer);
-      return;
-    }
-    if (!wizardModel.implementationId.equals("")) {
-      try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
-        ImplementationId implId=new ImplementationId();
-        implId.setName(wizardModel.implementationIdName);
-        implId.setImplementationId(wizardModel.implementationId);
-        implId.setPassphrase(wizardModel.implementationIdPassPhrase);
-        implId.setDescription(wizardModel.implementationIdDescription);
-        Context.getAdministrationService().setImplementationId(implId);
-      }
- catch (      Throwable t) {
-        errors.add(t.getMessage() + " Implementation ID could not be set.");
-        log.warn("Implementation ID could not be set.",t);
-        renderTemplate(DEFAULT_PAGE,null,writer);
-        Context.shutdown();
-        WebModuleUtil.shutdownModules(filterConfig.getServletContext());
-        contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
-        return;
-      }
- finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
-      }
-    }
-    try {
-      if (wizardModel.createTables) {
-        Context.authenticate("admin","test");
-        Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
-        Context.logout();
-      }
-      Listener.loadAndStartCoreModules(filterConfig.getServletContext());
-      Listener.performWebStartOfModules(filterConfig.getServletContext());
-      SchedulerUtil.startup(runtimeProperties);
-    }
- catch (    Throwable t) {
-      Context.shutdown();
-      WebModuleUtil.shutdownModules(filterConfig.getServletContext());
-      contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
-      errors.add(t.getMessage() + " Unable to complete the startup.");
-      log.warn("Unable to complete the startup.",t);
-      renderTemplate(DEFAULT_PAGE,null,writer);
-      return;
-    }
-    FileOutputStream fos=null;
-    try {
-      fos=new FileOutputStream(getRuntimePropertiesFile());
-      OpenmrsUtil.storeProperties(runtimeProperties,fos,null);
-      wizardModel.workLog.add("Saved runtime properties file " + getRuntimePropertiesFile());
-    }
-  finally {
-      if (fos != null) {
-        fos.close();
-      }
-    }
-    initializationComplete=true;
-    Context.closeSession();
-    httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
   }
 }
