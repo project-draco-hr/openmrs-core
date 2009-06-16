@@ -1,0 +1,9 @@
+{
+  Log log=LogFactory.getLog(getClass());
+  try {
+    changes=DatabaseUpdater.getUnrunDatabaseChanges();
+  }
+ catch (  Exception e) {
+    log.error("Unable to get the database changes",e);
+  }
+}

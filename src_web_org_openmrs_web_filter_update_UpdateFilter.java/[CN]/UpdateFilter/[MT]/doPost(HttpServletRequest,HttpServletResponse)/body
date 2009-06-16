@@ -36,12 +36,15 @@
  catch (    InputRequiredException inputRequired) {
       log.error("Not implemented",inputRequired);
       errors.add("Input during database updates is not yet implemented. " + inputRequired.getMessage());
+      model.updateChanges();
       renderTemplate(REVIEW_CHANGES,referenceMap,writer);
       return;
     }
 catch (    DatabaseUpdateException e) {
       log.error("Unable to update the database",e);
-      errors.add("Unable to update the database.  See server error logs for the full stacktrace. " + e.getMessage());
+      errors.add("Unable to update the database.  See server error logs for the full stacktrace.");
+      errors.addAll(Arrays.asList(e.getMessage().split("\n")));
+      model.updateChanges();
       renderTemplate(REVIEW_CHANGES,referenceMap,writer);
       return;
     }
