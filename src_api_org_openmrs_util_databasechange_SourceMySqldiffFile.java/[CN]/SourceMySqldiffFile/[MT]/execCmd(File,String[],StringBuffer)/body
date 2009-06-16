@@ -1,0 +1,28 @@
+{
+  log.debug("executing command: " + Arrays.toString(cmdWithArguments));
+  Integer exitValue=-1;
+  if (!OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM)   wd=null;
+  Process p=(wd != null) ? Runtime.getRuntime().exec(cmdWithArguments,null,wd) : Runtime.getRuntime().exec(cmdWithArguments);
+  out.append("Normal cmd output:\n");
+  Reader reader=new InputStreamReader(p.getInputStream());
+  BufferedReader input=new BufferedReader(reader);
+  int readChar=0;
+  while ((readChar=input.read()) != -1) {
+    out.append((char)readChar);
+  }
+  input.close();
+  reader.close();
+  out.append("ErrorStream cmd output:\n");
+  reader=new InputStreamReader(p.getErrorStream());
+  input=new BufferedReader(reader);
+  readChar=0;
+  while ((readChar=input.read()) != -1) {
+    out.append((char)readChar);
+  }
+  input.close();
+  reader.close();
+  exitValue=p.waitFor();
+  log.debug("Process exit value: " + exitValue);
+  log.debug("execCmd output: \n" + out.toString());
+  return exitValue;
+}
