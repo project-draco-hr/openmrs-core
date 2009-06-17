@@ -1,5 +1,6 @@
 {
   if (module != null) {
+    String moduleId=module.getModuleId();
     try {
       String requireVersion=module.getRequireOpenmrsVersion();
       if (requireVersion != null && !requireVersion.equals(""))       if (ModuleUtil.compareVersion(OpenmrsConstants.OPENMRS_VERSION_SHORT,requireVersion) < 0)       throw new ModuleException("Module requires at least version '" + requireVersion + "'.  Current code version is only '"+ OpenmrsConstants.OPENMRS_VERSION_SHORT+ "'",module.getName());
@@ -27,25 +28,13 @@
   finally {
         Context.removeProxyPrivilege("");
       }
-      getStartedModulesMap().put(module.getModuleId(),module);
+      getStartedModulesMap().put(moduleId,module);
       try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-        AdministrationService as=Context.getAdministrationService();
-        String propertyKey=module.getModuleId() + ".started";
-        GlobalProperty gp=as.getGlobalPropertyObject(propertyKey);
-        if (gp != null) {
-          gp.setPropertyValue("true");
-        }
- else {
-          gp=new GlobalProperty(propertyKey,"true",getGlobalPropertyStartedDescription(module.getModuleId()));
-        }
-        as.saveGlobalProperty(gp);
+        saveGlobalProperty(moduleId + ".started","true",getGlobalPropertyStartedDescription(moduleId));
+        saveGlobalProperty(moduleId + ".mandatory",String.valueOf(module.isMandatory()),getGlobalPropertyMandatoryModuleDescription(moduleId));
       }
  catch (      Exception e) {
         log.debug("Got an error when trying to set the global property on module startup",e);
-      }
- finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
       }
       if (module.getPrivileges().size() > 0 || module.getGlobalProperties().size() > 0) {
         log.debug("Updating core dataset");
@@ -63,13 +52,15 @@ catch (      Exception e) {
       module.clearStartupError();
     }
  catch (    Exception e) {
-      log.warn("Error while trying to start module: " + module.getModuleId(),e);
+      log.warn("Error while trying to start module: " + moduleId,e);
       module.setStartupErrorMessage("Error while trying to start module",e);
       try {
-        stopModule(module);
+        boolean skipOverStartedProperty=false;
+        if (e instanceof MandatoryModuleException)         skipOverStartedProperty=true;
+        stopModule(module,skipOverStartedProperty,true);
       }
  catch (      Exception e2) {
-        log.debug("Error while stopping module: " + module.getModuleId(),e2);
+        log.debug("Error while stopping module: " + moduleId,e2);
       }
     }
   }
