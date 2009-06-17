@@ -9,6 +9,9 @@
 catch (  InputRequiredException inputRequiredEx) {
     throw new ServletException("Should not be here because updates were run previously",inputRequiredEx);
   }
+catch (  MandatoryModuleException mandatoryModEx) {
+    throw new ServletException(mandatoryModEx);
+  }
   try {
     Listener.loadAndStartCoreModules(servletContext);
     Listener.performWebStartOfModules(servletContext);

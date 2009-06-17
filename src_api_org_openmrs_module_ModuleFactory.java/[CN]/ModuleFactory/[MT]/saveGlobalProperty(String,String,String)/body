@@ -1,0 +1,16 @@
+{
+  try {
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+    AdministrationService as=Context.getAdministrationService();
+    GlobalProperty gp=as.getGlobalPropertyObject(key);
+    if (gp == null)     gp=new GlobalProperty(key,value,desc);
+ else     gp.setPropertyValue(value);
+    as.saveGlobalProperty(gp);
+  }
+ catch (  Throwable t) {
+    log.warn("Unable to save the global property",t);
+  }
+ finally {
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+  }
+}
