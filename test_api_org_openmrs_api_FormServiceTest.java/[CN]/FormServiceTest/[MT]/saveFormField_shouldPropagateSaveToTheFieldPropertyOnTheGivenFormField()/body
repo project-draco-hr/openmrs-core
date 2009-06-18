@@ -1,0 +1,10 @@
+{
+  Field field=new Field();
+  field.setName("This is a new field");
+  field.setDescription("It should be saved along with the formField");
+  FormField formField=new FormField();
+  formField.setField(field);
+  formField.setForm(new Form(1));
+  Context.getFormService().saveFormField(formField);
+  Assert.assertNotNull(field.getUuid());
+}
