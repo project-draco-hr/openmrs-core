@@ -10,7 +10,43 @@
     log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
     es.saveEncounter(e);
   }
-  for (  PatientIdentifier pi : notPreferred.getIdentifiers()) {
+  ProgramWorkflowService programService=Context.getProgramWorkflowService();
+  for (  PatientProgram pp : programService.getPatientPrograms(notPreferred,null,null,null,null,null,false)) {
+    if (!pp.getVoided()) {
+      PatientProgram enroll=pp.copy();
+      enroll.setPatient(preferred);
+      log.debug("Copying patientProgram " + pp.getPatientProgramId() + " to "+ preferred.getPatientId());
+      programService.savePatientProgram(enroll);
+    }
+  }
+  PersonService personService=Context.getPersonService();
+  for (  Relationship rel : personService.getRelationshipsByPerson(notPreferred)) {
+    if (!rel.isVoided()) {
+      if (!((rel.getPersonA().equals(notPreferred) && rel.getPersonB().equals(preferred)) || rel.getPersonB().equals(notPreferred) && rel.getPersonA().equals(preferred))) {
+        Relationship tmpRel=rel.copy();
+        if (tmpRel.getPersonA().equals(notPreferred))         tmpRel.setPersonA(preferred);
+        if (tmpRel.getPersonB().equals(notPreferred))         tmpRel.setPersonB(preferred);
+        log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
+        personService.saveRelationship(tmpRel);
+      }
+    }
+  }
+  ObsService obsService=Context.getObsService();
+  for (  Obs obs : obsService.getObservationsByPerson(notPreferred)) {
+    if (obs.getEncounter() == null && !obs.isVoided()) {
+      obs.setPerson(preferred);
+      obsService.saveObs(obs,"Merged from patient #" + notPreferred.getPatientId());
+    }
+  }
+  OrderService os=Context.getOrderService();
+  for (  Order o : os.getOrdersByPatient(notPreferred)) {
+    if (o.getEncounter() == null && !o.getVoided()) {
+      Order tmpOrder=o.copy();
+      tmpOrder.setPatient(preferred);
+      os.saveOrder(tmpOrder);
+    }
+  }
+  for (  PatientIdentifier pi : notPreferred.getActiveIdentifiers()) {
     PatientIdentifier tmpIdentifier=new PatientIdentifier();
     tmpIdentifier.setIdentifier(pi.getIdentifier());
     tmpIdentifier.setIdentifierType(null);
@@ -27,6 +63,7 @@
       tmpIdentifier.setVoided(false);
       tmpIdentifier.setVoidedBy(null);
       tmpIdentifier.setVoidReason(null);
+      tmpIdentifier.setUuid(UUID.randomUUID().toString());
       tmpIdentifier.setPreferred(false);
       preferred.addIdentifier(tmpIdentifier);
       log.debug("Merging identifier " + tmpIdentifier.getIdentifier() + " to "+ preferred.getPatientId());
@@ -49,6 +86,7 @@
       tmpName.setVoidedBy(null);
       tmpName.setVoidReason(null);
       tmpName.setPreferred(false);
+      tmpName.setUuid(UUID.randomUUID().toString());
       preferred.addName(tmpName);
       log.debug("Merging name " + newName.getGivenName() + " to "+ preferred.getPatientId());
     }
@@ -69,49 +107,16 @@
       tmpAddress.setVoided(false);
       tmpAddress.setVoidedBy(null);
       tmpAddress.setVoidReason(null);
-      tmpAddress.setUuid(null);
+      tmpAddress.setUuid(UUID.randomUUID().toString());
       preferred.addAddress(tmpAddress);
       log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
-    }
-  }
-  ProgramWorkflowService programService=Context.getProgramWorkflowService();
-  for (  PatientProgram pp : programService.getPatientPrograms(notPreferred,null,null,null,null,null,false)) {
-    if (!pp.getVoided()) {
-      PatientProgram enroll=pp.copy();
-      enroll.setPatient(preferred);
-      log.debug("Copying patientProgram " + pp.getPatientProgramId() + " to "+ preferred.getPatientId());
-      programService.savePatientProgram(enroll);
-    }
-  }
-  PersonService personService=Context.getPersonService();
-  for (  Relationship rel : personService.getRelationshipsByPerson(notPreferred)) {
-    if (!rel.isVoided()) {
-      Relationship tmpRel=rel.copy();
-      if (tmpRel.getPersonA().equals(notPreferred))       tmpRel.setPersonA(preferred);
-      if (tmpRel.getPersonB().equals(notPreferred))       tmpRel.setPersonB(preferred);
-      log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
-      personService.saveRelationship(tmpRel);
-    }
-  }
-  ObsService obsService=Context.getObsService();
-  for (  Obs obs : obsService.getObservationsByPerson(notPreferred)) {
-    if (obs.getEncounter() == null && !obs.isVoided()) {
-      obs.setPerson(preferred);
-      obsService.saveObs(obs,"Merged from patient #" + notPreferred.getPatientId());
-    }
-  }
-  OrderService os=Context.getOrderService();
-  for (  Order o : os.getOrdersByPatient(notPreferred)) {
-    if (o.getEncounter() == null && !o.getVoided()) {
-      Order tmpOrder=o.copy();
-      tmpOrder.setPatient(preferred);
-      os.saveOrder(tmpOrder);
     }
   }
   for (  PersonAttribute attr : notPreferred.getAttributes()) {
     if (!attr.isVoided()) {
       PersonAttribute tmpAttr=attr.copy();
       tmpAttr.setPerson(null);
+      tmpAttr.setUuid(UUID.randomUUID().toString());
       preferred.addAttribute(tmpAttr);
     }
   }
