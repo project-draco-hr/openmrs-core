@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/PersonServiceTest-createRelationship.xml");
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  patientService.mergePatients(preferred,notPreferred);
+}
