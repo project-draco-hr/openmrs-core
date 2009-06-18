@@ -2,5 +2,6 @@
   Field field=formField.getField();
   if (field.getCreator() == null)   field.setCreator(Context.getAuthenticatedUser());
   if (field.getDateCreated() == null)   field.setDateCreated(new Date());
+  if (field.getUuid() == null)   field.setUuid(UUID.randomUUID().toString());
   return dao.saveFormField(formField);
 }
