@@ -25,7 +25,7 @@
   StringBuffer output=new StringBuffer();
   Integer exitValue=-1;
   try {
-    execCmd(tmpOutputFile.getParentFile(),commands.toArray(new String[]{}),output);
+    exitValue=execCmd(tmpOutputFile.getParentFile(),commands.toArray(new String[]{}),output);
   }
  catch (  IOException io) {
     if (io.getMessage().endsWith("not found")) {

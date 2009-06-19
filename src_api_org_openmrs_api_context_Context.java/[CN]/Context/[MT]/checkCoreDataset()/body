@@ -58,6 +58,7 @@
       String corePropName=coreProp.getProperty().toUpperCase();
       if (!currentPropNames.contains(corePropName)) {
         Context.getAdministrationService().saveGlobalProperty(coreProp);
+        currentPropNames.add(corePropName);
       }
  else {
         GlobalProperty propToUpdate=propsMissingDescription.get(corePropName);
