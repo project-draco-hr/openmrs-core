@@ -19,7 +19,7 @@ catch (    Exception e) {
     if (log.isDebugEnabled())     log.debug("Candidate user id: " + candidateUser.getUserId());
     String lockoutTimeString=candidateUser.getUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,null);
     Long lockoutTime=null;
-    if (lockoutTimeString != null)     lockoutTime=Long.valueOf(lockoutTimeString);
+    if (lockoutTimeString != null && !lockoutTimeString.equals("0"))     lockoutTime=Long.valueOf(lockoutTimeString);
     if (lockoutTime != null) {
       if (new Date().getTime() - lockoutTime > 300000)       candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
  else {
@@ -36,7 +36,7 @@ catch (    Exception e) {
       Integer attempts=getUsersLoginAttempts(candidateUser);
       if (attempts > 0) {
         candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
-        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,"0");
+        candidateUser.removeUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP);
         saveUserProperties(candidateUser);
       }
       return candidateUser;
