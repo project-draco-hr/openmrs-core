@@ -1,0 +1,64 @@
+{
+  Runnable r=new Runnable(){
+    /** 
+ * TODO split this up into multiple testable methods
+ * @see java.lang.Runnable#run()
+ */
+    public void run(){
+      try {
+        /** 
+ * A callback class that prints out info about liquibase changesets
+ */
+class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
+          private String message;
+          public PrintingChangeSetExecutorCallback(          String message){
+            this.message=message;
+          }
+          /** 
+ * @see org.openmrs.util.DatabaseUpdater.ChangeSetExecutorCallback#executing(liquibase.ChangeSet,int)
+ */
+          public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
+            addChangesetId(changeSet.getId());
+            setMessage(message);
+          }
+        }
+        try {
+          setMessage("Updating the database to the latest version");
+          DatabaseUpdater.executeChangelog(null,null,new PrintingChangeSetExecutorCallback("Updating database tables to latest version "));
+        }
+ catch (        InputRequiredException inputRequired) {
+          log.error("Not implemented",inputRequired);
+          model.updateChanges();
+          reportError("Input during database updates is not yet implemented. " + inputRequired.getMessage());
+          return;
+        }
+catch (        DatabaseUpdateException e) {
+          log.error("Unable to update the database",e);
+          List<String> errors=new ArrayList<String>();
+          errors.add("Unable to update the database.  See server error logs for the full stacktrace.");
+          errors.addAll(Arrays.asList(e.getMessage().split("\n")));
+          model.updateChanges();
+          reportErrors(errors);
+          return;
+        }
+        setMessage("Starting OpenMRS");
+        try {
+          startOpenmrs(filterConfig.getServletContext());
+        }
+ catch (        Throwable t) {
+          log.error("Unable to complete the startup.",t);
+          reportError("Unable to complete the startup.  See the server error log for the complete stacktrace." + t.getMessage());
+          return;
+        }
+        setUpdatesRequired(false);
+      }
+  finally {
+        if (!hasErrors()) {
+          setUpdatesRequired(false);
+        }
+      }
+    }
+  }
+;
+  thread=new Thread(r);
+}
