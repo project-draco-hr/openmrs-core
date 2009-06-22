@@ -1,5 +1,6 @@
 {
   try {
+    Context.openSession();
     Boolean emailIsEnabled=Boolean.valueOf(Context.getAdministrationService().getGlobalProperty(SchedulerConstants.SCHEDULER_ADMIN_EMAIL_ENABLED_PROPERTY));
     if (emailIsEnabled) {
       String recipients=Context.getAdministrationService().getGlobalProperty(SchedulerConstants.SCHEDULER_ADMIN_EMAIL_PROPERTY);
@@ -20,5 +21,8 @@
   }
  catch (  Exception e) {
     log.warn("Could not send scheduler error email: ",e);
+  }
+ finally {
+    Context.closeSession();
   }
 }
