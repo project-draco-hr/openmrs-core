@@ -10,7 +10,6 @@
       log.debug("Authentication successful.  Redirecting to 'reviewupdates' page.");
       authenticatedSuccessfully=true;
       renderTemplate(REVIEW_CHANGES,referenceMap,writer);
-      return;
     }
  else {
       try {
@@ -23,41 +22,40 @@
       }
       errors.add("Unable to authenticate as a " + OpenmrsConstants.SUPERUSER_ROLE + ". Invalid username or password");
       renderTemplate(DEFAULT_PAGE,referenceMap,writer);
-      return;
     }
   }
  else   if (REVIEW_CHANGES.equals(page)) {
     if (!authenticatedSuccessfully) {
       renderTemplate(DEFAULT_PAGE,referenceMap,writer);
-    }
-    try {
-      DatabaseUpdater.executeChangelog();
-    }
- catch (    InputRequiredException inputRequired) {
-      log.error("Not implemented",inputRequired);
-      errors.add("Input during database updates is not yet implemented. " + inputRequired.getMessage());
-      model.updateChanges();
-      renderTemplate(REVIEW_CHANGES,referenceMap,writer);
       return;
     }
-catch (    DatabaseUpdateException e) {
-      log.error("Unable to update the database",e);
-      errors.add("Unable to update the database.  See server error logs for the full stacktrace.");
-      errors.addAll(Arrays.asList(e.getMessage().split("\n")));
-      model.updateChanges();
-      renderTemplate(REVIEW_CHANGES,referenceMap,writer);
-      return;
+    updateJob=new UpdateFilterCompletion();
+    updateJob.start();
+    referenceMap.put("updateJobStarted",true);
+    renderTemplate(REVIEW_CHANGES,referenceMap,writer);
+  }
+ else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
+    httpResponse.setContentType("text/json");
+    httpResponse.setHeader("Cache-Control","no-cache");
+    Map<String,Object> result=new HashMap<String,Object>();
+    if (updateJob != null) {
+      result.put("hasErrors",updateJob.hasErrors());
+      if (updateJob.hasErrors()) {
+        errors.addAll(updateJob.getErrors());
+      }
+      result.put("updatesRequired",updatesRequired());
+      result.put("message",updateJob.getMessage());
+      result.put("changesetIds",updateJob.getChangesetIds());
+      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+      if (appender instanceof MemoryAppender) {
+        MemoryAppender memoryAppender=(MemoryAppender)appender;
+        result.put("logLines",memoryAppender.getLogLines());
+      }
+ else {
+        result.put("logLines",new ArrayList<String>());
+      }
     }
+    String jsonText=toJSONString(result);
+    writer.write(jsonText);
   }
-  try {
-    startOpenmrs(filterConfig.getServletContext());
-  }
- catch (  Throwable t) {
-    log.error("Unable to complete the startup.",t);
-    errors.add("Unable to complete the startup.  See the server error log for the complete stacktrace." + t.getMessage());
-    renderTemplate(DEFAULT_PAGE,null,writer);
-    return;
-  }
-  updatesRequired=false;
-  httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
 }
