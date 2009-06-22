@@ -2,5 +2,5 @@
   if (w.getProgram() == null) {
     throw new APIException("ProgramWorkflow requires a Program");
   }
-  saveProgram(w.getProgram());
+  Context.getProgramWorkflowService().saveProgram(w.getProgram());
 }
