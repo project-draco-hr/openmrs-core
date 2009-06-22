@@ -1,0 +1,14 @@
+{
+  boolean first=true;
+  sb.append('{');
+  for (  Map.Entry<String,Object> entry : map.entrySet()) {
+    if (first)     first=false;
+ else     sb.append(',');
+    sb.append('"');
+    if (entry.getKey() == null)     sb.append("null");
+ else     sb.append(JavascriptUtil.escapeJavaScript(entry.getKey()));
+    sb.append('"').append(':');
+    sb.append(toJSONString(entry.getValue()));
+  }
+  sb.append('}');
+}

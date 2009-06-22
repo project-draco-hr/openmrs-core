@@ -2,7 +2,7 @@
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
   Writer writer=httpResponse.getWriter();
-  if ("databasesetup.vm".equals(page)) {
+  if (DATABASE_SETUP.equals(page)) {
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
     if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
@@ -21,13 +21,13 @@
       checkForEmptyValue(wizardModel.createDatabasePassword,errors,"Password for user with 'CREATE DATABASE' privileges");
     }
     if (errors.isEmpty()) {
-      page="databasetablesanduser.vm";
+      page=DATABASE_TABLES_AND_USER;
     }
     renderTemplate(page,referenceMap,writer);
   }
- else   if ("databasetablesanduser.vm".equals(page)) {
+ else   if (DATABASE_TABLES_AND_USER.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate("databasesetup.vm",referenceMap,writer);
+      renderTemplate(DATABASE_SETUP,referenceMap,writer);
       return;
     }
     if (wizardModel.hasCurrentOpenmrsDatabase) {
@@ -51,40 +51,40 @@
       checkForEmptyValue(wizardModel.createUserPassword,errors,"Password for user that has 'CREATE USER' privileges");
     }
     if (errors.isEmpty()) {
-      page="otherruntimeproperties.vm";
+      page=OTHER_RUNTIME_PROPS;
     }
     renderTemplate(page,referenceMap,writer);
   }
- else   if ("otherruntimeproperties.vm".equals(page)) {
+ else   if (OTHER_RUNTIME_PROPS.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate("databasetablesanduser.vm",referenceMap,writer);
+      renderTemplate(DATABASE_TABLES_AND_USER,referenceMap,writer);
       return;
     }
     wizardModel.moduleWebAdmin="yes".equals(httpRequest.getParameter("module_web_admin"));
     wizardModel.autoUpdateDatabase="yes".equals(httpRequest.getParameter("auto_update_database"));
     if (wizardModel.createTables) {
-      page="adminusersetup.vm";
+      page=ADMIN_USER_SETUP;
     }
  else {
-      page="implementationidsetup.vm";
+      page=IMPLEMENTATION_ID_SETUP;
     }
     renderTemplate(page,referenceMap,writer);
   }
- else   if ("adminusersetup.vm".equals(page)) {
+ else   if (ADMIN_USER_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate("otherruntimeproperties.vm",referenceMap,writer);
+      renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,writer);
       return;
     }
     wizardModel.adminUserPassword=httpRequest.getParameter("new_admin_password");
     String adminUserConfirm=httpRequest.getParameter("new_admin_password_confirm");
     if (!wizardModel.adminUserPassword.equals(adminUserConfirm)) {
       errors.add("Admin passwords don't match");
-      renderTemplate("adminusersetup.vm",referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
       return;
     }
     if (wizardModel.adminUserPassword.equals("")) {
       errors.add("An admin password is required");
-      renderTemplate("adminusersetup.vm",referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
       return;
     }
     try {
@@ -92,18 +92,18 @@
     }
  catch (    PasswordException p) {
       errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
-      renderTemplate("adminusersetup.vm",referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
       return;
     }
     if (errors.isEmpty()) {
-      page="implementationidsetup.vm";
+      page=IMPLEMENTATION_ID_SETUP;
     }
     renderTemplate(page,referenceMap,writer);
   }
- else   if ("implementationidsetup.vm".equals(page)) {
+ else   if (IMPLEMENTATION_ID_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      if (wizardModel.createTables)       renderTemplate("adminusersetup.vm",referenceMap,writer);
- else       renderTemplate("otherruntimeproperties.vm",referenceMap,writer);
+      if (wizardModel.createTables)       renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
+ else       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,writer);
       return;
     }
     wizardModel.implementationIdName=httpRequest.getParameter("implementation_name");
@@ -112,46 +112,45 @@
     wizardModel.implementationIdDescription=httpRequest.getParameter("description");
     if (wizardModel.implementationId.indexOf('^') != -1 || wizardModel.implementationId.indexOf('|') != -1) {
       errors.add("Implementation ID cannot contain '^' or '|'");
-      renderTemplate("implementationidsetup.vm",referenceMap,writer);
+      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,writer);
       return;
     }
     if (errors.isEmpty()) {
-      page="wizardcomplete.vm";
+      page=WIZARD_COMPLETE;
     }
     renderTemplate(page,referenceMap,writer);
   }
- else   if ("wizardcomplete.vm".equals(page)) {
+ else   if (WIZARD_COMPLETE.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate("implementationidsetup.vm",referenceMap,writer);
+      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,writer);
       return;
     }
     initJob=new InitializationCompletion();
     initJob.start();
-    renderTemplate("progress.vm",referenceMap,writer);
+    renderTemplate(PROGRESS_VM,referenceMap,writer);
   }
- else   if ("progress.vm".equals(page)) {
+ else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
+    httpResponse.setContentType("text/json");
+    httpResponse.setHeader("Cache-Control","no-cache");
+    Map<String,Object> result=new HashMap<String,Object>();
     if (initJob != null) {
+      result.put("hasErrors",initJob.hasErrors());
       if (initJob.hasErrors()) {
-        initJob.waitForCompletion();
-        page=initJob.getErrorPage();
+        result.put("errorPage",initJob.getErrorPage());
         errors.addAll(initJob.getErrors());
-        renderTemplate(page,referenceMap,writer);
       }
- else       if (initJob.isCompleted()) {
-        initializationComplete=true;
-        httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME);
+      result.put("initializationComplete",isInitializationComplete());
+      result.put("message",initJob.getMessage());
+      result.put("actionCounter",initJob.getStepsComplete());
+      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+      if (appender instanceof MemoryAppender) {
+        MemoryAppender memoryAppender=(MemoryAppender)appender;
+        result.put("logLines",memoryAppender.getLogLines());
       }
  else {
-        wizardModel.actionCounter=initJob.getStepsComplete();
-        wizardModel.lastActionMessage=initJob.getMessage();
-        Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
-        if (appender instanceof MemoryAppender) {
-          MemoryAppender memoryAppender=(MemoryAppender)appender;
-          wizardModel.logLines=memoryAppender.getLogLines();
-        }
-        page="progress.vm";
-        renderTemplate(page,referenceMap,writer);
+        result.put("logLines",new ArrayList<String>());
       }
     }
+    writer.write(toJSONString(result));
   }
 }

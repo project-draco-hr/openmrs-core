@@ -13,7 +13,7 @@
           String sql="create database `?` default character set utf8";
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
-            reportError(null,DEFAULT_PAGE);
+            reportError("Unable to create the database",DEFAULT_PAGE);
             return;
           }
  else {
@@ -37,13 +37,13 @@
             wizardModel.workLog.add("Created user " + connectionUsername);
           }
  else {
-            reportError(null,DEFAULT_PAGE);
+            reportError("Unable to create a database user",DEFAULT_PAGE);
             return;
           }
           sql="GRANT ALL ON `?`.* TO '?'@'localhost'";
           int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
           if (result < 0) {
-            reportError(null,DEFAULT_PAGE);
+            reportError("Unable to grant privileges on openmrs database to user",DEFAULT_PAGE);
             return;
           }
  else {
@@ -57,7 +57,7 @@
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
         if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
           setMessage("Verify that the database connection works");
-          reportError(null,DEFAULT_PAGE);
+          reportError("Unable to connect to database",DEFAULT_PAGE);
           return;
         }
         Properties runtimeProperties=new Properties();
@@ -202,7 +202,9 @@ catch (        MandatoryModuleException mandatoryModEx) {
         reportError(e.getMessage() + " Unable to complete the startup.",DEFAULT_PAGE);
       }
  finally {
-        setCompleted(true);
+        if (!hasErrors()) {
+          setInitializationComplete(true);
+        }
       }
     }
   }

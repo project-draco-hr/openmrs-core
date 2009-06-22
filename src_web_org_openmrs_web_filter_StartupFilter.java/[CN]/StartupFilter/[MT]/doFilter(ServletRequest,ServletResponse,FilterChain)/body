@@ -1,5 +1,5 @@
 {
-  if (skipFilter()) {
+  if (skipFilter((HttpServletRequest)request)) {
     chain.doFilter(request,response);
   }
  else {
@@ -26,11 +26,11 @@
       httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
     }
  else {
-      errors.clear();
       if (httpRequest.getMethod().equals("GET")) {
         doGet(httpRequest,httpResponse);
       }
  else       if (httpRequest.getMethod().equals("POST")) {
+        errors.clear();
         doPost(httpRequest,httpResponse);
       }
     }
