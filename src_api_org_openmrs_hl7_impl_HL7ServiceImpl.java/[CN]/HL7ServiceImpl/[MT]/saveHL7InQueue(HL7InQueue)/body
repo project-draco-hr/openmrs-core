@@ -1,4 +1,5 @@
 {
   if (hl7InQueue.getDateCreated() == null)   hl7InQueue.setDateCreated(new Date());
+  if (hl7InQueue.getMessageState() == null)   hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_PENDING);
   return dao.saveHL7InQueue(hl7InQueue);
 }
