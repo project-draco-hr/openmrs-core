@@ -1,0 +1,21 @@
+{
+  Extension ext=extensions.next();
+  ext.initialize(parameterMap);
+  String overrideContent=ext.getOverrideContent(getBodyContentString());
+  if (overrideContent == null) {
+    log.debug("Adding ext: " + ext.getExtensionId() + " to pageContext class: "+ ext.getClass());
+    pageContext.setAttribute("extension",ext);
+    status.put(STATUS_FIRST,index == 0);
+    status.put(STATUS_LAST,extensions.hasNext() == false);
+    status.put(STATUS_INDEX,index++);
+    pageContext.setAttribute(varStatus,status);
+  }
+ else {
+    try {
+      bodyContent.getEnclosingWriter().write(overrideContent);
+    }
+ catch (    IOException io) {
+      log.warn("Cannot write override content of extension: " + ext.toString(),io);
+    }
+  }
+}

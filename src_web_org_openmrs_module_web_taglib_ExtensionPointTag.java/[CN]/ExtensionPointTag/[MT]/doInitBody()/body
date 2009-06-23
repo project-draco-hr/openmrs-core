@@ -1,5 +1,7 @@
 {
   getBodyContent().clearBody();
   pageContext.removeAttribute("extension");
-  return;
+  if (extensions.hasNext()) {
+    iterate();
+  }
 }

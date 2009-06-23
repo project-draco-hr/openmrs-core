@@ -1,24 +1,9 @@
 {
   if (extensions.hasNext()) {
-    if (firstIteration) {
-      bodyContent.clearBody();
-      firstIteration=false;
-    }
-    Extension ext=extensions.next();
-    String overrideContent=ext.getOverrideContent(getBodyContentString());
-    if (overrideContent == null) {
-      iterate(ext);
-    }
- else {
-      try {
-        bodyContent.getEnclosingWriter().write(overrideContent);
-      }
- catch (      IOException io) {
-        log.warn("Cannot write override content of extension: " + ext.toString(),io);
-      }
-      if (!extensions.hasNext())       return SKIP_BODY;
-    }
-    return EVAL_BODY_BUFFERED;
+    iterate();
+    return EVAL_BODY_AGAIN;
   }
-  return SKIP_BODY;
+ else {
+    return SKIP_BODY;
+  }
 }
