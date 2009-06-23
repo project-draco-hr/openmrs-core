@@ -6,12 +6,14 @@
     wrappedReportObject=new ReportObjectWrapper(reportObj);
     wrappedReportObject.setCreator(user);
     wrappedReportObject.setDateCreated(now);
+    wrappedReportObject.setUuid(UUID.randomUUID().toString());
   }
  else {
     wrappedReportObject=(ReportObjectWrapper)sessionFactory.getCurrentSession().get(ReportObjectWrapper.class,reportObj.getReportObjectId());
     wrappedReportObject.setReportObject(reportObj);
     wrappedReportObject.setChangedBy(user);
     wrappedReportObject.setDateChanged(now);
+    wrappedReportObject.setUuid(reportObj.getUuid());
   }
   sessionFactory.getCurrentSession().saveOrUpdate(wrappedReportObject);
   reportObj.setReportObjectId(wrappedReportObject.getReportObjectId());
