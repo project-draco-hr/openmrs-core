@@ -8,7 +8,7 @@
     }
  catch (    ParseException e) {
       log.error("Error parsing date ... " + obsDate);
-      obsDate=new Date();
+      throw e;
     }
   }
   Person person=Context.getPersonService().getPerson(personId);
@@ -35,6 +35,20 @@
   String hl7DataType=concept.getDatatype().getHl7Abbreviation();
   if ("NM".equals(hl7DataType)) {
     obs.setValueNumeric(Double.valueOf(valueText));
+  }
+ else   if ("DT".equals(hl7DataType)) {
+    Date obsDateValue=null;
+    if (valueText != null) {
+      SimpleDateFormat sdft=Context.getDateFormat();
+      try {
+        obsDateValue=sdft.parse(valueText);
+      }
+ catch (      ParseException e) {
+        log.warn("Date value has format error: " + obsDateValue,e);
+        throw e;
+      }
+    }
+    obs.setValueDatetime(obsDateValue);
   }
  else {
     obs.setValueText(valueText);
