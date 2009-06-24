@@ -2,7 +2,7 @@
   Vector<PatientStateItem> ret=new Vector<PatientStateItem>();
   ProgramWorkflowService s=Context.getProgramWorkflowService();
   PatientProgram p=s.getPatientProgram(patientProgramId);
-  ProgramWorkflow wf=s.getWorkflow(programWorkflowId);
+  ProgramWorkflow wf=p.getProgram().getWorkflow(programWorkflowId);
   for (  PatientState st : p.statesInWorkflow(wf,false))   ret.add(new PatientStateItem(st));
   return ret;
 }

@@ -1,5 +1,5 @@
 {
-  EncounterService es=Context.getEncounterService();
-  Location l=es.getLocation(locationId);
+  LocationService ls=Context.getLocationService();
+  Location l=ls.getLocation(locationId);
   return l == null ? null : new LocationListItem(l);
 }

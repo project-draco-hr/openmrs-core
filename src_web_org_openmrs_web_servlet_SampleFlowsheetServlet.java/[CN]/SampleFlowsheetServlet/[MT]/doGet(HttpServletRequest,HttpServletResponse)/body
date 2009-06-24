@@ -16,7 +16,7 @@
   ServletOutputStream out=response.getOutputStream();
   Integer patientId=Integer.parseInt(pid);
   Patient patient=Context.getPatientService().getPatient(patientId);
-  Set<Obs> obsList=Context.getObsService().getObservations(patient,true);
+  List<Obs> obsList=Context.getObsService().getObservationsByPerson(patient);
   if (obsList == null || obsList.size() < 1) {
     out.print("No observations found");
     return;

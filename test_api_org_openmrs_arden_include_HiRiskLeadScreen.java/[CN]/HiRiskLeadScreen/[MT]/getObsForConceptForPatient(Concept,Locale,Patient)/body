@@ -1,8 +1,8 @@
 {
-  Set<Obs> MyObs;
+  List<Obs> MyObs;
   Obs obs=new Obs();
 {
-    MyObs=Context.getObsService().getObservations(patient,concept,true);
+    MyObs=Context.getObsService().getObservationsByPersonAndConcept(patient,concept);
     Iterator iter=MyObs.iterator();
     if (iter.hasNext()) {
       while (iter.hasNext()) {

@@ -2,7 +2,7 @@
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
   Concept concept=cs.getConcept(conceptId);
-  List<Concept> concepts=cs.getQuestionsForAnswer(concept);
+  List<Concept> concepts=cs.getConceptsByAnswer(concept);
   List<ConceptListItem> items=new Vector<ConceptListItem>();
   for (  Concept c : concepts) {
     ConceptName cn=c.getName(locale);

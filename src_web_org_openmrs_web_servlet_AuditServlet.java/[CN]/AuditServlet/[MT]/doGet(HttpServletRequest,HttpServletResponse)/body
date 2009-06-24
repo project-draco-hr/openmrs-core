@@ -9,9 +9,9 @@
   if (audit.equals("patientIdentifiers")) {
     PatientIdentifierType newType=ps.getPatientIdentifierType(new Integer("4"));
     List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
-    for (    PatientIdentifierType pit : ps.getPatientIdentifierTypes()) {
+    for (    PatientIdentifierType pit : ps.getAllPatientIdentifierTypes()) {
       if (pit.hasValidator() && !pit.equals(newType)) {
-        identifiers.addAll(ps.getPatientIdentifiers(pit));
+        identifiers.addAll(ps.getPatientIdentifiers(null,Collections.singletonList(pit),null,null,null));
       }
     }
     Integer count=0;
@@ -26,7 +26,7 @@
       }
       if (updateNeeded) {
         identifier.setIdentifierType(newType);
-        ps.updatePatientIdentifier(identifier);
+        ps.savePatient(identifier.getPatient());
         count++;
       }
     }

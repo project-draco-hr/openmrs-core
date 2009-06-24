@@ -1,6 +1,8 @@
 {
   Vector<ListItem> ret=new Vector<ListItem>();
-  List<ProgramWorkflowState> states=Context.getProgramWorkflowService().getPossibleNextStates(Context.getProgramWorkflowService().getPatientProgram(patientProgramId),Context.getProgramWorkflowService().getWorkflow(programWorkflowId));
+  PatientProgram pp=Context.getProgramWorkflowService().getPatientProgram(patientProgramId);
+  ProgramWorkflow pw=pp.getProgram().getWorkflow(programWorkflowId);
+  List<ProgramWorkflowState> states=pw.getPossibleNextStates(pp);
   for (  ProgramWorkflowState state : states) {
     ListItem li=new ListItem();
     li.setId(state.getProgramWorkflowStateId());
