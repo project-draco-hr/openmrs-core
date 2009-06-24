@@ -1,8 +1,8 @@
 {
   Vector locationList=new Vector();
   try {
-    EncounterService es=Context.getEncounterService();
-    List<Location> locations=es.findLocations(searchValue);
+    LocationService ls=Context.getLocationService();
+    List<Location> locations=ls.getLocations(searchValue);
     locationList=new Vector(locations.size());
     for (    Location loc : locations) {
       locationList.add(new LocationListItem(loc));

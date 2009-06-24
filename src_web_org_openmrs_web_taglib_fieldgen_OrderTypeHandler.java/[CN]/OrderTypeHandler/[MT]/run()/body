@@ -10,7 +10,7 @@
     }
     if (optionHeader == null)     optionHeader="";
     OrderService os=Context.getOrderService();
-    List<OrderType> orderTypes=os.getOrderTypes();
+    List<OrderType> orderTypes=os.getAllOrderTypes();
     if (orderTypes == null)     orderTypes=new ArrayList<OrderType>();
     setParameter("initialValue",initialValue);
     setParameter("optionHeader",optionHeader);

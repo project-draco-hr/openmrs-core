@@ -17,7 +17,7 @@
   ro.setName("testReportObject1");
   ro.setDescription("OldCohortFrameworkTest testPatientSearchParameter");
   ro.setPatientSearch(ps);
-  Integer newId=Context.getReportObjectService().createReportObject(ro);
+  Integer newId=Context.getReportObjectService().saveReportObject(ro).getReportObjectId();
   EvaluationContext context=new EvaluationContext();
   context.addParameterValue(new Parameter("test.name","TestName",String.class,"WrongName"),testName);
   context.addParameterValue(new Parameter("test.salutation","TestSalutation",String.class,"WrongSalutation"),salutation);

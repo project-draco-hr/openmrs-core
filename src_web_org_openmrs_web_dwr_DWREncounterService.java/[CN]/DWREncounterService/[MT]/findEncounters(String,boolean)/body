@@ -1,4 +1,5 @@
 {
+  if (includeVoided == true)   throw new APIException("Don't include voided encounters.");
   Vector<Object> objectList=new Vector<Object>();
   try {
     EncounterService es=Context.getEncounterService();
@@ -16,7 +17,7 @@
     if (phrase == null || phrase.equals("")) {
     }
  else {
-      encs.addAll(es.getEncountersByPatientIdentifier(phrase,includeVoided));
+      encs.addAll(es.getEncountersByPatientIdentifier(phrase));
     }
     if (encs.size() == 0) {
       objectList.add("No matches found for <b>" + phrase + "</b>");

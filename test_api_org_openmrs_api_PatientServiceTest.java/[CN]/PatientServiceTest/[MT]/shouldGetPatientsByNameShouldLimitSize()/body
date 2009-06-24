@@ -1,5 +1,5 @@
 {
   executeDataSet(JOHN_PATIENTS_XML);
-  Collection<Patient> patients=patientService.getPatients("John",null,null);
+  Collection<Patient> patients=patientService.getPatients("John",null,null,false);
   assertTrue("The patient list size should be restricted to under the max (1000). its " + patients.size(),patients.size() == 1000);
 }

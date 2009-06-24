@@ -29,7 +29,7 @@
           log.debug("patient: " + patient);
           Person relative=null;
           log.debug("relative: " + relative);
-          if (relative == null)           relative=ps.getPerson(patient);
+          if (relative == null)           relative=ps.getPerson(patient.getPatientId());
           log.debug("relative: " + relative);
           if (relative == null)           relative=new Person();
           log.debug("relative: " + relative);

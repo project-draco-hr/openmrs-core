@@ -3,22 +3,22 @@
   if (Context.getReportObjectService().getPatientSearch("Male") == null) {
     PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
     ps.addArgument("gender","m",String.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Male",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Male",ps));
   }
   if (Context.getReportObjectService().getPatientSearch("Female") == null) {
     PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
     ps.addArgument("gender","f",String.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Female",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Female",ps));
   }
   if (Context.getReportObjectService().getPatientSearch("Adult") == null) {
     PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
     ps.addArgument("minAge","15",Integer.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Adult",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Adult",ps));
   }
   if (Context.getReportObjectService().getPatientSearch("Child") == null) {
     PatientSearch ps=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
     ps.addArgument("maxAge","15",Integer.class);
-    Context.getReportObjectService().createReportObject(new PatientSearchReportObject("Child",ps));
+    Context.getReportObjectService().saveReportObject(new PatientSearchReportObject("Child",ps));
   }
   EvaluationContext evalContext=new EvaluationContext();
   evalContext.addParameterValue(new Parameter("report.startDate","Start Date",Date.class,null),ymd.parse("2007-09-01"));

@@ -9,11 +9,11 @@
     }
     if (optionHeader == null)     optionHeader="";
     String reasonOrderStopped=Context.getAdministrationService().getGlobalProperty("concept.reasonOrderStopped");
-    Concept reasonStopped=Context.getConceptService().getConceptByIdOrName(reasonOrderStopped);
+    Concept reasonStopped=Context.getConceptService().getConcept(reasonOrderStopped);
     if (reasonStopped == null)     log.debug("Could not get even the default reason concept from global properties");
     if (this.fieldGenTag.getParameterMap() != null) {
       String reasonSetOverride=(String)this.fieldGenTag.getParameterMap().get("reasonSet");
-      if (reasonSetOverride != null)       reasonStopped=Context.getConceptService().getConceptByIdOrName(reasonSetOverride);
+      if (reasonSetOverride != null)       reasonStopped=Context.getConceptService().getConcept(reasonSetOverride);
     }
     List<Concept> possibleReasons=null;
     if (reasonStopped != null) {

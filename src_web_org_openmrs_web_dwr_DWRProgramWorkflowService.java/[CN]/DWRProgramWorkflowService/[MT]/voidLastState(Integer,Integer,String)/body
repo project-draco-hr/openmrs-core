@@ -1,6 +1,5 @@
 {
   ProgramWorkflowService s=Context.getProgramWorkflowService();
   PatientProgram pp=s.getPatientProgram(patientProgramId);
-  ProgramWorkflow wf=s.getWorkflow(programWorkflowId);
-  s.voidLastState(pp,wf,voidReason);
+  pp.voidLastState(pp.getProgram().getWorkflow(programWorkflowId),null,new Date(),voidReason);
 }

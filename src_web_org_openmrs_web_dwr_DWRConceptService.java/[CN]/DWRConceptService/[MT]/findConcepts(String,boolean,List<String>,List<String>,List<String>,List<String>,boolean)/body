@@ -57,7 +57,7 @@
         objectList.add(new ConceptListItem(word));
         if (includeDrugConcepts) {
           Integer classId=word.getConcept().getConceptClass().getConceptClassId();
-          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugs(word.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
+          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugsByConcept(word.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
         }
       }
     }

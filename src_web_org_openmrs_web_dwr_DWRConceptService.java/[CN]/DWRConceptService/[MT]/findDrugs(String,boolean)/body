@@ -1,8 +1,9 @@
 {
+  if (includeRetired == true)   throw new APIException("You should not include voideds in the search.");
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
   List<Object> items=new Vector<Object>();
-  List<Drug> drugs=cs.findDrugs(phrase,includeRetired);
+  List<Drug> drugs=cs.getDrugs(phrase);
   for (  Drug drug : drugs) {
     items.add(new ConceptDrugListItem(drug,locale));
   }
