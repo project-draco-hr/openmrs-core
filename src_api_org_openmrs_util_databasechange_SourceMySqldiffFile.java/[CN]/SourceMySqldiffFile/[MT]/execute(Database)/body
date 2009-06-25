@@ -1,4 +1,6 @@
 {
+  Properties runtimeProperties=Context.getRuntimeProperties();
+  if (runtimeProperties.size() == 0)   return;
   DatabaseConnection connection=database.getConnection();
   File tmpOutputFile=null;
   try {
@@ -12,7 +14,6 @@
   }
   List<String> commands=new ArrayList<String>();
   try {
-    Properties runtimeProperties=Context.getRuntimeProperties();
     commands.add("mysql");
     commands.add("-u" + runtimeProperties.getProperty("connection.username"));
     commands.add("-p" + runtimeProperties.getProperty("connection.password"));

@@ -1,4 +1,5 @@
 {
+  if (Context.getRuntimeProperties().size() == 0)   return;
   if (tableNamesArray == null || tableNamesArray.length == 0)   throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
   DatabaseConnection connection=database.getConnection();
   for (  String tableName : tableNamesArray) {
