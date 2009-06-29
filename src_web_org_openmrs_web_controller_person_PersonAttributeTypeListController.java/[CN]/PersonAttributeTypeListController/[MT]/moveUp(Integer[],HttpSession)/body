@@ -1,0 +1,27 @@
+{
+  if (personAttributeTypeId == null) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PersonAttributeType.select");
+  }
+ else {
+    PersonService ps=Context.getPersonService();
+    List<PersonAttributeType> attributes=ps.getAllPersonAttributeTypes();
+    Set<PersonAttributeType> attributesToSave=new HashSet<PersonAttributeType>();
+    List<Integer> selectedIds=Arrays.asList(personAttributeTypeId);
+    for (int i=1; i < attributes.size(); i++) {
+      PersonAttributeType current=attributes.get(i);
+      if (selectedIds.contains(current.getPersonAttributeTypeId())) {
+        PersonAttributeType above=attributes.get(i - 1);
+        int temp=current.getSortWeight();
+        current.setSortWeight(above.getSortWeight());
+        above.setSortWeight(temp);
+        Collections.swap(attributes,i,i - 1);
+        attributesToSave.add(current);
+        attributesToSave.add(above);
+      }
+    }
+    for (    PersonAttributeType pat : attributesToSave) {
+      ps.savePersonAttributeType(pat);
+    }
+  }
+  return "redirect:/admin/person/personAttributeType.list";
+}

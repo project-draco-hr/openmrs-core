@@ -1,0 +1,5 @@
+{
+  new PersonAttributeTypeListController().updateGlobalProperties("asdf","","","","",new MockHttpSession());
+  String attr=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES);
+  Assert.assertEquals("asdf",attr);
+}

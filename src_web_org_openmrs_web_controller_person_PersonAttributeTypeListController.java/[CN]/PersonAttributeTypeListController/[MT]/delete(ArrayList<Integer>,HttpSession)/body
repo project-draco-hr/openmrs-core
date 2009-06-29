@@ -1,0 +1,29 @@
+{
+  MessageSourceService mss=Context.getMessageSourceService();
+  PersonService ps=Context.getPersonService();
+  String type=mss.getMessage("PersonAttributeType.title");
+  String deleted=mss.getMessage("general.deleted");
+  String notDeleted=mss.getMessage("general.cannot.delete");
+  String success="";
+  String error="";
+  if (personAttributeTypeId != null) {
+    for (    Integer id : personAttributeTypeId) {
+      try {
+        ps.deletePersonAttributeType(id);
+        if (!success.equals(""))         success+="<br/>";
+        success+=type + " #" + id+ " "+ deleted;
+      }
+ catch (      Exception e) {
+        log.warn("Error deleting person attribute type",e);
+        if (!error.equals(""))         error+="<br/>";
+        error+=type + " #" + id+ " "+ notDeleted;
+      }
+    }
+  }
+ else {
+    error=mss.getMessage("PersonAttributeType.select");
+  }
+  if (!success.equals(""))   httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+  if (!error.equals(""))   httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  return "redirect:/admin/person/personAttributeType.list";
+}

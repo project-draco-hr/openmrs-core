@@ -1,0 +1,8 @@
+{
+  List<PersonAttributeType> allTypes=Context.getPersonService().getAllPersonAttributeTypes();
+  Assert.assertEquals(new PersonAttributeType(1),allTypes.get(0));
+  Integer[] ids=new Integer[]{1};
+  new PersonAttributeTypeListController().moveDown(ids,new MockHttpSession());
+  allTypes=Context.getPersonService().getAllPersonAttributeTypes();
+  Assert.assertEquals("The types didn't move correctly",new PersonAttributeType(8),allTypes.get(0));
+}
