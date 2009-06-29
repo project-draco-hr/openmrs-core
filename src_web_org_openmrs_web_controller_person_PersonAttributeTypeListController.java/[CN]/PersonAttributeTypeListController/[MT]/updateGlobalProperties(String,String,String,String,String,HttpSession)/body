@@ -1,0 +1,11 @@
+{
+  AdministrationService as=Context.getAdministrationService();
+  MessageSourceService mss=Context.getMessageSourceService();
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES,patientListingAttributeTypes));
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES,patientViewingAttributeTypes));
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_HEADER_ATTRIBUTES,patientHeaderAttributeTypes));
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_LISTING_ATTRIBUTES,userListingAttributeTypes));
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_VIEWING_ATTRIBUTES,userViewingAttributeTypes));
+  httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,mss.getMessage("PersonAttributeType.viewingListing.saved"));
+  return "redirect:/admin/person/personAttributeType.list";
+}

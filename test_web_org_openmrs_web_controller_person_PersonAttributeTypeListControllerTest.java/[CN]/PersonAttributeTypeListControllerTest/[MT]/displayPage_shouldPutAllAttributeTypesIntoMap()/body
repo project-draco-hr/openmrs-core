@@ -1,0 +1,6 @@
+{
+  ModelMap map=new ModelMap();
+  new PersonAttributeTypeListController().displayPage(map);
+  List<PersonAttributeType> alltypes=(List<PersonAttributeType>)map.get("personAttributeTypeList");
+  Assert.assertEquals(3,alltypes.size());
+}
