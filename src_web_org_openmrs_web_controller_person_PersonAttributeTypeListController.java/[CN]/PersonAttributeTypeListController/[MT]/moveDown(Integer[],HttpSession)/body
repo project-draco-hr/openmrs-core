@@ -11,7 +11,7 @@
       PersonAttributeType current=attributes.get(i);
       if (selectedIds.contains(current.getPersonAttributeTypeId())) {
         PersonAttributeType below=attributes.get(i + 1);
-        int temp=current.getSortWeight();
+        double temp=current.getSortWeight();
         current.setSortWeight(below.getSortWeight());
         below.setSortWeight(temp);
         Collections.swap(attributes,i,i + 1);
