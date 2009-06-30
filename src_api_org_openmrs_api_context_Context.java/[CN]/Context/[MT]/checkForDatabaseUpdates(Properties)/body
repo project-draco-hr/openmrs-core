@@ -1,10 +1,13 @@
 {
-  DatabaseUpdater.executeChangelog();
+  boolean updatesRequired=true;
   try {
-    Context.addProxyPrivilege("");
-    OpenmrsConstants.DATABASE_VERSION=getAdministrationService().getGlobalProperty("database_version");
+    updatesRequired=DatabaseUpdater.updatesRequired();
   }
-  finally {
-    Context.removeProxyPrivilege("");
+ catch (  Exception e) {
+    throw new DatabaseUpdateException("Unable to check if database updates are required",e);
+  }
+  if (updatesRequired) {
+    if (DatabaseUpdater.allowAutoUpdate())     DatabaseUpdater.executeChangelog();
+ else     throw new DatabaseUpdateException("Database updates are required.  Call Context.updateDatabase() before .startup() to continue.");
   }
 }
