@@ -1,4 +1,5 @@
 {
-  String updateRdf=ModuleUtil.getURL(new URL("https://dev.openmrs.org/modules/download/formentry/update.rdf"));
-  Assert.assertTrue(updateRdf.contains("<updates"));
+  String url="https://dev.openmrs.org/modules/download/formentry/update.rdf";
+  String updateRdf=ModuleUtil.getURL(new URL(url));
+  Assert.assertTrue("Unable to fetch module update url: " + url,updateRdf.contains("<updates"));
 }
