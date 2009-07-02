@@ -3,7 +3,7 @@
   EncounterService es=Context.getEncounterService();
   LocationService ls=Context.getLocationService();
   ConceptService cs=Context.getConceptService();
-  DateFormat dateFormat=OpenmrsUtil.getDateFormat();
+  DateFormat dateFormat=Context.getDateFormat();
   velocityContext.put("date",dateFormat);
   Concept c=cs.getConcept(new Integer("5096"));
   Calendar cal=Calendar.getInstance();

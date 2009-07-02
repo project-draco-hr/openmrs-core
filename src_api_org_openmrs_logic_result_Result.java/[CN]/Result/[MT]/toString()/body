@@ -9,7 +9,7 @@ case BOOLEAN:
 case CODED:
     return (valueCoded == null ? "" : valueCoded.getBestName(Context.getLocale()).getName());
 case DATETIME:
-  return (valueDatetime == null ? "" : OpenmrsUtil.getDateFormat().format(valueDatetime));
+  return (valueDatetime == null ? "" : Context.getDateFormat().format(valueDatetime));
 case NUMERIC:
 return (valueNumeric == null ? "" : String.valueOf(valueNumeric));
 case TEXT:

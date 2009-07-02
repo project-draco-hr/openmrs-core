@@ -5,7 +5,7 @@
   }
   String patientProgramIdStr=request.getParameter("patientProgramId");
   String dateCompletedStr=request.getParameter("dateCompleted");
-  CustomDateEditor cde=new CustomDateEditor(new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale()),true,10);
+  CustomDateEditor cde=new CustomDateEditor(Context.getDateFormat(),true,10);
   cde.setAsText(dateCompletedStr);
   Date dateCompleted=(Date)cde.getValue();
   PatientProgram p=Context.getProgramWorkflowService().getPatientProgram(Integer.valueOf(patientProgramIdStr));

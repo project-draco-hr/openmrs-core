@@ -1,0 +1,19 @@
+{
+  if (dateFormatCache.containsKey(locale))   return dateFormatCache.get(locale);
+  SimpleDateFormat sdf=(SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT,locale);
+  String pattern=sdf.toPattern();
+  if (!pattern.contains("yyyy")) {
+    pattern=pattern.replaceFirst("yy","yyyy");
+    sdf.applyPattern(pattern);
+  }
+  if (!pattern.contains("MM")) {
+    pattern=pattern.replaceFirst("M","MM");
+    sdf.applyPattern(pattern);
+  }
+  if (!pattern.contains("dd")) {
+    pattern=pattern.replaceFirst("d","dd");
+    sdf.applyPattern(pattern);
+  }
+  dateFormatCache.put(locale,sdf);
+  return sdf;
+}

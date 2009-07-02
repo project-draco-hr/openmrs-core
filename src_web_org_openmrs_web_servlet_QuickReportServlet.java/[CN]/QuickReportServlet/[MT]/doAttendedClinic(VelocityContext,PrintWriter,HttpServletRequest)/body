@@ -1,7 +1,7 @@
 {
   EncounterService es=Context.getEncounterService();
   LocationService ls=Context.getLocationService();
-  DateFormat dateFormat=OpenmrsUtil.getDateFormat();
+  DateFormat dateFormat=Context.getDateFormat();
   velocityContext.put("date",dateFormat);
   Calendar cal=Calendar.getInstance();
   Date start=new Date();
