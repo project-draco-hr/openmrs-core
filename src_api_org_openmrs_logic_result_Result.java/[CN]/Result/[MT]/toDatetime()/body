@@ -3,7 +3,7 @@
     if (valueDatetime != null)     return valueDatetime;
     if (datatype == Datatype.TEXT && valueText != null) {
       try {
-        return OpenmrsUtil.getDateFormat().parse(valueText);
+        return Context.getDateFormat().parse(valueText);
       }
  catch (      Exception e) {
       }

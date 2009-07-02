@@ -9,7 +9,7 @@
   String completionDateStr=request.getParameter("dateCompleted");
   log.debug("enroll " + patientIdStr + " in "+ programIdStr+ " on "+ enrollmentDateStr);
   ProgramWorkflowService pws=Context.getProgramWorkflowService();
-  CustomDateEditor cde=new CustomDateEditor(new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale()),true,10);
+  CustomDateEditor cde=new CustomDateEditor(Context.getDateFormat(),true,10);
   cde.setAsText(enrollmentDateStr);
   Date enrollmentDate=(Date)cde.getValue();
   cde.setAsText(completionDateStr);

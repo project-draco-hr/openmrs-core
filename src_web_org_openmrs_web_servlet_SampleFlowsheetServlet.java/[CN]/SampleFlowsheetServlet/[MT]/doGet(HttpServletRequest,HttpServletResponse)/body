@@ -35,7 +35,7 @@
     obsDate.setTime(obs.getObsDatetime());
     if (Math.abs(obsDate.getTimeInMillis() - date.getTimeInMillis()) > 86400000) {
       date=obsDate;
-      out.println("<tr><td class=header colspan=2>" + OpenmrsUtil.getDateFormat().format(date.getTime()) + "</td></tr>");
+      out.println("<tr><td class=header colspan=2>" + Context.getDateFormat().format(date.getTime()) + "</td></tr>");
     }
     StringBuffer s=new StringBuffer("<tr><td class=label>");
     s.append(getName(obs,locale));

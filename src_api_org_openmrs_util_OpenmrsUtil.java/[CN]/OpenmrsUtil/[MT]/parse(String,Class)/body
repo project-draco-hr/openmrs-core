@@ -69,8 +69,7 @@
       return ed.getValue();
     }
  else     if (Date.class.equals(clazz)) {
-      DateFormat df=new SimpleDateFormat(OpenmrsConstants.OPENMRS_LOCALE_DATE_PATTERNS().get(Context.getLocale().toString().toLowerCase()),Context.getLocale());
-      CustomDateEditor ed=new CustomDateEditor(df,true,10);
+      CustomDateEditor ed=new CustomDateEditor(Context.getDateFormat(),true,10);
       ed.setAsText(string);
       return ed.getValue();
     }

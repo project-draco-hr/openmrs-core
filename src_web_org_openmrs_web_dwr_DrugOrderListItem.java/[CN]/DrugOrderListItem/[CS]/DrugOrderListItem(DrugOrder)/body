@@ -6,7 +6,7 @@
     conceptName=drugOrder.getConcept().getName().getName();
   }
   instructions=drugOrder.getInstructions();
-  SimpleDateFormat sdf=OpenmrsUtil.getDateFormat();
+  SimpleDateFormat sdf=Context.getDateFormat();
   if (drugOrder.getStartDate() != null)   startDate=sdf.format(drugOrder.getStartDate());
   if (drugOrder.getAutoExpireDate() != null)   autoExpireDate=sdf.format(drugOrder.getAutoExpireDate());
   if (drugOrder.getEncounter() != null)   encounterId=drugOrder.getEncounter().getEncounterId();

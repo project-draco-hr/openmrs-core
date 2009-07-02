@@ -7,7 +7,7 @@
   birthdate=birthdate.trim();
   age=age.trim();
   if (birthdate.length() > 0) {
-    DateFormat format=OpenmrsUtil.getDateFormat();
+    DateFormat format=Context.getDateFormat();
     Date dateObject=null;
     try {
       dateObject=format.parse(birthdate);
