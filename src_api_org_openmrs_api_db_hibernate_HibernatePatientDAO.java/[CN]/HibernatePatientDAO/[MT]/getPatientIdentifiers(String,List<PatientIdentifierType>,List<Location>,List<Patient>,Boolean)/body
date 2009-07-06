@@ -1,5 +1,7 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifier.class);
+  criteria.createAlias("patient","patient");
+  criteria.add(Expression.eq("patient.voided",false));
   criteria.add(Expression.eq("voided",false));
   if (identifier != null)   criteria.add(Expression.eq("identifier",identifier));
   if (patientIdentifierTypes.size() > 0)   criteria.add(Expression.in("identifierType",patientIdentifierTypes));
