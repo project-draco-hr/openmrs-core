@@ -8,7 +8,13 @@
     HttpSession session=request.getSession();
     String uniqueRequestId=(String)request.getAttribute(WebConstants.INIT_REQ_UNIQUE_ID);
     String lastRequestId=(String)session.getAttribute(WebConstants.OPENMRS_PORTLET_LAST_REQ_ID);
-    if (uniqueRequestId.equals(lastRequestId))     model=(Map<String,Object>)session.getAttribute(WebConstants.OPENMRS_PORTLET_CACHED_MODEL);
+    if (uniqueRequestId.equals(lastRequestId)) {
+      model=(Map<String,Object>)session.getAttribute(WebConstants.OPENMRS_PORTLET_CACHED_MODEL);
+      List<String> parameterKeys=(List<String>)model.get("parameterKeys");
+      for (      String key : parameterKeys) {
+        model.remove(key);
+      }
+    }
     if (model == null) {
       log.debug("creating new portlet model");
       model=new HashMap<String,Object>();
@@ -30,10 +36,13 @@
     model.put("id",id);
     model.put("size",size);
     model.put("locale",Context.getLocale());
-    model.putAll(params);
+    model.put("portletUUID",UUID.randomUUID().toString());
+    List<String> parameterKeys=new ArrayList<String>(params.keySet());
     if (moreParams != null) {
       model.putAll(moreParams);
+      parameterKeys.addAll(moreParams.keySet());
     }
+    model.put("parameterKeys",parameterKeys);
     if (Context.getAuthenticatedUser() != null) {
       model.put("authenticatedUser",Context.getAuthenticatedUser());
     }
