@@ -1,4 +1,5 @@
 {
+  if (openmrsObject == null)   return;
   Class<? extends OpenmrsObject> openmrsObjectClass=openmrsObject.getClass();
   List<H> handlers=HandlerUtil.getHandlersForType(handlerType,openmrsObjectClass);
   for (  H handler : handlers) {
