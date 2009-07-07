@@ -1,6 +1,7 @@
 {
+  User user=Context.getUserService().getUser(currentUser.getId());
   if (auditable.getCreator() == null) {
-    auditable.setCreator(currentUser);
+    auditable.setCreator(user);
   }
   if (auditable.getDateCreated() == null) {
     auditable.setDateCreated(currentDate);
@@ -13,7 +14,7 @@
     hasId=true;
   }
   if (hasId) {
-    auditable.setChangedBy(currentUser);
+    auditable.setChangedBy(user);
     auditable.setDateChanged(currentDate);
   }
 }
