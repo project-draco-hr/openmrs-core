@@ -152,13 +152,12 @@
         }
         refreshWAC(servletContext);
       }
-      if (ModuleFactory.isModuleStarted(mod)) {
-        loadServlets(mod);
-        loadFilters(mod,servletContext);
-      }
-      return false;
     }
-    loadFilters(mod,servletContext);
+    if (ModuleFactory.isModuleStarted(mod)) {
+      log.debug("Loading servlets and filters for module: " + mod);
+      loadServlets(mod,servletContext);
+      loadFilters(mod,servletContext);
+    }
     return (moduleNeedsContextRefresh && delayContextRefresh == true);
   }
   return false;

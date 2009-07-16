@@ -1,7 +1,6 @@
 {
   Element rootNode=mod.getConfig().getDocumentElement();
   NodeList servletTags=rootNode.getElementsByTagName("servlet");
-  Map<String,HttpServlet> servletMap=new HashMap<String,HttpServlet>();
   for (int i=0; i < servletTags.getLength(); i++) {
     Node node=servletTags.item(i);
     NodeList childNodes=node.getChildNodes();
@@ -35,8 +34,19 @@ catch (    InstantiationException e) {
       log.warn("Class cannot be instantiated for servlet " + name + " for module "+ mod.getName(),e);
       continue;
     }
-    servletMap.put(name,httpServlet);
+    try {
+      log.debug("Initializing " + name + " servlet. - "+ httpServlet+ ".");
+      ServletConfig servletConfig=new ModuleServlet.SimpleServletConfig(name,servletContext);
+      httpServlet.init(servletConfig);
+    }
+ catch (    Throwable t) {
+      log.warn("Unable to initialize servlet: ",t);
+      throw new ModuleException("Unable to initialize servlet: " + httpServlet,mod.getModuleId(),t);
+    }
+    if (moduleServlets.containsKey(name)) {
+      throw new ModuleException("A servlet mapping with name " + name + " already exists. "+ mod.getModuleId()+ "'s servlet is trying to overwrite it");
+    }
+    log.debug("Caching the " + name + " servlet.");
+    moduleServlets.put(name,httpServlet);
   }
-  moduleServlets.put(mod,servletMap);
-  return servletMap;
 }
