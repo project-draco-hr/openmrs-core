@@ -1,24 +1,23 @@
 {
   log.debug("In service method for module servlet: " + request.getPathInfo());
-  String moduleId=request.getPathInfo();
-  int end=moduleId.indexOf("/",1);
-  if (end > 0)   moduleId=moduleId.substring(1,end);
+  String servletName=request.getPathInfo();
+  int end=servletName.indexOf("/",1);
+  String moduleId=null;
+  if (end > 0)   moduleId=servletName.substring(1,end);
   log.debug("ModuleId: " + moduleId);
   Module mod=ModuleFactory.getModuleById(moduleId);
-  if (mod == null) {
-    log.warn("No module with id " + moduleId + " exists");
-    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-    return;
+  int start=1;
+  if (mod != null) {
+    log.debug("Module with id " + moduleId + " found.  Looking for servlet name after "+ moduleId+ " in url path");
+    start=moduleId.length() + 2;
   }
-  String servletName=request.getPathInfo();
-  int start=moduleId.length() + 2;
   end=servletName.indexOf("/",start);
   if (end == -1 || end > servletName.length())   end=servletName.length();
   servletName=servletName.substring(start,end);
   log.debug("Servlet name: " + servletName);
-  HttpServlet servlet=WebModuleUtil.getServlet(mod,servletName);
+  HttpServlet servlet=WebModuleUtil.getServlet(servletName);
   if (servlet == null) {
-    log.warn("No servlet with name: " + servletName + " was found in module: "+ moduleId);
+    log.warn("No servlet with name: " + servletName + " was found");
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
     return;
   }

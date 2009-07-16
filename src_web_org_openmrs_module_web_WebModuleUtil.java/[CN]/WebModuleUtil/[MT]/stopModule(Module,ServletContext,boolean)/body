@@ -15,7 +15,7 @@
       log.warn("Couldn't delete: " + moduleWebFolder.getAbsolutePath(),io);
     }
   }
-  moduleServlets.remove(mod);
+  unloadServlets(mod);
   unloadFilters(mod);
   InputStream inputStream=null;
   try {

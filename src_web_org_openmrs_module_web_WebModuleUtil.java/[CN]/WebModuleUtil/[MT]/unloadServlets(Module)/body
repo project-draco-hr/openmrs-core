@@ -1,0 +1,22 @@
+{
+  Element rootNode=mod.getConfig().getDocumentElement();
+  NodeList servletTags=rootNode.getElementsByTagName("servlet");
+  for (int i=0; i < servletTags.getLength(); i++) {
+    Node node=servletTags.item(i);
+    NodeList childNodes=node.getChildNodes();
+    String name="";
+    for (int j=0; j < childNodes.getLength(); j++) {
+      Node childNode=childNodes.item(j);
+      if ("servlet-name".equals(childNode.getNodeName())) {
+        if (childNode.getTextContent() != null) {
+          name=childNode.getTextContent().trim();
+          HttpServlet servlet=moduleServlets.get(name);
+          if (servlet != null) {
+            servlet.destroy();
+            moduleServlets.remove(name);
+          }
+        }
+      }
+    }
+  }
+}
