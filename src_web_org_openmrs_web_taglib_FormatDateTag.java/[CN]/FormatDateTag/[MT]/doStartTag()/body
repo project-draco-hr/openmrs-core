@@ -55,7 +55,12 @@
   String datestr="";
   try {
     if (date != null) {
-      datestr=dateFormat.format(date);
+      if (type.equals("milliseconds")) {
+        datestr="" + date.getTime();
+      }
+ else {
+        datestr=dateFormat.format(date);
+      }
     }
   }
  catch (  IllegalArgumentException e) {
