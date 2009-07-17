@@ -21,7 +21,11 @@ catch (    Exception e) {
     Long lockoutTime=null;
     if (lockoutTimeString != null && !lockoutTimeString.equals("0"))     lockoutTime=Long.valueOf(lockoutTimeString);
     if (lockoutTime != null) {
-      if (new Date().getTime() - lockoutTime > 300000)       candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+      if (new Date().getTime() - lockoutTime > 300000) {
+        candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+        candidateUser.removeUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP);
+        saveUserProperties(candidateUser);
+      }
  else {
         candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,String.valueOf(new Date().getTime()));
         throw new ContextAuthenticationException("Invalid number of connection attempts. Please try again later.");
@@ -44,7 +48,7 @@ catch (    Exception e) {
  else {
       Integer attempts=getUsersLoginAttempts(candidateUser);
       attempts++;
-      if (attempts >= 5) {
+      if (attempts >= 8) {
         candidateUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,String.valueOf(new Date().getTime()));
       }
  else {
