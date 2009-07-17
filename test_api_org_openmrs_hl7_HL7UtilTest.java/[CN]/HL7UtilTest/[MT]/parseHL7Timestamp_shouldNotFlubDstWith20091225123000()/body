@@ -1,0 +1,7 @@
+{
+  TimeZone originalTimeZone=TimeZone.getDefault();
+  TimeZone.setDefault(TimeZone.getTimeZone("EST"));
+  Date d=HL7Util.parseHL7Date("20091225003000");
+  Assert.assertEquals(25,d.getDate());
+  TimeZone.setDefault(originalTimeZone);
+}

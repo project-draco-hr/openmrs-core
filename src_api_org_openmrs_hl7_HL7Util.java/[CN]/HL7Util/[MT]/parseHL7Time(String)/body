@@ -1,17 +1,6 @@
 {
-  String timeZoneOffset;
-  int tzPlus=s.indexOf('+');
-  int tzMinus=s.indexOf('-');
-  boolean timeZoneFlag=(tzPlus > 0 || tzMinus > 0);
-  if (timeZoneFlag) {
-    int tzIndex;
-    if (tzPlus > 0)     tzIndex=tzPlus;
- else     tzIndex=tzMinus;
-    timeZoneOffset=s.substring(tzIndex);
-    if (timeZoneOffset.length() != 5)     System.out.println("invalid timestamp");
-    s=s.substring(0,tzIndex);
-  }
- else   timeZoneOffset=LOCAL_TIMEZONE_OFFSET;
+  String timeZoneOffset=getTimeZoneOffset(s,new Date());
+  s=s.replace(timeZoneOffset,"");
   StringBuffer timeString=new StringBuffer();
   if (s.length() < 2 || s.length() > 16)   throw new HL7Exception("Invalid time format '" + s + "'");
   timeString.append(s.substring(0,2));
