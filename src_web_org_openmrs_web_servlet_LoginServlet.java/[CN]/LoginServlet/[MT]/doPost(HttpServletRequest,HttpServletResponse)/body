@@ -5,7 +5,7 @@
   if (loginAttempts == null)   loginAttempts=1;
   loginAttempts++;
   boolean lockedOut=false;
-  if (loginAttempts > 4) {
+  if (loginAttempts > 100) {
     lockedOut=true;
     Date lockedOutTime=lockoutDateByIP.get(ipAddress);
     if (lockedOutTime != null && new Date().getTime() - lockedOutTime.getTime() > 300000) {
