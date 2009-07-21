@@ -1,4 +1,5 @@
 {
+  Assert.assertNotNull(Context.getSerializationService().getDefaultSerializer());
   executeDataSet("org/openmrs/api/db/include/SerializedObjectDAOTest-initialData.xml");
   if (dao == null) {
     dao=(SerializedObjectDAO)applicationContext.getBean("serializedObjectDAO");
