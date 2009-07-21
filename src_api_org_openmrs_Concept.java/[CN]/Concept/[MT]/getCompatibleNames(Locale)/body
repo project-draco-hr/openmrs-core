@@ -8,8 +8,8 @@
   }
   if (compatibleNames == null) {
     compatibleNames=new Vector<ConceptName>();
-    for (    ConceptName possibleName : names) {
-      if (!possibleName.isVoided() && LocaleUtility.areCompatible(possibleName.getLocale(),desiredLocale)) {
+    for (    ConceptName possibleName : getNames()) {
+      if (LocaleUtility.areCompatible(possibleName.getLocale(),desiredLocale)) {
         compatibleNames.add(possibleName);
       }
     }
