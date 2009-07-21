@@ -12,7 +12,7 @@
     }
   }
 );
-  List<Extension> handlers=ModuleFactory.getExtensions("formentryHandler");
+  List<Extension> handlers=ModuleFactory.getExtensions("org.openmrs.module.web.extension.FormEntryHandler",MEDIA_TYPE.html);
   if (handlers != null) {
     for (    Extension ext : handlers) {
       FormEntryHandler handler=(FormEntryHandler)ext;
