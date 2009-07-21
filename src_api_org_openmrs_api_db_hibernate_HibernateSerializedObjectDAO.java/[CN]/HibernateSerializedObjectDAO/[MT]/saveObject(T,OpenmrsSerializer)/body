@@ -1,0 +1,55 @@
+{
+  Class<? extends OpenmrsObject> baseType=getRegisteredTypeForObject(object);
+  if (baseType == null) {
+    throw new DAOException("SerializedObjectDAO does not support saving objects of type <" + object.getClass() + ">");
+  }
+  SerializedObject serializedObject=getSerializedObject(object.getId());
+  if (serializedObject == null) {
+    serializedObject=new SerializedObject();
+  }
+  serializer=getSerializer(serializedObject,serializer);
+  String data=null;
+  try {
+    data=serializer.serialize(object);
+  }
+ catch (  SerializationException e) {
+    throw new DAOException("Unable to save object <" + object + "> because serialization failed.",e);
+  }
+  serializedObject.setUuid(object.getUuid());
+  serializedObject.setType(baseType);
+  serializedObject.setSubtype(object.getClass());
+  serializedObject.setSerializationClass(serializer.getClass());
+  serializedObject.setSerializedData(data);
+  if (object instanceof Auditable) {
+    Auditable auditableObj=(Auditable)object;
+    serializedObject.setCreator(auditableObj.getCreator());
+    serializedObject.setDateCreated(auditableObj.getDateCreated());
+    if (serializedObject.getCreator() == null) {
+      serializedObject.setCreator(Context.getAuthenticatedUser());
+    }
+    if (serializedObject.getDateCreated() == null) {
+      serializedObject.setDateCreated(new Date());
+    }
+    serializedObject.setChangedBy(auditableObj.getChangedBy());
+    serializedObject.setDateChanged(auditableObj.getDateChanged());
+  }
+  if (object instanceof OpenmrsMetadata) {
+    OpenmrsMetadata metaObj=(OpenmrsMetadata)object;
+    serializedObject.setName(metaObj.getName());
+    serializedObject.setDescription(metaObj.getDescription());
+    serializedObject.setRetired(metaObj.isRetired() == Boolean.TRUE);
+    serializedObject.setRetiredBy(metaObj.getRetiredBy());
+    serializedObject.setDateRetired(metaObj.getDateRetired());
+    serializedObject.setRetireReason(metaObj.getRetireReason());
+  }
+  if (object instanceof OpenmrsData) {
+    OpenmrsData dataObj=(OpenmrsData)object;
+    serializedObject.setRetired(dataObj.isVoided() == Boolean.TRUE);
+    serializedObject.setRetiredBy(dataObj.getVoidedBy());
+    serializedObject.setDateRetired(dataObj.getDateVoided());
+    serializedObject.setRetireReason(dataObj.getVoidReason());
+  }
+  sessionFactory.getCurrentSession().saveOrUpdate(serializedObject);
+  object.setId(serializedObject.getId());
+  return object;
+}
