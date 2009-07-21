@@ -7,7 +7,7 @@
   if (desiredLanguage.length() > 2)   desiredLanguage=desiredLanguage.substring(0,2);
   for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext() && foundName == null; ) {
     ConceptName possibleName=i.next();
-    if ((shortestName == null) || (possibleName.getName().length() < shortestName.getName().length())) {
+    if (!possibleName.isVoided() && ((shortestName == null) || (possibleName.getName().length() < shortestName.getName().length()))) {
       shortestName=possibleName;
     }
   }
