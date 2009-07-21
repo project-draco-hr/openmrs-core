@@ -1,7 +1,7 @@
 {
   ConceptName taggedName=null;
   for (  ConceptName possibleName : getNames()) {
-    if (possibleName.hasTag(conceptNameTag)) {
+    if (!possibleName.isVoided() && possibleName.hasTag(conceptNameTag)) {
       taggedName=possibleName;
       break;
     }

@@ -1,4 +1,4 @@
 {
-  for (  ConceptName cn : getNames())   if (name.equals(cn.getName()))   return true;
+  for (  ConceptName cn : getNames())   if (!cn.isVoided() && name.equals(cn.getName()))   return true;
   return false;
 }
