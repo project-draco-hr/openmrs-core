@@ -2,7 +2,7 @@
   if (serializedObject == null) {
     return null;
   }
-  OpenmrsSerializer serializer=getSerializer(serializedObject);
+  OpenmrsSerializer serializer=getSerializer(serializedObject,null);
   T obj=null;
   try {
     obj=(T)serializer.deserialize(serializedObject.getSerializedData(),serializedObject.getSubtype());
