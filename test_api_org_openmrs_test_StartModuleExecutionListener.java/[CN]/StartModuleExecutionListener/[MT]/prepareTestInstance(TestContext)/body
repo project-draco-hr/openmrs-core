@@ -1,0 +1,15 @@
+{
+  StartModule startModuleAnnotation=testContext.getTestClass().getAnnotation(StartModule.class);
+  if (startModuleAnnotation != null) {
+    if (!springAlreadyRestartedOnce) {
+      if (!Context.isSessionOpen())       Context.openSession();
+      String modulesToLoad=StringUtils.join(startModuleAnnotation.value()," ");
+      Properties props=new Properties();
+      props.setProperty(ModuleConstants.RUNTIMEPROPERTY_MODULE_LIST_TO_LOAD,modulesToLoad);
+      ModuleUtil.startup(props);
+      Assert.assertEquals("Some of the modules did not start successfully",startModuleAnnotation.value().length,ModuleFactory.getStartedModules().size());
+      new ClassPathXmlApplicationContext(new String[]{"applicationContext-service.xml","classpath*:moduleApplicationContext.xml"});
+      springAlreadyRestartedOnce=true;
+    }
+  }
+}

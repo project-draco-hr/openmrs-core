@@ -1,6 +1,0 @@
-{
-  User user=Context.getUserService().getUser(1);
-  String xmlOutput=Context.getSerializationService().serialize(user,XStreamSerializer.class);
-  XMLAssert.assertXpathNotExists("/user/log",xmlOutput);
-  XMLAssert.assertXpathNotExists("//log",xmlOutput);
-}
