@@ -10,7 +10,7 @@
   ConceptNameTag desiredCountryTag=ConceptNameTag.preferredCountryTagFor(locale);
   List<ConceptName> compatibleNames=getCompatibleNames(locale);
   if (compatibleNames.size() == 0) {
-    Iterator<ConceptName> nameIt=names.iterator();
+    Iterator<ConceptName> nameIt=getNames().iterator();
     bestMatch=nameIt.next();
   }
  else   if (compatibleNames.size() == 1) {
