@@ -1,0 +1,30 @@
+{
+  if (model.containsKey("formToEntryUrlMap")) {
+    return;
+  }
+  Person person=(Person)model.get("person");
+  if (person == null)   throw new IllegalArgumentException("This portlet may only be used in the context of a Person");
+  FormEntryContext fec=new FormEntryContext(person);
+  Map<Form,FormEntryHandler> entryUrlMap=new TreeMap<Form,FormEntryHandler>(new Comparator<Form>(){
+    public int compare(    Form left,    Form right){
+      int temp=left.getName().toLowerCase().compareTo(right.getName().toLowerCase());
+      if (temp == 0)       temp=OpenmrsUtil.compareWithNullAsLowest(left.getVersion(),right.getVersion());
+      return temp;
+    }
+  }
+);
+  List<Extension> handlers=ModuleFactory.getExtensions("org.openmrs.module.web.extension.FormEntryHandler",MEDIA_TYPE.html);
+  if (handlers != null) {
+    for (    Extension ext : handlers) {
+      FormEntryHandler handler=(FormEntryHandler)ext;
+      Collection<Form> toEnter=handler.getFormsModuleCanEnter(fec);
+      if (toEnter != null) {
+        for (        Form form : toEnter) {
+          entryUrlMap.put(form,handler);
+        }
+      }
+    }
+  }
+  model.put("formToEntryUrlMap",entryUrlMap);
+  model.put("anyUpdatedFormEntryModules",handlers != null && handlers.size() > 0);
+}
