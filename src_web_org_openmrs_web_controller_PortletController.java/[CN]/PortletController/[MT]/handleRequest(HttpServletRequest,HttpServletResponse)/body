@@ -36,7 +36,7 @@
     model.put("id",id);
     model.put("size",size);
     model.put("locale",Context.getLocale());
-    model.put("portletUUID",UUID.randomUUID().toString());
+    model.put("portletUUID",UUID.randomUUID().toString().replace("-",""));
     List<String> parameterKeys=new ArrayList<String>(params.keySet());
     model.putAll(params);
     if (moreParams != null) {
