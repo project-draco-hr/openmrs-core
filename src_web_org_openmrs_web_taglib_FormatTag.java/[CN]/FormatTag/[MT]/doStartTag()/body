@@ -1,17 +1,40 @@
 {
-  try {
-    StringBuilder sb=new StringBuilder();
-    if (conceptId != null)     concept=Context.getConceptService().getConcept(conceptId);
-    if (concept != null) {
-      if (concept.getName() != null)       sb.append(concept.getName().getName());
-    }
-    if (obsValue != null)     sb.append(obsValue.getValueAsString(Context.getLocale()));
-    if (userId != null)     user=Context.getUserService().getUser(userId);
-    if (user != null)     sb.append(user.getPersonName());
-    pageContext.getOut().write(sb.toString());
+  StringBuilder sb=new StringBuilder();
+  if (conceptId != null)   concept=Context.getConceptService().getConcept(conceptId);
+  if (concept != null) {
+    if (concept.getName() != null)     sb.append(concept.getName().getName());
   }
- catch (  IOException e) {
-    log.error("Failed to write to pageContext.getOut()",e);
+  if (obsValue != null)   sb.append(obsValue.getValueAsString(Context.getLocale()));
+  if (userId != null)   user=Context.getUserService().getUser(userId);
+  if (user != null)   printUser(sb,user);
+  if (encounterId != null)   encounter=Context.getEncounterService().getEncounter(encounterId);
+  if (encounter != null) {
+    printEncounterType(sb,encounter.getEncounterType());
+    sb.append(" @");
+    printLocation(sb,encounter.getLocation());
+    sb.append(" | ");
+    printDate(sb,encounter.getEncounterDatetime());
+    sb.append(" | ");
+    printUser(sb,encounter.getProvider());
+  }
+  if (encounterTypeId != null)   encounterType=Context.getEncounterService().getEncounterType(encounterTypeId);
+  if (encounterType != null) {
+    printEncounterType(sb,encounterType);
+  }
+  if (locationId != null)   location=Context.getLocationService().getLocation(locationId);
+  if (location != null) {
+    printLocation(sb,location);
+  }
+  if (StringUtils.hasText(var)) {
+    pageContext.setAttribute(var,sb.toString());
+  }
+ else {
+    try {
+      pageContext.getOut().write(sb.toString());
+    }
+ catch (    IOException e) {
+      log.error("Failed to write to pageContext.getOut()",e);
+    }
   }
   return SKIP_BODY;
 }
