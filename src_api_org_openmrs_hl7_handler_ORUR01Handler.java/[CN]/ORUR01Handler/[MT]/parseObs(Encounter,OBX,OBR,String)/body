@@ -4,9 +4,9 @@
   if (values == null || values.length < 1)   return null;
   String hl7Datatype=values[0].getName();
   if (log.isDebugEnabled())   log.debug("  datatype = " + hl7Datatype);
-  Concept concept=getConcept(obx);
+  Concept concept=getConcept(obx.getObservationIdentifier(),uid);
   if (log.isDebugEnabled())   log.debug("  concept = " + concept.getConceptId());
-  ConceptName conceptName=getConceptName(obx);
+  ConceptName conceptName=getConceptName(obx.getObservationIdentifier());
   if (log.isDebugEnabled())   log.debug("  concept-name = " + conceptName);
   Date datetime=getDatetime(obx);
   if (log.isDebugEnabled())   log.debug("  timestamp = " + datetime);
@@ -42,10 +42,9 @@
  else {
       log.debug("    not proposal");
       try {
-        Concept valueConcept=new Concept();
-        valueConcept.setConceptId(new Integer(valueIdentifier));
+        Concept valueConcept=getConcept(value,uid);
         obs.setValueCoded(valueConcept);
-        if ("99RX".equals(value.getNameOfAlternateCodingSystem().getValue())) {
+        if (FormConstants.HL7_LOCAL_DRUG.equals(value.getNameOfAlternateCodingSystem().getValue())) {
           Drug valueDrug=new Drug();
           valueDrug.setDrugId(new Integer(value.getAlternateIdentifier().getValue()));
           obs.setValueDrug(valueDrug);
@@ -76,10 +75,8 @@
     }
  else {
       try {
-        Concept valueCoded=new Concept();
-        valueCoded.setConceptId(new Integer(valueIdentifier));
-        obs.setValueCoded(valueCoded);
-        obs.setValueCodedName(valueCoded.getName());
+        obs.setValueCoded(getConcept(value,uid));
+        obs.setValueCodedName(getConceptName(value));
       }
  catch (      NumberFormatException e) {
         throw new HL7Exception("Invalid concept ID '" + valueIdentifier + "' for OBX-5 value '"+ valueName+ "'");
