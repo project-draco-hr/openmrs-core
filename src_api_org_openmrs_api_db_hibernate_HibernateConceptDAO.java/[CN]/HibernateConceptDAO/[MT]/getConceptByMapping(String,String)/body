@@ -1,0 +1,8 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class);
+  criteria.setProjection(Projections.property("concept"));
+  criteria.add(Expression.eq("sourceCode",conceptCode));
+  criteria.createAlias("source","conceptSource");
+  criteria.add(Expression.eq("conceptSource.hl7Code",mappingCode));
+  return (Concept)criteria.uniqueResult();
+}

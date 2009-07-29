@@ -30,7 +30,7 @@
     ORU_R01_ORDER_OBSERVATION orderObs=patientResult.getORDER_OBSERVATION(i);
     OBR obr=orderObs.getOBR();
     Obs obsGrouper=null;
-    Concept obrConcept=getConcept(obr);
+    Concept obrConcept=getConcept(obr.getUniversalServiceIdentifier(),messageControlId);
     if (obrConcept != null && !ignoredConcepts.contains(obrConcept)) {
       obsGrouper=new Obs();
       obsGrouper.setConcept(obrConcept);
@@ -49,7 +49,7 @@
       OBX obx=orderObs.getOBSERVATION(j).getOBX();
       try {
         log.debug("Parsing observation");
-        Obs obs=parseObs(encounter,obx,obr);
+        Obs obs=parseObs(encounter,obx,obr,messageControlId);
         if (obs != null) {
           if (encounter.getEncounterId() != null) {
             obs.setCreator(getEnterer(orc));

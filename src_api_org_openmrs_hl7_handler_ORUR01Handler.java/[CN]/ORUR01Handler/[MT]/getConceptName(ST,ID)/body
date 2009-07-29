@@ -1,0 +1,9 @@
+{
+  if (altIdentifier != null) {
+    if (FormConstants.HL7_LOCAL_CONCEPT_NAME.equals(altCodingSystem.getValue())) {
+      String hl7ConceptNameId=altIdentifier.getValue();
+      return getConceptName(hl7ConceptNameId);
+    }
+  }
+  return null;
+}
