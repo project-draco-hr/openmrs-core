@@ -1,0 +1,6 @@
+{
+  if (o != null && o.getSerializationClass() != null) {
+    return Context.getSerializationService().getSerializer(o.getSerializationClass());
+  }
+  return Context.getSerializationService().getDefaultSerializer();
+}

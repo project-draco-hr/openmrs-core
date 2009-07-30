@@ -7,7 +7,9 @@
   if (serializedObject == null) {
     serializedObject=new SerializedObject();
   }
-  serializer=getSerializer(serializedObject,serializer);
+  if (serializer == null) {
+    serializer=getSerializer(serializedObject);
+  }
   String data=null;
   try {
     data=serializer.serialize(object);
