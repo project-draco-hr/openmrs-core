@@ -27,7 +27,7 @@
     if (password.length() == 0 && isNewUser(user))     errors.reject("error.password.weak");
     if (password.length() > 0) {
       try {
-        OpenmrsUtil.validatePassword(user.getUsername(),password,String.valueOf(user.getUserId()));
+        OpenmrsUtil.validatePassword(user.getUsername(),password,user.getSystemId());
       }
  catch (      PasswordException e) {
         errors.reject(e.getMessage());
