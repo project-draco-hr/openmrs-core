@@ -20,14 +20,6 @@
   httpSession.setAttribute("locale",userContext.getLocale());
   Context.setUserContext(userContext);
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-  if (Context.isAuthenticated()) {
-    Context.refreshAuthenticatedUser();
-    User tmp=Context.getAuthenticatedUser();
-    tmp.getUserProperties().size();
-    tmp.getNames().size();
-    tmp.getAttributes().size();
-    tmp.getAddresses().size();
-  }
   log.debug("before chain.Filter");
   try {
     chain.doFilter(httpRequest,httpResponse);
