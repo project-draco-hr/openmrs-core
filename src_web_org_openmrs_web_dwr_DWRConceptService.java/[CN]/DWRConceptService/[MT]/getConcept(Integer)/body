@@ -2,6 +2,7 @@
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
   Concept c=cs.getConcept(conceptId);
+  if (c == null)   return null;
   ConceptName cn=c.getName(locale);
-  return c == null ? null : new ConceptListItem(c,cn,locale);
+  return new ConceptListItem(c,cn,locale);
 }
