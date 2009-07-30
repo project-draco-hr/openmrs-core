@@ -1,0 +1,8 @@
+{
+  if (test != null) {
+    Pattern pattern=Pattern.compile("^(?=.*?[A-Z])(?=.*?[a-z])[\\w|\\W]*$");
+    Matcher matcher=pattern.matcher(test);
+    return matcher.matches();
+  }
+  return false;
+}

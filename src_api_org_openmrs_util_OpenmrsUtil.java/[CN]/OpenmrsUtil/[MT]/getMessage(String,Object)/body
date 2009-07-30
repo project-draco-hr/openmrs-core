@@ -1,0 +1,13 @@
+{
+  Locale l=Context.getLocale();
+  try {
+    String translation=Context.getMessageSourceService().getMessage(code,args,l);
+    if (translation != null) {
+      return translation;
+    }
+  }
+ catch (  NoSuchMessageException e) {
+    log.warn("Message code <" + code + "> not found for locale "+ l);
+  }
+  return code;
+}

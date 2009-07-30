@@ -1,0 +1,8 @@
+{
+  GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(name);
+  if (gp == null) {
+    gp=new GlobalProperty(name);
+  }
+  gp.setPropertyValue(value);
+  Context.getAdministrationService().saveGlobalProperty(gp);
+}
