@@ -1,0 +1,7 @@
+{
+  String superClassName=metadataReader.getClassMetadata().getSuperClassName();
+  if (superClassName != null) {
+    return superClassNamesToExclude.contains(superClassName);
+  }
+  return false;
+}
