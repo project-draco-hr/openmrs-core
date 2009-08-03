@@ -1,0 +1,10 @@
+{
+  executeDataSet(EXTRA_DATA_XML);
+  List<EncounterType> list=new ArrayList<EncounterType>();
+  list.add(new EncounterType(1));
+  Cohort withOneType=service.getPatientsHavingEncounters(list,null,null,null,null,null,null);
+  Assert.assertEquals(1,withOneType.size());
+  list.add(new EncounterType(6));
+  Cohort withTwoTypes=service.getPatientsHavingEncounters(list,null,null,null,null,null,null);
+  Assert.assertEquals(2,withTwoTypes.size());
+}
