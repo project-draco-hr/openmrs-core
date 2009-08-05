@@ -9,5 +9,9 @@
  catch (  NoSuchMessageException e) {
     log.warn("Message code <" + code + "> not found for locale "+ l);
   }
+catch (  APIException apiEx) {
+    log.debug("Unable to get code: " + code,apiEx);
+    return code;
+  }
   return code;
 }
