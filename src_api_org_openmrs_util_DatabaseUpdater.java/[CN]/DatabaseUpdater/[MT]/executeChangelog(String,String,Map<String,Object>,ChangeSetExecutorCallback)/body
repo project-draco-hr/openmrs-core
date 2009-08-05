@@ -12,6 +12,7 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
       super.visit(changeSet,database);
     }
   }
+  log.debug("Setting up liquibase object to run changelog: " + changeLogFile);
   Liquibase liquibase=getLiquibase(changeLogFile);
   int numChangeSetsToRun=liquibase.listUnrunChangeSets(contexts).size();
   Database database=liquibase.getDatabase();
