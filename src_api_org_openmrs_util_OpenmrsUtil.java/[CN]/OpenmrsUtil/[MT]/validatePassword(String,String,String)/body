@@ -12,7 +12,7 @@
  catch (  APIException apiEx) {
     log.debug("Unable to get global properties",apiEx);
   }
-  if (svc != null) {
+  if (svc != null && Context.isSessionOpen()) {
     userGp=svc.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_CANNOT_MATCH_USERNAME_OR_SYSTEMID,userGp);
     lengthGp=svc.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_MINIMUM_LENGTH,lengthGp);
     caseGp=svc.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_REQUIRES_UPPER_AND_LOWER_CASE,caseGp);
