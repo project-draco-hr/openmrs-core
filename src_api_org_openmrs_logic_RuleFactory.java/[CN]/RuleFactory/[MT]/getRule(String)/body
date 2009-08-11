@@ -1,6 +1,19 @@
 {
+  Rule rule=null;
   if (token == null)   throw new LogicException("Token cannot be null");
   if (token.startsWith("%%"))   return new ReferenceRule(token.substring(2));
   if (!getRuleMap().containsKey(token))   throw new LogicException("No token \"" + token + "\" registered");
-  return getRuleMap().get(token);
+  Rule r=getRuleMap().get(token);
+  Class clas=r.getClass();
+  try {
+    Object obj=clas.newInstance();
+    rule=(Rule)obj;
+  }
+ catch (  InstantiationException e) {
+    log.error("Error creating new instance of Rule",e);
+  }
+catch (  IllegalAccessException e) {
+    log.error("Error creating new instance of Rule",e);
+  }
+  return rule;
 }

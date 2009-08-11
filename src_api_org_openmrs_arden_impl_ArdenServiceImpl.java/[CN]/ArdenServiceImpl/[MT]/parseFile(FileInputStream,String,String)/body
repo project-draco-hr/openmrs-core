@@ -207,7 +207,15 @@
       str="\"" + str + "\"";
     }
     w.write("\t/*** @see org.openmrs.module.dss.DssRule#getAgeMaxUnits()*/\n" + "\tpublic String getAgeMaxUnits(){\n" + "\t\treturn " + str + ";\n"+ "\t}\n\n");
-    w.write("\tpublic static String toProperCase(String str){\n\n");
+    w.write("private static boolean containsIgnoreCase(Result key,List<Result> lst){\n");
+    w.write("for(Result element:lst){\n");
+    w.write("if(key != null&&key.toString().equalsIgnoreCase(element.toString())){\n");
+    w.write("	return true;\n");
+    w.write("}\n");
+    w.write("}	\n");
+    w.write("return false;\n");
+    w.write("}\n");
+    w.write("\tprivate static String toProperCase(String str){\n\n");
     w.write("\t\tif(str == null || str.length()<1){\n");
     w.write("\t\t\treturn str;\n");
     w.write("\t\t}\n\n");

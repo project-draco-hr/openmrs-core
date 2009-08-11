@@ -1,10 +1,16 @@
 {
   String retVal="";
   if (readType != null && !readType.equals("") && !readType.equalsIgnoreCase("exist")) {
-    retVal="." + readType + "()";
+    retVal="." + readType;
   }
  else {
-    retVal=".last()";
+    retVal=".last";
+  }
+  if (howMany > 1) {
+    retVal+="(" + howMany + ")";
+  }
+ else {
+    retVal+="()";
   }
   return retVal;
 }

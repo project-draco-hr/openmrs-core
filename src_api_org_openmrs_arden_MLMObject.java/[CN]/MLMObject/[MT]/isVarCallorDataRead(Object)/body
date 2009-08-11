@@ -1,0 +1,30 @@
+{
+  boolean retVal=false;
+  Iterator<String> callSectionIterator=this.calls.keySet().iterator();
+  if (!(varObj instanceof String)) {
+    return retVal;
+  }
+  String var=(String)varObj;
+  if (this.conceptMap.containsKey(var)) {
+    retVal=true;
+  }
+ else   if (callSectionIterator != null) {
+    while (callSectionIterator.hasNext()) {
+      ArrayList<Call> callBySection=this.calls.get(callSectionIterator.next());
+      Iterator<Call> callIterator=null;
+      if (callBySection != null) {
+        callIterator=callBySection.iterator();
+        if (callIterator != null) {
+          while (callIterator.hasNext()) {
+            Call c=callIterator.next();
+            if (var.equalsIgnoreCase(c.getCallVar())) {
+              retVal=true;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+  return retVal;
+}

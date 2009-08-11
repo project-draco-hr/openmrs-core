@@ -24,10 +24,10 @@
 switch (operator) {
 case IN:
         if (keyList != null) {
-          retStr+=key + ".contains(getResultList_" + keyList+ "())";
+          retStr+="containsIgnoreCase(getResultList_" + keyList + "(),"+ key+ ")";
         }
  else {
-          retStr+=key + ".contains(getResultList_" + key+ "())";
+          retStr+="containsIgnoreCase(getResultList_" + key + "(),"+ key+ ")";
         }
       break;
 case EQUALS:
@@ -42,20 +42,32 @@ case GTE:
 if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
   retStr+=key + ".toNumber() >= " + this.answer;
 }
+ else if (isAnswerVar) {
+  retStr+=key + ".toNumber() >=  " + this.answer+ ".toNumber()";
+}
 break;
 case GT:
 if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
 retStr+=key + ".toNumber() > " + this.answer;
+}
+ else if (isAnswerVar) {
+retStr+=key + ".toNumber() >  " + this.answer+ ".toNumber()";
 }
 break;
 case LT:
 if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
 retStr+=key + ".toNumber() < " + this.answer;
 }
+ else if (isAnswerVar) {
+retStr+=key + ".toNumber() <  " + this.answer+ ".toNumber()";
+}
 break;
 case LTE:
 if (this.answer instanceof Integer || this.answer instanceof Double || this.answer instanceof Float) {
 retStr+=key + ".toNumber() <= " + this.answer;
+}
+ else if (isAnswerVar) {
+retStr+=key + ".toNumber() <=  " + this.answer+ ".toNumber()";
 }
 break;
 default :
