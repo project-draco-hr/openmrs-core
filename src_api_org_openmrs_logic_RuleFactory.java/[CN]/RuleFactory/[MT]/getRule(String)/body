@@ -4,6 +4,8 @@
   if (token.startsWith("%%"))   return new ReferenceRule(token.substring(2));
   if (!getRuleMap().containsKey(token))   throw new LogicException("No token \"" + token + "\" registered");
   Rule r=getRuleMap().get(token);
+  String state=StringUtils.EMPTY;
+  if (StatefulRule.class.isAssignableFrom(r.getClass()))   state=((StatefulRule)r).saveToString();
   Class clas=r.getClass();
   try {
     Object obj=clas.newInstance();
@@ -15,5 +17,6 @@
 catch (  IllegalAccessException e) {
     log.error("Error creating new instance of Rule",e);
   }
+  if (StatefulRule.class.isAssignableFrom(r.getClass()))   ((StatefulRule)rule).restoreFromString(state);
   return rule;
 }
