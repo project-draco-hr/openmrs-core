@@ -23,7 +23,9 @@
     w.append("else if (variable.contains(\"_value\"))\n");
     w.append("{\n");
     w.append("	variable = variable.replace(\"_value\",\"\").trim();\n");
+    w.append("if(resultLookup.get(variable) != null){");
     w.append("value = resultLookup.get(variable).toString();\n");
+    w.append("}");
     w.append("}\n");
     w.append("// It must be a result date\n");
     w.append("else if (variable.contains(\"_date\"))\n");
@@ -33,7 +35,16 @@
     w.append("variable = variable.replace(\"_date\",\"\").trim();\n");
     w.append("value = dateForm.format(resultLookup.get(variable).getResultDate());\n");
     w.append("}\n");
-    w.append("outStr += value;\n");
+    w.append("else\n");
+    w.append("{\n");
+    w.append("if(resultLookup.get(variable) != null){");
+    w.append("value = resultLookup.get(variable).toString();\n");
+    w.append("}");
+    w.append("}\n");
+    w.append("if (value != null)\n");
+    w.append("{\n");
+    w.append("	outStr += value;\n");
+    w.append("}\n");
     w.append("return outStr;\n");
     w.append("}\n");
     w.append("public String doAction(String inStr)\n");

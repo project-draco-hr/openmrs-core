@@ -26,7 +26,7 @@
   }
   List<Encounter> results=new ArrayList<Encounter>();
   criteria.add(Restrictions.eq("voided",false));
-  criteria.add(Restrictions.in("person.personId",who.getMemberIds()));
+  criteria.add(Restrictions.in("patient.personId",who.getMemberIds()));
   results.addAll(criteria.list());
   if (transformOperator == Operator.FIRST || transformOperator == Operator.LAST) {
     HashMap<Integer,ArrayList<Encounter>> nResultMap=new HashMap<Integer,ArrayList<Encounter>>();

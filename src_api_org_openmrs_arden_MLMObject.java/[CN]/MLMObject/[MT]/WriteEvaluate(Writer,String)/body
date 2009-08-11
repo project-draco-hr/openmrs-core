@@ -45,6 +45,9 @@
     w.append("\n\n\t\t\tif(evaluate_logic(parameters)){\n");
     w.append("\t\t\t\tResult ruleResult = new Result();\n");
     if (this.calls.get("action") != null) {
+      w.append("\t\t\t\tString value = null;\n");
+      w.append("\t\t\t\tString variable = null;\n");
+      w.append("\t\t\t\tint varLen = 0;\n");
       for (      Call currCall : this.calls.get("action")) {
         currCall.write(w);
       }
@@ -56,13 +59,17 @@
     w.append("\t\t\t\treturn ruleResult;\n");
     w.append("\t\t\t}\n");
     w.append("\t\t} catch (Exception e) {\n");
+    w.append("\t\t\tlog.error(\"Error within rule\",e);\n");
     w.append("\t\t\treturn Result.emptyResult();");
     w.append("\n\t\t}\n\t\treturn Result.emptyResult();\n\t}\n\n");
     LinkedHashMap<String,Comparison> compListBySection=comparisons.get("logic");
-    Iterator<Map.Entry<String,Comparison>> comparisonIteratorLogic=compListBySection.entrySet().iterator();
-    while (comparisonIteratorLogic.hasNext()) {
-      Comparison comparison=comparisonIteratorLogic.next().getValue();
-      comparison.writeComparisonList(w);
+    Iterator<Map.Entry<String,Comparison>> comparisonIteratorLogic=null;
+    if (compListBySection != null) {
+      comparisonIteratorLogic=compListBySection.entrySet().iterator();
+      while (comparisonIteratorLogic.hasNext()) {
+        Comparison comparison=comparisonIteratorLogic.next().getValue();
+        comparison.writeComparisonList(w);
+      }
     }
     w.append("\tprivate boolean evaluate_logic(Map<String, Object> parameters) throws LogicException {\n\n");
     evalListBySection=evaluateList.get("logic");
@@ -86,6 +93,9 @@
     Iterator<Call> callIterator=null;
     if (callBySection != null) {
       callIterator=callBySection.iterator();
+      w.append("\t\t\t\tString value = null;\n");
+      w.append("\t\t\t\tString variable = null;\n");
+      w.append("\t\t\t\tint varLen = 0;\n");
     }
     Iterator<Conclude> concludeIterator=this.concludes.iterator();
     comparisonIteratorLogic=compListBySection.entrySet().iterator();
