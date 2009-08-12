@@ -25,6 +25,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         try {
           setMessage("Updating the database to the latest version");
           DatabaseUpdater.executeChangelog(null,null,new PrintingChangeSetExecutorCallback("Updating database tables to latest version "));
+          executingChangesetId=null;
         }
  catch (        InputRequiredException inputRequired) {
           log.error("Not implemented",inputRequired);
