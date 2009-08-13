@@ -20,7 +20,7 @@
         log.error("Unable to sleep",e);
         throw new ServletException("Got interrupted while trying to sleep thread",e);
       }
-      errors.add("Unable to authenticate as a " + OpenmrsConstants.SUPERUSER_ROLE + ". Invalid username or password");
+      errors.add("Unable to authenticate as a User with the " + OpenmrsConstants.SUPERUSER_ROLE + " role. Invalid username or password");
       renderTemplate(DEFAULT_PAGE,referenceMap,writer);
     }
   }
