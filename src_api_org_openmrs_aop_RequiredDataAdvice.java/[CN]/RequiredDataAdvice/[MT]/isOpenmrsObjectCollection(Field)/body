@@ -1,7 +1,11 @@
 {
   if (Collection.class.isAssignableFrom(field.getType())) {
-    ParameterizedType type=(ParameterizedType)field.getGenericType();
-    if (OpenmrsObject.class.isAssignableFrom((Class)type.getActualTypeArguments()[0]))     return true;
+    try {
+      ParameterizedType type=(ParameterizedType)field.getGenericType();
+      return (OpenmrsObject.class.isAssignableFrom((Class)type.getActualTypeArguments()[0]));
+    }
+ catch (    ClassCastException e) {
+    }
   }
   return false;
 }
