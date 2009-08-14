@@ -1,10 +1,10 @@
 {
   if (concept != null) {
     conceptId=concept.getConceptId();
-    conceptNameId=conceptName.getConceptNameId();
     ConceptName conceptShortName=concept.getShortNameInLocale(locale);
     name=shortName=description="";
     if (conceptName != null) {
+      conceptNameId=conceptName.getConceptNameId();
       name=WebUtil.escapeHTML(conceptName.getName());
       if (!conceptName.isPreferred()) {
         ConceptName preferredNameObj=concept.getPreferredName(locale);
