@@ -4,9 +4,12 @@
     if (this.conceptAnswerId != null && c.getConceptAnswerId() != null)     return (this.conceptAnswerId.equals(c.getConceptAnswerId()));
  else {
       boolean ret=true;
-      if (this.concept != null && c.getConcept() != null)       ret=ret && this.concept.equals(c.getConcept());
-      if (this.answerConcept != null && c.getAnswerConcept() != null)       ret=ret && this.answerConcept.equals(c.getAnswerConcept());
-      if (this.answerDrug != null && c.getAnswerDrug() != null)       ret=ret && this.answerDrug.equals(c.getAnswerDrug());
+      if (concept == null && c.getConcept() != null)       return false;
+ else       if (this.concept != null)       ret=ret && this.concept.equals(c.getConcept());
+      if (this.answerConcept == null && c.getAnswerConcept() != null)       return false;
+ else       if (this.answerConcept != null)       ret=ret && this.answerConcept.equals(c.getAnswerConcept());
+      if (this.answerDrug == null && c.getAnswerDrug() != null)       return false;
+ else       if (this.answerDrug != null)       ret=ret && this.answerDrug.equals(c.getAnswerDrug());
       return ret;
     }
   }
