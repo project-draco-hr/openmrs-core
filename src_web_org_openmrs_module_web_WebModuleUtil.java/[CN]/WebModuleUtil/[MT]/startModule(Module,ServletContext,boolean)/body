@@ -144,7 +144,7 @@
         mod.setStartupErrorMessage(msg,e);
         if (log.isWarnEnabled())         log.warn(msg + " for module: " + mod.getModuleId(),e);
         try {
-          ModuleFactory.stopModule(mod);
+          ModuleFactory.stopModule(mod,true,true);
           stopModule(mod,servletContext,true);
         }
  catch (        Exception e2) {
