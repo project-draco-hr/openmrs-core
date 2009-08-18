@@ -1,6 +1,6 @@
 {
   EncounterService encounterService=Context.getEncounterService();
-  List<EncounterType> types=encounterService.getAllEncounterTypes();
-  assertNotNull(types);
-  assertEquals(2,types.size());
+  List<EncounterType> encounterTypes=encounterService.getAllEncounterTypes(false);
+  assertNotNull(encounterTypes);
+  assertEquals(2,encounterTypes.size());
 }
