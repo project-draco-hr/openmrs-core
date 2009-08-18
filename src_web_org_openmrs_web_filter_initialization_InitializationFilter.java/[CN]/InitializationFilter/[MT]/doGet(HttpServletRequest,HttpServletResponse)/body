@@ -5,6 +5,8 @@
   if (!runtimeProperties.exists()) {
     try {
       runtimeProperties.createNewFile();
+      wizardModel.canCreate=true;
+      wizardModel.cannotCreateErrorMessage="";
     }
  catch (    IOException io) {
       wizardModel.canCreate=false;
