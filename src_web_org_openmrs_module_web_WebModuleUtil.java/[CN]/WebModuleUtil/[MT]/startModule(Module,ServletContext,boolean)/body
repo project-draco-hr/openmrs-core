@@ -61,6 +61,10 @@
             }
           }
  else {
+            File parentDir=outFile.getParentFile();
+            if (!parentDir.exists()) {
+              parentDir.mkdirs();
+            }
             OutputStream outStream=new FileOutputStream(outFile,false);
             InputStream inStream=jarFile.getInputStream(entry);
             OpenmrsUtil.copyFile(inStream,outStream);
