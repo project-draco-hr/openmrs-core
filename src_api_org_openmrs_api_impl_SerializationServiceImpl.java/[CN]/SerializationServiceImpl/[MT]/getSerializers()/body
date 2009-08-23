@@ -1,3 +1,6 @@
 {
+  if (serializerMap == null) {
+    serializerMap=new LinkedHashMap<Class<? extends OpenmrsSerializer>,OpenmrsSerializer>();
+  }
   return new ArrayList<OpenmrsSerializer>(serializerMap.values());
 }
