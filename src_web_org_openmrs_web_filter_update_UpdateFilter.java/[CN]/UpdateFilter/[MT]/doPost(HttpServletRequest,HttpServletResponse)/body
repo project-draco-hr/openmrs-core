@@ -1,7 +1,6 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  Writer writer=httpResponse.getWriter();
   if (DEFAULT_PAGE.equals(page)) {
     String username=httpRequest.getParameter("username");
     String password=httpRequest.getParameter("password");
@@ -9,7 +8,7 @@
     if (authenticateAsSuperUser(username,password)) {
       log.debug("Authentication successful.  Redirecting to 'reviewupdates' page.");
       authenticatedSuccessfully=true;
-      renderTemplate(REVIEW_CHANGES,referenceMap,writer);
+      renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
     }
  else {
       try {
@@ -21,18 +20,18 @@
         throw new ServletException("Got interrupted while trying to sleep thread",e);
       }
       errors.add("Unable to authenticate as a User with the " + OpenmrsConstants.SUPERUSER_ROLE + " role. Invalid username or password");
-      renderTemplate(DEFAULT_PAGE,referenceMap,writer);
+      renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
     }
   }
  else   if (REVIEW_CHANGES.equals(page)) {
     if (!authenticatedSuccessfully) {
-      renderTemplate(DEFAULT_PAGE,referenceMap,writer);
+      renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
       return;
     }
     updateJob=new UpdateFilterCompletion();
     updateJob.start();
     referenceMap.put("updateJobStarted",true);
-    renderTemplate(REVIEW_CHANGES,referenceMap,writer);
+    renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
     httpResponse.setContentType("text/json");
@@ -57,6 +56,6 @@
       }
     }
     String jsonText=toJSONString(result);
-    writer.write(jsonText);
+    httpResponse.getWriter().write(jsonText);
   }
 }
