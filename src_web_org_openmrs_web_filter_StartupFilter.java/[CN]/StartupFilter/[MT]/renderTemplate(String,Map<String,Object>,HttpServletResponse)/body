@@ -23,8 +23,9 @@ catch (    IllegalAccessException e) {
     throw new IOException("Unable to find " + fullTemplatePath);
   }
   velocityContext.put("errors",errors);
+  httpResponse.setContentType("text/html");
   try {
-    velocityEngine.evaluate(velocityContext,writer,this.getClass().getName(),new InputStreamReader(templateInputStream));
+    velocityEngine.evaluate(velocityContext,httpResponse.getWriter(),this.getClass().getName(),new InputStreamReader(templateInputStream));
   }
  catch (  Exception e) {
     throw new RuntimeException("Unable to process template: " + fullTemplatePath,e);

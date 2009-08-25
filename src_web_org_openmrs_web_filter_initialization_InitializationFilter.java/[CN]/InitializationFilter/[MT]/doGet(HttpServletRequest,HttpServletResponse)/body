@@ -1,5 +1,4 @@
 {
-  Writer writer=httpResponse.getWriter();
   Map<String,Object> referenceMap=new HashMap<String,Object>();
   File runtimeProperties=getRuntimePropertiesFile();
   if (!runtimeProperties.exists()) {
@@ -19,5 +18,6 @@
     wizardModel.canWrite=runtimeProperties.canWrite();
   }
   wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
-  renderTemplate(DEFAULT_PAGE,referenceMap,writer);
+  httpResponse.setContentType("text/html");
+  renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
 }

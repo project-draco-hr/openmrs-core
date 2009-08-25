@@ -1,7 +1,6 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  Writer writer=httpResponse.getWriter();
   if (DATABASE_SETUP.equals(page)) {
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
@@ -23,11 +22,11 @@
     if (errors.isEmpty()) {
       page=DATABASE_TABLES_AND_USER;
     }
-    renderTemplate(page,referenceMap,writer);
+    renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (DATABASE_TABLES_AND_USER.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(DATABASE_SETUP,referenceMap,writer);
+      renderTemplate(DATABASE_SETUP,referenceMap,httpResponse);
       return;
     }
     if (wizardModel.hasCurrentOpenmrsDatabase) {
@@ -53,11 +52,11 @@
     if (errors.isEmpty()) {
       page=OTHER_RUNTIME_PROPS;
     }
-    renderTemplate(page,referenceMap,writer);
+    renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (OTHER_RUNTIME_PROPS.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(DATABASE_TABLES_AND_USER,referenceMap,writer);
+      renderTemplate(DATABASE_TABLES_AND_USER,referenceMap,httpResponse);
       return;
     }
     wizardModel.moduleWebAdmin="yes".equals(httpRequest.getParameter("module_web_admin"));
@@ -68,23 +67,23 @@
  else {
       page=IMPLEMENTATION_ID_SETUP;
     }
-    renderTemplate(page,referenceMap,writer);
+    renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (ADMIN_USER_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,writer);
+      renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
       return;
     }
     wizardModel.adminUserPassword=httpRequest.getParameter("new_admin_password");
     String adminUserConfirm=httpRequest.getParameter("new_admin_password_confirm");
     if (!wizardModel.adminUserPassword.equals(adminUserConfirm)) {
       errors.add("Admin passwords don't match");
-      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
     if (wizardModel.adminUserPassword.equals("")) {
       errors.add("An admin password is required");
-      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
     try {
@@ -92,18 +91,18 @@
     }
  catch (    PasswordException p) {
       errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
-      renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
+      renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
     if (errors.isEmpty()) {
       page=IMPLEMENTATION_ID_SETUP;
     }
-    renderTemplate(page,referenceMap,writer);
+    renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (IMPLEMENTATION_ID_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      if (wizardModel.createTables)       renderTemplate(ADMIN_USER_SETUP,referenceMap,writer);
- else       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,writer);
+      if (wizardModel.createTables)       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
+ else       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
       return;
     }
     wizardModel.implementationIdName=httpRequest.getParameter("implementation_name");
@@ -112,22 +111,22 @@
     wizardModel.implementationIdDescription=httpRequest.getParameter("description");
     if (wizardModel.implementationId.indexOf('^') != -1 || wizardModel.implementationId.indexOf('|') != -1) {
       errors.add("Implementation ID cannot contain '^' or '|'");
-      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,writer);
+      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,httpResponse);
       return;
     }
     if (errors.isEmpty()) {
       page=WIZARD_COMPLETE;
     }
-    renderTemplate(page,referenceMap,writer);
+    renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (WIZARD_COMPLETE.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,writer);
+      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,httpResponse);
       return;
     }
     initJob=new InitializationCompletion();
     initJob.start();
-    renderTemplate(PROGRESS_VM,referenceMap,writer);
+    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
     httpResponse.setContentType("text/json");
@@ -151,6 +150,6 @@
         result.put("logLines",new ArrayList<String>());
       }
     }
-    writer.write(toJSONString(result));
+    httpResponse.getWriter().write(toJSONString(result));
   }
 }
