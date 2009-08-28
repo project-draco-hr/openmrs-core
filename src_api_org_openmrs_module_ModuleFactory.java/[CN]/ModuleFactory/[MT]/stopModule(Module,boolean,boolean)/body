@@ -1,7 +1,7 @@
 {
   if (mod != null) {
     String moduleId=mod.getModuleId();
-    if (!isFailedStartup && ModuleUtil.getMandatoryModules().contains(moduleId)) {
+    if (!isFailedStartup && mod.isMandatory()) {
       throw new MandatoryModuleException(moduleId);
     }
     String modulePackage=mod.getPackageName();
