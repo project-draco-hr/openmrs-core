@@ -1,5 +1,8 @@
 {
+  Locale origLocale=Context.getLocale();
   executeDataSet(INITIAL_CONCEPTS_XML);
-  Assert.assertEquals(Context.getLocale(),Locale.UK);
+  Context.setLocale(Locale.ENGLISH);
   Assert.assertNotNull(Context.getConceptService().getConceptByName("Numeric name with en_GB locale"));
+  Assert.assertNotNull(Context.getConceptService().getConceptByName("Some numeric concept name"));
+  Context.setLocale(origLocale);
 }
