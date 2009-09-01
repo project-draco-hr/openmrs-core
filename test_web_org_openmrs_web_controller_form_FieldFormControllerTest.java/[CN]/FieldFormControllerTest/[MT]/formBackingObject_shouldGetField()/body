@@ -1,0 +1,9 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
+  request.setParameter("fieldId","1");
+  HttpServletResponse response=new MockHttpServletResponse();
+  FieldFormController controller=(FieldFormController)applicationContext.getBean("fieldForm");
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  Field command=(Field)modelAndView.getModel().get("field");
+  Assert.assertNotNull(command.getFieldId());
+}
