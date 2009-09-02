@@ -1,32 +1,35 @@
 {
-  log.debug("setting text: " + text);
+  log.debug("setting conceptSets with text: " + text);
   if (StringUtils.hasText(text)) {
     ConceptService cs=Context.getConceptService();
     String[] conceptIds=text.split(" ");
     List<Integer> requestConceptIds=new Vector<Integer>();
-    Set<ConceptSet> newSets=new HashSet<ConceptSet>();
     for (    String id : conceptIds) {
       id=id.trim();
       if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id)))       requestConceptIds.add(Integer.valueOf(id));
     }
-    Collection<ConceptSet> originalConceptSets=(Collection<ConceptSet>)getValue();
-    if (originalConceptSets == null)     originalConceptSets=new Vector<ConceptSet>();
-    for (    ConceptSet origConceptSet : originalConceptSets) {
-      for (int x=0; x < requestConceptIds.size(); x++) {
-        if (requestConceptIds.get(x).equals(origConceptSet.getConcept().getConceptId())) {
-          origConceptSet.setSortWeight(Double.valueOf(x));
-          newSets.add(origConceptSet);
-          requestConceptIds.set(x,new Integer(-1));
+    List<Integer> originalConceptSetIds=new ArrayList<Integer>(originalConceptSets.size());
+    Collection<ConceptSet> copyOfOriginalConceptSets=new ArrayList<ConceptSet>(originalConceptSets);
+    for (    ConceptSet origConceptSet : copyOfOriginalConceptSets) {
+      if (!requestConceptIds.contains(origConceptSet.getConcept().getConceptId()))       originalConceptSets.remove(origConceptSet);
+      originalConceptSetIds.add(origConceptSet.getConcept().getConceptId());
+    }
+    for (int x=0; x < requestConceptIds.size(); x++) {
+      Integer requestConceptId=requestConceptIds.get(x);
+      if (!originalConceptSetIds.contains(requestConceptId)) {
+        originalConceptSets.add(new ConceptSet(cs.getConcept(requestConceptId),new Double(x)));
+      }
+ else {
+        for (        ConceptSet conceptSet : originalConceptSets) {
+          if (conceptSet.getConcept().getConceptId().equals(requestConceptId)) {
+            conceptSet.setSortWeight(new Double(x));
+          }
         }
       }
     }
-    for (int x=0; x < requestConceptIds.size(); x++) {
-      Integer conceptId=requestConceptIds.get(x);
-      if (!conceptId.equals(new Integer(-1)))       newSets.add(new ConceptSet(cs.getConcept(conceptId),Double.valueOf(x)));
-    }
-    setValue(newSets);
   }
  else {
-    setValue(null);
+    originalConceptSets.clear();
   }
+  setValue(originalConceptSets);
 }

@@ -1,0 +1,18 @@
+{
+  ConceptService cs=Context.getConceptService();
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("conceptId","23");
+  mockRequest.setParameter("namesByLocale[en].name","FOOD CONSTRUCT");
+  mockRequest.setParameter("concept.datatype","4");
+  mockRequest.setParameter("concept.class","10");
+  mockRequest.setParameter("concept.conceptSets","18 19");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  Concept concept=cs.getConcept(23);
+  assertNotNull(concept);
+  assertEquals(2,concept.getConceptSets().size());
+}
