@@ -35,7 +35,11 @@
       }
     }
   }
-  if (!concept.isSet())   concept.setConceptSets(null);
+  if (!concept.isSet()) {
+    if (concept.getConceptSets() != null) {
+      concept.getConceptSets().clear();
+    }
+  }
   if (concept.getDatatype().getName().equals("Numeric")) {
     ConceptNumeric cn;
     if (concept instanceof ConceptNumeric)     cn=(ConceptNumeric)concept;
