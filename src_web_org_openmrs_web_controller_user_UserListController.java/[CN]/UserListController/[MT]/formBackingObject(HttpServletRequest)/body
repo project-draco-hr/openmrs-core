@@ -1,8 +1,6 @@
 {
   List<User> userList=new Vector<User>();
   if (Context.isAuthenticated()) {
-    UserService us=Context.getUserService();
-    userList=us.getAllUsers();
   }
   return userList;
 }
