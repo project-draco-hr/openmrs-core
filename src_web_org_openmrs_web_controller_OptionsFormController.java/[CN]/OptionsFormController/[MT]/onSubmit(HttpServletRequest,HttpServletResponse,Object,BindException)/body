@@ -4,7 +4,14 @@
   if (!errors.hasErrors()) {
     User loginUser=Context.getAuthenticatedUser();
     UserService us=Context.getUserService();
-    User user=us.getUser(loginUser.getUserId());
+    User user=null;
+    try {
+      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      user=us.getUser(loginUser.getUserId());
+    }
+  finally {
+      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    }
     OptionsForm opts=(OptionsForm)obj;
     Map<String,String> properties=user.getUserProperties();
     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,opts.getDefaultLocation());
@@ -81,12 +88,14 @@
       }
       try {
         Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
         us.saveUser(user,null);
+        Context.refreshAuthenticatedUser();
       }
   finally {
         Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
       }
-      Context.refreshAuthenticatedUser();
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
     }
  else {
