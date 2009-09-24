@@ -1,5 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptSource.class);
-  criteria.add(Expression.eq("voided",false));
+  criteria.add(Expression.eq("retired",false));
   return criteria.list();
 }

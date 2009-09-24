@@ -1,0 +1,12 @@
+{
+  ConceptService cs=Context.getConceptService();
+  ConceptSourceListController controller=(ConceptSourceListController)applicationContext.getBean("conceptSourceList");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("conceptSourceId","3");
+  mockRequest.setParameter("retireReason","dummy reason for retirement");
+  controller.handleRequest(mockRequest,new MockHttpServletResponse());
+  ConceptSource conceptSource=cs.getConceptSource(3);
+  Assert.assertTrue(conceptSource.isRetired());
+  Assert.assertEquals("dummy reason for retirement",conceptSource.getRetireReason());
+}
