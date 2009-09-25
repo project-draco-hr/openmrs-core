@@ -1,5 +1,5 @@
 {
-  if (UpdateFilter.updatesRequired()) {
+  if (UpdateFilter.updatesRequired() && !DatabaseUpdater.allowAutoUpdate()) {
     log.info("DB updates are required, so spring initialization is being skipped");
     throw new ServletException("Database updates are required. Visit /openmrs to run them.");
   }
