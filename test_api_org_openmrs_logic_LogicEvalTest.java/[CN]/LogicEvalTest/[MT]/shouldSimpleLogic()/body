@@ -11,6 +11,7 @@
   }
   Cohort cohort=new Cohort();
   cohort.addMember(2);
-  long l=System.currentTimeMillis();
   Map<Integer,Result> m=Context.getLogicService().eval(cohort,"TEMPERATURE (C)");
+  Assert.assertNotNull(m);
+  Assert.assertTrue(m.size() > 0);
 }

@@ -1,0 +1,10 @@
+{
+  try {
+    Rule rule=getRule(token);
+    if (rule != null)     return rule.getParameterList();
+  }
+ catch (  LogicException e) {
+    log.error("Error generating rule from logic token",e);
+  }
+  return null;
+}

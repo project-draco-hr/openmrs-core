@@ -6,7 +6,8 @@
     cohort.addMember(ids.get(i));
   }
   cohort.addMember(2);
-  long l=System.currentTimeMillis();
   LogicService ls=Context.getLogicService();
   Map<Integer,Result> m=ls.eval(cohort,"WEIGHT (KG)");
+  Assert.assertNotNull(m);
+  Assert.assertTrue(m.size() > 0);
 }

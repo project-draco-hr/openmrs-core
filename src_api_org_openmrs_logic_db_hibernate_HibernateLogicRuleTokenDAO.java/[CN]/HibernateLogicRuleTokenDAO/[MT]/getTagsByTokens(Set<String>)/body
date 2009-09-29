@@ -1,0 +1,12 @@
+{
+  List<String> allTags=new ArrayList<String>();
+  String strQuery="select logicRuleToken from LogicRuleToken logicRuleToken where logicRuleToken.token in :tokens";
+  Query query=sessionFactory.getCurrentSession().createQuery(strQuery);
+  query.setParameterList("tokens",tokens,Hibernate.STRING);
+  Iterator<?> logicTokens=query.iterate();
+  while (logicTokens.hasNext()) {
+    LogicRuleToken logicToken=(LogicRuleToken)logicTokens.next();
+    allTags.addAll(logicToken.getRuleTokenTags());
+  }
+  return allTags;
+}

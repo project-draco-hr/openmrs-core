@@ -1,0 +1,23 @@
+{
+  Rule rule=null;
+  if (token == null)   throw new LogicException("Token cannot be null");
+  if (token.startsWith("%%"))   return new ReferenceRule(token.substring(2));
+  LogicRuleToken logicToken=logicRuleTokenDAO.getLogicRuleToken(token);
+  if (logicToken == null)   throw new LogicException("No token \"" + token + "\" registered");
+  try {
+    Class<?> c=Context.loadClass(logicToken.getClassName());
+    Object obj=c.newInstance();
+    rule=(Rule)obj;
+  }
+ catch (  InstantiationException e) {
+    log.error("Error creating new instance of Rule",e);
+  }
+catch (  IllegalAccessException e) {
+    log.error("Error creating new instance of Rule",e);
+  }
+catch (  ClassNotFoundException e) {
+    log.error("Error creating new instance of Rule",e);
+  }
+  if (StringUtils.isNotBlank(logicToken.getState()))   ((StatefulRule)rule).restoreFromString(logicToken.getState());
+  return rule;
+}

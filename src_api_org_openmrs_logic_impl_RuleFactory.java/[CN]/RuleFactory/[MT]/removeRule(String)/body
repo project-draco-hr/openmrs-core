@@ -1,0 +1,5 @@
+{
+  LogicRuleToken logicToken=logicRuleTokenDAO.getLogicRuleToken(token);
+  if (logicToken != null)   logicRuleTokenDAO.deleteLogicRuleToken(logicToken);
+ else   throw new LogicException("Cannot delete missing token \"" + token + "\"");
+}
