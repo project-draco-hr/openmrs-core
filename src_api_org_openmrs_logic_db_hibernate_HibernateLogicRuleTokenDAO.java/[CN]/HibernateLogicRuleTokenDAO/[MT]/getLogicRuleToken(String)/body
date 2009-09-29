@@ -1,0 +1,3 @@
+{
+  return (LogicRuleToken)sessionFactory.getCurrentSession().createQuery("from LogicRuleToken logicRuleToken where logicRuleToken.token = :token").setString("token",token).uniqueResult();
+}

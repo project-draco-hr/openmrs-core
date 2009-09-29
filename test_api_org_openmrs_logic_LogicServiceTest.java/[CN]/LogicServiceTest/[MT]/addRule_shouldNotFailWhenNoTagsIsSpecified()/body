@@ -1,0 +1,9 @@
+{
+  LogicService logicService=Context.getLogicService();
+  Rule ageRule=logicService.getRule("AGE");
+  Assert.assertNotNull(ageRule);
+  logicService.addRule("ANOTHER AGE RULE",null,ageRule);
+  Rule anotherAgeRule=logicService.getRule("ANOTHER AGE RULE");
+  Assert.assertNotNull(anotherAgeRule);
+  Assert.assertTrue(AgeRule.class.isAssignableFrom(anotherAgeRule.getClass()));
+}

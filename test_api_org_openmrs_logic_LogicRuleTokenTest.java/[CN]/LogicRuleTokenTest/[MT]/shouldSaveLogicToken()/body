@@ -1,0 +1,12 @@
+{
+  LogicService logicService=Context.getLogicService();
+  Rule rule=logicService.getRule("%%person.death date");
+  logicService.addRule("DEATH DATE",rule);
+  rule=logicService.getRule("DEATH DATE");
+  Assert.assertNotNull(rule);
+  logicService.addTokenTag("DEATH DATE","aids");
+  logicService.addTokenTag("DEATH DATE","hiv");
+  logicService.updateRule("DEATH DATE",rule);
+  rule=logicService.getRule("DEATH DATE");
+  Assert.assertEquals(logicService.getTokenTags("DEATH DATE").size(),2);
+}

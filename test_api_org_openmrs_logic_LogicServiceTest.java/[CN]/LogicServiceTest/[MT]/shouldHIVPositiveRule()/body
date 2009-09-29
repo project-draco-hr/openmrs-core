@@ -4,41 +4,20 @@
   Map<Integer,Result> result=null;
   patients.addMember(2);
   try {
-    log.error("Evaluating FIRST HUMAN IMMUNODEFICIENCY VIRUS");
     result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("HUMAN IMMUNODEFICIENCY VIRUS").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST HIV INFECTED");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("HIV INFECTED").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST ASYMPTOMATIC HIV INFECTION");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,new LogicCriteria("PROBLEM ADDED").contains("ASYMPTOMATIC HIV INFECTION").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST HIV VIRAL LOAD");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,new LogicCriteria("HIV VIRAL LOAD").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST HIV VIRAL LOAD, QUALITATIVE");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,new LogicCriteria("HIV VIRAL LOAD, QUALITATIVE").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST CD4 COUNT < 200");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,new LogicCriteria("CD4 COUNT").lt(200).first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating HIV POSITIVE");
+    Assert.assertNotNull(result);
     result=logicService.eval(patients,"HIV POSITIVE");
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
+    Assert.assertNotNull(result);
   }
  catch (  LogicException e) {
     log.error("Error generated",e);

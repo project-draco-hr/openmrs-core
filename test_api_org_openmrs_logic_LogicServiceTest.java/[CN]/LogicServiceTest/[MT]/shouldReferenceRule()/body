@@ -4,30 +4,18 @@
   Map<Integer,Result> result=null;
   patients.addMember(2);
   try {
-    log.error("Evaluating ${OBS::CD4 COUNT}");
-    result=logicService.eval(patients,"${OBS::CD4 COUNT}");
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating FIRST ${OBS::CD4 COUNT}");
-    result=logicService.eval(patients,new LogicCriteria("${OBS::CD4 COUNT}").first());
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
-    log.error("Evaluating ${PERSON::BIRTHDATE}");
-    result=logicService.eval(patients,"${PERSON::BIRTHDATE}");
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
+    result=logicService.eval(patients,"%%obs.CD4 COUNT");
+    Assert.assertNotNull(result);
+    result=logicService.eval(patients,new LogicCriteria("%%obs.CD4 COUNT").first());
+    Assert.assertNotNull(result);
+    result=logicService.eval(patients,"%%person.BIRTHDATE");
+    Assert.assertNotNull(result);
     Calendar cal=Calendar.getInstance();
     cal.set(Calendar.YEAR,1980);
     cal.set(Calendar.MONTH,0);
     cal.set(Calendar.DAY_OF_MONTH,1);
-    log.error("Evaluating ${PERSON::BIRTHDATE} BEFORE 1980-01-01");
-    result=logicService.eval(patients,new LogicCriteria("${PERSON::BIRTHDATE}").before(cal.getTime()));
-    for (    Integer id : result.keySet()) {
-      log.error("Patient ID: " + id + " "+ result.get(id));
-    }
+    result=logicService.eval(patients,new LogicCriteria("%%person.BIRTHDATE").before(cal.getTime()));
+    Assert.assertNotNull(result);
   }
  catch (  LogicException e) {
     log.error("Error generated",e);

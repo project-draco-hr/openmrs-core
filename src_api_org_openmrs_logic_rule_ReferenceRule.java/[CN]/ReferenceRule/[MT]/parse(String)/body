@@ -7,6 +7,7 @@
   String dataSourceName=reference.substring(0,firstDotIndex);
   key=reference.substring(firstDotIndex + 1);
   dataSource=Context.getLogicService().getLogicDataSource(dataSourceName);
+  if (dataSource.getClass().isAssignableFrom(ObsDataSource.class))   ((ObsDataSource)dataSource).addKey(key);
   if (dataSource == null)   throw new InvalidReferenceRuleException("Invalid logic data source: " + dataSourceName);
   if (key == null || !dataSource.hasKey(key))   throw new InvalidReferenceRuleException("Invalid key (" + key + ") for LogicDataSource ("+ dataSourceName+ ").  Key attempted to be pulled from reference: "+ reference);
 }

@@ -1,0 +1,18 @@
+{
+  if (token != null) {
+    LogicRuleToken logicToken=logicRuleTokenDAO.getLogicRuleToken(token);
+    if (logicToken != null) {
+      logicToken.setClassName(rule.getClass().getCanonicalName());
+      if (StatefulRule.class.isAssignableFrom(rule.getClass()))       logicToken.setState(((StatefulRule)rule).saveToString());
+    }
+ else {
+      logicToken=new LogicRuleToken(token,rule);
+      if (tags != null) {
+        for (int i=0; i < tags.length; i++) {
+          logicToken.addTag(tags[i]);
+        }
+      }
+    }
+    logicRuleTokenDAO.saveLogicRuleToken(logicToken);
+  }
+}
