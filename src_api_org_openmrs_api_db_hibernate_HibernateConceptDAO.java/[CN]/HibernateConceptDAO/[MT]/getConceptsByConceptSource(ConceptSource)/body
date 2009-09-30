@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class,"map");
+  criteria.add(Expression.eq("map.source",conceptSource));
+  return (List<ConceptMap>)criteria.list();
+}
