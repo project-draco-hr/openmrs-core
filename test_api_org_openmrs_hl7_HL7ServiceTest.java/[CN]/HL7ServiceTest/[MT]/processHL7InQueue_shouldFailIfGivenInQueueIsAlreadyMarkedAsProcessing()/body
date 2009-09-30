@@ -1,0 +1,7 @@
+{
+  executeDataSet("org/openmrs/hl7/include/ORUTest-initialData.xml");
+  HL7Service hl7service=Context.getHL7Service();
+  HL7InQueue queueItem=hl7service.getHL7InQueue(1);
+  queueItem.setMessageState(HL7Constants.HL7_STATUS_PROCESSING);
+  hl7service.processHL7InQueue(queueItem);
+}

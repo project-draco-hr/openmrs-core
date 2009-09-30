@@ -1,0 +1,18 @@
+{
+  executeDataSet("org/openmrs/hl7/include/ORUTest-initialData.xml");
+  Properties props=super.getRuntimeProperties();
+  props.setProperty(ModuleConstants.RUNTIMEPROPERTY_MODULE_LIST_TO_LOAD,"org/openmrs/hl7/include/examplehl7handlers-0.1.omod");
+  ModuleUtil.startup(props);
+  Class<Application> c=(Class<Application>)Context.loadClass("org.openmrs.module.examplehl7handlers.AlternateORUR01Handler");
+  Application classInstance=c.newInstance();
+  HashMap<String,Application> map=new HashMap<String,Application>();
+  map.put("ORU_R01",classInstance);
+  HL7ServiceImpl.getInstance().setHL7Handlers(map);
+  HL7Service hl7service=Context.getHL7Service();
+  HL7InQueue queueItem=hl7service.getHL7InQueue(1);
+  hl7service.processHL7InQueue(queueItem);
+  List<HL7InError> errors=hl7service.getAllHL7InErrors();
+  HL7InError error=errors.get(errors.size() - 1);
+  Assert.assertTrue(error.getErrorDetails().contains("In alternate oru r01 parser"));
+  ModuleUtil.shutdown();
+}
