@@ -1,8 +1,0 @@
-{
-  HL7InError hl7InError=new HL7InError(hl7InQueue);
-  hl7InError.setError(error);
-  hl7InError.setErrorDetails(cause == null ? "" : cause.getMessage());
-  Context.getHL7Service().saveHL7InError(hl7InError);
-  Context.getHL7Service().purgeHL7InQueue(hl7InQueue);
-  log.error(error,cause);
-}

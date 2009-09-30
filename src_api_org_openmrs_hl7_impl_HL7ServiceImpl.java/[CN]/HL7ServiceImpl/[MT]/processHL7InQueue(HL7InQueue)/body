@@ -1,0 +1,29 @@
+{
+  if (hl7InQueue == null)   throw new HL7Exception("hl7InQueue argument cannot be null");
+  if (OpenmrsUtil.nullSafeEquals(HL7Constants.HL7_STATUS_PROCESSING,hl7InQueue.getMessageState()))   throw new HL7Exception("The hl7InQueue message with id: " + hl7InQueue.getHL7InQueueId() + " is already processing. "+ ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+ else   hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_PROCESSING);
+  if (log.isDebugEnabled())   log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  String hl7Message=hl7InQueue.getHL7Data();
+  try {
+    Message parsedMessage=Context.getHL7Service().processHL7String(hl7Message);
+    Message result=Context.getHL7Service().processHL7Message(parsedMessage);
+    log.debug("Archiving HL7 inbound queue entry");
+    Context.getHL7Service().saveHL7InArchive(new HL7InArchive(hl7InQueue));
+    log.debug("Removing HL7 message from inbound queue");
+    Context.getHL7Service().purgeHL7InQueue(hl7InQueue);
+  }
+ catch (  HL7Exception e) {
+    boolean skipError=false;
+    log.error("Unable to process hl7inqueue: " + hl7InQueue.getHL7InQueueId(),e);
+    log.error("Hl7inqueue source: " + hl7InQueue.getHL7Source());
+    log.error("hl7_processor.ignore_missing_patient_non_local? " + Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false"));
+    if (e.getCause() != null && e.getCause().getMessage().equals("Could not resolve patient") && !hl7InQueue.getHL7Source().getName().equals("local") && Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false").equals("true")) {
+      skipError=true;
+    }
+    if (!skipError)     setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
+  }
+catch (  Throwable t) {
+    setFatalError(hl7InQueue,"Exception while attempting to process HL7 In Queue (" + hl7InQueue.getHL7SourceKey() + ")",t);
+  }
+  return hl7InQueue;
+}
