@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptSource.class,"source");
+  criteria.add(Expression.eq("source.name",conceptSourceName));
+  return (ConceptSource)criteria.uniqueResult();
+}
