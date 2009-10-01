@@ -2,5 +2,5 @@
   DrugOrder order=new DrugOrder();
   Errors errors=new BindException(order,"order");
   new DrugOrderValidator().validate(order,errors);
-  Assert.assertTrue(errors.hasFieldErrors("drug"));
+  Assert.assertFalse(errors.hasFieldErrors("drug"));
 }
