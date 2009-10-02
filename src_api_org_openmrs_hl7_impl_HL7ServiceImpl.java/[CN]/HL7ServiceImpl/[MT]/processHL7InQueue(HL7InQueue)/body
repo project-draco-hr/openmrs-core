@@ -5,7 +5,7 @@
   if (log.isDebugEnabled())   log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
   String hl7Message=hl7InQueue.getHL7Data();
   try {
-    Message parsedMessage=Context.getHL7Service().processHL7String(hl7Message);
+    Message parsedMessage=Context.getHL7Service().parseHL7String(hl7Message);
     Message result=Context.getHL7Service().processHL7Message(parsedMessage);
     log.debug("Archiving HL7 inbound queue entry");
     Context.getHL7Service().saveHL7InArchive(new HL7InArchive(hl7InQueue));

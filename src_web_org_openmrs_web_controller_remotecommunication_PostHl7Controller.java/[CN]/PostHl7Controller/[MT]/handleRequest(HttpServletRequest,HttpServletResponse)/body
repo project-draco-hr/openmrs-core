@@ -8,7 +8,7 @@
       Context.authenticate(username,password);
     }
  else {
-      model.put("error","RemoteCommunication.missingAuthentication");
+      model.put("error","PostHl7.missingAuthentication");
     }
   }
   if (Context.isAuthenticated()) {
@@ -25,7 +25,7 @@
       success=true;
     }
  else {
-      model.put("error","RemoteCommunication.sourceAndhl7MessageParametersRequired");
+      model.put("error","PostHl7.sourceAndhl7MessageParametersRequired");
     }
   }
   model.put("success",success);
