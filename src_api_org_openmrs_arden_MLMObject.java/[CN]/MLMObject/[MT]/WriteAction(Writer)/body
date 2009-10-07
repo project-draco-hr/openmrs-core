@@ -33,7 +33,9 @@
     w.append("String pattern = \"MM/dd/yy\";\n");
     w.append("SimpleDateFormat dateForm = new SimpleDateFormat(pattern);\n");
     w.append("variable = variable.replace(\"_date\",\"\").trim();\n");
+    w.append("if(resultLookup.get(variable) != null){");
     w.append("value = dateForm.format(resultLookup.get(variable).getResultDate());\n");
+    w.append("}");
     w.append("}\n");
     w.append("else\n");
     w.append("{\n");
