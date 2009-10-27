@@ -1,0 +1,7 @@
+{
+  String openmrsVersion="1.4.3";
+  String requiredOpenmrsVersion="1.2.3 - 1.4.*a";
+  Assert.assertTrue(ModuleUtil.matchRequiredVersions(openmrsVersion,requiredOpenmrsVersion));
+  requiredOpenmrsVersion="1.4.*a - 1.4.5a";
+  Assert.assertTrue(ModuleUtil.matchRequiredVersions(openmrsVersion,requiredOpenmrsVersion));
+}
