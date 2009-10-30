@@ -8,7 +8,7 @@
       name=WebUtil.escapeHTML(conceptName.getName());
       if (!conceptName.isPreferred()) {
         ConceptName preferredNameObj=concept.getPreferredName(locale);
-        preferredName=preferredNameObj.getName();
+        if (preferredNameObj != null)         preferredName=preferredNameObj.getName();
       }
     }
     if (conceptShortName != null) {
