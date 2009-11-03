@@ -13,16 +13,25 @@
     throw new CustomChangeException("Unable to copy " + sqlFile + " to file: "+ tmpOutputFile.getAbsolutePath(),e);
   }
   List<String> commands=new ArrayList<String>();
+  String username=runtimeProperties.getProperty("connection.username");
+  String password=runtimeProperties.getProperty("connection.password");
+  String databaseName;
   try {
     commands.add("mysql");
-    commands.add("-u" + runtimeProperties.getProperty("connection.username"));
-    commands.add("-p" + runtimeProperties.getProperty("connection.password"));
-    commands.add("-e" + "source " + tmpOutputFile.getAbsolutePath() + ";");
-    commands.add(connection.getCatalog());
+    commands.add("-u" + username);
+    commands.add("-p" + password);
+    String path=tmpOutputFile.getAbsolutePath();
+    if (!OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM) {
+      path=fixWindowsPathHack(path);
+    }
+    commands.add("-esource " + path);
+    databaseName=connection.getCatalog();
+    commands.add(databaseName);
   }
  catch (  SQLException e) {
     throw new CustomChangeException("Unable to generate command string for file: " + sqlFile,e);
   }
+  String errorCommand="\"mysql -u" + runtimeProperties.getProperty("connection.username") + " -p -e\"source "+ tmpOutputFile.getAbsolutePath()+ "\""+ databaseName;
   StringBuffer output=new StringBuffer();
   Integer exitValue=-1;
   try {
@@ -30,10 +39,7 @@
   }
  catch (  IOException io) {
     if (io.getMessage().endsWith("not found")) {
-      throw new UnsupportedChangeException("Unable to run command: " + commands.get(0) + ".  Make sure that it is on the PATH and then restart your server and try again. "+ " Or run `mysql -u -p -e\"source "+ tmpOutputFile.getAbsolutePath()+ "\"` at the command line",io);
-    }
- else {
-      throw new UnsupportedChangeException("Error while executing command: '" + commands.get(0) + "'",io);
+      throw new UnsupportedChangeException("Unable to run command: " + commands.get(0) + ".  Make sure that it is on the PATH and then restart your server and try again. "+ " Or run "+ errorCommand+ " at the command line with the appropriate full mysql path",io);
     }
   }
 catch (  Exception e) {
@@ -42,7 +48,7 @@ catch (  Exception e) {
   log.debug("Exec called: " + Arrays.asList(commands));
   if (exitValue != 0) {
     log.error("There was an error while running the " + commands.get(0) + " command.  Command output: "+ output.toString());
-    throw new UnsupportedChangeException("There was an error while running the " + commands.get(0) + " command.  Command output: "+ output.toString());
+    throw new UnsupportedChangeException("There was an error while running the " + commands.get(0) + " command. See your server's error log for the full error output. As an alternative, you"+ " can run this command manually on your database to skip over this error.  Run this at the command line "+ errorCommand+ "  ");
   }
  else {
     log.debug("Output of exec: " + output);

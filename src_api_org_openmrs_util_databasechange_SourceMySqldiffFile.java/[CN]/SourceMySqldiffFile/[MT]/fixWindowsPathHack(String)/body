@@ -1,0 +1,13 @@
+{
+  StringBuffer returnedPath=new StringBuffer();
+  path=path.replace("\\","/");
+  for (  String pathPart : path.split("/")) {
+    if (pathPart.contains(" ")) {
+      pathPart=pathPart.substring(0,6).toUpperCase();
+      pathPart=pathPart + "~1";
+    }
+    returnedPath.append(pathPart).append("/");
+  }
+  returnedPath.deleteCharAt(returnedPath.length() - 1);
+  return returnedPath.toString();
+}
