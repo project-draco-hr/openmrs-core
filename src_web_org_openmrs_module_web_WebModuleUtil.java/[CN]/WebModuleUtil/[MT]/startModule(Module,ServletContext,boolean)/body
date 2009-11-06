@@ -52,7 +52,7 @@
  else {
             absPath.append("/view/module/");
           }
-          absPath.append(mod.getModuleId() + "/" + filepath);
+          absPath.append(mod.getModuleIdAsPath() + "/" + filepath);
           if (log.isDebugEnabled())           log.debug("Moving file from: " + name + " to "+ absPath);
           File outFile=new File(absPath.toString().replace("/",File.separator));
           if (entry.isDirectory()) {
@@ -129,7 +129,7 @@
         }
       }
     }
-    String folderPath=realPath + "/WEB-INF/view/module/" + mod.getModuleId();
+    String folderPath=realPath + "/WEB-INF/view/module/" + mod.getModuleIdAsPath();
     File outFile=new File(folderPath.replace("/",File.separator));
     outFile.deleteOnExit();
     if (moduleNeedsContextRefresh == false) {
