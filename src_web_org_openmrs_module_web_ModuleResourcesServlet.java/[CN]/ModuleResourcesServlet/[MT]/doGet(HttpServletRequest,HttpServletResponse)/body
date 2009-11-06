@@ -1,24 +1,19 @@
 {
   log.debug("In service method for module servlet: " + request.getPathInfo());
   String path=request.getPathInfo();
-  Integer i=path.indexOf("/",1);
-  String moduleId=path.substring(1,i);
-  log.debug("ModuleId: " + moduleId);
-  Module mod=ModuleFactory.getModuleById(moduleId);
-  if (mod == null) {
-    log.warn("No module with id '" + moduleId + "' exists");
+  Module module=ModuleUtil.getModuleForPath(path);
+  if (module == null) {
+    log.warn("No module handles the path: " + path);
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
     return;
   }
-  log.debug("nextslash: " + i + 1);
-  String otherPath=path.substring(i);
-  String realPath=getServletContext().getRealPath("");
-  realPath=realPath + MODULE_PATH + moduleId+ "/resources/"+ otherPath;
+  String relativePath=ModuleUtil.getPathForResource(module,path);
+  String realPath=getServletContext().getRealPath("") + MODULE_PATH + module.getModuleIdAsPath()+ "/resources"+ relativePath;
   realPath=realPath.replace("/",File.separator);
   log.debug("Real path: " + realPath);
   File f=new File(realPath);
   if (!f.exists()) {
-    log.warn("No object with path '" + realPath + "' exists for module with id '"+ moduleId+ "'");
+    log.warn("No object with path '" + realPath + "' exists for module '"+ module.getModuleId()+ "'");
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
     return;
   }
