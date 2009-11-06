@@ -1,3 +1,10 @@
 {
-  this.supportedTypes=supportedTypes;
+  if (this.supportedTypes == null) {
+    this.supportedTypes=new ArrayList<Class<? extends OpenmrsObject>>();
+  }
+  if (supportedTypes != null) {
+    for (    Class<? extends OpenmrsObject> clazz : supportedTypes) {
+      this.supportedTypes.add(clazz);
+    }
+  }
 }
