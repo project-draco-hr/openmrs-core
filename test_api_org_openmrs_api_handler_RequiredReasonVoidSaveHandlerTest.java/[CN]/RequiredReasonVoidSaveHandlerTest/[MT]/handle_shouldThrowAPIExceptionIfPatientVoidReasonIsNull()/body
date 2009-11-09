@@ -1,0 +1,6 @@
+{
+  Patient p=Context.getPatientService().getPatient(2);
+  p.setVoided(true);
+  p.setVoidReason(null);
+  Context.getPatientService().savePatient(p);
+}

@@ -1,0 +1,6 @@
+{
+  Encounter e=Context.getEncounterService().getEncounter(3);
+  e.setVoided(true);
+  e.setVoidReason("Some Reason");
+  Context.getEncounterService().saveEncounter(e);
+}

@@ -1,5 +1,4 @@
 {
-  if (retireReason == null || retireReason.equals(""))   throw new IllegalArgumentException("The 'reason' argument is required");
   if (!retireableObject.isRetired() || retireableObject.getRetiredBy() == null) {
     retireableObject.setRetired(true);
     retireableObject.setRetireReason(retireReason);
