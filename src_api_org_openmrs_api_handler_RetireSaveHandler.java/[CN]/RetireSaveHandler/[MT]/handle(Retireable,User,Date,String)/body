@@ -1,6 +1,5 @@
 {
   if (retireableObject.isRetired()) {
-    if (!StringUtils.hasLength(retireableObject.getRetireReason()))     throw new APIException("The retired bit was set to true, so a retire reason is required at save time for object: " + retireableObject + " of class: "+ retireableObject.getClass());
     if (retireableObject.getRetiredBy() == null) {
       retireableObject.setRetiredBy(currentUser);
     }
