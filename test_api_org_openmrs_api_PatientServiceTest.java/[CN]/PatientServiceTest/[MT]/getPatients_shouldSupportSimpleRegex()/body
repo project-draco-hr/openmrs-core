@@ -1,0 +1,8 @@
+{
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"^0*@SEARCH@([A-Z]+-[0-9])?$"));
+  PatientIdentifier identifier=new PatientIdentifier("1234-4",new PatientIdentifierType(1),new Location(1));
+  identifier.setCreator(new User(1));
+  identifier.setDateCreated(new Date());
+  Context.getPatientService().getPatient(2).addIdentifier(identifier);
+  assertEquals(1,Context.getPatientService().getPatients("1234-4").size());
+}

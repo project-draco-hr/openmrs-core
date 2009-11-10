@@ -1,0 +1,12 @@
+{
+  String returnString=regex.replaceAll("@SEARCH@",identifierSearched);
+  if (identifierSearched.length() > 1) {
+    returnString=returnString.replaceAll("@SEARCH-1@",identifierSearched.substring(0,identifierSearched.length() - 1));
+    returnString=returnString.replaceAll("@CHECKDIGIT@",identifierSearched.substring(identifierSearched.length() - 1));
+  }
+ else {
+    returnString=returnString.replaceAll("@SEARCH-1@","");
+    returnString=returnString.replaceAll("@CHECKDIGIT@","");
+  }
+  return returnString;
+}
