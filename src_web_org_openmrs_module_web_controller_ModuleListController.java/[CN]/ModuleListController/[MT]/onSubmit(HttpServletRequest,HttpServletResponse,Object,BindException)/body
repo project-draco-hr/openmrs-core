@@ -23,8 +23,21 @@
         File moduleFile=null;
         Module module=null;
         try {
-          inputStream=multipartModuleFile.getInputStream();
-          moduleFile=ModuleUtil.insertModuleFile(inputStream,filename);
+          Boolean updateModule=ServletRequestUtils.getBooleanParameter(request,"update",false);
+          if (updateModule) {
+            Module tmpModule=new ModuleFileParser(multipartModuleFile.getInputStream()).parse();
+            Module existingModule=ModuleFactory.getModuleById(tmpModule.getModuleId());
+            if (existingModule != null) {
+              ModuleFactory.stopModule(existingModule,false,true);
+              WebModuleUtil.stopModule(existingModule,getServletContext());
+              ModuleFactory.unloadModule(existingModule);
+            }
+            moduleFile=ModuleUtil.insertModuleFile(new FileInputStream(tmpModule.getFile()),filename);
+          }
+ else {
+            inputStream=multipartModuleFile.getInputStream();
+            moduleFile=ModuleUtil.insertModuleFile(inputStream,filename);
+          }
           module=ModuleFactory.loadModule(moduleFile);
         }
  catch (        ModuleException me) {
