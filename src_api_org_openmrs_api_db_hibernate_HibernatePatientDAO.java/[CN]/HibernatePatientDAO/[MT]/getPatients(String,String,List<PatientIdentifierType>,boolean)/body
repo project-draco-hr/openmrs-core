@@ -28,25 +28,31 @@
     criteria.createAlias("identifiers","ids");
     criteria.add(Expression.eq("ids.voided",false));
     if (identifier != null) {
-      AdministrationService adminService=Context.getAdministrationService();
-      String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
       if (matchIdentifierExactly) {
         criteria.add(Expression.eq("ids.identifier",identifier));
       }
  else {
+        AdministrationService adminService=Context.getAdministrationService();
+        String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
+        String patternSearch=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SEARCH_PATTERN,"");
         if (Pattern.matches("^\\^.{1}\\*.*$",regex)) {
           String padding=regex.substring(regex.indexOf("^") + 1,regex.indexOf("*"));
           Pattern pattern=Pattern.compile("^" + padding + "+");
           identifier=pattern.matcher(identifier).replaceFirst("");
         }
-        if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+        if (StringUtils.hasLength(patternSearch)) {
+          List<String> searchPatterns=new ArrayList<String>();
+          for (          String pattern : patternSearch.split(","))           searchPatterns.add(replaceSearchString(pattern,identifier));
+          criteria.add(Expression.in("ids.identifier",searchPatterns));
+        }
+ else         if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
           String prefix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_PREFIX,"");
-          String suffix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX,"%");
+          String suffix=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SUFFIX,"");
           StringBuffer likeString=new StringBuffer(prefix).append(identifier).append(suffix);
           criteria.add(Expression.like("ids.identifier",likeString.toString()));
         }
  else {
-          regex=regex.replace("@SEARCH@",identifier);
+          regex=replaceSearchString(regex,identifier);
           criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
         }
       }
