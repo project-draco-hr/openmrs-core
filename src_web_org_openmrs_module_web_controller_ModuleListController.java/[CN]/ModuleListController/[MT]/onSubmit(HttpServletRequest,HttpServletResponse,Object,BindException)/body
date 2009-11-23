@@ -22,13 +22,14 @@
         InputStream inputStream=null;
         File moduleFile=null;
         Module module=null;
+        Boolean updateModule=ServletRequestUtils.getBooleanParameter(request,"update",false);
+        List<Module> dependentModulesStopped=null;
         try {
-          Boolean updateModule=ServletRequestUtils.getBooleanParameter(request,"update",false);
           if (updateModule) {
             Module tmpModule=new ModuleFileParser(multipartModuleFile.getInputStream()).parse();
             Module existingModule=ModuleFactory.getModuleById(tmpModule.getModuleId());
             if (existingModule != null) {
-              ModuleFactory.stopModule(existingModule,false,true);
+              dependentModulesStopped=ModuleFactory.stopModule(existingModule,false,true);
               WebModuleUtil.stopModule(existingModule,getServletContext());
               ModuleFactory.unloadModule(existingModule);
             }
@@ -56,7 +57,15 @@
         if (module != null) {
           ModuleFactory.startModule(module);
           WebModuleUtil.startModule(module,getServletContext(),false);
-          if (module.isStarted())           success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
+          if (module.isStarted()) {
+            success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
+            if (updateModule && dependentModulesStopped != null) {
+              for (              Module depMod : dependentModulesStopped) {
+                ModuleFactory.startModule(depMod);
+                WebModuleUtil.startModule(depMod,getServletContext(),false);
+              }
+            }
+          }
  else           success=msa.getMessage("Module.loaded",new String[]{module.getName()});
         }
       }
