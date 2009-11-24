@@ -2,6 +2,7 @@
   if (xml != null) {
     ReportObjectXMLDecoder roxd=new ReportObjectXMLDecoder(this.xml);
     AbstractReportObject reportObj=roxd.toAbstractReportObject();
+    reportObj.setUuid(this.getUuid());
     return reportObj;
   }
  else {
