@@ -1,0 +1,6 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss=obsService.getObservations(null,null,null,null,Collections.singletonList(PERSON_TYPE.PATIENT),null,null,null,null,null,null,false);
+  Assert.assertEquals(13,obss.size());
+}

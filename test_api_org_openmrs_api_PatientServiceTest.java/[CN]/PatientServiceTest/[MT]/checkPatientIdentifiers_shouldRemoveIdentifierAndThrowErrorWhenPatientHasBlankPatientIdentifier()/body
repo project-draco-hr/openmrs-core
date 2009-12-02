@@ -1,0 +1,7 @@
+{
+  Patient patient=new Patient();
+  PatientIdentifier patientIdentifier=new PatientIdentifier();
+  patientIdentifier.setIdentifierType(Context.getPatientService().getAllPatientIdentifierTypes(false).get(0));
+  patient.addIdentifier(patientIdentifier);
+  Context.getPatientService().checkPatientIdentifiers(patient);
+}

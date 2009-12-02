@@ -1,0 +1,7 @@
+{
+  PersonService personService=Context.getPersonService();
+  PersonAttributeType personAttributeType=personService.getPersonAttributeType(1);
+  personService.purgePersonAttributeType(personAttributeType);
+  PersonAttributeType deletedPersonAttributeType=personService.getPersonAttributeType(1);
+  Assert.assertNull(deletedPersonAttributeType);
+}

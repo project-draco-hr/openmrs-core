@@ -1,0 +1,7 @@
+{
+  executeDataSet(ADMIN_INITIAL_DATA_XML);
+  AdministrationService as=Context.getAdministrationService();
+  Assert.assertEquals(8,as.getAllGlobalProperties().size());
+  as.purgeGlobalProperty(as.getGlobalPropertyObject("a_valid_gp_key"));
+  Assert.assertEquals(7,as.getAllGlobalProperties().size());
+}

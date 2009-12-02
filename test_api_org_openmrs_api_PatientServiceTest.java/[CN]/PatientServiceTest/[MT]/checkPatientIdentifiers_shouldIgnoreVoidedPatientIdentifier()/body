@@ -1,0 +1,10 @@
+{
+  Patient patient=new Patient();
+  PatientIdentifier patientIdentifier=new PatientIdentifier();
+  patientIdentifier.setIdentifierType(Context.getPatientService().getAllPatientIdentifierTypes(false).get(0));
+  patientIdentifier.setVoided(true);
+  patientIdentifier.setVoidedBy(Context.getAuthenticatedUser());
+  patientIdentifier.setVoidReason("Testing whether voided identifiers are ignored");
+  patient.addIdentifier(patientIdentifier);
+  Context.getPatientService().checkPatientIdentifiers(patient);
+}

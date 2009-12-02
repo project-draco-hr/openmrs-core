@@ -1,0 +1,17 @@
+{
+  ObsService obsService=Context.getObsService();
+  Obs parentObs=new Obs();
+  parentObs.setConcept(new Concept(3));
+  parentObs.setObsDatetime(new Date());
+  parentObs.setPerson(new Patient(2));
+  parentObs.setLocation(new Location(1));
+  Obs groupMember=new Obs();
+  groupMember.setConcept(new Concept(3));
+  groupMember.setValueNumeric(1.0);
+  groupMember.setObsDatetime(new Date());
+  groupMember.setPerson(new Patient(2));
+  groupMember.setLocation(new Location(1));
+  parentObs.addGroupMember(groupMember);
+  obsService.saveObs(parentObs,null);
+  Assert.assertNotNull(groupMember.getObsId());
+}

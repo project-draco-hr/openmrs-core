@@ -1,0 +1,12 @@
+{
+  TaskDefinition def=new TaskDefinition();
+  def.setName("Chores");
+  def.setTaskClass("org.openmrs.scheduler.tasks.HelloWorldTask");
+  Errors errors=new BindException(def,"def");
+  new SchedulerFormValidator().validate(def,errors);
+  Assert.assertTrue(errors.hasFieldErrors("repeatInterval"));
+  def.setTaskClass(" ");
+  errors=new BindException(def,"def");
+  new SchedulerFormValidator().validate(def,errors);
+  Assert.assertTrue(errors.hasFieldErrors("repeatInterval"));
+}

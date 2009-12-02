@@ -1,0 +1,9 @@
+{
+  PersonAttributeType type=new PersonAttributeType();
+  type.setFormat("java.lang.String");
+  PersonAttribute pa=new PersonAttribute(2);
+  pa.setAttributeType(type);
+  pa.setValue("lalapalooza");
+  String value=(String)pa.getHydratedObject();
+  Assert.assertEquals("lalapalooza",value);
+}

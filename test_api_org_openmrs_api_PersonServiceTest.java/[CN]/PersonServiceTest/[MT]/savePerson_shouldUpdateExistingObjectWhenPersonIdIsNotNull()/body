@@ -1,0 +1,7 @@
+{
+  Person personSaved=Context.getPersonService().getPerson(1);
+  Assert.assertNotNull(personSaved.getId());
+  personSaved.setGender("M");
+  Person personUpdated=Context.getPersonService().savePerson(personSaved);
+  Assert.assertEquals("M",personUpdated.getGender());
+}

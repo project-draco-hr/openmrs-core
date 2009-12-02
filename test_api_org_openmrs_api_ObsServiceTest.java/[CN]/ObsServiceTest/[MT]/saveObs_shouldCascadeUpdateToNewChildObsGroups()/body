@@ -1,0 +1,15 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Obs parentObs=obsService.getObs(2);
+  Obs groupMember=new Obs();
+  groupMember.setConcept(new Concept(3));
+  groupMember.setObsDatetime(new Date());
+  groupMember.setPerson(new Patient(2));
+  groupMember.setLocation(new Location(2));
+  parentObs.addGroupMember(groupMember);
+  assertNotNull(groupMember.getObsGroup());
+  obsService.saveObs(parentObs,"Updating obs group");
+  assertNotNull(groupMember.getObsId());
+  Assert.assertEquals(9,parentObs.getGroupMembers().toArray(new Obs[]{})[0].getObsId().intValue());
+}

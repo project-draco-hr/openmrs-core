@@ -1,0 +1,7 @@
+{
+  OpenmrsConstants.OBSCURE_PATIENTS=true;
+  PersonName pn=new PersonName();
+  pn.setFamilyName2("a non-null name");
+  Assert.assertNull(pn.getFamilyName2());
+  OpenmrsConstants.OBSCURE_PATIENTS=false;
+}

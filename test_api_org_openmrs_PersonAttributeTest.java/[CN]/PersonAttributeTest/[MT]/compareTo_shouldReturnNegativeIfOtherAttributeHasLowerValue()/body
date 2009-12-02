@@ -1,0 +1,9 @@
+{
+  PersonAttribute pa=new PersonAttribute();
+  pa.setAttributeType(new PersonAttributeType(1));
+  pa.setValue("2");
+  PersonAttribute other=new PersonAttribute();
+  other.setAttributeType(new PersonAttributeType(1));
+  other.setValue("1");
+  Assert.assertTrue(pa.compareTo(other) > 0);
+}

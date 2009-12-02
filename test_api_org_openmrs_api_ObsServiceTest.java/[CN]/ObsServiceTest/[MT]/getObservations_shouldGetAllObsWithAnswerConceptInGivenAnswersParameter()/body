@@ -1,0 +1,7 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss=obsService.getObservations(null,null,null,Collections.singletonList(new Concept(7)),null,null,null,null,null,null,null,false);
+  Assert.assertEquals(1,obss.size());
+  Assert.assertEquals(11,obss.get(0).getObsId().intValue());
+}

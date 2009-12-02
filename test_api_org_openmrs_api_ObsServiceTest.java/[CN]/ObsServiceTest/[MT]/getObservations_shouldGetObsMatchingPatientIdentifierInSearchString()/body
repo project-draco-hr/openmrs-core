@@ -1,0 +1,8 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss=obsService.getObservations("12345K");
+  Assert.assertEquals(2,obss.size());
+  Assert.assertEquals(4,obss.get(0).getObsId().intValue());
+  Assert.assertEquals(3,obss.get(1).getObsId().intValue());
+}

@@ -1,0 +1,9 @@
+{
+  Relationship relationship=Context.getPersonService().getRelationship(1);
+  Relationship voidedRelationship=Context.getPersonService().voidRelationship(relationship,"Test Voiding Relationship");
+  Assert.assertTrue(voidedRelationship.isVoided());
+  Assert.assertNotNull(voidedRelationship.getVoidedBy());
+  Assert.assertNotNull(voidedRelationship.getVoidReason());
+  Assert.assertNotNull(voidedRelationship.getDateVoided());
+  Assert.assertEquals(voidedRelationship.getVoidReason(),"Test Voiding Relationship");
+}

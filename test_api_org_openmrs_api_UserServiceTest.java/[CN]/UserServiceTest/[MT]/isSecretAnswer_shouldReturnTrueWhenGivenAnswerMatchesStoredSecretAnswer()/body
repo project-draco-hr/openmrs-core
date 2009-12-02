@@ -1,0 +1,5 @@
+{
+  executeDataSet(XML_FILENAME);
+  User user=Context.getUserService().getUser(507);
+  Assert.assertTrue(Context.getUserService().isSecretAnswer(user,"answer"));
+}

@@ -1,0 +1,15 @@
+{
+  PatientIdentifierType identifierType=Context.getPatientService().getAllPatientIdentifierTypes().get(0);
+  Assert.assertNotNull(identifierType);
+  Assert.assertNotNull(identifierType.getPatientIdentifierTypeId());
+  Assert.assertEquals(2,identifierType.getPatientIdentifierTypeId().intValue());
+  Assert.assertNotSame("test",identifierType.getName());
+  identifierType.setName("test");
+  identifierType.setDescription("test description");
+  identifierType.setRequired(false);
+  patientService.savePatientIdentifierType(identifierType);
+  PatientIdentifierType savedIdentifierType=patientService.getPatientIdentifierType(2);
+  assertNotNull(savedIdentifierType);
+  Assert.assertEquals("test",identifierType.getName());
+  assertTrue(savedIdentifierType.equals(identifierType));
+}

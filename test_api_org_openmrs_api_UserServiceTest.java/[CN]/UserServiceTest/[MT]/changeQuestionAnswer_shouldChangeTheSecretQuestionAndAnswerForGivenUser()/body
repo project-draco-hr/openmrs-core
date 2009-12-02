@@ -1,0 +1,8 @@
+{
+  UserService userService=Context.getUserService();
+  User u=userService.getUser(501);
+  userService.changeQuestionAnswer(u,"the question","the answer");
+  User o=userService.getUser(501);
+  Assert.assertEquals("the question",o.getSecretQuestion());
+  Assert.assertTrue(userService.isSecretAnswer(o,"the answer"));
+}

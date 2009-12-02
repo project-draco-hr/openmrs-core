@@ -1,0 +1,15 @@
+{
+  PatientIdentifierType patientIdentifierType=Context.getPatientService().getAllPatientIdentifierTypes(false).get(0);
+  Patient patient=new Patient();
+  PatientIdentifier patientIdentifier1=new PatientIdentifier();
+  patientIdentifier1.setIdentifier("123456789");
+  patientIdentifier1.setDateCreated(new Date());
+  patientIdentifier1.setIdentifierType(patientIdentifierType);
+  patient.addIdentifier(patientIdentifier1);
+  PatientIdentifier patientIdentifier2=new PatientIdentifier();
+  patientIdentifier2.setIdentifier("123456789");
+  patientIdentifier2.setIdentifierType(patientIdentifierType);
+  patientIdentifier2.setDateCreated(new Date());
+  patient.addIdentifier(patientIdentifier2);
+  Context.getPatientService().checkPatientIdentifiers(patient);
+}

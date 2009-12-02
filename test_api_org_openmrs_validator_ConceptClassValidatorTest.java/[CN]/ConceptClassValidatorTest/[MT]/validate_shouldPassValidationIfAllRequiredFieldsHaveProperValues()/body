@@ -1,0 +1,8 @@
+{
+  ConceptClass cc=new ConceptClass();
+  cc.setName("name");
+  cc.setDescription("some text");
+  Errors errors=new BindException(cc,"cc");
+  new ConceptClassValidator().validate(cc,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

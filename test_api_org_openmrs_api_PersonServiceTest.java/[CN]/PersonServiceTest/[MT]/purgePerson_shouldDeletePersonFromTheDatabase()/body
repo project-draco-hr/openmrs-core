@@ -1,0 +1,7 @@
+{
+  PersonService personService=Context.getPersonService();
+  Person person=personService.getPerson(8);
+  personService.purgePerson(person);
+  Person deletedPerson=personService.getPerson(8);
+  Assert.assertNull(deletedPerson);
+}

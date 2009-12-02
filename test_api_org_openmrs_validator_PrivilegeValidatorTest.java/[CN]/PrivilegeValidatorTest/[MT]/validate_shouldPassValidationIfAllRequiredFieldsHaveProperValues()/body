@@ -1,0 +1,8 @@
+{
+  Privilege priv=new Privilege();
+  priv.setPrivilege("Wallhacking");
+  priv.setDescription("idspispopd");
+  Errors errors=new BindException(priv,"priv");
+  new PrivilegeValidator().validate(priv,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

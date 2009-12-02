@@ -1,0 +1,12 @@
+{
+  Collection<PatientIdentifierType> types=Context.getPatientService().getAllPatientIdentifierTypes(true);
+  boolean atLeastOneRetired=false;
+  for (  PatientIdentifierType type : types) {
+    if (type.getRetired()) {
+      atLeastOneRetired=true;
+      break;
+    }
+  }
+  Assert.assertTrue("There should be at least one retired patient identifier type",atLeastOneRetired);
+  Assert.assertEquals("Should be exactly three patient identifier types",3,types.size());
+}

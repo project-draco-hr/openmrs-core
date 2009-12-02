@@ -1,0 +1,6 @@
+{
+  Privilege p=new Privilege("new privilege name","new privilege desc");
+  Context.getUserService().savePrivilege(p);
+  Privilege savedPrivilege=Context.getUserService().getPrivilege("new privilege name");
+  Assert.assertNotNull(savedPrivilege);
+}

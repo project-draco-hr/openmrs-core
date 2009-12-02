@@ -1,0 +1,10 @@
+{
+  TaskDefinition def=new TaskDefinition();
+  def.setName("Chores");
+  def.setRepeatInterval(3600000L);
+  def.setTaskClass("org.openmrs.ScaryRobot");
+  Errors errors=new BindException(def,"def");
+  new SchedulerFormValidator().validate(def,errors);
+  Assert.assertTrue(errors.hasFieldErrors("taskClass"));
+  Assert.assertEquals("Scheduler.taskForm.classNotFoundException",errors.getFieldError("taskClass").getCode());
+}

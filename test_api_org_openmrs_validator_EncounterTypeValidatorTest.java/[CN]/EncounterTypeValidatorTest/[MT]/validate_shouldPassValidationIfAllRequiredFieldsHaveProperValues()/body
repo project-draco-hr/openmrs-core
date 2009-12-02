@@ -1,0 +1,8 @@
+{
+  EncounterType type=new EncounterType();
+  type.setName("CLOSE");
+  type.setDescription("Aaaaah");
+  Errors errors=new BindException(type,"type");
+  new EncounterTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

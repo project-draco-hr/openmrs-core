@@ -1,0 +1,9 @@
+{
+  UserService userService=Context.getUserService();
+  User user=userService.getUser(502);
+  userService.voidUser(user,"because");
+  Assert.assertTrue(user.isVoided());
+  Assert.assertNotNull(user.getDateVoided());
+  Assert.assertNotNull(user.getVoidedBy());
+  Assert.assertEquals("because",user.getVoidReason());
+}

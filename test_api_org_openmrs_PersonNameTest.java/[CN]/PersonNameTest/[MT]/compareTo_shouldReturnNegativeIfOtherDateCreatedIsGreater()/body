@@ -1,0 +1,7 @@
+{
+  PersonName pn=new PersonName();
+  pn.setDateCreated(new Date());
+  PersonName other=new PersonName();
+  other.setDateCreated(new Date(pn.getDateCreated().getTime() + 1000));
+  Assert.assertTrue(pn.compareTo(other) < 0);
+}

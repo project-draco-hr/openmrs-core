@@ -1,0 +1,7 @@
+{
+  PersonService personService=Context.getPersonService();
+  Person secondPerson=personService.getPerson(7);
+  List<Relationship> relationships=personService.getRelationships(null,secondPerson,null);
+  Assert.assertNotNull(relationships);
+  Assert.assertTrue("There should be relationship found given the to person",relationships.size() > 0);
+}

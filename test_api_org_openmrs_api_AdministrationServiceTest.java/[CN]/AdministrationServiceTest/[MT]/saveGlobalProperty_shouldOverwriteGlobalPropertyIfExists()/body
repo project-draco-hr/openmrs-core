@@ -1,0 +1,9 @@
+{
+  executeDataSet(ADMIN_INITIAL_DATA_XML);
+  AdministrationService as=Context.getAdministrationService();
+  GlobalProperty gp=as.getGlobalPropertyObject("a_valid_gp_key");
+  Assert.assertEquals("correct-value",gp.getPropertyValue());
+  gp.setPropertyValue("new-even-more-correct-value");
+  as.saveGlobalProperty(gp);
+  Assert.assertEquals("new-even-more-correct-value",as.getGlobalProperty("a_valid_gp_key"));
+}

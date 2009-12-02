@@ -1,0 +1,6 @@
+{
+  UserService userService=Context.getUserService();
+  User user=userService.getUser(502);
+  Context.logout();
+  userService.setUserProperty(user,"some key","some value");
+}

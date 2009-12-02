@@ -1,0 +1,6 @@
+{
+  executeDataSet(XML_FILENAME);
+  Role role=Context.getUserService().getRole("Some Role");
+  Context.getUserService().purgeRole(role);
+  Assert.assertNull(Context.getUserService().getRole("Some Role"));
+}

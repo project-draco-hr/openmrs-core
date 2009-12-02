@@ -1,0 +1,10 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location loc=ls.getLocation("Test Retired Location");
+  Assert.assertTrue(loc.isRetired());
+  Location newLoc=ls.unretireLocation(loc);
+  Assert.assertEquals(loc,newLoc);
+  Assert.assertFalse(loc.isRetired());
+  Assert.assertNull(loc.getRetiredBy());
+  Assert.assertNull(loc.getRetireReason());
+}

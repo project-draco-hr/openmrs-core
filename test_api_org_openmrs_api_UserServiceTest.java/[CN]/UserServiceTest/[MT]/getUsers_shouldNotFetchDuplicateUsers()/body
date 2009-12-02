@@ -1,0 +1,5 @@
+{
+  executeDataSet(XML_FILENAME);
+  List<User> users=Context.getUserService().getUsers("John Doe",null,false);
+  Assert.assertEquals(1,users.size());
+}

@@ -1,0 +1,13 @@
+{
+  executeDataSet("org/openmrs/api/include/PersonServiceTest-createRetiredRelationship.xml");
+  List<Relationship> relationships=Context.getPersonService().getAllRelationships();
+  Assert.assertTrue("At least one element, otherwise no checking for voided will take place",relationships.size() > 0);
+  boolean foundVoided=false;
+  for (  Relationship relationship : relationships) {
+    if (relationship.isVoided()) {
+      foundVoided=true;
+      break;
+    }
+  }
+  Assert.assertFalse("There should be no voided relationship here",foundVoided);
+}

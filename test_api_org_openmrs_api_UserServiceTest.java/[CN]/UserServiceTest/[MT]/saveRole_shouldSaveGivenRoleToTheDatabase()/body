@@ -1,0 +1,5 @@
+{
+  Role role=new Role("new role","new desc");
+  Context.getUserService().saveRole(role);
+  Assert.assertNotNull(Context.getUserService().getRole("new role"));
+}

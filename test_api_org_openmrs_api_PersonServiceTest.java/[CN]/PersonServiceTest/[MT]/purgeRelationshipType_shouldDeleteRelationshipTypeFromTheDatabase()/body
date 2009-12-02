@@ -1,0 +1,7 @@
+{
+  PersonService personService=Context.getPersonService();
+  RelationshipType relationshipType=personService.getRelationshipType(1);
+  personService.purgeRelationshipType(relationshipType);
+  RelationshipType deletedRelationshipType=personService.getRelationshipType(1);
+  Assert.assertNull(deletedRelationshipType);
+}
