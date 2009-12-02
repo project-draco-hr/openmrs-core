@@ -1,0 +1,5 @@
+{
+  RelationshipType relationshipType=Context.getPersonService().getRelationshipType(1);
+  Assert.assertNotNull(relationshipType);
+  Assert.assertTrue("Expecting the return is of a relationship type",relationshipType.getClass().equals(RelationshipType.class));
+}

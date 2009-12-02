@@ -1,0 +1,6 @@
+{
+  executeDataSet(ADMIN_INITIAL_DATA_XML);
+  AdministrationService as=Context.getAdministrationService();
+  as.saveGlobalProperty(new GlobalProperty("detectHiddenSkill","100"));
+  Assert.assertNotNull(as.getGlobalProperty("detectHiddenSkill"));
+}

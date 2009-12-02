@@ -1,0 +1,14 @@
+{
+  Role role=new Role();
+  role.setDescription("some text");
+  role.setRole(" Bowling race car driver");
+  Errors errors=new BindException(role,"type");
+  new RoleValidator().validate(role,errors);
+  Assert.assertTrue(errors.hasFieldErrors("role"));
+  Assert.assertEquals("error.trailingSpaces",errors.getFieldError("role").getCode());
+  role.setRole("Bowling race car driver ");
+  errors=new BindException(role,"role");
+  new RoleValidator().validate(role,errors);
+  Assert.assertTrue(errors.hasFieldErrors("role"));
+  Assert.assertEquals("error.trailingSpaces",errors.getFieldError("role").getCode());
+}

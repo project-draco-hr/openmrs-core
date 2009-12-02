@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/PersonServiceTest-createRetiredRelationship.xml");
+  List<RelationshipType> relationshipTypes=Context.getPersonService().getRelationshipTypes("Sibling/Sibling",true);
+  Assert.assertNotNull(relationshipTypes);
+  Assert.assertTrue("There should be relationship type for the given name",relationshipTypes.size() > 0);
+}

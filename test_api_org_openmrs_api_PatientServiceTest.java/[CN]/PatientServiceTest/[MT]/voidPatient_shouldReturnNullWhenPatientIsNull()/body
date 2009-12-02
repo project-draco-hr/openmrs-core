@@ -1,0 +1,5 @@
+{
+  PatientService patientService=Context.getPatientService();
+  Patient voidedPatient=patientService.voidPatient(null,"No null patient should be voided");
+  Assert.assertNull(voidedPatient);
+}

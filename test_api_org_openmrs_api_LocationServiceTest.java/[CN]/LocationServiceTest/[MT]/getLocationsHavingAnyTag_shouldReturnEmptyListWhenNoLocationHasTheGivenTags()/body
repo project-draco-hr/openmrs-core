@@ -1,0 +1,4 @@
+{
+  LocationService ls=Context.getLocationService();
+  Assert.assertEquals(0,ls.getLocationsHavingAnyTag(Collections.singletonList(ls.getLocationTagByName("Retired"))).size());
+}

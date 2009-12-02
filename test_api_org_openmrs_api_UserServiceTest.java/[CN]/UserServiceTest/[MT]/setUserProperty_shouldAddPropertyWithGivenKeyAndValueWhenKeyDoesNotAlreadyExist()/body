@@ -1,0 +1,9 @@
+{
+  executeDataSet(XML_FILENAME);
+  UserService userService=Context.getUserService();
+  User user=userService.getUser(505);
+  Assert.assertEquals(user.getUserProperty("some new key"),"");
+  userService.setUserProperty(user,"some new key","some new value");
+  user=userService.getUser(505);
+  Assert.assertEquals("some new value",user.getUserProperty("some new key"));
+}

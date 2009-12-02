@@ -1,0 +1,13 @@
+{
+  TaskDefinition def=new TaskDefinition();
+  def.setName("Chores");
+  def.setRepeatInterval(3600000L);
+  def.setTaskClass("");
+  Errors errors=new BindException(def,"def");
+  new SchedulerFormValidator().validate(def,errors);
+  Assert.assertTrue(errors.hasFieldErrors("taskClass"));
+  def.setTaskClass(" ");
+  errors=new BindException(def,"def");
+  new SchedulerFormValidator().validate(def,errors);
+  Assert.assertTrue(errors.hasFieldErrors("taskClass"));
+}

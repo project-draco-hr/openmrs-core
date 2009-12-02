@@ -1,0 +1,16 @@
+{
+  PatientIdentifierType type=new PatientIdentifierType();
+  type.setName("name");
+  type.setDescription(null);
+  Errors errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription("");
+  errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription(" ");
+  errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

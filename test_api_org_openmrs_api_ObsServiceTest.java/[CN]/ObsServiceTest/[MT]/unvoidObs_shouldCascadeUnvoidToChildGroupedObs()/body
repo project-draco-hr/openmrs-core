@@ -1,0 +1,8 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Obs parentObs=obsService.getObs(2);
+  obsService.voidObs(parentObs,"testing void cascade to child obs groups");
+  Assert.assertTrue(obsService.getObs(9).isVoided());
+  Assert.assertTrue(obsService.getObs(10).isVoided());
+}

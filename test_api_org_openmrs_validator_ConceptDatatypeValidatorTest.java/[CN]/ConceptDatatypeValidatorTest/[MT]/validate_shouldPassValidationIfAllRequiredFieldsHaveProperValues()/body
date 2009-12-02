@@ -1,0 +1,8 @@
+{
+  ConceptDatatype cd=new ConceptDatatype();
+  cd.setName("name");
+  cd.setDescription("some text");
+  Errors errors=new BindException(cd,"cd");
+  new ConceptDatatypeValidator().validate(cd,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

@@ -1,0 +1,16 @@
+{
+  ConceptClass cc=new ConceptClass();
+  cc.setName("name");
+  cc.setDescription(null);
+  Errors errors=new BindException(cc,"cc");
+  new ConceptClassValidator().validate(cc,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  cc.setDescription("");
+  errors=new BindException(cc,"cc");
+  new ConceptClassValidator().validate(cc,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  cc.setDescription(" ");
+  errors=new BindException(cc,"cc");
+  new ConceptClassValidator().validate(cc,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

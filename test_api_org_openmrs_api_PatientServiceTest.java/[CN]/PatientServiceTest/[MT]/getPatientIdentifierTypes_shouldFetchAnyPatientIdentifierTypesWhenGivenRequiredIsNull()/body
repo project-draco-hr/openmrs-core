@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/PatientServiceTest-createPatientIdentifierType.xml");
+  List<PatientIdentifierType> patientIdentifierTypes=Context.getPatientService().getPatientIdentifierTypes(null,null,null,null);
+  Assert.assertTrue(!patientIdentifierTypes.isEmpty());
+  Assert.assertEquals(4,patientIdentifierTypes.size());
+}

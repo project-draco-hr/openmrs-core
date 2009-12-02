@@ -1,0 +1,10 @@
+{
+  LocationService ls=Context.getLocationService();
+  LocationTag tag=ls.getLocationTag(1);
+  Assert.assertFalse(tag.isRetired());
+  String reason="because i can";
+  LocationTag newTag=ls.retireLocationTag(tag,reason);
+  Assert.assertEquals(tag,newTag);
+  Assert.assertTrue(tag.isRetired());
+  Assert.assertEquals(reason,tag.getRetireReason());
+}

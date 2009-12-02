@@ -1,0 +1,10 @@
+{
+  PersonService personService=Context.getPersonService();
+  Relationship relationship=new Relationship();
+  relationship.setPersonA(personService.getPerson(1));
+  relationship.setPersonB(personService.getPerson(2));
+  relationship.setRelationshipType(personService.getRelationshipType(1));
+  Assert.assertNull(relationship.getRelationshipId());
+  Relationship savedRelationship=personService.saveRelationship(relationship);
+  Assert.assertNotNull(savedRelationship.getRelationshipId());
+}

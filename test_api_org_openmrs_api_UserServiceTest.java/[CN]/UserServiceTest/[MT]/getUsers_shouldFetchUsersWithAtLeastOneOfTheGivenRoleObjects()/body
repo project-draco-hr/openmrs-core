@@ -1,0 +1,5 @@
+{
+  executeDataSet(XML_FILENAME);
+  List<Role> roles=Collections.singletonList(new Role("Some Role"));
+  Assert.assertEquals(1,Context.getUserService().getUsers("Susy Kingman",roles,false).size());
+}

@@ -1,0 +1,5 @@
+{
+  PersonAttribute personAttribute=Context.getPersonService().getPersonAttribute(17);
+  Assert.assertNotNull(personAttribute);
+  Assert.assertTrue("Expecting the return is of a person attribute",personAttribute.getClass().equals(PersonAttribute.class));
+}

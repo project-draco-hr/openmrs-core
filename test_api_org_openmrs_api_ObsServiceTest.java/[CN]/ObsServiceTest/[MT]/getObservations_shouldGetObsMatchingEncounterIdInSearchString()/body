@@ -1,0 +1,6 @@
+{
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss=obsService.getObservations("5");
+  Assert.assertEquals(1,obss.size());
+  Assert.assertEquals(16,obss.get(0).getObsId().intValue());
+}

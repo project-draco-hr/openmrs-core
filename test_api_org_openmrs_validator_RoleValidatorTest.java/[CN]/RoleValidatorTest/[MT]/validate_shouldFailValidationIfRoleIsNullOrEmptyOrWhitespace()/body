@@ -1,0 +1,14 @@
+{
+  Role role=new Role();
+  role.setRole(null);
+  role.setDescription("some text");
+  Errors errors=new BindException(role,"type");
+  role.setRole("");
+  errors=new BindException(role,"role");
+  new RoleValidator().validate(role,errors);
+  Assert.assertTrue(errors.hasFieldErrors("role"));
+  role.setRole(" ");
+  errors=new BindException(role,"role");
+  new RoleValidator().validate(role,errors);
+  Assert.assertTrue(errors.hasFieldErrors("role"));
+}

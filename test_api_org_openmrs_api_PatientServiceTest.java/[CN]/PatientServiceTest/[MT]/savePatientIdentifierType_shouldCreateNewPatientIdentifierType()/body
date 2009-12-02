@@ -1,0 +1,10 @@
+{
+  PatientIdentifierType identifierType=new PatientIdentifierType();
+  identifierType.setName("test");
+  identifierType.setDescription("test description");
+  identifierType.setRequired(false);
+  Assert.assertNull(identifierType.getPatientIdentifierTypeId());
+  patientService.savePatientIdentifierType(identifierType);
+  PatientIdentifierType savedIdentifierType=patientService.getPatientIdentifierType(identifierType.getPatientIdentifierTypeId());
+  assertNotNull(savedIdentifierType);
+}

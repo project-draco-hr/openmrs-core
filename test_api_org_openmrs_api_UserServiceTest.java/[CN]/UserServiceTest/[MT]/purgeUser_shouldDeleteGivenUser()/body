@@ -1,0 +1,5 @@
+{
+  User user=Context.getUserService().getUser(502);
+  Context.getUserService().purgeUser(user);
+  Assert.assertNull(Context.getUserService().getUser(2));
+}

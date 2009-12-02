@@ -1,0 +1,7 @@
+{
+  RelationshipType savedRelationshipType=Context.getPersonService().getRelationshipType(1);
+  Assert.assertNotNull(savedRelationshipType.getRelationshipTypeId());
+  savedRelationshipType.setPreferred(true);
+  RelationshipType updatedRelationshipType=personService.saveRelationshipType(savedRelationshipType);
+  Assert.assertEquals(true,updatedRelationshipType.isPreferred());
+}

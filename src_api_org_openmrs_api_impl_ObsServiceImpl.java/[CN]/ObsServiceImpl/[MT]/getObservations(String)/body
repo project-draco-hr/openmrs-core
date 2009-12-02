@@ -1,13 +1,18 @@
 {
+  PatientService ps=Context.getPatientService();
+  List<Patient> patients=ps.getPatients(null,searchString,null,false);
+  List<Person> persons=new Vector<Person>();
+  persons.addAll(patients);
   EncounterService es=Context.getEncounterService();
-  List<Encounter> encounters=es.getEncountersByPatientIdentifier(searchString);
+  List<Encounter> encounters=new Vector<Encounter>();
   try {
     Encounter e=es.getEncounter(Integer.valueOf(searchString));
     if (e != null)     encounters.add(e);
   }
  catch (  NumberFormatException e) {
   }
-  List<Obs> returnList=getObservations(null,encounters,null,null,null,null,null,null,null,null,null,false);
+  List<Obs> returnList=new Vector<Obs>();
+  if (encounters.size() > 0 || persons.size() > 0)   returnList=getObservations(persons,encounters,null,null,null,null,null,null,null,null,null,false);
   try {
     Obs o=getObs(Integer.valueOf(searchString));
     if (o != null)     returnList.add(o);

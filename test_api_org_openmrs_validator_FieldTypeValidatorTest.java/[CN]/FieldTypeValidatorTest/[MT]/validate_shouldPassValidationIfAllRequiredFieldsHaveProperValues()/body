@@ -1,0 +1,7 @@
+{
+  FieldType type=new FieldType();
+  type.setName("soccer");
+  Errors errors=new BindException(type,"type");
+  new FieldTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

@@ -1,0 +1,5 @@
+{
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss=obsService.getObservations(null,null,null,null,null,Collections.singletonList(new Location(1)),null,null,null,null,null,false);
+  Assert.assertEquals(8,obss.size());
+}

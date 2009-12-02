@@ -1,0 +1,8 @@
+{
+  PersonService personService=Context.getPersonService();
+  Relationship savedRelationship=personService.getRelationship(1);
+  Assert.assertNotNull(savedRelationship.getRelationshipId());
+  savedRelationship.setRelationshipType(personService.getRelationshipType(2));
+  Relationship updatedRelationship=personService.saveRelationship(savedRelationship);
+  Assert.assertEquals(personService.getRelationshipType(2),updatedRelationship.getRelationshipType());
+}

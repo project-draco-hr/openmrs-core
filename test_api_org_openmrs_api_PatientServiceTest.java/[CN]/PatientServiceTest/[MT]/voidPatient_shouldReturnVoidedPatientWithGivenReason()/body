@@ -1,0 +1,9 @@
+{
+  Patient patient=Context.getPatientService().getPatient(2);
+  Patient voidedPatient=Context.getPatientService().voidPatient(patient,"Void for testing");
+  Assert.assertTrue(voidedPatient.isVoided());
+  Assert.assertNotNull(voidedPatient.getVoidedBy());
+  Assert.assertNotNull(voidedPatient.getVoidReason());
+  Assert.assertNotNull(voidedPatient.getDateVoided());
+  Assert.assertEquals("Void for testing",voidedPatient.getVoidReason());
+}

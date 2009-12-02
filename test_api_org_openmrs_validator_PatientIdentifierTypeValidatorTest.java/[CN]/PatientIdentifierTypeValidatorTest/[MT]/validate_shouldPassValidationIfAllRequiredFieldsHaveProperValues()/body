@@ -1,0 +1,8 @@
+{
+  PatientIdentifierType type=new PatientIdentifierType();
+  type.setName("restraining");
+  type.setDescription(":(");
+  Errors errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
