@@ -4,16 +4,19 @@
   if (Context.isAuthenticated()) {
     List<Role> allRoles=Context.getUserService().getAllRoles();
     Set<Role> inheritingRoles=new HashSet<Role>();
+    Set<Privilege> inheritedPrivileges=new HashSet<Privilege>();
     allRoles.remove(role);
     for (    Role r : allRoles) {
       if (r.getInheritedRoles().contains(role))       inheritingRoles.add(r);
     }
+    addInheritedPrivileges(role,inheritedPrivileges);
     for (    String s : OpenmrsConstants.AUTO_ROLES()) {
       Role r=Context.getUserService().getRole(s);
       allRoles.remove(r);
     }
     map.put("allRoles",allRoles);
     map.put("inheritingRoles",inheritingRoles);
+    map.put("inheritedPrivileges",inheritedPrivileges);
     map.put("privileges",Context.getUserService().getAllPrivileges());
     map.put("superuser",OpenmrsConstants.SUPERUSER_ROLE);
   }
