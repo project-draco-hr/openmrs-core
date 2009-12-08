@@ -1,9 +1,0 @@
-{
-  try {
-    return Integer.valueOf(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MAX_RESULTS,"1000"));
-  }
- catch (  Exception e) {
-    log.warn("Unable to convert the global property " + OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MAX_RESULTS + "to a valid integer. Returning the default 1000");
-  }
-  return 1000;
-}

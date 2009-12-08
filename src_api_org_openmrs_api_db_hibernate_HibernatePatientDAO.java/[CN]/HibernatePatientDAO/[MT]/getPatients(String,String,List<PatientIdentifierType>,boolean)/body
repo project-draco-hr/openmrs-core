@@ -63,6 +63,6 @@
   }
   criteria.add(Expression.eq("voided",false));
   criteria.setFirstResult(0);
-  criteria.setMaxResults(getMaximumSearchResults());
+  criteria.setMaxResults(HibernatePersonDAO.getMaximumSearchResults());
   return criteria.list();
 }
