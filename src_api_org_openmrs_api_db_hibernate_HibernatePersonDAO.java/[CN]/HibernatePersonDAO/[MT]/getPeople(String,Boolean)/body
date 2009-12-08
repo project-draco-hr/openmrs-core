@@ -12,5 +12,6 @@
   if (dead != null)   criteria.add(Expression.eq("dead",dead));
   criteria.addOrder(Order.asc("personId"));
   criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  criteria.setMaxResults(getMaximumSearchResults());
   return criteria.list();
 }
