@@ -1,0 +1,12 @@
+{
+  if (role.getInheritedRoles() != null) {
+    for (    Role r : role.getInheritedRoles()) {
+      if (r.getPrivileges() != null) {
+        for (        Privilege p : r.getPrivileges()) {
+          if (!inheritedPrivileges.contains(p))           inheritedPrivileges.add(p);
+        }
+      }
+      addInheritedPrivileges(r,inheritedPrivileges);
+    }
+  }
+}
