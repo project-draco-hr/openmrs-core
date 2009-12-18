@@ -1,5 +1,0 @@
-{
-  Result lastProgram=context.read(patient,context.getLogicDataSource("program"),(String)parameters.get("programName")).latest();
-  PatientProgram p=(PatientProgram)lastProgram.toObject();
-  return new Result(p.getDateEnrolled().before((Date)parameters.get("enrollmentDate")));
-}

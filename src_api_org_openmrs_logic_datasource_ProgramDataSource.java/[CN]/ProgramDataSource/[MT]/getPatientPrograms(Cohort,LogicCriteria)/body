@@ -1,8 +1,0 @@
-{
-  Collection<PatientProgram> patientPrograms=new ArrayList<PatientProgram>();
-  ProgramWorkflowService service=Context.getProgramWorkflowService();
-  for (  Integer patientId : patients.getMemberIds()) {
-    patientPrograms.addAll(service.getPatientPrograms(new Patient(patientId),null,null,null,null,null,false));
-  }
-  return patientPrograms;
-}

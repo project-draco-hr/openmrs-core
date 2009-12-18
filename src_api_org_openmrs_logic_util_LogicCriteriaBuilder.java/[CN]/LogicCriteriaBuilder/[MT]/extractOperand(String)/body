@@ -1,9 +1,0 @@
-{
-  Pattern pattern=Pattern.compile("(\\w*)\\((.*)\\)");
-  if (expression == null || (expression.length() == 0))   throw new ParseException("Expression must contain operator",0);
-  Matcher matcher=pattern.matcher(expression);
-  while (matcher.find()) {
-    return matcher.group(2);
-  }
-  return "EMPTY";
-}

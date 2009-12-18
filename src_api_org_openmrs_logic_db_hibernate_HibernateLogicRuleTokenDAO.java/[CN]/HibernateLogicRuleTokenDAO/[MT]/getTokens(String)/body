@@ -1,6 +1,0 @@
-{
-  String strQuery="select logicRuleToken.token from LogicRuleToken logicRuleToken where logicRuleToken.token like :partialToken";
-  Query query=sessionFactory.getCurrentSession().createQuery(strQuery);
-  query.setString("partialToken","%" + partialToken + "%");
-  return query.list();
-}

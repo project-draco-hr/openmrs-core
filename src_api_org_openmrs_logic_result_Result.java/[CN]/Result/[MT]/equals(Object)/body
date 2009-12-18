@@ -1,7 +1,10 @@
 {
   if (obj == null || !(obj instanceof Result))   return false;
   Result r=(Result)obj;
-  if (r instanceof EmptyResult && obj instanceof EmptyResult) {
+  if (EmptyResult.class.isAssignableFrom(r.getClass()) && this.isEmpty()) {
+    return true;
+  }
+  if (EmptyResult.class.isAssignableFrom(this.getClass()) && r.isEmpty()) {
     return true;
   }
   if (isSingleResult() && r.isSingleResult()) {

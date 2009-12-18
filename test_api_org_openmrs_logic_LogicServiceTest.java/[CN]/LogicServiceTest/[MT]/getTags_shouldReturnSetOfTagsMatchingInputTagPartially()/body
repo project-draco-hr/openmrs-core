@@ -1,9 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  String[] similarTags={"tags01","tags02","tags03","tags04","tags05"};
-  Rule rule=logicService.getRule("AGE");
-  Assert.assertNotNull(rule);
-  logicService.addRule("ANOTHER AGE",similarTags,rule);
-  List<String> tags=logicService.getTags("tags");
-  Assert.assertEquals(similarTags.length,tags.size());
-}

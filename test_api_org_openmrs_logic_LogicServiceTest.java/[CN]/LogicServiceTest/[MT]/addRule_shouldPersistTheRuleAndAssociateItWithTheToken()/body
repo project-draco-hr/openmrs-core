@@ -1,9 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  Rule hivRule=logicService.getRule("HIV POSITIVE");
-  Assert.assertNotNull(hivRule);
-  logicService.addRule("ANOTHER HIV POSITIVE",hivRule);
-  Rule anotherHivRule=logicService.getRule("ANOTHER HIV POSITIVE");
-  Assert.assertNotNull(anotherHivRule);
-  Assert.assertTrue(HIVPositiveRule.class.isAssignableFrom(anotherHivRule.getClass()));
-}

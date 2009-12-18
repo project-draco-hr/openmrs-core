@@ -1,8 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  Rule ageRule=logicService.getRule("AGE");
-  Assert.assertNotNull(ageRule);
-  logicService.removeRule("AGE");
-  Rule afterDeleteAgeRule=logicService.getRule("AGE");
-  Assert.assertNull(afterDeleteAgeRule);
-}

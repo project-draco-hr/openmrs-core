@@ -1,9 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  String[] newTags={"tags1","tags2","tags3"};
-  Rule rule=logicService.getRule("HIV POSITIVE");
-  Assert.assertNotNull(rule);
-  logicService.addRule("ANOTHER HIV POSITIVE",newTags,rule);
-  int tagsCount=logicService.getTokenTags("HIV POSITIVE").size();
-  Assert.assertEquals(newTags.length,tagsCount);
-}
