@@ -1,0 +1,8 @@
+{
+  Result parentResult=new Result();
+  Result firstResult=new Result(null,"some value",new Encounter(123));
+  Result secondResult=new Result(null,"some other value",new Encounter(124));
+  parentResult.add(firstResult);
+  parentResult.add(secondResult);
+  Assert.assertEquals("some value",parentResult.earliest().toString());
+}

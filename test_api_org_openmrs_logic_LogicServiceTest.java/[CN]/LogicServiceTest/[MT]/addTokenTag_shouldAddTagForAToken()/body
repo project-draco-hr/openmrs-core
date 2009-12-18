@@ -1,7 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  int initialTags=logicService.getTokenTags("HIV POSITIVE").size();
-  logicService.addTokenTag("HIV POSITIVE","a tag");
-  int finalTags=logicService.getTokenTags("HIV POSITIVE").size();
-  Assert.assertEquals(initialTags + 1,finalTags);
-}

@@ -1,0 +1,9 @@
+{
+  Result parentResult=new Result();
+  Result firstResult=new Result(Context.getDateFormat().parse("12/08/2008"),"some value",new Encounter(123));
+  Result secondResult=new Result(Context.getDateFormat().parse("15/08/2008"),"some other value",new Encounter(124));
+  parentResult.add(firstResult);
+  parentResult.add(secondResult);
+  Object toObject=parentResult.toObject();
+  Assert.assertNull(toObject);
+}

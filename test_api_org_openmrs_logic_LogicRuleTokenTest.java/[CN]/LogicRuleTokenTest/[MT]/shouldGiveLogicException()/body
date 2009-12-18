@@ -1,8 +1,0 @@
-{
-  LogicService logicService=Context.getLogicService();
-  Rule rule=logicService.getRule("%%person.birthdate");
-  logicService.addRule("BIRTHDATE",rule);
-  logicService.removeRule("BIRTHDATE");
-  rule=logicService.getRule("BIRTHDATE");
-  Assert.assertNull(rule);
-}
