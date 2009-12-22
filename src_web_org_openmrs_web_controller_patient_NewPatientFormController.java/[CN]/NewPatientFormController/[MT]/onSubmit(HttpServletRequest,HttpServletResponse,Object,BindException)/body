@@ -157,7 +157,7 @@ catch (      InsufficientIdentifiersException iie) {
 catch (      PatientIdentifierException pie) {
         log.error(pie);
         patient.removeIdentifier(pie.getPatientIdentifier());
-        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PatientIdentifier.error.general");
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,pie.getMessage());
         isError=true;
       }
       if (patient.getDead()) {
