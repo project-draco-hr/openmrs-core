@@ -127,6 +127,6 @@
   }
   if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
   if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
-  voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
+  Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
   savePatient(preferred);
 }

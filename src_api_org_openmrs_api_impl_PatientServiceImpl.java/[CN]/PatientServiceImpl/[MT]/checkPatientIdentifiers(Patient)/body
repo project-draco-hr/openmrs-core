@@ -1,5 +1,5 @@
 {
-  if (patient.getIdentifiers().size() < 1)   throw new InsufficientIdentifiersException("At least one Patient Identifier is required");
+  if (!patient.isVoided() && patient.getActiveIdentifiers().size() < 1)   throw new InsufficientIdentifiersException("At least one nonvoided Patient Identifier is required");
   List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
   identifiers.addAll(patient.getIdentifiers());
   List<String> identifiersUsed=new Vector<String>();
