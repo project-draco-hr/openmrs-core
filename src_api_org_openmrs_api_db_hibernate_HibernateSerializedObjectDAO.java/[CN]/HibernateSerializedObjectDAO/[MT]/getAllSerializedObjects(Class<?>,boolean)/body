@@ -1,0 +1,8 @@
+{
+  Criteria c=sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
+  c.add(Expression.or(Expression.eq("type",type.getName()),Expression.eq("subtype",type.getName())));
+  if (!includeRetired) {
+    c.add(Expression.like("retired",false));
+  }
+  return (List<SerializedObject>)c.list();
+}
