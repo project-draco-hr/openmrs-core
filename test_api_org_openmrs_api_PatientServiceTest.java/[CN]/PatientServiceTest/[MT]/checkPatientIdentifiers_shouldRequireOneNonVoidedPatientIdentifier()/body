@@ -6,12 +6,5 @@
   patientIdentifier.setVoidedBy(Context.getAuthenticatedUser());
   patientIdentifier.setVoidReason("Testing whether voided identifiers are ignored");
   patient.addIdentifier(patientIdentifier);
-  patientIdentifier=new PatientIdentifier();
-  patientIdentifier.setIdentifier("a non empty string");
-  patientIdentifier.setIdentifierType(Context.getPatientService().getAllPatientIdentifierTypes(false).get(0));
-  patientIdentifier.setVoided(false);
-  patientIdentifier.setVoidedBy(Context.getAuthenticatedUser());
-  patientIdentifier.setVoidReason("Testing whether voided identifiers are ignored");
-  patient.addIdentifier(patientIdentifier);
   Context.getPatientService().checkPatientIdentifiers(patient);
 }
