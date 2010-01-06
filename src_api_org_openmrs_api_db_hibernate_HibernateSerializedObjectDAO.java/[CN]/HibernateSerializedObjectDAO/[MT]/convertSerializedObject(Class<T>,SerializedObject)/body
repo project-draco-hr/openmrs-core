@@ -5,9 +5,10 @@
   OpenmrsSerializer serializer=getSerializer(serializedObject);
   T obj=null;
   try {
-    obj=(T)serializer.deserialize(serializedObject.getSerializedData(),serializedObject.getSubtype());
+    Class<?> subtype=Context.loadClass(serializedObject.getSubtype());
+    obj=(T)serializer.deserialize(serializedObject.getSerializedData(),subtype);
   }
- catch (  SerializationException e) {
+ catch (  Exception e) {
   }
   if (obj == null) {
     throw new DAOException("Unable to deserialize object: " + serializedObject);

@@ -18,8 +18,8 @@
     throw new DAOException("Unable to save object <" + object + "> because serialization failed.",e);
   }
   serializedObject.setUuid(object.getUuid());
-  serializedObject.setType(baseType);
-  serializedObject.setSubtype(object.getClass());
+  serializedObject.setType(baseType.getName());
+  serializedObject.setSubtype(object.getClass().getName());
   serializedObject.setSerializationClass(serializer.getClass());
   serializedObject.setSerializedData(data);
   if (object instanceof Auditable) {

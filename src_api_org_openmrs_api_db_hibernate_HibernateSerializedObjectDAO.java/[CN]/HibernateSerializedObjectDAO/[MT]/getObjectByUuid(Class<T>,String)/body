@@ -1,8 +1,6 @@
 {
-  if (uuid != null) {
-    Criteria c=sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
-    c.add(Expression.eq("uuid",uuid));
-    SerializedObject o=(SerializedObject)c.uniqueResult();
+  SerializedObject o=getSerializedObjectByUuid(uuid);
+  if (o != null) {
     return convertSerializedObject(baseClass,o);
   }
   return null;
