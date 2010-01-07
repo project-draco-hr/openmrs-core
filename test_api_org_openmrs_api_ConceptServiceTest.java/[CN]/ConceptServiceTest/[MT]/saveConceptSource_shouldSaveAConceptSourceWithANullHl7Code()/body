@@ -1,0 +1,9 @@
+{
+  ConceptSource source=new ConceptSource();
+  String aNullString=null;
+  String sourceName="A concept source with null HL7 code";
+  source.setName(sourceName);
+  source.setHl7Code(aNullString);
+  conceptService.saveConceptSource(source);
+  assertEquals("Did not save a ConceptSource with a null hl7Code",source,conceptService.getConceptSourceByName(sourceName));
+}

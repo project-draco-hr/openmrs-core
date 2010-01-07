@@ -1,0 +1,10 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(INITIAL_CONCEPTS_XML);
+  authenticate();
+  assertFalse(conceptService.getConcept(2).isSet());
+  Concept concept=conceptService.getConcept(2);
+  concept.setSet(true);
+  conceptService.saveConcept(concept);
+  assertTrue(conceptService.getConcept(2).isSet());
+}
