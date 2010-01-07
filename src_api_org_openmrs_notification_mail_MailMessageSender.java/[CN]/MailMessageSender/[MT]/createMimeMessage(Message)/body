@@ -1,10 +1,14 @@
 {
   if (message.getRecipients() == null)   throw new MessageException("Message must contain at least one recipient");
+  if (!StringUtils.hasText(message.getContentType())) {
+    String contentType=Context.getAdministrationService().getGlobalProperty("mail.default_content_type");
+    message.setContentType(StringUtils.hasText(contentType) ? contentType : "text/plain");
+  }
   MimeMessage mimeMessage=new MimeMessage(session);
   if (message.getSender() != null)   mimeMessage.setSender(new InternetAddress(message.getSender()));
   mimeMessage.setRecipients(javax.mail.Message.RecipientType.TO,InternetAddress.parse(message.getRecipients(),false));
   mimeMessage.setSubject(message.getSubject());
-  if (!message.hasAttachment())   mimeMessage.setContent(message.getContent(),"text/plain");
+  if (!message.hasAttachment())   mimeMessage.setContent(message.getContent(),message.getContentType());
  else   mimeMessage.setContent(createMultipart(message));
   return mimeMessage;
 }
