@@ -1,7 +1,7 @@
 {
   MimeMultipart toReturn=new MimeMultipart();
   MimeBodyPart textContent=new MimeBodyPart();
-  textContent.setText(message.getContent());
+  textContent.setContent(message.getContent(),message.getContentType());
   MimeBodyPart attachment=new MimeBodyPart();
   attachment.setContent(message.getAttachment(),message.getAttachmentContentType());
   attachment.setFileName(message.getAttachmentFileName());
