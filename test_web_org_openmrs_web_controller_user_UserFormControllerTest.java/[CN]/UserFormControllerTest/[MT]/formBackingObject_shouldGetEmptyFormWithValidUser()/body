@@ -1,9 +1,0 @@
-{
-  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
-  request.setParameter("userId","1");
-  HttpServletResponse response=new MockHttpServletResponse();
-  UserFormController controller=(UserFormController)applicationContext.getBean("userForm");
-  ModelAndView modelAndView=controller.handleRequest(request,response);
-  User command=(User)modelAndView.getModel().get("user");
-  Assert.assertNotNull(command.getUserId());
-}

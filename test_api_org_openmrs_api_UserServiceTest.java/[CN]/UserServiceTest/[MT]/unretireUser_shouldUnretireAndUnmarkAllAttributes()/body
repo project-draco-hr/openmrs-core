@@ -1,0 +1,9 @@
+{
+  UserService userService=Context.getUserService();
+  User user=userService.getUser(501);
+  userService.unretireUser(user);
+  Assert.assertFalse(user.isRetired());
+  Assert.assertNull(user.getDateRetired());
+  Assert.assertNull(user.getRetiredBy());
+  Assert.assertNull(user.getRetireReason());
+}

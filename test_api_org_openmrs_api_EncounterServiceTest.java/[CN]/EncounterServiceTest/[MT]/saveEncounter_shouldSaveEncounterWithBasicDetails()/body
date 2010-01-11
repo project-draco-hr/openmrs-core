@@ -4,7 +4,7 @@
   encounter.setEncounterType(new EncounterType(1));
   encounter.setEncounterDatetime(new Date());
   encounter.setPatient(new Patient(3));
-  encounter.setProvider(new User(1));
+  encounter.setProvider(new Person(1));
   EncounterService es=Context.getEncounterService();
   es.saveEncounter(encounter);
   assertNotNull("The saved encounter should have an encounter id now",encounter.getEncounterId());

@@ -1,0 +1,9 @@
+{
+  List<Role> roles=Context.getUserService().getAllRoles();
+  if (roles == null)   roles=new Vector<Role>();
+  for (  String s : OpenmrsConstants.AUTO_ROLES()) {
+    Role r=new Role(s);
+    roles.remove(r);
+  }
+  return roles;
+}

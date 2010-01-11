@@ -1,0 +1,5 @@
+{
+  model.addAttribute("isNewUser",user == null || user.getUserId() == null);
+  if (user == null || user.getUserId() == null || Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS))   model.addAttribute("modifyPasswords",true);
+  return "admin/users/userForm";
+}

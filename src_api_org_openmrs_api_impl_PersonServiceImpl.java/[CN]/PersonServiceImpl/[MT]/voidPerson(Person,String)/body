@@ -18,7 +18,6 @@
   savePerson(person);
   Context.getPatientService().voidPatient(Context.getPatientService().getPatient(person.getPersonId()),reason);
   UserService us=Context.getUserService();
-  User user=us.getUser(person.getPersonId());
-  if (user != null)   us.voidUser(user,reason);
+  for (  User user : us.getUsersByPerson(person,false))   us.retireUser(user,reason);
   return person;
 }

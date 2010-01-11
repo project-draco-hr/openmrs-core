@@ -1,6 +1,3 @@
 {
-  if (!personType.equals("person") && !personType.equals("user") && !personType.equals("patient")) {
-    throw new IllegalArgumentException("PersonType argument must be 'person', 'user', or 'patient' but was: " + personType);
-  }
-  return dao.getSimilarPeople(nameSearch,birthyear,gender,personType);
+  return getSimilarPeople(nameSearch,birthyear,gender);
 }

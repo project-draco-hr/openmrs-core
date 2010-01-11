@@ -1,0 +1,17 @@
+{
+  User user=new User();
+  user.setUsername("test");
+  user.setRetireReason(null);
+  user.setRetired(true);
+  Errors errors=new BindException(user,"user");
+  new UserValidator().validate(user,errors);
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+  user.setRetireReason("");
+  errors=new BindException(user,"user");
+  new UserValidator().validate(user,errors);
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+  user.setRetireReason(" ");
+  errors=new BindException(user,"user");
+  new UserValidator().validate(user,errors);
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

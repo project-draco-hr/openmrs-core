@@ -5,7 +5,7 @@
       Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
       Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
       if (StringUtils.hasText(request.getParameter("patientId")))       encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
-      if (StringUtils.hasText(request.getParameter("providerId")))       encounter.setProvider(Context.getUserService().getUser(Integer.valueOf(request.getParameter("providerId"))));
+      if (StringUtils.hasText(request.getParameter("providerId")))       encounter.setProvider(Context.getPersonService().getPerson(Integer.valueOf(request.getParameter("providerId"))));
       if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"patient","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"provider","error.null");

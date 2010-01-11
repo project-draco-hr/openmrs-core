@@ -7,14 +7,15 @@
   User preliminaryFetchedUser=userService.getUser(2);
   assertNull(preliminaryFetchedUser);
   Person personToMakeUser=Context.getPersonService().getPerson(2);
+  ((Patient)personToMakeUser).getIdentifiers().size();
   Context.clearSession();
   User user=new User(personToMakeUser);
-  user.setUserId(2);
   user.setUsername("bwolfe");
   user.setSystemId("asdf");
   user.addRole(new Role("Some Role","This is a test role"));
   assertTrue(user.getUsername().equals("bwolfe"));
   assertTrue(user.hasRole("Some Role"));
-  userService.saveUser(user,null);
-  shouldCreateUserWhoIsPatientAlreadyTestWasRun=true;
+  userService.saveUser(user,"password");
+  Assert.assertNotNull("User was not created",userService.getUser(user.getUserId()));
+  shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated=user.getUserId();
 }

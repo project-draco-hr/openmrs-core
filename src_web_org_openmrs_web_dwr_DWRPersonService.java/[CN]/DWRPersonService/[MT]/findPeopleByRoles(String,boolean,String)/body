@@ -10,8 +10,8 @@
         roleList.add(new Role(role));
       }
     }
-    for (    Person p : us.getUsers(searchPhrase,roleList,includeVoided)) {
-      personList.add(PersonListItem.createBestMatch(p));
+    for (    User u : us.getUsers(searchPhrase,roleList,includeVoided)) {
+      personList.add(new UserListItem(u));
     }
   }
  else {

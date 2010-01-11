@@ -1,8 +1,8 @@
 {
   try {
-    assertTrue("This test should not be run without first running 'shouldCreateUserWhoIsPatient' test method",shouldCreateUserWhoIsPatientAlreadyTestWasRun);
+    assertNotNull("This test should not be run without first running 'shouldCreateUserWhoIsPatient' test method",shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated);
     UserService userService=Context.getUserService();
-    User fetchedUser=userService.getUser(2);
+    User fetchedUser=userService.getUser(shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated);
     User fetchedUser3=userService.getUser(3);
     if (fetchedUser3 != null)     throw new Exception("There is a user with id #3");
     assertNotNull("Uh oh, the user object was not created",fetchedUser);
@@ -11,7 +11,7 @@
     assertTrue("Uh oh, the role was not assigned",fetchedUser.hasRole("Some Role"));
     Context.clearSession();
     List<User> allUsers=userService.getAllUsers();
-    assertEquals(6,allUsers.size());
+    assertEquals(9,allUsers.size());
     Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
     assertEquals(1,allPatientsSet.getSize());
   }
