@@ -7,6 +7,8 @@
   if (obsValue != null)   sb.append(obsValue.getValueAsString(Context.getLocale()));
   if (userId != null)   user=Context.getUserService().getUser(userId);
   if (user != null)   printUser(sb,user);
+  if (personId != null)   person=Context.getPersonService().getPerson(personId);
+  if (person != null)   printPerson(sb,person);
   if (encounterId != null)   encounter=Context.getEncounterService().getEncounter(encounterId);
   if (encounter != null) {
     printEncounterType(sb,encounter.getEncounterType());
@@ -15,7 +17,7 @@
     sb.append(" | ");
     printDate(sb,encounter.getEncounterDatetime());
     sb.append(" | ");
-    printUser(sb,encounter.getProvider());
+    printPerson(sb,encounter.getProvider());
   }
   if (encounterTypeId != null)   encounterType=Context.getEncounterService().getEncounterType(encounterTypeId);
   if (encounterType != null) {

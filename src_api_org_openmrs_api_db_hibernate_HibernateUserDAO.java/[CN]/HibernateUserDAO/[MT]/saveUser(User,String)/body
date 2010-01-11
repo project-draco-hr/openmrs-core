@@ -1,5 +1,4 @@
 {
-  insertUserStubIfNeeded(user);
   sessionFactory.getCurrentSession().saveOrUpdate(user);
   if (password != null) {
     String salt=Security.getRandomToken();

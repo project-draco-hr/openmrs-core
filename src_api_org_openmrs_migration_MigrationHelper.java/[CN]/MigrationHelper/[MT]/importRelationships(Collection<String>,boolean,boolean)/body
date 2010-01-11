@@ -31,6 +31,7 @@
     }
     if (user == null && autoCreateUsers) {
       user=new User();
+      user.setPerson(new Person());
       PersonName pn=new PersonName(userFirstName,"",userLastName);
       user.addName(pn);
       user.setUsername(username);

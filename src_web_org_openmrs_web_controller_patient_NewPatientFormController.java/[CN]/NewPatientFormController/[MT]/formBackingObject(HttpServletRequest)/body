@@ -34,7 +34,7 @@ catch (      ObjectRetrievalFailureException noUserEx) {
     String date=request.getParameter("addBirthdate");
     String age=request.getParameter("addAge");
     p=new Patient();
-    UserFormController.getMiniPerson(p,name,gender,date,age);
+    PersonFormController.getMiniPerson(p,name,gender,date,age);
     patient=new ShortPatientModel(p);
   }
   if (patient.getAddress() == null) {

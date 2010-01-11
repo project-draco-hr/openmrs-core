@@ -1,7 +1,7 @@
 {
   List<User> users=new Vector<User>();
   String query="from User u where u.names.givenName = :givenName and u.names.familyName = :familyName";
-  if (!includeVoided)   query+=" and u.voided = false";
+  if (!includeRetired)   query+=" and u.retired = false";
   Query q=sessionFactory.getCurrentSession().createQuery(query).setString("givenName",givenName).setString("familyName",familyName);
   for (  User u : (List<User>)q.list()) {
     users.add(u);

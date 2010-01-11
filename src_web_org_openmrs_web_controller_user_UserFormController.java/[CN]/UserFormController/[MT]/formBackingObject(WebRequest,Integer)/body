@@ -1,0 +1,21 @@
+{
+  String userId=request.getParameter("userId");
+  User u=null;
+  try {
+    u=Context.getUserService().getUser(Integer.valueOf(userId));
+  }
+ catch (  Exception ex) {
+  }
+  if (u == null) {
+    u=new User();
+  }
+  if (personId != null) {
+    u.setPerson(Context.getPersonService().getPerson(personId));
+  }
+ else   if (u.getPerson() == null) {
+    Person p=new Person();
+    p.addName(new PersonName());
+    u.setPerson(p);
+  }
+  return u;
+}

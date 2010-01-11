@@ -1,0 +1,6 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(User.class);
+  if (person != null)   crit.add(Restrictions.eq("person",person));
+  if (!includeRetired)   crit.add(Restrictions.eq("retired",false));
+  return (List<User>)crit.list();
+}

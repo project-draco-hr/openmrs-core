@@ -88,11 +88,11 @@
           temp.appendChild(doc.createTextNode(f.getName()));
           metadataNode.appendChild(temp);
         }
-        User u=e.getProvider();
+        Person u=e.getProvider();
         if (u != null) {
           Element temp=doc.createElement("provider");
-          temp.setAttribute("provider_id",u.getUserId().toString());
-          temp.appendChild(doc.createTextNode(formatUserName(u)));
+          temp.setAttribute("provider_id",u.getPersonId().toString());
+          temp.appendChild(doc.createTextNode(u.getPersonName().toString()));
           metadataNode.appendChild(temp);
         }
       }

@@ -1,8 +1,11 @@
 {
   User user=new User();
   user.setUsername("test");
-  user.setVoided(true);
-  user.setVoidReason("for the lulz");
+  user.setRetired(true);
+  user.setRetireReason("for the lulz");
+  user.setPerson(new Person(999));
+  user.getPerson().addName(new PersonName("Users","Need","People"));
+  user.getPerson().setGender("F");
   Errors errors=new BindException(user,"user");
   new UserValidator().validate(user,errors);
   Assert.assertFalse(errors.hasErrors());
