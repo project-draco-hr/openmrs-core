@@ -12,10 +12,10 @@
     }
     propList.add(propertiesFile);
     try {
-      OpenmrsUtil.loadProperties(props,new FileInputStream(propertiesFile));
+      OpenmrsUtil.loadProperties(props,propertiesFile);
       fileToPropertiesMap.put(propertiesFile,props);
     }
- catch (    FileNotFoundException e) {
+ catch (    Exception e) {
       log.error("Error generated",e);
     }
   }

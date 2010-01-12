@@ -1,19 +1,7 @@
 {
   try {
-    BufferedReader reader=new BufferedReader(new InputStreamReader(input,"UTF-8"));
-    while (reader.ready()) {
-      String line=reader.readLine();
-      if (line.length() > 0 && line.charAt(0) != '#') {
-        int pos=line.indexOf("=");
-        if (pos > 0) {
-          String keyString=line.substring(0,pos);
-          String valueString=line.substring(pos + 1);
-          if (keyString != null && keyString.length() > 0) {
-            props.put(keyString,fixPropertiesValueString(valueString));
-          }
-        }
-      }
-    }
+    InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+    props.load(reader);
     reader.close();
   }
  catch (  UnsupportedEncodingException uee) {

@@ -4,9 +4,9 @@
   for (  File propertiesFile : findPropertiesFiles()) {
     props.clear();
     try {
-      OpenmrsUtil.loadProperties(props,new FileInputStream(propertiesFile));
+      OpenmrsUtil.loadProperties(props,propertiesFile);
     }
- catch (    FileNotFoundException e) {
+ catch (    Exception e) {
       log.error("Error generated",e);
     }
     if (props.containsKey(code)) {

@@ -4,12 +4,12 @@
     Locale currentLocale=parseLocaleFrom(propertiesFile.getName());
     Properties props=new Properties();
     try {
-      OpenmrsUtil.loadProperties(props,new FileInputStream(propertiesFile));
+      OpenmrsUtil.loadProperties(props,propertiesFile);
       for (      Map.Entry<Object,Object> property : props.entrySet()) {
         presentations.add(new PresentationMessage(property.getKey().toString(),currentLocale,property.getValue().toString(),""));
       }
     }
- catch (    FileNotFoundException e) {
+ catch (    Exception e) {
       log.error("Error generated",e);
     }
   }
