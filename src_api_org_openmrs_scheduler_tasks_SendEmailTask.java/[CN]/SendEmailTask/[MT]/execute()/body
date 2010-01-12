@@ -1,6 +1,12 @@
 {
-  log.info("****************************** SEND EMAIL TASK:  Executing task ...");
-  if (!Context.isAuthenticated()) {
-    authenticate();
+  try {
+    Context.openSession();
+    log.info("****************************** SEND EMAIL TASK:  Executing task ...");
+    if (!Context.isAuthenticated()) {
+      authenticate();
+    }
+  }
+  finally {
+    Context.closeSession();
   }
 }
