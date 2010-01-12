@@ -3,9 +3,37 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     PersonAttributeType attrType=(PersonAttributeType)obj;
-    Context.getPersonService().savePersonAttributeType(attrType);
-    view=getSuccessView();
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PersonAttributeType.saved");
+    PersonService ps=Context.getPersonService();
+    if (request.getParameter("save") != null) {
+      ps.savePersonAttributeType(attrType);
+      view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PersonAttributeType.saved");
+    }
+ else     if (request.getParameter("retire") != null) {
+      String retireReason=request.getParameter("retireReason");
+      if (attrType.getPersonAttributeTypeId() != null && !(StringUtils.hasText(retireReason))) {
+        errors.reject("retireReason","general.retiredReason.empty");
+        return showForm(request,response,errors);
+      }
+      ps.retirePersonAttributeType(attrType,retireReason);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PersonAttributeType.retiredSuccessfully");
+      view=getSuccessView();
+    }
+ else     if (request.getParameter("purge") != null) {
+      try {
+        ps.purgePersonAttributeType(attrType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PersonAttributeType.purgedSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+        view="personAttributeType.form?personAttributeTypeId=" + attrType.getPersonAttributeTypeId();
+      }
+catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="personAttributeType.form?personAttributeTypeId=" + attrType.getPersonAttributeTypeId();
+      }
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

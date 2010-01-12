@@ -8,7 +8,7 @@
   List<PersonAttributeType> attributeTypeList=new Vector<PersonAttributeType>();
   if (Context.isAuthenticated()) {
     PersonService ps=Context.getPersonService();
-    attributeTypeList=ps.getAllPersonAttributeTypes();
+    attributeTypeList=ps.getAllPersonAttributeTypes(true);
   }
   modelMap.addAttribute("personAttributeTypeList",attributeTypeList);
   return "/admin/person/personAttributeTypeList";
