@@ -4,10 +4,38 @@
   ModelAndView toReturn=new ModelAndView(new RedirectView(view));
   if (Context.isAuthenticated()) {
     PatientIdentifierType identifierType=(PatientIdentifierType)obj;
-    identifierType.setCheckDigit(identifierType.hasValidator());
-    Context.getPatientService().savePatientIdentifierType(identifierType);
-    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.saved");
-    toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+    PatientService ps=Context.getPatientService();
+    if (request.getParameter("save") != null) {
+      identifierType.setCheckDigit(identifierType.hasValidator());
+      ps.savePatientIdentifierType(identifierType);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.saved");
+      toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+    }
+ else     if (request.getParameter("retire") != null) {
+      String retireReason=request.getParameter("retireReason");
+      if (identifierType.getPatientIdentifierTypeId() != null && !(StringUtils.hasText(retireReason))) {
+        errors.reject("retireReason","general.retiredReason.empty");
+        return showForm(request,response,errors);
+      }
+      ps.retirePatientIdentifierType(identifierType,retireReason);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.retiredSuccessfully");
+      toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+    }
+ else     if (request.getParameter("purge") != null) {
+      try {
+        ps.purgePatientIdentifierType(identifierType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.purgedSuccessfully");
+        toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+        return showForm(request,response,errors);
+      }
+catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        return showForm(request,response,errors);
+      }
+    }
   }
   return toReturn;
 }
