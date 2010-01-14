@@ -74,7 +74,7 @@
     UserValidator uv=new UserValidator();
     uv.validate(user,errors);
     if (errors.hasErrors()) {
-      return showForm(user.getUserId(),user,model);
+      return showForm(user.getUserId(),createNewPerson,user,model);
     }
     if (isNewUser(user))     us.saveUser(user,password);
  else {
