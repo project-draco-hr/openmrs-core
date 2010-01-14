@@ -54,11 +54,18 @@
       ps.execute();
       if (ps.getResultSet().next()) {
         sessionFactory.getCurrentSession().clear();
-        ps2=connection.prepareStatement("INSERT INTO concept_complex (concept_id, precise) VALUES (?, false)");
+        ps2=connection.prepareStatement("INSERT INTO concept_complex (concept_id) VALUES (?)");
         ps2.setInt(1,concept.getConceptId());
         ps2.executeUpdate();
       }
  else {
+        if (!concept.isComplex()) {
+          ps2=connection.prepareStatement("DELETE FROM concept_complex WHERE concept_id = ?");
+          ps2.setInt(1,concept.getConceptId());
+          ps2.executeUpdate();
+        }
+ else {
+        }
       }
     }
  catch (    SQLException e) {
@@ -84,5 +91,47 @@
     }
   }
  else   if (concept instanceof ConceptDerived) {
+    try {
+      ps=connection.prepareStatement("SELECT * FROM concept WHERE concept_id = ? and not exists (select * from concept_derived WHERE concept_id = ?)");
+      ps.setInt(1,concept.getConceptId());
+      ps.setInt(2,concept.getConceptId());
+      ps.execute();
+      if (ps.getResultSet().next()) {
+        sessionFactory.getCurrentSession().clear();
+        ps2=connection.prepareStatement("INSERT INTO concept_derived (concept_id) VALUES (?)");
+        ps2.setInt(1,concept.getConceptId());
+        ps2.executeUpdate();
+      }
+ else {
+        if (!concept.isComplex()) {
+          ps2=connection.prepareStatement("DELETE FROM concept_derived WHERE concept_id = ?");
+          ps2.setInt(1,concept.getConceptId());
+          ps2.executeUpdate();
+        }
+ else {
+        }
+      }
+    }
+ catch (    SQLException e) {
+      log.error("Error while trying to see if this ConceptDerived is in the concept_derived table already",e);
+    }
+ finally {
+      if (ps != null) {
+        try {
+          ps.close();
+        }
+ catch (        SQLException e) {
+          log.error("Error generated while closing statement",e);
+        }
+      }
+      if (ps2 != null) {
+        try {
+          ps2.close();
+        }
+ catch (        SQLException e) {
+          log.error("Error generated while closing statement",e);
+        }
+      }
+    }
   }
 }
