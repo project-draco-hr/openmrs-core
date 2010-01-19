@@ -1,0 +1,11 @@
+{
+  String tag="a new tag";
+  ConceptNameTag nameTag=new ConceptNameTag();
+  nameTag.setTag(tag);
+  conceptService.saveConceptNameTag(nameTag);
+  ConceptNameTag secondNameTag=new ConceptNameTag();
+  secondNameTag.setTag(tag);
+  ConceptNameTag existingConceptNameTag=conceptService.saveConceptNameTag(secondNameTag);
+  assertNull(secondNameTag.getId());
+  assertEquals(existingConceptNameTag.getId(),nameTag.getId());
+}
