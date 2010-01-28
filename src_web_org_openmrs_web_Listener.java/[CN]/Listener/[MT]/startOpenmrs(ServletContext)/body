@@ -12,6 +12,9 @@ catch (  InputRequiredException inputRequiredEx) {
 catch (  MandatoryModuleException mandatoryModEx) {
     throw new ServletException(mandatoryModEx);
   }
+catch (  OpenmrsRequiredModuleException reqModEx) {
+    throw reqModEx;
+  }
   try {
     Listener.loadAndStartCoreModules(servletContext);
     Listener.performWebStartOfModules(servletContext);

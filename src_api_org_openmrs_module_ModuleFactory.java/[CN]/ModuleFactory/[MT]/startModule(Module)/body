@@ -56,7 +56,7 @@ catch (      Exception e) {
       module.setStartupErrorMessage("Error while trying to start module",e);
       try {
         boolean skipOverStartedProperty=false;
-        if (e instanceof MandatoryModuleException)         skipOverStartedProperty=true;
+        if (e instanceof ModuleMustStartException)         skipOverStartedProperty=true;
         stopModule(module,skipOverStartedProperty,true);
       }
  catch (      Exception e2) {

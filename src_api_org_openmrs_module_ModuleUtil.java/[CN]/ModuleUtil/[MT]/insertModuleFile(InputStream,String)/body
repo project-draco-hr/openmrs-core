@@ -1,7 +1,7 @@
 {
   File folder=getModuleRepository();
   if (OpenmrsUtil.folderContains(folder,filename))   throw new ModuleException(filename + " is already associated with a loaded module.");
-  File file=new File(folder.getAbsolutePath() + File.separator + filename);
+  File file=new File(folder.getAbsolutePath(),filename);
   FileOutputStream outputStream=null;
   try {
     outputStream=new FileOutputStream(file);
