@@ -5,6 +5,9 @@
     if (!isFailedStartup && mod.isMandatory()) {
       throw new MandatoryModuleException(moduleId);
     }
+    if (!isFailedStartup && ModuleConstants.REQUIRED_MODULES.containsKey(moduleId)) {
+      throw new OpenmrsRequiredModuleException(moduleId);
+    }
     String modulePackage=mod.getPackageName();
     List<Module> startedModulesCopy=new ArrayList<Module>();
     startedModulesCopy.addAll(getStartedModules());

@@ -139,6 +139,11 @@ catch (        MandatoryModuleException mandatoryModEx) {
           reportError(mandatoryModEx.getMessage(),DEFAULT_PAGE);
           return;
         }
+catch (        OpenmrsRequiredModuleException requiredModEx) {
+          log.warn("A required module failed to start. Make sure that all required modules (with the required minimum versions) are installed and starting properly.",requiredModEx);
+          reportError(requiredModEx.getMessage(),DEFAULT_PAGE);
+          return;
+        }
         if (!wizardModel.implementationId.equals("")) {
           try {
             Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);

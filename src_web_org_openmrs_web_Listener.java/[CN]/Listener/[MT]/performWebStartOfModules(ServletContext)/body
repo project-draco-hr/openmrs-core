@@ -16,8 +16,8 @@
     try {
       WebModuleUtil.refreshWAC(servletContext);
     }
- catch (    MandatoryModuleException mme) {
-      throw mme;
+ catch (    ModuleMustStartException ex) {
+      throw ex;
     }
 catch (    Throwable t) {
       log.fatal("Unable to refresh the spring application context. Unloading all modules,  Error was:",t);
@@ -28,8 +28,8 @@ catch (    Throwable t) {
         }
         WebModuleUtil.refreshWAC(servletContext);
       }
- catch (      MandatoryModuleException mme) {
-        throw mme;
+ catch (      ModuleMustStartException ex) {
+        throw ex;
       }
 catch (      Throwable t2) {
         log.warn("caught another error: ",t2);
