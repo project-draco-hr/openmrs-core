@@ -1,0 +1,9 @@
+{
+  runtimeProperties.setProperty(ModuleConstants.IGNORE_REQUIRED_MODULES_PROPERTY,"false");
+  try {
+    ModuleUtil.checkOpenmrsRequiredModulesStarted();
+  }
+  finally {
+    runtimeProperties.setProperty(ModuleConstants.IGNORE_REQUIRED_MODULES_PROPERTY,"true");
+  }
+}
