@@ -1,4 +1,5 @@
 {
+  if (ignoreRequiredModules())   return;
   Map<String,String> requiredModules=new HashMap<String,String>(ModuleConstants.REQUIRED_MODULES);
   Collection<Module> startedModules=ModuleFactory.getStartedModulesMap().values();
   for (  Module mod : startedModules) {

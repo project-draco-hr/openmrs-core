@@ -11,12 +11,10 @@
     log.warn("Core module repository isn't a directory: " + folder.getAbsolutePath());
     return;
   }
-  boolean aModuleLoaded=false;
   for (  File f : folder.listFiles()) {
     if (!f.getName().startsWith(".")) {
       try {
-        Module mod=ModuleFactory.loadModule(f,false);
-        aModuleLoaded=true;
+        Module mod=ModuleFactory.loadModule(f);
         log.debug("Loaded module: " + mod + " successfully");
       }
  catch (      Throwable t) {
@@ -24,5 +22,4 @@
       }
     }
   }
-  if (aModuleLoaded)   ModuleFactory.startModules();
 }

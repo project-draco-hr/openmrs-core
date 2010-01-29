@@ -2,7 +2,7 @@
   for (  File f : modulesToLoad) {
     if (!f.getName().startsWith(".")) {
       try {
-        Module mod=loadModule(f);
+        Module mod=loadModule(f,true);
         log.debug("Loaded module: " + mod + " successfully");
       }
  catch (      Throwable t) {

@@ -1,6 +1,7 @@
 {
   try {
     Context.openSession();
+    Listener.loadCoreModules(servletContext);
     Context.startup(getRuntimeProperties());
   }
  catch (  DatabaseUpdateException updateEx) {
@@ -16,7 +17,6 @@ catch (  OpenmrsRequiredModuleException reqModEx) {
     throw reqModEx;
   }
   try {
-    Listener.loadAndStartCoreModules(servletContext);
     Listener.performWebStartOfModules(servletContext);
     SchedulerUtil.startup(getRuntimeProperties());
   }
