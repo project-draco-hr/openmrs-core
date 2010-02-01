@@ -4,6 +4,7 @@
   if (Context.isAuthenticated()) {
     PersonService ps=Context.getPersonService();
     Integer userId=Context.getAuthenticatedUser().getUserId();
+    invalidAgeFormat=false;
     getParametersFromRequest(request);
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
@@ -18,7 +19,12 @@
         Calendar c=Calendar.getInstance();
         c.setTime(new Date());
         d=c.get(Calendar.YEAR);
-        d=d - Integer.parseInt(age);
+        try {
+          d=d - Integer.parseInt(age);
+        }
+ catch (        NumberFormatException e) {
+          invalidAgeFormat=true;
+        }
       }
       if (gender.length() < 1)       gender=null;
       personList=new Vector<PersonListItem>();

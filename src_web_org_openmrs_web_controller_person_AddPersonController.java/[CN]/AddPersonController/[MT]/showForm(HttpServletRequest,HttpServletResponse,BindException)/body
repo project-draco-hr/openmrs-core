@@ -1,6 +1,12 @@
 {
   log.debug("In showForm method");
   ModelAndView mav=super.showForm(request,response,errors);
+  if (invalidAgeFormat) {
+    mav=new ModelAndView(FORM_ENTRY_ERROR_URL);
+    mav.addObject("errorTitle","Person.age.error");
+    mav.addObject("errorMessage","Person.birthdate.required");
+    return mav;
+  }
   Object o=mav.getModel().get(this.getCommandName());
   List personList=(List)o;
   log.debug("Found list of size: " + personList.size());
