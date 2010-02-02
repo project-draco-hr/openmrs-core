@@ -7,7 +7,7 @@
   if (types != null && types.size() > 0)   criteria.add(Restrictions.in("identifierType",types));
   criteria.addOrder(org.hibernate.criterion.Order.desc("patient.personId"));
   List<PatientIdentifier> identifiers=criteria.list();
-  log.info("IDS: " + identifiers);
+  if (log.isDebugEnabled())   log.debug("IDS: " + identifiers);
   for (  PatientIdentifier identifier : identifiers) {
     Integer patientId=identifier.getPatient().getPatientId();
     if (!patientIdentifiers.containsKey(patientId))     patientIdentifiers.put(patientId,identifier);
