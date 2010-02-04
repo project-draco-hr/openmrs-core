@@ -2,10 +2,19 @@
   if (log.isDebugEnabled())   log.debug("Adding module " + module.getName() + " to the module queue");
   Module oldModule=getLoadedModulesMap().get(module.getModuleId());
   if (oldModule != null) {
-    if (replaceIfExists == true) {
+    int versionComparison=ModuleUtil.compareVersion(oldModule.getVersion(),module.getVersion());
+    if (versionComparison < 0) {
       unloadModule(oldModule);
     }
- else     throw new ModuleException("A module with the same id already exists",module.getModuleId());
+ else     if (versionComparison == 0) {
+      if (replaceIfExists) {
+        unloadModule(oldModule);
+      }
+ else       throw new ModuleException("A module with the same id and version already exists",module.getModuleId());
+    }
+ else {
+      return oldModule;
+    }
   }
   getLoadedModulesMap().put(module.getModuleId(),module);
   return module;
