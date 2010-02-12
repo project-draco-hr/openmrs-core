@@ -4,8 +4,8 @@
     errors.reject("auth.invalid");
   }
  else {
-    if (person.getPersonName().getGivenName() == "")     errors.rejectValue("names[0].givenName","Person.name.required");
-    if (person.getPersonName().getFamilyName() == "")     errors.rejectValue("names[0].familyName","Person.name.required");
+    if (person.getPersonName().getGivenName().trim().equals(""))     errors.rejectValue("names[0].givenName","Person.name.required");
+    if (person.getPersonName().getFamilyName().trim().equals(""))     errors.rejectValue("names[0].familyName","Person.name.required");
     if (person.getGender() == null || person.getGender().equals(""))     errors.rejectValue("gender","Person.gender.required");
     for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PERSON,null)) {
       String paramName=type.getPersonAttributeTypeId().toString();
