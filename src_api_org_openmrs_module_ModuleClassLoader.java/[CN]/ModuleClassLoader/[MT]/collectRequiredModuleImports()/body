@@ -1,5 +1,8 @@
 {
   Map<String,Module> publicImportsMap=new WeakHashMap<String,Module>();
+  for (  String moduleId : ModuleConstants.REQUIRED_MODULES.keySet()) {
+    publicImportsMap.put(moduleId,ModuleFactory.getModuleById(moduleId));
+  }
   for (  String requiredPackage : getModule().getRequiredModules()) {
     Module requiredModule=ModuleFactory.getModuleByPackage(requiredPackage);
     if (ModuleFactory.isModuleStarted(requiredModule)) {
