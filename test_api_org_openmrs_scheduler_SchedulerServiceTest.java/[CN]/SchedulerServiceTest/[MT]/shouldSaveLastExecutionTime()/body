@@ -14,5 +14,5 @@
   Thread.sleep(2000);
   service.shutdownTask(td);
   td=service.getTaskByName(NAME);
-  assertEquals("Last execution time in seconds is wrong",actualExecutionTime.longValue() / 1000,td.getLastExecutionTime().getTime() / 1000);
+  assertEquals("Last execution time in seconds is wrong",actualExecutionTime.longValue() / 1000,td.getLastExecutionTime().getTime() / 1000,1);
 }
