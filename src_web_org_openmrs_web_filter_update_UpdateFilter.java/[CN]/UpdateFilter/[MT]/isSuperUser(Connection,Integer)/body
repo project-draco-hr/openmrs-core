@@ -1,5 +1,5 @@
 {
-  String select="select 1 from user_role where user_id = ? and (role = ? or role = 'System Developer')";
+  String select="select 1 from user_role where user_id = ? and (role = ? or role = 'Administrator')";
   PreparedStatement statement=connection.prepareStatement(select);
   statement.setInt(1,userId);
   statement.setString(2,OpenmrsConstants.SUPERUSER_ROLE);
