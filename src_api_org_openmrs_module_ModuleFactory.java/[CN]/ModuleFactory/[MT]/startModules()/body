@@ -9,7 +9,8 @@
         String key=mod.getModuleId() + ".started";
         String startedProp=as.getGlobalProperty(key,null);
         String mandatoryProp=as.getGlobalProperty(mod.getModuleId() + ".mandatory",null);
-        if (startedProp == null || startedProp.equals("true") || "true".equalsIgnoreCase(mandatoryProp) || mod.isMandatory()) {
+        boolean isRequiredByOpenmrs=ModuleConstants.REQUIRED_MODULES.containsKey(mod.getModuleId()) && !ModuleUtil.ignoreRequiredModules();
+        if (startedProp == null || startedProp.equals("true") || "true".equalsIgnoreCase(mandatoryProp) || mod.isMandatory() || isRequiredByOpenmrs) {
           if (requiredModulesStarted(mod))           try {
             if (log.isDebugEnabled())             log.debug("starting module: " + mod.getModuleId());
             startModule(mod);
