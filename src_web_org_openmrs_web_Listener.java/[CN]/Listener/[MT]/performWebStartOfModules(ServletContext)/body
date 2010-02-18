@@ -24,7 +24,7 @@ catch (    Throwable t) {
       try {
         WebModuleUtil.shutdownModules(servletContext);
         for (        Module mod : ModuleFactory.getLoadedModules()) {
-          ModuleFactory.stopModule(mod,true);
+          ModuleFactory.stopModule(mod,true,true);
         }
         WebModuleUtil.refreshWAC(servletContext);
       }

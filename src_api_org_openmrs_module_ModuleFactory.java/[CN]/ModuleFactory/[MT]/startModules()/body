@@ -4,7 +4,7 @@
     try {
       Context.addProxyPrivilege("");
       AdministrationService as=Context.getAdministrationService();
-      for (      Module mod : getLoadedModules()) {
+      for (      Module mod : getLoadedModulesCoreFirst()) {
         if (mod.isStarted())         continue;
         String key=mod.getModuleId() + ".started";
         String startedProp=as.getGlobalProperty(key,null);
