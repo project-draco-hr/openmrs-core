@@ -1,0 +1,5 @@
+{
+  ObsService obsService=Context.getObsService();
+  Integer count=obsService.getObservationCount(null,Collections.singletonList(new Encounter(4)),null,null,null,null,null,null,null,false);
+  Assert.assertEquals(6,count.intValue());
+}

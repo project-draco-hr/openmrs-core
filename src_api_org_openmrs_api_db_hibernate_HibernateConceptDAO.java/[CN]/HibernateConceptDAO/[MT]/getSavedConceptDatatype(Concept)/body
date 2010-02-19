@@ -1,0 +1,5 @@
+{
+  SQLQuery sql=sessionFactory.getCurrentSession().createSQLQuery("select datatype.* from " + "concept_datatype datatype, " + "concept concept "+ "where "+ "datatype.concept_datatype_id = concept.datatype_id "+ "and concept.concept_id=:conceptId").addEntity(ConceptDatatype.class);
+  sql.setInteger("conceptId",concept.getConceptId());
+  return (ConceptDatatype)sql.uniqueResult();
+}

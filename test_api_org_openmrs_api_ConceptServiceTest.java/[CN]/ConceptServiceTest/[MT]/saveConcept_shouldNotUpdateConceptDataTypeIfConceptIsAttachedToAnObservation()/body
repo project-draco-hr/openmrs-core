@@ -1,0 +1,10 @@
+{
+  executeDataSet(INITIAL_CONCEPTS_XML);
+  Concept concept=conceptService.getConcept(1);
+  assertNotNull(concept);
+  ObsService obsService=Context.getObsService();
+  obsService.saveObs(new Obs(new Person(1),concept,new Date(),new Location(1)),"Creating a new observation with a concept");
+  ConceptDatatype newDatatype=conceptService.getConceptDatatypeByName("Text");
+  concept.setDatatype(newDatatype);
+  conceptService.saveConcept(concept);
+}
