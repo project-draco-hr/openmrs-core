@@ -1,0 +1,5 @@
+{
+  Criteria criteria=createGetObservationsCriteria(whom,encounters,questions,answers,personTypes,locations,null,null,obsGroupId,fromDate,toDate,includeVoidedObs);
+  criteria.setProjection(Projections.rowCount());
+  return (Integer)criteria.list().get(0);
+}

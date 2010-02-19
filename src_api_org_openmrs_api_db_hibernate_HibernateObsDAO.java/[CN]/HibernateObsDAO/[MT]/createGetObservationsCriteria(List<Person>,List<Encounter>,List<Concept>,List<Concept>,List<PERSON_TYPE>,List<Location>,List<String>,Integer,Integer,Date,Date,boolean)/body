@@ -1,0 +1,23 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Obs.class,"obs");
+  if (CollectionUtils.isNotEmpty(whom))   criteria.add(Restrictions.in("person",whom));
+  if (CollectionUtils.isNotEmpty(encounters))   criteria.add(Restrictions.in("encounter",encounters));
+  if (CollectionUtils.isNotEmpty(questions))   criteria.add(Restrictions.in("concept",questions));
+  if (CollectionUtils.isNotEmpty(answers))   criteria.add(Restrictions.in("valueCoded",answers));
+  if (CollectionUtils.isNotEmpty(personTypes))   getCriteriaPersonModifier(criteria,personTypes);
+  if (CollectionUtils.isNotEmpty(locations))   criteria.add(Restrictions.in("location",locations));
+  if (CollectionUtils.isNotEmpty(sortList)) {
+    for (    String sort : sortList) {
+      if (sort != null && !"".equals(sort))       criteria.addOrder(Order.desc(sort));
+    }
+  }
+  if (mostRecentN != null && mostRecentN > 0)   criteria.setMaxResults(mostRecentN);
+  if (obsGroupId != null) {
+    criteria.createAlias("obsGroup","og");
+    criteria.add(Restrictions.eq("og.obsId",obsGroupId));
+  }
+  if (fromDate != null)   criteria.add(Restrictions.ge("obsDatetime",fromDate));
+  if (toDate != null)   criteria.add(Restrictions.le("obsDatetime",toDate));
+  if (includeVoidedObs == false)   criteria.add(Restrictions.eq("voided",false));
+  return criteria;
+}

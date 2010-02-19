@@ -7,6 +7,13 @@
   map.put("tags",cs.getAllConceptNameTags());
   map.put("classes",cs.getAllConceptClasses());
   map.put("datatypes",cs.getAllConceptDatatypes());
+  String conceptId=request.getParameter("conceptId");
+  boolean dataTypeReadOnly=false;
+  if (conceptId != null) {
+    Concept concept=cs.getConcept(Integer.valueOf(conceptId));
+    dataTypeReadOnly=cs.hasAnyObservation(concept);
+  }
+  map.put("dataTypeReadOnly",dataTypeReadOnly);
   map.put("handlers",Context.getObsService().getHandlers());
   map.put("locale",Context.getLocale());
   return map;

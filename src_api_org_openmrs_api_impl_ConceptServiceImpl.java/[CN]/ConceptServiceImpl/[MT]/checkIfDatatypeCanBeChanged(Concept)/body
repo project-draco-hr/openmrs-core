@@ -1,0 +1,7 @@
+{
+  if (concept.getId() != null) {
+    if (hasAnyObservation(concept) && hasDatatypeChanged(concept)) {
+      throw new ConceptInUseException();
+    }
+  }
+}
