@@ -44,6 +44,7 @@
       encounter.addObs(obsGrouper);
     }
     int numObs=orderObs.getOBSERVATIONReps();
+    String errorInHL7Queue=null;
     for (int j=0; j < numObs; j++) {
       if (log.isDebugEnabled())       log.debug("Processing OBS (" + j + " of "+ numObs+ ")");
       OBX obx=orderObs.getOBSERVATION(j).getOBX();
@@ -66,15 +67,25 @@
  catch (      ProposingConceptException proposingException) {
         Concept questionConcept=proposingException.getConcept();
         String value=proposingException.getValueName();
-        conceptProposals.add(createConceptProposal(encounter,questionConcept,value));
+        if (value != null && !value.equals(""))         conceptProposals.add(createConceptProposal(encounter,questionConcept,value));
+ else {
+          errorInHL7Queue=Context.getMessageSourceService().getMessage("Hl7.proposed.concept.name.empty");
+          break;
+        }
       }
 catch (      HL7Exception e) {
-        log.warn("HL7Exception",e);
-        HL7InError hl7InError=new HL7InError();
-        hl7InError.setError(e.getMessage());
-        hl7InError.setErrorDetails(PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")));
-        hl7InError.setHL7SourceKey(messageControlId);
-        hl7Service.saveHL7InError(hl7InError);
+        errorInHL7Queue=e.getMessage();
+      }
+ finally {
+        if (errorInHL7Queue != null) {
+          log.warn("HL7Exception: " + errorInHL7Queue);
+          HL7InError hl7InError=new HL7InError();
+          hl7InError.setError(errorInHL7Queue);
+          hl7InError.setErrorDetails(PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")));
+          hl7InError.setHL7SourceKey(messageControlId);
+          hl7InError.setHL7Data(PipeParser.encode(oru,new EncodingCharacters('|',"^~\\&")));
+          hl7Service.saveHL7InError(hl7InError);
+        }
       }
     }
   }
