@@ -1,6 +1,6 @@
 {
   List<Module> list=new ArrayList<Module>(getLoadedModules());
-  final Collection<String> coreModuleIds=ModuleConstants.REQUIRED_MODULES.keySet();
+  final Collection<String> coreModuleIds=ModuleConstants.CORE_MODULES.keySet();
   Collections.sort(list,new Comparator<Module>(){
     @Override public int compare(    Module left,    Module right){
       Integer leftVal=coreModuleIds.contains(left.getModuleId()) ? 0 : 1;

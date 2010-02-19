@@ -1,5 +1,5 @@
 {
-  if (getModel().errorAtStartup instanceof OpenmrsRequiredModuleException) {
+  if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
     RequestContext requestContext=new ServletRequestContext(httpRequest);
     if (!ServletFileUpload.isMultipartContent(requestContext))     throw new ServletException("The request is not a valid multipart/form-data upload request");
     FileItemFactory factory=new DiskFileItemFactory();
@@ -20,6 +20,6 @@
     }
     Map<String,Object> map=new HashMap<String,Object>();
     map.put("success",Boolean.TRUE);
-    renderTemplate("requiredmoduleerror.vm",map,httpResponse);
+    renderTemplate("coremoduleerror.vm",map,httpResponse);
   }
 }

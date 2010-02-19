@@ -1,24 +1,24 @@
 {
   Log log=LogFactory.getLog(Listener.class);
   String path=servletContext.getRealPath("");
-  path+=File.separator + "WEB-INF" + File.separator+ "coreModules";
+  path+=File.separator + "WEB-INF" + File.separator+ "bundledModules";
   File folder=new File(path);
   if (!folder.exists()) {
-    log.warn("Core module repository doesn't exist: " + folder.getAbsolutePath());
+    log.warn("Bundled module folder doesn't exist: " + folder.getAbsolutePath());
     return;
   }
   if (!folder.isDirectory()) {
-    log.warn("Core module repository isn't a directory: " + folder.getAbsolutePath());
+    log.warn("Bundled module folder isn't really a directory: " + folder.getAbsolutePath());
     return;
   }
   for (  File f : folder.listFiles()) {
     if (!f.getName().startsWith(".")) {
       try {
         Module mod=ModuleFactory.loadModule(f);
-        log.debug("Loaded module: " + mod + " successfully");
+        log.debug("Loaded bundled module: " + mod + " successfully");
       }
  catch (      Throwable t) {
-        log.warn("Error while trying to load module " + f.getName() + "",t);
+        log.warn("Error while trying to load bundled module " + f.getName() + "",t);
       }
     }
   }
