@@ -1,0 +1,16 @@
+{
+  if (ignoreCoreModules())   return;
+  Map<String,String> coreModules=new HashMap<String,String>(ModuleConstants.CORE_MODULES);
+  Collection<Module> startedModules=ModuleFactory.getStartedModulesMap().values();
+  for (  Module mod : startedModules) {
+    String moduleId=mod.getModuleId();
+    if (coreModules.containsKey(moduleId)) {
+      String coreReqVersion=coreModules.get(moduleId);
+      if (compareVersion(mod.getVersion(),coreReqVersion) >= 0)       coreModules.remove(moduleId);
+ else       log.debug("Module: " + moduleId + " is a core module and is started, but its version: "+ mod.getVersion()+ " is not within the required version: "+ coreReqVersion);
+    }
+  }
+  if (coreModules.size() > 0) {
+    throw new OpenmrsCoreModuleException(coreModules);
+  }
+}

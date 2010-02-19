@@ -122,7 +122,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         contextLoader.initWebApplicationContext(filterConfig.getServletContext());
         try {
           Context.openSession();
-          Listener.loadCoreModules(filterConfig.getServletContext());
+          Listener.loadBundledModules(filterConfig.getServletContext());
           Context.startup(runtimeProperties);
         }
  catch (        DatabaseUpdateException updateEx) {
@@ -140,9 +140,9 @@ catch (        MandatoryModuleException mandatoryModEx) {
           reportError(mandatoryModEx.getMessage(),DEFAULT_PAGE);
           return;
         }
-catch (        OpenmrsRequiredModuleException requiredModEx) {
-          log.warn("A required module failed to start. Make sure that all required modules (with the required minimum versions) are installed and starting properly.",requiredModEx);
-          reportError(requiredModEx.getMessage(),DEFAULT_PAGE);
+catch (        OpenmrsCoreModuleException coreModEx) {
+          log.warn("A core module failed to start. Make sure that all core modules (with the required minimum versions) are installed and starting properly.",coreModEx);
+          reportError(coreModEx.getMessage(),DEFAULT_PAGE);
           return;
         }
         if (!wizardModel.implementationId.equals("")) {

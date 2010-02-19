@@ -1,7 +1,7 @@
 {
   try {
     Context.openSession();
-    Listener.loadCoreModules(servletContext);
+    Listener.loadBundledModules(servletContext);
     Context.startup(getRuntimeProperties());
   }
  catch (  DatabaseUpdateException updateEx) {
@@ -13,8 +13,8 @@ catch (  InputRequiredException inputRequiredEx) {
 catch (  MandatoryModuleException mandatoryModEx) {
     throw new ServletException(mandatoryModEx);
   }
-catch (  OpenmrsRequiredModuleException reqModEx) {
-    throw reqModEx;
+catch (  OpenmrsCoreModuleException coreModEx) {
+    throw coreModEx;
   }
   try {
     Listener.performWebStartOfModules(servletContext);
