@@ -1,0 +1,7 @@
+{
+  User user=new User();
+  user.setUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD,String.valueOf(true));
+  UserProperties userProperties=new UserProperties(user.getUserProperties());
+  userProperties.setSupposedToChangePassword(false);
+  assertFalse(user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
+}
