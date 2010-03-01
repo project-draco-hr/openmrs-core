@@ -1,0 +1,11 @@
+{
+  User user=new User();
+  UserProperties userProperties=new UserProperties(user.getUserProperties());
+  assertFalse(userProperties.isSupposedToChangePassword());
+  userProperties.setSupposedToChangePassword(true);
+  assertTrue(userProperties.isSupposedToChangePassword());
+  userProperties.setSupposedToChangePassword(false);
+  assertFalse(userProperties.isSupposedToChangePassword());
+  userProperties.setSupposedToChangePassword(null);
+  assertFalse(userProperties.isSupposedToChangePassword());
+}

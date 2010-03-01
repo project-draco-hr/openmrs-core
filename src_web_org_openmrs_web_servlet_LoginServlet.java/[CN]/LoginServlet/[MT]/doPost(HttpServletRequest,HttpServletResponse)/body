@@ -54,8 +54,7 @@
             oclr.setLocale(request,response,locale);
           }
         }
-        Boolean forcePasswordChange=new Boolean(user.getUserProperty(OpenmrsConstants.USER_PROPERTY_CHANGE_PASSWORD));
-        if (forcePasswordChange) {
+        if (new UserProperties(user.getUserProperties()).isSupposedToChangePassword()) {
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.password.change");
           redirect=request.getContextPath() + "/options.form#Change Login Info";
         }
