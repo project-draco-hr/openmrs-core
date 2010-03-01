@@ -2,6 +2,9 @@
   if (birthdate == null)   return null;
   Calendar today=Calendar.getInstance();
   if (onDate != null)   today.setTime(onDate);
+  if (getDeathDate() != null && today.getTime().after(getDeathDate())) {
+    today.setTime(getDeathDate());
+  }
   Calendar bday=Calendar.getInstance();
   bday.setTime(birthdate);
   int age=today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
