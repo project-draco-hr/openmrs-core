@@ -22,6 +22,21 @@
     }
     return "redirect:/index.htm";
   }
+ else   if (mss.getMessage("User.retire").equals(action)) {
+    String retireReason=request.getParameter("retireReason");
+    if (!(StringUtils.hasText(retireReason))) {
+      errors.rejectValue("retireReason","general.retiredReason.empty");
+      return showForm(user.getUserId(),createNewPerson,user,model);
+    }
+ else {
+      us.retireUser(user,retireReason);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.retiredMessage");
+    }
+  }
+ else   if (mss.getMessage("User.unRetire").equals(action)) {
+    us.unretireUser(user);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.unRetiredMessage");
+  }
  else {
     if (us.hasDuplicateUsername(user))     errors.rejectValue("username","error.username.taken");
     if (password == null || password.equals("XXXXXXXXXXXXXXX"))     password="";
