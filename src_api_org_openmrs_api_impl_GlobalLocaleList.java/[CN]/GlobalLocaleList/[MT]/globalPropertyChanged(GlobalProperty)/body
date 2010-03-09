@@ -1,5 +1,5 @@
 {
-  allowedLocales=new ArrayList<Locale>();
+  allowedLocales=new LinkedHashSet<Locale>();
   for (  String allowedLocaleString : newValue.getPropertyValue().split(",")) {
     try {
       Locale allowedLocale=LocaleUtility.fromSpecification(allowedLocaleString.trim());
