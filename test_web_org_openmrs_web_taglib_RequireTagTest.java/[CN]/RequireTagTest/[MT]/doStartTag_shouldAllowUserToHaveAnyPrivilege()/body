@@ -4,7 +4,7 @@
   Context.authenticate("whirleygiguser","test");
   RequireTag tag=new RequireTag();
   tag.setPageContext(new MockPageContext());
-  tag.setAnyPrivileges("Manage WhirleyGigs, Manage WhoopDeDoos");
+  tag.setAnyPrivilege("Manage WhirleyGigs, Manage WhoopDeDoos");
   Assert.assertEquals(Tag.SKIP_BODY,tag.doStartTag());
   Context.logout();
 }
