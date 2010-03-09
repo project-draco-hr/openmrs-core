@@ -6,5 +6,5 @@
     GlobalProperty allowedLocalesProperty=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,currentPropertyValue);
     globalLocaleList.globalPropertyChanged(allowedLocalesProperty);
   }
-  return globalLocaleList.getAllowedLocales();
+  return new ArrayList<Locale>(globalLocaleList.getAllowedLocales());
 }
