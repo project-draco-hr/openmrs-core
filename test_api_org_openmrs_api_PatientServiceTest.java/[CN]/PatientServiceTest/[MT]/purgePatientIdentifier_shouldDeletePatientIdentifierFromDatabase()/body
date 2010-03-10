@@ -1,0 +1,5 @@
+{
+  PatientIdentifier patientIdentifier=patientService.getPatientIdentifier(7);
+  patientService.purgePatientIdentifier(patientIdentifier);
+  Assert.assertNull(patientService.getPatientIdentifier(7));
+}

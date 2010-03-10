@@ -1,0 +1,8 @@
+{
+  if (patientIdentifier == null || patientIdentifier.getPatient() == null || patientIdentifier.getIdentifierType() == null || patientIdentifier.getLocation() == null || StringUtils.isBlank(patientIdentifier.getIdentifier()))   throw new APIException("PatientIdentifier argument or one of its required fields is null or invalid");
+  if (patientIdentifier.getPatientIdentifierId() == null) {
+    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_PATIENT_IDENTIFIERS);
+  }
+ else   Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_PATIENT_IDENTIFIERS);
+  return dao.savePatientIdentifier(patientIdentifier);
+}

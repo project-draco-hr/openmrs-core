@@ -1,0 +1,7 @@
+{
+  PatientIdentifier patientIdentifier=patientService.getPatientIdentifier(7);
+  patientIdentifier.setIdentifier("NEW-ID");
+  PatientIdentifier updatedPatientIdentifier=patientService.savePatientIdentifier(patientIdentifier);
+  Assert.assertNotNull(updatedPatientIdentifier);
+  Assert.assertEquals("NEW-ID",updatedPatientIdentifier.getIdentifier());
+}

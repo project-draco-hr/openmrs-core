@@ -1,0 +1,8 @@
+{
+  Patient patient=patientService.getPatientIdentifier(3).getPatient();
+  int oldActiveIdentifierSize=patient.getActiveIdentifiers().size();
+  PatientIdentifier patientIdentifierToVoid=patientService.getPatientIdentifier(3);
+  PatientIdentifier voidedIdentifier=patientService.voidPatientIdentifier(patientIdentifierToVoid,"Testing");
+  Assert.assertEquals("Testing",voidedIdentifier.getVoidReason());
+  Assert.assertEquals(oldActiveIdentifierSize - 1,patient.getActiveIdentifiers().size());
+}
