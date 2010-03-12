@@ -3,6 +3,7 @@
   Session session=sessionFactory.getCurrentSession();
   User candidateUser=null;
   if (login != null) {
+    if (StringUtils.isEmpty(login) || StringUtils.isWhitespace(login))     throw new ContextAuthenticationException(errorMsg);
     String loginWithDash=login;
     if (login.matches("\\d{2,}"))     loginWithDash=login.substring(0,login.length() - 1) + "-" + login.charAt(login.length() - 1);
     try {
