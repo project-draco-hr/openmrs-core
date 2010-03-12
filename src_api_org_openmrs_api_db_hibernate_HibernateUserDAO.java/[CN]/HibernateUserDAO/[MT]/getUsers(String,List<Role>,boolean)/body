@@ -1,5 +1,6 @@
 {
   log.debug("name: " + name);
+  if (name != null)   name=StringUtils.replaceEach(name,HibernateUtil.getSqlWildCardsAndTheirEscapedVersions()[0],HibernateUtil.getSqlWildCardsAndTheirEscapedVersions()[1]);
   List<String> criteria=new ArrayList<String>();
   int counter=0;
   Map<String,String> namesMap=new HashMap<String,String>();
