@@ -1,4 +1,4 @@
 {
-  List<EncounterType> list=Collections.singletonList(encounterType);
+  List<EncounterType> list=encounterType == null ? null : Collections.singletonList(encounterType);
   return getPatientSetDAO().getPatientsHavingEncounters(list,location,form,fromDate,toDate,minCount,maxCount);
 }

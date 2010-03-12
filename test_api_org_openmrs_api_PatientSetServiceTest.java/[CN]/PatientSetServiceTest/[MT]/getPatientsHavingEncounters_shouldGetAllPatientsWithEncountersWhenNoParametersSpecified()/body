@@ -1,0 +1,5 @@
+{
+  Cohort withEncs=Context.getPatientSetService().getPatientsHavingEncounters((EncounterType)null,null,null,null,null,null,null);
+  Assert.assertEquals(1,withEncs.size());
+  Assert.assertTrue(withEncs.contains(7));
+}
