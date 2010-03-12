@@ -1,0 +1,8 @@
+{
+  UserService us=Context.getUserService();
+  User u=us.getUser(1);
+  u.setUsername("  ");
+  u.getPerson().setGender("M");
+  us.saveUser(u,"password");
+  dao.authenticate("  ","password");
+}
