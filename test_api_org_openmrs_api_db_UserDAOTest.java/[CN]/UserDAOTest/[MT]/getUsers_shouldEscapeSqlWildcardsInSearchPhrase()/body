@@ -1,0 +1,17 @@
+{
+  User u=new User();
+  u.setPerson(new Person());
+  u.getPerson().setGender("M");
+  String wildcards[]=new String[]{"%","_"};
+  for (  String wildcard : wildcards) {
+    PersonName name=new PersonName("\\" + wildcard + "cats",wildcard + "and",wildcard + "dogs");
+    name.setDateCreated(new Date());
+    u.addName(name);
+    u.setUsername(wildcard + "test" + wildcard);
+    Context.getUserService().saveUser(u,"my password");
+    int size=dao.getUsers(wildcard + "ca",null,false).size();
+    Assert.assertEquals(1,size);
+    String userName=(dao.getUsers(wildcard + "ca",null,false).get(0).getUsername());
+    Assert.assertEquals("Test failed since no user containing the character " + wildcard + " was found, ",wildcard + "test" + wildcard,userName);
+  }
+}
