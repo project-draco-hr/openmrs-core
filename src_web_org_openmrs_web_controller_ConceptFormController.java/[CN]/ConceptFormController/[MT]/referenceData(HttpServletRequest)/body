@@ -9,9 +9,11 @@
   map.put("datatypes",cs.getAllConceptDatatypes());
   String conceptId=request.getParameter("conceptId");
   boolean dataTypeReadOnly=false;
-  if (conceptId != null) {
+  try {
     Concept concept=cs.getConcept(Integer.valueOf(conceptId));
     dataTypeReadOnly=cs.hasAnyObservation(concept);
+  }
+ catch (  NumberFormatException ex) {
   }
   map.put("dataTypeReadOnly",dataTypeReadOnly);
   map.put("handlers",Context.getObsService().getHandlers());
