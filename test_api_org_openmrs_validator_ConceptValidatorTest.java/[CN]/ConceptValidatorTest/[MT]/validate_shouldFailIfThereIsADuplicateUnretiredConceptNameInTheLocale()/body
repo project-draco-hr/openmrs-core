@@ -1,0 +1,6 @@
+{
+  Concept concept=new Concept();
+  concept.setPreferredName(Context.getLocale(),new ConceptName("CD4 COUNT",Context.getLocale()));
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+}

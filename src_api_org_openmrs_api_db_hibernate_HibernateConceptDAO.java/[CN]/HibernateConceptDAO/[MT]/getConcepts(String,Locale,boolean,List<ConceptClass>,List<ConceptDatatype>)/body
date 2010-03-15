@@ -6,7 +6,7 @@
     criteria.createAlias("names","names");
     MatchMode matchmode=MatchMode.EXACT;
     if (searchOnPhrase)     matchmode=MatchMode.ANYWHERE;
-    criteria.add(Expression.like("names.name",name,matchmode));
+    criteria.add(Expression.ilike("names.name",name,matchmode));
     String language=loc.getLanguage();
     if (language.length() > 2) {
       criteria.add(Expression.or(Expression.eq("names.locale",loc.getLanguage()),Expression.eq("names.locale",loc.getLanguage().substring(0,2))));

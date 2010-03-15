@@ -1,0 +1,7 @@
+{
+  Concept conceptToUpdate=Context.getConceptService().getConcept(5497);
+  Errors errors=new BindException(conceptToUpdate,"concept");
+  conceptToUpdate.setCreator(Context.getAuthenticatedUser());
+  new ConceptValidator().validate(conceptToUpdate,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
