@@ -24,15 +24,16 @@ catch (    Throwable t) {
       try {
         WebModuleUtil.shutdownModules(servletContext);
         for (        Module mod : ModuleFactory.getLoadedModules()) {
-          ModuleFactory.stopModule(mod,true,true);
+          if (!mod.isCoreModule() && !mod.isMandatory())           ModuleFactory.stopModule(mod,true,true);
         }
         WebModuleUtil.refreshWAC(servletContext);
       }
- catch (      ModuleMustStartException ex) {
-        throw ex;
+ catch (      MandatoryModuleException ex) {
+        throw new MandatoryModuleException(ex.getModuleId(),"Got an error while starting a mandatory module: " + t.getMessage() + ". Check the server logs for more information");
       }
 catch (      Throwable t2) {
         log.warn("caught another error: ",t2);
+        throw t2;
       }
     }
   }
