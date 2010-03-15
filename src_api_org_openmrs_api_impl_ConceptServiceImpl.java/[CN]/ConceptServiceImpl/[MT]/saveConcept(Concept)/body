@@ -1,6 +1,9 @@
 {
   checkIfLocked();
   checkIfDatatypeCanBeChanged(concept);
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  if (errors.hasErrors())   throw new APIException("Validation errors found");
   Concept conceptToReturn=dao.saveConcept(concept);
   this.updateConceptWord(conceptToReturn);
   return conceptToReturn;
