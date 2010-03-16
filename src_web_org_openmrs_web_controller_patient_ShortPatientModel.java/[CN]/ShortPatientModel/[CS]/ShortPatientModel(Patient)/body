@@ -9,7 +9,7 @@
         first=false;
       }
  else {
-        if (otherIdentifiers != "")         otherIdentifiers+=",";
+        if (!"".equals(otherIdentifiers))         otherIdentifiers+=",";
         otherIdentifiers+=" " + pi.getIdentifier();
       }
     }
@@ -20,7 +20,7 @@
         first=false;
       }
  else {
-        if (otherNames != "")         otherNames+=",";
+        if (!"".equals(otherNames))         otherNames+=",";
         otherNames+=" " + pn.getGivenName() + " "+ pn.getMiddleName()+ " "+ pn.getFamilyName();
       }
     }
