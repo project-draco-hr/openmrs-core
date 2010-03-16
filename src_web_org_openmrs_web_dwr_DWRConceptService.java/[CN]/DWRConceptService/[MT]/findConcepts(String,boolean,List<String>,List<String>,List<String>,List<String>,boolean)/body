@@ -7,7 +7,7 @@
   if (localesToSearchOn == null)   localesToSearchOn=new Vector<Locale>();
   if (localesToSearchOn.size() == 0) {
     localesToSearchOn.add(defaultLocale);
-    if (defaultLocale.getCountry() != "") {
+    if (!"".equals(defaultLocale.getCountry())) {
       localesToSearchOn.add(new Locale(defaultLocale.getLanguage()));
     }
   }
