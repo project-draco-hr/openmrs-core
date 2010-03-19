@@ -5,7 +5,7 @@
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
     String patientId=request.getParameter("patientId");
-    if (patientId != null) {
+    if (StringUtils.hasText(patientId)) {
       try {
         id=Integer.valueOf(patientId);
         p=ps.getPatient(id);
