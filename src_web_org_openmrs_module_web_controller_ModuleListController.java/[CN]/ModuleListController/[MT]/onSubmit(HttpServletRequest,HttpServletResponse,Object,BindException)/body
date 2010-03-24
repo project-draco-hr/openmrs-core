@@ -10,64 +10,78 @@
   if (ServletRequestUtils.getStringParameter(request,"start.x",null) != null)   action="start";
  else   if (ServletRequestUtils.getStringParameter(request,"stop.x",null) != null)   action="stop";
  else   if (ServletRequestUtils.getStringParameter(request,"unload.x",null) != null)   action="unload";
-  if ("upload".equals(action) && request instanceof MultipartHttpServletRequest) {
-    MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
-    MultipartFile multipartModuleFile=multipartRequest.getFile("moduleFile");
-    if (multipartModuleFile != null && !multipartModuleFile.isEmpty()) {
-      if (!ModuleUtil.allowAdmin()) {
-        error=msa.getMessage("Module.disallowUploads",new String[]{ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN});
-      }
+  if ("upload".equals(action)) {
+    if (!ModuleUtil.allowAdmin()) {
+      error=msa.getMessage("Module.disallowUploads",new String[]{ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN});
+    }
  else {
-        String filename=WebUtil.stripFilename(multipartModuleFile.getOriginalFilename());
-        InputStream inputStream=null;
-        File moduleFile=null;
-        Module module=null;
-        Boolean updateModule=ServletRequestUtils.getBooleanParameter(request,"update",false);
-        List<Module> dependentModulesStopped=null;
-        try {
-          if (updateModule) {
-            Module tmpModule=new ModuleFileParser(multipartModuleFile.getInputStream()).parse();
-            Module existingModule=ModuleFactory.getModuleById(tmpModule.getModuleId());
-            if (existingModule != null) {
-              dependentModulesStopped=ModuleFactory.stopModule(existingModule,false,true);
-              WebModuleUtil.stopModule(existingModule,getServletContext());
-              ModuleFactory.unloadModule(existingModule);
-            }
-            moduleFile=ModuleUtil.insertModuleFile(new FileInputStream(tmpModule.getFile()),filename);
+      InputStream inputStream=null;
+      File moduleFile=null;
+      Module module=null;
+      Boolean updateModule=ServletRequestUtils.getBooleanParameter(request,"update",false);
+      Boolean downloadModule=ServletRequestUtils.getBooleanParameter(request,"download",false);
+      List<Module> dependentModulesStopped=null;
+      try {
+        if (downloadModule) {
+          String downloadURL=request.getParameter("downloadURL");
+          if (downloadURL == null) {
+            throw new MalformedURLException("Couldn't download module because no url was provided");
           }
- else {
-            inputStream=multipartModuleFile.getInputStream();
-            moduleFile=ModuleUtil.insertModuleFile(inputStream,filename);
-          }
-          module=ModuleFactory.loadModule(moduleFile);
+          String fileName=downloadURL.substring(downloadURL.lastIndexOf("/") + 1);
+          final URL url=new URL(downloadURL);
+          inputStream=ModuleUtil.getURLStream(url);
+          moduleFile=ModuleUtil.insertModuleFile(inputStream,fileName);
         }
- catch (        ModuleException me) {
-          log.warn("Unable to load and start module",me);
-          error=me.getMessage();
-        }
- finally {
-          try {
-            if (inputStream != null)             inputStream.close();
-          }
- catch (          IOException io) {
-            log.warn("Unable to close temporary input stream",io);
-          }
-          if (module == null && moduleFile != null)           moduleFile.delete();
-        }
-        if (module != null) {
-          ModuleFactory.startModule(module);
-          WebModuleUtil.startModule(module,getServletContext(),false);
-          if (module.isStarted()) {
-            success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
-            if (updateModule && dependentModulesStopped != null) {
-              for (              Module depMod : dependentModulesStopped) {
-                ModuleFactory.startModule(depMod);
-                WebModuleUtil.startModule(depMod,getServletContext(),false);
+ else         if (request instanceof MultipartHttpServletRequest) {
+          MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
+          MultipartFile multipartModuleFile=multipartRequest.getFile("moduleFile");
+          if (multipartModuleFile != null && !multipartModuleFile.isEmpty()) {
+            String filename=WebUtil.stripFilename(multipartModuleFile.getOriginalFilename());
+            if (updateModule) {
+              Module tmpModule=new ModuleFileParser(multipartModuleFile.getInputStream()).parse();
+              Module existingModule=ModuleFactory.getModuleById(tmpModule.getModuleId());
+              if (existingModule != null) {
+                dependentModulesStopped=ModuleFactory.stopModule(existingModule,false,true);
+                WebModuleUtil.stopModule(existingModule,getServletContext());
+                ModuleFactory.unloadModule(existingModule);
               }
+              inputStream=new FileInputStream(tmpModule.getFile());
+              moduleFile=ModuleUtil.insertModuleFile(inputStream,filename);
+            }
+ else {
+              inputStream=multipartModuleFile.getInputStream();
+              moduleFile=ModuleUtil.insertModuleFile(inputStream,filename);
             }
           }
- else           success=msa.getMessage("Module.loaded",new String[]{module.getName()});
         }
+        module=ModuleFactory.loadModule(moduleFile);
+      }
+ catch (      ModuleException me) {
+        log.warn("Unable to load and start module",me);
+        error=me.getMessage();
+      }
+ finally {
+        try {
+          if (inputStream != null)           inputStream.close();
+        }
+ catch (        IOException io) {
+          log.warn("Unable to close temporary input stream",io);
+        }
+        if (module == null && moduleFile != null)         moduleFile.delete();
+      }
+      if (module != null) {
+        ModuleFactory.startModule(module);
+        WebModuleUtil.startModule(module,getServletContext(),false);
+        if (module.isStarted()) {
+          success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
+          if (updateModule && dependentModulesStopped != null) {
+            for (            Module depMod : dependentModulesStopped) {
+              ModuleFactory.startModule(depMod);
+              WebModuleUtil.startModule(depMod,getServletContext(),false);
+            }
+          }
+        }
+ else         success=msa.getMessage("Module.loaded",new String[]{module.getName()});
       }
     }
   }
