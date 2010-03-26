@@ -1,0 +1,15 @@
+{
+  Patient patient2=pService.getPatient(2);
+  PatientIdentifier patientIdentifier=new PatientIdentifier("\\%567",pService.getPatientIdentifierType(2),Context.getLocationService().getLocation(1));
+  patient2.addIdentifier(patientIdentifier);
+  pService.savePatient(patient2);
+  Patient patient6=pService.getPatient(6);
+  PatientIdentifier patientIdentifier6=new PatientIdentifier("4567",pService.getPatientIdentifierType(2),Context.getLocationService().getLocation(1));
+  patient6.addIdentifier(patientIdentifier6);
+  pService.savePatient(patient6);
+  List<PatientIdentifierType> identifierTypes=Collections.emptyList();
+  int actualSize=dao.getPatients(null,"%567",identifierTypes,false).size();
+  Assert.assertEquals(1,actualSize);
+  Patient actualPatient=dao.getPatients(null,"%567",identifierTypes,false).get(0);
+  Assert.assertEquals(patient2,actualPatient);
+}

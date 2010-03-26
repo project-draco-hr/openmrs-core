@@ -1,4 +1,6 @@
 {
+  name=HibernateUtil.escapeSqlWildcards(name,sessionFactory);
+  identifier=HibernateUtil.escapeSqlWildcards(identifier,sessionFactory);
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
   criteria.createAlias("names","name");
   criteria.addOrder(Order.asc("name.givenName"));
