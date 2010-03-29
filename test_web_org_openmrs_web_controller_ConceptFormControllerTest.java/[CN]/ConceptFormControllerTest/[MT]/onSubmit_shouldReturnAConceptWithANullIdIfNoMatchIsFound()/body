@@ -1,0 +1,11 @@
+{
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("GET");
+  mockRequest.setParameter("conceptId","57432223");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  ConceptFormBackingObject formBackingObject=(ConceptFormBackingObject)mav.getModel().get("command");
+  assertNotNull(formBackingObject.getConcept());
+  assertNull(formBackingObject.getConcept().getConceptId());
+}
