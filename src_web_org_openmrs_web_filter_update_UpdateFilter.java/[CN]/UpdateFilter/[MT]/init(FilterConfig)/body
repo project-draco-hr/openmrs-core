@@ -1,10 +1,8 @@
 {
   super.init(filterConfig);
   log.debug("Initializing the UpdateFilter");
-  Properties properties=Listener.getRuntimeProperties();
-  if (properties != null) {
+  if (!InitializationFilter.initializationRequired()) {
     model=new UpdateFilterModel();
-    Context.setRuntimeProperties(properties);
     try {
       if (model.changes == null)       updatesRequired=false;
  else {
@@ -17,7 +15,7 @@
     }
   }
  else {
-    log.debug("Setting updates required to false because the user doesn't have any runtime properties yet");
+    log.debug("Setting updates required to false because the user doesn't have any runtime properties yet or database is empty");
     setUpdatesRequired(false);
   }
 }

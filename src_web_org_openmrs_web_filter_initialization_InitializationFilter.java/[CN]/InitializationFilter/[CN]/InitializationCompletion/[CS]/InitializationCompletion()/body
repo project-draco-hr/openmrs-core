@@ -10,7 +10,7 @@
         String connectionPassword;
         if (!wizardModel.hasCurrentOpenmrsDatabase) {
           setMessage("Create database");
-          String sql="create database `?` default character set utf8";
+          String sql="create database if not exists `?` default character set utf8";
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
             reportError("Unable to create the database",DEFAULT_PAGE);

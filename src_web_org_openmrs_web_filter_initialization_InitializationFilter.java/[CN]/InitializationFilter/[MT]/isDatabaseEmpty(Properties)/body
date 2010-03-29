@@ -1,0 +1,36 @@
+{
+  if (props != null) {
+    String databaseConnectionFinalUrl=props.getProperty("connection.url");
+    if (databaseConnectionFinalUrl == null)     return true;
+    String connectionUsername=props.getProperty("connection.username");
+    if (connectionUsername == null)     return true;
+    String connectionPassword=props.getProperty("connection.password");
+    if (connectionPassword == null)     return true;
+    Connection connection=null;
+    try {
+      DatabaseUtil.loadDatabaseDriver(databaseConnectionFinalUrl);
+      connection=DriverManager.getConnection(databaseConnectionFinalUrl,connectionUsername,connectionPassword);
+      DatabaseMetaData dbMetaData=(DatabaseMetaData)connection.getMetaData();
+      String[] types={"TABLE"};
+      ResultSet tbls=dbMetaData.getTables(null,null,null,types);
+      while (tbls.next()) {
+        String tableName=tbls.getString("TABLE_NAME");
+        if (!("liquibasechangelog".equals(tableName)) && !("liquibasechangeloglock".equals(tableName)))         return false;
+      }
+      return true;
+    }
+ catch (    Exception e) {
+    }
+ finally {
+      try {
+        if (connection != null) {
+          connection.close();
+        }
+      }
+ catch (      Throwable t) {
+      }
+    }
+    return true;
+  }
+ else   return true;
+}

@@ -1,4 +1,11 @@
 {
   super.init(filterConfig);
   wizardModel=new InitializationWizardModel();
+  if (Listener.runtimePropertiesFound()) {
+    boolean dbEmpty=isDatabaseEmpty(Listener.getRuntimeProperties());
+    setInitializationComplete(!dbEmpty);
+  }
+ else {
+    setInitializationComplete(false);
+  }
 }
