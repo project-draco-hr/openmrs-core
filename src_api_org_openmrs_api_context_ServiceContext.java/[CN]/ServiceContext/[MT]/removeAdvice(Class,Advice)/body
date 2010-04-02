@@ -1,4 +1,5 @@
 {
-  ProxyFactory factory=getFactory(cls);
-  factory.removeAdvice(advice);
+  Advised advisedService=(Advised)services.get(cls);
+  advisedService.removeAdvice(advice);
+  getAddedAdvice(cls).remove(advice);
 }

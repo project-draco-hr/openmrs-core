@@ -1,0 +1,13 @@
+{
+  Class serviceClass=source.getClass();
+  Set<Advisor> existingAdvisors=getAddedAdvisors(serviceClass);
+  for (  Advisor advisor : existingAdvisors) {
+    target.addAdvisor(advisor);
+    source.removeAdvisor(advisor);
+  }
+  Set<Advice> existingAdvice=getAddedAdvice(serviceClass);
+  for (  Advice advice : existingAdvice) {
+    target.addAdvice(advice);
+    source.removeAdvice(advice);
+  }
+}

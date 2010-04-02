@@ -10,7 +10,7 @@ synchronized (refreshingContext) {
       log.warn("Refresh lock was interrupted",e);
     }
   }
-  ProxyFactory factory=proxyFactories.get(cls);
-  if (factory == null)   throw new APIException("Service not found: " + cls);
-  return (T)factory.getProxy(OpenmrsClassLoader.getInstance());
+  Object service=services.get(cls);
+  if (service == null)   throw new APIException("Service not found: " + cls);
+  return (T)service;
 }
