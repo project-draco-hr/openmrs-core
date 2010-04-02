@@ -1,12 +1,25 @@
 {
-  if (instance != null && instance.proxyFactories != null) {
+  if (instance != null && instance.services != null) {
     if (log.isDebugEnabled()) {
-      for (      Map.Entry<Class,ProxyFactory> entry : instance.proxyFactories.entrySet()) {
-        log.debug("Class:ProxyFactory - " + entry.getKey().getName() + ":"+ entry.getValue());
+      for (      Map.Entry<Class,Object> entry : instance.services.entrySet()) {
+        log.debug("Service - " + entry.getKey().getName() + ":"+ entry.getValue());
       }
     }
-    if (instance.proxyFactories != null)     instance.proxyFactories.clear();
-    instance.proxyFactories=null;
+    for (    Class serviceClass : instance.services.keySet()) {
+      instance.removeAddedAOP(serviceClass);
+    }
+    if (instance.services != null) {
+      instance.services.clear();
+      instance.services=null;
+    }
+    if (instance.addedAdvisors != null) {
+      instance.addedAdvisors.clear();
+      instance.addedAdvisors=null;
+    }
+    if (instance.addedAdvice != null) {
+      instance.addedAdvice.clear();
+      instance.addedAdvice=null;
+    }
   }
   if (log.isDebugEnabled())   log.debug("Destroying ServiceContext instance: " + instance);
   instance=null;

@@ -1,4 +1,6 @@
 {
-  ProxyFactory factory=getFactory(cls);
-  factory.addAdvisor(advisor);
+  Advised advisedService=(Advised)services.get(cls);
+  advisedService.addAdvisor(advisor);
+  if (addedAdvice.get(cls) == null)   addedAdvisors.put(cls,new HashSet<Advisor>());
+  getAddedAdvisors(cls).add(advisor);
 }
