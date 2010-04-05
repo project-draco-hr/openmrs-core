@@ -1,0 +1,17 @@
+{
+  Patient patient=Context.getPatientService().getPatient(patientId);
+  ConceptNumeric concept=Context.getConceptService().getConceptNumeric(conceptId);
+  List<Obs> observations=Context.getObsService().getObservationsByPersonAndConcept(patient,concept);
+  PatientGraphData graph=new PatientGraphData();
+  graph.setCriticalHigh(concept.getHiCritical());
+  graph.setCriticalLow(concept.getLowCritical());
+  graph.setAbsoluteHigh(concept.getHiAbsolute());
+  graph.setAbsoluteLow(concept.getLowAbsolute());
+  graph.setNormalHigh(concept.getHiNormal());
+  graph.setNormalLow(concept.getLowNormal());
+  for (  Obs obs : observations) {
+    graph.addValue(obs.getObsDatetime().getTime(),obs.getValueNumeric());
+  }
+  map.put("graph",graph);
+  return "patientGraphJsonForm";
+}
