@@ -1,0 +1,21 @@
+{
+  ShortPatientModel shortPatientModel=(ShortPatientModel)obj;
+  personNameValidator.validatePersonName(shortPatientModel.getName(),errors,false,false);
+  if (StringUtils.isBlank(shortPatientModel.getGender()))   errors.rejectValue("gender","Person.gender.required");
+  if (shortPatientModel.getBirthdate() != null) {
+    if (shortPatientModel.getBirthdate().after(new Date()))     errors.rejectValue("birthdate","error.date.future");
+ else {
+      Calendar c=Calendar.getInstance();
+      c.setTime(new Date());
+      c.add(Calendar.YEAR,-120);
+      if (shortPatientModel.getBirthdate().before(c.getTime())) {
+        errors.rejectValue("birthdate","error.date.nonsensical");
+      }
+    }
+  }
+ else {
+    errors.rejectValue("birthdate","error.required",new Object[]{"Birthdate"},"");
+  }
+  if (shortPatientModel.getVoided())   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+  if (shortPatientModel.isDead() && (shortPatientModel.getCauseOfDeath() == null))   errors.rejectValue("causeOfDeath","Patient.dead.causeOfDeathNull");
+}

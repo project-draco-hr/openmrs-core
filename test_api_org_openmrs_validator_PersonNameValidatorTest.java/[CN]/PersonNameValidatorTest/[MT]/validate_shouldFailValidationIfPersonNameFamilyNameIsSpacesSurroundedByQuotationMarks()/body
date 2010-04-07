@@ -1,0 +1,7 @@
+{
+  PersonName personName=new PersonName();
+  personName.setFamilyName("\"   \"");
+  Errors errors=new BindException(personName,"familyName");
+  new PersonNameValidator().validatePersonName(personName,errors,false,true);
+  Assert.assertTrue(errors.hasFieldErrors("familyName"));
+}

@@ -1,9 +1,30 @@
 {
+  log.error(this.getClass().getName() + ".validate...");
   Patient patient=(Patient)obj;
-  PatientIdentifierValidator piv=new PatientIdentifierValidator();
-  if (patient != null && patient.getIdentifiers() != null) {
-    for (    PatientIdentifier identifier : patient.getIdentifiers()) {
-      piv.validate(identifier,errors);
+  if (patient != null) {
+    for (    PersonName personName : patient.getNames()) {
+      personNameValidator.validate(personName,errors);
+    }
+  }
+  if (StringUtils.isBlank(patient.getGender()))   errors.rejectValue("gender","Person.gender.required");
+  if (patient.getBirthdate() != null) {
+    if (patient.getBirthdate().after(new Date()))     errors.rejectValue("birthdate","error.date.future");
+ else {
+      Calendar c=Calendar.getInstance();
+      c.setTime(new Date());
+      c.add(Calendar.YEAR,-120);
+      if (patient.getBirthdate().before(c.getTime())) {
+        errors.rejectValue("birthdate","error.date.nonsensical");
+      }
+    }
+  }
+  if (patient.isPersonVoided())   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+  if (patient.isDead() && (patient.getCauseOfDeath() == null))   errors.rejectValue("causeOfDeath","Patient.dead.causeOfDeathNull");
+  if (!errors.hasErrors()) {
+    if (patient != null && patient.getIdentifiers() != null) {
+      for (      PatientIdentifier identifier : patient.getIdentifiers()) {
+        patientIdentifierValidator.validate(identifier,errors);
+      }
     }
   }
 }

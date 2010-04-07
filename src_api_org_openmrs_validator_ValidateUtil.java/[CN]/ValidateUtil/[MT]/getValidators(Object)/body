@@ -1,5 +1,6 @@
 {
   List<Validator> matchingValidators=new Vector<Validator>();
+  List<Validator> validators=HandlerUtil.getHandlersForType(Validator.class,obj.getClass());
   for (  Validator validator : validators) {
     if (validator.supports(obj.getClass())) {
       matchingValidators.add(validator);
