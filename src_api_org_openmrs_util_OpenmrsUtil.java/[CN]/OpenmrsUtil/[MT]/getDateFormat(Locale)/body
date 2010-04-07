@@ -1,5 +1,5 @@
 {
-  if (dateFormatCache.containsKey(locale))   return dateFormatCache.get(locale);
+  if (dateFormatCache.containsKey(locale))   return (SimpleDateFormat)dateFormatCache.get(locale).clone();
   SimpleDateFormat sdf=(SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT,locale);
   String pattern=sdf.toPattern();
   if (!pattern.contains("yyyy")) {
@@ -15,5 +15,5 @@
     sdf.applyPattern(pattern);
   }
   dateFormatCache.put(locale,sdf);
-  return sdf;
+  return (SimpleDateFormat)sdf.clone();
 }
