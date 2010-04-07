@@ -1,0 +1,7 @@
+{
+  PersonName personName=new PersonName();
+  personName.setDegree("123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789");
+  Errors errors=new BindException(personName,"degree");
+  new PersonNameValidator().validatePersonName(personName,errors,false,true);
+  Assert.assertTrue(errors.hasFieldErrors("degree"));
+}

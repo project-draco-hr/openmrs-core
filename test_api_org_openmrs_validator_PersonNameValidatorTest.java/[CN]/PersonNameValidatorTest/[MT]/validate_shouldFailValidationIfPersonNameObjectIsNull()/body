@@ -1,0 +1,6 @@
+{
+  PersonName personName=new PersonName();
+  Errors errors=new BindException(personName,"personName");
+  new PersonNameValidator().validate(null,errors);
+  Assert.assertTrue(errors.hasErrors());
+}

@@ -1,0 +1,7 @@
+{
+  PersonName personName=new PersonName();
+  personName.setFamilyNameSuffix("1234567890123456789012345678901234567890123456789");
+  Errors errors=new BindException(personName,"familyNameSuffix");
+  new PersonNameValidator().validatePersonName(personName,errors,false,true);
+  Assert.assertFalse(errors.hasFieldErrors("familyNameSuffix"));
+}
