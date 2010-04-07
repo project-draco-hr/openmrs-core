@@ -1,0 +1,12 @@
+{
+  Locale locale=new Locale("hk");
+  Assert.assertTrue("default locale is potentially already cached",!Context.getLocale().equals(locale));
+  SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(locale);
+  Assert.assertNotSame("initial dateFormatCache entry is modifiable",OpenmrsUtil.getDateFormat(locale),sdf);
+  sdf.applyPattern("yyyymmdd");
+  Assert.assertTrue("initial dateFormatCache pattern is modifiable",!OpenmrsUtil.getDateFormat(locale).toPattern().equals(sdf.toPattern()));
+  sdf=OpenmrsUtil.getDateFormat(locale);
+  Assert.assertNotSame("cached dateFormatCache entry is modifiable",OpenmrsUtil.getDateFormat(locale),sdf);
+  sdf.applyPattern("yyyymmdd");
+  Assert.assertTrue("cached dateFormatCache pattern is modifiable",!OpenmrsUtil.getDateFormat(locale).toPattern().equals(sdf.toPattern()));
+}
