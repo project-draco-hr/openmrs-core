@@ -1,0 +1,6 @@
+{
+  if ((getSortWeight() == null) && (ca.getSortWeight() != null))   return -1;
+  if ((getSortWeight() != null) && (ca.getSortWeight() == null))   return 1;
+  if ((getSortWeight() == null) && (ca.getSortWeight() == null))   return 0;
+  return (getSortWeight() < ca.getSortWeight()) ? -1 : (getSortWeight() > ca.getSortWeight()) ? 1 : 0;
+}

@@ -1,0 +1,10 @@
+{
+  ConceptAnswer ca=new ConceptAnswer(123);
+  Concept c=new Concept();
+  c.setAnswers(null);
+  c.addAnswer(ca);
+  Assert.assertEquals(1d,ca.getSortWeight().doubleValue(),0);
+  ConceptAnswer ca2=new ConceptAnswer(456);
+  c.addAnswer(ca2);
+  Assert.assertEquals(2d,ca2.getSortWeight().doubleValue(),0);
+}
