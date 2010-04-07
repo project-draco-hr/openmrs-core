@@ -1,5 +1,5 @@
 {
-  Map<String,String> conceptAnswers=new TreeMap<String,String>();
+  Map<String,String> conceptAnswers=new LinkedHashMap<String,String>();
   for (  ConceptAnswer answer : concept.getAnswers(true)) {
     log.debug("getting answers");
     String key=answer.getAnswerConcept().getConceptId().toString();

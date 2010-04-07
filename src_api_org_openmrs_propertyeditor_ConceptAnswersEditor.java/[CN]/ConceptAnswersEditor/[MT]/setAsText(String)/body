@@ -43,6 +43,38 @@
         originalConceptAnswers.add(ac);
       }
     }
+    Double lastWeightSeen=null;
+    int startIdx=-1;
+    for (int i=0; i < requestConceptIds.size() - 1; i++) {
+      Integer id1=getConceptId(requestConceptIds.get(i));
+      ConceptAnswer ca1=getConceptAnswerFromOriginal(id1);
+      if (ca1.getSortWeight() == null) {
+        if (lastWeightSeen == null) {
+          lastWeightSeen=1d;
+        }
+ else {
+          lastWeightSeen+=1;
+        }
+        startIdx=i;
+        break;
+      }
+      Integer id2=getConceptId(requestConceptIds.get(i + 1));
+      ConceptAnswer ca2=getConceptAnswerFromOriginal(id2);
+      int c=ca1.compareTo(ca2);
+      if (c > 0) {
+        startIdx=i;
+        lastWeightSeen=ca1.getSortWeight();
+        break;
+      }
+      lastWeightSeen=ca1.getSortWeight();
+    }
+    if (startIdx != -1) {
+      for (int i=startIdx; i < requestConceptIds.size(); i++) {
+        Integer id=getConceptId(requestConceptIds.get(i));
+        ConceptAnswer ca=getConceptAnswerFromOriginal(id);
+        ca.setSortWeight(lastWeightSeen++);
+      }
+    }
     log.debug("originalConceptAnswers.getConceptId(): ");
     for (    ConceptAnswer a : originalConceptAnswers)     log.debug("id: " + a.getAnswerConcept().getConceptId());
     log.debug("requestConceptIds: ");
