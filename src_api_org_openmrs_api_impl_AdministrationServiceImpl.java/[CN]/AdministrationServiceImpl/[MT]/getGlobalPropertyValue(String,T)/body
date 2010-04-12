@@ -1,0 +1,18 @@
+{
+  if (defaultValue == null)   throw new IllegalArgumentException("The defaultValue argument cannot be null");
+  String propVal=getGlobalProperty(propertyName);
+  if (!StringUtils.hasLength(propVal))   return defaultValue;
+  try {
+    return (T)defaultValue.getClass().getDeclaredConstructor(String.class).newInstance(propVal);
+  }
+ catch (  InstantiationException e) {
+    throw new APIException(defaultValue.getClass().getName() + " is not able to be instantiated with value: " + propVal,e);
+  }
+catch (  NoSuchMethodException e) {
+    throw new APIException(defaultValue.getClass().getName() + " does not have a string constructor",e);
+  }
+catch (  Exception e) {
+    log.error("Unable to turn value '" + propVal + "' into type "+ defaultValue.getClass().getName(),e);
+    return defaultValue;
+  }
+}

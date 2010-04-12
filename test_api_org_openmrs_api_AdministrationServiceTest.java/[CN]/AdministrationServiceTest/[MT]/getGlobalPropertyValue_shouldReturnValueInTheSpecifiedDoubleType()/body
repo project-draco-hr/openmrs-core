@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  Object retValue=adminService.getGlobalPropertyValue("valid.double",new Double(4.34));
+  Assert.assertTrue(retValue instanceof Double);
+  Assert.assertEquals(new Double(1234.54),retValue);
+}
