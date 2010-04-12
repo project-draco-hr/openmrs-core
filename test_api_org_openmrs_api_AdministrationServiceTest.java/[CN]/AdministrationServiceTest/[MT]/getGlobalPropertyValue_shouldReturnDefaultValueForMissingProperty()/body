@@ -1,0 +1,5 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  Object value=adminService.getGlobalPropertyValue("does.not.exist",new Integer(1234));
+  Assert.assertEquals(new Integer(1234),value);
+}
