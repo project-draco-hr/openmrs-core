@@ -1,0 +1,9 @@
+{
+  String requestURI=((HttpServletRequest)request).getRequestURI();
+  if (Context.isAuthenticated() && new UserProperties(Context.getAuthenticatedUser().getUserProperties()).isSupposedToChangePassword() && shouldNotAllowAccessToUrl(requestURI)) {
+    config.getServletContext().getRequestDispatcher(changePasswordForm).forward(request,response);
+  }
+ else {
+    chain.doFilter(request,response);
+  }
+}

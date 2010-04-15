@@ -1,0 +1,17 @@
+{
+  NewPassword newPassword=(NewPassword)object;
+  if (newPassword.isNotSameAsConfirmPassword()) {
+    errors.reject("error.password.match");
+  }
+ else   if (newPassword.isEmpty()) {
+    errors.reject("error.password.weak");
+  }
+ else {
+    try {
+      newPassword.checkStrength(user);
+    }
+ catch (    PasswordException e) {
+      errors.reject(e.getMessage());
+    }
+  }
+}

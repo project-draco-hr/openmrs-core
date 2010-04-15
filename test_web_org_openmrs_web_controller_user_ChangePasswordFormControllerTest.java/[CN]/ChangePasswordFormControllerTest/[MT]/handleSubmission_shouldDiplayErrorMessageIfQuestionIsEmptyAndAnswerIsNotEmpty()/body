@@ -1,0 +1,7 @@
+{
+  ChangePasswordFormController controller=new ChangePasswordFormController();
+  BindException errors=new BindException(controller.formBackingObject(),"user");
+  String result=controller.handleSubmission(new MockHttpSession(),"Passw0rd","Passw0rd","","answer","answer",Context.getAuthenticatedUser(),errors);
+  assertTrue(errors.hasErrors());
+  assertEquals("auth.question.empty",errors.getGlobalError().getCode());
+}

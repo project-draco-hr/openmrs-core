@@ -1,0 +1,21 @@
+{
+  try {
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+    UserService userService=Context.getUserService();
+    User currentUser=userService.getUser(user.getId());
+    userService.changePassword(currentUser,password.getPassword());
+    new UserProperties(currentUser.getUserProperties()).setSupposedToChangePassword(false);
+    userService.saveUser(currentUser,password.getPassword());
+    if (StringUtils.isNotBlank(questionAnswer.getQuestion()) || StringUtils.isNotBlank(questionAnswer.getAnswer())) {
+      userService.changeQuestionAnswer(currentUser,questionAnswer.getQuestion(),questionAnswer.getAnswer());
+    }
+    Context.refreshAuthenticatedUser();
+  }
+  finally {
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+  }
+}
