@@ -5,8 +5,5 @@
     log.error("Passwords don't match");
     throw new DAOException("Passwords don't match");
   }
-  log.info("Updating secret question and answer for " + u.getUsername());
-  credentials.setSecretQuestion(question);
-  credentials.setSecretAnswer(answer);
-  updateLoginCredential(credentials);
+  changeQuestionAnswer(u,question,answer);
 }

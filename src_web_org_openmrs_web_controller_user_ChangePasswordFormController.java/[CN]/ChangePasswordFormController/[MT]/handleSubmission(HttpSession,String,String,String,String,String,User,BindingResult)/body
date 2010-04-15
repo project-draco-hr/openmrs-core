@@ -1,0 +1,12 @@
+{
+  NewPassword newPassword=new NewPassword(password,confirmPassword);
+  NewQuestionAnswer newQuestionAnswer=new NewQuestionAnswer(question,answer,confirmAnswer);
+  new NewPasswordValidator(user).validate(newPassword,errors);
+  new NewQuestionAnswerValidator().validate(newQuestionAnswer,errors);
+  if (errors.hasErrors()) {
+    return showForm(httpSession);
+  }
+  changeUserPasswordAndQuestion(user,newPassword,newQuestionAnswer);
+  httpSession.removeAttribute(WebConstants.OPENMRS_MSG_ATTR);
+  return "redirect:/index.htm";
+}

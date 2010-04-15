@@ -56,7 +56,7 @@
         }
         if (new UserProperties(user.getUserProperties()).isSupposedToChangePassword()) {
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.password.change");
-          redirect=request.getContextPath() + "/options.form#Change Login Info";
+          redirect=request.getContextPath() + "/changePassword.form";
         }
         if (Context.getLocale() == null) {
           Context.setLocale(LocaleUtility.getDefaultLocale());

@@ -80,13 +80,18 @@
     if (errors.hasErrors()) {
       return showForm(user.getUserId(),createNewPerson,user,model);
     }
-    if (isNewUser(user))     us.saveUser(user,password);
+    if (isNewUser(user)) {
+      us.saveUser(user,password);
+    }
  else {
       us.saveUser(user,null);
       if (!password.equals("") && Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS)) {
         if (log.isDebugEnabled())         log.debug("calling changePassword for user " + user + " by user "+ Context.getAuthenticatedUser());
         us.changePassword(user,password);
       }
+    }
+    if (StringUtils.hasLength(secretQuestion) || StringUtils.hasLength(secretAnswer)) {
+      us.changeQuestionAnswer(user,secretQuestion,secretAnswer);
     }
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.saved");
   }

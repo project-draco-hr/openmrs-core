@@ -1,0 +1,11 @@
+{
+  User user=Context.getAuthenticatedUser();
+  new UserProperties(user.getUserProperties()).setSupposedToChangePassword(true);
+  UserService us=Context.getUserService();
+  us.saveUser(user,"test");
+  ChangePasswordFormController controller=new ChangePasswordFormController();
+  BindException errors=new BindException(controller.formBackingObject(),"user");
+  controller.handleSubmission(new MockHttpSession(),"Passw0rd","Pasw0rd","","","",Context.getAuthenticatedUser(),errors);
+  User modifiedUser=us.getUser(user.getId());
+  assertTrue(new UserProperties(modifiedUser.getUserProperties()).isSupposedToChangePassword());
+}

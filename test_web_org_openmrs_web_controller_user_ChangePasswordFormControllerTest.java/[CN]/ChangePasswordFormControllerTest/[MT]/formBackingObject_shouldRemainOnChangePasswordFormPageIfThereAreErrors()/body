@@ -1,0 +1,7 @@
+{
+  ChangePasswordFormController controller=new ChangePasswordFormController();
+  BindException errors=new BindException(controller.formBackingObject(),"user");
+  errors.addError(new ObjectError("Test","Test Error"));
+  String result=controller.handleSubmission(new MockHttpSession(),"password","differentPassword","","","",Context.getAuthenticatedUser(),errors);
+  assertEquals("/admin/users/changePasswordForm",result);
+}

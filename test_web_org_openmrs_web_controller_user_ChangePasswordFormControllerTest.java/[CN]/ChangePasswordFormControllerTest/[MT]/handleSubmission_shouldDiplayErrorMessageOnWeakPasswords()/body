@@ -1,0 +1,7 @@
+{
+  ChangePasswordFormController controller=new ChangePasswordFormController();
+  BindException errors=new BindException(controller.formBackingObject(),"user");
+  String result=controller.handleSubmission(new MockHttpSession(),"password","password","","","",Context.getAuthenticatedUser(),errors);
+  assertTrue(errors.hasErrors());
+  assertEquals("error.password.requireMixedCase",errors.getGlobalError().getCode());
+}

@@ -1,0 +1,14 @@
+{
+  NewQuestionAnswer questionAnswer=(NewQuestionAnswer)object;
+  if (questionAnswer.isQuestionNotEmpty()) {
+    if (questionAnswer.isAnswerAndConfirmAnswerNotTheSame()) {
+      errors.reject("error.options.secretAnswer.match");
+    }
+ else     if (questionAnswer.isAnswerEmpty()) {
+      errors.reject("auth.question.fill");
+    }
+  }
+ else   if (questionAnswer.isAnswerNotEmpty()) {
+    errors.reject("auth.question.empty");
+  }
+}
