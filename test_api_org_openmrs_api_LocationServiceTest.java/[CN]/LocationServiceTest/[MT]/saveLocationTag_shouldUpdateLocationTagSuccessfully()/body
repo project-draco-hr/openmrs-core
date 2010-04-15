@@ -1,16 +1,16 @@
 {
   LocationService ls=Context.getLocationService();
   LocationTag tag=ls.getLocationTag(1);
-  String origName=tag.getTag();
+  String origName=tag.getName();
   String origDesc=tag.getDescription();
   String newName="new name";
   String newDesc="new desc";
-  tag.setTag(newName);
+  tag.setName(newName);
   tag.setDescription(newDesc);
   ls.saveLocationTag(tag);
   LocationTag newestTag=ls.getLocationTag(tag.getLocationTagId());
   assertFalse("The name should be different",origName.equals(newName));
-  assertTrue("The name should NOT be different",newestTag.getTag().equals(newName));
+  assertTrue("The name should NOT be different",newestTag.getName().equals(newName));
   assertFalse("The name should be different",origDesc.equals(newDesc));
   assertTrue("The name should NOT be different",newestTag.getDescription().equals(newDesc));
 }

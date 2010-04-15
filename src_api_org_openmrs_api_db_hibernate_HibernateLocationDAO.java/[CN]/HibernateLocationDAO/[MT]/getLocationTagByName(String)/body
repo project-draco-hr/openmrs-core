@@ -1,5 +1,5 @@
 {
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(LocationTag.class).add(Expression.eq("tag",tag));
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(LocationTag.class).add(Expression.eq("name",tag));
   List<LocationTag> tags=criteria.list();
   if (null == tags || tags.isEmpty()) {
     return null;
