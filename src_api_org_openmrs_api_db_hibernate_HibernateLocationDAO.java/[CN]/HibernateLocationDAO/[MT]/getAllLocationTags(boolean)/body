@@ -3,6 +3,6 @@
   if (!includeRetired) {
     criteria.add(Expression.like("retired",false));
   }
-  criteria.addOrder(Order.asc("tag"));
+  criteria.addOrder(Order.asc("name"));
   return criteria.list();
 }

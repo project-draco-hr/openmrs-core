@@ -5,8 +5,8 @@
   if (location.getTags() != null) {
     for (    LocationTag tag : location.getTags()) {
       if (tag.getLocationTagId() == null) {
-        if (!StringUtils.hasLength(tag.getTag()))         throw new APIException("A tag name is required");
-        LocationTag existing=Context.getLocationService().getLocationTagByName(tag.getTag());
+        if (!StringUtils.hasLength(tag.getName()))         throw new APIException("A tag name is required");
+        LocationTag existing=Context.getLocationService().getLocationTagByName(tag.getName());
         if (existing != null) {
           location.removeTag(tag);
           location.addTag(existing);
