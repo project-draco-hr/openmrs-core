@@ -42,6 +42,10 @@
       if (atRootNode)       errors.rejectValue("valueText","error.null");
  else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
     }
+    if (dt.isText() && obs.getValueText() != null && obs.getValueText().length() > VALUE_TEXT_MAX_LENGTH) {
+      if (atRootNode)       errors.rejectValue("valueText","error.exceededMaxLengthOfField");
+ else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+    }
   }
   if (errors.hasErrors())   return;
   if (ancestors.contains(obs))   errors.rejectValue("groupMembers","Obs.error.groupContainsItself");
