@@ -1,6 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PersonAttributeType.class,"r");
-  criteria.add(Expression.eq("retired",false));
   if (exactName != null)   criteria.add(Expression.eq("name",exactName));
   if (format != null)   criteria.add(Expression.eq("format",format));
   if (foreignKey != null)   criteria.add(Expression.eq("foreignKey",foreignKey));
