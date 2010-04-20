@@ -1,6 +1,6 @@
 {
   executeDataSet("org/openmrs/api/include/PersonServiceTest-createRetiredPersonAttributeType.xml");
-  List<PersonAttributeType> attributeTypes=Context.getPersonService().getPersonAttributeTypes("Credit Card","java.lang.String",null,false);
+  List<PersonAttributeType> attributeTypes=Context.getPersonService().getPersonAttributeTypes("A non-existent attr type name","java.lang.String",null,false);
   Assert.assertNotNull(attributeTypes);
   Assert.assertTrue("Should return empty list",attributeTypes.isEmpty());
 }
