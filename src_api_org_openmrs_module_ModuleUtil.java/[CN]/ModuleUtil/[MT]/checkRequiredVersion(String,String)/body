@@ -1,0 +1,32 @@
+{
+  if (value != null && !value.equals("")) {
+    String separator="-";
+    if (value.indexOf("*") > 0 || value.indexOf(separator) > 0) {
+      String lowerBound=value;
+      String upperBound=value;
+      int indexOfSeparator=value.indexOf(separator);
+      while (indexOfSeparator > 0) {
+        lowerBound=value.substring(0,indexOfSeparator);
+        upperBound=value.substring(indexOfSeparator + 1);
+        if (upperBound.matches("^\\s?\\d+.*"))         break;
+        indexOfSeparator=value.indexOf(separator,indexOfSeparator + 1);
+      }
+      lowerBound=StringUtils.remove(lowerBound,lowerBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
+      upperBound=StringUtils.remove(upperBound,upperBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
+      if (lowerBound.indexOf("*") > 0)       lowerBound=lowerBound.replaceAll("\\*","0");
+      if (upperBound.indexOf("*") > 0)       upperBound=upperBound.replaceAll("\\*","999");
+      int lowerReturn=compareVersion(version,lowerBound);
+      int upperReturn=compareVersion(version,upperBound);
+      if (lowerReturn < 0 || upperReturn > 0) {
+        String ms=Context.getMessageSourceService().getMessage("Module.requireVersion.outOfBounds",new String[]{lowerBound,upperBound,version},Context.getLocale());
+        throw new ModuleException(ms);
+      }
+    }
+ else {
+      if (compareVersion(version,value) < 0) {
+        String ms=Context.getMessageSourceService().getMessage("Module.requireVersion.belowLowerBound",new String[]{value,version},Context.getLocale());
+        throw new ModuleException(ms);
+      }
+    }
+  }
+}
