@@ -17,5 +17,18 @@
   assertTrue(user.hasRole("Some Role"));
   userService.saveUser(user,"password");
   Assert.assertNotNull("User was not created",userService.getUser(user.getUserId()));
-  shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated=user.getUserId();
+  Integer shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated=user.getUserId();
+  Context.flushSession();
+  User fetchedUser=userService.getUser(shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated);
+  User fetchedUser3=userService.getUser(3);
+  if (fetchedUser3 != null)   throw new Exception("There is a user with id #3");
+  assertNotNull("Uh oh, the user object was not created",fetchedUser);
+  assertNotNull("Uh oh, the username was not saved",fetchedUser.getUsername());
+  assertTrue("Uh oh, the username was not saved",fetchedUser.getUsername().equals("bwolfe"));
+  assertTrue("Uh oh, the role was not assigned",fetchedUser.hasRole("Some Role"));
+  Context.clearSession();
+  List<User> allUsers=userService.getAllUsers();
+  assertEquals(9,allUsers.size());
+  Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
+  assertEquals(1,allPatientsSet.getSize());
 }
