@@ -13,7 +13,7 @@
     return results;
   }
  catch (  Exception e) {
-    throw new RuntimeException("error getting unrun updates on the database",e);
+    throw new RuntimeException("Error occurred while trying to get the updates needed for the database. " + e.getMessage(),e);
   }
  finally {
     try {
