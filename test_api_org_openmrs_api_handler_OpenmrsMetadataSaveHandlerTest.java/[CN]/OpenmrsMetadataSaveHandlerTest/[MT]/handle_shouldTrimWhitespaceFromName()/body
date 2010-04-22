@@ -1,0 +1,8 @@
+{
+  String NAME="the location name";
+  OpenmrsMetadataSaveHandler handler=new OpenmrsMetadataSaveHandler();
+  Location loc=new Location();
+  loc.setName(" " + NAME + " ");
+  handler.handle(loc,null,null,null);
+  Assert.assertEquals(NAME,loc.getName());
+}
