@@ -1,9 +1,4 @@
 {
   if (!runtimePropertiesFound)   return true;
-  try {
-    return DatabaseUpdater.updatesRequired() && !DatabaseUpdater.allowAutoUpdate();
-  }
- catch (  Throwable t) {
-    throw new ServletException(t);
-  }
+  return DatabaseUpdater.updatesRequired() && !DatabaseUpdater.allowAutoUpdate();
 }

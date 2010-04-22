@@ -2,6 +2,11 @@
   Connection connection=null;
   try {
     connection=getConnection();
+  }
+ catch (  SQLException e) {
+    throw new Exception("Unable to get a connection to the database.  Please check your openmrs runtime properties file and make sure you have the correct connection.username and connection.password set",e);
+  }
+  try {
     Database database=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);
     database.setDatabaseChangeLogTableName("liquibasechangelog");
     database.setDatabaseChangeLogLockTableName("liquibasechangeloglock");
