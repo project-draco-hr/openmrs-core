@@ -90,7 +90,7 @@
         us.changePassword(user,password);
       }
     }
-    if (StringUtils.hasLength(secretQuestion) || StringUtils.hasLength(secretAnswer)) {
+    if (StringUtils.hasLength(secretQuestion) && StringUtils.hasLength(secretAnswer)) {
       us.changeQuestionAnswer(user,secretQuestion,secretAnswer);
     }
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.saved");
