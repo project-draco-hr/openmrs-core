@@ -6,8 +6,5 @@
   u.addName(new PersonName("Benjamin","A","Wolfe"));
   u.setUsername("bwolfe");
   u.getPerson().setGender("M");
-  User createdUser=us.saveUser(u,"Openmr5xy");
-  assertTrue("The user returned by the create user method should equal the passed in user",createdUser.equals(u));
-  createdUser=us.getUserByUsername("bwolfe");
-  assertTrue("The created user should equal the passed in user",createdUser.equals(u));
+  us.saveUser(u,"short");
 }
