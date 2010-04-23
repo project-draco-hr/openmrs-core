@@ -8,5 +8,8 @@
   checkPrivileges(user);
   if (user.getUserId() == null && (password == null || password.length() < 1))   throw new APIException("A password is required when creating a user");
   if (hasDuplicateUsername(user))   throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
+  if (user.getUserId() == null && password != null) {
+    OpenmrsUtil.validatePassword(user.getUsername(),password,user.getSystemId());
+  }
   return dao.saveUser(user,password);
 }

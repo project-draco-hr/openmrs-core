@@ -15,7 +15,7 @@
   user.addRole(new Role("Some Role","This is a test role"));
   assertTrue(user.getUsername().equals("bwolfe"));
   assertTrue(user.hasRole("Some Role"));
-  userService.saveUser(user,"password");
+  userService.saveUser(user,"Openmr5xy");
   Assert.assertNotNull("User was not created",userService.getUser(user.getUserId()));
   Integer shouldCreateUserWhoIsPatientAlreadyTestUserIdCreated=user.getUserId();
   Context.flushSession();

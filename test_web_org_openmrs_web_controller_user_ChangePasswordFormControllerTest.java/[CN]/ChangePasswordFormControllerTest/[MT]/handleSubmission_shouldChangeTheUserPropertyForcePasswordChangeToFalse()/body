@@ -2,7 +2,7 @@
   User user=Context.getAuthenticatedUser();
   new UserProperties(user.getUserProperties()).setSupposedToChangePassword(true);
   UserService us=Context.getUserService();
-  us.saveUser(user,"test");
+  us.saveUser(user,"Openmr5xy");
   ChangePasswordFormController controller=new ChangePasswordFormController();
   BindException errors=new BindException(controller.formBackingObject(),"user");
   controller.handleSubmission(new MockHttpSession(),"Passw0rd","Passw0rd","","","",Context.getAuthenticatedUser(),errors);
