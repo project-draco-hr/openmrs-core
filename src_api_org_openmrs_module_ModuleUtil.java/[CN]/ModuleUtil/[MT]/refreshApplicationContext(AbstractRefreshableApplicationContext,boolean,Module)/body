@@ -1,0 +1,47 @@
+{
+  for (  Module module : ModuleFactory.getStartedModules()) {
+    try {
+      if (module.getModuleActivator() != null)       module.getModuleActivator().willRefreshContext();
+    }
+ catch (    Throwable t) {
+      log.warn("Unable to call willRefreshContext() method in the module's activator",t);
+    }
+  }
+  OpenmrsClassLoader.saveState();
+  ServiceContext.destroyInstance();
+  try {
+    ctx.stop();
+    ctx.close();
+  }
+ catch (  Exception e) {
+    log.warn("Exception while stopping and closing context: ",e);
+  }
+  OpenmrsClassLoader.destroyInstance();
+  ctx.setClassLoader(OpenmrsClassLoader.getInstance());
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  ServiceContext.getInstance().startRefreshingContext();
+  try {
+    ctx.refresh();
+  }
+  finally {
+    ServiceContext.getInstance().doneRefreshingContext();
+  }
+  ctx.setClassLoader(OpenmrsClassLoader.getInstance());
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  OpenmrsClassLoader.restoreState();
+  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
+  for (  Module module : ModuleFactory.getStartedModules()) {
+    ModuleFactory.loadAdvice(module);
+    try {
+      if (module.getModuleActivator() != null) {
+        module.getModuleActivator().contextRefreshed();
+        if (isOpenmrsStartup)         module.getModuleActivator().started();
+ else         if (!isOpenmrsStartup && module.equals(startedModule))         module.getModuleActivator().started();
+      }
+    }
+ catch (    Throwable t) {
+      log.warn("Unable to invoke method on the module's activator ",t);
+    }
+  }
+  return ctx;
+}

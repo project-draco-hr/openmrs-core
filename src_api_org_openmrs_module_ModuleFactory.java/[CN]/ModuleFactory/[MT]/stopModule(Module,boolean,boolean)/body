@@ -1,6 +1,12 @@
 {
   List<Module> dependentModulesStopped=new Vector<Module>();
   if (mod != null) {
+    try {
+      if (mod.getModuleActivator() != null)       mod.getModuleActivator().willStop();
+    }
+ catch (    Throwable t) {
+      log.warn("Unable to call module's Activator.willStop() method",t);
+    }
     String moduleId=mod.getModuleId();
     if (!isFailedStartup && mod.isMandatory()) {
       throw new MandatoryModuleException(moduleId);
@@ -65,12 +71,10 @@
       }
     }
     try {
-      mod.getActivator().shutdown();
+      if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
+ else       mod.getActivator().shutdown();
     }
- catch (    ModuleException me) {
-      log.debug("Exception encountered while calling module's activator.shutdown()",me);
-    }
-catch (    Throwable t) {
+ catch (    Throwable t) {
       log.warn("Unable to call module's Activator.shutdown() method",t);
     }
     ModuleClassLoader cl=removeClassLoader(mod);

@@ -140,7 +140,13 @@
     if (moduleNeedsContextRefresh && delayContextRefresh == false) {
       if (log.isDebugEnabled())       log.debug("Refreshing context for module" + mod);
       try {
-        refreshWAC(servletContext);
+        refreshWAC(servletContext,false,mod);
+        try {
+          if (mod.getModuleActivator() != null)           mod.getModuleActivator().started();
+        }
+ catch (        Throwable t) {
+          log.warn("Unable to call module's Activator.started() method",t);
+        }
         log.debug("Done Refreshing WAC");
       }
  catch (      Exception e) {
@@ -154,7 +160,7 @@
  catch (        Exception e2) {
           if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
         }
-        refreshWAC(servletContext);
+        refreshWAC(servletContext,false,mod);
       }
     }
     if (ModuleFactory.isModuleStarted(mod)) {
