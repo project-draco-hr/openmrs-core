@@ -1,7 +1,7 @@
 {
   XmlWebApplicationContext wac=(XmlWebApplicationContext)WebApplicationContextUtils.getWebApplicationContext(servletContext);
   if (log.isDebugEnabled())   log.debug("Refreshing web applciation Context of class: " + wac.getClass().getName());
-  XmlWebApplicationContext newAppContext=(XmlWebApplicationContext)ModuleUtil.refreshApplicationContext(wac);
+  XmlWebApplicationContext newAppContext=(XmlWebApplicationContext)ModuleUtil.refreshApplicationContext(wac,isOpenmrsStartup,startedModule);
   try {
     if (dispatcherServlet != null)     dispatcherServlet.reInitFrameworkServlet();
   }

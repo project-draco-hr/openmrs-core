@@ -14,7 +14,7 @@
   }
   if (someModuleNeedsARefresh) {
     try {
-      WebModuleUtil.refreshWAC(servletContext);
+      WebModuleUtil.refreshWAC(servletContext,true,null);
     }
  catch (    ModuleMustStartException ex) {
       throw ex;
@@ -26,7 +26,7 @@ catch (    Throwable t) {
         for (        Module mod : ModuleFactory.getLoadedModules()) {
           if (!mod.isCoreModule() && !mod.isMandatory())           ModuleFactory.stopModule(mod,true,true);
         }
-        WebModuleUtil.refreshWAC(servletContext);
+        WebModuleUtil.refreshWAC(servletContext,true,null);
       }
  catch (      MandatoryModuleException ex) {
         throw new MandatoryModuleException(ex.getModuleId(),"Got an error while starting a mandatory module: " + t.getMessage() + ". Check the server logs for more information");

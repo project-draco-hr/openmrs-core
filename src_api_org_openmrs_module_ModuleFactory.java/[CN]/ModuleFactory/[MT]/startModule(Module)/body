@@ -41,13 +41,14 @@
         Context.checkCoreDataset();
       }
       try {
-        module.getActivator().startup();
+        if (module.getModuleActivator() != null)         module.getModuleActivator().willStart();
+ else         module.getActivator().startup();
       }
  catch (      ModuleException e) {
         throw e;
       }
 catch (      Exception e) {
-        throw new ModuleException("Error while calling module's Activator.startup() method",e);
+        throw new ModuleException("Error while calling module's Activator.startup()/willStart() method",e);
       }
       module.clearStartupError();
     }
