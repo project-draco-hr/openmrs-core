@@ -1,4 +1,12 @@
 {
+  sb.append("<span class=\"user\">");
+  sb.append("<span class=\"username\">");
   sb.append(u.getUsername());
-  if (u.getPerson() != null)   sb.append(" (").append(u.getPersonName()).append(")");
+  sb.append("</span>");
+  if (u.getPerson() != null) {
+    sb.append("<span class=\"personName\">");
+    sb.append(" (").append(u.getPersonName()).append(")");
+    sb.append("</span>");
+  }
+  sb.append("</span>");
 }

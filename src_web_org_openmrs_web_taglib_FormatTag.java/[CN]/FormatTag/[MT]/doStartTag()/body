@@ -11,9 +11,9 @@
   if (person != null)   printPerson(sb,person);
   if (encounterId != null)   encounter=Context.getEncounterService().getEncounter(encounterId);
   if (encounter != null) {
-    printEncounterType(sb,encounter.getEncounterType());
+    printMetadata(sb,encounter.getEncounterType());
     sb.append(" @");
-    printLocation(sb,encounter.getLocation());
+    printMetadata(sb,encounter.getLocation());
     sb.append(" | ");
     printDate(sb,encounter.getEncounterDatetime());
     sb.append(" | ");
@@ -21,11 +21,15 @@
   }
   if (encounterTypeId != null)   encounterType=Context.getEncounterService().getEncounterType(encounterTypeId);
   if (encounterType != null) {
-    printEncounterType(sb,encounterType);
+    printMetadata(sb,encounterType);
   }
   if (locationId != null)   location=Context.getLocationService().getLocation(locationId);
   if (location != null) {
-    printLocation(sb,location);
+    printMetadata(sb,location);
+  }
+  if (locationTagId != null)   locationTag=Context.getLocationService().getLocationTag(locationTagId);
+  if (locationTag != null) {
+    printMetadata(sb,locationTag);
   }
   if (StringUtils.hasText(var)) {
     pageContext.setAttribute(var,sb.toString());

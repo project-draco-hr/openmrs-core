@@ -1,0 +1,14 @@
+{
+  if (!StringUtils.hasText(name)) {
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("LocationTag.error.name.required"),WebRequest.SCOPE_SESSION);
+  }
+ else   if (Context.getLocationService().getLocationTagByName(name) != null) {
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("LocationTag.error.name.duplicate"),WebRequest.SCOPE_SESSION);
+  }
+ else {
+    LocationTag tag=new LocationTag(name,description);
+    Context.getLocationService().saveLocationTag(tag);
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationTag.saved"),WebRequest.SCOPE_SESSION);
+  }
+  return "redirect:locationTag.list";
+}
