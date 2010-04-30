@@ -14,8 +14,8 @@
     if (log.isDebugEnabled())     log.debug("Just set user context " + userContext + " as attribute on session");
   }
  else {
-    User user;
-    if ((user=userContext.getAuthenticatedUser()) != null)     httpSession.setAttribute("username",user.getUsername());
+    User user=userContext.getAuthenticatedUser();
+    if (user != null)     httpSession.setAttribute("username",user.getUsername());
   }
   httpSession.setAttribute("locale",userContext.getLocale());
   Context.setUserContext(userContext);
