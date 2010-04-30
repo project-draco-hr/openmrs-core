@@ -1,0 +1,5 @@
+{
+  Context.getLocationService().unretireLocationTag(locationTag);
+  request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationTag.unretired"),WebRequest.SCOPE_SESSION);
+  return "redirect:/admin/locations/locationTag.list";
+}

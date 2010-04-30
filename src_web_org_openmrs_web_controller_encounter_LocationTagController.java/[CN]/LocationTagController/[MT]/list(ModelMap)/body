@@ -1,0 +1,5 @@
+{
+  List<LocationTag> list=new ArrayList<LocationTag>(Context.getLocationService().getAllLocationTags());
+  Collections.sort(list,new MetadataComparator(Context.getLocale()));
+  model.addAttribute("locationTags",list);
+}

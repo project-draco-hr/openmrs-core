@@ -1,0 +1,5 @@
+{
+  model.addAttribute("locationTag",locationTag);
+  List<Location> locations=Context.getLocationService().getLocationsByTag(locationTag);
+  if (locations != null && locations.size() > 0)   model.addAttribute("locations",locations);
+}

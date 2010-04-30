@@ -1,0 +1,12 @@
+{
+  new LocationTagValidator().validate(locationTag,result);
+  if (result.hasErrors()) {
+    return "/admin/locations/locationTagEdit";
+  }
+ else {
+    Context.getLocationService().saveLocationTag(locationTag);
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationTag.saved"),WebRequest.SCOPE_SESSION);
+    status.setComplete();
+    return "redirect:/admin/locations/locationTag.list";
+  }
+}
