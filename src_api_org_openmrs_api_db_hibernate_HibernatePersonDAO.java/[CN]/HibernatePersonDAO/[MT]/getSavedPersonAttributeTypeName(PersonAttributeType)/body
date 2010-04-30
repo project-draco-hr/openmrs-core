@@ -1,0 +1,5 @@
+{
+  SQLQuery sql=sessionFactory.getCurrentSession().createSQLQuery("select name from person_attribute_type where person_attribute_type_id = :personAttributeTypeId");
+  sql.setInteger("personAttributeTypeId",personAttributeType.getId());
+  return (String)sql.uniqueResult();
+}

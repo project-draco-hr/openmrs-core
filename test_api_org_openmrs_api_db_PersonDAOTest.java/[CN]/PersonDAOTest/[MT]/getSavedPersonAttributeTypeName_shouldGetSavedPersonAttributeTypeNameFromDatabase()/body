@@ -1,0 +1,9 @@
+{
+  PersonAttributeType pat=Context.getPersonService().getPersonAttributeType(1);
+  String origName=pat.getName();
+  String newName="Race Updated";
+  assertFalse(newName.equals(origName));
+  pat.setName(newName);
+  String nameFromDatabase=dao.getSavedPersonAttributeTypeName(pat);
+  assertEquals(origName,nameFromDatabase);
+}
