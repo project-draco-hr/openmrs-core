@@ -17,7 +17,7 @@
     List<Concept> matchingConcepts=Context.getConceptService().getConceptsByName(newName);
     Set<Concept> duplicates=new HashSet<Concept>();
     for (    Concept c : matchingConcepts) {
-      if (newConcept.getConceptId() != null && c.getConceptId().intValue() == newConcept.getConceptId())       continue;
+      if (newConcept.getConceptId() != null && c.getConceptId().equals(newConcept.getConceptId()))       continue;
       if (c.getPreferredName(Context.getLocale()).getName().equalsIgnoreCase(newName) && !c.isRetired()) {
         duplicates.add(c);
       }
