@@ -1,0 +1,22 @@
+{
+  executeDataSet("org/openmrs/api/include/PersonServiceTest-updatePersonAttributeType.xml");
+  PersonService service=Context.getPersonService();
+  AdministrationService as=Context.getAdministrationService();
+  PersonAttributeType pat=service.getPersonAttributeType(1);
+  assertEquals("Race",pat.getName());
+  String patientHeader=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_HEADER_ATTRIBUTES);
+  assertEquals("Race,Birthpalce",patientHeader);
+  String patientListing=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES);
+  assertEquals("Race,Birthpalce",patientListing);
+  String patientViewing=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES);
+  assertEquals("Birthpalce",patientViewing);
+  pat.setName("Race Updated");
+  pat=service.savePersonAttributeType(pat);
+  assertEquals("Race Updated",pat.getName());
+  patientHeader=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_HEADER_ATTRIBUTES);
+  assertEquals("Race Updated,Birthpalce",patientHeader);
+  patientListing=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_LISTING_ATTRIBUTES);
+  assertEquals("Race Updated,Birthpalce",patientListing);
+  patientViewing=as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES);
+  assertEquals("Birthpalce",patientViewing);
+}
