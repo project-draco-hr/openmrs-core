@@ -1,0 +1,8 @@
+{
+  List<GlobalProperty> props=new ArrayList<GlobalProperty>();
+  props.add(new GlobalProperty("a.property.key","something"));
+  props.add(new GlobalProperty("a.property.KEY","somethingelse"));
+  adminService.saveGlobalProperties(props);
+  props=adminService.getAllGlobalProperties();
+  Assert.assertEquals(2,props.size());
+}

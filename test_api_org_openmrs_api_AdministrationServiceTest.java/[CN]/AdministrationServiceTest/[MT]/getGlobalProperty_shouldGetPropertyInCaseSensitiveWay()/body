@@ -1,0 +1,7 @@
+{
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  String orig=adminService.getGlobalProperty("another-global-property");
+  Assert.assertEquals("anothervalue",orig);
+  String noprop=adminService.getGlobalProperty("ANOTher-global-property","boo");
+  Assert.assertEquals("boo",noprop);
+}
