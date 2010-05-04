@@ -1,3 +1,4 @@
 {
-  return sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class).list();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
+  return criteria.addOrder(Order.asc("property")).list();
 }

@@ -1,5 +1,5 @@
 {
-  GlobalProperty gp=(GlobalProperty)sessionFactory.getCurrentSession().get(GlobalProperty.class,propertyName);
+  GlobalProperty gp=getGlobalPropertyObject(propertyName);
   if (gp == null)   return null;
   return gp.getPropertyValue();
 }
