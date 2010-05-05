@@ -5,6 +5,6 @@
   }
   if (log.isDebugEnabled())   log.debug("Getting conceptName for locale: " + locale);
   ConceptName bestName=getBestName(locale);
-  if (exact && bestName.getLocale() != locale)   return null;
+  if (exact && !bestName.getLocale().equals(locale))   return null;
  else   return bestName;
 }
