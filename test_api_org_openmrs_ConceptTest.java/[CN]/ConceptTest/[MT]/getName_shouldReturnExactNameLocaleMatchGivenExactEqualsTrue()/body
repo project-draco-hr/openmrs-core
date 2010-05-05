@@ -3,5 +3,6 @@
   Locale localeToSearch=new Locale("en","US");
   Concept concept=new Concept();
   concept.addName(new ConceptName("some name",definedNameLocale));
-  Assert.assertNull(concept.getName(localeToSearch,true));
+  Assert.assertNotNull(concept.getName(localeToSearch,true));
+  Assert.assertEquals("some name",concept.getName(localeToSearch,true).getName());
 }
