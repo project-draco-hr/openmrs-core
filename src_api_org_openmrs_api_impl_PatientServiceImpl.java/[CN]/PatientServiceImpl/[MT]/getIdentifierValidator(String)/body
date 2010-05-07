@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(pivClassName)) {
+    return null;
+  }
   try {
     return getIdentifierValidator(((Class<IdentifierValidator>)Context.loadClass(pivClassName)));
   }
