@@ -1,15 +1,15 @@
 {
 synchronized (outputForConcurrentInit) {
-    outputForConcurrentInit.add("INIT-START-4");
+    outputForConcurrentInit.add(config.getProperty("id"));
   }
   super.initialize(config);
   try {
-    Thread.sleep(1000);
+    Thread.sleep(Integer.valueOf(config.getProperty("delay")));
   }
  catch (  InterruptedException e) {
     log.error("Error generated",e);
   }
 synchronized (outputForConcurrentInit) {
-    outputForConcurrentInit.add("INIT-END-4");
+    outputForConcurrentInit.add(config.getProperty("id"));
   }
 }

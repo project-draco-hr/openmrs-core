@@ -4,14 +4,9 @@
   td.setId(10);
   td.setName("Task");
   td.setStartOnStartup(false);
-  td.setRepeatInterval(1L);
   td.setTaskClass(BareTask.class.getName());
-  Calendar startTime=Calendar.getInstance();
-  startTime.add(Calendar.SECOND,1);
-  td.setStartTime(startTime.getTime());
+  td.setStartTime(null);
   schedulerService.scheduleTask(td);
-  Thread.sleep(2000);
-  schedulerService.shutdownTask(td);
+  Thread.sleep(500);
   assertTrue(BareTask.outputList.contains("TEST"));
-  System.out.println(BareTask.outputList);
 }

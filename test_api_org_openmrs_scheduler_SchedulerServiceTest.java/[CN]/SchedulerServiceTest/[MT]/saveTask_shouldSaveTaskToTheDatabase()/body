@@ -6,7 +6,7 @@
   def.setName(TASK_NAME);
   def.setStartOnStartup(false);
   def.setRepeatInterval(10L);
-  def.setTaskClass(SampleTask1.class.getName());
+  def.setTaskClass(ExecutePrintingTask.class.getName());
   service.saveTask(def);
   Assert.assertEquals(1,service.getRegisteredTasks().size());
   def=service.getTaskByName(TASK_NAME);

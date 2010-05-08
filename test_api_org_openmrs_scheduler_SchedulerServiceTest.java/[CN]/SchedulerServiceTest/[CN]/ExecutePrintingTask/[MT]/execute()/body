@@ -1,0 +1,14 @@
+{
+synchronized (outputForConcurrentTasks) {
+    outputForConcurrentTasks.add(getTaskDefinition().getProperty("id"));
+  }
+  try {
+    Thread.sleep(Integer.valueOf(getTaskDefinition().getProperty("delay")));
+  }
+ catch (  InterruptedException e) {
+    log.error("Error generated",e);
+  }
+synchronized (outputForConcurrentTasks) {
+    outputForConcurrentTasks.add(getTaskDefinition().getProperty("id"));
+  }
+}
