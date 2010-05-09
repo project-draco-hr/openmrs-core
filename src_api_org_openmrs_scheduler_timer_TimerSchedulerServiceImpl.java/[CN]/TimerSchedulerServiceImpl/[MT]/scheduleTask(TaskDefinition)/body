@@ -11,7 +11,8 @@
       if (clientTask != null) {
         schedulerTask=new TimerSchedulerTask(clientTask);
         taskDefinition.setTaskInstance(clientTask);
-        long repeatInterval=taskDefinition.getRepeatInterval() * SchedulerConstants.SCHEDULER_MILLIS_PER_SECOND;
+        long repeatInterval=0;
+        if (taskDefinition.getRepeatInterval() != null)         repeatInterval=taskDefinition.getRepeatInterval() * SchedulerConstants.SCHEDULER_MILLIS_PER_SECOND;
         if (taskDefinition.getStartTime() != null) {
           Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
           log.info("Starting task ... the task will execute for the first time at " + nextTime);
