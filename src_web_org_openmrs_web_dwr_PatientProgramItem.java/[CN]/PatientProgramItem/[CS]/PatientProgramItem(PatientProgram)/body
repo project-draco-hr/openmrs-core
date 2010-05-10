@@ -3,6 +3,12 @@
   patientId=p.getPatient().getPatientId();
   dateEnrolled=p.getDateEnrolled();
   dateCompleted=p.getDateCompleted();
+  creator=p.getCreator().getPersonName().getFullName();
+  dateCreated=p.getDateCreated();
+  if (p.getChangedBy() != null) {
+    changedBy=p.getChangedBy().getPersonName().getFullName();
+    dateChanged=p.getDateChanged();
+  }
   name=p.getProgram().getConcept().getName(Context.getLocale(),false).getName();
   workflows=new HashMap<String,Integer>();
   for (  ProgramWorkflow wf : p.getProgram().getWorkflows()) {
