@@ -9,5 +9,7 @@
     for (    Role r : user.getRoles()) {
       roles[i++]=r.getRole();
     }
+    this.retired=user.isRetired();
+    setVoided(retired);
   }
 }
