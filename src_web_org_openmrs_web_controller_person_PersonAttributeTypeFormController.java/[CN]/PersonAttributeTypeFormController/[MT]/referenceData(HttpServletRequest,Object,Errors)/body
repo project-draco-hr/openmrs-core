@@ -4,7 +4,11 @@
   if (Context.isAuthenticated()) {
     privileges=Context.getUserService().getAllPrivileges();
   }
-  Set<String> formats=FieldGenHandlerFactory.getSingletonInstance().getHandlers().keySet();
+  Set<String> formats=new TreeSet<String>(FieldGenHandlerFactory.getSingletonInstance().getHandlers().keySet());
+  formats.add("java.lang.Character");
+  formats.add("java.lang.Integer");
+  formats.add("java.lang.Float");
+  formats.add("java.lang.Boolean");
   map.put("privileges",privileges);
   map.put("formats",formats);
   return map;

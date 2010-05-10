@@ -46,9 +46,9 @@
           startVal=val.toString();
         }
         startVal=(startVal == null) ? "" : startVal.toLowerCase();
-        if ("false".equals(startVal) || "0".equals(startVal))         startVal="f";
-        if ("true".equals(startVal) || "1".equals(startVal))         startVal="t";
-        if ("unknown".equals(startVal) || "?".equals(startVal))         startVal="u";
+        if ("false".equals(startVal) || "0".equals(startVal))         startVal="false";
+        if ("true".equals(startVal) || "1".equals(startVal))         startVal="true";
+        if ("unknown".equals(startVal) || "?".equals(startVal))         startVal="unknown";
         String forceInputType=this.parameterMap != null ? (String)this.parameterMap.get("forceInputType") : null;
         String isNullable=this.parameterMap != null ? (String)this.parameterMap.get("isNullable") : null;
         String trueLabel=this.parameterMap != null ? (String)this.parameterMap.get("trueLabel") : null;
@@ -56,7 +56,7 @@
         String unknownLabel=this.parameterMap != null ? (String)this.parameterMap.get("unknownLabel") : null;
         if (forceInputType == null)         forceInputType="";
         if ("checkbox".equals(forceInputType)) {
-          output="<input type=\"checkbox\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "\" value=\"t\""+ ("t".equals(startVal) ? " checked" : "")+ "/> ";
+          output="<input type=\"checkbox\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "\" value=\"true\""+ ("true".equals(startVal) ? " checked" : "")+ "/> ";
         }
  else {
           if (isNullable == null)           isNullable="";
@@ -64,20 +64,20 @@
           if (falseLabel == null)           falseLabel=Context.getMessageSourceService().getMessage("general.no");
           if (unknownLabel == null)           unknownLabel=Context.getMessageSourceService().getMessage("general.unknown");
           if ("false".equalsIgnoreCase(isNullable) || "f".equalsIgnoreCase(isNullable) || "0".equals(isNullable)) {
-            output="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_f\" value=\"f\""+ ("f".equals(startVal) ? " checked" : "")+ "/> ";
+            output="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_f\" value=\"false\""+ ("false".equals(startVal) ? " checked" : "")+ "/> ";
             output+=falseLabel;
             output+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_t\" value=\"t\""+ ("t".equals(startVal) ? " checked" : "")+ "/> ";
+            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_t\" value=\"true\""+ ("true".equals(startVal) ? " checked" : "")+ "/> ";
             output+=trueLabel;
           }
  else {
-            output="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_f\" value=\"f\""+ ("f".equals(startVal) ? " checked" : "")+ "/> ";
+            output="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_f\" value=\"false\""+ ("false".equals(startVal) ? " checked" : "")+ "/> ";
             output+=falseLabel;
             output+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_t\" value=\"t\""+ ("t".equals(startVal) ? " checked" : "")+ "/> ";
+            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_t\" value=\"true\""+ ("true".equals(startVal) ? " checked" : "")+ "/> ";
             output+=trueLabel;
             output+="&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_u\" value=\"u\""+ ("u".equals(startVal) ? " checked" : "")+ "/> ";
+            output+="<input type=\"radio\" name=\"" + formFieldName + "\" id=\""+ formFieldName+ "_u\" value=\"unknown\""+ ("unknown".equals(startVal) ? " checked" : "")+ "/> ";
             output+=unknownLabel;
           }
         }
