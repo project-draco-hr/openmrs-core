@@ -1,0 +1,30 @@
+{
+  criteria.createAlias("identifiers","ids");
+  criteria.add(Expression.eq("ids.voided",false));
+  if (identifier != null) {
+    if (matchIdentifierExactly) {
+      criteria.add(Expression.eq("ids.identifier",identifier));
+    }
+ else {
+      AdministrationService adminService=Context.getAdministrationService();
+      String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
+      String patternSearch=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SEARCH_PATTERN,"");
+      if (Pattern.matches("^\\^.{1}\\*.*$",regex)) {
+        identifier=removePadding(identifier,regex);
+      }
+      if (StringUtils.hasLength(patternSearch)) {
+        splitAndAddSearchPattern(criteria,identifier,patternSearch);
+      }
+ else       if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+        addCriterionForSimpleSearch(criteria,identifier,adminService);
+      }
+ else {
+        regex=replaceSearchString(regex,identifier);
+        criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+      }
+    }
+  }
+  if (identifierTypes.size() > 0) {
+    criteria.add(Expression.in("ids.identifierType",identifierTypes));
+  }
+}

@@ -1,0 +1,5 @@
+{
+  List<String> searchPatterns=new ArrayList<String>();
+  for (  String pattern : patternSearch.split(","))   searchPatterns.add(replaceSearchString(pattern,identifier));
+  criteria.add(Expression.in("ids.identifier",searchPatterns));
+}
