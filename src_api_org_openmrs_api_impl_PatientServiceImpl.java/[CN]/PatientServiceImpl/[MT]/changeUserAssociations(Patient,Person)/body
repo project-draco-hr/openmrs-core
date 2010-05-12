@@ -1,0 +1,8 @@
+{
+  UserService userService=Context.getUserService();
+  List<User> users=userService.getUsersByPerson(notPreferred,true);
+  for (  User user : users) {
+    user.setPerson(preferred);
+    userService.saveUser(user,null);
+  }
+}

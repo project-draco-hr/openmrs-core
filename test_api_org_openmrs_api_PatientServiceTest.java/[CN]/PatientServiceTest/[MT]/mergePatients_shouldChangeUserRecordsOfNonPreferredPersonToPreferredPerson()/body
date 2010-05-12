@@ -1,0 +1,6 @@
+{
+  executeDataSet(USERS_WHO_ARE_PATIENTS_XML);
+  Context.getPatientService().mergePatients(patientService.getPatient(6),patientService.getPatient(2));
+  User user=Context.getUserService().getUser(2);
+  Assert.assertEquals(new Person(6),user.getPerson());
+}

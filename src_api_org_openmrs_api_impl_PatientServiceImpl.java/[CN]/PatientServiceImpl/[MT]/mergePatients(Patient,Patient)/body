@@ -128,5 +128,7 @@
   if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
   if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
   Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
+  personService.voidPerson(notPreferred,"The patient corresponding to this person has been voided and Merged with patient #" + preferred.getPatientId());
+  changeUserAssociations(preferred,notPreferred);
   savePatient(preferred);
 }
