@@ -1,5 +1,5 @@
 {
-  if (identifier == null)   throw new IllegalArgumentException("The 'identifier' parameter is requred and cannot be null");
+  if (identifier == null)   throw new IllegalArgumentException("The 'identifier' parameter is required and cannot be null");
   List<Encounter> encs=new Vector<Encounter>();
   for (  Patient p : Context.getPatientService().getPatients(null,identifier,null,false)) {
     encs.addAll(getEncountersByPatientId(p.getPatientId()));

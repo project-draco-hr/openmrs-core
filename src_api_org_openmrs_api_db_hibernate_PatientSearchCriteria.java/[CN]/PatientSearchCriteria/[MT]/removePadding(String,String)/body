@@ -1,0 +1,6 @@
+{
+  String padding=regex.substring(regex.indexOf("^") + 1,regex.indexOf("*"));
+  Pattern pattern=Pattern.compile("^" + padding + "+");
+  identifier=pattern.matcher(identifier).replaceFirst("");
+  return identifier;
+}

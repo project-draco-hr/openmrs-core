@@ -1,0 +1,17 @@
+{
+  name=HibernateUtil.escapeSqlWildcards(name,sessionFactory);
+  identifier=HibernateUtil.escapeSqlWildcards(identifier,sessionFactory);
+  criteria.createAlias("names","name");
+  criteria.addOrder(Order.asc("name.givenName"));
+  criteria.addOrder(Order.asc("name.middleName"));
+  criteria.addOrder(Order.asc("name.familyName"));
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  if (name != null) {
+    addNameCriterias(criteria,name);
+  }
+  if (identifier != null || identifierTypes.size() > 0) {
+    addIdentifierCriterias(criteria,identifier,identifierTypes,matchIdentifierExactly);
+  }
+  criteria.add(Expression.eq("voided",false));
+  return criteria;
+}

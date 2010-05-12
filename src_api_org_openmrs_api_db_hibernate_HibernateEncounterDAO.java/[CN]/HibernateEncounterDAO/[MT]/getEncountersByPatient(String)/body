@@ -1,0 +1,13 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class).createCriteria("patient","pat");
+  String name=null;
+  String identifier=null;
+  if (query.matches(".*\\d+.*")) {
+    identifier=query;
+  }
+ else {
+    name=query;
+  }
+  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false);
+  return criteria.list();
+}
