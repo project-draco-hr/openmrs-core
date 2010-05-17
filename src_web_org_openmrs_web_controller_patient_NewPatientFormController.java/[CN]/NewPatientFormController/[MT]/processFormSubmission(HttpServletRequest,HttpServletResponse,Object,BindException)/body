@@ -14,11 +14,17 @@
       if (pref == null)       pref="";
       if (log.isDebugEnabled()) {
         log.debug("identifiers: " + identifiers);
-        for (        String s : identifiers)         log.debug(s);
+        if (identifiers != null) {
+          for (          String s : identifiers)           log.debug(s);
+        }
         log.debug("types: " + types);
-        for (        String s : types)         log.debug(s);
+        if (types != null) {
+          for (          String s : types)           log.debug(s);
+        }
         log.debug("locations: " + locs);
-        for (        String s : locs)         log.debug(s);
+        if (locs != null) {
+          for (          String s : locs)           log.debug(s);
+        }
         log.debug("preferred: " + pref);
       }
       if (identifiers != null) {
