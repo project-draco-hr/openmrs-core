@@ -1,45 +1,5 @@
 {
-  Integer patientId=null;
-  CX[] patientIdentifierList=pid.getPatientIdentifierList();
-  if (patientIdentifierList.length < 1)   throw new HL7Exception("Missing patient identifier in PID segment");
-  for (  CX identifier : patientIdentifierList) {
-    String hl7PatientId=identifier.getIDNumber().getValue();
-    String assigningAuthority=identifier.getAssigningAuthority().getNamespaceID().getValue();
-    if (assigningAuthority != null && assigningAuthority.length() > 0) {
-      try {
-        PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierTypeByName(assigningAuthority);
-        if (pit == null) {
-          log.warn("Can't find PatientIdentifierType named '" + assigningAuthority + "'");
-          continue;
-        }
-        List<PatientIdentifier> matchingIds=Context.getPatientService().getPatientIdentifiers(hl7PatientId,Collections.singletonList(pit),null,null,null);
-        if (matchingIds == null || matchingIds.size() < 1) {
-          log.warn("NO matches found for " + hl7PatientId);
-          continue;
-        }
- else         if (matchingIds.size() == 1) {
-          return matchingIds.get(0).getPatient().getPatientId();
-        }
- else {
-          log.debug("Ambiguous identifier in PID. " + matchingIds.size() + " matches for identifier '"+ hl7PatientId+ "' of type '"+ pit+ "'");
-          continue;
-        }
-      }
- catch (      Exception e) {
-        log.error("Error resolving patient identifier '" + hl7PatientId + "' for assigning authority '"+ assigningAuthority+ "'",e);
-        continue;
-      }
-    }
- else {
-      try {
-        log.debug("PID contains patient ID '" + hl7PatientId + "' without assigning authority -- assuming patient.patient_id");
-        patientId=Integer.parseInt(hl7PatientId);
-        return patientId;
-      }
- catch (      NumberFormatException e) {
-        log.warn("Invalid patient ID '" + hl7PatientId + "'");
-      }
-    }
-  }
+  Person p=resolvePersonFromIdentifiers(pid.getPatientIdentifierList());
+  if (p != null && p.isPatient())   return p.getPersonId();
   return null;
 }

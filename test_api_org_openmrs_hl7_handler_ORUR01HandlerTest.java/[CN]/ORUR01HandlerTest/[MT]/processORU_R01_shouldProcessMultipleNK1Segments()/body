@@ -1,0 +1,20 @@
+{
+  PersonService personService=Context.getPersonService();
+  Patient patient=new Patient(3);
+  Patient relative=new Patient(2);
+  Relationship newRel=new Relationship();
+  newRel.setRelationshipType(new RelationshipType(3));
+  newRel.setPersonA(relative);
+  newRel.setPersonB(patient);
+  personService.saveRelationship(newRel);
+  Assert.assertEquals(1,personService.getRelationships(relative,patient,new RelationshipType(3)).size());
+  String hl7String="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20090728170333||ORU^R01|gu99yBh4loLX2mh9cHaV|P|2.5|1||||||||4^AMRS.ELD.FORMID\r" + "PID|||3^^^^||Beren^John^Bondo||\r" + "NK1|1|Jones^Jane^Lee^^RN|2A^Sibling^99REL||||||||||||F|19751016|||||||||||||||||2^^^L^PI\r"+ "NK1|2|Jones^Jane^Lee^^RN|1B^Patient^99REL||||||||||||F|19751016|||||||||||||||||2^^^L^PI\r"+ "PV1||O|1^Unknown||||1^Super User (admin)|||||||||||||||||||||||||||||||||||||20090714|||||||V\r"+ "ORC|RE||||||||20090728165937|1^Super User\r"+ "OBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT\r"+ "OBX|2|NM|5497^CD4 COUNT^99DCT||123|||||||||20090714\r"+ "OBR|3|||23^FOOD CONSTRUCT^99DCT\r"+ "OBX|1|CWE|21^FOOD ASSISTANCE FOR ENTIRE FAMILY^99DCT||22^UNKNOWN^99DCT^2471^UNKNOWN^99NAM|||||||||20090714";
+  Message hl7message=parser.parse(hl7String);
+  router.processMessage(hl7message);
+  List<Relationship> rels=personService.getRelationships(relative,patient,new RelationshipType(3));
+  Assert.assertTrue("existing relationship was not retained",!rels.isEmpty() && rels.size() == 1);
+  rels=personService.getRelationships(patient,relative,new RelationshipType(2));
+  Assert.assertTrue("first new relationship was not created",!rels.isEmpty() && rels.size() == 1);
+  rels=personService.getRelationships(patient,relative,new RelationshipType(1));
+  Assert.assertTrue("second new relationship was not created",!rels.isEmpty() && rels.size() == 1);
+}

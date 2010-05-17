@@ -1,0 +1,40 @@
+{
+  String relCodingSystem=nk1.getRelationship().getNameOfCodingSystem().getValue();
+  if (!relCodingSystem.equals(FormConstants.HL7_LOCAL_RELATIONSHIP))   throw new HL7Exception("Relationship coding system '" + relCodingSystem + "' unknown in NK1 segment.");
+  String relIdentifier=nk1.getRelationship().getIdentifier().getValue();
+  if (!Pattern.matches("[0-9]+[AB]",relIdentifier))   throw new HL7Exception("Relationship type '" + relIdentifier + "' improperly formed in NK1 segment.");
+  Integer relTypeId=0;
+  try {
+    relTypeId=Integer.parseInt(relIdentifier.substring(0,relIdentifier.length() - 1));
+  }
+ catch (  NumberFormatException e) {
+    throw new HL7Exception("Relationship type '" + relIdentifier + "' improperly formed in NK1 segment.");
+  }
+  RelationshipType relType=Context.getPersonService().getRelationshipType(relTypeId);
+  if (relType == null)   throw new HL7Exception("Relationship type '" + relTypeId + "' in NK1 segment not found");
+  Person relative=getRelative(nk1);
+  boolean patientIsPersonA=relIdentifier.endsWith("B");
+  boolean patientCanBeEitherPerson=relType.getbIsToA().equals(relType.getaIsToB());
+  Set<Relationship> rels=new HashSet<Relationship>();
+  if (relative != null) {
+    if (patientCanBeEitherPerson || patientIsPersonA)     rels.addAll(Context.getPersonService().getRelationships(patient,relative,relType));
+    if (patientCanBeEitherPerson || !patientIsPersonA)     rels.addAll(Context.getPersonService().getRelationships(relative,patient,relType));
+  }
+  if (rels.isEmpty()) {
+    if (relative == null) {
+      relative=Context.getHL7Service().createPersonFromNK1(nk1);
+      if (relative == null)       throw new HL7Exception("could not create a new relative from NK1 segment");
+    }
+    Relationship relation=new Relationship();
+    if (patientCanBeEitherPerson || patientIsPersonA) {
+      relation.setPersonA(patient);
+      relation.setPersonB(relative);
+    }
+ else {
+      relation.setPersonA(relative);
+      relation.setPersonB(patient);
+    }
+    relation.setRelationshipType(relType);
+    Context.getPersonService().saveRelationship(relation);
+  }
+}
