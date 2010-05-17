@@ -26,7 +26,12 @@
       log.warn("Not creating null valued obs for concept " + concept);
       return null;
     }
-    obs.setValueNumeric(Double.valueOf(value));
+    try {
+      obs.setValueNumeric(Double.valueOf(value));
+    }
+ catch (    NumberFormatException e) {
+      throw new HL7Exception("numeric (NM) value '" + value + "' is not numeric for concept #"+ concept.getConceptId()+ " ("+ conceptName.getName()+ ") in message "+ uid,e);
+    }
   }
  else   if ("CWE".equals(hl7Datatype)) {
     log.debug("  CWE observation");
