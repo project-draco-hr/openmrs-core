@@ -1,0 +1,8 @@
+{
+  GlobalPropertyPortletController portletController=new GlobalPropertyPortletController();
+  Map<String,Object> model=new HashMap<String,Object>();
+  portletController.setupModelForModule(model);
+  Assert.assertNull(model.get("propertyPrefix"));
+  Assert.assertNull(model.get("hidePrefix"));
+  Assert.assertNull(model.get("excludePrefix"));
+}
