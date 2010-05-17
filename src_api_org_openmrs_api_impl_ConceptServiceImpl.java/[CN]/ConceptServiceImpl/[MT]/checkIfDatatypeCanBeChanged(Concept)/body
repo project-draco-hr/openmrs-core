@@ -1,7 +1,8 @@
 {
   if (concept.getId() != null) {
     if (hasAnyObservation(concept) && hasDatatypeChanged(concept)) {
-      throw new ConceptInUseException();
+      if (!(dao.getSavedConceptDatatype(concept).isBoolean() && concept.getDatatype().isCoded()))       throw new ConceptInUseException();
+      if (log.isDebugEnabled())       log.debug("Converting datatype of concept with id " + concept.getConceptId() + " from Boolean to Coded");
     }
   }
 }

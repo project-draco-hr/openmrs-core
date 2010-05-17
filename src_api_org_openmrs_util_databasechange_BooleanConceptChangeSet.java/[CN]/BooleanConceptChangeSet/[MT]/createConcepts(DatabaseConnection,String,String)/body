@@ -1,0 +1,9 @@
+{
+  for (  String conceptName : new String[]{trueConceptName,falseConceptName}) {
+    final boolean conceptNamePresent=getInt(connection,"SELECT COUNT(*) FROM concept_name WHERE name = '" + conceptName + "'") == 1;
+    if (!conceptNamePresent) {
+      createConcept(connection,conceptName);
+    }
+ else     throw new CustomChangeException("Another concept already exists with the name '" + conceptName + "'");
+  }
+}

@@ -1,0 +1,21 @@
+{
+  DatabaseConnection connection=database.getConnection();
+  String trueConceptName="";
+  String falseConceptName="";
+  final boolean trueFalseGlobalPropertiesPresent=getInt(connection,"SELECT COUNT(*) FROM global_property WHERE property IN ('" + OpenmrsConstants.GLOBAL_PROPERTY_TRUE_CONCEPT + "', '"+ OpenmrsConstants.GLOBAL_PROPERTY_FALSE_CONCEPT+ "')") == 2;
+  for (  String[] trueFalseConceptNames : BOOLEAN_CONCEPTS_VALUES) {
+    trueConceptName=trueFalseConceptNames[0];
+    falseConceptName=trueFalseConceptNames[1];
+    final boolean conceptNamesPresent=getInt(connection,"SELECT COUNT(*) FROM concept_name WHERE name IN ('" + trueConceptName + "', '"+ falseConceptName+ "')") == 2;
+    if (conceptNamesPresent) {
+      if (!trueFalseGlobalPropertiesPresent)       createGlobalProperties(connection,trueConceptName,falseConceptName);
+      changeObs(connection,trueConceptName,falseConceptName);
+      return;
+    }
+  }
+  trueConceptName=BOOLEAN_CONCEPTS_VALUES[0][0];
+  falseConceptName=BOOLEAN_CONCEPTS_VALUES[0][1];
+  if (!trueFalseGlobalPropertiesPresent)   createConcepts(connection,trueConceptName,falseConceptName);
+  createGlobalProperties(connection,trueConceptName,falseConceptName);
+  changeObs(connection,trueConceptName,falseConceptName);
+}

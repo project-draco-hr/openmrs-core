@@ -1,9 +1,9 @@
 {
   if (log.isDebugEnabled())   log.debug("getConcept() == " + getConcept());
-  if (getConcept() != null) {
+  if (getConcept() != null && !StringUtils.isBlank(s)) {
     String abbrev=getConcept().getDatatype().getHl7Abbreviation();
     if (abbrev.equals("BIT")) {
-      setValueNumeric(Boolean.valueOf(s) ? 1.0 : 0.0);
+      setValueBoolean(Boolean.valueOf(s));
     }
  else     if (abbrev.equals("CWE")) {
       throw new RuntimeException("Not Yet Implemented");
