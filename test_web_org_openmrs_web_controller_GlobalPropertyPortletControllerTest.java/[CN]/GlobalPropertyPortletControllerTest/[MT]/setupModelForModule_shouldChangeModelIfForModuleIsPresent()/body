@@ -1,0 +1,10 @@
+{
+  GlobalPropertyPortletController portletController=new GlobalPropertyPortletController();
+  Map<String,Object> model=new HashMap<String,Object>();
+  String forModule="file";
+  model.put("forModule",forModule);
+  portletController.setupModelForModule(model);
+  Assert.assertEquals(forModule + ".",model.get("propertyPrefix"));
+  Assert.assertEquals("true",model.get("hidePrefix"));
+  Assert.assertEquals(forModule + ".started;" + forModule+ ".mandatory",model.get("excludePrefix"));
+}

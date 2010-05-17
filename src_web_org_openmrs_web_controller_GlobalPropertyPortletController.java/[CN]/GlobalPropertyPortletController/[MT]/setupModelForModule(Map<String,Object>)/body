@@ -1,0 +1,22 @@
+{
+  if (Context.isAuthenticated()) {
+    String forModule=(String)model.get("forModule");
+    if ("".equals(forModule)) {
+      forModule=null;
+      model.put("forModule",forModule);
+    }
+    if (forModule != null) {
+      String modulePrefix=forModule + ".";
+      model.put("propertyPrefix",modulePrefix);
+      model.put("hidePrefix","true");
+      String excludePrefix=(String)model.get("excludePrefix");
+      if (excludePrefix == null) {
+        excludePrefix="";
+      }
+ else {
+        excludePrefix+=";";
+      }
+      model.put("excludePrefix",excludePrefix + modulePrefix + "started;"+ modulePrefix+ "mandatory");
+    }
+  }
+}

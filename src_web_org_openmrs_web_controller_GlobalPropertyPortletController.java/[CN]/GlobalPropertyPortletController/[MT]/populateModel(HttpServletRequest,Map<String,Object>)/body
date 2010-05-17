@@ -1,5 +1,6 @@
 {
   if (Context.isAuthenticated()) {
+    setupModelForModule(model);
     String propertyPrefix=(String)model.get("propertyPrefix");
     if (propertyPrefix == null) {
       propertyPrefix="";
@@ -10,10 +11,23 @@
       excludePrefix=null;
       model.put("excludePrefix",excludePrefix);
     }
+    String[] prefixes=new String[0];
+    if (excludePrefix != null) {
+      prefixes=excludePrefix.split(";");
+    }
     List<GlobalProperty> properties=new ArrayList<GlobalProperty>();
     for (    GlobalProperty p : Context.getAdministrationService().getAllGlobalProperties()) {
-      if (p.getProperty().startsWith(propertyPrefix) && (excludePrefix == null || !p.getProperty().startsWith(excludePrefix))) {
-        properties.add(p);
+      if (p.getProperty().startsWith(propertyPrefix)) {
+        boolean found=false;
+        for (        String prefix : prefixes) {
+          if (p.getProperty().startsWith(prefix)) {
+            found=true;
+            break;
+          }
+        }
+        if (!found) {
+          properties.add(p);
+        }
       }
     }
     model.put("properties",properties);

@@ -1,0 +1,14 @@
+{
+  GlobalPropertyPortletController portletController=new GlobalPropertyPortletController();
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
+  Map<String,Object> model=new HashMap<String,Object>();
+  String excludePrefix="file.started;file.mandatory";
+  model.put("excludePrefix",excludePrefix);
+  GlobalProperty[] globalProperties={new GlobalProperty("file.started",""),new GlobalProperty("file.mandatory",""),new GlobalProperty("file.other","")};
+  Context.getAdministrationService().saveGlobalProperties(Arrays.asList(globalProperties));
+  portletController.populateModel(request,model);
+  List<GlobalProperty> properties=(List<GlobalProperty>)model.get("properties");
+  Assert.assertFalse(properties.contains(globalProperties[0]));
+  Assert.assertFalse(properties.contains(globalProperties[1]));
+  Assert.assertTrue(properties.contains(globalProperties[2]));
+}
