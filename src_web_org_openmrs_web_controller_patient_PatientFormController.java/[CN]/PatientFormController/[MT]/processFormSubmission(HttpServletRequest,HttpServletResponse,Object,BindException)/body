@@ -28,6 +28,21 @@
           }
         }
       }
+      Iterator<PatientIdentifier> identifiers=patient.getIdentifiers().iterator();
+      PatientIdentifier currentId=null;
+      PatientIdentifier preferredId=null;
+      while (identifiers.hasNext()) {
+        currentId=identifiers.next();
+        if (currentId.isPreferred()) {
+          if (preferredId != null) {
+            preferredId.setPreferred(false);
+          }
+          preferredId=currentId;
+        }
+      }
+      if ((preferredId == null) && (currentId != null)) {
+        currentId.setPreferred(true);
+      }
       String[] add1s=ServletRequestUtils.getStringParameters(request,"address1");
       String[] add2s=ServletRequestUtils.getStringParameters(request,"address2");
       String[] cities=ServletRequestUtils.getStringParameters(request,"cityVillage");
@@ -67,6 +82,21 @@
           if (addPrefStatus != null && addPrefStatus.length > i)           pa.setPreferred(new Boolean(addPrefStatus[i]));
           patient.addAddress(pa);
         }
+        Iterator<PersonAddress> addresses=patient.getAddresses().iterator();
+        PersonAddress currentAddress=null;
+        PersonAddress preferredAddress=null;
+        while (addresses.hasNext()) {
+          currentAddress=addresses.next();
+          if (currentAddress.isPreferred()) {
+            if (preferredAddress != null) {
+              preferredAddress.setPreferred(false);
+            }
+            preferredAddress=currentAddress;
+          }
+        }
+        if ((preferredAddress == null) && (currentAddress != null)) {
+          currentAddress.setPreferred(true);
+        }
       }
       objs=patient.getNames().toArray();
       for (int i=0; i < objs.length; i++) {
@@ -94,6 +124,21 @@
             if (degrees.length >= i + 1)             pn.setDegree(degrees[i]);
             patient.addName(pn);
           }
+        }
+        Iterator<PersonName> names=patient.getNames().iterator();
+        PersonName currentName=null;
+        PersonName preferredName=null;
+        while (names.hasNext()) {
+          currentName=names.next();
+          if (currentName.isPreferred()) {
+            if (preferredName != null) {
+              preferredName.setPreferred(false);
+            }
+            preferredName=currentName;
+          }
+        }
+        if ((preferredName == null) && (currentName != null)) {
+          currentName.setPreferred(true);
         }
       }
       for (      PatientIdentifier pi : patient.getIdentifiers()) {
