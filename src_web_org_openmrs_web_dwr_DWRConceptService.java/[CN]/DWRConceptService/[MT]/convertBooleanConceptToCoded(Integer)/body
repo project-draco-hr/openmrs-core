@@ -1,0 +1,14 @@
+{
+  try {
+    Context.getConceptService().convertBooleanConceptToCoded(Context.getConceptService().getConcept(conceptId));
+    return "refresh";
+  }
+ catch (  ConceptsLockedException cle) {
+    log.error("Tried to save/convert concept while concepts were locked",cle);
+    return Context.getMessageSourceService().getMessage("Concept.concepts.locked");
+  }
+catch (  APIException e) {
+    log.error("Error while trying to change the datatype of concept",e);
+    return Context.getMessageSourceService().getMessage("Concept.cannot.save");
+  }
+}
