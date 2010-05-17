@@ -2,6 +2,7 @@
   validate(oru);
   MSH msh=getMSH(oru);
   PID pid=getPID(oru);
+  List<NK1> nk1List=getNK1List(oru);
   PV1 pv1=getPV1(oru);
   ORC orc=getORC(oru);
   String messageControlId=msh.getMessageControlID().getValue();
@@ -16,6 +17,7 @@
  catch (  Exception e) {
     log.error("Error while processing Discharge To Location (" + messageControlId + ")",e);
   }
+  for (  NK1 nk1 : nk1List)   processNK1(patient,nk1);
   List<ConceptProposal> conceptProposals=new ArrayList<ConceptProposal>();
   if (log.isDebugEnabled())   log.debug("Creating observations for message " + messageControlId + "...");
   List<Concept> ignoredConcepts=new ArrayList<Concept>();

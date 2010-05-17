@@ -3,7 +3,7 @@
   Patient patient=new Patient(3);
   Concept concept=new Concept(21);
   Assert.assertEquals(0,obsService.getObservationsByPersonAndConcept(patient,concept).size());
-  String hl7String="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20090728170332||ORU^R01|gu99yBh4loLX2mh9cHaV|P|2.5|1||||||||4^AMRS.ELD.FORMID\rPID|||3^^^^||Beren^John^Bondo||\rPV1||O|1^Unknown||||1^Super User (admin)|||||||||||||||||||||||||||||||||||||20090714|||||||V\rORC|RE||||||||20090728165937|1^Super User\rOBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT\rOBX|2|NM|5497^CD4 COUNT^99DCT||123|||||||||20090714\rOBR|3|||23^FOOD CONSTRUCT^99DCT\rOBX|1|CWE|21^FOOD ASSISTANCE FOR ENTIRE FAMILY^99DCT||22^UNKNOWN^99DCT^2471^UNKNOWN^99NAM|||||||||20090714";
+  String hl7String="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20090728170332||ORU^R01|gu99yBh4loLX2mh9cHaV|P|2.5|1||||||||4^AMRS.ELD.FORMID\r" + "PID|||3^^^^||Beren^John^Bondo||\r" + "PV1||O|1^Unknown||||1^Super User (admin)|||||||||||||||||||||||||||||||||||||20090714|||||||V\r"+ "ORC|RE||||||||20090728165937|1^Super User\r"+ "OBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT\r"+ "OBX|2|NM|5497^CD4 COUNT^99DCT||123|||||||||20090714\r"+ "OBR|3|||23^FOOD CONSTRUCT^99DCT\r"+ "OBX|1|CWE|21^FOOD ASSISTANCE FOR ENTIRE FAMILY^99DCT||22^UNKNOWN^99DCT^2471^UNKNOWN^99NAM|||||||||20090714";
   Message hl7message=parser.parse(hl7String);
   router.processMessage(hl7message);
   List<Obs> obss=obsService.getObservationsByPersonAndConcept(patient,concept);
