@@ -1,12 +1,14 @@
 {
   PreparedStatement updateStatement=null;
   try {
-    final int conceptId=getInt(connection,"SELECT MAX(concept_id) + 1 FROM concept");
+    int conceptId=getInt(connection,"SELECT MAX(concept_id) FROM concept");
+    conceptId++;
     updateStatement=connection.prepareStatement("INSERT INTO concept (concept_id, short_name, description, datatype_id, class_id, is_set, creator, date_created, uuid) VALUES (?, '', '', 4, 11, 0, 1, NOW(), ?)");
     updateStatement.setInt(1,conceptId);
     updateStatement.setString(2,UUID.randomUUID().toString());
     updateStatement.executeUpdate();
-    final int conceptNameId=getInt(connection,"SELECT MAX(concept_name_id) + 1 FROM concept_name");
+    int conceptNameId=getInt(connection,"SELECT MAX(concept_name_id) FROM concept_name");
+    conceptNameId++;
     updateStatement=connection.prepareStatement("INSERT INTO concept_name (concept_name_id, concept_id, locale, name, creator, date_created, uuid) VALUES (?, ?, 'en', ?, 1, NOW(), ?)");
     updateStatement.setInt(1,conceptNameId);
     updateStatement.setInt(2,conceptId);
