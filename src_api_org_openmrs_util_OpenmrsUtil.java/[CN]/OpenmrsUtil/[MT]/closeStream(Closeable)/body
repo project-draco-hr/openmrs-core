@@ -1,0 +1,10 @@
+{
+  if (closableStream != null) {
+    try {
+      closableStream.close();
+    }
+ catch (    IOException io) {
+      log.trace("Error occurred while closing stream",io);
+    }
+  }
+}

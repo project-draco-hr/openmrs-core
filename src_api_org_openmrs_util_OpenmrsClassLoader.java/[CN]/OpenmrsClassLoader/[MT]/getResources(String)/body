@@ -1,0 +1,14 @@
+{
+  Set<URL> results=new HashSet<URL>();
+  for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
+    Enumeration<URL> urls=classLoader.getResources(packageName);
+    while (urls.hasMoreElements()) {
+      URL result=urls.nextElement();
+      if (result != null)       results.add(result);
+    }
+  }
+  for (Enumeration<URL> en=super.getResources(packageName); en.hasMoreElements(); ) {
+    results.add(en.nextElement());
+  }
+  return Collections.enumeration(results);
+}

@@ -1,10 +1,4 @@
 {
   log.debug("Executing changelog: " + changelog);
-  ChangeSetExecutorCallback doNothingCallback=new ChangeSetExecutorCallback(){
-    public void executing(    ChangeSet changeSet,    int numChangeSetsToRun){
-      log.debug("Executing changeset: " + changeSet.getId() + " numChangeSetsToRun: "+ numChangeSetsToRun);
-    }
-  }
-;
-  executeChangelog(changelog,userInput,doNothingCallback);
+  executeChangelog(changelog,userInput,null);
 }

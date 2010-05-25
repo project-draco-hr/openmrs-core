@@ -2,7 +2,7 @@
   log.debug("Getting unrun changesets");
   Database database=null;
   try {
-    Liquibase liquibase=getLiquibase(null);
+    Liquibase liquibase=getLiquibase(null,null);
     database=liquibase.getDatabase();
     List<ChangeSet> changeSets=liquibase.listUnrunChangeSets(CONTEXT);
     List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();

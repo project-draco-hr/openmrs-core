@@ -1,4 +1,8 @@
 {
-  if (locales == null)   locales=findLocales();
+  long now=new Date().getTime();
+  if (locales == null || cacheMilliSeconds <= 0 || now - cacheMilliSeconds > lastCached) {
+    locales=findLocales();
+    lastCached=now;
+  }
   return locales;
 }
