@@ -28,6 +28,7 @@
   finally {
         Context.removeProxyPrivilege("");
       }
+      runLiquibase(module);
       getStartedModulesMap().put(moduleId,module);
       try {
         saveGlobalProperty(moduleId + ".started","true",getGlobalPropertyStartedDescription(moduleId));

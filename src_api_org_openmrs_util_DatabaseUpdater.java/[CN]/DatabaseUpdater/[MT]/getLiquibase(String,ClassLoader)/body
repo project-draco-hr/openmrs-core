@@ -6,6 +6,7 @@
  catch (  SQLException e) {
     throw new Exception("Unable to get a connection to the database.  Please check your openmrs runtime properties file and make sure you have the correct connection.username and connection.password set",e);
   }
+  if (cl == null)   cl=OpenmrsClassLoader.getInstance();
   try {
     Database database=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);
     database.setDatabaseChangeLogTableName("liquibasechangelog");
@@ -14,10 +15,10 @@
       database.setDatabaseChangeLogTableName(database.getDatabaseChangeLogTableName().toUpperCase());
       database.setDatabaseChangeLogLockTableName(database.getDatabaseChangeLogLockTableName().toUpperCase());
     }
-    FileOpener clFO=new ClassLoaderFileOpener();
+    FileOpener openmrsFO=new ClassLoaderFileOpener(cl);
     FileOpener fsFO=new FileSystemFileOpener();
     if (changeLogFile == null)     changeLogFile=CHANGE_LOG_FILE;
-    return new Liquibase(changeLogFile,new CompositeFileOpener(clFO,fsFO),database);
+    return new Liquibase(changeLogFile,new CompositeFileOpener(openmrsFO,fsFO),database);
   }
  catch (  Exception e) {
     if (connection != null)     connection.close();

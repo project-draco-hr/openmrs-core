@@ -1,7 +1,7 @@
 {
   Database database=null;
   try {
-    Liquibase liquibase=getLiquibase(CHANGE_LOG_FILE);
+    Liquibase liquibase=getLiquibase(CHANGE_LOG_FILE,null);
     database=liquibase.getDatabase();
     DatabaseChangeLog changeLog=new ChangeLogParser(new HashMap<String,Object>()).parse(CHANGE_LOG_FILE,liquibase.getFileOpener());
     List<ChangeSet> changeSets=changeLog.getChangeSets();

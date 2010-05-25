@@ -16,7 +16,7 @@
       fileToPropertiesMap.put(propertiesFile,props);
     }
  catch (    Exception e) {
-      log.error("Error generated",e);
+      log.error("Unable to load properties from file: " + propertiesFile.getAbsolutePath(),e);
     }
   }
   for (  PresentationMessage message : fromSource.getPresentations()) {
