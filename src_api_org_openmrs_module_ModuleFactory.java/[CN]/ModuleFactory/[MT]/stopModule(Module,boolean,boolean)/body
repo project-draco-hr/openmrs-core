@@ -33,7 +33,7 @@
         for (        AdvicePoint advice : mod.getAdvicePoints()) {
           Class cls=null;
           try {
-            cls=Class.forName(advice.getPoint());
+            cls=Context.loadClass(advice.getPoint());
             Object aopObject=advice.getClassInstance();
             if (Advisor.class.isInstance(aopObject)) {
               log.debug("adding advisor: " + aopObject.getClass());
