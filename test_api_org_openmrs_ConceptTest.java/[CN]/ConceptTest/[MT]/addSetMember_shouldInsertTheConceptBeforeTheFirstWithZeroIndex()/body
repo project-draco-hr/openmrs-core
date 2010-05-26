@@ -1,0 +1,10 @@
+{
+  Concept concept=new Concept();
+  Concept firstSetMember=new Concept(2);
+  concept.addSetMember(firstSetMember);
+  Concept setMember=new Concept(3);
+  concept.addSetMember(setMember,0);
+  ConceptSet firstConceptSet=(ConceptSet)concept.getConceptSets().toArray()[0];
+  ConceptSet secondConceptSet=(ConceptSet)concept.getConceptSets().toArray()[1];
+  Assert.assertTrue(firstConceptSet.getSortWeight() < secondConceptSet.getSortWeight());
+}

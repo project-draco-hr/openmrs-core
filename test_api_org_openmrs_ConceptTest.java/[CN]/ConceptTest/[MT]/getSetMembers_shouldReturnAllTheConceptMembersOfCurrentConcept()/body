@@ -1,0 +1,11 @@
+{
+  Concept c=new Concept();
+  Concept setMember1=new Concept(12345);
+  c.addSetMember(setMember1);
+  Concept setMember2=new Concept(67890);
+  c.addSetMember(setMember2);
+  List<Concept> setMembers=c.getSetMembers();
+  Assert.assertEquals(2,setMembers.size());
+  Assert.assertEquals(setMember1,setMembers.get(0));
+  Assert.assertEquals(setMember2,setMembers.get(1));
+}

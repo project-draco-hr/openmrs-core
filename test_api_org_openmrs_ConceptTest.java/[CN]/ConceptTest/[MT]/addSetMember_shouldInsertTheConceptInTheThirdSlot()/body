@@ -1,0 +1,13 @@
+{
+  Concept concept=new Concept();
+  Concept firstSetMember=new Concept(2);
+  concept.addSetMember(firstSetMember);
+  Concept secondSetMember=new Concept(3);
+  concept.addSetMember(secondSetMember);
+  Concept thirdSetMember=new Concept(4);
+  concept.addSetMember(thirdSetMember);
+  Concept newThirdSetMember=new Concept(5);
+  concept.addSetMember(newThirdSetMember,2);
+  ConceptSet thirdConceptSet=(ConceptSet)concept.getConceptSets().toArray()[2];
+  Assert.assertEquals(newThirdSetMember,thirdConceptSet.getConcept());
+}
