@@ -1,0 +1,6 @@
+{
+  executeDataSet(XML_FILENAME);
+  Role role=Context.getUserService().getRole(704);
+  Assert.assertEquals("Some Role",role.getRole());
+  Assert.assertEquals(new Integer(704),role.getRoleId());
+}
