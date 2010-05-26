@@ -1,5 +1,7 @@
 {
   Advised advisedService=(Advised)services.get(cls);
   Set<Advisor> advisorsToRemove=addedAdvisors.get(cls);
-  if (advisedService != null && advisorsToRemove != null)   for (  Advisor advisor : advisorsToRemove)   removeAdvisor(cls,advisor);
+  if (advisedService != null && advisorsToRemove != null) {
+    for (    Advisor advisor : advisorsToRemove.toArray(new Advisor[]{}))     removeAdvisor(cls,advisor);
+  }
 }
