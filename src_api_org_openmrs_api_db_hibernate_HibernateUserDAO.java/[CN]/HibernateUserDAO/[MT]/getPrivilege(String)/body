@@ -1,3 +1,3 @@
 {
-  return (Privilege)sessionFactory.getCurrentSession().createCriteria(Privilege.class,"p").add(Expression.eq("p.privilege",privilege)).uniqueResult();
+  return (Privilege)sessionFactory.getCurrentSession().get(Privilege.class,p);
 }
