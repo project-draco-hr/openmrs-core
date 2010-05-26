@@ -1,0 +1,7 @@
+{
+  Concept concept=new Concept();
+  Concept setMember=new Concept(2);
+  concept.addSetMember(setMember,0);
+  ConceptSet conceptSet=(ConceptSet)concept.getConceptSets().toArray()[0];
+  Assert.assertEquals(setMember,conceptSet.getConcept());
+}
