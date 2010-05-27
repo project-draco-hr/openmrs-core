@@ -1,0 +1,11 @@
+{
+  RelationshipType testRelationshipType=new RelationshipType(1);
+  Map<Integer,List<Relationship>> results=Context.getPatientSetService().getRelationships(null,testRelationshipType);
+  assertNotNull(results);
+  assertTrue("getRelationships should return a result greater than 0",results.size() > 0);
+  for (  List<Relationship> relationships : results.values()) {
+    for (    Relationship relationship : relationships) {
+      assertEquals(testRelationshipType.getRelationshipTypeId(),relationship.getRelationshipType().getRelationshipTypeId());
+    }
+  }
+}

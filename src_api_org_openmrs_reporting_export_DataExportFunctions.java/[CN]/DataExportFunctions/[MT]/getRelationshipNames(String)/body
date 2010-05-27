@@ -7,7 +7,7 @@
     StringBuilder sb=new StringBuilder();
     for (Iterator<Relationship> i=rels.iterator(); i.hasNext(); ) {
       Relationship r=i.next();
-      sb.append(r.getPersonA().toString());
+      sb.append(r.getPersonA().getPersonName().getFullName());
       if (i.hasNext())       sb.append(" ");
     }
     return sb.toString();
