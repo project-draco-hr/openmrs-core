@@ -2,7 +2,7 @@
   Map<Integer,List<Relationship>> ret=new HashMap<Integer,List<Relationship>>();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class);
   criteria.setCacheMode(CacheMode.IGNORE);
-  if (relType != null)   criteria.add(Restrictions.eq("relationship",relType));
+  if (relType != null)   criteria.add(Restrictions.eq("relationshipType",relType));
   if (patients != null)   criteria.createCriteria("personB").add(Restrictions.in("personId",patients.getMemberIds()));
   criteria.add(Restrictions.eq("voided",false));
   log.debug("criteria: " + criteria);
