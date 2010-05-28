@@ -1,3 +1,6 @@
 {
-  dao.deleteHL7InArchive(hl7InArchive);
+  if (hl7InArchive != null) {
+    if (!isArchiveMigrationRequired())     dao.deleteHL7InArchiveInFileSystem(hl7InArchive.getUuid());
+ else     throw new APIException("Can't purge hl7 archive before hl7 in archive migration has been run and completed");
+  }
 }

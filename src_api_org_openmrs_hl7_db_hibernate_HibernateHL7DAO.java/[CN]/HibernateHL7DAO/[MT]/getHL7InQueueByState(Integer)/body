@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createQuery("from HL7InQueue where messageState = ?").setParameter(0,state,Hibernate.INTEGER).list();
+}

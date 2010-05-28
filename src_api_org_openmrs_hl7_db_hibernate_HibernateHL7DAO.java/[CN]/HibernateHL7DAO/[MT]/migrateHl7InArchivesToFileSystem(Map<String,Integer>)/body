@@ -1,0 +1,57 @@
+{
+  int numberTransferred=0;
+  int numberOfFailedTransfers=0;
+  List<HL7InArchive> hl7InArchives=getAllHL7InArchives(HL7Constants.MIGRATION_MAX_BATCH_SIZE);
+  while (Hl7InArchivesMigrateThread.getTransferStatus() == Status.RUNNING && hl7InArchives != null && hl7InArchives.size() > 0) {
+    Iterator<HL7InArchive> iterator=hl7InArchives.iterator();
+    while (Hl7InArchivesMigrateThread.getTransferStatus() == Status.RUNNING && iterator.hasNext()) {
+      HL7InArchive archive=iterator.next();
+      if (archive.getMessageState().equals(HL7Constants.HL7_STATUS_PROCESSED)) {
+        if (writeHL7InArchiveToFileSystem(archive)) {
+          deleteHL7InArchive(archive);
+          progressStatusMap.put(HL7Constants.NUMBER_TRANSFERRED_KEY,numberTransferred++);
+        }
+ else         progressStatusMap.put(HL7Constants.NUMBER_OF_FAILED_TRANSFERS_KEY,numberOfFailedTransfers++);
+      }
+ else {
+        HL7InQueue archiveToMoveToHl7Queue=new HL7InQueue();
+        archiveToMoveToHl7Queue.setHL7Source(archive.getHL7Source());
+        archiveToMoveToHl7Queue.setHL7SourceKey(archive.getHL7SourceKey());
+        archiveToMoveToHl7Queue.setHL7Data(archive.getHL7Data());
+        archiveToMoveToHl7Queue.setMessageState(archive.getMessageState());
+        archiveToMoveToHl7Queue.setUuid(UUID.randomUUID().toString());
+        archiveToMoveToHl7Queue.setDateCreated(archive.getDateCreated());
+        if (saveHL7InQueue(archiveToMoveToHl7Queue) != null) {
+          deleteHL7InArchive(archive);
+          progressStatusMap.put(HL7Constants.NUMBER_TRANSFERRED_KEY,numberTransferred++);
+          if (log.isDebugEnabled())           log.debug("Moved hl7 archive with id '" + archive.getHL7InArchiveId() + "' back into the hl7 queue");
+        }
+ else         progressStatusMap.put(HL7Constants.NUMBER_OF_FAILED_TRANSFERS_KEY,numberOfFailedTransfers++);
+      }
+    }
+    hl7InArchives=getAllHL7InArchives(HL7Constants.MIGRATION_MAX_BATCH_SIZE);
+  }
+  if (Hl7InArchivesMigrateThread.getTransferStatus() != Status.STOPPED && !isArchiveMigrationRequired()) {
+    Connection conn=sessionFactory.getCurrentSession().connection();
+    Statement stmt=null;
+    try {
+      stmt=conn.createStatement();
+      stmt.executeUpdate("DROP TABLE hl7_in_archive");
+      if (log.isDebugEnabled())       log.debug("dropped table 'hl7_in_archive'");
+    }
+ catch (    SQLException e) {
+      log.warn("Failed to drop 'hl7_in_archive' table");
+    }
+ finally {
+      if (stmt != null) {
+        try {
+          stmt.close();
+        }
+ catch (        SQLException e) {
+          log.warn("Error generated",e);
+        }
+      }
+    }
+  }
+  if (log.isDebugEnabled())   log.debug("Transfer of HL7 archives has completed or has been stopped");
+}

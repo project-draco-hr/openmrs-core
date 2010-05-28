@@ -1,0 +1,11 @@
+{
+  Map<String,Object> statusMap=new HashMap<String,Object>();
+  statusMap.put("numberMigrated",Hl7InArchivesMigrateThread.getNumberTransferred());
+  Status status=Hl7InArchivesMigrateThread.getTransferStatus();
+  statusMap.put("status",status.toString());
+  if (status == Status.COMPLETED) {
+    if (Hl7InArchivesMigrateThread.getNumberOfFailedTransfers() > 0)     statusMap.put("areAllTransferred",false);
+ else     statusMap.put("areAllTransferred",true);
+  }
+  return statusMap;
+}

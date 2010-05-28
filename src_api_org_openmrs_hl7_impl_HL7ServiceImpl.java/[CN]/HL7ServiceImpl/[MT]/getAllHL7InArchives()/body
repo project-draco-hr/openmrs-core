@@ -1,3 +1,4 @@
 {
-  return dao.getAllHL7InArchives();
+  if (!isArchiveMigrationRequired())   return dao.getAllHL7InArchivesInFileSystem();
+  throw new APIException("Can't fetch all hl7 archives before hl7 in archive migration has been run");
 }

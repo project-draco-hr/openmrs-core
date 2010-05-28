@@ -1,0 +1,29 @@
+{
+  if (directoryToSearch != null) {
+    if (!directoryToSearch.isDirectory())     throw new DAOException("The file '" + directoryToSearch.getAbsolutePath() + "' is not a directory");
+    if (filesFound == null)     filesFound=new LinkedList<File>();
+    File filesInThisDirectory[]=directoryToSearch.listFiles(new FileFilter(){
+      @Override public boolean accept(      File file){
+        return file.isFile();
+      }
+    }
+);
+    if (filesInThisDirectory != null && filesInThisDirectory.length > 0) {
+      for (      File file : filesInThisDirectory) {
+        filesFound.add(file);
+      }
+    }
+    File subDirectories[]=directoryToSearch.listFiles(new FileFilter(){
+      @Override public boolean accept(      File file){
+        return file.isDirectory();
+      }
+    }
+);
+    if (subDirectories != null && subDirectories.length > 0) {
+      for (      File file : subDirectories) {
+        getAllFiles(file,filesFound);
+      }
+    }
+  }
+  return filesFound;
+}

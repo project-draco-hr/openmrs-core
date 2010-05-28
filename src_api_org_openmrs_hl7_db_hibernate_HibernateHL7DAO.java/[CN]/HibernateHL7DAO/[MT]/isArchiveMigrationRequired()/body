@@ -1,0 +1,33 @@
+{
+  Context.flushSession();
+  Connection conn=sessionFactory.getCurrentSession().connection();
+  PreparedStatement ps=null;
+  try {
+    DatabaseMetaData dbm=conn.getMetaData();
+    ResultSet tables=dbm.getTables(null,null,"hl7_in_archive",null);
+    if (!tables.next()) {
+      if (log.isDebugEnabled())       log.debug("'hl7_in_archive' table doesn't exist");
+      return false;
+    }
+    ps=conn.prepareStatement("select count(*) AS number_of_rows from hl7_in_archive");
+    ResultSet rs=ps.executeQuery();
+    if (rs.next()) {
+      int rows=rs.getInt("number_of_rows");
+      if (rows == 0)       return false;
+    }
+  }
+ catch (  SQLException e) {
+    throw new DAOException("Error generated",e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Error generated",e);
+      }
+    }
+  }
+  return true;
+}

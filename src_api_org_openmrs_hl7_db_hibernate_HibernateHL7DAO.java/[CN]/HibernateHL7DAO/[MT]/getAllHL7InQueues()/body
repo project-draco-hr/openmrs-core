@@ -1,3 +1,3 @@
 {
-  return sessionFactory.getCurrentSession().createQuery("from HL7InQueue order by HL7InQueueId").list();
+  return sessionFactory.getCurrentSession().createQuery("from HL7InQueue where messageState = ? order by HL7InQueueId").setParameter(0,HL7Constants.HL7_STATUS_PENDING,Hibernate.INTEGER).list();
 }
