@@ -80,7 +80,6 @@ catch (      HL7Exception e) {
       }
  finally {
         if (errorInHL7Queue != null) {
-          log.warn("HL7Exception: " + errorInHL7Queue);
           throw new HL7Exception("Improperly formatted OBX: " + PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")),HL7Exception.DATA_TYPE_ERROR,errorInHL7Queue);
         }
       }
