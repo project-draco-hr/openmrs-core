@@ -30,7 +30,12 @@
       concept=concept.hydrate(concept.getConceptId().toString());
       obs.setConcept(concept);
       if (concept.getDatatype().isBoolean())       obs.setValueBoolean(value.equals("1"));
- else       if (concept.getDatatype().isNumeric())       obs.setValueNumeric(Double.valueOf(value));
+ else       if (concept.getDatatype().isNumeric())       try {
+        obs.setValueNumeric(Double.valueOf(value));
+      }
+ catch (      NumberFormatException e) {
+        throw new HL7Exception("numeric (NM) value '" + value + "' is not numeric for concept #"+ concept.getConceptId()+ " ("+ conceptName.getName()+ ") in message "+ uid,e);
+      }
  else       if (concept.getDatatype().isCoded()) {
         Concept answer=value.equals("1") ? Context.getConceptService().getTrueConcept() : Context.getConceptService().getFalseConcept();
         boolean isValidAnswer=false;
