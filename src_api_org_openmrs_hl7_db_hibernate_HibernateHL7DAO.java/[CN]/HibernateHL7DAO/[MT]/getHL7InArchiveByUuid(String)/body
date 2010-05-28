@@ -1,0 +1,6 @@
+{
+  Query query=sessionFactory.getCurrentSession().createQuery("from HL7InArchive where uuid = ?").setParameter(0,uuid,Hibernate.STRING);
+  Object record=query.uniqueResult();
+  if (record != null)   return (HL7InArchive)record;
+  return null;
+}

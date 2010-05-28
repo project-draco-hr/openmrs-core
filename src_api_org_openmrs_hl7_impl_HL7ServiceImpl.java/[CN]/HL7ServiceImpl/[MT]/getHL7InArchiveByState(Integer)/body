@@ -1,3 +1,7 @@
 {
-  return dao.getHL7InArchiveByState(state);
+  if (!isArchiveMigrationRequired()) {
+    if (state.equals(HL7Constants.HL7_STATUS_PROCESSED))     return getAllHL7InArchives();
+    return Collections.emptyList();
+  }
+  throw new APIException("Can't fetch hl7 archives by state before hl7 in archive migration has been run");
 }

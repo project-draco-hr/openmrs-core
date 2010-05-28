@@ -1,0 +1,17 @@
+{
+  try {
+    Context.openSession();
+    Context.setUserContext(userContext);
+    Context.getHL7Service().migrateHl7InArchivesToFileSystem(progressStatusMap);
+    if (transferStatus != Status.STOPPED)     transferStatus=Status.COMPLETED;
+ else     if (transferStatus == Status.STOPPED)     transferStatus=Status.STOPPED;
+  }
+ catch (  Exception e) {
+    transferStatus=Status.ERROR;
+    log.warn("Some error occurred while migrating hl7 archives",e);
+  }
+ finally {
+    resetStateProperties();
+    Context.closeSession();
+  }
+}

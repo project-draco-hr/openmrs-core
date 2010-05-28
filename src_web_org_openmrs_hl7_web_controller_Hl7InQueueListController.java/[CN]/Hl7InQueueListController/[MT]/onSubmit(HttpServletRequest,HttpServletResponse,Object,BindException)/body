@@ -11,10 +11,8 @@
       Object[] args=new Object[]{queueId};
       try {
         HL7InQueue hl7InQueue=hL7Service.getHL7InQueue(Integer.valueOf(queueId));
-        HL7InArchive hl7InArchive=new HL7InArchive(hl7InQueue);
-        hl7InArchive.setMessageState(HL7Constants.HL7_STATUS_DELETED);
-        hL7Service.saveHL7InArchive(hl7InArchive);
-        hL7Service.purgeHL7InQueue(hl7InQueue);
+        hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_DELETED);
+        hL7Service.saveHL7InQueue(hl7InQueue);
         success.append(msa.getMessage("Hl7inQueue.queueList.deleted",args) + "<br/>");
       }
  catch (      APIException e) {

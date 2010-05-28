@@ -1,0 +1,6 @@
+{
+  File fileToDelete=findHl7ArchiveByUuid(HL7Util.getHl7ArchivesDirectory(),uuid);
+  if (fileToDelete != null && fileToDelete.exists())   return fileToDelete.delete();
+  log.warn("No hl7 archive with id '" + uuid + "' was found");
+  return false;
+}

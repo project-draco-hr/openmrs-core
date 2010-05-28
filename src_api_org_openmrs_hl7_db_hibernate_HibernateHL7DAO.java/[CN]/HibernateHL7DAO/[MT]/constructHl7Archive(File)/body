@@ -1,0 +1,53 @@
+{
+  HL7InArchive hl7InArchive=null;
+  if (hl7ArchiveFile != null && hl7ArchiveFile.isFile()) {
+    if (!checkIfArchiveFilenameIsValid(hl7ArchiveFile))     throw new DAOException("'" + hl7ArchiveFile.getAbsolutePath() + "' is an invalid hl7 archive file with.");
+    Scanner filenameScanner=null;
+    Scanner fileContentScanner=null;
+    hl7InArchive=new HL7InArchive();
+    try {
+      filenameScanner=new Scanner(hl7ArchiveFile.getName());
+      filenameScanner.useDelimiter("_");
+      hl7InArchive.setUuid(filenameScanner.next());
+      Integer sourceId=Integer.valueOf(filenameScanner.next());
+      HL7Source source=Context.getHL7Service().getHL7Source(sourceId);
+      if (source != null)       hl7InArchive.setHL7Source(source);
+ else       log.warn("No hl7 source matches source id for hl7 archive file '" + hl7ArchiveFile.getAbsolutePath() + "'");
+      String milliSecondsString=filenameScanner.next();
+      if (!filenameScanner.hasNext())       milliSecondsString=milliSecondsString.substring(0,milliSecondsString.indexOf(".txt"));
+ else {
+        String sourceKeyWithFileExt=filenameScanner.next();
+        hl7InArchive.setHL7SourceKey(sourceKeyWithFileExt.substring(0,sourceKeyWithFileExt.indexOf(".txt")));
+      }
+      hl7InArchive.setDateCreated(new Date(Long.valueOf(milliSecondsString)));
+      fileContentScanner=new Scanner(hl7ArchiveFile);
+      StringBuffer sb=new StringBuffer();
+      while (fileContentScanner.hasNext()) {
+        sb.append(fileContentScanner.nextLine() + System.getProperty("line.separator"));
+      }
+      hl7InArchive.setHL7Data(sb.toString());
+      hl7InArchive.setMessageState(HL7Constants.HL7_STATUS_PROCESSED);
+    }
+ catch (    NumberFormatException e) {
+      log.warn("'" + hl7ArchiveFile.getName() + " is an invalid hl7 archive file name");
+    }
+catch (    FileNotFoundException e) {
+      log.warn("The hl7 archive file '" + hl7ArchiveFile.getAbsolutePath() + " doesn't exist");
+    }
+ finally {
+      if (filenameScanner != null) {
+        if (filenameScanner.ioException() != null) {
+          log.warn("An error occurred while trying to read the file '" + hl7ArchiveFile.getAbsolutePath() + "'");
+        }
+        filenameScanner.close();
+      }
+      if (fileContentScanner != null) {
+        if (fileContentScanner.ioException() != null) {
+          log.warn("An error occurred while trying to read the file '" + hl7ArchiveFile.getAbsolutePath() + "'");
+        }
+        fileContentScanner.close();
+      }
+    }
+  }
+  return hl7InArchive;
+}
