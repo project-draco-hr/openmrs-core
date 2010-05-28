@@ -1,0 +1,6 @@
+{
+  String hl7string="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20080226102656||ORU^R01|JqnfhKKtouEz8kzTk6Zo|P|2.5|1||||||||16^AMRS.ELD.FORMID\r" + "PID|||7^^^^||Collet^Test^Chebaskwony||\r" + "PV1||O|1^Unknown Location||||1^Super User (1-8)|||||||||||||||||||||||||||||||||||||20080212|||||||V\r"+ "ORC|RE||||||||20080226102537|1^Super User\r"+ "OBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT\r"+ "OBX|2|NM|19^FAVORITE FOOD, NON-CODED^99DCT||1|||||||||20080206";
+  Assert.assertEquals("Text",Context.getConceptService().getConcept(19).getDatatype().getName());
+  Message hl7message=parser.parse(hl7string);
+  router.processMessage(hl7message);
+}
