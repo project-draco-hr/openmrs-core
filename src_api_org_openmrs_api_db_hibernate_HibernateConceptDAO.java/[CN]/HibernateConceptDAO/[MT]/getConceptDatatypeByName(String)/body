@@ -1,0 +1,7 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
+  if (name != null) {
+    criteria.add(Restrictions.eq("name",name));
+  }
+  return (ConceptDatatype)criteria.uniqueResult();
+}
