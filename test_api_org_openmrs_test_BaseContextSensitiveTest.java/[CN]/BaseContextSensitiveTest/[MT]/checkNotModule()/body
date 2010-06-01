@@ -1,0 +1,5 @@
+{
+  if (this.getClass().getPackage().toString().contains("org.openmrs.module.") && !(this instanceof BaseModuleContextSensitiveTest)) {
+    throw new RuntimeException("Module unit test classes should extend BaseModuleContextSensitiveTest, not just BaseContextSensitiveTest");
+  }
+}

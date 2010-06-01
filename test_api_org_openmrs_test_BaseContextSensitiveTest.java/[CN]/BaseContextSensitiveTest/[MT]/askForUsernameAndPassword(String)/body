@@ -23,7 +23,7 @@
   frame.setVisible(true);
   frame.setTitle("JUnit Test Credentials");
   TimerTask later=new TimerTask(){
-    public void run(){
+    @Override public void run(){
       if (frame != null) {
         frame.toFront();
         usernameField.grabFocus();
@@ -33,7 +33,7 @@
 ;
   new Timer().schedule(later,500);
   TimerTask laterStill=new TimerTask(){
-    public void run(){
+    @Override public void run(){
       if (frame != null) {
         frame.toFront();
         usernameField.grabFocus();
