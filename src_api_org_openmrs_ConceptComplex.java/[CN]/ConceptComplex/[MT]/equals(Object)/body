@@ -3,5 +3,8 @@
     ConceptComplex c=(ConceptComplex)obj;
     return (this.getConceptId().equals(c.getConceptId()));
   }
+ else   if (obj instanceof Concept) {
+    if (obj.equals(this))     return true;
+  }
   return obj == this;
 }
