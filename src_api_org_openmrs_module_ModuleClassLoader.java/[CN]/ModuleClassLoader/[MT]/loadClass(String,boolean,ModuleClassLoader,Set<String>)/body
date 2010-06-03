@@ -18,16 +18,14 @@
     throw new ClassNotFoundException(msg);
   }
   Class<?> result=null;
+  result=findLoadedClass(name);
+  if (result != null) {
+    checkClassVisibility(result,requestor);
+    return result;
+  }
 synchronized (this) {
-    result=findLoadedClass(name);
-    if (result != null) {
-      checkClassVisibility(result,requestor);
-      return result;
-    }
     try {
-synchronized (getClass()) {
-        result=findClass(name);
-      }
+      result=findClass(name);
     }
  catch (    LinkageError le) {
       throw le;
