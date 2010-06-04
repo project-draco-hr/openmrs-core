@@ -1,5 +1,6 @@
 {
   String path=request.getServletPath() + request.getPathInfo();
+  if (rewrites != null && rewrites.containsKey(path))   path=rewrites.get(path);
   if (interpretJstl)   path+=".withjstl";
   return new ModelAndView(path);
 }
