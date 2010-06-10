@@ -3,15 +3,15 @@
   try {
     stmt=connection.createStatement();
     ResultSet rs=stmt.executeQuery(sql);
-    int result;
+    Integer result=null;
     if (rs.next()) {
       result=rs.getInt(1);
     }
  else {
-      throw new CustomChangeException("no result in getInt");
+      log.debug("Query returned no results: " + sql);
     }
     if (rs.next()) {
-      throw new CustomChangeException("multiple results in getInt");
+      log.warn("Query returned multiple results when we expected just one: " + sql);
     }
     return result;
   }

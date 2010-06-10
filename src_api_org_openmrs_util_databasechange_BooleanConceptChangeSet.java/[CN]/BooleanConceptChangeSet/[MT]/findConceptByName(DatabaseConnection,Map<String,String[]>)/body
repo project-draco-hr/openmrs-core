@@ -1,0 +1,10 @@
+{
+  for (  Map.Entry<String,String[]> e : names.entrySet()) {
+    String locale=e.getKey();
+    for (    String name : e.getValue()) {
+      Integer ret=getInt(connection,"select concept_id from concept_name where name = '" + name + "' and locale like '"+ locale+ "%'");
+      if (ret != null)       return ret;
+    }
+  }
+  return null;
+}

@@ -1,7 +1,5 @@
 {
-  trueConceptId=getInt(connection,"SELECT concept_id FROM concept_name WHERE name = '" + trueConceptName + "'");
-  falseConceptId=getInt(connection,"SELECT concept_id FROM concept_name WHERE name = '" + falseConceptName + "'");
-  if (trueConceptId < 1 || falseConceptId < 1)   throw new CustomChangeException("Can't create global properties for true/false concepts with invalid conceptIds");
+  if (trueConceptId == null || trueConceptId < 1 || falseConceptId == null || falseConceptId < 1)   throw new CustomChangeException("Can't create global properties for true/false concepts with invalid conceptIds");
   PreparedStatement updateStatement=null;
   try {
     updateStatement=connection.prepareStatement("INSERT INTO global_property (property, property_value, description, uuid) VALUES (?, ?, ?, ?)");
