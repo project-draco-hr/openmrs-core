@@ -1,0 +1,51 @@
+{
+  PreparedStatement updateStatement=null;
+  try {
+    int conceptId=getInt(connection,"SELECT MAX(concept_id) FROM concept");
+    conceptId++;
+    updateStatement=connection.prepareStatement("INSERT INTO concept (concept_id, short_name, description, datatype_id, class_id, is_set, creator, date_created, uuid) VALUES (?, '', '', 4, 11, 0, 1, NOW(), ?)");
+    updateStatement.setInt(1,conceptId);
+    updateStatement.setString(2,UUID.randomUUID().toString());
+    updateStatement.executeUpdate();
+    boolean preferredDoneAlready=false;
+    int conceptNameId=getInt(connection,"SELECT MAX(concept_name_id) FROM concept_name");
+    for (    Map.Entry<String,String[]> e : names.entrySet()) {
+      String locale=e.getKey();
+      for (      String name : e.getValue()) {
+        conceptNameId++;
+        updateStatement=connection.prepareStatement("INSERT INTO concept_name (concept_name_id, concept_id, locale, name, creator, date_created, uuid) VALUES (?, ?, ?, ?, 1, NOW(), ?)");
+        updateStatement.setInt(1,conceptNameId);
+        updateStatement.setInt(2,conceptId);
+        updateStatement.setString(3,locale);
+        updateStatement.setString(4,name);
+        updateStatement.setString(5,UUID.randomUUID().toString());
+        updateStatement.executeUpdate();
+        if (!preferredDoneAlready && "en".equals(locale)) {
+          updateStatement=connection.prepareStatement("INSERT INTO concept_name_tag_map (concept_name_id, concept_name_tag_id) VALUES (?, 4)");
+          updateStatement.setInt(1,conceptNameId);
+          updateStatement.executeUpdate();
+          preferredDoneAlready=true;
+        }
+        updateStatement=connection.prepareStatement("INSERT INTO concept_word (concept_id, word, locale, concept_name_id) VALUES (?, ?, ?, ?)");
+        updateStatement.setInt(1,conceptId);
+        updateStatement.setString(2,name);
+        updateStatement.setString(3,locale);
+        updateStatement.setInt(4,conceptNameId);
+        updateStatement.executeUpdate();
+      }
+    }
+    return conceptId;
+  }
+ catch (  SQLException e) {
+    throw new CustomChangeException("Unable to create concept with names " + names,e);
+  }
+ finally {
+    if (updateStatement != null) {
+      try {
+        updateStatement.close();
+      }
+ catch (      SQLException e) {
+      }
+    }
+  }
+}
