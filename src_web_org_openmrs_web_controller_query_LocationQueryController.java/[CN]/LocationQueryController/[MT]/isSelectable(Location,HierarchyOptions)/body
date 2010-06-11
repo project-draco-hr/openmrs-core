@@ -1,0 +1,8 @@
+{
+  if (options.selectOnlyLeaves && loc.getChildLocations() != null && loc.getChildLocations().size() > 0)   return false;
+  if (options.selectableTags != null && options.selectableTags.size() > 0) {
+    for (    String tag : options.selectableTags)     if (loc.hasTag(tag))     return true;
+    return false;
+  }
+  return true;
+}

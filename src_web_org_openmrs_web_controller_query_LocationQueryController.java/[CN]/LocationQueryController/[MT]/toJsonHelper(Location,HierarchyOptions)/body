@@ -1,0 +1,39 @@
+{
+  if (loc == null) {
+    String none=Context.getMessageSourceService().getMessage("general.none");
+    Map<String,Object> attrs=new HashMap<String,Object>();
+    attrs.put("id",0);
+    attrs.put("name",none);
+    attrs.put("rel","nulloption");
+    Map<String,Object> ret=new LinkedHashMap<String,Object>();
+    ret.put("attributes",attrs);
+    ret.put("data",none);
+    return ret;
+  }
+ else {
+    String nodeType=isSelectable(loc,options) ? "selectable" : "default";
+    Map<String,Object> attrs=new HashMap<String,Object>();
+    attrs.put("id",loc.getLocationId());
+    attrs.put("name",loc.getName());
+    attrs.put("rel",nodeType);
+    Map<String,Object> ret=new LinkedHashMap<String,Object>();
+    ret.put("attributes",attrs);
+    StringBuilder sb=new StringBuilder(loc.getName());
+    if (loc.getTags() != null && loc.getTags().size() > 0) {
+      sb.append(" (");
+      for (Iterator<LocationTag> i=loc.getTags().iterator(); i.hasNext(); ) {
+        LocationTag t=i.next();
+        sb.append(t.getName());
+        if (i.hasNext())         sb.append(", ");
+      }
+      sb.append(")");
+    }
+    ret.put("data",sb.toString());
+    if (loc.getChildLocations() != null && loc.getChildLocations().size() > 0) {
+      List<Map<String,Object>> children=new ArrayList<Map<String,Object>>();
+      for (      Location child : loc.getChildLocations())       children.add(toJsonHelper(child,options));
+      ret.put("children",children);
+    }
+    return ret;
+  }
+}
