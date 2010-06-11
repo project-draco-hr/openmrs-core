@@ -1,0 +1,22 @@
+{
+  List<Location> rootNodes=new ArrayList<Location>();
+  if (options.startFromTag != null) {
+    LocationTag tag=Context.getLocationService().getLocationTagByName(options.startFromTag);
+    rootNodes.addAll(Context.getLocationService().getLocationsByTag(tag));
+  }
+ else {
+    for (    Location loc : Context.getLocationService().getAllLocations()) {
+      if (loc.getParentLocation() == null) {
+        rootNodes.add(loc);
+      }
+    }
+  }
+  List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+  if (options.includeNullOption) {
+    list.add(toJsonHelper(null,options));
+  }
+  for (  Location loc : rootNodes) {
+    list.add(toJsonHelper(loc,options));
+  }
+  return list;
+}
