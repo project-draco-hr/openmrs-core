@@ -9,7 +9,7 @@
     props.setProperty("mail.debug",adminService.getGlobalProperty("mail.debug"));
     props.setProperty("mail.smtp.auth",adminService.getGlobalProperty("mail.smtp_auth"));
     Authenticator auth=new Authenticator(){
-      public PasswordAuthentication getPasswordAuthentication(){
+      @Override public PasswordAuthentication getPasswordAuthentication(){
         return new PasswordAuthentication(getAdministrationService().getGlobalProperty("mail.user"),getAdministrationService().getGlobalProperty("mail.password"));
       }
     }
