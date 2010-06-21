@@ -1,0 +1,6 @@
+{
+  Reflect reflect=new Reflect(OpenmrsObject.class);
+  List<Field> allFields=Reflect.getAllFields(OpenmrsObjectImp.class);
+  Assert.assertEquals("genericCollectionField",allFields.get(0).getName());
+  Assert.assertFalse(reflect.isCollectionField(allFields.get(0)));
+}
