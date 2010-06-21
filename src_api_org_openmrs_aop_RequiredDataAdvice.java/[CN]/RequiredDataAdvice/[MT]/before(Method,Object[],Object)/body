@@ -4,15 +4,15 @@
     if (args == null || args.length == 0)     return;
     Object mainArgument=args[0];
     if (mainArgument == null)     return;
-    Class<?> argClass=mainArgument.getClass();
     String other=null;
     if (args.length > 1) {
       other=(String)args[1];
     }
-    if (OpenmrsObject.class.isAssignableFrom(argClass)) {
+    Reflect reflect=new Reflect(OpenmrsObject.class);
+    if (reflect.isSuperClass(mainArgument)) {
       recursivelyHandle(SaveHandler.class,(OpenmrsObject)mainArgument,other);
     }
- else     if (isOpenmrsObjectCollection(argClass,mainArgument)) {
+ else     if (Reflect.isCollection(mainArgument) && isOpenmrsObjectCollection(mainArgument)) {
       Collection<OpenmrsObject> openmrsObjects=(Collection<OpenmrsObject>)mainArgument;
       for (      OpenmrsObject object : openmrsObjects) {
         recursivelyHandle(SaveHandler.class,object,other);

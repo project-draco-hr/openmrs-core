@@ -1,0 +1,11 @@
+{
+  if (isCollection(field.getType())) {
+    try {
+      ParameterizedType type=(ParameterizedType)field.getGenericType();
+      return (parametrizedClass.isAssignableFrom((Class)type.getActualTypeArguments()[0]));
+    }
+ catch (    ClassCastException e) {
+    }
+  }
+  return false;
+}

@@ -9,10 +9,10 @@
     handler.handle(openmrsObject,currentUser,currentDate,other);
   }
   alreadyHandled.add(openmrsObject);
-  List<Field> allInheritedFields=new ArrayList<Field>();
-  getAllInheritedFields(openmrsObjectClass,allInheritedFields);
+  Reflect reflect=new Reflect(OpenmrsObject.class);
+  List<Field> allInheritedFields=reflect.getInheritedFields(openmrsObjectClass);
   for (  Field field : allInheritedFields) {
-    if (isOpenmrsObjectCollection(field)) {
+    if (reflect.isCollectionField(field)) {
       Collection<OpenmrsObject> childCollection=getChildCollection(openmrsObject,field);
       if (childCollection != null) {
         for (        Object collectionElement : childCollection) {
