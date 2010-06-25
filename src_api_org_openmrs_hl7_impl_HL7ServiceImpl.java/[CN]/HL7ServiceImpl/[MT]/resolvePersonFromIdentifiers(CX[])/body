@@ -7,21 +7,21 @@
       try {
         PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierTypeByName(assigningAuthority);
         if (pit == null) {
-          if (assigningAuthority.equals(FormConstants.HL7_AUTHORITY_UUID)) {
+          if (assigningAuthority.equals(HL7Constants.HL7_AUTHORITY_UUID)) {
             Person p=Context.getPersonService().getPersonByUuid(hl7PersonId);
             if (p != null)             return p;
             log.warn("Can't find person for UUID '" + hl7PersonId + "'");
             continue;
           }
- else           if (assigningAuthority.equals(FormConstants.HL7_AUTHORITY_LOCAL)) {
+ else           if (assigningAuthority.equals(HL7Constants.HL7_AUTHORITY_LOCAL)) {
             String idType=identifier.getIdentifierTypeCode().getValue();
             try {
-              if (idType.equals(FormConstants.HL7_ID_PERSON)) {
+              if (idType.equals(HL7Constants.HL7_ID_PERSON)) {
                 Integer pid=Integer.parseInt(hl7PersonId);
                 Person p=Context.getPersonService().getPerson(pid);
                 if (p != null)                 return p;
               }
- else               if (idType.equals(FormConstants.HL7_ID_PATIENT)) {
+ else               if (idType.equals(HL7Constants.HL7_ID_PATIENT)) {
                 Integer pid=Integer.parseInt(hl7PersonId);
                 Patient p=Context.getPatientService().getPatient(pid);
                 if (p != null)                 return p;
