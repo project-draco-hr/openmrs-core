@@ -1,6 +1,6 @@
 {
   String relCodingSystem=nk1.getRelationship().getNameOfCodingSystem().getValue();
-  if (!relCodingSystem.equals(FormConstants.HL7_LOCAL_RELATIONSHIP))   throw new HL7Exception("Relationship coding system '" + relCodingSystem + "' unknown in NK1 segment.");
+  if (!relCodingSystem.equals(HL7Constants.HL7_LOCAL_RELATIONSHIP))   throw new HL7Exception("Relationship coding system '" + relCodingSystem + "' unknown in NK1 segment.");
   String relIdentifier=nk1.getRelationship().getIdentifier().getValue();
   if (!Pattern.matches("[0-9]+[AB]",relIdentifier))   throw new HL7Exception("Relationship type '" + relIdentifier + "' improperly formed in NK1 segment.");
   Integer relTypeId=0;

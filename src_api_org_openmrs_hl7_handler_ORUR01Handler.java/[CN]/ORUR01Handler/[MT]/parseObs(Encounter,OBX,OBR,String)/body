@@ -80,7 +80,7 @@
       try {
         Concept valueConcept=getConcept(value,uid);
         obs.setValueCoded(valueConcept);
-        if (FormConstants.HL7_LOCAL_DRUG.equals(value.getNameOfAlternateCodingSystem().getValue())) {
+        if (HL7Constants.HL7_LOCAL_DRUG.equals(value.getNameOfAlternateCodingSystem().getValue())) {
           Drug valueDrug=new Drug();
           valueDrug.setDrugId(new Integer(value.getAlternateIdentifier().getValue()));
           obs.setValueDrug(valueDrug);
