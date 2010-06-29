@@ -37,4 +37,8 @@ catch (      Throwable t2) {
       }
     }
   }
+  for (  Module mod : ModuleFactory.getStartedModules()) {
+    WebModuleUtil.loadServlets(mod,servletContext);
+    WebModuleUtil.loadFilters(mod,servletContext);
+  }
 }
