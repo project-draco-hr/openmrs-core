@@ -32,11 +32,13 @@
     printMetadata(sb,locationTag);
   }
   if (StringUtils.hasText(var)) {
-    pageContext.setAttribute(var,sb.toString());
+    if (javaScriptEscape)     pageContext.setAttribute(var,JavaScriptUtils.javaScriptEscape(sb.toString()));
+ else     pageContext.setAttribute(var,sb.toString());
   }
  else {
     try {
-      pageContext.getOut().write(sb.toString());
+      if (javaScriptEscape)       pageContext.getOut().write(JavaScriptUtils.javaScriptEscape(sb.toString()));
+ else       pageContext.getOut().write(sb.toString());
     }
  catch (    IOException e) {
       log.error("Failed to write to pageContext.getOut()",e);
