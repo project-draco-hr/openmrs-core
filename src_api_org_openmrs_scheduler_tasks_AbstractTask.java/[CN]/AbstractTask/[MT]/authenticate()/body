@@ -1,9 +1,2 @@
 {
-  try {
-    AdministrationService adminService=Context.getAdministrationService();
-    Context.authenticate(adminService.getGlobalProperty(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY),adminService.getGlobalProperty(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY));
-  }
- catch (  ContextAuthenticationException e) {
-    log.error("Error authenticating user",e);
-  }
 }

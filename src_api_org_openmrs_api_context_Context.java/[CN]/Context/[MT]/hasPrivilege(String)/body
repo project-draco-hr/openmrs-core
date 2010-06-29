@@ -1,3 +1,6 @@
 {
+  if (Daemon.isDaemonThread()) {
+    return true;
+  }
   return getUserContext().hasPrivilege(privilege);
 }

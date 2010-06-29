@@ -1,0 +1,3 @@
+{
+  return (User)sessionFactory.getCurrentSession().createQuery("from User u where u.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

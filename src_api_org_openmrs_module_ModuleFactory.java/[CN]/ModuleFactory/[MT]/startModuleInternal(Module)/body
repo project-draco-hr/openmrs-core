@@ -1,0 +1,70 @@
+{
+  if (module != null) {
+    String moduleId=module.getModuleId();
+    try {
+      String requireVersion=module.getRequireOpenmrsVersion();
+      ModuleUtil.checkRequiredVersion(OpenmrsConstants.OPENMRS_VERSION_SHORT,requireVersion);
+      if (!requiredModulesStarted(module)) {
+        throw new ModuleException("Not all required modules are started: " + OpenmrsUtil.join(getMissingRequiredModules(module),", ") + ". ",module.getName());
+      }
+      ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
+      getModuleClassLoaderMap().put(module,moduleClassLoader);
+      for (      Extension ext : module.getExtensions()) {
+        String extId=ext.getExtensionId();
+        List<Extension> tmpExtensions=getExtensions(extId);
+        if (tmpExtensions == null)         tmpExtensions=new Vector<Extension>();
+        log.debug("Adding to mapping ext: " + ext.getExtensionId() + " ext.class: "+ ext.getClass());
+        tmpExtensions.add(ext);
+        getExtensionMap().put(extId,tmpExtensions);
+      }
+      SortedMap<String,String> diffs=SqlDiffFileParser.getSqlDiffs(module);
+      try {
+        Context.addProxyPrivilege("");
+        for (        String version : diffs.keySet()) {
+          String sql=diffs.get(version);
+          if (StringUtils.hasText(sql))           runDiff(module,version,sql);
+        }
+      }
+  finally {
+        Context.removeProxyPrivilege("");
+      }
+      runLiquibase(module);
+      getStartedModulesMap().put(moduleId,module);
+      try {
+        saveGlobalProperty(moduleId + ".started","true",getGlobalPropertyStartedDescription(moduleId));
+        saveGlobalProperty(moduleId + ".mandatory",String.valueOf(module.isMandatory()),getGlobalPropertyMandatoryModuleDescription(moduleId));
+      }
+ catch (      Exception e) {
+        log.debug("Got an error when trying to set the global property on module startup",e);
+      }
+      if (module.getPrivileges().size() > 0 || module.getGlobalProperties().size() > 0) {
+        log.debug("Updating core dataset");
+        Context.checkCoreDataset();
+      }
+      try {
+        if (module.getModuleActivator() != null)         module.getModuleActivator().willStart();
+ else         module.getActivator().startup();
+      }
+ catch (      ModuleException e) {
+        throw e;
+      }
+catch (      Exception e) {
+        throw new ModuleException("Error while calling module's Activator.startup()/willStart() method",e);
+      }
+      module.clearStartupError();
+    }
+ catch (    Exception e) {
+      log.warn("Error while trying to start module: " + moduleId,e);
+      module.setStartupErrorMessage("Error while trying to start module",e);
+      try {
+        boolean skipOverStartedProperty=false;
+        if (e instanceof ModuleMustStartException)         skipOverStartedProperty=true;
+        stopModule(module,skipOverStartedProperty,true);
+      }
+ catch (      Exception e2) {
+        log.debug("Error while stopping module: " + moduleId,e2);
+      }
+    }
+  }
+  return module;
+}

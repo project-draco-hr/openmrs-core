@@ -1,0 +1,29 @@
+{
+  DaemonThread startModuleThread=new DaemonThread(){
+    @Override public void run(){
+      isDaemonThread.set(true);
+      try {
+        Context.openSession();
+        returnedObject=ModuleFactory.startModuleInternal(module);
+      }
+ catch (      Throwable t) {
+        exceptionThrown=t;
+      }
+ finally {
+        Context.closeSession();
+      }
+    }
+  }
+;
+  startModuleThread.start();
+  try {
+    startModuleThread.join();
+  }
+ catch (  InterruptedException e) {
+  }
+  if (startModuleThread.exceptionThrown != null) {
+    if (startModuleThread.exceptionThrown instanceof ModuleException)     throw (ModuleException)startModuleThread.exceptionThrown;
+ else     throw new ModuleException("Unable to start module as Daemon",startModuleThread.exceptionThrown);
+  }
+  return (Module)startModuleThread.returnedObject;
+}
