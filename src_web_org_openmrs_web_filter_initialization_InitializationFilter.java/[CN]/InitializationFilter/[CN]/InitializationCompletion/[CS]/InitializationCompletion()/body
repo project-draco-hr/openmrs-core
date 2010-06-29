@@ -66,8 +66,6 @@
         runtimeProperties.put("connection.password",connectionPassword);
         runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
         runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
-        runtimeProperties.put(SchedulerConstants.SCHEDULER_USERNAME_PROPERTY,"admin");
-        runtimeProperties.put(SchedulerConstants.SCHEDULER_PASSWORD_PROPERTY,wizardModel.adminUserPassword);
         Context.setRuntimeProperties(runtimeProperties);
         /** 
  * A callback class that prints out info about liquibase changesets

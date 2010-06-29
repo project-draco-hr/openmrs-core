@@ -1,6 +1,6 @@
 {
   try {
-    task.execute();
+    Daemon.executeScheduledTask(task);
     if (!Context.isSessionOpen()) {
       Context.openSession();
     }
