@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createQuery("from FormField f where f.field = :field").setEntity("field",field).list();
+}

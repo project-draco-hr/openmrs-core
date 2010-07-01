@@ -1,0 +1,7 @@
+{
+  executeDataSet(INITIAL_FIELDS_XML);
+  executeDataSet(FORM_FIELDS_XML);
+  Context.getFormService().mergeDuplicateFields();
+  Assert.assertNull(Context.getFormService().getFieldByUuid("b1843148-da2f-4349-c9c7-1164b98d91dd"));
+  Assert.assertEquals(2,Context.getFormService().getAllFields().size());
+}

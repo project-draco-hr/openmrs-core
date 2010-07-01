@@ -1,0 +1,28 @@
+{
+  List<Field> fields=dao.getAllFields(true);
+  Set<Field> fieldsToDelete=new HashSet<Field>();
+  Map<String,Integer> fieldNameAsKeyAndFieldIdAsValueMap=new HashMap<String,Integer>();
+  for (  Field field : fields) {
+    if (fieldNameAsKeyAndFieldIdAsValueMap.containsKey(field.getName())) {
+      Field fieldToCompareTo=dao.getField(fieldNameAsKeyAndFieldIdAsValueMap.get(field.getName()));
+      if (fieldsAreSimilar(field,fieldToCompareTo)) {
+        List<FormField> formFields=dao.getFormFieldsByField(field);
+        for (        FormField formField : formFields) {
+          formField.setField(fieldToCompareTo);
+          dao.saveFormField(formField);
+          fieldsToDelete.add(field);
+        }
+      }
+ else {
+        fieldNameAsKeyAndFieldIdAsValueMap.put(field.getName(),field.getId());
+      }
+    }
+ else {
+      fieldNameAsKeyAndFieldIdAsValueMap.put(field.getName(),field.getId());
+    }
+  }
+  for (  Field field : fieldsToDelete) {
+    dao.deleteField(field);
+  }
+  return fieldsToDelete.size();
+}
