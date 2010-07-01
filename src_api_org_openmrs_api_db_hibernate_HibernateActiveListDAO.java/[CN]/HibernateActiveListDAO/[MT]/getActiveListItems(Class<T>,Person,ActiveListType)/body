@@ -1,0 +1,8 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(clazz);
+  criteria.add(Expression.eq("activeListType",type));
+  criteria.add(Expression.eq("person",p));
+  criteria.add(Expression.eq("voided",Boolean.FALSE));
+  criteria.addOrder(Order.desc("startDate"));
+  return criteria.list();
+}

@@ -1,0 +1,9 @@
+{
+  Allergy allergy=Context.getPatientService().getAllergy(activeListItemId);
+  allergy.setAllergen(Context.getConceptService().getConcept(allergenId));
+  allergy.setAllergyType(type);
+  allergy.setStartDate(parseDate(pStartDate));
+  allergy.setSeverity(severity);
+  allergy.setReaction((reactionId == null) ? null : Context.getConceptService().getConcept(reactionId));
+  Context.getPatientService().saveAllergy(allergy);
+}

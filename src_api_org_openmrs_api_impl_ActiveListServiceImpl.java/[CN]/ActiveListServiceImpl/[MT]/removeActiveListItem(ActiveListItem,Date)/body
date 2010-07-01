@@ -1,0 +1,9 @@
+{
+  if (item.getEndDate() == null) {
+    if (endDate == null) {
+      endDate=new Date();
+    }
+    item.setEndDate(endDate);
+  }
+  return dao.saveActiveListItem(item);
+}

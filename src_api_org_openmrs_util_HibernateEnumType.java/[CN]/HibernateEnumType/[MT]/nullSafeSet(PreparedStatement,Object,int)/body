@@ -1,0 +1,8 @@
+{
+  if (null == value) {
+    preparedStatement.setNull(index,Types.VARCHAR);
+  }
+ else {
+    preparedStatement.setString(index,((Enum)value).name());
+  }
+}

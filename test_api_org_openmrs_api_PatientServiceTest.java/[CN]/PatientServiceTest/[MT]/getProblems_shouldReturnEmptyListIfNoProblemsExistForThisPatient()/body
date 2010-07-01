@@ -1,0 +1,7 @@
+{
+  executeDataSet(ACTIVE_LIST_INITIAL_XML);
+  Patient p=patientService.getPatient(3);
+  List<Problem> problems=patientService.getProblems(p);
+  Assert.assertNotNull(problems);
+  assertEqualsInt(0,problems.size());
+}

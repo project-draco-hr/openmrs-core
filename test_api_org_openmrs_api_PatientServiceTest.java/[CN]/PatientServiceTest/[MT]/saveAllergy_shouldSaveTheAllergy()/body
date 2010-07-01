@@ -1,0 +1,19 @@
+{
+  executeDataSet(ACTIVE_LIST_INITIAL_XML);
+  Patient p=patientService.getPatient(2);
+  Allergy allergen=new Allergy();
+  allergen.setPerson(p);
+  allergen.setAllergen(Context.getConceptService().getConcept(88));
+  patientService.saveAllergy(allergen);
+  List<Allergy> allergies=patientService.getAllergies(p);
+  Assert.assertNotNull(allergies);
+  assertEqualsInt(2,allergies.size());
+  for (  Allergy a : allergies) {
+    if (a.getAllergen().getConceptId().equals(88)) {
+      allergen=a;
+      break;
+    }
+  }
+  Assert.assertNotNull(allergen.getPerson());
+  Assert.assertNotNull(allergen.getStartDate());
+}

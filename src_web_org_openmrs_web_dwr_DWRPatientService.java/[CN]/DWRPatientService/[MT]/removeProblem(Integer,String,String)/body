@@ -1,0 +1,5 @@
+{
+  Problem problem=Context.getPatientService().getProblem(activeListId);
+  problem.setEndDate(parseDate(pEndDate));
+  Context.getPatientService().removeProblem(problem,reason);
+}

@@ -1,0 +1,7 @@
+{
+  Patient patient=Context.getPatientService().getPatient(patientId);
+  Concept problemConcept=Context.getConceptService().getConcept(problemId);
+  ProblemModifier modifier=StringUtils.isBlank(status) ? null : ProblemModifier.valueOf(status);
+  Problem problem=new Problem(patient,problemConcept,parseDate(pStartDate),modifier,comments,null);
+  Context.getPatientService().saveProblem(problem);
+}

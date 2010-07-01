@@ -1,0 +1,10 @@
+{
+  executeDataSet(ACTIVE_LIST_INITIAL_XML);
+  Patient p=patientService.getPatient(2);
+  List<Allergy> allergies=patientService.getAllergies(p);
+  Assert.assertNotNull(allergies);
+  patientService.removeAllergy(allergies.get(0),"resolving by retiring");
+  allergies=patientService.getAllergies(p);
+  Assert.assertNotNull(allergies);
+  Assert.assertNotNull(allergies.get(0).getEndDate());
+}

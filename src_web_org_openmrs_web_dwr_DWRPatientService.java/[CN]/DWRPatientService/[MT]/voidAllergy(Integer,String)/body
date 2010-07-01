@@ -1,0 +1,7 @@
+{
+  Allergy allergy=Context.getPatientService().getAllergy(activeListId);
+  if (reason == null) {
+    reason="Error - user entered incorrect data from UI";
+  }
+  Context.getPatientService().voidAllergy(allergy,reason);
+}
