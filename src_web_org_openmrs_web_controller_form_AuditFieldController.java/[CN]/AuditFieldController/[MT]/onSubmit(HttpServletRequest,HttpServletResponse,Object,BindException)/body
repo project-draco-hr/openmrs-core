@@ -1,0 +1,17 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    view=getSuccessView();
+    try {
+      int i=Context.getFormService().mergeDuplicateFields();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ARGS,i);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Form.auditSuccess");
+    }
+ catch (    APIException e) {
+      log.warn("Error in mergeDuplicateFields",e);
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Form.auditError");
+    }
+  }
+  return new ModelAndView(new RedirectView(view));
+}
