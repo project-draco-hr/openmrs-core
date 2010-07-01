@@ -1,0 +1,8 @@
+{
+  Problem problem=Context.getPatientService().getProblem(activeListId);
+  problem.setProblem(Context.getConceptService().getConcept(problemId));
+  problem.setModifier(status);
+  problem.setStartDate(parseDate(pStartDate));
+  problem.setComments(comments);
+  Context.getPatientService().saveProblem(problem);
+}

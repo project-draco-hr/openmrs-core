@@ -1,0 +1,9 @@
+{
+  this.setActiveListId(problem.getActiveListId());
+  this.setProblemConceptId(problem.getProblem().getConceptId());
+  this.setProblem(problem.getProblem().getName().getName());
+  this.setStart(problem.getStartDate());
+  this.setEnd(problem.getEndDate());
+  this.setStatus((problem.getModifier() == null) ? null : problem.getModifier().name());
+  this.setComments((problem.getComments() == null) ? null : problem.getComments());
+}

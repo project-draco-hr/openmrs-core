@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ActiveListItem.class);
+  criteria.add(Expression.eq("uuid",uuid));
+  return (ActiveListItem)criteria.uniqueResult();
+}

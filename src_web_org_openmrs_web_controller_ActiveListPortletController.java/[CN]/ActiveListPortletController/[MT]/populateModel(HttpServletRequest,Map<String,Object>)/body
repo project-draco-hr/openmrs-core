@@ -1,0 +1,20 @@
+{
+  Patient patient=Context.getPatientService().getPatient((Integer)model.get("patientId"));
+  model.put("today",Context.getDateFormat().format(new Date()));
+  String type=(String)model.get("type");
+  if ("allergy".equals(type)) {
+    List<Allergy> allergies=Context.getPatientService().getAllergies(patient);
+    List<List<Allergy>> ls=separate(allergies);
+    model.put("allergies",ls.get(0));
+    model.put("removedAllergies",ls.get(1));
+    model.put("allergyTypes",AllergyType.values());
+    model.put("allergySeverities",AllergySeverity.values());
+  }
+ else   if ("problem".equals(type)) {
+    List<Problem> problems=Context.getPatientService().getProblems(patient);
+    List<List<Problem>> ls=separate(problems);
+    model.put("problems",ls.get(0));
+    model.put("removedProblems",ls.get(1));
+    model.put("problemModifiers",ProblemModifier.values());
+  }
+}

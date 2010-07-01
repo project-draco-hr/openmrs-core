@@ -1,0 +1,6 @@
+{
+  Patient p=patientService.getPatient(2);
+  List<ActiveListItem> items=activeListService.getActiveListItems(p,new ActiveListType(2));
+  assertEquals(1,items.size());
+  System.out.println("instance=" + items.get(0).getClass().toString());
+}

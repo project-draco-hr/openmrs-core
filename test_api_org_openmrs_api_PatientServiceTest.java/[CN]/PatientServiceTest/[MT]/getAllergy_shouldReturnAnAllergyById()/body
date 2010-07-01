@@ -1,0 +1,9 @@
+{
+  executeDataSet(ACTIVE_LIST_INITIAL_XML);
+  Allergy allergy=patientService.getAllergy(1);
+  Assert.assertNotNull(allergy);
+  Assert.assertNotNull(allergy.getActiveListId());
+  Assert.assertNotNull(allergy.getActiveListType());
+  Assert.assertNotNull(allergy.getAllergen());
+  Assert.assertNotNull(allergy.getStartDate());
+}

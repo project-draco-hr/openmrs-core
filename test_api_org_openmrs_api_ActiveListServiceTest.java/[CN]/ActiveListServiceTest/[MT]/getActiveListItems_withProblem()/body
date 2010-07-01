@@ -1,0 +1,5 @@
+{
+  Patient p=patientService.getPatient(2);
+  List<Problem> items=activeListService.getActiveListItems(Problem.class,p,new ActiveListType(2));
+  assertEquals(1,items.size());
+}

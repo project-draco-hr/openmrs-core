@@ -1,0 +1,10 @@
+{
+  Date startDate=parseDate(pStartDate);
+  Patient patient=Context.getPatientService().getPatient(patientId);
+  Concept allergyConcept=Context.getConceptService().getConcept(allergenId);
+  Concept reactionConcept=(reactionId == null) ? null : Context.getConceptService().getConcept(reactionId);
+  AllergySeverity allergySeverity=StringUtils.isBlank(severity) ? null : AllergySeverity.valueOf(severity);
+  AllergyType allergyType=StringUtils.isBlank(type) ? null : AllergyType.valueOf(type);
+  Allergy allergy=new Allergy(patient,allergyConcept,startDate,allergyType,reactionConcept,allergySeverity);
+  Context.getPatientService().saveAllergy(allergy);
+}

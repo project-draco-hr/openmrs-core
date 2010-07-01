@@ -1,0 +1,8 @@
+{
+  Allergy item=activeListService.getActiveListItem(Allergy.class,1);
+  item=(Allergy)activeListService.voidActiveListItem(item,"Because");
+  Assert.assertTrue(item.isVoided());
+  Patient p=patientService.getPatient(2);
+  List<Allergy> items=activeListService.getActiveListItems(Allergy.class,p,new ActiveListType(1));
+  assertEquals(0,items.size());
+}

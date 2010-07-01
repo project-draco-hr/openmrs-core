@@ -1,0 +1,10 @@
+{
+  executeDataSet(ACTIVE_LIST_INITIAL_XML);
+  Patient p=patientService.getPatient(2);
+  List<Problem> problems=patientService.getProblems(p);
+  Assert.assertNotNull(problems);
+  patientService.removeProblem(problems.get(0),"resolving by retiring");
+  problems=patientService.getProblems(p);
+  Assert.assertNotNull(problems);
+  Assert.assertNotNull(problems.get(0).getEndDate());
+}

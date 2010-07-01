@@ -1,0 +1,7 @@
+{
+  Allergy item=activeListService.getActiveListItem(Allergy.class,1);
+  activeListService.removeActiveListItem(item,null);
+  item=activeListService.getActiveListItem(Allergy.class,1);
+  Assert.assertNotNull(item);
+  Assert.assertNotNull(item.getEndDate());
+}

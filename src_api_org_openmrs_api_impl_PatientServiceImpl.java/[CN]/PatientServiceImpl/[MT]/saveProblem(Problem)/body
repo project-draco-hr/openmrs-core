@@ -1,0 +1,6 @@
+{
+  if ((problem.getId() == null) && (problem.getSortWeight() == null)) {
+    problem.setSortWeight((double)(getProblems(problem.getPerson()).size() + 1));
+  }
+  Context.getActiveListService().saveActiveListItem(problem);
+}

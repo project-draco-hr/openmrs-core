@@ -1,0 +1,8 @@
+{
+  String name=resultSet.getString(names[0]);
+  Object result=null;
+  if (!resultSet.wasNull() && !StringUtils.isBlank(name)) {
+    result=Enum.valueOf(clazz,name);
+  }
+  return result;
+}

@@ -1,0 +1,16 @@
+{
+  List<T> active=new ArrayList<T>();
+  List<T> removed=new ArrayList<T>();
+  for (  T item : ls) {
+    if (item.getEndDate() == null) {
+      active.add(item);
+    }
+ else {
+      removed.add(item);
+    }
+  }
+  List<List<T>> items=new ArrayList<List<T>>(2);
+  items.add(active);
+  items.add(removed);
+  return items;
+}
