@@ -1,0 +1,8 @@
+{
+  String theme=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_THEME);
+  model.addAttribute("theme",theme);
+  String locale=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE);
+  model.addAttribute("locale",locale);
+  String allowedLocales=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST);
+  model.addAttribute("allowedLocales",allowedLocales);
+}
