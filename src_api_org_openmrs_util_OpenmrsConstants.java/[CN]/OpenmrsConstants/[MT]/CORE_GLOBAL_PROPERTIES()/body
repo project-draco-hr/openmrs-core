@@ -77,6 +77,7 @@
   props.add(new GlobalProperty(GP_PASSWORD_REQUIRES_UPPER_AND_LOWER_CASE,"true","Configure whether passwords must contain both upper and lower case characters"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false","If true, hl7 messages for patients that are not found and are non-local will silently be dropped/ignored"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_SHOW_PATIENT_NAME,"false","Whether or not to display the patient name in the patient dashboard title. Note that enabling this could be security risk if multiple users operate on the same computer."));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_DEFAULT_THEME,"","Default theme for users.  OpenMRS ships with themes of 'green', 'orange', 'blue', and 'legacy'"));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }

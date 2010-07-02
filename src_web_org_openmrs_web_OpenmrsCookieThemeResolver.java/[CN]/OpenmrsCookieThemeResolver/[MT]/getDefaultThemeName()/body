@@ -1,0 +1,18 @@
+{
+  String themeName=null;
+  boolean openedSession=false;
+  try {
+    if (!Context.isSessionOpen()) {
+      openedSession=true;
+      Context.openSession();
+    }
+    themeName=Context.getAdministrationService().getGlobalProperty(GP_THEME_NAME);
+  }
+  finally {
+    if (openedSession)     Context.closeSession();
+  }
+  if (StringUtils.hasText(themeName)) {
+    return themeName;
+  }
+ else   return super.getDefaultThemeName();
+}
