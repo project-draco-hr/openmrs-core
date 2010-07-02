@@ -1,0 +1,15 @@
+{
+  Concept c=new Concept(1);
+  ConceptName fullySpecifiedName=new ConceptName("fully specified",new Locale("en","US"));
+  c.addName(fullySpecifiedName);
+  ConceptName indexTerm=new ConceptName("index Term",new Locale("en","US"));
+  indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
+  c.addName(indexTerm);
+  ConceptWord fullySpecifiedWord=new ConceptWord("name",c,fullySpecifiedName,new Locale("en","US"));
+  ConceptWord indexTermWord=new ConceptWord("name",c,indexTerm,new Locale("en","US"));
+  List<ConceptWord> words=new ArrayList<ConceptWord>();
+  words.add(fullySpecifiedWord);
+  words.add(indexTermWord);
+  List<ConceptWord> weightedWords=new ConceptServiceImpl().weightWords("name",Collections.singletonList(new Locale("en","US")),words);
+  Assert.assertEquals("fully specified",weightedWords.get(0).getConceptName().getName());
+}

@@ -1,0 +1,7 @@
+{
+  Concept concept=createMockConcept(1,Context.getLocale());
+  ConceptName oldFullySpecifiedName=concept.getFullySpecifiedName(Context.getLocale());
+  Assert.assertEquals(ConceptNameType.FULLY_SPECIFIED,oldFullySpecifiedName.getConceptNameType());
+  concept.setFullySpecifiedName(new ConceptName("some name",Context.getLocale()));
+  Assert.assertEquals(null,oldFullySpecifiedName.getConceptNameType());
+}

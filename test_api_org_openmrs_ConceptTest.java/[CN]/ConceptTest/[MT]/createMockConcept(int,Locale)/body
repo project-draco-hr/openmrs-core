@@ -1,10 +1,12 @@
 {
   Concept mockConcept=new Concept();
   mockConcept.setConceptId(conceptId);
-  ConceptName primaryName=ConceptNameTest.createMockConceptName(1,primaryLocale);
-  mockConcept.setPreferredName(primaryLocale,primaryName);
-  Locale generalLocale=new Locale(primaryLocale.getLanguage());
-  ConceptName generalName=ConceptNameTest.createMockConceptName(2,generalLocale);
-  mockConcept.addName(generalName);
+  Locale desiredLocale=null;
+  if (locale == null)   desiredLocale=Context.getLocale();
+ else   desiredLocale=locale;
+  ConceptName shortName=ConceptNameTest.createMockConceptName(1,desiredLocale,ConceptNameType.SHORT,false);
+  ConceptName fullySpecifiedName=ConceptNameTest.createMockConceptName(2,desiredLocale,null,false);
+  mockConcept.addName(fullySpecifiedName);
+  mockConcept.addName(shortName);
   return mockConcept;
 }

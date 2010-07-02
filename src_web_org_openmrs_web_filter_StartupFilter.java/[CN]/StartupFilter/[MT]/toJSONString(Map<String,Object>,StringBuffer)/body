@@ -6,7 +6,7 @@
  else     sb.append(',');
     sb.append('"');
     if (entry.getKey() == null)     sb.append("null");
- else     sb.append(JavascriptUtil.escapeJavaScript(entry.getKey()));
+ else     sb.append(WebUtil.escapeQuotesAndNewlines(entry.getKey()));
     sb.append('"').append(':');
     sb.append(toJSONString(entry.getValue()));
   }

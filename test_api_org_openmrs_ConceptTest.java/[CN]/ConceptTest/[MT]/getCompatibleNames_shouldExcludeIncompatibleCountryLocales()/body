@@ -2,7 +2,7 @@
   Locale primaryLocale=Locale.US;
   Concept testConcept=createMockConcept(1,primaryLocale);
   int initialNameCollectionSize=testConcept.getNames().size();
-  ConceptName name_en_UK=ConceptNameTest.createMockConceptName(initialNameCollectionSize + 1,Locale.UK);
+  ConceptName name_en_UK=ConceptNameTest.createMockConceptName(initialNameCollectionSize + 1,Locale.UK,ConceptNameType.FULLY_SPECIFIED,false);
   testConcept.addName(name_en_UK);
   Collection<ConceptName> compatibleNames=testConcept.getCompatibleNames(primaryLocale);
   assertFalse(compatibleNames.contains(name_en_UK));

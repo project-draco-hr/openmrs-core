@@ -1,6 +1,6 @@
 {
   if (concept != null) {
-    ConceptName bestShortName=concept.getBestShortName(this.locale);
+    ConceptName bestShortName=concept.getShortestName(this.locale,false);
     if (bestShortName != null)     return bestShortName.getName();
   }
   return getName();

@@ -8,6 +8,7 @@
   final String EXPECTED_SYNONYM_C="mock";
   ConceptService cs=Context.getConceptService();
   Concept conceptToUpdate=new Concept();
+  conceptToUpdate.addName(new ConceptName("demo name",Context.getLocale()));
   ConceptDescription originalConceptDescription=new ConceptDescription();
   originalConceptDescription.setLocale(Locale.ENGLISH);
   originalConceptDescription.setDescription(ORIGINAL_DESCRIPTION);

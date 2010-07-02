@@ -1,0 +1,25 @@
+{
+  ObsService os=Context.getObsService();
+  Obs o=new Obs();
+  o.setConcept(new Concept(3));
+  o.setPerson(new Patient(2));
+  o.setEncounter(new Encounter(3));
+  o.setObsDatetime(new Date());
+  o.setLocation(new Location(1));
+  ConceptName cn1=new ConceptName(1847);
+  o.setValueCodedName(cn1);
+  os.saveObs(o,null);
+  Obs o2=new Obs();
+  o2.setConcept(new Concept(3));
+  o2.setPerson(new Patient(2));
+  o2.setEncounter(new Encounter(3));
+  o2.setObsDatetime(new Date());
+  o2.setLocation(new Location(1));
+  ConceptName cn2=new ConceptName(2453);
+  o2.setValueCodedName(cn2);
+  os.saveObs(o2,null);
+  List<ConceptName> names=new LinkedList<ConceptName>();
+  names.add(cn1);
+  names.add(cn2);
+  Assert.assertEquals(2,os.getObservationCount(names,true).intValue());
+}

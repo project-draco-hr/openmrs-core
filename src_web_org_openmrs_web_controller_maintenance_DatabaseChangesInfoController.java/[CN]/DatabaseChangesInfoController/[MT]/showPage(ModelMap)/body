@@ -1,4 +1,5 @@
 {
   model.addAttribute("databaseChanges",DatabaseUpdater.getDatabaseChanges());
+  model.addAttribute("updateLogFile",OpenmrsUtil.getApplicationDataDirectory() + DatabaseUpdater.DATABASE_UPDATES_LOG_FILE);
   return "/admin/maintenance/databaseChangesInfo";
 }

@@ -7,9 +7,10 @@
     description="";
     if (conceptName != null) {
       conceptNameId=conceptName.getConceptNameId();
-      name=WebUtil.escapeHTML(conceptName.getName());
-      if (!conceptName.isPreferred()) {
-        ConceptName preferredNameObj=concept.getPreferredName(locale);
+      if (conceptName.isIndexTerm() && concept.getName() == null)       name=WebUtil.escapeHTML(conceptName.getName()) + Context.getMessageSourceService().getMessage("Concept.no.fullySpecifiedName.found");
+ else       name=WebUtil.escapeHTML(conceptName.getName());
+      if (!conceptName.isPreferred() && !conceptName.isFullySpecifiedName()) {
+        ConceptName preferredNameObj=concept.getName(locale,false);
         if (preferredNameObj != null)         preferredName=preferredNameObj.getName();
       }
     }

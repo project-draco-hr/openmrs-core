@@ -1,0 +1,10 @@
+{
+  Concept concept=conceptService.getConceptByName("cd4 count");
+  Assert.assertEquals(false,conceptService.getConceptName(1847).isVoided().booleanValue());
+  for (  ConceptName cn : concept.getNames()) {
+    if (cn.getConceptNameId().equals(1847))     cn.setName("new name");
+  }
+  Assert.assertEquals(true,concept.hasName("new name",new Locale("en")));
+  conceptService.saveConcept(concept);
+  Assert.assertEquals(true,conceptService.getConceptName(1847).isVoided().booleanValue());
+}

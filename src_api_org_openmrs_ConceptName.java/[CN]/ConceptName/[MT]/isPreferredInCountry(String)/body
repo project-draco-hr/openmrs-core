@@ -1,3 +1,6 @@
 {
-  return hasTag(ConceptNameTag.preferredCountryTagFor(country));
+  if (!StringUtils.isBlank(country) && this.locale != null) {
+    if (isPreferred() && this.locale.getCountry().equals(country))     return true;
+  }
+  return false;
 }

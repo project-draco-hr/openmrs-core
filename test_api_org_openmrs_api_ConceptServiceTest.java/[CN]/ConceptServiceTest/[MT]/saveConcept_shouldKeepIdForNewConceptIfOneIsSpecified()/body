@@ -2,7 +2,8 @@
   Integer conceptId=343434;
   Assert.assertNull(conceptService.getConcept(conceptId));
   Concept concept=new Concept();
-  concept.addName(new ConceptName("Weight",Locale.US));
+  ConceptName cn=new ConceptName("Weight",Context.getLocale());
+  concept.addName(cn);
   concept.setConceptId(conceptId);
   concept.setDatatype(Context.getConceptService().getConceptDatatypeByName("Numeric"));
   concept.setConceptClass(Context.getConceptService().getConceptClassByName("Finding"));

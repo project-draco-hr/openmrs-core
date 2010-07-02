@@ -1,0 +1,113 @@
+{
+  List<Integer> conceptIds=getAllUnretiredConceptIds(connection);
+  allowedLocales=getAllowedLocalesList(connection);
+  defaultLocale=allowedLocales.get(allowedLocales.size() - 1);
+  for (  Integer conceptId : conceptIds) {
+    Map<Locale,List<ConceptName>> localeConceptNamesMap=getLocaleConceptNamesMap(connection,conceptId);
+    if (localeConceptNamesMap == null) {
+      updateWarnings.add("No names added for concept with id: " + conceptId);
+      continue;
+    }
+    boolean hasFullySpecifiedName=false;
+    Set<Locale> locales=localeConceptNamesMap.keySet();
+    List<ConceptName> namesWithNoLocale=null;
+    for (    Locale conceptNameLocale : locales) {
+      boolean fullySpecifiedNameForLocaleFound=false;
+      boolean preferredNameForLocaleFound=false;
+      boolean shortNameForLocaleFound=false;
+      Map<String,List<ConceptName>> nameDuplicateConceptNamesMap=new HashMap<String,List<ConceptName>>();
+      for (      ConceptName nameInLocale : localeConceptNamesMap.get(conceptNameLocale)) {
+        if (StringUtils.isBlank(nameInLocale.getName())) {
+          updateWarnings.add("ConceptName with id " + nameInLocale.getConceptNameId() + " ("+ nameInLocale.getName()+ ") is null, white space character or empty string");
+        }
+        if (conceptNameLocale == null) {
+          if (namesWithNoLocale == null)           namesWithNoLocale=new LinkedList<ConceptName>();
+          namesWithNoLocale.add(nameInLocale);
+          continue;
+        }
+        if (!allowedLocales.contains(conceptNameLocale)) {
+          updateWarnings.add("ConceptName with id: " + nameInLocale.getConceptNameId() + " ("+ nameInLocale.getName()+ ") has a locale ("+ conceptNameLocale+ ") that isn't listed among the allowed ones by the system admin");
+        }
+        if (nameInLocale.isLocalePreferred() != null) {
+          if (nameInLocale.isLocalePreferred() && !preferredNameForLocaleFound) {
+            if (nameInLocale.isIndexTerm()) {
+              nameInLocale.setLocalePreferred(false);
+              reportUpdatedName(nameInLocale,"Preferred name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been dropped as the preferred name because it is a search term");
+            }
+ else             if (nameInLocale.isShort()) {
+              nameInLocale.setLocalePreferred(false);
+              reportUpdatedName(nameInLocale,"Preferred name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been dropped as the preferred name because it is a short name");
+            }
+ else             preferredNameForLocaleFound=true;
+          }
+ else           if (nameInLocale.isLocalePreferred() && preferredNameForLocaleFound) {
+            nameInLocale.setLocalePreferred(false);
+            reportUpdatedName(nameInLocale,"Preferred name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been dropped as the preferred name because there is already another preferred name in the same locale");
+          }
+        }
+ else {
+          nameInLocale.setLocalePreferred(false);
+          reportUpdatedName(nameInLocale,"The locale preferred property of name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been updated to false from null");
+        }
+        if (nameInLocale.isFullySpecifiedName()) {
+          if (!hasFullySpecifiedName)           hasFullySpecifiedName=true;
+          if (!fullySpecifiedNameForLocaleFound)           fullySpecifiedNameForLocaleFound=true;
+ else {
+            nameInLocale.setConceptNameType(null);
+            reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from fully specified to a synonym");
+          }
+        }
+        if (nameInLocale.isShort()) {
+          if (!shortNameForLocaleFound)           shortNameForLocaleFound=true;
+ else {
+            nameInLocale.setConceptNameType(null);
+            reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from a short name to a synonym");
+          }
+        }
+        if (!isNameUniqueInLocale(connection,nameInLocale)) {
+          updateWarnings.add("ConceptName with id " + nameInLocale.getConceptNameId() + " ("+ nameInLocale.getName()+ ") is a duplicate concept name in locale '"+ conceptNameLocale.getDisplayName()+ "'");
+        }
+        String name=nameInLocale.getName().toLowerCase();
+        if (!nameDuplicateConceptNamesMap.containsKey(name))         nameDuplicateConceptNamesMap.put(name,new ArrayList<ConceptName>());
+        nameDuplicateConceptNamesMap.get(name).add(nameInLocale);
+      }
+      for (      Map.Entry<String,List<ConceptName>> entry : nameDuplicateConceptNamesMap.entrySet()) {
+        if (entry.getValue().size() < 2)         continue;
+        logMessages.add("The name '" + entry.getKey() + "' was found multiple times for the concept with id '"+ conceptId+ "' in locale '"+ conceptNameLocale.getDisplayName()+ "'");
+        ConceptName chosenName=null;
+        List<ConceptName> voidedNames=new ArrayList<ConceptName>();
+        for (        ConceptName duplicate : entry.getValue()) {
+          if (chosenName == null)           chosenName=duplicate;
+ else {
+            duplicate.setVoided(true);
+            duplicate.setVoidReason("Duplicate name in locale");
+            voidedNames.add(duplicate);
+            reportUpdatedName(duplicate,"ConceptName with id: " + duplicate.getConceptNameId() + " has been voided because it is a duplicate name for concept"+ conceptId+ "' in locale '"+ conceptNameLocale.getDisplayName()+ "'");
+          }
+        }
+      }
+    }
+    if (!hasFullySpecifiedName)     hasFullySpecifiedName=setFullySpecifiedName(conceptId,localeConceptNamesMap);
+    if (!CollectionUtils.isEmpty(namesWithNoLocale)) {
+      for (      ConceptName conceptName : namesWithNoLocale) {
+        conceptName.setLocale(defaultLocale);
+        reportUpdatedName(conceptName,"The locale for ConceptName with id " + conceptName.getConceptNameId() + " ("+ conceptName.getName()+ ") has been set to '"+ defaultLocale.getDisplayName()+ "'");
+        if (!hasFullySpecifiedName) {
+          conceptName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+          hasFullySpecifiedName=true;
+          reportUpdatedName(conceptName,"ConceptName with id " + conceptName.getConceptNameId() + " ("+ conceptName.getName()+ ") in locale '"+ defaultLocale.getDisplayName()+ "' has been set as the fully specified name for concept with id : "+ conceptId);
+        }
+ else {
+          conceptName.setLocalePreferred(false);
+          reportUpdatedName(conceptName,"ConceptName with id " + conceptName.getConceptNameId() + " ("+ conceptName.getName()+ ") is no longer marked as preferred because it had no locale");
+          if (conceptName.isFullySpecifiedName() || conceptName.isShort()) {
+            conceptName.setConceptNameType(null);
+            reportUpdatedName(conceptName,"The name '" + conceptName.getName() + "' in locale '"+ conceptName.toString()+ "' has been converted to a synonym because it had no locale");
+          }
+        }
+      }
+    }
+    if (!hasFullySpecifiedName)     updateWarnings.add("Concept with id: " + conceptId + " has no fully specified name");
+  }
+  logMessages.add("Number of Updated ConceptNames: " + updatedConceptNames.size());
+}

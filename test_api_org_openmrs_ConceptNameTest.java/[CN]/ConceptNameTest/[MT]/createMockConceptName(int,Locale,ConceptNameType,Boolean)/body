@@ -1,0 +1,10 @@
+{
+  ConceptName mockConceptName=new ConceptName();
+  mockConceptName.setConceptNameId(conceptNameId);
+  if (locale == null)   mockConceptName.setLocale(Context.getLocale());
+ else   mockConceptName.setLocale(locale);
+  mockConceptName.setConceptNameType(conceptNameType);
+  mockConceptName.setLocalePreferred(isLocalePreferred);
+  mockConceptName.setName(nameGenerator.generate());
+  return mockConceptName;
+}

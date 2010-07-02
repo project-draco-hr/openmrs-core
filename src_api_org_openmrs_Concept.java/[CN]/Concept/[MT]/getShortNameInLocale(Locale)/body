@@ -1,16 +1,8 @@
 {
-  ConceptName shortName=null;
-  String country=locale.getCountry();
-  if (country.length() != 0) {
-    shortName=getShortNameForCountry(country);
-  }
- else {
-    shortName=getShortNameInLanguage(locale.getLanguage());
-  }
-  if (shortName == null) {
-    for (    ConceptName name : getCompatibleNames(locale)) {
-      if (name.hasTag(ConceptNameTag.SHORT))       return name;
+  if (locale != null && getShortNames().size() > 0) {
+    for (    ConceptName shortName : getShortNames()) {
+      if (shortName.getLocale().equals(locale))       return shortName;
     }
   }
-  return shortName;
+  return null;
 }

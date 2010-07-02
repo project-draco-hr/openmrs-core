@@ -1,0 +1,6 @@
+{
+  List<ConceptName> names=new LinkedList<ConceptName>();
+  names.add(new ConceptName(1847));
+  names.add(new ConceptName(2453));
+  Assert.assertEquals(0,Context.getObsService().getObservationCount(names,true).intValue());
+}

@@ -1,3 +1,24 @@
 {
-  return getName(Context.getLocale());
+  if (getNames().size() == 0) {
+    if (log.isDebugEnabled())     log.debug("there are no names defined for: " + conceptId);
+    return null;
+  }
+  for (  Locale currentLocale : LocaleUtility.getLocalesInOrder()) {
+    ConceptName preferredName=getPreferredName(currentLocale);
+    if (preferredName != null)     return preferredName;
+    ConceptName fullySpecifiedName=getFullySpecifiedName(currentLocale);
+    if (fullySpecifiedName != null)     return fullySpecifiedName;
+    if (!StringUtils.isBlank(currentLocale.getCountry()) || !StringUtils.isBlank(currentLocale.getVariant())) {
+      Locale broaderLocale=new Locale(currentLocale.getLanguage());
+      ConceptName prefNameInBroaderLoc=getPreferredName(broaderLocale);
+      if (prefNameInBroaderLoc != null)       return prefNameInBroaderLoc;
+      ConceptName fullySpecNameInBroaderLoc=getFullySpecifiedName(broaderLocale);
+      if (fullySpecNameInBroaderLoc != null)       return fullySpecNameInBroaderLoc;
+    }
+  }
+  for (  ConceptName cn : getNames()) {
+    if (cn.isFullySpecifiedName())     return cn;
+  }
+  if (getSynonyms().size() > 0)   return getSynonyms().iterator().next();
+  return null;
 }

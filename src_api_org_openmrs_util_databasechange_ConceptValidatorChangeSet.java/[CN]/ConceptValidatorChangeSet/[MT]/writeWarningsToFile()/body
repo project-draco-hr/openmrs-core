@@ -1,0 +1,8 @@
+{
+  String lineSeparator=System.getProperty("line.separator");
+  StringBuilder sb=new StringBuilder("WARNINGS:").append(lineSeparator);
+  for (  String warning : updateWarnings)   sb.append(lineSeparator).append(warning);
+  sb.append(lineSeparator).append(lineSeparator).append("NOTIFICATIONS:").append(lineSeparator);
+  for (  String message : logMessages)   sb.append(lineSeparator).append(message);
+  DatabaseUpdater.writeUpdateMessagesToFile(sb.toString());
+}

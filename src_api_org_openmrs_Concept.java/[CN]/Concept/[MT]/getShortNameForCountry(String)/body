@@ -1,3 +1,8 @@
 {
-  return findNameTaggedWith(ConceptNameTag.shortCountryTagFor(country));
+  if (!StringUtils.isBlank(country)) {
+    for (    ConceptName shortName : getShortNames()) {
+      if (shortName.getLocale() != null && shortName.getLocale().getCountry().equals(country))       return shortName;
+    }
+  }
+  return null;
 }

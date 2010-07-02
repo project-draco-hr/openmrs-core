@@ -1,26 +1,25 @@
 {
   if (log.isDebugEnabled())   log.debug("Getting shortest conceptName for locale: " + locale);
-  ConceptName foundName=null;
-  ConceptName shortestName=null;
-  if (locale == null)   locale=LocaleUtility.getDefaultLocale();
-  String desiredLanguage=locale.getLanguage();
-  if (desiredLanguage.length() > 2)   desiredLanguage=desiredLanguage.substring(0,2);
-  for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext() && foundName == null; ) {
-    ConceptName possibleName=i.next();
-    if ((shortestName == null) || (possibleName.getName().length() < shortestName.getName().length())) {
-      shortestName=possibleName;
+  ConceptName shortNameInLocale=getShortNameInLocale(locale);
+  if (shortNameInLocale != null)   return shortNameInLocale;
+  ConceptName shortestNameForLocale=null;
+  ConceptName shortestNameForConcept=null;
+  if (locale != null) {
+    for (Iterator<ConceptName> i=getNames().iterator(); i.hasNext(); ) {
+      ConceptName possibleName=i.next();
+      if (possibleName.getLocale().equals(locale)) {
+        if ((shortestNameForLocale == null) || (possibleName.getName().length() < shortestNameForLocale.getName().length())) {
+          shortestNameForLocale=possibleName;
+        }
+      }
+      if ((shortestNameForConcept == null) || (possibleName.getName().length() < shortestNameForConcept.getName().length())) {
+        shortestNameForConcept=possibleName;
+      }
     }
   }
-  if (foundName == null) {
-    if (exact) {
-      log.warn("No short concept name found for concept id " + conceptId + " for locale "+ locale.getDisplayName());
-    }
- else     if (shortestName != null) {
-      foundName=shortestName;
-    }
- else {
-      log.warn("No concept name found for default locale for concept id " + conceptId);
-    }
+  if (exact) {
+    if (shortestNameForLocale == null)     log.warn("No short concept name found for concept id " + conceptId + " for locale "+ locale.getDisplayName());
+    return shortestNameForLocale;
   }
-  return foundName;
+  return shortestNameForConcept;
 }

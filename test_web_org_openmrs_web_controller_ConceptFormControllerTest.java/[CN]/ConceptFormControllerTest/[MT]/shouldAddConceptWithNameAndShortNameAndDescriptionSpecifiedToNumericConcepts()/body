@@ -21,7 +21,7 @@
   assertNotNull(actualConcept);
   Collection<ConceptName> actualNames=actualConcept.getNames();
   assertEquals(2,actualNames.size());
-  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getPreferredName(Locale.ENGLISH).getName());
+  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getFullySpecifiedName(Locale.ENGLISH).getName());
   assertNotNull(actualConcept.getShortNameInLocale(Locale.ENGLISH));
   assertEquals(EXPECTED_SHORT_NAME,actualConcept.getShortNameInLocale(Locale.ENGLISH).getName());
   assertNotNull(actualConcept.getDescription(Locale.ENGLISH));

@@ -1,0 +1,23 @@
+{
+  ProgramWorkflow program=new ProgramWorkflow();
+  ConceptName state1ConceptName=new ConceptName("Group 10",Context.getLocale());
+  Concept state1Concept=new Concept();
+  state1Concept.addName(state1ConceptName);
+  ProgramWorkflowState state1=new ProgramWorkflowState();
+  state1.setConcept(state1Concept);
+  program.addState(state1);
+  ConceptName state2ConceptName=new ConceptName("Group 2",Context.getLocale());
+  Concept state2Concept=new Concept();
+  state2Concept.addName(state2ConceptName);
+  ProgramWorkflowState state2=new ProgramWorkflowState();
+  state2.setConcept(state2Concept);
+  program.addState(state2);
+  Set<ProgramWorkflowState> sortedStates=program.getSortedStates();
+  int x=1;
+  for (  ProgramWorkflowState state : sortedStates) {
+    if (x == 1)     Assert.assertEquals("Group 2",state.getConcept().getName(Context.getLocale()).getName());
+ else     if (x == 2)     Assert.assertEquals("Group 10",state.getConcept().getName(Context.getLocale()).getName());
+ else     Assert.fail("Wha?!");
+    x++;
+  }
+}

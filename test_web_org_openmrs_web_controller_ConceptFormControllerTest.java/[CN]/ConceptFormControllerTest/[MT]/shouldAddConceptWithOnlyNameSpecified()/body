@@ -14,7 +14,7 @@
   assertTrue(mav.getModel().isEmpty());
   Concept actualConcept=cs.getConceptByName(EXPECTED_PREFERRED_NAME);
   assertNotNull(actualConcept);
-  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getPreferredName(Locale.ENGLISH).getName());
+  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getFullySpecifiedName(Locale.ENGLISH).getName());
   Collection<ConceptName> actualNames=actualConcept.getNames();
   assertEquals(1,actualNames.size());
   assertNull(actualConcept.getShortNameInLocale(Locale.ENGLISH));

@@ -1,0 +1,9 @@
+{
+  Vector<ConceptName> indexTermsForLocale=new Vector<ConceptName>();
+  if (getIndexTerms().size() > 0) {
+    for (    ConceptName name : getIndexTerms()) {
+      if (name.getLocale().equals(locale))       indexTermsForLocale.add(name);
+    }
+  }
+  return indexTermsForLocale;
+}

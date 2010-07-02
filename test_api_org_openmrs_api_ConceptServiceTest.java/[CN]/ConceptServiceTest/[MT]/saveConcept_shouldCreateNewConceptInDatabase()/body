@@ -3,7 +3,8 @@
   executeDataSet(INITIAL_CONCEPTS_XML);
   authenticate();
   Concept conceptToAdd=new Concept();
-  conceptToAdd.addName(new ConceptName("new name",Locale.US));
+  ConceptName cn=new ConceptName("new name",Context.getLocale());
+  conceptToAdd.addName(cn);
   assertFalse(conceptService.getAllConcepts().contains(conceptToAdd));
   conceptService.saveConcept(conceptToAdd);
   assertTrue(conceptService.getAllConcepts().contains(conceptToAdd));

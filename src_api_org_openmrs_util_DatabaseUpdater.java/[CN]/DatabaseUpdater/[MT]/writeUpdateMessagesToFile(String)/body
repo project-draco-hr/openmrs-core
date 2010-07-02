@@ -1,0 +1,34 @@
+{
+  PrintWriter writer=null;
+  Scanner scanner=null;
+  File destFile=new File(OpenmrsUtil.getApplicationDataDirectory(),DatabaseUpdater.DATABASE_UPDATES_LOG_FILE);
+  try {
+    String lineSeparator=System.getProperty("line.separator");
+    java.util.Date date=Calendar.getInstance().getTime();
+    StringBuilder sb=new StringBuilder();
+    if (destFile.isFile()) {
+      scanner=new Scanner(destFile);
+      while (scanner.hasNextLine())       sb.append(scanner.nextLine()).append(lineSeparator);
+      sb.append(lineSeparator);
+      sb.append(lineSeparator);
+      if (scanner.ioException() != null)       log.warn("Some error(s) occured while writing the database updates to the file system",scanner.ioException());
+    }
+    writer=new PrintWriter(destFile);
+    sb.append("********** START OF DATABASE UPDATE LOGS AS AT " + Calendar.getInstance().getTime() + " **********");
+    sb.append(lineSeparator);
+    sb.append(lineSeparator);
+    sb.append(text);
+    sb.append(lineSeparator);
+    sb.append(lineSeparator);
+    sb.append("*********** END OF DATABASE UPDATE LOGS AS AT " + Calendar.getInstance().getTime() + " ***********");
+    writer.write(sb.toString());
+    if (writer.checkError())     log.warn("An Error occured while writing the warnings from the database update process to a file'");
+  }
+ catch (  FileNotFoundException e) {
+    log.warn("Generated error",e);
+  }
+ finally {
+    if (writer != null)     writer.close();
+    if (scanner != null)     scanner.close();
+  }
+}

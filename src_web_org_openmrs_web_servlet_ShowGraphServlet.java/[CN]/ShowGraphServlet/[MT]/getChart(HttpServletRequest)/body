@@ -35,7 +35,7 @@
   if (conceptId2 != null)   concept2=Context.getConceptService().getConcept(Integer.parseInt(conceptId2));
   if (concept1 != null) {
     observations1=Context.getObsService().getObservationsByPersonAndConcept(patient,concept1);
-    chartTitle=concept1.getBestName(request.getLocale()).getName();
+    chartTitle=concept1.getName().getName();
     rangeAxisTitle=((ConceptNumeric)concept1).getUnits();
     minRange=((ConceptNumeric)concept1).getLowAbsolute();
     maxRange=((ConceptNumeric)concept1).getHiAbsolute();
@@ -47,7 +47,7 @@
       String concept2Units=((ConceptNumeric)concept2).getUnits();
       if (concept2Units != null && concept2Units.equals(rangeAxisTitle)) {
         observations2=Context.getObsService().getObservationsByPersonAndConcept(patient,concept2);
-        chartTitle+=" + " + concept2.getBestName(request.getLocale()).getName();
+        chartTitle+=" + " + concept2.getName().getName();
         if (((ConceptNumeric)concept2).getHiAbsolute() != null && ((ConceptNumeric)concept2).getHiAbsolute() > maxRange)         maxRange=((ConceptNumeric)concept2).getHiAbsolute();
         if (((ConceptNumeric)concept2).getLowAbsolute() != null && ((ConceptNumeric)concept2).getLowAbsolute() < minRange)         minRange=((ConceptNumeric)concept2).getLowAbsolute();
       }
@@ -91,9 +91,9 @@
     timeScale=Day.class;
     timeAxisTitle="Date";
   }
-  series1=new TimeSeries(concept1.getBestName(Context.getLocale()).getName(),timeScale);
+  series1=new TimeSeries(concept1.getName().getName(),timeScale);
   if (concept2 == null)   series2=new TimeSeries("NULL",Hour.class);
- else   series2=new TimeSeries(concept2.getBestName(Context.getLocale()).getName(),timeScale);
+ else   series2=new TimeSeries(concept2.getName().getName(),timeScale);
   for (  Obs obs : observations1) {
     if (obs.getValueNumeric() != null && obs.getObsDatetime().getTime() >= fromDate.getTime() && obs.getObsDatetime().getTime() < toDate.getTime()) {
       cal.setTime(obs.getObsDatetime());

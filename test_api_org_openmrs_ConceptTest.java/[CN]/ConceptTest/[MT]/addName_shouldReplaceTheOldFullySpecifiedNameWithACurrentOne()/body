@@ -1,0 +1,11 @@
+{
+  Concept concept=new Concept();
+  ConceptName oldFullySpecName=new ConceptName("some name",Context.getLocale());
+  concept.addName(oldFullySpecName);
+  Assert.assertEquals(true,oldFullySpecName.isFullySpecifiedName());
+  ConceptName newFullySpecName=new ConceptName("new name",Context.getLocale());
+  newFullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  concept.addName(newFullySpecName);
+  Assert.assertEquals(false,oldFullySpecName.isFullySpecifiedName());
+  Assert.assertEquals("new name",concept.getFullySpecifiedName(Context.getLocale()).getName());
+}

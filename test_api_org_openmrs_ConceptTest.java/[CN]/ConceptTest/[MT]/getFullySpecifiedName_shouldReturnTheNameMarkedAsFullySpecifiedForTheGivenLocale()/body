@@ -1,0 +1,8 @@
+{
+  Locale primaryLocale=Locale.US;
+  Concept testConcept=createMockConcept(1,primaryLocale);
+  ConceptName fullySpecifiedName_FR=ConceptNameTest.createMockConceptName(3,new Locale("fr"),ConceptNameType.FULLY_SPECIFIED,true);
+  testConcept.addName(fullySpecifiedName_FR);
+  Assert.assertEquals(primaryLocale,testConcept.getFullySpecifiedName(primaryLocale).getLocale());
+  Assert.assertEquals(ConceptNameType.FULLY_SPECIFIED,testConcept.getFullySpecifiedName(primaryLocale).getConceptNameType());
+}
