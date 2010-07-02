@@ -1,6 +1,7 @@
 {
   Concept concept=new Concept();
-  concept.addName(new ConceptName("Weight",Locale.US));
+  ConceptName cn=new ConceptName("Weight",Context.getLocale());
+  concept.addName(cn);
   concept.setConceptId(null);
   concept.setDatatype(Context.getConceptService().getConceptDatatypeByName("Numeric"));
   concept.setConceptClass(Context.getConceptService().getConceptClassByName("Finding"));

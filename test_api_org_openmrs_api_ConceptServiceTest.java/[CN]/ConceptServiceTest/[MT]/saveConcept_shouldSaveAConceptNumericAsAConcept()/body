@@ -2,8 +2,10 @@
   initializeInMemoryDatabase();
   executeDataSet(INITIAL_CONCEPTS_XML);
   authenticate();
+  Context.setLocale(Locale.US);
   Concept c2=new Concept(2);
-  c2.addName(new ConceptName("not a numeric anymore",Locale.US));
+  ConceptName cn=new ConceptName("not a numeric anymore",Locale.US);
+  c2.addName(cn);
   c2.setDatatype(new ConceptDatatype(3));
   conceptService.saveConcept(c2);
   Concept secondConcept=conceptService.getConcept(2);

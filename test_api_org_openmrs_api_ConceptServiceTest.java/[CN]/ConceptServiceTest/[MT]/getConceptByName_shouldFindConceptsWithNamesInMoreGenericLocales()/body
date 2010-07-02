@@ -1,5 +1,5 @@
 {
   executeDataSet(INITIAL_CONCEPTS_XML);
-  Assert.assertEquals(Context.getLocale(),Locale.UK);
+  Context.setLocale(Locale.UK);
   Assert.assertNotNull(Context.getConceptService().getConceptByName("Some numeric concept name"));
 }

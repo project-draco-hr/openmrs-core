@@ -1,0 +1,8 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("name",Context.getLocale()));
+  concept.addName(new ConceptName(null,Context.getLocale()));
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertEquals(true,errors.hasErrors());
+}

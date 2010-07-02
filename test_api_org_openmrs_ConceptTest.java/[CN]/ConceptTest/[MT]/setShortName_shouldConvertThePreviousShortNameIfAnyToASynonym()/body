@@ -1,0 +1,7 @@
+{
+  Concept concept=createMockConcept(1,Context.getLocale());
+  ConceptName oldShortName=concept.getShortNameInLocale(Context.getLocale());
+  Assert.assertEquals(ConceptNameType.SHORT,oldShortName.getConceptNameType());
+  concept.setShortName(new ConceptName("some name",Context.getLocale()));
+  Assert.assertEquals(null,oldShortName.getConceptNameType());
+}

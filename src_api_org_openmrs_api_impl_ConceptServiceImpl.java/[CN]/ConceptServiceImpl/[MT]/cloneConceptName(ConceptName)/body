@@ -1,0 +1,19 @@
+{
+  ConceptName copy=new ConceptName();
+  try {
+    copy=(ConceptName)BeanUtils.cloneBean(conceptName);
+  }
+ catch (  IllegalAccessException e) {
+    log.warn("Error generated",e);
+  }
+catch (  InstantiationException e) {
+    log.warn("Error generated",e);
+  }
+catch (  InvocationTargetException e) {
+    log.warn("Error generated",e);
+  }
+catch (  NoSuchMethodException e) {
+    log.warn("Error generated",e);
+  }
+  return copy;
+}

@@ -1,0 +1,31 @@
+{
+  for (  Locale allowedLoc : allowedLocales) {
+    List<ConceptName> possiblePrefNames=localeConceptNamesMap.get(allowedLoc);
+    if (possiblePrefNames == null)     continue;
+    for (    ConceptName cn : possiblePrefNames) {
+      if (cn.isSynonym()) {
+        cn.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+        reportUpdatedName(cn,"ConceptName with id " + cn.getConceptNameId() + " ("+ cn.getName()+ ") in locale '"+ allowedLoc.getDisplayName()+ "' has been set as the fully specified name for concept with id : "+ conceptId);
+        return true;
+      }
+    }
+    for (    ConceptName cn : possiblePrefNames) {
+      if (cn.isShort()) {
+        cn.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+        reportUpdatedName(cn,"ConceptName with id " + cn.getConceptNameId() + " ("+ cn.getName()+ ") in locale '"+ allowedLoc.getDisplayName()+ "' has been changed from short to fully specified name for concept with id : "+ conceptId);
+        return true;
+      }
+    }
+  }
+  Set<Locale> localeSet=localeConceptNamesMap.keySet();
+  for (Iterator<Locale> localeIterator=localeSet.iterator(); localeIterator.hasNext(); ) {
+    Locale locale=localeIterator.next();
+    if (locale != null) {
+      ConceptName fullySpecName=localeConceptNamesMap.get(locale).get(0);
+      fullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+      reportUpdatedName(fullySpecName,"ConceptName with id " + fullySpecName.getConceptNameId() + " ("+ fullySpecName.getName()+ ") in locale '"+ locale.getDisplayName()+ "' has been set as the fully specified name for concept with id : "+ conceptId);
+      return true;
+    }
+  }
+  return false;
+}

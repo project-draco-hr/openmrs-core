@@ -1,0 +1,14 @@
+{
+  Context.setLocale(Context.getLocale());
+  Concept concept=Context.getConceptService().getConcept(5497);
+  ConceptName preferredName=new ConceptName("preferred name",Context.getLocale());
+  concept.setPreferredName(preferredName);
+  Context.getConceptService().saveConcept(concept);
+  Assert.assertEquals("preferred name",concept.getPreferredName(Context.getLocale()).getName());
+  Concept newConcept=ConceptTest.createMockConcept(2,Context.getLocale());
+  ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,true);
+  anotherConceptName.setName("preferred name");
+  newConcept.addName(anotherConceptName);
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(newConcept,errors);
+}

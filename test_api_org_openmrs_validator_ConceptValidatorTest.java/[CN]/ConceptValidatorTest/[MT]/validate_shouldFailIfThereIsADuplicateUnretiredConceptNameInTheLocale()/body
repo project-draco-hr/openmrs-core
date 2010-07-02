@@ -1,6 +1,9 @@
 {
-  Concept concept=new Concept();
-  concept.setPreferredName(Context.getLocale(),new ConceptName("CD4 COUNT",Context.getLocale()));
+  Concept concept=ConceptTest.createMockConcept(1,Context.getLocale());
+  String duplicateName=concept.getFullySpecifiedName(Context.getLocale()).getName();
+  ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,false);
+  anotherConceptName.setName(duplicateName);
+  concept.addName(anotherConceptName);
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
 }

@@ -1,3 +1,8 @@
 {
-  return findNameTaggedWith(ConceptNameTag.preferredCountryTagFor(country));
+  if (!StringUtils.isBlank(country)) {
+    for (    ConceptName conceptName : getNames()) {
+      if (conceptName.isPreferred() && conceptName.getLocale() != null && conceptName.getLocale().getCountry().equals(country))       return conceptName;
+    }
+  }
+  return null;
 }

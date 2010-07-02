@@ -2,14 +2,18 @@
   this.concept=concept;
   this.locales=Context.getAdministrationService().getAllowedLocales();
   for (  Locale locale : locales) {
-    namesByLocale.put(locale,concept.getPreferredName(locale));
+    ConceptName preferredName=concept.getPreferredName(locale);
+    preferredNamesByLocale.put(locale,(preferredName != null ? preferredName.getName() : null));
+    namesByLocale.put(locale,concept.getFullySpecifiedName(locale));
     shortNamesByLocale.put(locale,concept.getShortNameInLocale(locale));
     synonymsByLocale.put(locale,(List<ConceptName>)concept.getSynonyms(locale));
     descriptionsByLocale.put(locale,concept.getDescription(locale,true));
+    indexTermsByLocale.put(locale,(List<ConceptName>)concept.getIndexTermsForLocale(locale));
     if (namesByLocale.get(locale) == null)     namesByLocale.put(locale,new ConceptName(null,locale));
     if (shortNamesByLocale.get(locale) == null)     shortNamesByLocale.put(locale,new ConceptName(null,locale));
     if (descriptionsByLocale.get(locale) == null)     descriptionsByLocale.put(locale,new ConceptDescription(null,locale));
     synonymsByLocale.put(locale,ListUtils.lazyList(synonymsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
+    indexTermsByLocale.put(locale,ListUtils.lazyList(indexTermsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
   }
   mappings=ListUtils.lazyList(new Vector(concept.getConceptMappings()),FactoryUtils.instantiateFactory(ConceptMap.class));
   if (concept.isNumeric()) {

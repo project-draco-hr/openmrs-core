@@ -1,0 +1,11 @@
+{
+  Concept concept=new Concept();
+  ConceptName oldPreferredName=new ConceptName("some name",Context.getLocale());
+  oldPreferredName.setLocalePreferred(true);
+  concept.addName(oldPreferredName);
+  ConceptName newPreferredName=new ConceptName("new name",Context.getLocale());
+  newPreferredName.setLocalePreferred(true);
+  concept.addName(newPreferredName);
+  Assert.assertEquals(false,oldPreferredName.isPreferred());
+  Assert.assertEquals("new name",concept.getPreferredName(Context.getLocale()).getName());
+}

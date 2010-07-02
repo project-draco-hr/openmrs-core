@@ -7,6 +7,9 @@
       log.warn("Multiple concepts found for '" + name + "'");
       for (      Concept c : concepts) {
         if (c.getName(Context.getLocale()).getName().compareTo(name) == 0)         return c;
+        for (        ConceptName indexTerm : c.getIndexTermsForLocale(Context.getLocale())) {
+          if (indexTerm.getName().compareTo(name) == 0)           return c;
+        }
       }
     }
     return concepts.get(0);

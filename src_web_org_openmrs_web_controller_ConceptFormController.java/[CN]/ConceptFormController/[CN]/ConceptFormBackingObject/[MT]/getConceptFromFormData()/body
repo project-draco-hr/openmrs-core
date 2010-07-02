@@ -1,23 +1,38 @@
 {
-  ConceptNameTag preferredTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.PREFERRED);
-  ConceptNameTag shortTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.SHORT);
-  ConceptNameTag synonymTag=Context.getConceptService().getConceptNameTagByName(ConceptNameTag.SYNONYM);
   for (  Locale locale : locales) {
-    ConceptName preferredNameInLocale=namesByLocale.get(locale);
-    if (StringUtils.hasLength(preferredNameInLocale.getName()) && !concept.getNames().contains(preferredNameInLocale)) {
-      preferredNameInLocale.addTag(preferredTag);
-      concept.addName(preferredNameInLocale);
+    ConceptName fullySpecifiedNameInLocale=namesByLocale.get(locale);
+    if (StringUtils.hasText(fullySpecifiedNameInLocale.getName())) {
+      concept.setFullySpecifiedName(fullySpecifiedNameInLocale);
+      if (fullySpecifiedNameInLocale.getName().equalsIgnoreCase(preferredNamesByLocale.get(locale))) {
+        concept.setPreferredName(fullySpecifiedNameInLocale);
+      }
     }
     ConceptName shortNameInLocale=shortNamesByLocale.get(locale);
-    if (StringUtils.hasLength(shortNameInLocale.getName()) && !concept.getNames().contains(shortNameInLocale) && !concept.hasName(shortNameInLocale.getName(),locale)) {
-      shortNameInLocale.addTag(shortTag);
-      concept.addName(shortNameInLocale);
+    if (StringUtils.hasText(shortNameInLocale.getName())) {
+      concept.setShortName(shortNameInLocale);
     }
     for (    ConceptName synonym : synonymsByLocale.get(locale)) {
-      if (synonym != null && synonym.getName() != null && !concept.getNames().contains(synonym) && !concept.hasName(synonym.getName(),locale)) {
-        synonym.addTag(synonymTag);
+      if (synonym != null && StringUtils.hasText(synonym.getName())) {
         synonym.setLocale(locale);
-        concept.addName(synonym);
+        if (synonym.getName().equalsIgnoreCase(preferredNamesByLocale.get(locale))) {
+          concept.setPreferredName(synonym);
+        }
+ else         if (!concept.getNames().contains(synonym) && !concept.hasName(synonym.getName(),locale)) {
+          concept.addName(synonym);
+        }
+        if (!synonym.isVoided())         synonym.setVoidReason(null);
+ else         if (synonym.isVoided() && !StringUtils.hasText(synonym.getVoidReason()))         synonym.setVoidReason(Context.getMessageSourceService().getMessage("Concept.name.default.voidReason"));
+      }
+    }
+    for (    ConceptName indexTerm : indexTermsByLocale.get(locale)) {
+      if (indexTerm != null && StringUtils.hasText(indexTerm.getName())) {
+        if (!concept.getNames().contains(indexTerm) && !concept.hasName(indexTerm.getName(),locale)) {
+          indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
+          indexTerm.setLocale(locale);
+          concept.addName(indexTerm);
+        }
+        if (!indexTerm.isVoided())         indexTerm.setVoidReason(null);
+ else         if (indexTerm.isVoided() && !StringUtils.hasText(indexTerm.getVoidReason()))         indexTerm.setVoidReason(Context.getMessageSourceService().getMessage("Concept.name.default.voidReason"));
       }
     }
     ConceptDescription descInLocale=descriptionsByLocale.get(locale);

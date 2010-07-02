@@ -4,12 +4,13 @@
   ConceptNameTag cnt=cs.getConceptNameTagByName("preferred_en");
   Assert.assertNotNull(cnt);
   ConceptName cn=new ConceptName("Some name",Locale.ENGLISH);
+  cn.addTag(new ConceptNameTag("preferred_en","preferred name in a language"));
   Concept concept=new Concept();
-  concept.setPreferredName(Locale.ENGLISH,cn);
+  concept.addName(cn);
   concept.setDatatype(new ConceptDatatype(1));
   concept.setConceptClass(new ConceptClass(1));
   cs.saveConcept(concept);
-  Collection<ConceptNameTag> savedConceptNameTags=concept.getBestName(Locale.ENGLISH).getTags();
+  Collection<ConceptNameTag> savedConceptNameTags=concept.getName(Locale.ENGLISH,false).getTags();
   ConceptNameTag savedConceptNameTag=(ConceptNameTag)savedConceptNameTags.toArray()[0];
   Assert.assertEquals(cnt.getConceptNameTagId(),savedConceptNameTag.getConceptNameTagId());
 }

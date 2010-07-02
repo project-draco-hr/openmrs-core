@@ -1,0 +1,7 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("shortName123",Context.getLocale()));
+  concept.setShortName(new ConceptName("shortName12",Context.getLocale()));
+  concept.setShortName(new ConceptName("shortName1",Locale.US));
+  Assert.assertEquals("shortName1",concept.getShortestName(Locale.US,null).getName());
+}

@@ -50,6 +50,16 @@
       if (updateJob.hasErrors()) {
         errors.addAll(updateJob.getErrors());
       }
+      if (updateJob.hasWarnings() && updateJob.getExecutingChangesetId() == null) {
+        result.put("hasWarnings",updateJob.hasWarnings());
+        StringBuilder sb=new StringBuilder("<ul>");
+        for (        String warning : updateJob.getUpdateWarnings())         sb.append("<li>" + warning + "</li>");
+        sb.append("</ul>");
+        result.put("updateWarnings",sb.toString());
+        result.put("updateLogFile",StringUtils.replace(OpenmrsUtil.getApplicationDataDirectory() + DatabaseUpdater.DATABASE_UPDATES_LOG_FILE,"\\","\\\\"));
+        updateJob.hasUpdateWarnings=false;
+        updateJob.getUpdateWarnings().clear();
+      }
       result.put("updatesRequired",updatesRequired());
       result.put("message",updateJob.getMessage());
       result.put("changesetIds",updateJob.getChangesetIds());

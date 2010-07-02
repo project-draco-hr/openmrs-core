@@ -1,0 +1,8 @@
+{
+  Locale primaryLocale=Locale.US;
+  Concept testConcept=createMockConcept(1,primaryLocale);
+  ConceptName newPreferredName=ConceptNameTest.createMockConceptName(3,primaryLocale,null,false);
+  assertEquals(false,testConcept.getNames(primaryLocale).contains(newPreferredName));
+  testConcept.setPreferredName(newPreferredName);
+  assertEquals(true,testConcept.getNames(primaryLocale).contains(newPreferredName));
+}

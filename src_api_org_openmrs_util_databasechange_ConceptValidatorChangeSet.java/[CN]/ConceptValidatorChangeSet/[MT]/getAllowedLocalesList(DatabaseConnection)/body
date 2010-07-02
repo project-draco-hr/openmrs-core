@@ -1,0 +1,42 @@
+{
+  Statement stmt=null;
+  ListOrderedSet allowedLocales=new ListOrderedSet();
+  try {
+    stmt=connection.createStatement();
+    ResultSet rs_defaultLocale=stmt.executeQuery("SELECT property_value FROM global_property WHERE property = '" + OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE + "'");
+    if (rs_defaultLocale.next()) {
+      String defaultLocaleStr=rs_defaultLocale.getString("property_value");
+      if (!StringUtils.isBlank(defaultLocaleStr) && defaultLocaleStr.length() > 1) {
+        Locale defaultLocale_GP=LocaleUtils.toLocale(defaultLocaleStr);
+        if (defaultLocale_GP != null)         defaultLocale=defaultLocale_GP;
+      }
+    }
+    allowedLocales.add(defaultLocale);
+    ResultSet rs_allowedLocales=stmt.executeQuery("SELECT property_value FROM global_property WHERE property = '" + OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST + "'");
+    if (rs_allowedLocales.next()) {
+      String allowedLocaleStr=rs_allowedLocales.getString("property_value");
+      if (!StringUtils.isBlank(allowedLocaleStr)) {
+        String[] localesArray=allowedLocaleStr.split(",");
+        for (        String localeStr : localesArray) {
+          if (localeStr.trim().length() > 1)           allowedLocales.add(LocaleUtils.toLocale(localeStr.trim()));
+        }
+      }
+    }
+ else     log.warn("The global property '" + OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST + "' isn't set");
+  }
+ catch (  SQLException e) {
+    log.warn("Error generated",e);
+  }
+ finally {
+    if (stmt != null) {
+      try {
+        stmt.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Failed to close the statement object");
+      }
+    }
+  }
+  allowedLocales.add(new Locale("en"));
+  return allowedLocales.asList();
+}

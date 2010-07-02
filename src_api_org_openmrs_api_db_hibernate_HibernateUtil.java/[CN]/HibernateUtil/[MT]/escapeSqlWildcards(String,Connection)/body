@@ -1,0 +1,13 @@
+{
+  if (!StringUtils.isBlank(oldString)) {
+    String escapeCharacter="";
+    try {
+      escapeCharacter=connection.getMetaData().getSearchStringEscape();
+    }
+ catch (    SQLException e) {
+      log.warn("Error generated",e);
+    }
+    return StringUtils.replaceEach(oldString,new String[]{"%","_","*","'"},new String[]{escapeCharacter + "%",escapeCharacter + "_",escapeCharacter + "*",escapeCharacter + "'"});
+  }
+ else   return oldString;
+}

@@ -1,3 +1,8 @@
 {
-  return findNameTaggedWith(ConceptNameTag.shortLanguageTagFor(language));
+  if (!StringUtils.isBlank(language)) {
+    for (    ConceptName shortName : getShortNames()) {
+      if (shortName.getLocale() != null && shortName.getLocale().getLanguage().equals(language))       return shortName;
+    }
+  }
+  return null;
 }

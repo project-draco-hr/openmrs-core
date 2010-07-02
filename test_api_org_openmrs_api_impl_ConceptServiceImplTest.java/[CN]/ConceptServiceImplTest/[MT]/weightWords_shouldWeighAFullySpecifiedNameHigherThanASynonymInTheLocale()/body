@@ -1,0 +1,14 @@
+{
+  Concept c=new Concept(1);
+  ConceptName fullySpecifiedName=new ConceptName("fully specified",new Locale("en","US"));
+  c.addName(fullySpecifiedName);
+  ConceptName synonym=new ConceptName("synonym",new Locale("en","US"));
+  c.addName(synonym);
+  ConceptWord fullySpecifiedWord=new ConceptWord("name",c,fullySpecifiedName,new Locale("en","US"));
+  ConceptWord synonymWord=new ConceptWord("name",c,synonym,new Locale("en","US"));
+  List<ConceptWord> words=new ArrayList<ConceptWord>();
+  words.add(fullySpecifiedWord);
+  words.add(synonymWord);
+  List<ConceptWord> weightedWords=new ConceptServiceImpl().weightWords("name",Collections.singletonList(new Locale("en","US")),words);
+  Assert.assertEquals("fully specified",weightedWords.get(0).getConceptName().getName());
+}

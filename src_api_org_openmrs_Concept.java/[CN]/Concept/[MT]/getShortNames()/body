@@ -1,0 +1,12 @@
+{
+  Vector<ConceptName> shortNames=new Vector<ConceptName>();
+  if (getNames().size() == 0) {
+    if (log.isDebugEnabled())     log.debug("The Concept with id: " + conceptId + " has no names");
+  }
+ else {
+    for (    ConceptName name : getNames()) {
+      if (name.isShort())       shortNames.add(name);
+    }
+  }
+  return shortNames;
+}
