@@ -3,4 +3,6 @@
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
   patientService.mergePatients(preferred,notPreferred);
+  List<Relationship> rels=personService.getRelationshipsByPerson(notPreferred);
+  assertTrue("there should not be any relationships for non preferred",rels.isEmpty());
 }

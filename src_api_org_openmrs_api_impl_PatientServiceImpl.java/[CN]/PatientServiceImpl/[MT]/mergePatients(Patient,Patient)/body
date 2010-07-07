@@ -20,14 +20,31 @@
     }
   }
   PersonService personService=Context.getPersonService();
+  Set<String> existingRelationships=new HashSet<String>();
+  for (  Relationship rel : personService.getRelationshipsByPerson(preferred)) {
+    existingRelationships.add(relationshipHash(rel,preferred));
+  }
   for (  Relationship rel : personService.getRelationshipsByPerson(notPreferred)) {
     if (!rel.isVoided()) {
-      if (!((rel.getPersonA().equals(notPreferred) && rel.getPersonB().equals(preferred)) || rel.getPersonB().equals(notPreferred) && rel.getPersonA().equals(preferred))) {
+      boolean personAisPreferred=rel.getPersonA().equals(preferred);
+      boolean personAisNotPreferred=rel.getPersonA().equals(notPreferred);
+      boolean personBisPreferred=rel.getPersonB().equals(preferred);
+      boolean personBisNotPreferred=rel.getPersonB().equals(notPreferred);
+      String relHash=relationshipHash(rel,notPreferred);
+      if ((personAisPreferred && personBisNotPreferred) || (personBisPreferred && personAisNotPreferred)) {
+        personService.voidRelationship(rel,"person " + (personAisNotPreferred ? "A" : "B") + " was merged to person "+ (personAisPreferred ? "A" : "B"));
+      }
+ else       if (existingRelationships.contains(relHash)) {
+        personService.voidRelationship(rel,"person " + (personAisNotPreferred ? "A" : "B") + " was merged and a relationship already exists");
+      }
+ else {
         Relationship tmpRel=rel.copy();
-        if (tmpRel.getPersonA().equals(notPreferred))         tmpRel.setPersonA(preferred);
-        if (tmpRel.getPersonB().equals(notPreferred))         tmpRel.setPersonB(preferred);
+        if (personAisNotPreferred)         tmpRel.setPersonA(preferred);
+        if (personBisNotPreferred)         tmpRel.setPersonB(preferred);
         log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
         personService.saveRelationship(tmpRel);
+        personService.voidRelationship(rel,"person " + (personAisNotPreferred ? "A" : "B") + " was merged, relationship copied to #"+ tmpRel.getRelationshipId());
+        existingRelationships.add(relHash);
       }
     }
   }
