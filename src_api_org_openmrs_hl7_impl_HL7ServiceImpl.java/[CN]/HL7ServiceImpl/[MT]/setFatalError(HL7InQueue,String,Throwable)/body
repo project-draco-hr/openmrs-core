@@ -8,7 +8,7 @@
     cause.printStackTrace(pw);
     pw.flush();
     sw.flush();
-    hl7InError.setErrorDetails(sw.toString());
+    hl7InError.setErrorDetails(OpenmrsUtil.shortenedStackTrace(sw.toString()));
   }
   Context.getHL7Service().saveHL7InError(hl7InError);
   Context.getHL7Service().purgeHL7InQueue(hl7InQueue);
