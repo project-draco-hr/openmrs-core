@@ -3,4 +3,6 @@
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
   patientService.mergePatients(preferred,notPreferred);
+  List<Relationship> rels=personService.getRelationships(preferred,new Person(1),new RelationshipType(2));
+  assertEquals("duplicate relationships were not removed",1,rels.size());
 }

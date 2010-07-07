@@ -1,0 +1,10 @@
+{
+  executeDataSet(PATIENT_RELATIONSHIPS_XML);
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  patientService.mergePatients(preferred,notPreferred);
+  List<Relationship> rels=personService.getRelationships(new Person(7),preferred,new RelationshipType(4));
+  assertEquals("7->999 (type 4) was removed",1,rels.size());
+  rels=personService.getRelationships(new Person(7),preferred,new RelationshipType(1));
+  assertEquals("7->999 (type 1) was removed",1,rels.size());
+}
