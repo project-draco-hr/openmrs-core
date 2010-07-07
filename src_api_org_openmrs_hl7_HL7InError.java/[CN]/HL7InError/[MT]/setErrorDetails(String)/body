@@ -1,3 +1,4 @@
 {
+  if (errorDetails != null && errorDetails.length() > MAX_ERROR_DETAILS_LENGTH)   throw new APIException("error details length of " + errorDetails.length() + " exceeds maximum length of "+ MAX_ERROR_DETAILS_LENGTH);
   this.errorDetails=errorDetails;
 }

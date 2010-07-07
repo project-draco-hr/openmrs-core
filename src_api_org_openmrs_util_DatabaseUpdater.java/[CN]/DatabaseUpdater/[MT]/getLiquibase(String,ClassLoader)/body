@@ -11,7 +11,7 @@
     Database database=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(connection);
     database.setDatabaseChangeLogTableName("liquibasechangelog");
     database.setDatabaseChangeLogLockTableName("liquibasechangeloglock");
-    if (connection.getMetaData().getDatabaseProductName().contains("HSQL Database Engine")) {
+    if (connection.getMetaData().getDatabaseProductName().contains("HSQL Database Engine") || connection.getMetaData().getDatabaseProductName().contains("H2")) {
       database.setDatabaseChangeLogTableName(database.getDatabaseChangeLogTableName().toUpperCase());
       database.setDatabaseChangeLogLockTableName(database.getDatabaseChangeLogLockTableName().toUpperCase());
     }
