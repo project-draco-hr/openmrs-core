@@ -6,10 +6,10 @@
     OpenmrsUtil.copyFile(inputStream,outputStream);
   }
  catch (  FileNotFoundException e) {
-    throw new ModuleException("Can't create module file",e);
+    throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotCreateFile"),e);
   }
 catch (  IOException e) {
-    throw new ModuleException("Can't create module file",e);
+    throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotCreateFile"),e);
   }
  finally {
     try {
