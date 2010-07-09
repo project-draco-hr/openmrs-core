@@ -7,9 +7,10 @@
     if (rs_defaultLocale.next()) {
       String defaultLocaleStr=rs_defaultLocale.getString("property_value");
       if (!StringUtils.isBlank(defaultLocaleStr) && defaultLocaleStr.length() > 1) {
-        Locale defaultLocale_GP=LocaleUtils.toLocale(defaultLocaleStr);
+        Locale defaultLocale_GP=LocaleUtility.fromSpecification(defaultLocaleStr);
         if (defaultLocale_GP != null)         defaultLocale=defaultLocale_GP;
       }
+ else       updateWarnings.add("'" + defaultLocaleStr + "' is an invalid value for the global property default locale");
     }
     allowedLocales.add(defaultLocale);
     ResultSet rs_allowedLocales=stmt.executeQuery("SELECT property_value FROM global_property WHERE property = '" + OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST + "'");
@@ -18,7 +19,8 @@
       if (!StringUtils.isBlank(allowedLocaleStr)) {
         String[] localesArray=allowedLocaleStr.split(",");
         for (        String localeStr : localesArray) {
-          if (localeStr.trim().length() > 1)           allowedLocales.add(LocaleUtils.toLocale(localeStr.trim()));
+          if (localeStr.trim().length() > 1)           allowedLocales.add(LocaleUtility.fromSpecification(localeStr.trim()));
+ else           updateWarnings.add("'" + localeStr + "' is an invalid value for the global property locale.allowed.list");
         }
       }
     }
