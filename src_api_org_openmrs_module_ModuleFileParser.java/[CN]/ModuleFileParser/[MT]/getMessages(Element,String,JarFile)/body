@@ -20,7 +20,7 @@
         InputStream inStream=null;
         try {
           ZipEntry entry=jarfile.getEntry(file);
-          if (entry == null)           throw new ModuleException("No message properties file '" + file + "' for language '"+ lang+ "'");
+          if (entry == null)           throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.NoMessagePropsFile",new Object[]{file,lang},Context.getLocale()));
           inStream=jarfile.getInputStream(entry);
           Properties props=new Properties();
           OpenmrsUtil.loadProperties(props,inStream);

@@ -7,15 +7,15 @@
       jarfile=new JarFile(moduleFile);
     }
  catch (    IOException e) {
-      throw new ModuleException("Unable to get jar file",moduleFile.getName(),e);
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotGetJarFile"),moduleFile.getName(),e);
     }
     ZipEntry config=jarfile.getEntry("config.xml");
-    if (config == null)     throw new ModuleException("Error loading module. No config.xml found.",moduleFile.getName());
+    if (config == null)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noConfigFile"),moduleFile.getName());
     try {
       configStream=jarfile.getInputStream(config);
     }
  catch (    IOException e) {
-      throw new ModuleException("Unable to get config file stream",moduleFile.getName(),e);
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotGetConfigFileStream"),moduleFile.getName(),e);
     }
     Document configDoc=null;
     try {
@@ -49,23 +49,22 @@
         }
  catch (        Exception e3) {
         }
-        ;
       }
       log.error("config.xml content: " + output);
-      throw new ModuleException("Error parsing module config.xml file",moduleFile.getName(),e);
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotParseConfigFile"),moduleFile.getName(),e);
     }
     Element rootNode=configDoc.getDocumentElement();
     String configVersion=rootNode.getAttribute("configVersion");
-    if (!validConfigVersions.contains(configVersion))     throw new ModuleException("Invalid config version: " + configVersion,moduleFile.getName());
+    if (!validConfigVersions.contains(configVersion))     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.invalidConfigVersion",new Object[]{configVersion},Context.getLocale()),moduleFile.getName());
     String name=getElement(rootNode,configVersion,"name");
     String moduleId=getElement(rootNode,configVersion,"id");
     String packageName=getElement(rootNode,configVersion,"package");
     String author=getElement(rootNode,configVersion,"author");
     String desc=getElement(rootNode,configVersion,"description");
     String version=getElement(rootNode,configVersion,"version");
-    if (name == null || name.length() == 0)     throw new ModuleException("name cannot be empty",moduleFile.getName());
-    if (moduleId == null || moduleId.length() == 0)     throw new ModuleException("module id cannot be empty",name);
-    if (packageName == null || packageName.length() == 0)     throw new ModuleException("package cannot be empty",name);
+    if (name == null || name.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.nameCannotBeEmpty"),moduleFile.getName());
+    if (moduleId == null || moduleId.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.idCannotBeEmpty"),name);
+    if (packageName == null || packageName.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.packageCannotBeEmpty"),name);
     Document log4jDoc=null;
     try {
       ZipEntry log4j=jarfile.getEntry("log4j.xml");
