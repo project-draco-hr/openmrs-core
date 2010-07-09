@@ -19,7 +19,7 @@
         conceptName.setConceptNameType(conceptNameType);
       }
       String localeString=rs.getString("locale");
-      conceptName.setLocale(!StringUtils.isBlank(localeString) ? LocaleUtils.toLocale(localeString) : null);
+      conceptName.setLocale(!StringUtils.isBlank(localeString) ? LocaleUtility.fromSpecification(localeString) : null);
       conceptName.setLocalePreferred((rs.getInt("locale_preferred") == 1) ? true : false);
       conceptName.setVoided(false);
       if (!localeConceptNamesMap.containsKey(conceptName.getLocale()))       localeConceptNamesMap.put(conceptName.getLocale(),new LinkedList<ConceptName>());
