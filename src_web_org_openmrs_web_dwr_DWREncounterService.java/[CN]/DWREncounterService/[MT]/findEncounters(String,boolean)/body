@@ -16,7 +16,13 @@
     if (phrase == null || phrase.equals("")) {
     }
  else {
-      encs.addAll(es.getEncountersByPatient(phrase));
+      List<Encounter> encounters=es.getEncountersByPatient(phrase);
+      encs.addAll(encounters);
+      if (!encs.isEmpty() && !includeVoided) {
+        for (        Encounter encounter : encounters) {
+          if (encounter.isVoided())           encs.remove(encounter);
+        }
+      }
     }
     if (encs.size() == 0) {
       objectList.add("No matches found for <b>" + phrase + "</b>");
