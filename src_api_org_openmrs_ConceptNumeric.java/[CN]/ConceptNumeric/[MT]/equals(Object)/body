@@ -5,7 +5,7 @@
     return (this.getConceptId().equals(c.getConceptId()));
   }
  else   if (obj instanceof Concept) {
-    if (obj.equals(this))     return true;
+    return OpenmrsUtil.nullSafeEquals(((Concept)obj).getConceptId(),this.getConceptId());
   }
   return obj == this;
 }
