@@ -25,7 +25,7 @@
   patientIdentifier.setIdentifier("123-0");
   patientIdentifier.setIdentifierType(patientIdTypes.get(0));
   patientIdentifier.setLocation(new Location(1));
-  Set<PatientIdentifier> patientIdentifiers=new TreeSet<PatientIdentifier>();
+  Set<PatientIdentifier> patientIdentifiers=new LinkedHashSet<PatientIdentifier>();
   patientIdentifiers.add(patientIdentifier);
   patient.setIdentifiers(patientIdentifiers);
   patientService.savePatient(patient);

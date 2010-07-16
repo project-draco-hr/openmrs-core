@@ -40,7 +40,6 @@
   for (  PatientIdentifier identifier : newIdentifiers) {
     identifier.setPatient(patient);
   }
-  identifiers.addAll(newIdentifiers);
   if (pref.length() > 0)   for (  PatientIdentifier pi : identifiers)   pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
   if (Context.isAuthenticated())   map.put("defaultLocation",Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION));
   map.put("identifiers",identifiers);
