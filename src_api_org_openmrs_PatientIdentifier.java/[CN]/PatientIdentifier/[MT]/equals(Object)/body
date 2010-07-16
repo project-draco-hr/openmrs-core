@@ -1,8 +1,8 @@
 {
   if (obj instanceof PatientIdentifier) {
     PatientIdentifier p=(PatientIdentifier)obj;
-    boolean ret=(patient != null && patient.equals(p.getPatient())) && (identifier != null && identifier.equals(p.getIdentifier())) && (identifierType != null && identifierType.equals(p.getIdentifierType()));
-    return ret || p == this;
+    if (this.getPatientIdentifierId() != null && p.getPatientIdentifierId() != null)     return (this.getPatientIdentifierId().equals(p.getPatientIdentifierId()));
+    return obj == this;
   }
   return false;
 }

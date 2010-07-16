@@ -62,7 +62,7 @@
       }
     }
     if (log.isDebugEnabled())     log.debug("patient addresses: " + patient.getAddresses());
-    if (patient.getIdentifiers() == null)     patient.setIdentifiers(new TreeSet<PatientIdentifier>());
+    if (patient.getIdentifiers() == null)     patient.setIdentifiers(new LinkedHashSet<PatientIdentifier>());
     for (    PatientIdentifier pi : patient.getIdentifiers()) {
       pi.setPreferred(pref.equals(pi.getIdentifier() + pi.getIdentifierType().getPatientIdentifierTypeId()));
     }
@@ -92,10 +92,7 @@
     for (    PatientIdentifier identifier : newIdentifiers) {
       identifier.setPatient(patient);
       for (      PatientIdentifier currentIdentifier : patient.getActiveIdentifiers()) {
-        if (currentIdentifier.equals(identifier)) {
-          patient.removeIdentifier(currentIdentifier);
-          Context.evictFromSession(currentIdentifier);
-        }
+        patient.removeIdentifier(currentIdentifier);
       }
     }
     patient.addIdentifiers(newIdentifiers);
