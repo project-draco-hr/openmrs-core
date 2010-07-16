@@ -10,7 +10,7 @@
   }
  catch (  Exception e) {
     log.error("Error while attempting to get locations",e);
-    locationList.add("Error while attempting to get locations - " + e.getMessage());
+    locationList.add(Context.getMessageSourceService().getMessage("Location.get.error") + " - " + e.getMessage());
   }
   return locationList;
 }

@@ -1,10 +1,11 @@
 {
   Vector<Object> objectList=new Vector<Object>();
+  MessageSourceService mss=Context.getMessageSourceService();
   try {
     EncounterService es=Context.getEncounterService();
     List<Encounter> encs=new Vector<Encounter>();
     if (phrase == null) {
-      objectList.add("Search phrase cannot be null");
+      objectList.add(mss.getMessage("Encounter.searchPhraseCannotBeNull"));
       return objectList;
     }
     if (phrase.matches("\\d+")) {
@@ -16,16 +17,10 @@
     if (phrase == null || phrase.equals("")) {
     }
  else {
-      List<Encounter> encounters=es.getEncountersByPatient(phrase);
-      encs.addAll(encounters);
-      if (!encs.isEmpty() && !includeVoided) {
-        for (        Encounter encounter : encounters) {
-          if (encounter.isVoided())           encs.remove(encounter);
-        }
-      }
+      encs.addAll(es.getEncountersByPatient(phrase,includeVoided));
     }
     if (encs.size() == 0) {
-      objectList.add("No matches found for <b>" + phrase + "</b>");
+      objectList.add(mss.getMessage("Encounter.noMatchesFound",new Object[]{phrase},Context.getLocale()));
     }
  else {
       objectList=new Vector<Object>(encs.size());
@@ -36,7 +31,7 @@
   }
  catch (  Exception e) {
     log.error("Error while searching for encounters",e);
-    objectList.add("Error while attempting to find encounter - " + e.getMessage());
+    objectList.add(mss.getMessage("Encounter.search.error") + " - " + e.getMessage());
   }
   return objectList;
 }

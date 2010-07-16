@@ -1,5 +1,7 @@
 {
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class).createCriteria("patient","pat");
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  if (!includedVoided)   criteria.add(Restrictions.eq("voided",false));
+  criteria=criteria.createCriteria("patient","pat");
   String name=null;
   String identifier=null;
   if (query.matches(".*\\d+.*")) {
