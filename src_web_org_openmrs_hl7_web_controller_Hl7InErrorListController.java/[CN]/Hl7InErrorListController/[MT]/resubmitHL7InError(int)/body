@@ -1,0 +1,26 @@
+{
+  HL7Service hL7Service=Context.getHL7Service();
+  MessageSourceService mss=Context.getMessageSourceService();
+  StringBuffer success=new StringBuffer();
+  StringBuffer error=new StringBuffer();
+  Object[] args=new Object[]{id};
+  try {
+    HL7InError hl7InError=hL7Service.getHL7InError(Integer.valueOf(id));
+    HL7InQueue hl7InQueue=new HL7InQueue(hl7InError);
+    hL7Service.saveHL7InQueue(hl7InQueue);
+    hL7Service.purgeHL7InError(hl7InError);
+    success.append(mss.getMessage("Hl7inError.errorList.restored",args,Context.getLocale()) + "<br/>");
+  }
+ catch (  APIException e) {
+    log.warn("Error Processing erred message",e);
+    error.append(mss.getMessage("Hl7inError.errorList.error",args,Context.getLocale()) + "<br/>");
+  }
+  Map<String,Object> results=new HashMap<String,Object>();
+  if (!success.toString().equals("")) {
+    results.put(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+  }
+  if (!error.toString().equals("")) {
+    results.put(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+  }
+  return results;
+}

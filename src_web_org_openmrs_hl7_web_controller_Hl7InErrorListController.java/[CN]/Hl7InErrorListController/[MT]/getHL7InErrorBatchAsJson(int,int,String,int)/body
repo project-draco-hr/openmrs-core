@@ -1,0 +1,11 @@
+{
+  List<HL7InError> hl7s=Context.getHL7Service().getHL7InErrorBatch(iDisplayStart,iDisplayLength,sSearch);
+  List<Object> results=new ArrayList<Object>();
+  for (  HL7InError hl7 : hl7s)   results.add(splitHL7InError(hl7));
+  Map<String,Object> response=new HashMap<String,Object>();
+  response.put("iTotalRecords",Context.getHL7Service().countHL7InError(null));
+  response.put("iTotalDisplayRecords",Context.getHL7Service().countHL7InError(sSearch));
+  response.put("sEcho",sEcho);
+  response.put("aaData",results.toArray());
+  return response;
+}

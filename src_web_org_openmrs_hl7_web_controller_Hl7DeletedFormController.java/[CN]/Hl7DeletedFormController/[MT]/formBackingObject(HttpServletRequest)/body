@@ -1,7 +1,0 @@
-{
-  List<HL7InQueue> hl7InQueue=new Vector<HL7InQueue>();
-  if (Context.isAuthenticated()) {
-    hl7InQueue=Context.getHL7Service().getHL7InQueueByState(HL7Constants.HL7_STATUS_DELETED);
-  }
-  return hl7InQueue;
-}

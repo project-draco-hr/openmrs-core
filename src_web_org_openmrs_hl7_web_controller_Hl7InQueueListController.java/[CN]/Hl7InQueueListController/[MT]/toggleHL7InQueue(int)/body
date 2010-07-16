@@ -1,0 +1,27 @@
+{
+  HL7Service hL7Service=Context.getHL7Service();
+  MessageSourceService mss=Context.getMessageSourceService();
+  StringBuffer success=new StringBuffer();
+  StringBuffer error=new StringBuffer();
+  Object[] args=new Object[]{id};
+  try {
+    HL7InQueue hl7InQueue=hL7Service.getHL7InQueue(id);
+    if (hl7InQueue.getMessageState().equals(HL7Constants.HL7_STATUS_PENDING))     hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_DELETED);
+ else     hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_PENDING);
+    hL7Service.saveHL7InQueue(hl7InQueue);
+    if (hl7InQueue.getMessageState().equals(HL7Constants.HL7_STATUS_PENDING))     success.append(mss.getMessage("Hl7inQueue.queueList.restored",args,Context.getLocale()) + "<br/>");
+ else     success.append(mss.getMessage("Hl7inQueue.queueList.held",args,Context.getLocale()) + "<br/>");
+  }
+ catch (  APIException e) {
+    log.warn("Error updating a queue entry",e);
+    error.append(mss.getMessage("Hl7inQueue.queueList.error",args,Context.getLocale()) + "<br/>");
+  }
+  Map<String,Object> results=new HashMap<String,Object>();
+  if (!success.toString().equals("")) {
+    results.put(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+  }
+  if (!error.toString().equals("")) {
+    results.put(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+  }
+  return results;
+}

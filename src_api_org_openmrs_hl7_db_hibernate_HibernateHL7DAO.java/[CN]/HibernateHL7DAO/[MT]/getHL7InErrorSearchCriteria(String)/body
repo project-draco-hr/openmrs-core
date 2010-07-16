@@ -1,0 +1,5 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(HL7InError.class);
+  if (query != null && !query.isEmpty())   crit.add(Restrictions.or(Restrictions.like("HL7Data",query,MatchMode.ANYWHERE),Restrictions.or(Restrictions.like("errorDetails",query,MatchMode.ANYWHERE),Restrictions.like("error",query,MatchMode.ANYWHERE))));
+  return crit;
+}
