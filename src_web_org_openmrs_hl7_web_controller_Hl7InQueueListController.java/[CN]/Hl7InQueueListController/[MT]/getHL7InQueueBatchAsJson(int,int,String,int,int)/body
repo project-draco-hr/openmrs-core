@@ -1,0 +1,11 @@
+{
+  List<HL7InQueue> hl7s=Context.getHL7Service().getHL7InQueueBatch(iDisplayStart,iDisplayLength,messageState,sSearch);
+  List<Object> results=new ArrayList<Object>();
+  for (  HL7InQueue hl7 : hl7s)   results.add(splitHL7InQueue(hl7));
+  Map<String,Object> response=new HashMap<String,Object>();
+  response.put("iTotalRecords",Context.getHL7Service().countHL7InQueue(messageState,null));
+  response.put("iTotalDisplayRecords",Context.getHL7Service().countHL7InQueue(messageState,sSearch));
+  response.put("sEcho",sEcho);
+  response.put("aaData",results.toArray());
+  return response;
+}

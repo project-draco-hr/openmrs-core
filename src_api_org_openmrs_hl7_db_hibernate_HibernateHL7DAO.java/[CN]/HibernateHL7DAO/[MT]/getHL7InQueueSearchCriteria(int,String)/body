@@ -1,0 +1,6 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(HL7InQueue.class);
+  crit.add(Restrictions.eq("messageState",messageState));
+  if (query != null && !query.isEmpty())   crit.add(Restrictions.like("HL7Data",query,MatchMode.ANYWHERE));
+  return crit;
+}
