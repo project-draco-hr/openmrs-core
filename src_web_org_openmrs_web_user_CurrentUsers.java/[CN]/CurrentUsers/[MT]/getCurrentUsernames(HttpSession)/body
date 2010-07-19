@@ -1,0 +1,11 @@
+{
+  Map<String,String> currentUsers=getCurrentUsers(httpSession);
+  List<String> userNames=new ArrayList<String>();
+synchronized (currentUsers) {
+    for (    String value : currentUsers.values()) {
+      userNames.add(value);
+    }
+  }
+  Collections.sort(userNames);
+  return userNames;
+}

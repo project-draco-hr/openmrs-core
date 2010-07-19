@@ -61,6 +61,7 @@
         if (Context.getLocale() == null) {
           Context.setLocale(LocaleUtility.getDefaultLocale());
         }
+        CurrentUsers.addUser(httpSession,user);
         if (log.isDebugEnabled()) {
           log.debug("Redirecting after login to: " + redirect);
           log.debug("Locale address: " + request.getLocalAddr());

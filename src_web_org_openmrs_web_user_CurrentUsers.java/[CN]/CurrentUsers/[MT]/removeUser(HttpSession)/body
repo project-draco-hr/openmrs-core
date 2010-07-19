@@ -1,0 +1,8 @@
+{
+  String sessionId=httpSession.getId();
+  Map<String,String> currentUsers=getCurrentUsers(httpSession);
+  if (log.isDebugEnabled()) {
+    log.debug("Removing user from the current users. session: " + sessionId + " user: "+ currentUsers.get(sessionId));
+  }
+  currentUsers.remove(sessionId);
+}
