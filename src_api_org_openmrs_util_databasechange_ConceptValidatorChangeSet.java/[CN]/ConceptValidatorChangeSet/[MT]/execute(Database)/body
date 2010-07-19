@@ -1,7 +1,10 @@
 {
   DatabaseConnection connection=database.getConnection();
   validateAndCleanUpConcepts(connection);
-  if (!updatedConceptNames.isEmpty())   runBatchUpdate(connection);
+  if (!updatedConceptNames.isEmpty()) {
+    daemonUserId=getInt(connection,"SELECT u.user_id FROM users u WHERE u.uuid = 'A4F30A1B-5EB9-11DF-A648-37A07F9C90FB'");
+    runBatchUpdate(connection);
+  }
  else   log.debug("No concept names to update");
   if (!logMessages.isEmpty() || !updateWarnings.isEmpty())   writeWarningsToFile();
   if (!updateWarnings.isEmpty()) {

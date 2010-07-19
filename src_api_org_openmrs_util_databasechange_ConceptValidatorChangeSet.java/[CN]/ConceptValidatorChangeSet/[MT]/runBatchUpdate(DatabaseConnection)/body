@@ -2,15 +2,18 @@
   PreparedStatement pStmt=null;
   try {
     connection.setAutoCommit(false);
-    pStmt=connection.prepareStatement("UPDATE concept_name SET locale = ?, concept_name_type = ?, locale_preferred = ?, voided = ?, date_voided = ?, void_reason = ? WHERE concept_name_id = ?");
+    pStmt=connection.prepareStatement("UPDATE concept_name SET locale = ?, concept_name_type = ?, locale_preferred = ?, voided = ?, date_voided = ?, void_reason = ?, voided_by = ? WHERE concept_name_id = ?");
     for (    ConceptName conceptName : updatedConceptNames) {
       pStmt.setString(1,conceptName.getLocale().toString());
       pStmt.setString(2,(conceptName.getConceptNameType() != null) ? conceptName.getConceptNameType().toString() : null);
       pStmt.setBoolean(3,conceptName.isLocalePreferred());
       pStmt.setBoolean(4,conceptName.isVoided());
-      if (conceptName.isVoided())       pStmt.setDate(5,new Date(System.currentTimeMillis()));
-      pStmt.setString(6,conceptName.getVoidReason());
-      pStmt.setInt(7,conceptName.getConceptNameId());
+      if (conceptName.isVoided()) {
+        pStmt.setDate(5,new Date(System.currentTimeMillis()));
+        pStmt.setString(6,conceptName.getVoidReason());
+        if (daemonUserId > 0)         pStmt.setInt(7,daemonUserId);
+      }
+      pStmt.setInt(8,conceptName.getConceptNameId());
       pStmt.addBatch();
     }
     try {
