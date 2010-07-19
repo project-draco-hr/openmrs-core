@@ -1,0 +1,5 @@
+{
+  log.debug("List current users");
+  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_USERS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_VIEW_USERS);
+  modelMap.put("currentUsers",CurrentUsers.getCurrentUsernames(request.getSession()));
+}

@@ -1,0 +1,11 @@
+{
+  Map<String,String> currentUsers=getCurrentUsers(httpSession);
+  String currentUserName=user.getUsername();
+  if (StringUtils.isBlank(currentUserName)) {
+    currentUserName="systemid:" + user.getSystemId();
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Adding current user " + currentUserName);
+  }
+  currentUsers.put(httpSession.getId(),currentUserName);
+}
