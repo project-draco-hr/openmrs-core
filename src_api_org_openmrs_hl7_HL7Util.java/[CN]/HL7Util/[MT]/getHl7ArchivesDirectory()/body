@@ -1,3 +1,11 @@
 {
-  return OpenmrsUtil.getDirectoryInApplicationDataDirectory(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY));
+  String archiveDir=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY);
+  if (StringUtils.isBlank(archiveDir)) {
+    log.warn("Invalid value for global property '" + OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY + "', trying to set a default one");
+    GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_HL7_ARCHIVE_DIRECTORY);
+    gp.setPropertyValue(HL7Constants.HL7_ARCHIVE_DIRECTORY_NAME);
+    gp=Context.getAdministrationService().saveGlobalProperty(gp);
+    archiveDir=gp.getPropertyValue();
+  }
+  return OpenmrsUtil.getDirectoryInApplicationDataDirectory(archiveDir);
 }
