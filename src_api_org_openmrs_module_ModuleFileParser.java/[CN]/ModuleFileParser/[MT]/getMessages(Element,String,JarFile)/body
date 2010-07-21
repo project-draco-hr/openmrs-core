@@ -11,8 +11,8 @@
       String lang="", file="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("lang".equals(childNode.getNodeName()))         lang=childNode.getTextContent();
- else         if ("file".equals(childNode.getNodeName()))         file=childNode.getTextContent();
+        if ("lang".equals(childNode.getNodeName()))         lang=childNode.getTextContent().trim();
+ else         if ("file".equals(childNode.getNodeName()))         file=childNode.getTextContent().trim();
         x++;
       }
       log.debug("lang: " + lang + " file: "+ file);

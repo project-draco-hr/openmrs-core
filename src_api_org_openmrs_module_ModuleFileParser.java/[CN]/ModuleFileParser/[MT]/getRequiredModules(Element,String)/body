@@ -11,7 +11,7 @@
         NamedNodeMap attributes=n.getAttributes();
         Node versionNode=attributes.getNamedItem("version");
         String reqVersion=versionNode == null ? null : versionNode.getNodeValue();
-        packageNamesToVersion.put(n.getTextContent(),reqVersion);
+        packageNamesToVersion.put(n.getTextContent().trim(),reqVersion);
       }
       i++;
     }

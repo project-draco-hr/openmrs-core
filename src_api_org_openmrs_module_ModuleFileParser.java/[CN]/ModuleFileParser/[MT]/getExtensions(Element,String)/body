@@ -11,8 +11,8 @@
       String point="", extClass="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent();
- else         if ("class".equals(childNode.getNodeName()))         extClass=childNode.getTextContent();
+        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent().trim();
+ else         if ("class".equals(childNode.getNodeName()))         extClass=childNode.getTextContent().trim();
         x++;
       }
       log.debug("point: " + point + " class: "+ extClass);

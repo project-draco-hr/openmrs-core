@@ -1,6 +1,6 @@
 {
   if (Double.parseDouble(configVersion) >= 1.3) {
-    String mandatory=getElement(rootNode,configVersion,"mandatory");
+    String mandatory=getElement(rootNode,configVersion,"mandatory").trim();
     return "true".equalsIgnoreCase(mandatory);
   }
   return false;

@@ -11,8 +11,8 @@
       String point="", adviceClass="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent();
- else         if ("class".equals(childNode.getNodeName()))         adviceClass=childNode.getTextContent();
+        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent().trim();
+ else         if ("class".equals(childNode.getNodeName()))         adviceClass=childNode.getTextContent().trim();
         x++;
       }
       log.debug("point: " + point + " class: "+ adviceClass);

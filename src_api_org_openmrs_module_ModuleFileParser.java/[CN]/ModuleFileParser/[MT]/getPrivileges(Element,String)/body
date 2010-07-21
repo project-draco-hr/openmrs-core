@@ -11,8 +11,8 @@
       String name="", description="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("name".equals(childNode.getNodeName()))         name=childNode.getTextContent();
- else         if ("description".equals(childNode.getNodeName()))         description=childNode.getTextContent();
+        if ("name".equals(childNode.getNodeName()))         name=childNode.getTextContent().trim();
+ else         if ("description".equals(childNode.getNodeName()))         description=childNode.getTextContent().trim();
         x++;
       }
       log.debug("name: " + name + " description: "+ description);
