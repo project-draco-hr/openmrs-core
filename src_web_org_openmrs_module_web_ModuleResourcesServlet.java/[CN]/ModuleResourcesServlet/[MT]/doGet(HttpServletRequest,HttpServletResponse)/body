@@ -17,6 +17,13 @@
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
     return;
   }
-  InputStream is=new FileInputStream(f);
-  OpenmrsUtil.copyFile(is,response.getOutputStream());
+  response.setDateHeader("Last-Modified",f.lastModified());
+  response.setContentLength(new Long(f.length()).intValue());
+  FileInputStream is=new FileInputStream(f);
+  try {
+    OpenmrsUtil.copyFile(is,response.getOutputStream());
+  }
+  finally {
+    OpenmrsUtil.closeStream(is);
+  }
 }
