@@ -14,7 +14,7 @@
     for (    ConceptName synonym : synonymsByLocale.get(locale)) {
       if (synonym != null && StringUtils.hasText(synonym.getName())) {
         synonym.setLocale(locale);
-        if (synonym.getName().equalsIgnoreCase(preferredNamesByLocale.get(locale))) {
+        if (synonym.getName().equalsIgnoreCase(preferredNamesByLocale.get(locale)) && !synonym.isVoided()) {
           concept.setPreferredName(synonym);
         }
  else         if (!concept.getNames().contains(synonym) && !concept.hasName(synonym.getName(),locale)) {
