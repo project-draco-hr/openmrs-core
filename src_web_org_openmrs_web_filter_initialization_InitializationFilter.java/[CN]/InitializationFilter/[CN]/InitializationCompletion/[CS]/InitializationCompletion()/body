@@ -10,6 +10,7 @@
         String connectionPassword;
         if (!wizardModel.hasCurrentOpenmrsDatabase) {
           setMessage("Create database");
+          setExecutingTask(WizardTask.CREATE_SCHEMA);
           String sql="create database if not exists `?` default character set utf8";
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
@@ -19,9 +20,11 @@
  else {
             wizardModel.workLog.add("Created database " + wizardModel.databaseName);
           }
+          addExecutedTask(WizardTask.CREATE_SCHEMA);
         }
         if (wizardModel.createDatabaseUser) {
           setMessage("Create database user");
+          setExecutingTask(WizardTask.CREATE_DB_USER);
           connectionUsername=wizardModel.databaseName + "_user";
           if (connectionUsername.length() > 16)           connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
           connectionPassword="";
@@ -49,6 +52,7 @@
  else {
             wizardModel.workLog.add("Granted user " + connectionUsername + " all privileges to database "+ wizardModel.databaseName);
           }
+          addExecutedTask(WizardTask.CREATE_DB_USER);
         }
  else {
           connectionUsername=wizardModel.currentDatabaseUsername;
@@ -81,14 +85,20 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
  */
           public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
             setMessage(message + " (" + i+++ "/"+ numChangeSetsToRun+ "): Author: "+ changeSet.getAuthor()+ " Comments: "+ changeSet.getComments()+ " Description: "+ changeSet.getDescription());
+            setCompletedPercentage(Math.round(i * 100 / numChangeSetsToRun));
           }
         }
         if (wizardModel.createTables) {
           try {
             setMessage("Executing " + LIQUIBASE_SCHEMA_DATA);
+            setExecutingTask(WizardTask.CREATE_TABLES);
             DatabaseUpdater.executeChangelog(LIQUIBASE_SCHEMA_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS schema file"));
+            addExecutedTask(WizardTask.CREATE_TABLES);
+            setCompletedPercentage(0);
+            setExecutingTask(WizardTask.ADD_CORE_DATA);
             DatabaseUpdater.executeChangelog(LIQUIBASE_CORE_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS core data file"));
             wizardModel.workLog.add("Created database tables and added core data");
+            addExecutedTask(WizardTask.ADD_CORE_DATA);
           }
  catch (          Exception e) {
             reportError(e.getMessage() + " See the error log for more details",null);
@@ -98,8 +108,11 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         if (wizardModel.createTables && wizardModel.addDemoData) {
           try {
             setMessage("Adding demo data");
+            setCompletedPercentage(0);
+            setExecutingTask(WizardTask.ADD_DEMO_DATA);
             DatabaseUpdater.executeChangelog(LIQUIBASE_DEMO_DATA,null,new PrintingChangeSetExecutorCallback("OpenMRS demo patients, users, and forms"));
             wizardModel.workLog.add("Added demo data");
+            addExecutedTask(WizardTask.ADD_DEMO_DATA);
           }
  catch (          Exception e) {
             reportError(e.getMessage() + " See the error log for more details",null);
@@ -108,13 +121,17 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         }
         try {
           setMessage("Updating the database to the latest version");
+          setCompletedPercentage(0);
+          setExecutingTask(WizardTask.UPDATE_TO_LATEST);
           DatabaseUpdater.executeChangelog(null,null,new PrintingChangeSetExecutorCallback("Updating database tables to latest version "));
+          addExecutedTask(WizardTask.UPDATE_TO_LATEST);
         }
  catch (        Exception e) {
           reportError(e.getMessage() + " Error while trying to update to the latest database version",DEFAULT_PAGE);
           log.warn("Error while trying to update to the latest database version",e);
           return;
         }
+        setExecutingTask(null);
         setMessage("Starting OpenMRS");
         ContextLoader contextLoader=new ContextLoader();
         contextLoader.initWebApplicationContext(filterConfig.getServletContext());

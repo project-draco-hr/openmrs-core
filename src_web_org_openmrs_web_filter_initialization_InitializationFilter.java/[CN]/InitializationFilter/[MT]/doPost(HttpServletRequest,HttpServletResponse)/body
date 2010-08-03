@@ -125,6 +125,16 @@
       return;
     }
     initJob=new InitializationCompletion();
+    wizardModel.tasksToExecute=new ArrayList<WizardTask>();
+    if (!wizardModel.hasCurrentOpenmrsDatabase)     wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
+    if (wizardModel.createDatabaseUser)     wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
+    if (wizardModel.createTables) {
+      wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
+      wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
+    }
+    if (wizardModel.addDemoData)     wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
+    wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
+    referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     initJob.start();
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
@@ -141,6 +151,11 @@
       result.put("initializationComplete",isInitializationComplete());
       result.put("message",initJob.getMessage());
       result.put("actionCounter",initJob.getStepsComplete());
+      if (!isInitializationComplete()) {
+        result.put("executingTask",initJob.getExecutingTask());
+        result.put("executedTasks",initJob.getExecutedTasks());
+        result.put("completedPercentage",initJob.getCompletedPercentage());
+      }
       Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
       if (appender instanceof MemoryAppender) {
         MemoryAppender memoryAppender=(MemoryAppender)appender;
