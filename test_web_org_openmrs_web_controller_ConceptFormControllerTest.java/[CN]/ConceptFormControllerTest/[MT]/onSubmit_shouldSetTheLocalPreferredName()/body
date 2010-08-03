@@ -1,0 +1,15 @@
+{
+  ConceptService cs=Context.getConceptService();
+  Concept concept=cs.getConcept(5497);
+  Assert.assertNull(concept.getPreferredName(Locale.ENGLISH));
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("conceptId","5497");
+  mockRequest.setParameter("preferredNamesByLocale[en]","CD3+CD4+ABS CNT");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  Assert.assertEquals("CD3+CD4+ABS CNT",concept.getPreferredName(Locale.ENGLISH).getName());
+}
