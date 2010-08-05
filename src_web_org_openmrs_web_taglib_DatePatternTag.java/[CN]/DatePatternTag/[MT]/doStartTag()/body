@@ -1,7 +1,11 @@
 {
   SimpleDateFormat dateFormat=Context.getDateFormat();
   try {
-    pageContext.getOut().write(dateFormat.toLocalizedPattern().toLowerCase());
+    String pattern=dateFormat.toLocalizedPattern().toLowerCase();
+    if ((localize != null) && "false".equals(localize)) {
+      pattern=dateFormat.toPattern().toLowerCase();
+    }
+    pageContext.getOut().write(pattern);
   }
  catch (  Exception e) {
     log.error("error getting date pattern",e);
