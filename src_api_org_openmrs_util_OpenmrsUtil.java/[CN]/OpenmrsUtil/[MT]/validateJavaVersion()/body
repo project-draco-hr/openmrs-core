@@ -1,0 +1,5 @@
+{
+  if (JdkVersion.getMajorJavaVersion() < JdkVersion.JAVA_16) {
+    throw new APIException("OpenMRS requires Java 6, but is running under " + JdkVersion.getJavaVersion());
+  }
+}
