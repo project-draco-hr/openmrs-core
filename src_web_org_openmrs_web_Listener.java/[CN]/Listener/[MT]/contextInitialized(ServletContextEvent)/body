@@ -2,6 +2,7 @@
   Log log=LogFactory.getLog(Listener.class);
   log.debug("Starting the OpenMRS webapp");
   try {
+    OpenmrsUtil.validateJavaVersion();
     ServletContext servletContext=event.getServletContext();
     loadConstants(servletContext);
     clearDWRFile(servletContext);
