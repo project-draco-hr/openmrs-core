@@ -1,0 +1,11 @@
+{
+  if (obj == null)   return false;
+  if (obj instanceof ConceptDerived) {
+    ConceptDerived c=(ConceptDerived)obj;
+    return (this.getConceptId().equals(c.getConceptId()));
+  }
+ else   if (obj instanceof Concept) {
+    return OpenmrsUtil.nullSafeEquals(((Concept)obj).getConceptId(),this.getConceptId());
+  }
+  return obj == this;
+}
