@@ -1,9 +1,7 @@
 {
   String contextPath="";
   try {
-    String path=servletContext.getResource("/").getPath();
-    contextPath=path.substring(0,path.lastIndexOf("/"));
-    contextPath=contextPath.substring(contextPath.lastIndexOf("/"));
+    contextPath=servletContext.getContextPath();
   }
  catch (  Exception e) {
     e.printStackTrace();
