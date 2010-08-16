@@ -1,0 +1,11 @@
+{
+  ConceptDerived conceptDerived;
+  Object obj=sessionFactory.getCurrentSession().get(ConceptDerived.class,conceptId);
+  if (obj != null && !obj.getClass().equals(ConceptDerived.class)) {
+    sessionFactory.getCurrentSession().evict(obj);
+    Query query=sessionFactory.getCurrentSession().createQuery("from ConceptDerived where conceptId = :conceptId").setParameter("conceptId",conceptId);
+    obj=query.uniqueResult();
+  }
+  conceptDerived=(ConceptDerived)obj;
+  return conceptDerived;
+}

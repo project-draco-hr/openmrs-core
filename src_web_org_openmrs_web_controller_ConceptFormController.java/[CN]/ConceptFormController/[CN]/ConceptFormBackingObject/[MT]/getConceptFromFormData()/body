@@ -85,5 +85,14 @@
     complexConcept.setHandler(handlerKey);
     concept=complexConcept;
   }
+ else   if (concept.getDatatype().getName().equals("Rule")) {
+    ConceptDerived conceptDerived=null;
+    if (concept instanceof ConceptDerived)     conceptDerived=(ConceptDerived)concept;
+ else     conceptDerived=new ConceptDerived(concept);
+    conceptDerived.setRule(definition);
+    conceptDerived.setLanguage(language);
+    conceptDerived.setClassName(className);
+    concept=conceptDerived;
+  }
   return concept;
 }

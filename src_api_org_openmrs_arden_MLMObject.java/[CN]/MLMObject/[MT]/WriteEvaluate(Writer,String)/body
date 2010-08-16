@@ -31,6 +31,7 @@
     w.append("\t\t\t\tuserVarMap.put(\"gender\",\"her\");\n");
     w.append("\t\t\t\tuserVarMap.put(\"hisher\",\"her\");\n");
     w.append("\t\t\t}\n");
+    w.append("\t\t\tLogicService logicService = Context.getLogicService();\n");
     w.append("\t\t\tinitAction();\n");
     Iterator<Map.Entry<String,Comparison>> comparisonIterator=null;
     if (this.comparisons.get("data") != null) {
@@ -104,7 +105,7 @@
       w.flush();
     }
     if (!skipReturn) {
-      w.append("\treturn false;");
+      w.append("\t\treturn false;\n");
     }
     w.append("\t}");
     w.append("\n\n");
