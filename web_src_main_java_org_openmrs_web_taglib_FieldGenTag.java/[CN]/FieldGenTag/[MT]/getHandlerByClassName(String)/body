@@ -1,4 +1,5 @@
 {
+  FieldGenHandler cacheHit=fieldGenHandlerCache.get(className);
   String handlerClassName=null;
   try {
     factory=FieldGenHandlerFactory.getSingletonInstance();
@@ -14,6 +15,7 @@
         Class<?> cls=Context.loadClass(handlerClassName);
         Constructor<?> ct=cls.getConstructor();
         FieldGenHandler handler=(FieldGenHandler)ct.newInstance();
+        fieldGenHandlerCache.put(className,handler);
         return handler;
       }
  catch (      Exception e) {
