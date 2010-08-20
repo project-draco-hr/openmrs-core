@@ -1,5 +1,6 @@
 {
-  Assert.assertNull(patientService.getPatient(501));
+  Patient oldPatient=patientService.getPatient(501);
+  Assert.assertNull(oldPatient);
   Person existingPerson=Context.getPersonService().getPerson(501);
   Context.clearSession();
   Patient patient=new Patient(existingPerson);
