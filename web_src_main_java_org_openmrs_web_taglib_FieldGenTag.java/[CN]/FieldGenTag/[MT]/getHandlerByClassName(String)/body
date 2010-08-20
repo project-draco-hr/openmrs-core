@@ -1,5 +1,8 @@
 {
   FieldGenHandler cacheHit=fieldGenHandlerCache.get(className);
+  if (cacheHit != null) {
+    return cacheHit;
+  }
   String handlerClassName=null;
   try {
     factory=FieldGenHandlerFactory.getSingletonInstance();
