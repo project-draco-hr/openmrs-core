@@ -1,0 +1,47 @@
+{
+  sql=sql.trim();
+  boolean dataManipulation=false;
+  String sqlLower=sql.toLowerCase();
+  if (sqlLower.startsWith("insert") || sqlLower.startsWith("update") || sqlLower.startsWith("delete")|| sqlLower.startsWith("alter")|| sqlLower.startsWith("drop")|| sqlLower.startsWith("create")|| sqlLower.startsWith("rename")) {
+    dataManipulation=true;
+  }
+  if (selectOnly && dataManipulation)   throw new IllegalArgumentException("Illegal command(s) found in query string");
+  PreparedStatement ps=null;
+  List<List<Object>> results=new Vector<List<Object>>();
+  try {
+    ps=conn.prepareStatement(sql);
+    if (dataManipulation == true) {
+      Integer i=ps.executeUpdate();
+      List<Object> row=new Vector<Object>();
+      row.add(i);
+      results.add(row);
+    }
+ else {
+      ResultSet resultSet=ps.executeQuery();
+      ResultSetMetaData rmd=resultSet.getMetaData();
+      int columnCount=rmd.getColumnCount();
+      while (resultSet.next()) {
+        List<Object> rowObjects=new Vector<Object>();
+        for (int x=1; x <= columnCount; x++) {
+          rowObjects.add(resultSet.getObject(x));
+        }
+        results.add(rowObjects);
+      }
+    }
+  }
+ catch (  Exception e) {
+    log.debug("Error while running sql: " + sql,e);
+    throw new DAOException("Error while running sql: " + sql + " . Message: "+ e.getMessage(),e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
+  }
+  return results;
+}
