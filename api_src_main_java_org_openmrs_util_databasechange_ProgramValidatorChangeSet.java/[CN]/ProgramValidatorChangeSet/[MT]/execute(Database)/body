@@ -1,0 +1,57 @@
+{
+  Connection conn=database.getConnection().getUnderlyingConnection();
+  List<String> messages=new ArrayList<String>();
+  StringBuilder message=new StringBuilder();
+  message.append("Following this update, the system will automatically complete a program enrollment ");
+  message.append("for a patient when they are transitioned into a state that is configured as terminal. ");
+  message.append("This update serves to check for any states that are potentially misconfigured, by checking ");
+  message.append("for states that are configured as both as initial and terminal and by checking for workflows ");
+  message.append("that have no initial states defined.  Any of these found should be reviewed to ensure that ");
+  message.append("program enrollments will not be closed incorrectly.<br/><br/>");
+  message.append("The following states are configured as both initial and terminal:<br/>");
+  StringBuilder query=new StringBuilder();
+  query.append(" select 	s.concept_id, min(n.name) as name ");
+  query.append(" from 	program_workflow_state s, concept_name n ");
+  query.append(" where 	s.concept_id = n.concept_id and initial = 1 and terminal = 1 ");
+  query.append(" group by s.concept_id ");
+  List<List<Object>> results=DatabaseUtil.executeSQL(conn,query.toString(),true);
+  if (results.isEmpty()) {
+    message.append("None found.");
+  }
+ else {
+    for (    List<Object> row : results) {
+      message.append(row.get(1).toString() + "<br/>");
+    }
+  }
+  message.append("<br/>The following workflows have no initial states...<br/>");
+  query=new StringBuilder();
+  query.append(" select 		w.concept_id, s.initial, count(*) as num ");
+  query.append(" from			program_workflow w, program_workflow_state s ");
+  query.append(" where		w.program_workflow_id = s.program_workflow_id ");
+  query.append(" group by 	w.concept_id, s.initial ");
+  results=DatabaseUtil.executeSQL(conn,query.toString(),true);
+  List<Integer> missingInitial=new ArrayList<Integer>();
+  for (  List<Object> row : results) {
+    missingInitial.add(Integer.valueOf(row.get(0).toString()));
+  }
+  for (  List<Object> row : results) {
+    Integer conceptId=Integer.valueOf(row.get(0).toString());
+    boolean isInitial=row.get(1).toString().equals("1");
+    int num=Integer.parseInt(row.get(2).toString());
+    if (isInitial && num > 0) {
+      missingInitial.remove(conceptId);
+    }
+  }
+  if (missingInitial.isEmpty()) {
+    message.append("None found.");
+  }
+ else {
+    for (    Integer conceptId : missingInitial) {
+      String sql="select min(name) from concept_name where concept_id = " + conceptId;
+      String name=DatabaseUtil.executeSQL(conn,sql,true).get(0).get(0).toString();
+      message.append(name + "<br/>");
+    }
+  }
+  messages.add(message.toString());
+  DatabaseUpdater.reportUpdateWarnings(messages);
+}
