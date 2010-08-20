@@ -2,7 +2,7 @@
   StringBuilder sb=new StringBuilder();
   if (conceptId != null)   concept=Context.getConceptService().getConcept(conceptId);
   if (concept != null) {
-    if (concept.getName() != null)     sb.append(concept.getName().getName());
+    printConcept(sb,concept);
   }
   if (obsValue != null)   sb.append(obsValue.getValueAsString(Context.getLocale()));
   if (userId != null)   user=Context.getUserService().getUser(userId);
@@ -30,6 +30,15 @@
   if (locationTagId != null)   locationTag=Context.getLocationService().getLocationTag(locationTagId);
   if (locationTag != null) {
     printMetadata(sb,locationTag);
+  }
+  if (programId != null)   program=Context.getProgramWorkflowService().getProgram(programId);
+  if (program != null) {
+    if (StringUtils.hasText(program.getName())) {
+      printMetadata(sb,program);
+    }
+ else     if (program.getConcept() != null) {
+      printConcept(sb,program.getConcept());
+    }
   }
   if (StringUtils.hasText(var)) {
     if (javaScriptEscape)     pageContext.setAttribute(var,JavaScriptUtils.javaScriptEscape(sb.toString()));
