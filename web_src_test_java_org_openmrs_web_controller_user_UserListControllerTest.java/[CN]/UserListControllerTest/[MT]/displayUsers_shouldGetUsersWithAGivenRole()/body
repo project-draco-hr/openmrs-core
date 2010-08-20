@@ -1,0 +1,5 @@
+{
+  UserListController controller=new UserListController();
+  List<User> users=controller.getUsers("Search",null,new Role("Provider"),null);
+  Assert.assertEquals(1,users.size());
+}
