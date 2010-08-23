@@ -1,8 +1,10 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class);
-  criteria.setProjection(Projections.property("concept"));
+  criteria.setProjection(Projections.distinct(Projections.property("concept")));
   criteria.add(Expression.eq("sourceCode",conceptCode));
   criteria.createAlias("source","conceptSource");
   criteria.add(Expression.or(Expression.eq("conceptSource.name",mappingCode),Expression.eq("conceptSource.hl7Code",mappingCode)));
-  return (Concept)criteria.uniqueResult();
+  criteria.createAlias("concept","concept");
+  criteria.add(Expression.eq("concept.retired",false));
+  return (List<Concept>)criteria.list();
 }
