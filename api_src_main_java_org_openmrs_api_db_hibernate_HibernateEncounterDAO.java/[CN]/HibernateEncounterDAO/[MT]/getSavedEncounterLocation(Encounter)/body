@@ -1,0 +1,5 @@
+{
+  SQLQuery sql=sessionFactory.getCurrentSession().createSQLQuery("select location_id from encounter where encounter_id = :encounterId");
+  sql.setInteger("encounterId",encounter.getEncounterId());
+  return Context.getLocationService().getLocation((Integer)sql.uniqueResult());
+}

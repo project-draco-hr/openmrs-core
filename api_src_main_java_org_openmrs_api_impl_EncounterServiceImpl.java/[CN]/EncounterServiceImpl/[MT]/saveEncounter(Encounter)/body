@@ -2,6 +2,8 @@
   boolean isNewEncounter=false;
   Date newDate=encounter.getEncounterDatetime();
   Date originalDate=null;
+  Location newLocation=encounter.getLocation();
+  Location originalLocation=null;
   if (encounter.getEncounterId() == null) {
     isNewEncounter=true;
     Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_ENCOUNTERS);
@@ -11,11 +13,17 @@
   }
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);
+    originalLocation=dao.getSavedEncounterLocation(encounter);
     Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs(true)) {
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
         if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
           obs.setObsDatetime(newDate);
+        }
+      }
+      if (!newLocation.equals(originalLocation)) {
+        if (obs.getLocation().equals(originalLocation)) {
+          obs.setLocation(newLocation);
         }
       }
       if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
