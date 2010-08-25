@@ -1,5 +1,5 @@
 {
-  List<Concept> concepts=getConceptsByMapping(conceptCode,mappingCode);
+  List<Concept> concepts=getConceptsByMapping(code,sourceName);
   if (concepts.size() == 0) {
     return null;
   }
@@ -7,6 +7,6 @@
     return concepts.get(0);
   }
  else {
-    throw new APIException("Mulitple concepts found for mapping " + mappingCode + " from source "+ conceptCode);
+    throw new APIException("Multiple concepts found for mapping " + code + " from source "+ sourceName);
   }
 }
