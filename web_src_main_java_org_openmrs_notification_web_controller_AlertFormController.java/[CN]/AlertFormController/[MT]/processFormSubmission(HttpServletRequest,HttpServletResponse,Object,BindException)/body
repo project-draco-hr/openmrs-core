@@ -1,8 +1,8 @@
 {
   Alert alert=(Alert)obj;
   try {
-    if (Context.hasPrivilege(OpenmrsConstants.PRIV_MANAGE_ALERTS) == false)     throw new APIAuthenticationException("Must be logged in as user with alerts privileges");
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    if (Context.hasPrivilege(PrivilegeConstants.MANAGE_ALERTS) == false)     throw new APIAuthenticationException("Must be logged in as user with alerts privileges");
+    Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
     UserService us=Context.getUserService();
     if (Context.isAuthenticated()) {
       String[] userIdValues=request.getParameter("userIds").split(" ");
@@ -44,7 +44,7 @@
     errors.reject(e.getMessage());
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
   }
   return super.processFormSubmission(request,reponse,alert,errors);
 }

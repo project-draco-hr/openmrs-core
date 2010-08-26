@@ -6,12 +6,12 @@
  catch (  Throwable t) {
   }
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
     if (service != null) {
       service.onShutdown();
     }
   }
   finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
   }
 }

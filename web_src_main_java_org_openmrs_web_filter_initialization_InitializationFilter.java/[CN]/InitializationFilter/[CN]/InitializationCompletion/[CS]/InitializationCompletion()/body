@@ -162,10 +162,10 @@ catch (        OpenmrsCoreModuleException coreModEx) {
         }
         if (!wizardModel.implementationId.equals("")) {
           try {
-            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
-            Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
-            Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+            Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+            Context.addProxyPrivilege(PrivilegeConstants.MANAGE_CONCEPT_SOURCES);
+            Context.addProxyPrivilege(PrivilegeConstants.VIEW_CONCEPT_SOURCES);
+            Context.addProxyPrivilege(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID);
             ImplementationId implId=new ImplementationId();
             implId.setName(wizardModel.implementationIdName);
             implId.setImplementationId(wizardModel.implementationId);
@@ -182,10 +182,10 @@ catch (        OpenmrsCoreModuleException coreModEx) {
             return;
           }
  finally {
-            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_CONCEPT_SOURCES);
-            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_CONCEPT_SOURCES);
-            Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+            Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+            Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_CONCEPT_SOURCES);
+            Context.removeProxyPrivilege(PrivilegeConstants.VIEW_CONCEPT_SOURCES);
+            Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID);
           }
         }
         try {

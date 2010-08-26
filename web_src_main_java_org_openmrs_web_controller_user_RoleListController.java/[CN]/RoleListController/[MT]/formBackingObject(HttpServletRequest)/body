@@ -3,7 +3,7 @@
   if (Context.isAuthenticated()) {
     UserService us=Context.getUserService();
     for (    Role r : us.getAllRoles()) {
-      if (OpenmrsConstants.CORE_ROLES().keySet().contains(r.getRole()))       roleList.put(r,true);
+      if (OpenmrsUtil.getCoreRoles().keySet().contains(r.getRole()))       roleList.put(r,true);
  else       roleList.put(r,false);
     }
   }

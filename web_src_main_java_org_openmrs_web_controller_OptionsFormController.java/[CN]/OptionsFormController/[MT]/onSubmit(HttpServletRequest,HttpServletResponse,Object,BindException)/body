@@ -6,11 +6,11 @@
     UserService us=Context.getUserService();
     User user=null;
     try {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       user=us.getUser(loginUser.getUserId());
     }
   finally {
-      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+      Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
     }
     OptionsForm opts=(OptionsForm)obj;
     Map<String,String> properties=user.getUserProperties();
@@ -64,13 +64,13 @@
     }
     if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
       try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         if (us.hasDuplicateUsername(user)) {
           errors.rejectValue("username","error.username.taken");
         }
       }
   finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       }
     }
     if (!errors.hasErrors()) {
@@ -88,14 +88,14 @@
         user.addName(newPersonName);
       }
       try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);
+        Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         us.saveUser(user,null);
         Context.refreshAuthenticatedUser();
       }
   finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.removeProxyPrivilege(PrivilegeConstants.EDIT_USERS);
+        Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       }
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"options.saved");
     }

@@ -1,8 +1,8 @@
 {
   if (authenticatedRole != null)   return authenticatedRole;
-  authenticatedRole=Context.getUserService().getRole(OpenmrsConstants.AUTHENTICATED_ROLE);
+  authenticatedRole=Context.getUserService().getRole(RoleConstants.AUTHENTICATED);
   if (authenticatedRole == null) {
-    throw new RuntimeException("Database out of sync with code: " + OpenmrsConstants.AUTHENTICATED_ROLE + " role does not exist");
+    throw new RuntimeException("Database out of sync with code: " + RoleConstants.AUTHENTICATED + " role does not exist");
   }
   return authenticatedRole;
 }

@@ -1,11 +1,11 @@
 {
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_ROLES);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ROLES);
     Set<String> currentRoleNames=new HashSet<String>();
     for (    Role role : Context.getUserService().getAllRoles()) {
       currentRoleNames.add(role.getRole().toUpperCase());
     }
-    Map<String,String> map=OpenmrsConstants.CORE_ROLES();
+    Map<String,String> map=OpenmrsUtil.getCoreRoles();
     for (    String roleName : map.keySet()) {
       if (!currentRoleNames.contains(roleName.toUpperCase())) {
         Role role=new Role();
@@ -19,15 +19,15 @@
     log.error("Error while setting core roles for openmrs system",e);
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_ROLES);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_ROLES);
   }
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_PRIVILEGES);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_PRIVILEGES);
     Set<String> currentPrivilegeNames=new HashSet<String>();
     for (    Privilege privilege : Context.getUserService().getAllPrivileges()) {
       currentPrivilegeNames.add(privilege.getPrivilege().toUpperCase());
     }
-    Map<String,String> map=OpenmrsConstants.CORE_PRIVILEGES();
+    Map<String,String> map=OpenmrsUtil.getCorePrivileges();
     for (    String privilegeName : map.keySet()) {
       if (!currentPrivilegeNames.contains(privilegeName.toUpperCase())) {
         Privilege p=new Privilege();
@@ -41,11 +41,11 @@
     log.error("Error while setting core privileges",e);
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_PRIVILEGES);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_PRIVILEGES);
   }
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_GLOBAL_PROPERTIES);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+    Context.addProxyPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES);
     Set<String> currentPropNames=new HashSet<String>();
     Map<String,GlobalProperty> propsMissingDescription=new HashMap<String,GlobalProperty>();
     for (    GlobalProperty prop : Context.getAdministrationService().getAllGlobalProperties()) {
@@ -73,7 +73,7 @@
     log.error("Error while setting core global properties",e);
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_GLOBAL_PROPERTIES);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES);
   }
 }

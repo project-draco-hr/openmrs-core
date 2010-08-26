@@ -1,8 +1,8 @@
 {
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+    Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);
+    Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.addProxyPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS);
     UserService userService=Context.getUserService();
     User currentUser=userService.getUser(user.getId());
     userService.changePassword(currentUser,password.getPassword());
@@ -14,8 +14,8 @@
     Context.refreshAuthenticatedUser();
   }
   finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+    Context.removeProxyPrivilege(PrivilegeConstants.EDIT_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS);
   }
 }

@@ -26,11 +26,11 @@
     if (secretAnswer == null) {
       User user=null;
       try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         if (username != null && username.length() > 0)         user=Context.getUserService().getUserByUsername(username);
       }
   finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       }
       if (user == null || user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.question.empty");
@@ -44,11 +44,11 @@
  else     if (secretAnswer != null) {
       User user=null;
       try {
-        Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         user=Context.getUserService().getUserByUsername(username);
       }
   finally {
-        Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
+        Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       }
       if (user == null || user.getSecretQuestion() == null || user.getSecretQuestion().equals("")) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"auth.question.empty");
@@ -59,11 +59,11 @@
           randomPassword+=String.valueOf((Math.random() * (127 - 48) + 48));
         }
         try {
-          Context.addProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+          Context.addProxyPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS);
           Context.getUserService().changePassword(user,randomPassword);
         }
   finally {
-          Context.removeProxyPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS);
+          Context.removeProxyPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS);
         }
         httpSession.setAttribute("resetPassword",randomPassword);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"auth.password.reset");
