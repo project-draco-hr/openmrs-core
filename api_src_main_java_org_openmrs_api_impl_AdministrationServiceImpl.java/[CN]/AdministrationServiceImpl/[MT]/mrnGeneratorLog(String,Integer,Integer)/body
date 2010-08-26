@@ -1,4 +1,4 @@
 {
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + OpenmrsConstants.PRIV_EDIT_PATIENTS);
+  if (!Context.hasPrivilege(PrivilegeConstants.EDIT_PATIENTS))   throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.EDIT_PATIENTS);
   dao.mrnGeneratorLog(site,start,count);
 }

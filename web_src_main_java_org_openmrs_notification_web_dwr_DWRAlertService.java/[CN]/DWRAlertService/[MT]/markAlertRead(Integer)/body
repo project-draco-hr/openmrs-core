@@ -3,13 +3,13 @@
     AlertService as=Context.getAlertService();
     Alert alert=as.getAlert(alertId);
     if (alert.getRecipient(Context.getAuthenticatedUser()) == null)     return;
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_ALERTS);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
     if (alert != null)     as.saveAlert(alert.markAlertRead());
   }
  catch (  Exception e) {
     log.error("Error while marking alert '" + alertId + "' as read",e);
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_ALERTS);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
   }
 }

@@ -1,8 +1,8 @@
 {
   response.setContentType("text/html");
   HttpSession session=request.getSession();
-  if (!Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
-    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Privilege required: " + OpenmrsConstants.PRIV_VIEW_PATIENTS);
+  if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS)) {
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
     response.sendRedirect(request.getContextPath() + "/login.htm");
     return;
   }

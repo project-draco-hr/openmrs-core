@@ -1,7 +1,7 @@
 {
   TaskDefinition taskDefinition=null;
   try {
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
     if (task.getTaskDefinition() != null) {
       SchedulerService schedulerService=Context.getSchedulerService();
       taskDefinition=task.getTaskDefinition();
@@ -16,6 +16,6 @@
     log.warn("Unable to save the last execution time for task ",e);
   }
  finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_SCHEDULER);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
   }
 }

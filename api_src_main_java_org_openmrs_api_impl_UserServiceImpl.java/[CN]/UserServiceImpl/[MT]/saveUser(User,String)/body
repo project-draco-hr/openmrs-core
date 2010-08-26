@@ -1,9 +1,9 @@
 {
   if (user.getUserId() == null) {
-    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_USERS);
+    Context.requirePrivilege(PrivilegeConstants.ADD_USERS);
   }
  else {
-    Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_USERS);
+    Context.requirePrivilege(PrivilegeConstants.EDIT_USERS);
   }
   checkPrivileges(user);
   if (user.getUserId() == null && (password == null || password.length() < 1))   throw new APIException("A password is required when creating a user");

@@ -16,7 +16,7 @@
   }
   if (executeSQL) {
     try {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_SQL_LEVEL_ACCESS);
+      Context.addProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
       log.debug("Executing sql: " + sql);
       String[] sqlStatements=sql.split(";");
       for (      String sqlStatement : sqlStatements) {
@@ -24,10 +24,10 @@
       }
     }
   finally {
-      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_SQL_LEVEL_ACCESS);
+      Context.removeProxyPrivilege(PrivilegeConstants.SQL_LEVEL_ACCESS);
     }
     try {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+      Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
       String description="DO NOT MODIFY.  Current database version number for the " + module.getModuleId() + " module.";
       if (gp == null) {
         log.info("Global property " + key + " was not found. Creating one now.");
@@ -45,7 +45,7 @@
       }
     }
   finally {
-      Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_GLOBAL_PROPERTIES);
+      Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
     }
   }
 }

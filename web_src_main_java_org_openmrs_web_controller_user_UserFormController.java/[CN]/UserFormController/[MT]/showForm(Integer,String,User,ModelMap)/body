@@ -1,6 +1,6 @@
 {
   model.addAttribute("isNewUser",isNewUser(user));
-  if (isNewUser(user) || Context.hasPrivilege(OpenmrsConstants.PRIV_EDIT_USER_PASSWORDS))   model.addAttribute("modifyPasswords",true);
+  if (isNewUser(user) || Context.hasPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS))   model.addAttribute("modifyPasswords",true);
   if (createNewPerson != null)   model.addAttribute("createNewPerson",createNewPerson);
   if (!isNewUser(user))   model.addAttribute("changePassword",new UserProperties(user.getUserProperties()).isSupposedToChangePassword());
   return "admin/users/userForm";

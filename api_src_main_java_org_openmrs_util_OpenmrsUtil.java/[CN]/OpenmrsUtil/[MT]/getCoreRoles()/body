@@ -1,0 +1,18 @@
+{
+  Map<String,String> roles=new HashMap<String,String>();
+  Field flds[]=RoleConstants.class.getDeclaredFields();
+  for (  Field fld : flds) {
+    String fieldValue=null;
+    AddOnStartup roleAnnotation=fld.getAnnotation(AddOnStartup.class);
+    if (null == roleAnnotation)     continue;
+    if (!roleAnnotation.core())     continue;
+    try {
+      fieldValue=(String)fld.get(null);
+    }
+ catch (    IllegalAccessException e) {
+      log.error("Field is inaccessible.",e);
+    }
+    roles.put(fieldValue,roleAnnotation.description());
+  }
+  return roles;
+}

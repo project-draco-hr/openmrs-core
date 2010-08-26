@@ -6,10 +6,10 @@
   Location originalLocation=null;
   if (encounter.getEncounterId() == null) {
     isNewEncounter=true;
-    Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_ENCOUNTERS);
+    Context.requirePrivilege(PrivilegeConstants.ADD_ENCOUNTERS);
   }
  else {
-    Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_ENCOUNTERS);
+    Context.requirePrivilege(PrivilegeConstants.EDIT_ENCOUNTERS);
   }
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);

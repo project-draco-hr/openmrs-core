@@ -2,7 +2,7 @@
   String select="select 1 from user_role where user_id = ? and (role = ? or role = 'Administrator')";
   PreparedStatement statement=connection.prepareStatement(select);
   statement.setInt(1,userId);
-  statement.setString(2,OpenmrsConstants.SUPERUSER_ROLE);
+  statement.setString(2,RoleConstants.SUPERUSER);
   if (statement.execute()) {
     ResultSet results=statement.getResultSet();
     if (results.next()) {

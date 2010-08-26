@@ -7,7 +7,7 @@
   List<Encounter> encounters=new Vector<Encounter>();
   String causeOfDeathOther="";
   if (Context.isAuthenticated()) {
-    if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_UNPUBLISHED_FORMS))     forms.addAll(Context.getFormService().getAllForms());
+    if (Context.hasPrivilege(PrivilegeConstants.VIEW_UNPUBLISHED_FORMS))     forms.addAll(Context.getFormService().getAllForms());
  else     forms.addAll(Context.getFormService().getPublishedForms());
     List<Encounter> encs=Context.getEncounterService().getEncountersByPatient(patient);
     if (encs != null && encs.size() > 0)     encounters.addAll(encs);

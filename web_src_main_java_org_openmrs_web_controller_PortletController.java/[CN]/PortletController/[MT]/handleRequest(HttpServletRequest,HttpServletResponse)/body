@@ -53,11 +53,11 @@
       String patientVariation="";
       Integer patientId=(Integer)o;
       if (!model.containsKey("patient")) {
-        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS)) {
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS)) {
           Patient p=Context.getPatientService().getPatient(patientId);
           model.put("patient",p);
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS)) {
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_OBS)) {
             List<Obs> patientObs=Context.getObsService().getObservationsByPerson(p);
             model.put("patientObs",patientObs);
             Obs latestWeight=null;
@@ -132,7 +132,7 @@
             }
           }
           model.put("patientReasonForExit",reasonForExitObs);
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ORDERS)) {
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_ORDERS)) {
             List<DrugOrder> drugOrderList=Context.getOrderService().getDrugOrdersByPatient(p);
             model.put("patientDrugOrders",drugOrderList);
             List<DrugOrder> currentDrugOrders=new ArrayList<DrugOrder>();
@@ -148,7 +148,7 @@
             List<RegimenSuggestion> standardRegimens=Context.getOrderService().getStandardRegimens();
             if (standardRegimens != null)             model.put("standardRegimens",standardRegimens);
           }
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PROGRAMS) && Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENT_PROGRAMS)) {
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_PROGRAMS) && Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENT_PROGRAMS)) {
             model.put("patientPrograms",Context.getProgramWorkflowService().getPatientPrograms(p,null,null,null,null,null,false));
             model.put("patientCurrentPrograms",Context.getProgramWorkflowService().getPatientPrograms(p,null,null,new Date(),new Date(),null,false));
           }
@@ -173,7 +173,7 @@
         Person p=(Person)model.get("patient");
         if (p == null)         p=Context.getPersonService().getPerson(personId);
         model.put("person",p);
-        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_RELATIONSHIPS)) {
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_RELATIONSHIPS)) {
           List<Relationship> relationships=new ArrayList<Relationship>();
           relationships.addAll(Context.getPersonService().getRelationshipsByPerson(p));
           Map<RelationshipType,List<Relationship>> relationshipsByType=new HashMap<RelationshipType,List<Relationship>>();
@@ -193,10 +193,10 @@
     o=request.getAttribute("org.openmrs.portlet.encounterId");
     if (o != null && !model.containsKey("encounterId")) {
       if (!model.containsKey("encounter")) {
-        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_ENCOUNTERS)) {
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS)) {
           Encounter e=Context.getEncounterService().getEncounter((Integer)o);
           model.put("encounter",e);
-          if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_OBS))           model.put("encounterObs",e.getObs());
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_OBS))           model.put("encounterObs",e.getObs());
         }
         model.put("encounterId",(Integer)o);
       }
@@ -204,7 +204,7 @@
     o=request.getAttribute("org.openmrs.portlet.userId");
     if (o != null) {
       if (!model.containsKey("user")) {
-        if (Context.hasPrivilege(OpenmrsConstants.PRIV_VIEW_USERS)) {
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_USERS)) {
           User u=Context.getUserService().getUser((Integer)o);
           model.put("user",u);
         }

@@ -2,8 +2,8 @@
   Encounter encounter=(Encounter)obj;
   try {
     if (Context.isAuthenticated()) {
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-      Context.addProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+      Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+      Context.addProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
       if (StringUtils.hasText(request.getParameter("patientId")))       encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
       if (StringUtils.hasText(request.getParameter("providerId")))       encounter.setProvider(Context.getPersonService().getPerson(Integer.valueOf(request.getParameter("providerId"))));
       if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
@@ -13,8 +13,8 @@
     }
   }
   finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_USERS);
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_VIEW_PATIENTS);
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
   }
   return super.processFormSubmission(request,reponse,encounter,errors);
 }

@@ -1,6 +1,6 @@
 {
-  if (patient.getPatientId() == null)   Context.requirePrivilege(OpenmrsConstants.PRIV_ADD_PATIENTS);
- else   Context.requirePrivilege(OpenmrsConstants.PRIV_EDIT_PATIENTS);
+  if (patient.getPatientId() == null)   Context.requirePrivilege(PrivilegeConstants.ADD_PATIENTS);
+ else   Context.requirePrivilege(PrivilegeConstants.EDIT_PATIENTS);
   checkPatientIdentifiers(patient);
   return dao.savePatient(patient);
 }

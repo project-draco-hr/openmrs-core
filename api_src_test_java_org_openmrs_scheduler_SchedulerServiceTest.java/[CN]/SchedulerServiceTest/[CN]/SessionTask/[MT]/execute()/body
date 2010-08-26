@@ -1,12 +1,12 @@
 {
   try {
     Context.openSession();
-    Context.addProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID);
     Context.getAdministrationService().getImplementationId();
     actualExecutionTime=System.currentTimeMillis();
   }
   finally {
-    Context.removeProxyPrivilege(OpenmrsConstants.PRIV_MANAGE_IMPLEMENTATION_ID);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_IMPLEMENTATION_ID);
     Context.closeSession();
   }
 }
