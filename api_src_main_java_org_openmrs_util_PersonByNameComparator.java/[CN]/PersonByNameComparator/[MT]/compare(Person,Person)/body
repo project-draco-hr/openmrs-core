@@ -1,4 +1,10 @@
 {
+  if (person1 == null || person1.getPersonName() == null) {
+    return 1;
+  }
+ else   if (person2 == null || person2.getPersonName() == null) {
+    return -1;
+  }
   PersonName name1=person1.getPersonName();
   PersonName name2=person2.getPersonName();
   int ret=OpenmrsUtil.compareWithNullAsGreatest(name1.getFamilyName(),name2.getFamilyName());
