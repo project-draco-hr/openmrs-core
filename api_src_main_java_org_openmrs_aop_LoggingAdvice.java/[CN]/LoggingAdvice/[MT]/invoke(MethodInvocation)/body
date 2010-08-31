@@ -4,11 +4,18 @@
   boolean isGetterTypeOfMethod=name.startsWith("get") || name.startsWith("find");
   boolean logGetter=isGetterTypeOfMethod && log.isDebugEnabled();
   boolean logSetter=!isGetterTypeOfMethod && log.isInfoEnabled();
-  long startTime=new Date().getTime();
+  long startTime=System.currentTimeMillis();
+  Logging loggingAnnotation=null;
+  if (logGetter || logSetter) {
+    loggingAnnotation=method.getAnnotation(Logging.class);
+    if (loggingAnnotation != null && loggingAnnotation.ignore()) {
+      logGetter=false;
+      logSetter=false;
+    }
+  }
   if (logGetter || logSetter) {
     StringBuilder output=new StringBuilder();
     output.append("In method ").append(method.getDeclaringClass().getSimpleName()).append(".").append(name);
-    Logging loggingAnnotation=method.getAnnotation(Logging.class);
     if (loggingAnnotation == null || loggingAnnotation.ignoreAllArgumentValues() == false) {
       int x;
       Class<?>[] types=method.getParameterTypes();
