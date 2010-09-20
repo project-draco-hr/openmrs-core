@@ -14,7 +14,7 @@
     try {
       Context.getUserService().purgeUser(user);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.delete.success");
-      return "redirect:/admin/users/user.list";
+      return "redirect:users.list";
     }
  catch (    Exception ex) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"User.delete.failure");
@@ -95,5 +95,5 @@
     }
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"User.saved");
   }
-  return "redirect:user.list";
+  return "redirect:users.list";
 }
