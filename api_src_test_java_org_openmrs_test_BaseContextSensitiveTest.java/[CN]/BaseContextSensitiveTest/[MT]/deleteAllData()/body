@@ -13,7 +13,7 @@
     String tableName=resultSet.getString(3);
     dataset.addTable(new DefaultTable(tableName));
   }
-  DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
+  if (useInMemoryDatabase())   DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
   if (useInMemoryDatabase()) {
     String sql="SET REFERENTIAL_INTEGRITY TRUE";
     PreparedStatement ps=connection.prepareStatement(sql);
