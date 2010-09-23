@@ -19,6 +19,13 @@
   obs.setLocation(encounter.getLocation());
   obs.setCreator(encounter.getCreator());
   obs.setDateCreated(encounter.getDateCreated());
+  StringBuilder comments=new StringBuilder();
+  ORU_R01_OBSERVATION parent=(ORU_R01_OBSERVATION)obx.getParent();
+  for (int i=0; i < parent.getNTEReps(); i++)   for (  FT obxComment : parent.getNTE(i).getComment()) {
+    if (comments.length() > 0)     comments.append(" ");
+    comments=comments.append(obxComment.getValue());
+  }
+  if (StringUtils.hasText(comments.toString()))   obs.setComment(comments.toString());
   Type obx5=values[0].getData();
   if ("NM".equals(hl7Datatype)) {
     String value=((NM)obx5).getValue();

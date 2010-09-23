@@ -43,6 +43,14 @@
       obsGrouper.setObsDatetime(datetime);
       obsGrouper.setLocation(encounter.getLocation());
       obsGrouper.setCreator(encounter.getCreator());
+      StringBuilder comments=new StringBuilder();
+      ORU_R01_ORDER_OBSERVATION parent=(ORU_R01_ORDER_OBSERVATION)obr.getParent();
+      int totalNTEs=parent.getNTEReps();
+      for (int iNTE=0; iNTE < totalNTEs; iNTE++)       for (      FT obxComment : parent.getNTE(iNTE).getComment()) {
+        if (comments.length() > 0)         comments.append(" ");
+        comments.append(obxComment.getValue());
+      }
+      if (StringUtils.hasText(comments.toString()))       obsGrouper.setComment(comments.toString());
       encounter.addObs(obsGrouper);
     }
     int numObs=orderObs.getOBSERVATIONReps();

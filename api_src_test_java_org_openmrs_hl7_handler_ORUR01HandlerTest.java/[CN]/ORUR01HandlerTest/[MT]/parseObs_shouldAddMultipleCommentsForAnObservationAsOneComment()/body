@@ -1,0 +1,16 @@
+{
+  ObsService os=Context.getObsService();
+  String hl7string="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20080226102656||ORU^R01|JqnfhKKtouEz8kzTk6Zo|P|2.5|1||||||||16^AMRS.ELD.FORMID\r" + "PID|||7^^^^||Collet^Test^Chebaskwony||\r" + "PV1||O|1^Unknown Location||||1^Super User (1-8)|||||||||||||||||||||||||||||||||||||20080212|||||||V\r"+ "ORC|RE||||||||20080226102537|1^Super User\r"+ "OBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT\r"+ "OBX|1|NM|5497^CD4, BY FACS^99DCT||1|||||||||20080206\r"+ "NTE|1|L|This is a comment\r"+ "NTE|2|L|that spans two lines\r"+ "OBX|2|NM|5497^CD4, BY FACS^99DCT||2|||||||||20080206";
+  Assert.assertEquals("Numeric",Context.getConceptService().getConcept(5497).getDatatype().getName());
+  List<Obs> oldList=os.getObservationsByPersonAndConcept(new Person(7),new Concept(5497));
+  Message hl7message=parser.parse(hl7string);
+  router.processMessage(hl7message);
+  List<Obs> newList=os.getObservationsByPersonAndConcept(new Person(7),new Concept(5497));
+  Obs newObservation=null;
+  int thisIndex=0;
+  while (newObservation == null && thisIndex < newList.size()) {
+    Obs newObs=newList.get(thisIndex++);
+    if (!oldList.contains(newObs) && !newObs.isObsGrouping() && newObs.getComment() != null)     newObservation=newObs;
+  }
+  Assert.assertEquals("This is a comment that spans two lines",newObservation.getComment());
+}
