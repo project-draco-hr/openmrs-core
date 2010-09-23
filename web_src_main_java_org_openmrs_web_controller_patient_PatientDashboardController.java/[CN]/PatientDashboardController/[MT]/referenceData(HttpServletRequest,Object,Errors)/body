@@ -2,17 +2,13 @@
   log.debug("Entering referenceData");
   Patient patient=(Patient)obj;
   log.debug("patient: '" + patient + "'");
-  List<Form> forms=new Vector<Form>();
   Map<String,Object> map=new HashMap<String,Object>();
-  List<Encounter> encounters=new Vector<Encounter>();
   String causeOfDeathOther="";
   if (Context.isAuthenticated()) {
-    if (Context.hasPrivilege(PrivilegeConstants.VIEW_UNPUBLISHED_FORMS))     forms.addAll(Context.getFormService().getAllForms());
- else     forms.addAll(Context.getFormService().getPublishedForms());
-    List<Encounter> encs=Context.getEncounterService().getEncountersByPatient(patient);
-    if (encs != null && encs.size() > 0)     encounters.addAll(encs);
-    String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
-    Concept conceptCause=Context.getConceptService().getConcept(propCause);
+    if (conceptCause == null) {
+      String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+      Concept conceptCause=Context.getConceptService().getConcept(propCause);
+    }
     if (conceptCause != null) {
       List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,conceptCause);
       if (obssDeath.size() == 1) {
@@ -35,7 +31,7 @@
     }
   }
   String patientVariation="";
-  Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
+  if (reasonForExitConcept == null)   reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null) {
     List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);
     if (patientExitObs != null) {
@@ -54,11 +50,9 @@
     }
   }
   map.put("patientVariation",patientVariation);
-  map.put("forms",forms);
   map.put("emptyIdentifier",new PatientIdentifier());
   map.put("emptyName",new PersonName());
   map.put("emptyAddress",new PersonAddress());
-  map.put("encounters",encounters);
   map.put("causeOfDeathOther",causeOfDeathOther);
   return map;
 }
