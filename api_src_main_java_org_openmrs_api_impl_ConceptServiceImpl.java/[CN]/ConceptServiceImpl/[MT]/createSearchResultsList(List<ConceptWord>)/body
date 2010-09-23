@@ -1,0 +1,12 @@
+{
+  if (CollectionUtils.isNotEmpty(conceptWords)) {
+    ArrayList<ConceptSearchResult> conceptSearchResults=new ArrayList<ConceptSearchResult>();
+    for (    ConceptWord conceptWord : conceptWords) {
+      if (conceptWord != null) {
+        conceptSearchResults.add(new ConceptSearchResult(conceptWord.getWord(),conceptWord.getConcept(),conceptWord.getConceptName(),conceptWord.getWeight()));
+      }
+    }
+    return conceptSearchResults;
+  }
+  return Collections.emptyList();
+}

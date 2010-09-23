@@ -1,0 +1,10 @@
+{
+  TaskDefinition conceptIndexUpdateTaskDef=new TaskDefinition();
+  conceptIndexUpdateTaskDef.setTaskClass("org.openmrs.scheduler.tasks.ConceptIndexUpdateTask");
+  conceptIndexUpdateTaskDef.setRepeatInterval(0L);
+  conceptIndexUpdateTaskDef.setStartOnStartup(false);
+  conceptIndexUpdateTaskDef.setStartTime(null);
+  conceptIndexUpdateTaskDef.setName(CONCEPT_WORD_UPDATE_TASK_NAME);
+  conceptIndexUpdateTaskDef.setDescription("Iterates through the concept dictionary, re-creating concept index (which are used for searcing). This task is started when using the \"Update Concept Index Storage\" page and no range is given.  This task stops itself when one iteration has completed.");
+  return conceptIndexUpdateTaskDef;
+}

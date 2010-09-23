@@ -29,16 +29,16 @@
       if (concept != null)       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
   }
-  List<ConceptWord> conceptWords=Context.getConceptService().getConceptWords(txt,locale);
-  for (  ConceptWord word : conceptWords) {
-    concept=word.getConcept();
+  List<ConceptSearchResult> searchResults=Context.getConceptService().getConcepts(txt,locale);
+  for (  ConceptSearchResult searchResult : searchResults) {
+    concept=searchResult.getConcept();
     for (    Field field : Context.getFormService().getFieldsByConcept(concept)) {
       FieldListItem fli=new FieldListItem(field,locale);
       if (!objects.contains(fli))       objects.add(fli);
       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
     if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
-      objects.add(new ConceptListItem(word));
+      objects.add(new ConceptListItem(searchResult));
       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
   }

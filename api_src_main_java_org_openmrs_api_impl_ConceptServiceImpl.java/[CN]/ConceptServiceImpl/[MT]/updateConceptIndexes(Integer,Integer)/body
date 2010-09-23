@@ -1,0 +1,8 @@
+{
+  checkIfLocked();
+  Integer i=conceptIdStart;
+  ConceptService cs=Context.getConceptService();
+  while (i++ <= conceptIdEnd) {
+    updateConceptWord(cs.getConcept(i));
+  }
+}

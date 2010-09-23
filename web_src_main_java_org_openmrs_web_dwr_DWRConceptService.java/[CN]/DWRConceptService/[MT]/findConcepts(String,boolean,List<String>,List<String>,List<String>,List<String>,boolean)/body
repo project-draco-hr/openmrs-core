@@ -24,13 +24,13 @@
   if (excludeDatatypeNames == null)   excludeDatatypeNames=new Vector<String>();
   try {
     ConceptService cs=Context.getConceptService();
-    List<ConceptWord> words=new Vector<ConceptWord>();
+    List<ConceptSearchResult> searchResults=new Vector<ConceptSearchResult>();
     if (phrase.matches("\\d+")) {
       Concept c=cs.getConcept(Integer.valueOf(phrase));
       if (c != null) {
         ConceptName cn=c.getName(defaultLocale);
-        ConceptWord word=new ConceptWord(phrase,c,cn,defaultLocale,"Exact match on concept id: #" + phrase);
-        words.add(word);
+        ConceptSearchResult searchResult=new ConceptSearchResult(phrase,c,cn);
+        searchResults.add(searchResult);
       }
     }
     if (phrase == null || phrase.equals("")) {
@@ -44,20 +44,20 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      words.addAll(cs.findConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes));
+      searchResults.addAll(cs.getConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,null,null));
     }
-    if (words.size() == 0) {
+    if (searchResults.size() == 0) {
       objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ OpenmrsUtil.join(localesToSearchOn,", "));
     }
  else {
       int maxCount=500;
       int curCount=0;
-      for (      ConceptWord word : words) {
+      for (      ConceptSearchResult searchResult : searchResults) {
         if (++curCount > maxCount)         break;
-        objectList.add(new ConceptListItem(word));
+        objectList.add(new ConceptListItem(searchResult));
         if (includeDrugConcepts) {
-          Integer classId=word.getConcept().getConceptClass().getConceptClassId();
-          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugsByConcept(word.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
+          Integer classId=searchResult.getConcept().getConceptClass().getConceptClassId();
+          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugsByConcept(searchResult.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
         }
       }
     }

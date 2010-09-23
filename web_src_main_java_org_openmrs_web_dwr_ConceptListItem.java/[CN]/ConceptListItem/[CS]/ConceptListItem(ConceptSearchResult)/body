@@ -1,0 +1,9 @@
+{
+  if (searchResult != null) {
+    Concept concept=searchResult.getConcept();
+    ConceptName conceptName=searchResult.getConceptName();
+    if (conceptName.isIndexTerm() && conceptName.getConcept().getName() != null)     conceptName=concept.getName();
+    Locale locale=conceptName.getLocale();
+    initialize(concept,conceptName,locale);
+  }
+}

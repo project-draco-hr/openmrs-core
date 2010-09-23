@@ -1,9 +1,0 @@
-{
-  if (word != null) {
-    Concept concept=word.getConcept();
-    ConceptName conceptName=word.getConceptName();
-    if (conceptName.isIndexTerm() && conceptName.getConcept().getName() != null)     conceptName=concept.getName();
-    Locale locale=word.getLocale();
-    initialize(concept,conceptName,locale);
-  }
-}
