@@ -2,8 +2,8 @@
   Boolean found=false;
   String uuid=null;
   for (  CX identifier : identifiers) {
-    if (identifier.getAssigningAuthority().getNamespaceID().getValue().equals("UUID")) {
-      if (found && !identifier.getIDNumber().getValue().equals(uuid))       throw new HL7Exception("multiple UUID values found");
+    if (OpenmrsUtil.nullSafeEquals(identifier.getAssigningAuthority().getNamespaceID().getValue(),"UUID")) {
+      if (found && !OpenmrsUtil.nullSafeEquals(identifier.getIDNumber().getValue(),uuid))       throw new HL7Exception("multiple UUID values found");
       uuid=identifier.getIDNumber().getValue();
       found=true;
     }
