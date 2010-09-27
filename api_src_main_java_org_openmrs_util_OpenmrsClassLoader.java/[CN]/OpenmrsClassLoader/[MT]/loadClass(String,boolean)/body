@@ -8,7 +8,21 @@
  catch (    ClassNotFoundException e) {
     }
   }
-  Class<?> c=getParent().loadClass(name);
-  loadedClasses.add(c);
-  return c;
+  ClassNotFoundException ex=null;
+  try {
+    Class<?> c=getParent().loadClass(name);
+    loadedClasses.add(c);
+    return c;
+  }
+ catch (  ClassNotFoundException e) {
+    ex=e;
+  }
+  try {
+    Class<?> c=this.findClass(name);
+    return c;
+  }
+ catch (  ClassNotFoundException e) {
+    ex=e;
+  }
+  throw ex;
 }
