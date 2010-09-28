@@ -1,7 +1,7 @@
 {
   log.debug("Checking identifier: " + identifier + " against format: "+ format);
   if (StringUtils.isBlank(identifier)) {
-    throw new BlankIdentifierException("Identifier cannot be null or blank");
+    throw new BlankIdentifierException("PatientIdentifier.error.nullOrBlank");
   }
   if (StringUtils.isBlank(format)) {
     log.debug("Format is blank, identifier passes.");
@@ -9,7 +9,7 @@
   }
   if (!identifier.matches(format)) {
     log.debug("The two DO NOT match");
-    throw new InvalidIdentifierFormatException("Identifier [" + identifier + "] does not match required format: "+ format);
+    throw new InvalidIdentifierFormatException(getMessage("PatientIdentifier.error.invalidFormat",identifier,format));
   }
   log.debug("The two match!!");
 }
