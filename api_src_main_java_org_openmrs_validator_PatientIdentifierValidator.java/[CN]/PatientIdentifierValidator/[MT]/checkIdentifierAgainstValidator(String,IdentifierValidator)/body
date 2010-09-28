@@ -1,7 +1,7 @@
 {
   log.debug("Checking identifier: " + identifier + " against validator: "+ validator);
   if (StringUtils.isBlank(identifier)) {
-    throw new BlankIdentifierException("Identifier cannot be null or blank");
+    throw new BlankIdentifierException("PatientIdentifier.error.nullOrBlank");
   }
   if (validator == null) {
     log.debug("Validator is null, identifier passes.");
@@ -9,11 +9,11 @@
   }
   try {
     if (!validator.isValid(identifier)) {
-      throw new InvalidCheckDigitException("Invalid check digit for identifier: " + identifier);
+      throw new InvalidCheckDigitException(getMessage("PatientIdentifier.error.checkDigitWithParameter",identifier));
     }
   }
  catch (  UnallowedIdentifierException e) {
-    throw new InvalidCheckDigitException("Identifier " + identifier + " is not appropriate for validation scheme "+ validator.getName());
+    throw new InvalidCheckDigitException(getMessage("PatientIdentifier.error.unallowedIdentifier",identifier,validator.getName()));
   }
   log.debug("The identifier passed validation.");
 }

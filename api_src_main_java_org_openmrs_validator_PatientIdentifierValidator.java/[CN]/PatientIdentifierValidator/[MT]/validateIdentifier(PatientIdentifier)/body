@@ -1,10 +1,10 @@
 {
   if (pi == null) {
-    throw new BlankIdentifierException("Patient Identifier cannot be null.");
+    throw new BlankIdentifierException("PatientIdentifier.error.null");
   }
   if (!pi.isVoided()) {
     if (Context.getPatientService().isIdentifierInUseByAnotherPatient(pi)) {
-      throw new IdentifierNotUniqueException("Identifier " + pi.getIdentifier() + " already in use by another patient");
+      throw new IdentifierNotUniqueException(getMessage("PatientIdentifier.error.notUniqueWithParameter",pi.getIdentifier()));
     }
     validateIdentifier(pi.getIdentifier(),pi.getIdentifierType());
   }

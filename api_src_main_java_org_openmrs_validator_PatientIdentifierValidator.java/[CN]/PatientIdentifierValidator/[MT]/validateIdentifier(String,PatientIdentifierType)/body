@@ -1,10 +1,10 @@
 {
   log.debug("Checking identifier: " + identifier + " for type: "+ pit);
   if (pit == null) {
-    throw new BlankIdentifierException("Patient Identifier Type cannot be null");
+    throw new BlankIdentifierException("PatientIdentifierType.null");
   }
   if (StringUtils.isBlank(identifier)) {
-    throw new BlankIdentifierException("Identifier cannot be null or blank");
+    throw new BlankIdentifierException("PatientIdentifier.error.nullOrBlank");
   }
   checkIdentifierAgainstFormat(identifier,pit.getFormat());
   if (pit.hasValidator()) {
