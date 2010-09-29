@@ -3,4 +3,8 @@
     List<Program> programs=Context.getProgramWorkflowService().getAllPrograms();
     model.put("programs",programs);
   }
+  if (!model.containsKey("locations")) {
+    List<Location> locations=Context.getLocationService().getAllLocations();
+    model.put("locations",locations);
+  }
 }
