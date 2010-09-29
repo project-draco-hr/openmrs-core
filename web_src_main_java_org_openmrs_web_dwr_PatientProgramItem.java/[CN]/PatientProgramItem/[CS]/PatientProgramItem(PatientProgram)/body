@@ -3,6 +3,7 @@
   patientId=p.getPatient().getPatientId();
   dateEnrolled=p.getDateEnrolled();
   dateCompleted=p.getDateCompleted();
+  location=new LocationListItem(p.getLocation());
   creator=p.getCreator().getPersonName().getFullName();
   dateCreated=p.getDateCreated();
   if (p.getChangedBy() != null) {

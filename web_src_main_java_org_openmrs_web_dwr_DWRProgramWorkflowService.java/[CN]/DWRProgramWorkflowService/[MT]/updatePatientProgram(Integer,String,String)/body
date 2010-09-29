@@ -1,27 +1,3 @@
 {
-  PatientProgram pp=Context.getProgramWorkflowService().getPatientProgram(patientProgramId);
-  Date dateEnrolled=null;
-  Date dateCompleted=null;
-  Date ppDateEnrolled=null;
-  Date ppDateCompleted=null;
-  if (null != pp.getDateEnrolled()) {
-    String enrolled=ymdDf.format(pp.getDateEnrolled());
-    if (null != enrolled && enrolled.length() > 0)     ppDateEnrolled=ymdDf.parse(enrolled);
-  }
-  if (null != pp.getDateCompleted()) {
-    String completed=ymdDf.format(pp.getDateCompleted());
-    if (null != completed && completed.length() > 0)     ppDateCompleted=ymdDf.parse(completed);
-  }
-  if (enrollmentDateYmd != null && enrollmentDateYmd.length() > 0)   dateEnrolled=ymdDf.parse(enrollmentDateYmd);
-  if (completionDateYmd != null && completionDateYmd.length() > 0)   dateCompleted=ymdDf.parse(completionDateYmd);
-  boolean anyChange=OpenmrsUtil.nullSafeEquals(dateEnrolled,ppDateEnrolled);
-  anyChange|=OpenmrsUtil.nullSafeEquals(dateCompleted,ppDateCompleted);
-  if (null != dateEnrolled && null != dateCompleted && dateCompleted.before(dateEnrolled)) {
-    anyChange=false;
-  }
-  if (anyChange) {
-    pp.setDateEnrolled(dateEnrolled);
-    pp.setDateCompleted(dateCompleted);
-    Context.getProgramWorkflowService().savePatientProgram(pp);
-  }
+  updatePatientProgram(patientProgramId,enrollmentDateYmd,completionDateYmd,null);
 }
