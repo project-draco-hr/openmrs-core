@@ -26,8 +26,9 @@
   hql+=" order by user.username asc";
   Query query=sessionFactory.getCurrentSession().createQuery(hql);
   for (  Map.Entry<String,String> e : namesMap.entrySet())   query.setString(e.getKey(),e.getValue());
+  List<User> returnList;
   if (roles != null && roles.size() > 0) {
-    List returnList=new Vector();
+    returnList=new Vector();
     log.debug("looping through to find matching roles");
     for (    Object o : query.list()) {
       User u=(User)o;
@@ -36,10 +37,11 @@
         break;
       }
     }
-    return returnList;
   }
  else {
     log.debug("not looping because there appears to be no roles");
-    return query.list();
+    returnList=query.list();
   }
+  if (!CollectionUtils.isEmpty(returnList))   Collections.sort(returnList,new UserByNameComparator());
+  return returnList;
 }
