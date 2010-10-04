@@ -1,0 +1,4 @@
+{
+  if (callStackDepth < 0)   throw new APIException("Call stack depth cannot be less than 0");
+  return getClassContext()[callStackDepth + 2];
+}
