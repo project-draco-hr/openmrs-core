@@ -1,0 +1,9 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  criteria.setCacheMode(org.hibernate.CacheMode.IGNORE);
+  if (patients != null)   criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
+  criteria.add(Restrictions.eq("voided",false));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("patient.personId"));
+  criteria.addOrder(org.hibernate.criterion.Order.desc("encounterDatetime"));
+  return criteria;
+}
