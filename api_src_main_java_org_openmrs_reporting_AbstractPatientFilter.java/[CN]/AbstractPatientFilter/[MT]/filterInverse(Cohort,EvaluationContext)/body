@@ -1,0 +1,12 @@
+{
+  Cohort filterResult=filter(input,context);
+  if (input != null) {
+    return Cohort.subtract(input,filterResult);
+  }
+ else   if (context != null) {
+    return Cohort.subtract(context.getBaseCohort(),filterResult);
+  }
+ else {
+    return Context.getPatientSetService().getInverseOfCohort(filterResult);
+  }
+}

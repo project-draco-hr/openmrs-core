@@ -1,0 +1,9 @@
+{
+  PatientFilter a=new DrugOrderPatientFilter();
+  PatientFilter b=new EncounterPatientFilter();
+  List<PatientFilter> filters=Arrays.asList(a,b);
+  CompoundPatientFilter f=new CompoundPatientFilter();
+  f.setOperator(BooleanOperator.AND);
+  f.setFilters(filters);
+  helper(f);
+}

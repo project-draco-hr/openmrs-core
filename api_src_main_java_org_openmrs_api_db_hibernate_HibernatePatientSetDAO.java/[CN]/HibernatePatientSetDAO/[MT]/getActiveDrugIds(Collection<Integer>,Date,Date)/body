@@ -8,7 +8,7 @@
     whereClauses.add("(o.auto_expire_date is null or o.auto_expire_date > :fromDate)");
     whereClauses.add("(o.discontinued_date is null or o.discontinued_date > :fromDate)");
   }
-  String sql="select o.patient_id, d.drug_inventory_id " + "from orders o " + "    inner join drug_order d on o.order_id = d.order_id ";
+  String sql="select o.patient_id, d.drug_inventory_id " + "from orders o " + "    inner join patient p on o.patient_id = p.patient_id and p.voided = false "+ "    inner join drug_order d on o.order_id = d.order_id ";
   for (ListIterator<String> i=whereClauses.listIterator(); i.hasNext(); ) {
     sql+=(i.nextIndex() == 0 ? " where " : " and ");
     sql+=i.next();
