@@ -18,6 +18,7 @@
   if (maxCount != null)   havingClauses.add("count(*) >= :maxCount");
   StringBuilder sb=new StringBuilder();
   sb.append(" select e.patient_id from encounter e ");
+  sb.append(" inner join patient p on e.patient_id = p.patient_id and p.voided = false ");
   for (ListIterator<String> i=whereClauses.listIterator(); i.hasNext(); ) {
     sb.append(i.nextIndex() == 0 ? " where " : " and ");
     sb.append(i.next());

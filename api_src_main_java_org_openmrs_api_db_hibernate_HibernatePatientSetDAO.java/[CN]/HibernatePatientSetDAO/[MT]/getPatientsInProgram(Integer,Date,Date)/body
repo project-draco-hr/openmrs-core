@@ -1,5 +1,7 @@
 {
-  String sql="select patient_id from patient_program pp where pp.voided = false and pp.program_id = :programId ";
+  String sql="select pp.patient_id from patient_program pp ";
+  sql+=" inner join patient p on pp.patient_id = p.patient_id and p.voided = false ";
+  sql+=" where pp.voided = false and pp.program_id = :programId ";
   if (fromDate != null)   sql+=" and (date_completed is null or date_completed >= :fromDate) ";
   if (toDate != null)   sql+=" and (date_enrolled is null or date_enrolled <= :toDate) ";
   log.debug("sql: " + sql);
