@@ -6,7 +6,9 @@
     if ("download".equals(view)) {
       originalFilename=originalFilename.replace(",","").replace(" ","");
     }
-    obs.setComplexData(new ComplexData(originalFilename,new BufferedInputStream(new FileInputStream(file))));
+    FileInputStream fileInputStream=new FileInputStream(file);
+    obs.setComplexData(new ComplexData(originalFilename,new BufferedInputStream(fileInputStream)));
+    fileInputStream.close();
   }
  catch (  Exception e) {
     throw new APIException("An error occurred while trying to get binary complex obs.",e);
