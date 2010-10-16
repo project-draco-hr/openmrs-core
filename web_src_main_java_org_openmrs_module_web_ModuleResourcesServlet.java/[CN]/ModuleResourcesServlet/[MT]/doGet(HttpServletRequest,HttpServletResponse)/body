@@ -1,21 +1,12 @@
 {
   log.debug("In service method for module servlet: " + request.getPathInfo());
-  String path=request.getPathInfo();
-  Module module=ModuleUtil.getModuleForPath(path);
-  if (module == null) {
-    log.warn("No module handles the path: " + path);
-    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-    return;
+  File f=getFile(request);
+  if (f == null)   response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+  try {
+    Thread.sleep(10);
   }
-  String relativePath=ModuleUtil.getPathForResource(module,path);
-  String realPath=getServletContext().getRealPath("") + MODULE_PATH + module.getModuleIdAsPath()+ "/resources"+ relativePath;
-  realPath=realPath.replace("/",File.separator);
-  log.debug("Real path: " + realPath);
-  File f=new File(realPath);
-  if (!f.exists()) {
-    log.warn("No object with path '" + realPath + "' exists for module '"+ module.getModuleId()+ "'");
-    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-    return;
+ catch (  InterruptedException e) {
+    e.printStackTrace();
   }
   response.setDateHeader("Last-Modified",f.lastModified());
   response.setContentLength(new Long(f.length()).intValue());
