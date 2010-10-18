@@ -1,4 +1,5 @@
 {
   Criteria crit=getFormCriteria(partialName,published,encounterTypes,retired,containingAnyFormField,containingAllFormFields,fields);
-  return crit.list();
+  crit.setProjection(Projections.count("formId"));
+  return (Integer)crit.uniqueResult();
 }
