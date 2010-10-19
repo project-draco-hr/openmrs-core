@@ -2,6 +2,7 @@
   List<Integer> conceptIds=getAllUnretiredConceptIds(connection);
   allowedLocales=getAllowedLocalesList(connection);
   defaultLocale=allowedLocales.get(allowedLocales.size() - 1);
+  Map<Locale,Set<String>> localeDuplicateNamesMap=null;
   for (  Integer conceptId : conceptIds) {
     Map<Locale,List<ConceptName>> localeConceptNamesMap=getLocaleConceptNamesMap(connection,conceptId);
     if (localeConceptNamesMap == null) {
@@ -64,8 +65,12 @@
             reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from a short name to a synonym");
           }
         }
-        if (!isNameUniqueInLocale(connection,nameInLocale)) {
-          updateWarnings.add("ConceptName with id " + nameInLocale.getConceptNameId() + " ("+ nameInLocale.getName()+ ") is a duplicate concept name in locale '"+ conceptNameLocale.getDisplayName()+ "'");
+        if (nameInLocale.isFullySpecifiedName() || nameInLocale.isPreferred()) {
+          if (!isNameUniqueInLocale(connection,nameInLocale,conceptId)) {
+            if (localeDuplicateNamesMap == null)             localeDuplicateNamesMap=new HashMap<Locale,Set<String>>();
+            if (!localeDuplicateNamesMap.containsKey(conceptNameLocale))             localeDuplicateNamesMap.put(conceptNameLocale,new HashSet<String>());
+            localeDuplicateNamesMap.get(conceptNameLocale).add(nameInLocale.getName());
+          }
         }
         String name=nameInLocale.getName().toLowerCase();
         if (!nameDuplicateConceptNamesMap.containsKey(name))         nameDuplicateConceptNamesMap.put(name,new ArrayList<ConceptName>());
@@ -108,6 +113,12 @@
       }
     }
     if (!hasFullySpecifiedName)     updateWarnings.add("Concept with id: " + conceptId + " has no fully specified name");
+  }
+  if (!MapUtils.isEmpty(localeDuplicateNamesMap)) {
+    for (    Map.Entry<Locale,Set<String>> entry : localeDuplicateNamesMap.entrySet()) {
+      if (CollectionUtils.isEmpty(entry.getValue()))       continue;
+      for (      String duplicateName : entry.getValue())       updateWarnings.add("Concept Name '" + duplicateName + "' was found multiple times in locale '"+ entry.getKey()+ "'");
+    }
   }
   logMessages.add("Number of Updated ConceptNames: " + updatedConceptNames.size());
 }
