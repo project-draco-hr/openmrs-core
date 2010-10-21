@@ -1,0 +1,11 @@
+{
+  List<Concept> concepts=Context.getConceptService().getAllConcepts();
+  Set<Locale> allowedLocales=LocaleUtility.getLocalesInOrder();
+  for (  Concept concept : concepts) {
+    if (!CollectionUtils.isEmpty(concept.getNames())) {
+      for (      ConceptName cn : concept.getNames()) {
+        Assert.assertTrue("The locale '" + cn.getLocale() + "' of conceptName with id: "+ cn.getConceptNameId()+ " is not among those listed in the global property 'locale.allowed.list'",allowedLocales.contains(cn.getLocale()));
+      }
+    }
+  }
+}

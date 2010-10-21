@@ -1,0 +1,12 @@
+{
+  List<Concept> concepts=Context.getConceptService().getAllConcepts();
+  Set<Locale> allowedLocales=LocaleUtility.getLocalesInOrder();
+  for (  Concept concept : concepts) {
+    for (    Locale locale : allowedLocales) {
+      if (!CollectionUtils.isEmpty(concept.getNames(locale))) {
+        Assert.assertNotNull("Concept with Id: " + concept.getConceptId() + " has no preferred name in locale:"+ locale,concept.getPreferredName(locale));
+        Assert.assertEquals(true,concept.getPreferredName(locale).isLocalePreferred().booleanValue());
+      }
+    }
+  }
+}

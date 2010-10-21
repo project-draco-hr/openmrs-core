@@ -1,0 +1,18 @@
+{
+  List<Concept> concepts=Context.getConceptService().getAllConcepts();
+  Set<Locale> allowedLocales=LocaleUtility.getLocalesInOrder();
+  for (  Concept concept : concepts) {
+    for (    Locale locale : allowedLocales) {
+      Collection<ConceptName> namesInLocale=concept.getNames(locale);
+      if (!CollectionUtils.isEmpty(namesInLocale)) {
+        int preferredNamesFound=0;
+        for (        ConceptName conceptName : namesInLocale) {
+          if (conceptName.isLocalePreferred()) {
+            preferredNamesFound++;
+            Assert.assertTrue("Found multiple preferred names for conceptId: " + concept.getConceptId() + " in the locale '"+ locale+ "'",preferredNamesFound < 2);
+          }
+        }
+      }
+    }
+  }
+}

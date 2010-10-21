@@ -1,7 +1,7 @@
 {
   ConceptService cs=Context.getConceptService();
   Concept concept=cs.getConcept(5497);
-  Assert.assertEquals(false,concept.getPreferredName(Locale.ENGLISH).isLocalePreferred());
+  Assert.assertNotSame("CD3+CD4+ABS CNT",concept.getPreferredName(Locale.ENGLISH).getName());
   ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
   MockHttpServletRequest mockRequest=new MockHttpServletRequest();
   mockRequest.setMethod("POST");
