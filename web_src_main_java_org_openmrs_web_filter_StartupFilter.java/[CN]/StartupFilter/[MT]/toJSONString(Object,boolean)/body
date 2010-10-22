@@ -1,0 +1,8 @@
+{
+  StringBuffer sb=new StringBuffer();
+  if (object instanceof Map)   toJSONString((Map<String,Object>)object,sb,escapeJavascript);
+ else   if (object instanceof List)   toJSONString((List)object,sb,escapeJavascript);
+ else   if (object instanceof Boolean)   sb.append(object.toString());
+ else   toJSONString(object,sb,escapeJavascript);
+  return sb.toString();
+}
