@@ -1,6 +1,7 @@
 {
-  if (StringUtils.isBlank(personName.getGivenName()) || StringUtils.isBlank(personName.getGivenName().replaceAll("\"","")))   errors.rejectValue(getFieldKey("givenName",arrayInd,testInd),"Person.name.required");
-  if (StringUtils.isBlank(personName.getFamilyName()) || StringUtils.isBlank(personName.getFamilyName().replaceAll("\"","")))   errors.rejectValue(getFieldKey("familyName",arrayInd,testInd),"Person.name.required");
+  if (personName == null)   errors.reject("error.name");
+  if (StringUtils.isBlank(personName.getGivenName()) || StringUtils.isBlank(personName.getGivenName().replaceAll("\"","")))   errors.rejectValue(getFieldKey("givenName",arrayInd,testInd),"Patient.names.required.given.family");
+  if (StringUtils.isBlank(personName.getFamilyName()) || StringUtils.isBlank(personName.getFamilyName().replaceAll("\"","")))   errors.rejectValue(getFieldKey("familyName",arrayInd,testInd),"Patient.names.required.given.family");
   if (StringUtils.length(personName.getPrefix()) > 50)   rejectPersonName(errors,"prefix",arrayInd,testInd);
   if (StringUtils.length(personName.getGivenName()) > 50)   rejectPersonName(errors,"givenName",arrayInd,testInd);
   if (StringUtils.length(personName.getMiddleName()) > 50)   rejectPersonName(errors,"middleName",arrayInd,testInd);

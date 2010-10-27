@@ -1,0 +1,54 @@
+{
+  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ": Validating patient data from the short patient form....");
+  ShortPatientModel shortPatientModel=(ShortPatientModel)obj;
+  PersonName personName=shortPatientModel.getPersonName();
+  Errors nameErrors=new BindException(personName,"personName");
+  new PersonNameValidator().validatePersonName(personName,nameErrors,false,true);
+  if (nameErrors.hasErrors()) {
+    Iterator<ObjectError> it=nameErrors.getAllErrors().iterator();
+    Set<String> errorCodesWithNoArguments=new HashSet<String>();
+    while (it.hasNext()) {
+      ObjectError error=it.next();
+      if (error.getCode() != null && (!errorCodesWithNoArguments.contains(error.getCode()) || (error.getArguments() != null && error.getArguments().length > 0))) {
+        errors.reject(error.getCode(),error.getArguments(),"");
+        if (error.getArguments() == null || error.getArguments().length == 0)         errorCodesWithNoArguments.add(error.getCode());
+      }
+    }
+    errorCodesWithNoArguments=null;
+  }
+  if (CollectionUtils.isEmpty(shortPatientModel.getIdentifiers()))   errors.reject("PatientIdentifier.error.insufficientIdentifiers");
+ else {
+    boolean nonVoidedIdentifierFound=false;
+    for (    PatientIdentifier pId : shortPatientModel.getIdentifiers()) {
+      if (!pId.isVoided())       nonVoidedIdentifierFound=true;
+      new PatientIdentifierValidator().validate(pId,errors);
+    }
+    if (!nonVoidedIdentifierFound)     errors.reject("PatientIdentifier.error.insufficientIdentifiers");
+  }
+  PersonAddress personAddress=shortPatientModel.getPersonAddress();
+  if (personAddress != null) {
+    if (personAddress.isVoided() || (StringUtils.isBlank(personAddress.getAddress1()) && StringUtils.isBlank(personAddress.getAddress2())))     errors.reject("Person.addresses.length");
+  }
+  if (StringUtils.isBlank(shortPatientModel.getPatient().getGender()))   errors.rejectValue("patient.gender","Person.gender.required");
+  if (shortPatientModel.getPatient().getBirthdate() != null) {
+    if (shortPatientModel.getPatient().getBirthdate().after(new Date()))     errors.rejectValue("patient.birthdate","error.date.future");
+ else {
+      Calendar c=Calendar.getInstance();
+      c.setTime(new Date());
+      c.add(Calendar.YEAR,-120);
+      if (shortPatientModel.getPatient().getBirthdate().before(c.getTime())) {
+        errors.rejectValue("patient.birthdate","error.date.nonsensical");
+      }
+    }
+  }
+ else {
+    errors.rejectValue("patient.birthdate","error.required",new Object[]{Context.getMessageSourceService().getMessage("Person.birthdate")},"");
+  }
+  if (shortPatientModel.getPatient().getDead()) {
+    if (shortPatientModel.getPatient().getCauseOfDeath() == null)     errors.rejectValue("patient.causeOfDeath","Person.dead.causeOfDeathNull");
+    if (shortPatientModel.getPatient().getDeathDate() != null) {
+      if (shortPatientModel.getPatient().getDeathDate().after(new Date()))       errors.rejectValue("patient.deathDate","error.date.future");
+      if (shortPatientModel.getPatient().getBirthdate() != null && shortPatientModel.getPatient().getDeathDate().before(shortPatientModel.getPatient().getBirthdate()))       errors.rejectValue("patient.deathDate","error.deathdate.before.birthdate");
+    }
+  }
+}

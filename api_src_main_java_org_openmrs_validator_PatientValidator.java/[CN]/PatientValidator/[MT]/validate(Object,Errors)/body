@@ -1,5 +1,5 @@
 {
-  log.error(this.getClass().getName() + ".validate...");
+  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
   Patient patient=(Patient)obj;
   if (patient != null) {
     for (    PersonName personName : patient.getNames()) {

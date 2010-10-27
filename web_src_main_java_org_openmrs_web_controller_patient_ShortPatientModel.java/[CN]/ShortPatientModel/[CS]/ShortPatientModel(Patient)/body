@@ -1,40 +1,16 @@
 {
-  this();
   if (patient != null) {
-    patientId=patient.getPatientId();
-    boolean first=true;
-    for (    PatientIdentifier pi : patient.getIdentifiers()) {
-      if (first) {
-        identifier=pi.getIdentifier();
-        first=false;
+    this.patient=patient;
+    this.personName=patient.getPersonName();
+    this.personAddress=patient.getPersonAddress();
+    identifiers=ListUtils.lazyList(new ArrayList<PatientIdentifier>(patient.getActiveIdentifiers()),FactoryUtils.instantiateFactory(PatientIdentifier.class));
+    List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING);
+    List<PersonAttribute> activePatientAttributes=patient.getActiveAttributes();
+    personAttributes=new ArrayList<PersonAttribute>();
+    if (!CollectionUtils.isEmpty(viewableAttributeTypes)) {
+      for (      PersonAttribute personAttribute : activePatientAttributes) {
+        if (viewableAttributeTypes.contains(personAttribute.getAttributeType()))         personAttributes.add(personAttribute);
       }
- else {
-        if (!"".equals(otherIdentifiers))         otherIdentifiers+=",";
-        otherIdentifiers+=" " + pi.getIdentifier();
-      }
-    }
-    first=true;
-    for (    PersonName pn : patient.getNames()) {
-      if (first) {
-        setName(pn);
-        first=false;
-      }
- else {
-        if (!"".equals(otherNames))         otherNames+=",";
-        otherNames+=" " + pn.getGivenName() + " "+ pn.getMiddleName()+ " "+ pn.getFamilyName();
-      }
-    }
-    gender=patient.getGender();
-    birthdate=patient.getBirthdate();
-    birthdateEstimated=patient.isBirthdateEstimated();
-    voided=patient.isVoided();
-    dead=patient.isDead();
-    causeOfDeath=patient.getCauseOfDeath();
-    deathDate=patient.getDeathDate();
-    address=patient.getPersonAddress();
-    attributeMap=new HashMap<String,PersonAttribute>();
-    for (    PersonAttribute attribute : patient.getActiveAttributes()) {
-      attributeMap.put(attribute.getAttributeType().getName(),attribute);
     }
   }
 }
