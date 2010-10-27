@@ -1,0 +1,71 @@
+{
+  if (patientModel.getPatient().getDead()) {
+    log.debug("Patient is dead, so let's make sure there's an Obs for it");
+    String codProp=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+    Concept causeOfDeath=Context.getConceptService().getConcept(codProp);
+    if (causeOfDeath != null) {
+      List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patientModel.getPatient(),causeOfDeath);
+      if (obssDeath != null) {
+        if (obssDeath.size() > 1) {
+          log.warn("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
+        }
+ else {
+          Obs obsDeath=null;
+          if (obssDeath.size() == 1) {
+            log.debug("Already has a cause of death, so changing it");
+            obsDeath=obssDeath.iterator().next();
+          }
+ else {
+            log.debug("No cause of death yet, let's create one.");
+            obsDeath=new Obs();
+            obsDeath.setPerson(patientModel.getPatient());
+            obsDeath.setConcept(causeOfDeath);
+            Location loc=Context.getLocationService().getDefaultLocation();
+            if (loc != null)             obsDeath.setLocation(loc);
+ else             log.error("Could not find a suitable location for which to create this new Obs");
+          }
+          Concept currCause=patientModel.getPatient().getCauseOfDeath();
+          if (currCause == null) {
+            log.debug("Current cause is null, attempting to set to NONE");
+            String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
+            currCause=Context.getConceptService().getConcept(noneConcept);
+          }
+          if (currCause != null) {
+            log.debug("Current cause is not null, setting to value_coded");
+            obsDeath.setValueCoded(currCause);
+            obsDeath.setValueCodedName(currCause.getName());
+            Date dateDeath=patientModel.getPatient().getDeathDate();
+            if (dateDeath == null)             dateDeath=new Date();
+            obsDeath.setObsDatetime(dateDeath);
+            String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
+            Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
+            if (conceptOther != null) {
+              if (conceptOther.equals(currCause)) {
+                String otherInfo=request.getParameter("causeOfDeath_other");
+                if (otherInfo == null)                 otherInfo="";
+                log.debug("Setting value_text as " + otherInfo);
+                obsDeath.setValueText(otherInfo);
+              }
+ else {
+                log.debug("New concept is NOT the OTHER concept, so setting to blank");
+                obsDeath.setValueText("");
+              }
+            }
+ else {
+              log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
+              obsDeath.setValueText("");
+            }
+            if (StringUtils.isBlank(obsDeath.getVoidReason()))             obsDeath.setVoidReason(Context.getMessageSourceService().getMessage("general.default.changeReason"));
+            Context.getObsService().saveObs(obsDeath,obsDeath.getVoidReason());
+          }
+ else {
+            log.debug("Current cause is still null - aborting mission");
+          }
+        }
+      }
+    }
+ else {
+      log.debug("Cause of death is null - should not have gotten here without throwing an error on the form.");
+    }
+  }
+}

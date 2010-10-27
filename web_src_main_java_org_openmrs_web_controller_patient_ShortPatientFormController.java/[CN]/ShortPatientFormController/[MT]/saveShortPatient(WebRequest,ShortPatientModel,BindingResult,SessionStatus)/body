@@ -1,0 +1,22 @@
+{
+  if (Context.isAuthenticated()) {
+    new ShortPatientFormValidator().validate(patientModel,result);
+    if (result.hasErrors())     return SHORT_PATIENT_FORM_URL;
+    Patient patient=null;
+    patient=getPatientFromFormData(patientModel);
+    patientValidator.validate(patient,result);
+    if (result.hasErrors())     return SHORT_PATIENT_FORM_URL;
+    patient=Context.getPatientService().savePatient(patient);
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Patient.saved"),WebRequest.SCOPE_SESSION);
+    saveDeathInfo(patientModel,request);
+    if (!patient.getVoided()) {
+      Map<String,Relationship> relationships=getRelationshipsMap(patient,request);
+      for (      Relationship relationship : relationships.values()) {
+        if (relationship.getPersonA() != null && relationship.getPersonB() != null)         Context.getPersonService().saveRelationship(relationship);
+      }
+    }
+    status.setComplete();
+    return "redirect:" + PATIENT_DASHBOARD_URL + "?patientId="+ patient.getPatientId();
+  }
+  return FIND_PATIENT_PAGE;
+}

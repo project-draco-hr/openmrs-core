@@ -3,10 +3,10 @@
   Patient patient=createBasicPatient();
   Patient patient2=createBasicPatient();
   PatientIdentifierType pit=patientService.getPatientIdentifierType(1);
-  PatientIdentifier ident1=new PatientIdentifier("123-1",pit,locationService.getLocation(0));
-  PatientIdentifier ident2=new PatientIdentifier("123",pit,locationService.getLocation(0));
-  PatientIdentifier ident3=new PatientIdentifier("123-0",pit,locationService.getLocation(0));
-  PatientIdentifier ident4=new PatientIdentifier("123-A",pit,locationService.getLocation(0));
+  PatientIdentifier ident1=new PatientIdentifier("123-1",pit,locationService.getLocation(1));
+  PatientIdentifier ident2=new PatientIdentifier("123",pit,locationService.getLocation(1));
+  PatientIdentifier ident3=new PatientIdentifier("123-0",pit,locationService.getLocation(1));
+  PatientIdentifier ident4=new PatientIdentifier("123-A",pit,locationService.getLocation(1));
   try {
     patient.addIdentifier(ident1);
     patientService.savePatient(patient);

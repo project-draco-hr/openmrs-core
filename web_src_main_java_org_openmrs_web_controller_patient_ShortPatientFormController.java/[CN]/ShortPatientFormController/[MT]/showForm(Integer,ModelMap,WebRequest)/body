@@ -1,0 +1,22 @@
+{
+  if (Context.isAuthenticated()) {
+    Patient patient=null;
+    if (patientId != null)     patient=Context.getPatientService().getPatient(patientId);
+ else {
+      patient=new Patient();
+      String name=request.getParameter("addName");
+      if (!StringUtils.isBlank(name)) {
+        String gender=request.getParameter("addGender");
+        String date=request.getParameter("addBirthdate");
+        String age=request.getParameter("addAge");
+        PersonFormController.getMiniPerson(patient,name,gender,date,age);
+      }
+    }
+    ShortPatientModel patientModel=new ShortPatientModel(patient);
+    model.addAttribute("patientModel",patientModel);
+    model.addAttribute("relationshipsMap",getRelationshipsMap(patient,request));
+    model.addAttribute("identifierTypes",Context.getPatientService().getAllPatientIdentifierTypes());
+    model.addAttribute("locations",Context.getLocationService().getAllLocations());
+  }
+  return SHORT_PATIENT_FORM_URL;
+}

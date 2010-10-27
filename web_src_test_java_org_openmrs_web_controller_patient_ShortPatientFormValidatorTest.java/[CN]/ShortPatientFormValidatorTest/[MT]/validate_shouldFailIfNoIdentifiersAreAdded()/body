@@ -1,0 +1,11 @@
+{
+  Patient p=ps.getPatient(2);
+  List<PatientIdentifier> activeIdentifiers=p.getActiveIdentifiers();
+  Set<PatientIdentifier> patientIdentifiers=p.getIdentifiers();
+  for (  PatientIdentifier activeIdentifier : activeIdentifiers)   patientIdentifiers.remove(activeIdentifier);
+  p.setIdentifiers(patientIdentifiers);
+  ShortPatientModel model=new ShortPatientModel(p);
+  Errors errors=new BindException(model,"patientModel");
+  validator.validate(model,errors);
+  Assert.assertEquals(true,errors.hasGlobalErrors());
+}
