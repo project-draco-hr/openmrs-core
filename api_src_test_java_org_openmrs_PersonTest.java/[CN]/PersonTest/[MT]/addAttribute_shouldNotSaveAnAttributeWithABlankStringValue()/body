@@ -1,0 +1,10 @@
+{
+  Person p=new Person();
+  Assert.assertEquals("There should not be any attributes",0,p.getAttributes().size());
+  PersonAttribute pa1=new PersonAttribute();
+  pa1.setValue("");
+  pa1.setAttributeType(new PersonAttributeType(1));
+  pa1.setVoided(false);
+  p.addAttribute(pa1);
+  Assert.assertEquals("There should not be any attributes",0,p.getAttributes().size());
+}
