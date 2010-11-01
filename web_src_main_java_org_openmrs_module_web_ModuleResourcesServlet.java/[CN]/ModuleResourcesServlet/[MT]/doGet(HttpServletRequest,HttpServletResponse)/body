@@ -1,22 +1,17 @@
 {
   log.debug("In service method for module servlet: " + request.getPathInfo());
   File f=getFile(request);
-  if (f == null)   response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+  if (f == null) {
+    response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    return;
+  }
+  response.setDateHeader("Last-Modified",f.lastModified());
+  response.setContentLength(new Long(f.length()).intValue());
+  FileInputStream is=new FileInputStream(f);
   try {
-    Thread.sleep(10);
+    OpenmrsUtil.copyFile(is,response.getOutputStream());
   }
- catch (  InterruptedException e) {
-    e.printStackTrace();
-  }
-  if (f != null) {
-    response.setDateHeader("Last-Modified",f.lastModified());
-    response.setContentLength(new Long(f.length()).intValue());
-    FileInputStream is=new FileInputStream(f);
-    try {
-      OpenmrsUtil.copyFile(is,response.getOutputStream());
-    }
   finally {
-      OpenmrsUtil.closeStream(is);
-    }
+    OpenmrsUtil.closeStream(is);
   }
 }

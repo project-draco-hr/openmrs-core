@@ -8,10 +8,9 @@
   String relativePath=ModuleUtil.getPathForResource(module,path);
   String realPath=getServletContext().getRealPath("") + MODULE_PATH + module.getModuleIdAsPath()+ "/resources"+ relativePath;
   realPath=realPath.replace("/",File.separator);
-  log.debug("Real path: " + realPath);
   File f=new File(realPath);
   if (!f.exists()) {
-    log.warn("No object with path '" + realPath + "' exists for module '"+ module.getModuleId()+ "'");
+    log.warn("No file with path '" + realPath + "' exists for module '"+ module.getModuleId()+ "'");
     return null;
   }
   return f;
