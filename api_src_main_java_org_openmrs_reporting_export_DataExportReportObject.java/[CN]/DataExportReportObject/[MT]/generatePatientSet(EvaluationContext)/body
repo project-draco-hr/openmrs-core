@@ -1,32 +1,30 @@
 {
   PatientSetService pss=Context.getPatientSetService();
-  Set<Integer> patientIdSet=new HashSet<Integer>();
-  if (getPatientIds() == null || getPatientIds().size() == 0) {
-    patientIdSet.addAll(Context.getPatientSetService().getAllPatients().getMemberIds());
-    setAllPatients(true);
+  Cohort cohort=null;
+  if (getPatientIds() != null && getPatientIds().size() > 0) {
+    cohort=new Cohort(getPatientIds());
   }
- else {
-    patientIdSet.addAll(patientIds);
+  if (location != null && !location.equals("")) {
+    cohort=intersectFast(cohort,pss.getPatientsHavingLocation(getLocation()));
   }
-  if (location != null && !location.equals(""))   patientIdSet.retainAll(pss.getPatientsHavingLocation(getLocation()).getMemberIds());
   if (cohortId != null) {
-    Cohort cohort=Context.getCohortService().getCohort(cohortId);
-    if (cohort != null)     patientIdSet.retainAll(cohort.getMemberIds());
+    Cohort loadedCohort=Context.getCohortService().getCohort(cohortId);
+    if (loadedCohort != null)     cohort=intersectFast(cohort,loadedCohort);
   }
   if (cohortDefinitionId != null) {
     PatientFilter cohortDefinition=(PatientFilter)Context.getReportObjectService().getReportObject(cohortDefinitionId);
     if (cohortDefinition != null) {
-      Cohort c=new Cohort("Cohort from Definition","cohort from cohortdefinitionid: " + cohortDefinitionId,patientIdSet);
-      c=cohortDefinition.filter(c,context);
-      patientIdSet=c.getMemberIds();
+      cohort=cohortDefinition.filter(cohort,context);
     }
   }
   if (patientSearchId != null) {
     PatientSearchReportObject search=(PatientSearchReportObject)Context.getReportObjectService().getReportObject(patientSearchId);
     PatientFilter cohortDefinition=OpenmrsUtil.toPatientFilter(search.getPatientSearch(),null);
-    org.openmrs.Cohort c=new Cohort("Cohort from patientSearch","cohort from patientSearchId: " + patientSearchId,patientIdSet);
-    c=cohortDefinition.filter(c,context);
-    patientIdSet=c.getMemberIds();
+    cohort=cohortDefinition.filter(cohort,context);
   }
-  return new Cohort("Cohort from selected groups","",patientIdSet);
+  if (cohort == null) {
+    cohort=Context.getPatientSetService().getAllPatients();
+    setAllPatients(true);
+  }
+  return cohort;
 }
