@@ -2,6 +2,7 @@
   Map<Integer,PatientProgram> ret=new HashMap<Integer,PatientProgram>();
   Date now=new Date();
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientProgram.class);
+  criteria.setFetchMode("patient",FetchMode.JOIN);
   criteria.setCacheMode(CacheMode.IGNORE);
   if (ps != null)   criteria.add(Restrictions.in("patient.personId",ps.getMemberIds()));
   criteria.add(Restrictions.eq("program",program));
