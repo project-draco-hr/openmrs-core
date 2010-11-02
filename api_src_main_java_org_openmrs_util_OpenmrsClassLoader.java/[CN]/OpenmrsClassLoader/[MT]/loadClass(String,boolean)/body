@@ -1,11 +1,22 @@
 {
   for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
-    try {
-      Class<?> c=classLoader.loadClass(name);
-      loadedClasses.add(c);
-      return c;
+    boolean tryToLoad=name.startsWith(classLoader.getModule().getPackageName());
+    if (!tryToLoad) {
+      for (      String providedPackage : classLoader.getAdditionalPackages()) {
+        if (name.startsWith(providedPackage)) {
+          tryToLoad=true;
+          break;
+        }
+      }
     }
- catch (    ClassNotFoundException e) {
+    if (tryToLoad) {
+      try {
+        Class<?> c=classLoader.loadClass(name);
+        loadedClasses.add(c);
+        return c;
+      }
+ catch (      ClassNotFoundException e) {
+      }
     }
   }
   ClassNotFoundException ex=null;
