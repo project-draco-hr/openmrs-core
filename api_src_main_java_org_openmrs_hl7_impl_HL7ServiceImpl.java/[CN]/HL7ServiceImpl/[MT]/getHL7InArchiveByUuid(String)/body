@@ -1,5 +1,4 @@
 {
-  if (!isArchiveMigrationRequired())   return dao.getHL7InArchiveByUuidFromFileSystem(uuid);
- else   if (isArchiveMigrationRequired() && Hl7InArchivesMigrateThread.getTransferStatus() == Status.NONE)   return dao.getHL7InArchiveByUuid(uuid);
-  throw new APIException("Can't retrieve hl7 archive by uuid while archive migration is running");
+  if (Hl7InArchivesMigrateThread.isActive())   throw new APIException("cannot fetch archives during migration");
+  return dao.getHL7InArchiveByUuid(uuid);
 }

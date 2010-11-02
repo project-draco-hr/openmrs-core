@@ -1,0 +1,5 @@
+{
+  Criteria crit=getHL7SearchCriteria(clazz,messageState,query);
+  crit.setProjection(Projections.rowCount());
+  return (Integer)crit.uniqueResult();
+}

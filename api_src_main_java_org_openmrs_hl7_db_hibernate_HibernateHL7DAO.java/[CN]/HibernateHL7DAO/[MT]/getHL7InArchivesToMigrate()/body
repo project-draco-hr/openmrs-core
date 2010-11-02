@@ -1,0 +1,11 @@
+{
+  Integer daysToKeep=Hl7InArchivesMigrateThread.getDaysKept();
+  Criteria crit=getHL7SearchCriteria(HL7InArchive.class,HL7Constants.HL7_STATUS_PROCESSED,null);
+  crit.setMaxResults(HL7Constants.MIGRATION_MAX_BATCH_SIZE);
+  if (daysToKeep != null) {
+    Calendar cal=Calendar.getInstance();
+    cal.add(Calendar.DATE,-1 * daysToKeep);
+    crit.add(Restrictions.lt("dateCreated",cal.getTime()));
+  }
+  return crit.list();
+}

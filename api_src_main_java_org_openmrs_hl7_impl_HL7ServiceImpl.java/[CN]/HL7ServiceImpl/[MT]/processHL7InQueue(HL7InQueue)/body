@@ -6,7 +6,7 @@
   String hl7Message=hl7InQueue.getHL7Data();
   try {
     Message parsedMessage=Context.getHL7Service().parseHL7String(hl7Message);
-    Message result=Context.getHL7Service().processHL7Message(parsedMessage);
+    Context.getHL7Service().processHL7Message(parsedMessage);
     log.debug("Archiving HL7 inbound queue entry");
     Context.getHL7Service().saveHL7InArchive(new HL7InArchive(hl7InQueue));
     log.debug("Removing HL7 message from inbound queue");

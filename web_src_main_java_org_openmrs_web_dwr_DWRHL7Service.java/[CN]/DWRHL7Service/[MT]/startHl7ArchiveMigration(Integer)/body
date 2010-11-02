@@ -1,0 +1,14 @@
+{
+  if (Hl7InArchivesMigrateThread.isActive())   return new Object[]{false,Context.getMessageSourceService().getMessage("Hl7InArchive.migrate.already.running")};
+  try {
+    Hl7InArchivesMigrateThread.setDaysKept(daysToKeep);
+    Hl7InArchivesMigrateThread.setActive(true);
+    hl7MigrationThread=new Hl7InArchivesMigrateThread();
+    hl7MigrationThread.setName("HL7 Archive Migration Thread");
+    hl7MigrationThread.start();
+    return new Object[]{true};
+  }
+ catch (  APIAuthenticationException e) {
+    return new Object[]{false,Context.getMessageSourceService().getMessage("Hl7InArchive.migrate.authentication.fail")};
+  }
+}

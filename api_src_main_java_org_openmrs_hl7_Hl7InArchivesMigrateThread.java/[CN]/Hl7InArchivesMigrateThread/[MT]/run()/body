@@ -1,17 +1,26 @@
 {
-  try {
-    Context.openSession();
-    Context.setUserContext(userContext);
-    Context.getHL7Service().migrateHl7InArchivesToFileSystem(progressStatusMap);
-    if (transferStatus != Status.STOPPED)     transferStatus=Status.COMPLETED;
- else     if (transferStatus == Status.STOPPED)     transferStatus=Status.STOPPED;
+  Context.openSession();
+  Context.setUserContext(userContext);
+  transferStatus=Status.RUNNING;
+  while (isActive() && transferStatus == Status.RUNNING) {
+    try {
+      if (isActive())       Context.getHL7Service().migrateHl7InArchivesToFileSystem(progressStatusMap);
+      if (transferStatus != Status.STOPPED)       transferStatus=Status.COMPLETED;
+    }
+ catch (    APIException api) {
+      log.debug("Unable to migrate HL7 archive",api);
+      try {
+        Thread.sleep(HL7Constants.THREAD_SLEEP_PERIOD);
+      }
+ catch (      InterruptedException e) {
+        log.warn("Hl7 in archive migration thread has been abnormally interrupted",e);
+      }
+    }
+catch (    Exception e) {
+      transferStatus=Status.ERROR;
+      log.warn("Some error occurred while migrating hl7 archives",e);
+    }
   }
- catch (  Exception e) {
-    transferStatus=Status.ERROR;
-    log.warn("Some error occurred while migrating hl7 archives",e);
-  }
- finally {
-    resetStateProperties();
-    Context.closeSession();
-  }
+  Context.closeSession();
+  setActive(false);
 }

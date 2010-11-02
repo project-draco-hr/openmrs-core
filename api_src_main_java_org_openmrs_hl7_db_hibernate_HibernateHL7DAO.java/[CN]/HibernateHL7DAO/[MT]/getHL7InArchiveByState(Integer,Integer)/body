@@ -1,0 +1,5 @@
+{
+  Query q=sessionFactory.getCurrentSession().createQuery("from HL7InArchive where messageState = ?").setParameter(0,state,Hibernate.INTEGER);
+  if (maxResults != null)   q.setMaxResults(maxResults);
+  return q.list();
+}
