@@ -1,0 +1,8 @@
+{
+  if (clazz == null)   throw new DAOException("no class defined for HL7 search");
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(clazz);
+  if (query != null && !query.isEmpty())   if (clazz == HL7InError.class)   crit.add(Restrictions.or(Restrictions.like("HL7Data",query,MatchMode.ANYWHERE),Restrictions.or(Restrictions.like("errorDetails",query,MatchMode.ANYWHERE),Restrictions.like("error",query,MatchMode.ANYWHERE))));
+ else   crit.add(Restrictions.like("HL7Data",query,MatchMode.ANYWHERE));
+  if (messageState != null)   crit.add(Restrictions.eq("messageState",messageState));
+  return crit;
+}

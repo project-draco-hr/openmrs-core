@@ -1,7 +1,0 @@
-{
-  Criteria crit=getHL7InQueueSearchCriteria(messageState,query);
-  crit.setFirstResult(start);
-  crit.setMaxResults(length);
-  crit.addOrder(Order.asc("dateCreated"));
-  return crit.list();
-}

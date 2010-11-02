@@ -1,0 +1,5 @@
+{
+  Query q=sessionFactory.getCurrentSession().createQuery("from HL7InArchive order by HL7InArchiveId");
+  if (maxResults != null)   q.setMaxResults(maxResults);
+  return q.list();
+}

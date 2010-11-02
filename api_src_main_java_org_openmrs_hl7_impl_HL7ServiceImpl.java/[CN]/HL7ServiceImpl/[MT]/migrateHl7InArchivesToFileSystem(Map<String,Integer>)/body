@@ -1,3 +1,20 @@
 {
-  dao.migrateHl7InArchivesToFileSystem(progressStatusMap);
+  int numberTransferred=0;
+  int numberOfFailedTransfers=0;
+  List<HL7InArchive> hl7InArchives=getHL7InArchivesToMigrate();
+  while (Hl7InArchivesMigrateThread.isActive() && Hl7InArchivesMigrateThread.getTransferStatus() == Status.RUNNING && hl7InArchives != null && hl7InArchives.size() > 0) {
+    Iterator<HL7InArchive> iterator=hl7InArchives.iterator();
+    while (Hl7InArchivesMigrateThread.isActive() && Hl7InArchivesMigrateThread.getTransferStatus() == Status.RUNNING && iterator.hasNext()) {
+      HL7InArchive archive=iterator.next();
+      try {
+        migrateHL7InArchive(archive);
+        progressStatusMap.put(HL7Constants.NUMBER_TRANSFERRED_KEY,numberTransferred++);
+      }
+ catch (      DAOException e) {
+        progressStatusMap.put(HL7Constants.NUMBER_OF_FAILED_TRANSFERS_KEY,numberOfFailedTransfers++);
+      }
+    }
+    hl7InArchives=getHL7InArchivesToMigrate();
+  }
+  if (log.isDebugEnabled())   log.debug("Transfer of HL7 archives has completed or has been stopped");
 }

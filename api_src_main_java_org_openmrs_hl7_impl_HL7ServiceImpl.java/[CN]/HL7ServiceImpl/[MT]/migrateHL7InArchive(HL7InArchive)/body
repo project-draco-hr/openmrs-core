@@ -1,0 +1,13 @@
+{
+  if (archive == null)   throw new APIException("could not migrate a null HL7 archive");
+  if (!OpenmrsUtil.nullSafeEquals(archive.getMessageState(),HL7Constants.HL7_STATUS_PROCESSED))   throw new APIException("could not migrate HL7 archive not in 'processed' state");
+  try {
+    URI uri=writeHL7InArchiveToFileSystem(archive);
+    archive.setHL7Data(uri.toString());
+    archive.setMessageState(HL7Constants.HL7_STATUS_MIGRATED);
+    archive=saveHL7InArchive(archive);
+  }
+ catch (  APIException e) {
+    throw new APIException("could not migrate HL7 archive",e);
+  }
+}

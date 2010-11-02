@@ -1,4 +1,4 @@
 {
-  hl7InArchive.setDateCreated(new Date());
-  return dao.saveHL7InArchiveToFileSystem(hl7InArchive);
+  if (hl7InArchive.getDateCreated() == null)   hl7InArchive.setDateCreated(new Date());
+  return dao.saveHL7InArchive(hl7InArchive);
 }

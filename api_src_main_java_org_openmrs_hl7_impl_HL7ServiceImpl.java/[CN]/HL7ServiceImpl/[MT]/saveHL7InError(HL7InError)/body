@@ -1,4 +1,4 @@
 {
-  hl7InError.setDateCreated(new Date());
+  if (hl7InError.getDateCreated() == null)   hl7InError.setDateCreated(new Date());
   return dao.saveHL7InError(hl7InError);
 }

@@ -1,5 +1,3 @@
 {
-  if (!isArchiveMigrationRequired())   throw new APIException("The method 'getHL7InArchive(Integer hl7InArchiveId)' should not be called after" + " migration of archives has been done, instead use getHl7InArchiveByUuid()");
- else   if (isArchiveMigrationRequired() && Hl7InArchivesMigrateThread.getTransferStatus() != Status.NONE)   throw new APIException("Can't retrieve hl7 archive by id while archive migration is running");
   return dao.getHL7InArchive(hl7InArchiveId);
 }
