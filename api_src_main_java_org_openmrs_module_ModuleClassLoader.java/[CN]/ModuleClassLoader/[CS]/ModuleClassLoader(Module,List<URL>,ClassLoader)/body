@@ -1,3 +1,6 @@
 {
   this(module,urls,parent,null);
+  for (  URL url : urls) {
+    addAllAdditionalPackages(ModuleUtil.getPackagesFromFile(OpenmrsUtil.url2file(url)));
+  }
 }

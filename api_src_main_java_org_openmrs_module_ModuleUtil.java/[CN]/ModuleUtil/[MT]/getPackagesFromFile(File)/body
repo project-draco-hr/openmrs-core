@@ -1,0 +1,45 @@
+{
+  if (!file.getName().endsWith(".jar"))   return Collections.EMPTY_SET;
+  Set<String> packagesProvided=new HashSet<String>();
+  JarFile jar=null;
+  try {
+    jar=new JarFile(file);
+    Enumeration<JarEntry> jarEntries=jar.entries();
+    while (jarEntries.hasMoreElements()) {
+      JarEntry jarEntry=jarEntries.nextElement();
+      if (jarEntry.isDirectory()) {
+        continue;
+      }
+      String name=jarEntry.getName();
+      Integer indexOfLastSlash=name.lastIndexOf("/");
+      if (indexOfLastSlash <= 0)       continue;
+      String packageName=name.substring(0,indexOfLastSlash);
+      if (packageName.equals("lib") || packageName.equals("META-INF") || packageName.startsWith("web/module")) {
+        continue;
+      }
+      packageName=packageName.replaceAll("/",".");
+      if (packagesProvided.add(packageName))       log.trace("Adding module's jarentry with package: " + packageName);
+    }
+  }
+ catch (  IOException e) {
+    log.error("Unable to open jar from file: " + file.getAbsolutePath(),e);
+  }
+ finally {
+    if (jar != null)     try {
+      jar.close();
+    }
+ catch (    IOException e) {
+    }
+  }
+  Set<String> packagesProvidedCopy=new HashSet<String>();
+  packagesProvidedCopy.addAll(packagesProvided);
+  for (  String packageNameOuter : packagesProvidedCopy) {
+    packageNameOuter+=".";
+    for (    String packageNameInner : packagesProvidedCopy) {
+      if (packageNameInner.contains(packageNameOuter)) {
+        packagesProvided.remove(packageNameInner);
+      }
+    }
+  }
+  return packagesProvided;
+}
