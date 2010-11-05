@@ -17,7 +17,7 @@
     if (phrase == null || phrase.equals("")) {
     }
  else {
-      encs.addAll(es.getEncountersByPatient(phrase,includeVoided));
+      encs.addAll(es.getEncounters(phrase,start,length,includeVoided));
     }
     if (encs.size() == 0) {
       objectList.add(mss.getMessage("Encounter.noMatchesFound",new Object[]{phrase},Context.getLocale()));

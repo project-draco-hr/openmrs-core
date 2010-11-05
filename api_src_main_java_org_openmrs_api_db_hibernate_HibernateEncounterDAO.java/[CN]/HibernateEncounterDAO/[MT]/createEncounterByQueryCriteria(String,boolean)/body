@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
-  if (!includedVoided)   criteria.add(Restrictions.eq("voided",false));
+  if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
   criteria=criteria.createCriteria("patient","pat");
   String name=null;
   String identifier=null;
@@ -11,5 +11,5 @@
     name=query;
   }
   criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false);
-  return criteria.list();
+  return criteria;
 }
