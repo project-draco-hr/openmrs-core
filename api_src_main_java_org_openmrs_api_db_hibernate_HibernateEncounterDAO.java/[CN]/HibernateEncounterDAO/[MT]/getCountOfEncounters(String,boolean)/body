@@ -1,0 +1,5 @@
+{
+  Criteria criteria=createEncounterByQueryCriteria(query,includeVoided);
+  criteria.setProjection(Projections.rowCount());
+  return (Integer)criteria.uniqueResult();
+}
