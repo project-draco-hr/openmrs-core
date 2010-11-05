@@ -1,5 +1,9 @@
 {
-  List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
-  if (type != null)   types.add(type);
-  return getPatientSetDAO().getPatientIdentifierByType(patients,types);
+  Map<Integer,String> strings=getPatientIdentifierStringsByType(patients,type);
+  Map<Integer,PatientIdentifier> objects=new HashMap<Integer,PatientIdentifier>();
+  for (  Map.Entry<Integer,String> entry : strings.entrySet()) {
+    PatientIdentifier tmpValue=new PatientIdentifier(entry.getValue(),null,null);
+    objects.put(entry.getKey(),tmpValue);
+  }
+  return objects;
 }
