@@ -22,7 +22,7 @@
       log.debug("Object at pageContext." + HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY + " is "+ pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,PageContext.SESSION_SCOPE)+ "");
     }
     if (!isAlreadyUsed(file,initialRequestId)) {
-      String output="";
+      StringBuffer output=new StringBuffer();
       String prefix="";
       try {
         prefix=request.getContextPath();
@@ -32,14 +32,20 @@
         log.debug("Could not cast request to HttpServletRequest in HtmlIncludeTag");
       }
       if (isJs) {
-        output="<script src=\"" + prefix + file+ "?v="+ OpenmrsConstants.OPENMRS_VERSION_SHORT+ "\" type=\"text/javascript\" ></script>";
+        output.append("<script src=\"").append(prefix).append(file);
+        output.append("?v=").append(OpenmrsConstants.OPENMRS_VERSION_SHORT);
+        if (appendLocale)         output.append("&locale=").append(Context.getLocale());
+        output.append("\" type=\"text/javascript\" ></script>");
       }
  else       if (isCss) {
-        output="<link href=\"" + prefix + file+ "?v="+ OpenmrsConstants.OPENMRS_VERSION_SHORT+ "\" type=\"text/css\" rel=\"stylesheet\" />";
+        output.append("<link href=\"").append(prefix).append(file);
+        output.append("?v=").append(OpenmrsConstants.OPENMRS_VERSION_SHORT);
+        if (appendLocale)         output.append("&locale=").append(Context.getLocale());
+        output.append("\" type=\"text/css\" rel=\"stylesheet\" />");
       }
       if (log.isDebugEnabled())       log.debug("isAlreadyUsed() is FALSE - printing " + this.file + " to output.");
       try {
-        pageContext.getOut().print(output);
+        pageContext.getOut().print(output.toString());
       }
  catch (      IOException e) {
         log.debug("Could not produce output in HtmlIncludeTag.java");
