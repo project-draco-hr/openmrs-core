@@ -1,3 +1,11 @@
 {
+  if (log.isDebugEnabled()) {
+    StringBuffer sb=new StringBuffer();
+    for (    GlobalPropertyListener gpl : globalPropertyListeners) {
+      if (sb.length() > 0)       sb.append(", ");
+      sb.append(gpl.getClass().getName());
+    }
+    log.debug("GlobalPropertyListeners set to: " + sb.toString());
+  }
   EventListeners.globalPropertyListeners=globalPropertyListeners;
 }
