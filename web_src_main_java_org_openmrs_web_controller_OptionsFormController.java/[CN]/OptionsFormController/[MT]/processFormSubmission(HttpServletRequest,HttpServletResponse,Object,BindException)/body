@@ -20,6 +20,12 @@
       errors.rejectValue("secretAnswerNew","error.options.secretAnswer.match");
       errors.rejectValue("secretAnswerConfirm","error.options.secretAnswer.match");
     }
+    if (opts.getSecretAnswerNew().isEmpty()) {
+      errors.rejectValue("secretAnswerNew","error.options.secretAnswer.empty");
+    }
+    if (opts.getSecretQuestionNew().isEmpty()) {
+      errors.rejectValue("secretQuestionNew","error.options.secretQuestion.empty");
+    }
   }
   return super.processFormSubmission(request,response,object,errors);
 }

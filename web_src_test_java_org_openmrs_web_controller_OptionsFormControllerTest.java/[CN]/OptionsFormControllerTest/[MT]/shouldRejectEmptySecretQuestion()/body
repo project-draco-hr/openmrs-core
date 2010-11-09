@@ -1,0 +1,14 @@
+{
+  LoginCredential loginCredential=userDao.getLoginCredential(user);
+  String originalQuestion=loginCredential.getSecretQuestion();
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  request.setParameter("secretQuestionPassword","test");
+  request.setParameter("secretQuestionNew","");
+  String emptyAnswer="test_answer";
+  request.setParameter("secretAnswerNew",emptyAnswer);
+  request.setParameter("secretAnswerConfirm",emptyAnswer);
+  HttpServletResponse response=new MockHttpServletResponse();
+  controller.handleRequest(request,response);
+  loginCredential=userDao.getLoginCredential(user);
+  assertEquals(originalQuestion,loginCredential.getSecretQuestion());
+}
