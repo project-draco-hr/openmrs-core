@@ -20,7 +20,7 @@
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_RETIRED,opts.getShowRetiredMessage().toString());
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE,opts.getVerbose().toString());
     properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION,opts.getNotification() == null ? "" : opts.getNotification().toString());
-    properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS,opts.getNotificationAddress().toString());
+    properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS,opts.getNotificationAddress() == null ? "" : opts.getNotificationAddress().toString());
     if (!opts.getOldPassword().equals("")) {
       try {
         String password=opts.getNewPassword();
