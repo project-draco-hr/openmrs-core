@@ -8,8 +8,12 @@
     }
   }
   sb.append("\n");
-  sb.append("$!{fn.setPatientSet($patientSet)}");
-  sb.append("#foreach($patientId in $patientSet.memberIds)\n");
+  sb.append("#set($numberOfBatches=$fn.patientSetBatchCount)");
+  sb.append("#if( !$numberOfBatches )$fn.setPatientSet($patientSet)#set($numberOfBatches=0)#end");
+  sb.append("#if( !$fn.patientSet )Please upgrade your reportingcompatibility module to at least v1.5.2 (its faster!)#end");
+  sb.append("#foreach($batchIndex in [0..$numberOfBatches])\n");
+  sb.append("$!{fn.setPatientSetFromBatch($batchIndex)}");
+  sb.append("#foreach($patientId in $fn.patientSet.memberIds)\n");
   sb.append("$!{fn.setPatientId($patientId)}");
   if (columns.size() >= 1) {
     sb.append(columns.get(0).toTemplateString());
@@ -19,6 +23,7 @@
     }
   }
  else   log.warn("Report has column size less than 1");
+  sb.append("\n#end");
   sb.append("\n#end\n");
   return sb.toString();
 }
