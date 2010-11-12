@@ -8,7 +8,7 @@
   ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,true);
   anotherConceptName.setName(duplicateName);
   newConcept.addName(anotherConceptName);
-  Errors errors=new BindException(concept,"concept");
+  Errors errors=new BindException(newConcept,"concept");
   new ConceptValidator().validate(newConcept,errors);
   Assert.assertEquals(false,errors.hasErrors());
 }
