@@ -1,5 +1,3 @@
 {
-  if (attributes == null)   attributes=new Vector<String>();
-  if (attributes.size() < 1 || attributes.get(0) != null)   attributes.add(0,null);
-  return getPatientSetDAO().getObservationsValues(patients,c,attributes);
+  return getObservationsValues(patients,c,attributes,null,true);
 }
