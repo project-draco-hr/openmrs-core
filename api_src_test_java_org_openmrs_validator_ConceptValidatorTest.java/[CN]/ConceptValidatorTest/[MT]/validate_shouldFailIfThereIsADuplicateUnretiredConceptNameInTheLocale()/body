@@ -1,9 +1,11 @@
 {
-  Concept concept=ConceptTest.createMockConcept(1,Context.getLocale());
+  Context.setLocale(new Locale("en"));
+  Concept concept=Context.getConceptService().getConcept(5497);
   String duplicateName=concept.getFullySpecifiedName(Context.getLocale()).getName();
-  ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,false);
-  anotherConceptName.setName(duplicateName);
-  concept.addName(anotherConceptName);
+  ConceptName newName=new ConceptName(duplicateName,Context.getLocale());
+  newName.setDateCreated(Calendar.getInstance().getTime());
+  newName.setCreator(Context.getAuthenticatedUser());
+  concept.addName(newName);
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
 }

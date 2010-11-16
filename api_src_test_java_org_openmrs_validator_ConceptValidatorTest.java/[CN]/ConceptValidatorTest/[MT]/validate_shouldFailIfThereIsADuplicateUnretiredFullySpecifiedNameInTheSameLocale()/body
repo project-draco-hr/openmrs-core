@@ -1,11 +1,10 @@
 {
   Context.setLocale(new Locale("en"));
   Concept concept=Context.getConceptService().getConcept(5497);
+  Assert.assertEquals(true,concept.getFullySpecifiedName(Context.getLocale()).isFullySpecifiedName());
   String duplicateName=concept.getFullySpecifiedName(Context.getLocale()).getName();
-  Concept newConcept=ConceptTest.createMockConcept(2,Context.getLocale());
-  ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,true);
-  anotherConceptName.setName(duplicateName);
-  newConcept.addName(anotherConceptName);
-  Errors errors=new BindException(newConcept,"concept");
-  new ConceptValidator().validate(newConcept,errors);
+  Concept anotherConcept=Context.getConceptService().getConcept(5089);
+  anotherConcept.getFullySpecifiedName(Context.getLocale()).setName(duplicateName);
+  Errors errors=new BindException(anotherConcept,"concept");
+  new ConceptValidator().validate(anotherConcept,errors);
 }

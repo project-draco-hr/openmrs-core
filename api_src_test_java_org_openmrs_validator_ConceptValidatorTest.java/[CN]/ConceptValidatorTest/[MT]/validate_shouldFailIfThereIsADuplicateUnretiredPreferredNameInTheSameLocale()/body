@@ -5,10 +5,8 @@
   concept.setPreferredName(preferredName);
   Context.getConceptService().saveConcept(concept);
   Assert.assertEquals("preferred name",concept.getPreferredName(Context.getLocale()).getName());
-  Concept newConcept=ConceptTest.createMockConcept(2,Context.getLocale());
-  ConceptName anotherConceptName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,true);
-  anotherConceptName.setName("preferred name");
-  newConcept.addName(anotherConceptName);
-  Errors errors=new BindException(newConcept,"concept");
-  new ConceptValidator().validate(newConcept,errors);
+  Concept anotherConcept=Context.getConceptService().getConcept(5089);
+  anotherConcept.getFullySpecifiedName(Context.getLocale()).setName("preferred name");
+  Errors errors=new BindException(anotherConcept,"concept");
+  new ConceptValidator().validate(anotherConcept,errors);
 }
