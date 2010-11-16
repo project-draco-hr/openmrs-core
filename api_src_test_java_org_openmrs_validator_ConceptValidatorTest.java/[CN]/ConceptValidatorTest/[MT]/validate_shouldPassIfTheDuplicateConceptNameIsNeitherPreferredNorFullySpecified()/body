@@ -1,15 +1,11 @@
 {
   Context.setLocale(new Locale("en"));
   Concept concept=Context.getConceptService().getConcept(5497);
-  ConceptName duplicateName=new ConceptName("duplicate name",Context.getLocale());
-  concept.addName(duplicateName);
-  Context.getConceptService().saveConcept(concept);
-  Assert.assertEquals(true,concept.hasName("duplicate name",Context.getLocale()));
-  Concept newConcept=ConceptTest.createMockConcept(2,Context.getLocale());
-  ConceptName assumedDuplicateName=ConceptNameTest.createMockConceptName(3,Context.getLocale(),null,true);
-  assumedDuplicateName.setName(duplicateName.getName());
-  newConcept.addName(assumedDuplicateName);
-  Errors errors=new BindException(newConcept,"concept");
-  new ConceptValidator().validate(newConcept,errors);
+  ConceptName duplicateName=concept.getSynonyms(Context.getLocale()).iterator().next();
+  Assert.assertEquals(true,duplicateName.isSynonym());
+  Concept anotherConcept=Context.getConceptService().getConcept(5089);
+  anotherConcept.getFullySpecifiedName(Context.getLocale()).setName(duplicateName.getName());
+  Errors errors=new BindException(anotherConcept,"concept");
+  new ConceptValidator().validate(anotherConcept,errors);
   Assert.assertEquals(false,errors.hasErrors());
 }
