@@ -1,0 +1,28 @@
+{
+  Map<String,Object> resultsMap=new HashMap<String,Object>();
+  Vector<Object> objectList=new Vector<Object>();
+  try {
+    EncounterService es=Context.getEncounterService();
+    int encounterCount=0;
+    if (getMatchCount) {
+      encounterCount+=es.getCountOfEncounters(phrase,includeVoided);
+      if (phrase.matches("\\d+")) {
+        Encounter e=es.getEncounter(Integer.valueOf(phrase));
+        if (e != null) {
+          if (!e.isVoided() || includeVoided == true)           encounterCount++;
+        }
+      }
+    }
+    if (encounterCount > 0 || !getMatchCount)     objectList=findEncounters(phrase,includeVoided,start,length);
+    resultsMap.put("count",encounterCount);
+    resultsMap.put("objectList",objectList);
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for encounters",e);
+    objectList.clear();
+    objectList.add(Context.getMessageSourceService().getMessage("Encounter.search.error") + " - " + e.getMessage());
+    resultsMap.put("count",0);
+    resultsMap.put("objectList",objectList);
+  }
+  return resultsMap;
+}
