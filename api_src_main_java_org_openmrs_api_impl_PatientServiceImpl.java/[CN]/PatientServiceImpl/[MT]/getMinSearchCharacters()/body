@@ -1,0 +1,10 @@
+{
+  int minSearchCharacters=OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_MIN_SEARCH_CHARACTERS;
+  String minSearchCharactersStr=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS);
+  try {
+    minSearchCharacters=Integer.valueOf(minSearchCharactersStr);
+  }
+ catch (  NumberFormatException e) {
+  }
+  return minSearchCharacters;
+}

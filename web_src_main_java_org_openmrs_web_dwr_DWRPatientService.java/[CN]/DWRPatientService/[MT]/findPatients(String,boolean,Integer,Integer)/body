@@ -1,17 +1,19 @@
 {
+  if (maximumResults == null)   maximumResults=getMaximumSearchResults();
+  if (length != null && length > maximumResults)   length=maximumResults;
   List<Object> patientList=new Vector<Object>();
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
   try {
-    patients=ps.getPatients(searchValue);
+    patients=ps.getPatients(searchValue,start,length);
   }
  catch (  APIAuthenticationException e) {
-    patientList.add("Error while attempting to find patients - " + e.getMessage());
+    patientList.add(Context.getMessageSourceService().getMessage("Patient.search.error") + " - " + e.getMessage());
     return patientList;
   }
   patientList=new Vector<Object>(patients.size());
   for (  Patient p : patients)   patientList.add(new PatientListItem(p));
-  if (patientList.size() < 3 && !searchValue.matches(".*\\d+.*")) {
+  if ((length == null || length > 2) && patients.size() < 3 && !searchValue.matches(".*\\d+.*")) {
     String[] names=searchValue.split(" ");
     String newSearch="";
     for (    String name : names) {
@@ -19,17 +21,19 @@
       newSearch+=" " + name;
     }
     newSearch=newSearch.trim();
-    Collection<Patient> newPatients=ps.getPatients(newSearch);
-    newPatients.removeAll(patients);
-    if (newPatients.size() > 0) {
-      patientList.add("Minimal patients returned. Results for <b>" + newSearch + "</b>");
-      for (      Patient p : newPatients) {
-        PatientListItem pi=new PatientListItem(p);
-        patientList.add(pi);
+    if (!newSearch.equals(searchValue)) {
+      Collection<Patient> newPatients=ps.getPatients(newSearch,start,length);
+      patients=CollectionUtils.union(newPatients,patients);
+      if (newPatients.size() > 0) {
+        patientList=new Vector<Object>(patients.size());
+        for (        Patient p : newPatients) {
+          PatientListItem pi=new PatientListItem(p);
+          patientList.add(pi);
+        }
       }
     }
   }
- else   if (patientList.size() == 0 && searchValue.matches(".*\\d+.*")) {
+ else   if (patients.size() == 0 && searchValue.matches(".*\\d+.*")) {
     Collection<IdentifierValidator> pivs=ps.getAllIdentifierValidators();
     boolean shouldWarnUser=true;
     boolean validCheckDigit=false;

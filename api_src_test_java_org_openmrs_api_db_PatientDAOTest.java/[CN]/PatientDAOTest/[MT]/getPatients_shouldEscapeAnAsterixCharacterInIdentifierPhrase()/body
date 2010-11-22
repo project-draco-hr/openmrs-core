@@ -8,8 +8,8 @@
   patient6.addIdentifier(patientIdentifier6);
   pService.savePatient(patient6);
   List<PatientIdentifierType> identifierTypes=Collections.emptyList();
-  int actualSize=dao.getPatients(null,"*567",identifierTypes,false).size();
+  int actualSize=dao.getPatients(null,"*567",identifierTypes,false,0,null).size();
   Assert.assertEquals(1,actualSize);
-  Patient actualPatient=dao.getPatients(null,"*567",identifierTypes,false).get(0);
+  Patient actualPatient=dao.getPatients(null,"*567",identifierTypes,false,0,null).get(0);
   Assert.assertEquals(patient2,actualPatient);
 }

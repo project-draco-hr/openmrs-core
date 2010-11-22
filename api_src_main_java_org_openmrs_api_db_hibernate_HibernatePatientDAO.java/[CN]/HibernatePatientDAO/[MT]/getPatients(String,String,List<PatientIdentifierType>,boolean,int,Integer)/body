@@ -1,0 +1,12 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
+  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,identifierTypes,matchIdentifierExactly);
+  criteria.setFirstResult(start);
+  int limit=HibernatePersonDAO.getMaximumSearchResults();
+  if (length == null || length > limit) {
+    if (log.isDebugEnabled())     log.debug("Limitng the size of the number of matching patients to " + limit);
+    length=limit;
+  }
+  criteria.setMaxResults(length);
+  return criteria.list();
+}

@@ -1,7 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
   criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,identifierTypes,matchIdentifierExactly);
-  criteria.setFirstResult(0);
-  criteria.setMaxResults(HibernatePersonDAO.getMaximumSearchResults());
-  return criteria.list();
+  criteria.setProjection(Projections.rowCount());
+  return (Integer)criteria.uniqueResult();
 }
