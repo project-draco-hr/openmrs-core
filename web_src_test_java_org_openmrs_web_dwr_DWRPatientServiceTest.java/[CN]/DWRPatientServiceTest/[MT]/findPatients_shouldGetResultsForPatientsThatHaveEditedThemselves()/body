@@ -1,6 +1,6 @@
 {
   executeDataSet("org/openmrs/web/dwr/include/DWRPatientService-patientisauser.xml");
   DWRPatientService dwrService=new DWRPatientService();
-  Collection<Object> resultObjects=dwrService.findPatients("Other",false);
+  Collection<Object> resultObjects=dwrService.findPatients("Other",false,null,null);
   Assert.assertEquals(1,resultObjects.size());
 }
