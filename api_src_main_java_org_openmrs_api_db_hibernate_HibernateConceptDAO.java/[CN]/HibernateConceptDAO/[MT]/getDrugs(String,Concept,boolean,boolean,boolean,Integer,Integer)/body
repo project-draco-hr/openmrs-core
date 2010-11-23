@@ -1,0 +1,18 @@
+{
+  Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
+  if (StringUtils.isBlank(drugName) && concept == null)   return Collections.emptyList();
+  if (includeRetired == false)   searchCriteria.add(Expression.eq("drug.retired",false));
+  if (concept != null)   searchCriteria.add(Expression.eq("drug.concept",concept));
+  MatchMode matchMode=MatchMode.START;
+  if (searchOnPhrase)   matchMode=MatchMode.ANYWHERE;
+  if (!StringUtils.isBlank(drugName)) {
+    searchCriteria.add(Expression.ilike("drug.name",drugName,matchMode));
+    if (searchDrugConceptNames) {
+      searchCriteria.createCriteria("concept","concept").createAlias("concept.names","names");
+      searchCriteria.add(Expression.ilike("names.name",drugName,matchMode));
+    }
+  }
+  if (start != null)   searchCriteria.setFirstResult(start);
+  if (length != null && length > 0)   searchCriteria.setMaxResults(length);
+  return searchCriteria.list();
+}
