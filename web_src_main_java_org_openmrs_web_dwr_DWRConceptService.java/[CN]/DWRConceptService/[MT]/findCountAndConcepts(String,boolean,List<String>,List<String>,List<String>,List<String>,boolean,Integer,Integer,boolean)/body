@@ -1,4 +1,5 @@
 {
+  Map<String,Object> resultsMap=new HashMap<String,Object>();
   Vector<Object> objectList=new Vector<Object>();
   User currentUser=Context.getAuthenticatedUser();
   Locale defaultLocale=Context.getLocale();
@@ -24,18 +25,7 @@
   if (excludeDatatypeNames == null)   excludeDatatypeNames=new Vector<String>();
   try {
     ConceptService cs=Context.getConceptService();
-    List<ConceptSearchResult> searchResults=new Vector<ConceptSearchResult>();
-    if (phrase.matches("\\d+")) {
-      Concept c=cs.getConcept(Integer.valueOf(phrase));
-      if (c != null) {
-        ConceptName cn=c.getName(defaultLocale);
-        ConceptSearchResult searchResult=new ConceptSearchResult(phrase,c,cn);
-        searchResults.add(searchResult);
-      }
-    }
-    if (phrase == null || phrase.equals("")) {
-    }
- else {
+    if (!StringUtils.isBlank(phrase)) {
       List<ConceptClass> includeClasses=new Vector<ConceptClass>();
       for (      String name : includeClassNames)       if (!"".equals(name))       includeClasses.add(cs.getConceptClassByName(name));
       List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
@@ -44,28 +34,31 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      searchResults.addAll(cs.getConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,null,null));
-    }
-    if (searchResults.size() == 0) {
-      objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ OpenmrsUtil.join(localesToSearchOn,", "));
-    }
- else {
-      int maxCount=500;
-      int curCount=0;
-      for (      ConceptSearchResult searchResult : searchResults) {
-        if (++curCount > maxCount)         break;
-        objectList.add(new ConceptListItem(searchResult));
-        if (includeDrugConcepts) {
-          Integer classId=searchResult.getConcept().getConceptClass().getConceptClassId();
-          if (classId.equals(OpenmrsConstants.CONCEPT_CLASS_DRUG))           for (          Drug d : cs.getDrugsByConcept(searchResult.getConcept()))           objectList.add(new ConceptDrugListItem(d,defaultLocale));
+      int matchCount=0;
+      if (getMatchCount) {
+        matchCount+=cs.getCountOfConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null);
+        if (phrase.matches("\\d+")) {
+          Concept c=cs.getConcept(Integer.valueOf(phrase));
+          if (c != null && (!c.isRetired() || includeRetired))           matchCount++;
         }
       }
+      if (matchCount > 0 || !getMatchCount) {
+        objectList.addAll(findConcepts(phrase,includeRetired,includeClassNames,excludeClassNames,includeDatatypeNames,excludeDatatypeNames,includeDrugs,start,length));
+      }
+      resultsMap.put("count",matchCount);
+      resultsMap.put("objectList",objectList);
+    }
+ else {
+      resultsMap.put("count",0);
+      objectList.add(Context.getMessageSourceService().getMessage("searchWidget.noMatchesFound"));
     }
   }
  catch (  Exception e) {
-    log.error("Error while finding concepts + " + e.getMessage(),e);
-    objectList.add("Error while attempting to find concepts - " + e.getMessage());
+    log.error("Error while searching for concepts",e);
+    objectList.clear();
+    objectList.add(Context.getMessageSourceService().getMessage("Concept.search.error") + " - " + e.getMessage());
+    resultsMap.put("count",0);
+    resultsMap.put("objectList",objectList);
   }
-  if (objectList.size() == 0)   objectList.add("No matches found for <b>" + phrase + "</b> in locale: "+ defaultLocale);
-  return objectList;
+  return resultsMap;
 }

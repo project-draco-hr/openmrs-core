@@ -1,0 +1,60 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  User currentUser=Context.getAuthenticatedUser();
+  Locale defaultLocale=Context.getLocale();
+  List<Locale> localesToSearchOn=null;
+  if (currentUser != null)   localesToSearchOn=currentUser.getProficientLocales();
+  if (localesToSearchOn == null)   localesToSearchOn=new Vector<Locale>();
+  if (localesToSearchOn.size() == 0) {
+    localesToSearchOn.add(defaultLocale);
+    if (!"".equals(defaultLocale.getCountry())) {
+      localesToSearchOn.add(new Locale(defaultLocale.getLanguage()));
+    }
+  }
+  if (log.isDebugEnabled()) {
+    StringBuffer searchLocalesString=new StringBuffer();
+    for (    Locale loc : localesToSearchOn) {
+      searchLocalesString.append(loc.toString() + " ");
+    }
+    log.debug("searching locales: " + searchLocalesString);
+  }
+  if (includeClassNames == null)   includeClassNames=new Vector<String>();
+  if (excludeClassNames == null)   excludeClassNames=new Vector<String>();
+  if (includeDatatypeNames == null)   includeDatatypeNames=new Vector<String>();
+  if (excludeDatatypeNames == null)   excludeDatatypeNames=new Vector<String>();
+  try {
+    ConceptService cs=Context.getConceptService();
+    List<ConceptSearchResult> searchResults=new Vector<ConceptSearchResult>();
+    if (phrase.matches("\\d+")) {
+      Concept c=cs.getConcept(Integer.valueOf(phrase));
+      if (c != null && (!c.isRetired() || includeRetired)) {
+        ConceptName cn=c.getName(defaultLocale);
+        ConceptSearchResult searchResult=new ConceptSearchResult(phrase,c,cn);
+        searchResults.add(searchResult);
+      }
+    }
+    if (!StringUtils.isBlank(phrase)) {
+      List<ConceptClass> includeClasses=new Vector<ConceptClass>();
+      for (      String name : includeClassNames)       if (!"".equals(name))       includeClasses.add(cs.getConceptClassByName(name));
+      List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
+      for (      String name : excludeClassNames)       if (!"".equals(name))       excludeClasses.add(cs.getConceptClassByName(name));
+      List<ConceptDatatype> includeDatatypes=new Vector<ConceptDatatype>();
+      for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
+      List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
+      for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
+      searchResults.addAll(cs.getConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,start,length));
+    }
+    if (searchResults.size() < 1) {
+      objectList.add(Context.getMessageSourceService().getMessage("general.noMatchesFoundInLocale",new Object[]{"<b>" + phrase + "</b>",OpenmrsUtil.join(localesToSearchOn,", ")},Context.getLocale()));
+    }
+ else {
+      for (      ConceptSearchResult searchResult : searchResults)       objectList.add(new ConceptListItem(searchResult));
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while finding concepts + " + e.getMessage(),e);
+    objectList.add(Context.getMessageSourceService().getMessage("Concept.search.error") + " - " + e.getMessage());
+  }
+  if (objectList.size() == 0)   objectList.add(Context.getMessageSourceService().getMessage("general.noMatchesFoundInLocale",new Object[]{"<b>" + phrase + "</b>",defaultLocale},Context.getLocale()));
+  return objectList;
+}

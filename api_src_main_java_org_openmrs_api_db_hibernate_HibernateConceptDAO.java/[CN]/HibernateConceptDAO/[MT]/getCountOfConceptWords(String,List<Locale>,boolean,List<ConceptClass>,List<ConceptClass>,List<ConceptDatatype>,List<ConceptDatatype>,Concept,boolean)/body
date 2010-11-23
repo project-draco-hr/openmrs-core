@@ -1,0 +1,9 @@
+{
+  Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
+  if (searchCriteria != null) {
+    if (forUniqueConcepts)     searchCriteria.setProjection(Projections.countDistinct("concept"));
+ else     searchCriteria.setProjection(Projections.rowCount());
+    return (Integer)searchCriteria.uniqueResult();
+  }
+  return 0;
+}
