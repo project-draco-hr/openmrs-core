@@ -1,0 +1,20 @@
+{
+  Vector locationList=new Vector();
+  MessageSourceService mss=Context.getMessageSourceService();
+  try {
+    LocationService ls=Context.getLocationService();
+    List<Location> locations=ls.getLocations(searchValue,start,length);
+    locationList=new Vector(locations.size());
+    for (    Location loc : locations) {
+      locationList.add(new LocationListItem(loc));
+    }
+  }
+ catch (  Exception e) {
+    log.error(e);
+    locationList.add(mss.getMessage("Location.search.error") + " - " + e.getMessage());
+  }
+  if (locationList.size() == 0) {
+    locationList.add(mss.getMessage("Location.noLocationsFound"));
+  }
+  return locationList;
+}

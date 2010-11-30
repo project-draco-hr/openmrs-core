@@ -1,0 +1,8 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Location.class);
+  if (StringUtils.isNotBlank(nameFragment))   criteria.add(Expression.ilike("name",nameFragment,MatchMode.START));
+  criteria.addOrder(Order.asc("name")).list();
+  if (start != null)   criteria.setFirstResult(start);
+  if (length != null && length > 0)   criteria.setMaxResults(length);
+  return criteria.list();
+}
