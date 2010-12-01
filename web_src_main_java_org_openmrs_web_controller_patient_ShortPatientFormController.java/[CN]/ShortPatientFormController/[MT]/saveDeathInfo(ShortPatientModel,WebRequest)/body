@@ -20,9 +20,6 @@
             obsDeath=new Obs();
             obsDeath.setPerson(patientModel.getPatient());
             obsDeath.setConcept(causeOfDeath);
-            Location loc=Context.getLocationService().getDefaultLocation();
-            if (loc != null)             obsDeath.setLocation(loc);
- else             log.error("Could not find a suitable location for which to create this new Obs");
           }
           Concept currCause=patientModel.getPatient().getCauseOfDeath();
           if (currCause == null) {
@@ -41,7 +38,7 @@
             Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
             if (conceptOther != null) {
               if (conceptOther.equals(currCause)) {
-                String otherInfo=request.getParameter("causeOfDeath_other");
+                String otherInfo=request.getParameter("patient.causeOfDeath_other");
                 if (otherInfo == null)                 otherInfo="";
                 log.debug("Setting value_text as " + otherInfo);
                 obsDeath.setValueText(otherInfo);
