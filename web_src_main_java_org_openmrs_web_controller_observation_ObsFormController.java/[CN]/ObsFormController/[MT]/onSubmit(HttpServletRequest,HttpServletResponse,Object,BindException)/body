@@ -2,6 +2,7 @@
   HttpSession httpSession=request.getSession();
   if (Context.isAuthenticated()) {
     Obs obs=(Obs)obj;
+    Obs newlySavedObs=null;
     ObsService os=Context.getObsService();
     try {
       if (request.getParameter("saveObs") != null) {
@@ -18,13 +19,13 @@
               InputStream complexDataInputStream=complexDataFile.getInputStream();
               ComplexData complexData=new ComplexData(complexDataFile.getOriginalFilename(),complexDataInputStream);
               obs.setComplexData(complexData);
-              os.saveObs(obs,reason);
+              newlySavedObs=os.saveObs(obs,reason);
               complexDataInputStream.close();
             }
           }
         }
  else {
-          os.saveObs(obs,reason);
+          newlySavedObs=os.saveObs(obs,reason);
         }
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.saved");
       }
@@ -50,6 +51,7 @@
       String view=getSuccessView() + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
       return new ModelAndView(new RedirectView(view));
     }
+ else     return new ModelAndView(new RedirectView("obs.form?obsId=" + newlySavedObs.getObsId()));
   }
   return showForm(request,response,errors);
 }
