@@ -17,31 +17,23 @@
     }
   }
   if (includeRetired == false)   criteria.add("user.retired = false");
-  String hql="select distinct user from User as user inner join user.person.names as name ";
+  String hql=hqlSelectStart;
+  boolean searchOnRoles=false;
+  if (CollectionUtils.isNotEmpty(roles)) {
+    hql+="inner join user.roles as role ";
+    searchOnRoles=true;
+  }
   if (criteria.size() > 0)   hql+="where ";
   for (Iterator<String> i=criteria.iterator(); i.hasNext(); ) {
     hql+=i.next() + " ";
     if (i.hasNext())     hql+="and ";
   }
+  if (searchOnRoles)   hql+=" and role in (:roleList)";
   hql+=" order by user.username asc";
   Query query=sessionFactory.getCurrentSession().createQuery(hql);
   for (  Map.Entry<String,String> e : namesMap.entrySet())   query.setString(e.getKey(),e.getValue());
-  List<User> returnList;
-  if (roles != null && roles.size() > 0) {
-    returnList=new Vector();
-    log.debug("looping through to find matching roles");
-    for (    Object o : query.list()) {
-      User u=(User)o;
-      for (      Role r : roles)       if (u.hasRole(r.getRole(),true)) {
-        returnList.add(u);
-        break;
-      }
-    }
+  if (searchOnRoles) {
+    query.setParameterList("roleList",roles);
   }
- else {
-    log.debug("not looping because there appears to be no roles");
-    returnList=query.list();
-  }
-  if (!CollectionUtils.isEmpty(returnList))   Collections.sort(returnList,new UserByNameComparator());
-  return returnList;
+  return query;
 }

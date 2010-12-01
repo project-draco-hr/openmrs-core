@@ -1,0 +1,6 @@
+{
+  if (name != null)   name=name.replace(", "," ");
+  Role auth_role=getRole(RoleConstants.AUTHENTICATED);
+  if (roles.contains(auth_role))   return dao.getCountOfUsers(name,new Vector<Role>(),includeRetired);
+  return dao.getCountOfUsers(name,roles,includeRetired);
+}

@@ -1,0 +1,7 @@
+{
+  if (name != null)   name=name.replace(", "," ");
+  if (roles == null)   roles=new Vector<Role>();
+  Role auth_role=getRole(RoleConstants.AUTHENTICATED);
+  if (roles.contains(auth_role))   return dao.getUsers(name,new Vector<Role>(),includeRetired,start,length);
+  return dao.getUsers(name,roles,includeRetired,start,length);
+}
