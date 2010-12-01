@@ -1,0 +1,5 @@
+{
+  String hqlSelectStart="select count(distinct user) from User as user inner join user.person.names as name ";
+  Query query=createUserSearchQuery(name,roles,includeRetired,hqlSelectStart);
+  return ((Long)query.uniqueResult()).intValue();
+}
