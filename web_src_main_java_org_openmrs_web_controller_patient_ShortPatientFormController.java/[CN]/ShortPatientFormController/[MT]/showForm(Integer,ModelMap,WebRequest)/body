@@ -17,6 +17,30 @@
     model.addAttribute("relationshipsMap",getRelationshipsMap(patient,request));
     model.addAttribute("identifierTypes",Context.getPatientService().getAllPatientIdentifierTypes());
     model.addAttribute("locations",Context.getLocationService().getAllLocations());
+    String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+    Concept conceptCause=Context.getConceptService().getConcept(propCause);
+    String causeOfDeathOther="";
+    if (conceptCause != null && patient.getPatientId() != null) {
+      List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(patient,conceptCause);
+      if (obssDeath.size() == 1) {
+        Obs obsDeath=obssDeath.iterator().next();
+        causeOfDeathOther=obsDeath.getValueText();
+        if (causeOfDeathOther == null) {
+          log.debug("cod is null, so setting to empty string");
+          causeOfDeathOther="";
+        }
+ else {
+          log.debug("cod is valid: " + causeOfDeathOther);
+        }
+      }
+ else {
+        log.debug("obssDeath is wrong size: " + obssDeath.size());
+      }
+    }
+ else {
+      log.debug("No concept cause found");
+    }
+    model.addAttribute("causeOfDeathOther",causeOfDeathOther);
   }
   return SHORT_PATIENT_FORM_URL;
 }
