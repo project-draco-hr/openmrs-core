@@ -1,13 +1,6 @@
 {
   String redirect=request.getParameter("redirect");
   if (redirect == null || redirect.equals("")) {
-    redirect=request.getParameter("refererURL");
-    if (redirect != null) {
-      int index=redirect.indexOf(request.getContextPath(),2);
-      if (index != -1)       redirect=redirect.substring(index);
-    }
-  }
-  if (redirect == null || redirect.equals("")) {
     redirect=request.getContextPath();
   }
  else   if (redirect.contains("login.")) {
