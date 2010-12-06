@@ -2,4 +2,7 @@
   PersonName pname=Context.getPersonService().parsePersonName("Doe, John");
   assertEquals("Doe",pname.getFamilyName());
   assertEquals("John",pname.getGivenName());
+  pname=Context.getPersonService().parsePersonName("Doe,John");
+  assertEquals("Doe",pname.getFamilyName());
+  assertEquals("John",pname.getGivenName());
 }
