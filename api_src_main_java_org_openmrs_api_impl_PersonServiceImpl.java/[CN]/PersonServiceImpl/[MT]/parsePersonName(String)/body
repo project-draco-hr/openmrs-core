@@ -1,18 +1,25 @@
 {
+  name=name.trim();
   String firstName=name;
   String middleName="";
   String lastName="";
   if (name.contains(",")) {
+    while (name.endsWith(","))     name=name.substring(0,name.length() - 1);
     String[] names=name.split(", ");
-    String[] firstNames=names[1].split(" ");
-    if (firstNames.length == 2) {
-      lastName=names[0];
-      firstName=firstNames[0];
-      middleName=firstNames[1];
+    if (names.length > 1) {
+      String[] firstNames=names[1].split(" ");
+      if (firstNames.length == 2) {
+        lastName=names[0];
+        firstName=firstNames[0];
+        middleName=firstNames[1];
+      }
+ else {
+        firstName=names[1];
+        lastName=names[0];
+      }
     }
  else {
-      firstName=names[1];
-      lastName=names[0];
+      firstName=name;
     }
   }
  else   if (name.contains(" ")) {
