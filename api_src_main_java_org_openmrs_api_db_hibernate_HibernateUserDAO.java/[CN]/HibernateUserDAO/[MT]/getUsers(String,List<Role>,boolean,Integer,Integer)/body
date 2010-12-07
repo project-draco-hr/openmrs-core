@@ -1,9 +1,9 @@
 {
   String hqlSelectStart="select distinct user from User as user inner join user.person.names as name ";
   Query query=createUserSearchQuery(name,roles,includeRetired,hqlSelectStart);
-  List<User> returnList=query.list();
   if (start != null)   query.setFirstResult(start);
-  if (length != null && length > 0)   query.setFetchSize(length);
+  if (length != null && length > 0)   query.setMaxResults(length);
+  List<User> returnList=query.list();
   if (!CollectionUtils.isEmpty(returnList))   Collections.sort(returnList,new UserByNameComparator());
   return returnList;
 }
