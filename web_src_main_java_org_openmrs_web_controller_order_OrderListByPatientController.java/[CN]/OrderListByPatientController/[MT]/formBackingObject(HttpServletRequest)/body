@@ -2,7 +2,6 @@
   List<DrugOrder> orderList=new Vector<DrugOrder>();
   Integer patientId=ServletRequestUtils.getIntParameter(request,"patientId");
   boolean showAll=ServletRequestUtils.getBooleanParameter(request,"showAll",false);
-  System.err.println("pid is " + patientId);
   if (Context.isAuthenticated()) {
     if (patientId != null) {
       this.setFormView("/admin/orders/orderListByPatient");
