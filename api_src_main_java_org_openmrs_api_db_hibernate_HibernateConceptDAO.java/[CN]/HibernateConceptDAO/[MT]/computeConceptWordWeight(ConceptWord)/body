@@ -4,45 +4,20 @@
   String wordString=word.getWord();
   if (conceptName.indexOf(wordString) < 0)   return weight;
   weight=1.0;
-  if (word.getConceptName().isIndexTerm() || (word.getConceptName().isPreferred() && word.getConceptName().isFullySpecifiedName())) {
-    weight+=7.0;
-    if (conceptName.equals(wordString))     weight+=7.0;
- else     if (conceptName.startsWith(wordString)) {
-      weight+=(7.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-    }
+  if (conceptName.equals(wordString)) {
+    double weightCoefficient=5.0;
+    weight+=weightCoefficient;
+    weight+=computeBonusWeight(weightCoefficient,word);
+  }
+ else   if (conceptName.startsWith(wordString)) {
+    double weightCoefficient=3.0;
+    weight+=(weightCoefficient * (wordString.length() / new Double(conceptName.length())));
+    weight+=computeBonusWeight(weightCoefficient,word);
+  }
  else {
-      weight+=((7.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-    }
-  }
- else   if (word.getConceptName().isPreferred()) {
-    weight+=5.0;
-    if (conceptName.equals(wordString))     weight+=5.0;
- else     if (conceptName.startsWith(wordString))     weight+=(5.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
- else     weight+=((5.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-  }
- else   if (word.getConceptName().isFullySpecifiedName()) {
-    weight+=4.0;
-    if (conceptName.equals(wordString))     weight+=4.0;
- else     if (conceptName.startsWith(wordString))     weight+=(4.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
- else     weight+=((4.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-  }
- else   if (word.getConceptName().isSynonym()) {
-    weight+=3.0;
-    if (conceptName.equals(wordString))     weight+=3.0;
- else     if (conceptName.startsWith(wordString))     weight+=(3.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
- else     weight+=((3.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-  }
- else   if (word.getConceptName().isSynonym()) {
-    weight+=2.0;
-    if (conceptName.equals(wordString))     weight+=2.0;
- else     if (conceptName.startsWith(wordString))     weight+=(2.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
- else     weight+=((2.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
-  }
- else   if (word.getConceptName().isShort()) {
-    weight+=1.0;
-    if (conceptName.equals(wordString))     weight+=1.0;
- else     if (conceptName.startsWith(wordString))     weight+=(1.0 * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
- else     weight+=((1.0 / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
+    double weightCoefficient=1.0;
+    weight+=((weightCoefficient / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
+    weight+=computeBonusWeight(weightCoefficient,word);
   }
   return Double.parseDouble(new DecimalFormat("0.00").format(weight));
 }
