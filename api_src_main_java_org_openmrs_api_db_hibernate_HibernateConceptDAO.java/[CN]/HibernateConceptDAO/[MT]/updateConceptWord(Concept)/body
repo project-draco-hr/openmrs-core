@@ -5,6 +5,7 @@
     Collection<ConceptWord> words=ConceptWord.makeConceptWords(concept);
     log.debug("words: " + words);
     for (    ConceptWord word : words) {
+      word.setWeight(computeConceptWordWeight(word));
       try {
         sessionFactory.getCurrentSession().save(word);
       }

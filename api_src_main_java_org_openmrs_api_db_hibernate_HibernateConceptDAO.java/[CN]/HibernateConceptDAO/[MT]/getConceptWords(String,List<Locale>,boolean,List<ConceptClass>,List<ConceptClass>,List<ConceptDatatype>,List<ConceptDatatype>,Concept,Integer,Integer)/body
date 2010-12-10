@@ -1,5 +1,6 @@
 {
   Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
+  searchCriteria.addOrder(Order.desc("cw1.weight"));
   List<ConceptWord> conceptWords=new Vector<ConceptWord>();
   if (searchCriteria != null) {
     if (start != null)     searchCriteria.setFirstResult(start);
