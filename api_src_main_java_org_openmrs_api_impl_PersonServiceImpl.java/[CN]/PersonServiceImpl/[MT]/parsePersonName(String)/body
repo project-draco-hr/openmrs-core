@@ -4,6 +4,7 @@
   String firstName=name;
   String middleName="";
   String lastName="";
+  String lastName2=null;
   if (name.contains(",")) {
     String[] names=name.split(",");
     for (int x=0; x < names.length; x++) {
@@ -22,7 +23,13 @@
   }
  else   if (name.contains(" ")) {
     String[] names=name.split(" ");
-    if (names.length == 3) {
+    if (names.length == 4) {
+      firstName=names[0];
+      middleName=names[1];
+      lastName=names[2];
+      lastName2=names[3];
+    }
+ else     if (names.length == 3) {
       firstName=names[0];
       middleName=names[1];
       lastName=names[2];
@@ -32,5 +39,7 @@
       lastName=names[1];
     }
   }
-  return new PersonName(firstName,middleName,lastName);
+  PersonName pn=new PersonName(firstName,middleName,lastName);
+  pn.setFamilyName2(lastName2);
+  return pn;
 }
