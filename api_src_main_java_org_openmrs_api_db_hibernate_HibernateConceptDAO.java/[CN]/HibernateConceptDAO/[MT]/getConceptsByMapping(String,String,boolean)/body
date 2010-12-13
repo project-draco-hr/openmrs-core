@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class);
-  criteria.setProjection(Projections.alias(Projections.distinct(Projections.property("concept")),"conceptResults"));
+  criteria.setProjection(Projections.property("concept"));
   criteria.add(Expression.eq("sourceCode",code));
   criteria.createAlias("source","conceptSource");
   criteria.add(Expression.or(Expression.eq("conceptSource.name",sourceName),Expression.eq("conceptSource.hl7Code",sourceName)));
@@ -9,7 +9,9 @@
     criteria.add(Expression.eq("concept.retired",false));
   }
  else {
-    criteria.addOrder(Order.asc("conceptResults"));
+    criteria.createAlias("concept","concept");
+    criteria.addOrder(Order.asc("concept.retired"));
   }
+  criteria.setResultTransformer(new DistinctRootEntityResultTransformer());
   return (List<Concept>)criteria.list();
 }
