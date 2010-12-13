@@ -1,6 +1,16 @@
 {
   String redirect=request.getParameter("redirect");
   if (redirect == null || redirect.equals("")) {
+    redirect=request.getParameter("refererURL");
+    if (redirect != null && !redirect.startsWith("/")) {
+      Integer requestURLLength=request.getRequestURL().length();
+      StringBuffer domainAndPort=request.getRequestURL();
+      domainAndPort.delete(requestURLLength - request.getRequestURI().length(),requestURLLength);
+      if (!redirect.startsWith(domainAndPort.toString()))       redirect=null;
+      redirect=redirect.substring(redirect.indexOf("/",9));
+    }
+  }
+  if (redirect == null || redirect.equals("")) {
     redirect=request.getContextPath();
   }
  else   if (redirect.contains("login.")) {
