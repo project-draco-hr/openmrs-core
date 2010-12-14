@@ -4,12 +4,15 @@
   query.setString("type",reportObjectType);
   List<ReportObjectWrapper> wrappedObjects=query.list();
   for (  ReportObjectWrapper wrappedObject : wrappedObjects) {
-    AbstractReportObject reportObject=wrappedObject.getReportObject();
-    if (reportObject != null) {
+    try {
+      AbstractReportObject reportObject=wrappedObject.getReportObject();
       if (reportObject.getReportObjectId() == null) {
         reportObject.setReportObjectId(wrappedObject.getReportObjectId());
       }
       reportObjects.add(reportObject);
+    }
+ catch (    Exception e) {
+      log.warn("Unable to deserialize report object: " + wrappedObject.getName() + " ("+ wrappedObject.getId()+ ")");
     }
   }
   return reportObjects;
