@@ -7,7 +7,9 @@
       StringBuffer domainAndPort=request.getRequestURL();
       domainAndPort.delete(requestURLLength - request.getRequestURI().length(),requestURLLength);
       if (!redirect.startsWith(domainAndPort.toString()))       redirect=null;
-      redirect=redirect.substring(redirect.indexOf("/",9));
+ else {
+        redirect=redirect.substring(redirect.indexOf("/",9));
+      }
     }
   }
   if (redirect == null || redirect.equals("")) {
