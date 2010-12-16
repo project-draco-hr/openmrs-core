@@ -6,5 +6,6 @@
  else   if (conceptName.isFullySpecifiedName())   bonusWeight+=weightCoefficient * 0.5;
  else   if (conceptName.isSynonym())   bonusWeight+=weightCoefficient * 0.3;
  else   if (conceptName.isShort())   bonusWeight+=weightCoefficient * 0.1;
+  bonusWeight+=weightCoefficient / new Double(word.getConceptName().getName().length());
   return bonusWeight;
 }
