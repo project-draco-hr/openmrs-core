@@ -11,7 +11,7 @@
   }
  else   if (conceptName.startsWith(wordString)) {
     double weightCoefficient=3.0;
-    weight+=(weightCoefficient * (wordString.length() / new Double(conceptName.length())));
+    weight+=(weightCoefficient / wordString.length());
     weight+=computeBonusWeight(weightCoefficient,word);
   }
  else {
