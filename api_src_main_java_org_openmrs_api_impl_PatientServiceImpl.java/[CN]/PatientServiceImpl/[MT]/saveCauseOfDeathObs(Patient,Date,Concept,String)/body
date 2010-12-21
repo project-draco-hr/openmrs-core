@@ -64,7 +64,7 @@
             log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
             obsDeath.setValueText("");
           }
-          Context.getObsService().saveObs(obsDeath,null);
+          Context.getObsService().saveObs(obsDeath,"updated by PatientService.saveCauseOfDeathObs");
         }
  else {
           log.debug("Current cause is still null - aborting mission");
