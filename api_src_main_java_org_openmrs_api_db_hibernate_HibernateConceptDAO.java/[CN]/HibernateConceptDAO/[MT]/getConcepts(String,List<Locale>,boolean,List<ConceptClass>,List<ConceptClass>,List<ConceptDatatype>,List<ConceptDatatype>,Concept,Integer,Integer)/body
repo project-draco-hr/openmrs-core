@@ -1,0 +1,23 @@
+{
+  Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
+  List<ConceptSearchResult> results=new Vector<ConceptSearchResult>();
+  if (searchCriteria != null) {
+    ProjectionList pl=Projections.projectionList();
+    pl.add(Projections.distinct(Projections.property("concept")),"cw1.concept");
+    pl.add(Projections.property("word"),"cw1.word");
+    pl.add(Projections.property("weight"),"cw1.weight");
+    pl.add(Projections.property("locale"),"cw1.locale");
+    pl.add(Projections.property("conceptName"),"cw1.conceptName");
+    searchCriteria.setProjection(pl);
+    searchCriteria.addOrder(Order.desc("cw1.weight"));
+    if (start != null)     searchCriteria.setFirstResult(start);
+    if (size != null && size > 0)     searchCriteria.setMaxResults(size);
+    searchCriteria.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);
+    List<ConceptWord> resultObjects=searchCriteria.list();
+    for (    Object obj : resultObjects) {
+      Map aliasEntityMap=(Map)obj;
+      results.add(new ConceptSearchResult((String)aliasEntityMap.get("cw1.word"),(Concept)aliasEntityMap.get("cw1.concept"),(ConceptName)aliasEntityMap.get("cw1.conceptName"),(Double)aliasEntityMap.get("cw1.weight")));
+    }
+  }
+  return results;
+}

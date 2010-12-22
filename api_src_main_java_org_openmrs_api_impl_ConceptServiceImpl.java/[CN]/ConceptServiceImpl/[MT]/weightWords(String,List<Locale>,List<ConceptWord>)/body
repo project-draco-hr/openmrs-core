@@ -9,6 +9,7 @@
     concept=currentWord.getConcept();
     conceptId=concept.getConceptId();
     conceptName=currentWord.getConceptName();
+    currentWord.setWeight(0.0);
     for (    Locale locale : locales) {
       if (conceptName.isPreferredInCountry(locale.getCountry()))       currentWord.increaseWeight(5.0);
  else       if (conceptName.isPreferredInLanguage(locale.getLanguage()))       currentWord.increaseWeight(3.0);
