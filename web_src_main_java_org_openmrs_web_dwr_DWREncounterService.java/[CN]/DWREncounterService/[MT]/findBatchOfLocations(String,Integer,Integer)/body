@@ -3,7 +3,7 @@
   MessageSourceService mss=Context.getMessageSourceService();
   try {
     LocationService ls=Context.getLocationService();
-    List<Location> locations=ls.getLocations(searchValue,start,length);
+    List<Location> locations=ls.getLocations(searchValue,false,start,length);
     locationList=new Vector<Object>(locations.size());
     for (    Location loc : locations) {
       locationList.add(new LocationListItem(loc));
