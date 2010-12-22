@@ -13,7 +13,7 @@
     if (start != null)     searchCriteria.setFirstResult(start);
     if (size != null && size > 0)     searchCriteria.setMaxResults(size);
     searchCriteria.setResultTransformer(CriteriaSpecification.ALIAS_TO_ENTITY_MAP);
-    List<ConceptWord> resultObjects=searchCriteria.list();
+    List resultObjects=searchCriteria.list();
     for (    Object obj : resultObjects) {
       Map aliasEntityMap=(Map)obj;
       results.add(new ConceptSearchResult((String)aliasEntityMap.get("cw1.word"),(Concept)aliasEntityMap.get("cw1.concept"),(ConceptName)aliasEntityMap.get("cw1.conceptName"),(Double)aliasEntityMap.get("cw1.weight")));
