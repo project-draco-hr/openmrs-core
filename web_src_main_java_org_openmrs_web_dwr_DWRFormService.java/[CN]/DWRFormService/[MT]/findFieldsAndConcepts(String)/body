@@ -29,7 +29,7 @@
       if (concept != null)       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
   }
-  List<ConceptSearchResult> searchResults=Context.getConceptService().getConcepts(txt,locale);
+  List<ConceptSearchResult> searchResults=Context.getConceptService().getConcepts(txt,locale,false);
   for (  ConceptSearchResult searchResult : searchResults) {
     concept=searchResult.getConcept();
     for (    Field field : Context.getFormService().getFieldsByConcept(concept)) {

@@ -15,7 +15,7 @@
     matchingProposals=cs.getConceptProposals(cp.getOriginalText());
     String phrase=cp.getOriginalText();
     if (phrase.length() > 3)     phrase=phrase.substring(0,3);
-    List<ConceptSearchResult> possibleConcepts=cs.getConcepts(phrase,locale);
+    List<ConceptSearchResult> possibleConcepts=cs.getConcepts(phrase,locale,false);
     if (possibleConcepts != null)     for (    ConceptSearchResult searchResult : possibleConcepts)     possibleConceptsListItems.add(new ConceptListItem(searchResult));
     if (cp.getMappedConcept() != null)     map.put("mappedConceptName",cp.getMappedConcept().getName(locale));
   }
