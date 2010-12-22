@@ -5,7 +5,7 @@
     LocationService es=Context.getLocationService();
     int locationCount=0;
     if (getMatchCount)     locationCount+=es.getCountOfLocations(phrase,includeRetired);
-    if (locationCount > 0 || !getMatchCount)     objectList=findBatchOfLocations(phrase,start,length);
+    if (locationCount > 0 || !getMatchCount)     objectList=findBatchOfLocations(phrase,includeRetired,start,length);
     resultsMap.put("count",locationCount);
     resultsMap.put("objectList",objectList);
   }
