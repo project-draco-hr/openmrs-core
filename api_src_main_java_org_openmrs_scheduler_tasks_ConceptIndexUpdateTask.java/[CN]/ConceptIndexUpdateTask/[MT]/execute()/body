@@ -5,12 +5,16 @@
     if (log.isDebugEnabled())     log.debug("Updating concept words ... ");
     try {
       ConceptService cs=Context.getConceptService();
-      Iterator<Concept> conceptIterator=cs.conceptIterator();
-      while (conceptIterator.hasNext() && shouldExecute) {
-        Concept currentConcept=conceptIterator.next();
+      Concept currentConcept=cs.getNextConcept(new Concept(0));
+      int counter=0;
+      while (currentConcept != null && shouldExecute) {
         if (log.isDebugEnabled())         log.debug("updateConceptWords() : current concept: " + currentConcept);
         cs.updateConceptIndex(currentConcept);
-        Context.evictFromSession(currentConcept);
+        if (counter++ > 200) {
+          Context.clearSession();
+          counter=0;
+        }
+        currentConcept=cs.getNextConcept(currentConcept);
       }
     }
  catch (    APIException e) {
