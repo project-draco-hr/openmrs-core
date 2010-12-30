@@ -12,8 +12,8 @@
   if (pn.getDateChanged() != null)   newName.setDateChanged((Date)pn.getDateChanged().clone());
   if (pn.getDateCreated() != null)   newName.setDateCreated((Date)pn.getDateCreated().clone());
   if (pn.getDateVoided() != null)   newName.setDateVoided((Date)pn.getDateVoided().clone());
-  if (pn.getPreferred() != null)   newName.setPreferred(new Boolean(pn.getPreferred().booleanValue()));
-  if (pn.getVoided() != null)   newName.setVoided(new Boolean(pn.getVoided().booleanValue()));
+  if (pn.getPreferred() != null)   newName.setPreferred(pn.getPreferred().booleanValue());
+  if (pn.getVoided() != null)   newName.setVoided(pn.getVoided().booleanValue());
   newName.setPerson(pn.getPerson());
   newName.setVoidedBy(pn.getVoidedBy());
   newName.setChangedBy(pn.getChangedBy());
