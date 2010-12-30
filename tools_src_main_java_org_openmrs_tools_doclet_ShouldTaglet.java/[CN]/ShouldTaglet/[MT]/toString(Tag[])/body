@@ -1,0 +1,10 @@
+{
+  if (tags.length == 0) {
+    return null;
+  }
+  String result="\n<DT><B>" + HEADER + "</B></DT>";
+  for (int i=0; i < tags.length; i++) {
+    result+="\n  <DD>Should " + tags[i].text() + "</DD>";
+  }
+  return result;
+}
