@@ -1,0 +1,12 @@
+{
+  String uuid="af4ae460-0e2b-11e0-a94b-469c3c5a0c2f";
+  ConceptProposal proposal=Context.getConceptService().getConceptProposalByUuid(uuid);
+  Assert.assertNotNull("could not find proposal " + uuid,proposal);
+  Assert.assertFalse("proposal used for testing should not have the Reject state",proposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT));
+  try {
+    Context.getConceptService().mapConceptProposalToConcept(proposal,null);
+    Assert.fail("Attempt to map proposal to null concept did not throw an APIException");
+  }
+ catch (  APIException ex) {
+  }
+}
