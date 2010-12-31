@@ -1,0 +1,11 @@
+{
+  String uuid="af4ae460-0e2b-11e0-a94b-469c3c5a0c2f";
+  ConceptProposal proposal=Context.getConceptService().getConceptProposalByUuid(uuid);
+  Assert.assertNotNull("could not find proposal " + uuid,proposal);
+  Concept concept=conceptService.getConcept(3);
+  Assert.assertNotNull("could not find target concept to use for the test",concept);
+  proposal.setState(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT);
+  Context.getConceptService().mapConceptProposalToConcept(proposal,concept);
+  ConceptProposal persisted=Context.getConceptService().getConceptProposalByUuid(uuid);
+  Assert.assertEquals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT,persisted.getState());
+}
