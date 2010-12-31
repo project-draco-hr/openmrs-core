@@ -1,6 +1,12 @@
 {
   try {
-    @SuppressWarnings("unused") Collection<OpenmrsObject> openmrsObjects=(Collection<OpenmrsObject>)arg;
+    Collection<Object> objects=(Collection<Object>)arg;
+    if (!objects.isEmpty()) {
+      @SuppressWarnings("unused") OpenmrsObject openmrsObject=(OpenmrsObject)objects.iterator().next();
+    }
+ else {
+      return false;
+    }
     return true;
   }
  catch (  ClassCastException ex) {

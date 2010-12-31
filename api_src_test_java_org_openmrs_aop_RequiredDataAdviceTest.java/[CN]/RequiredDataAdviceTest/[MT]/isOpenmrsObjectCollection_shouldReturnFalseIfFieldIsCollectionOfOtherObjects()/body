@@ -1,3 +1,6 @@
 {
   Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(ClassWithOtherFields.class.getDeclaredField("locales")));
+  List<String> list=new LinkedList<String>();
+  list.add("Test");
+  Assert.assertFalse(RequiredDataAdvice.isOpenmrsObjectCollection(list));
 }
