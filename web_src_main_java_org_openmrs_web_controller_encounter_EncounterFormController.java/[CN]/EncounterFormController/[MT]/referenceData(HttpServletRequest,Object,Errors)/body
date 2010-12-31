@@ -2,7 +2,6 @@
   Encounter encounter=(Encounter)obj;
   Map<String,Object> map=new HashMap<String,Object>();
   List<Integer> editedObs=new Vector<Integer>();
-  List<Integer> obsAfterEncounter=new Vector<Integer>();
   SortedMap<FormField,List<Obs>> obsMapToReturn=null;
   String sortType=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_FORM_OBS_SORT_ORDER);
   if ("weight".equals(sortType))   obsMapToReturn=new TreeMap<FormField,List<Obs>>();
@@ -16,10 +15,6 @@
     map.put("forms",Context.getFormService().getAllForms());
     String reason="";
     for (    Obs o : encounter.getObsAtTopLevel(true)) {
-      Encounter en=o.getEncounter();
-      if (o.getDateCreated().compareTo(en.getDateCreated()) != 0) {
-        obsAfterEncounter.add(o.getId());
-      }
       if (o.isVoided()) {
         reason=o.getVoidReason();
         int start=reason.lastIndexOf(" ") + 1;
@@ -51,6 +46,5 @@
   map.put("otherFormFields",otherFormFields);
   map.put("locale",Context.getLocale());
   map.put("editedObs",editedObs);
-  map.put("obsAfterEncounter",obsAfterEncounter);
   return map;
 }
