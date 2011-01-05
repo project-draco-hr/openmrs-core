@@ -160,6 +160,7 @@
  catch (        Exception e2) {
           if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
         }
+        notifySuperUsersAboutModuleFailure(mod);
         refreshWAC(servletContext,false,mod);
       }
     }

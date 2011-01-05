@@ -1,0 +1,8 @@
+{
+  Assert.assertEquals(0,Context.getAlertService().getAlertsByUser(null).size());
+  AlertServiceImpl alert=new AlertServiceImpl();
+  alert.notifySuperUsers("Module.startupError.notification.message",null,"test");
+  Assert.assertEquals(1,Context.getAlertService().getAlertsByUser(null).size());
+  Alert alertOne=Context.getAlertService().getAlert(1);
+  Assert.assertTrue(alertOne.getText().equals("Module.startupError.notification.message"));
+}

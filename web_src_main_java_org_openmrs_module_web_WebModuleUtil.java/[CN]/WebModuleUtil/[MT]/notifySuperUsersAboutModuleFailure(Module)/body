@@ -1,0 +1,11 @@
+{
+  try {
+    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
+    Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.getAlertService().notifySuperUsers("Module.startupError.notification.message",null,mod.getName());
+  }
+  finally {
+    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
+  }
+}
