@@ -18,6 +18,7 @@
  catch (          Exception e) {
             log.error("Error while starting module: " + mod.getName(),e);
             mod.setStartupErrorMessage("Error while starting module",e);
+            notifySuperUsersAboutModuleFailure(mod);
           }
  else {
             leftoverModules.add(mod);
@@ -56,6 +57,7 @@
       String message="Unable to start module '" + leftoverModule.getName() + "'.  All required modules are not available: "+ OpenmrsUtil.join(getMissingRequiredModules(leftoverModule),", ");
       log.error(message);
       leftoverModule.setStartupErrorMessage(message);
+      notifySuperUsersAboutModuleFailure(leftoverModule);
     }
   }
 }

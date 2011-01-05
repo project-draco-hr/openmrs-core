@@ -1,0 +1,20 @@
+{
+  String message=Context.getMessageSourceService().getMessage(messageCode,messageArguments,Context.getLocale());
+  if (cause != null) {
+    StringBuffer stackTrace=new StringBuffer();
+    for (    StackTraceElement traceElement : cause.getStackTrace()) {
+      stackTrace.append(traceElement);
+      stackTrace.append("\n");
+      if (stackTrace.length() >= 512) {
+        break;
+      }
+    }
+    message=message + ": " + stackTrace.substring(0,Alert.TEXT_MAX_LENGTH - message.length() - 2);
+  }
+  Alert alert=new Alert(message,Context.getUserService().getUsersByRole(new Role(OpenmrsConstants.SUPERUSER_ROLE)));
+  alert.setSatisfiedByAny(true);
+  if (alert.getCreator() == null) {
+    alert.setCreator(new User(1));
+  }
+  Context.getAlertService().saveAlert(alert);
+}
