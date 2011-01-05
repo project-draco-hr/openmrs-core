@@ -4,12 +4,11 @@
   criteria.add(Expression.eq("sourceCode",code));
   criteria.createAlias("source","conceptSource");
   criteria.add(Expression.or(Expression.eq("conceptSource.name",sourceName),Expression.eq("conceptSource.hl7Code",sourceName)));
+  criteria.createAlias("concept","concept");
   if (!includeRetired) {
-    criteria.createAlias("concept","concept");
     criteria.add(Expression.eq("concept.retired",false));
   }
  else {
-    criteria.createAlias("concept","concept");
     criteria.addOrder(Order.asc("concept.retired"));
   }
   criteria.setResultTransformer(new DistinctRootEntityResultTransformer());
