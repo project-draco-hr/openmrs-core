@@ -1,12 +1,3 @@
 {
-  List<Concept> concepts=getConceptsByMapping(code,sourceName,true);
-  if (concepts.size() == 0) {
-    return null;
-  }
- else   if (concepts.size() == 1) {
-    return concepts.get(0);
-  }
- else {
-    throw new APIException("Multiple concepts found for mapping " + code + " from source "+ sourceName);
-  }
+  return getConceptByMapping(code,sourceName,true);
 }
