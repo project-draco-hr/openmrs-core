@@ -1,0 +1,13 @@
+{
+  Thread another=Daemon.runInNewDaemonThread(new Runnable(){
+    @Override public void run(){
+      wasRun=true;
+    }
+  }
+);
+  try {
+    another.join();
+  }
+ catch (  InterruptedException ex) {
+  }
+}

@@ -1,0 +1,18 @@
+{
+  if (!isDaemonThread())   throw new APIAuthenticationException("Can only be called from a Daemon thread");
+  DaemonThread thread=new DaemonThread(){
+    @Override public void run(){
+      isDaemonThread.set(true);
+      try {
+        Context.openSession();
+        runnable.run();
+      }
+  finally {
+        Context.closeSession();
+      }
+    }
+  }
+;
+  thread.start();
+  return thread;
+}
