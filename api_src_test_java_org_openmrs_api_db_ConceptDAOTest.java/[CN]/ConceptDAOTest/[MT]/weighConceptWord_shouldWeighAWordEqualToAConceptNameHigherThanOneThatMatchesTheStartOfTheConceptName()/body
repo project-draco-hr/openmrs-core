@@ -1,0 +1,10 @@
+{
+  Concept c=new Concept();
+  ConceptName cn1=new ConceptName("matching",Locale.ENGLISH);
+  ConceptWord word1=new ConceptWord("matching",c,cn1,Locale.ENGLISH);
+  ConceptName cn2=new ConceptName("in or up",Locale.ENGLISH);
+  ConceptWord word2=new ConceptWord("in",c,cn2,Locale.ENGLISH);
+  cn2.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  cn2.setLocalePreferred(true);
+  Assert.assertTrue("A word matching the concept name should weigh more than other words that don't",dao.weighConceptWord(word1) > dao.weighConceptWord(word2));
+}

@@ -1,0 +1,9 @@
+{
+  Concept c=new Concept();
+  ConceptName synonymName=new ConceptName("my depot",Locale.ENGLISH);
+  ConceptWord synonymWord=new ConceptWord("my",c,synonymName,Locale.ENGLISH);
+  ConceptName fullySpecName=new ConceptName("my depot",Locale.ENGLISH);
+  ConceptWord fullySpecWord=new ConceptWord("my",c,fullySpecName,Locale.ENGLISH);
+  fullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  Assert.assertTrue("A word for a fully specified name should weigh higher than that of a syonym",dao.weighConceptWord(fullySpecWord) > dao.weighConceptWord(synonymWord));
+}

@@ -1,0 +1,10 @@
+{
+  Concept c=new Concept();
+  ConceptName shorterName=new ConceptName("toy",Locale.ENGLISH);
+  ConceptWord shorterNameWord=new ConceptWord("to",c,shorterName,Locale.ENGLISH);
+  ConceptName longerName=new ConceptName("toye",Locale.ENGLISH);
+  ConceptWord longerNameWord=new ConceptWord("to",c,longerName,Locale.ENGLISH);
+  longerName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  longerName.setLocalePreferred(true);
+  Assert.assertTrue("A word for shorter concept name should weigh more than that of a longer concept name",dao.weighConceptWord(shorterNameWord) > dao.weighConceptWord(longerNameWord));
+}
