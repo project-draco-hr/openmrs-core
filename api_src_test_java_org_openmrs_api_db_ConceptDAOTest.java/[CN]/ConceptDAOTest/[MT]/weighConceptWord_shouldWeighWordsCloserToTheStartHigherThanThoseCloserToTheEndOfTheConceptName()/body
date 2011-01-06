@@ -1,0 +1,10 @@
+{
+  Concept c=new Concept();
+  ConceptName cn1=new ConceptName("on my way",Locale.ENGLISH);
+  ConceptWord word1=new ConceptWord("on",c,cn1,Locale.ENGLISH);
+  ConceptName cn2=new ConceptName("in my way",Locale.ENGLISH);
+  ConceptWord word2=new ConceptWord("my",c,cn2,Locale.ENGLISH);
+  cn2.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  cn2.setLocalePreferred(true);
+  Assert.assertTrue("A word closer to the start of its concept name should weigh more than one closer to the end",dao.weighConceptWord(word1) > dao.weighConceptWord(word2));
+}

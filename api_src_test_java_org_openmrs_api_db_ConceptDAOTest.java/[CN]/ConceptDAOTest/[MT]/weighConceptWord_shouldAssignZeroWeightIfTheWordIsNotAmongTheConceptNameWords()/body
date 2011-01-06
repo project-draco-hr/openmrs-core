@@ -1,0 +1,6 @@
+{
+  Concept c=new Concept();
+  ConceptName cn=new ConceptName("my depot",Locale.ENGLISH);
+  ConceptWord invalidWord=new ConceptWord("myt",c,cn,Locale.ENGLISH);
+  Assert.assertEquals(dao.weighConceptWord(invalidWord),new Double(0));
+}

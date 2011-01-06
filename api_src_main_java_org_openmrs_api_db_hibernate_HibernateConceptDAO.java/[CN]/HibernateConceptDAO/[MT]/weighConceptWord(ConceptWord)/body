@@ -7,6 +7,8 @@
   if (conceptName.equals(wordString)) {
     double weightCoefficient=5.0;
     weight+=weightCoefficient;
+    weightCoefficient+=(weightCoefficient / wordString.length());
+    weight+=(weightCoefficient / wordString.length());
     weight+=computeBonusWeight(weightCoefficient,word);
   }
  else   if (conceptName.startsWith(wordString)) {
@@ -19,5 +21,5 @@
     weight+=((weightCoefficient / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
     weight+=computeBonusWeight(weightCoefficient,word);
   }
-  return Double.parseDouble(new DecimalFormat("0.00").format(weight));
+  return Double.parseDouble(new DecimalFormat("0.000").format(weight));
 }
