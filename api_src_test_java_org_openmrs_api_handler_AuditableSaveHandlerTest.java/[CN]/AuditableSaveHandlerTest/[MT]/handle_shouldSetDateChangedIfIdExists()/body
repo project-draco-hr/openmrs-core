@@ -1,6 +1,0 @@
-{
-  Date d=new Date(new Date().getTime() - 1000);
-  Auditable auditable=new ConceptDatatype(5);
-  new AuditableSaveHandler().handle(auditable,null,d,null);
-  Assert.assertEquals(d,auditable.getDateChanged());
-}

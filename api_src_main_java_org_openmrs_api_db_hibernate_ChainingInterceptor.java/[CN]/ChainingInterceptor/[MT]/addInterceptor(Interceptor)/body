@@ -1,0 +1,9 @@
+{
+  if (interceptor == this) {
+    log.error("Attempting to add self to chain.  This would result in epic failures.");
+    return;
+  }
+  log.debug("Adding " + interceptor + " to interceptor chain");
+  if (interceptors == null)   interceptors=new LinkedHashSet<Interceptor>();
+  interceptors.add(interceptor);
+}

@@ -1,5 +1,0 @@
-{
-  AuditableWithUnsupportedId auditable=new AuditableWithUnsupportedId();
-  new AuditableSaveHandler().handle(auditable,new User(2),null,null);
-  Assert.assertEquals(new User(2),auditable.getChangedBy());
-}

@@ -1,0 +1,15 @@
+{
+  List<Integer> uniqueIndices=new LinkedList<Integer>();
+  for (  Interceptor i : interceptors) {
+    int[] indices=i.findDirty(entity,id,currentState,previousState,propertyNames,types);
+    if (indices != null) {
+      for (      int index : indices) {
+        if (!uniqueIndices.contains(index))         uniqueIndices.add(index);
+      }
+    }
+  }
+  if (uniqueIndices.isEmpty())   return null;
+  int[] uniquePrimitiveIndices=new int[uniqueIndices.size()];
+  for (int x=0; x < uniqueIndices.size(); x++)   uniquePrimitiveIndices[x]=uniqueIndices.get(x).intValue();
+  return uniquePrimitiveIndices;
+}
