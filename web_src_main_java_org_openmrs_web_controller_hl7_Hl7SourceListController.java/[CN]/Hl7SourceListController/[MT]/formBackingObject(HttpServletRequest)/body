@@ -1,0 +1,8 @@
+{
+  List<HL7Source> hl7SourceList=new Vector<HL7Source>();
+  if (Context.isAuthenticated()) {
+    HL7Service hl7s=Context.getHL7Service();
+    hl7SourceList=hl7s.getAllHL7Sources();
+  }
+  return hl7SourceList;
+}

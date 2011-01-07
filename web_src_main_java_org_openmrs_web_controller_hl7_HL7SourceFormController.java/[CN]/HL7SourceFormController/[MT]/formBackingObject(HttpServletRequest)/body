@@ -1,0 +1,10 @@
+{
+  HL7Source hl7Source=null;
+  if (Context.isAuthenticated()) {
+    HL7Service hs=Context.getHL7Service();
+    String hl7SourceId=request.getParameter("hl7SourceId");
+    if (hl7SourceId != null)     hl7Source=hs.getHL7Source(Integer.valueOf(hl7SourceId));
+  }
+  if (hl7Source == null)   hl7Source=new HL7Source();
+  return hl7Source;
+}

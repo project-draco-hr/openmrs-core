@@ -1,0 +1,29 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    HL7Source hl7Source=(HL7Source)obj;
+    HL7Service hs=Context.getHL7Service();
+    if (request.getParameter("save") != null) {
+      hs.saveHL7Source(hl7Source);
+      view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"HL7Source.saved");
+    }
+ else     if (request.getParameter("purge") != null) {
+      try {
+        hs.purgeHL7Source(hl7Source);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"HL7Source.purgedSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+        view="hl7Source.form?hl7SourceId=" + hl7Source.getHL7SourceId();
+      }
+catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="hl7Source.form?hl7SourceId=" + hl7Source.getHL7SourceId();
+      }
+    }
+  }
+  return new ModelAndView(new RedirectView(view));
+}
