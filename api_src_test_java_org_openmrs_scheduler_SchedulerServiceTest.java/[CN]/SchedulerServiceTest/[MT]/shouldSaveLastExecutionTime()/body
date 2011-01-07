@@ -8,8 +8,8 @@
   td.setStartTime(null);
   service.saveTask(td);
   service.scheduleTask(td);
-  for (int x=0; x < 5 && actualExecutionTime == null; x++)   Thread.sleep(200);
   td=service.getTaskByName(NAME);
+  for (int x=0; x < 5 && actualExecutionTime == null && td.getLastExecutionTime() == null; x++)   Thread.sleep(200);
   Assert.assertNotNull(actualExecutionTime);
   assertEquals("Last execution time in seconds is wrong",actualExecutionTime.longValue() / 1000,td.getLastExecutionTime().getTime() / 1000,1);
 }
