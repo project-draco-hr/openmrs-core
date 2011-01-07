@@ -1,0 +1,5 @@
+{
+  boolean objectChanged=false;
+  for (  Interceptor i : interceptors)   objectChanged=i.onFlushDirty(entity,id,currentState,previousState,propertyNames,types) || objectChanged;
+  return objectChanged;
+}

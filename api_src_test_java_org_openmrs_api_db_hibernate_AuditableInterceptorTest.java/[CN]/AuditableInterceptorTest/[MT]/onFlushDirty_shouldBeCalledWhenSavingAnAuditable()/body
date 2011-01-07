@@ -1,0 +1,8 @@
+{
+  User u=Context.getUserService().getUser(1);
+  u.setUsername("asdf");
+  Date beforeDate=u.getDateChanged();
+  Context.getUserService().saveUser(u,null);
+  Date afterDate=u.getDateChanged();
+  Assert.assertNotSame(beforeDate,afterDate);
+}

@@ -1,0 +1,11 @@
+{
+  if (entity instanceof Auditable) {
+    if (log.isDebugEnabled())     log.debug("Setting changed by fields on " + entity);
+    for (int x=0; x < propertyNames.length; x++) {
+      if (propertyNames[x].equals("changedBy"))       currentState[x]=Context.getAuthenticatedUser();
+ else       if (propertyNames[x].equals("dateChanged"))       currentState[x]=new Date();
+    }
+    return true;
+  }
+  return false;
+}

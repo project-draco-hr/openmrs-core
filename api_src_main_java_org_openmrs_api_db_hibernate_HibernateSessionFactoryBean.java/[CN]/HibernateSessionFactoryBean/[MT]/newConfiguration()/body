@@ -19,13 +19,12 @@
  catch (  IOException e) {
     log.fatal("Unable to load default hibernate properties",e);
   }
-  if (globalSessionInterceptor != null) {
-    log.debug("Setting global Hibernate Session Interceptor for SessionFactory, Interceptor: " + globalSessionInterceptor);
-    config.setInterceptor(globalSessionInterceptor);
+  log.debug("Setting global Hibernate Session Interceptor for SessionFactory, Interceptor: " + chainingInterceptor);
+  List<String> keys=new ArrayList<String>(interceptors.keySet());
+  Collections.sort(keys);
+  for (  String key : keys) {
+    chainingInterceptor.addInterceptor(interceptors.get(key));
   }
- else {
-    log.debug("No global Hibernate Session Interceptor for SessionFactory set in builder");
-    log.debug("Is there a global pre-set interceptor already for SessionFactory?: " + config.getInterceptor());
-  }
+  config.setInterceptor(chainingInterceptor);
   return config;
 }

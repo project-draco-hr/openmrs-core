@@ -1,0 +1,6 @@
+{
+  for (  Interceptor i : interceptors) {
+    sql=i.onPrepareStatement(sql);
+  }
+  return sql;
+}

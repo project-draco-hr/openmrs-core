@@ -1,0 +1,11 @@
+{
+  Boolean returnValue=null;
+  for (  Interceptor i : interceptors) {
+    Boolean tmpReturnValue=i.isTransient(entity);
+    if (tmpReturnValue != null) {
+      if (returnValue == null)       returnValue=tmpReturnValue;
+ else       returnValue=returnValue && tmpReturnValue;
+    }
+  }
+  return returnValue;
+}

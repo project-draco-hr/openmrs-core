@@ -1,0 +1,5 @@
+{
+  boolean objectChanged=false;
+  for (  Interceptor i : interceptors)   objectChanged=i.onSave(entity,id,state,propertyNames,types) || objectChanged;
+  return objectChanged;
+}
