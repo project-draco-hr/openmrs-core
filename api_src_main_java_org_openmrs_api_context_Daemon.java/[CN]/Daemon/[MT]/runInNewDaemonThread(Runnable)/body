@@ -1,5 +1,5 @@
 {
-  if (!isDaemonThread())   throw new APIAuthenticationException("Can only be called from a Daemon thread");
+  if (!isDaemonThread())   throw new APIAuthenticationException("Only daemon threads can spawn new daemon threads");
   DaemonThread thread=new DaemonThread(){
     @Override public void run(){
       isDaemonThread.set(true);
