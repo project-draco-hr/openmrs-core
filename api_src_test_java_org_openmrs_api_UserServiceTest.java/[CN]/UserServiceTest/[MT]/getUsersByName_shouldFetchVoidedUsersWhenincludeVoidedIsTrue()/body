@@ -1,0 +1,6 @@
+{
+  UserService userService=Context.getUserService();
+  User voidedUser=userService.getUser(501);
+  List<User> users=userService.getUsersByName("Bruno","Otterbourg",true);
+  assertTrue(users.contains(voidedUser));
+}

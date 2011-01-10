@@ -1,0 +1,8 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(CREATE_PATIENT_XML);
+  authenticate();
+  List<Patient> patientList=patientService.getPatients(null,"???",null,false);
+  assertNotNull("an empty list should be returned instead of a null object",patientList);
+  assertEquals(0,patientList.size());
+}

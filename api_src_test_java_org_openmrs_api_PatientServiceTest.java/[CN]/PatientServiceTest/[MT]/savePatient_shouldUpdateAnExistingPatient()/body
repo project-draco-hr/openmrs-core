@@ -1,0 +1,10 @@
+{
+  Patient patient=patientService.getPatient(2);
+  assertNotNull("There should be a patient with patient_id of 2",patient);
+  assertTrue("The patient should be listed as male",patient.getGender().equals("M"));
+  patient.setGender("F");
+  patientService.savePatient(patient);
+  Patient patient2=patientService.getPatient(patient.getPatientId());
+  assertTrue("The updated patient and the orig patient should still be equal",patient.equals(patient2));
+  assertTrue("The gender should be new",patient2.getGender().equals("F"));
+}

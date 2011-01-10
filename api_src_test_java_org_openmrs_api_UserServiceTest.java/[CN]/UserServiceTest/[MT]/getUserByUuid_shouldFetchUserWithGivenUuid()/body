@@ -1,0 +1,8 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(XML_FILENAME);
+  authenticate();
+  UserService userService=Context.getUserService();
+  User user=userService.getUserByUuid("013c49c6-e132-11de-babe-001e378eb67e");
+  assertEquals("Did not fetch user with given uuid",user,userService.getUser(5505));
+}

@@ -1,9 +1,13 @@
 {
   List<User> users=new Vector<User>();
-  String query="from User u where u.names.givenName = :givenName and u.names.familyName = :familyName";
-  if (!includeRetired)   query+=" and u.retired = false";
-  Query q=sessionFactory.getCurrentSession().createQuery(query).setString("givenName",givenName).setString("familyName",familyName);
-  for (  User u : (List<User>)q.list()) {
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(User.class);
+  crit.createAlias("person","person");
+  crit.createAlias("person.names","names");
+  crit.add(Expression.eq("names.givenName",givenName));
+  crit.add(Expression.eq("names.familyName",familyName));
+  crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  if (!includeRetired)   crit.add(Expression.eq("retired",false));
+  for (  User u : (List<User>)crit.list()) {
     users.add(u);
   }
   return users;

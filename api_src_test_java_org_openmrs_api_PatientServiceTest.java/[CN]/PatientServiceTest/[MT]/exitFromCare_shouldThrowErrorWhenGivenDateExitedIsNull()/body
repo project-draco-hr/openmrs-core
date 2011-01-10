@@ -1,0 +1,9 @@
+{
+  try {
+    patientService.exitFromCare(patientService.getPatient(7),new Date(),new Concept());
+  }
+ catch (  Exception e) {
+    fail("failed with correct parameters");
+  }
+  patientService.exitFromCare(patientService.getPatient(8),null,new Concept());
+}

@@ -1,0 +1,7 @@
+{
+  executeDataSet(COHORT_XML);
+  List<Cohort> allCohorts=service.getAllCohorts();
+  assertNotNull(allCohorts);
+  assertEquals(1,allCohorts.size());
+  assertFalse(allCohorts.get(0).isVoided());
+}

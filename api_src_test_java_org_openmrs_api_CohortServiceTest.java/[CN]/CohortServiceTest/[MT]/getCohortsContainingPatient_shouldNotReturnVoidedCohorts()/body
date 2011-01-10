@@ -1,0 +1,13 @@
+{
+  executeDataSet(COHORT_XML);
+  assertTrue(service.getCohort(1).isVoided());
+  assertFalse(service.getCohort(2).isVoided());
+  Patient patientToAdd=new Patient(4);
+  service.addPatientToCohort(service.getCohort(1),patientToAdd);
+  service.addPatientToCohort(service.getCohort(2),patientToAdd);
+  assertTrue(service.getCohort(1).contains(patientToAdd));
+  assertTrue(service.getCohort(2).contains(patientToAdd));
+  List<Cohort> cohortsWithPatientAdded=service.getCohortsContainingPatient(patientToAdd);
+  assertNotNull(cohortsWithPatientAdded);
+  assertFalse(cohortsWithPatientAdded.contains(service.getCohort(1)));
+}

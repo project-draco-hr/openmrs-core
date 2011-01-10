@@ -1,5 +1,5 @@
 {
-  executeDataSet("org/openmrs/api/include/CohortServiceTest-cohort.xml");
+  executeDataSet(COHORT_XML);
   List<Cohort> allCohorts=service.getAllCohorts(true);
   assertEquals(2,allCohorts.size());
   service.purgeCohort(allCohorts.get(0));

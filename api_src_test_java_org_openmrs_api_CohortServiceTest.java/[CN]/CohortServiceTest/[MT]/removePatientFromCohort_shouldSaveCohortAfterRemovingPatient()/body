@@ -1,0 +1,8 @@
+{
+  executeDataSet(COHORT_XML);
+  Patient patientToAddThenRemove=new Patient(4);
+  service.addPatientToCohort(service.getCohort(2),patientToAddThenRemove);
+  assertTrue(service.getCohort(2).contains(patientToAddThenRemove));
+  service.removePatientFromCohort(service.getCohort(2),patientToAddThenRemove);
+  assertFalse(service.getCohort(2).contains(patientToAddThenRemove));
+}

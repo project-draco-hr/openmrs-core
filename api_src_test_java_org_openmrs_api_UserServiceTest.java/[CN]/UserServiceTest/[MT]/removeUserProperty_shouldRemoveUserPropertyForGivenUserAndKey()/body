@@ -1,9 +1,9 @@
 {
   executeDataSet(XML_FILENAME);
   UserService userService=Context.getUserService();
-  User user=userService.getUser(505);
+  User user=userService.getUser(5505);
   Assert.assertNotSame("",user.getUserProperty("some key"));
   userService.removeUserProperty(user,"some key");
-  user=userService.getUser(505);
+  user=userService.getUser(5505);
   Assert.assertEquals("",user.getUserProperty("some key"));
 }
