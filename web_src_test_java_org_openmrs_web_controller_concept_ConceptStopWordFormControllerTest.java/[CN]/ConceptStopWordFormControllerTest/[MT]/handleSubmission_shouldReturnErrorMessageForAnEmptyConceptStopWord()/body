@@ -1,0 +1,12 @@
+{
+  ConceptStopWordFormController controller=(ConceptStopWordFormController)applicationContext.getBean("conceptStopWordFormController");
+  HttpSession mockSession=new MockHttpSession();
+  ConceptStopWord conceptStopWord=new ConceptStopWord("",Locale.CANADA);
+  mockSession.setAttribute("value",conceptStopWord.getValue());
+  BindException errors=new BindException(conceptStopWord,"value");
+  controller.handleSubmission(mockSession,conceptStopWord,errors);
+  ObjectError objectError=(ObjectError)errors.getAllErrors().get(0);
+  Assert.assertTrue(errors.hasErrors());
+  Assert.assertEquals(1,errors.getErrorCount());
+  Assert.assertEquals("ConceptStopWord.error.value.empty",objectError.getCode());
+}

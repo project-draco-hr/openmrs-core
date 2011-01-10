@@ -1,0 +1,9 @@
+{
+  ConceptStopWordListController controller=(ConceptStopWordListController)applicationContext.getBean("conceptStopWordListController");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  controller.showForm(mockRequest.getSession());
+  List<ConceptStopWord> conceptStopWordList=(List<ConceptStopWord>)mockRequest.getSession().getAttribute("conceptStopWordList");
+  Assert.assertNotNull(conceptStopWordList);
+  Assert.assertEquals(4,conceptStopWordList.size());
+}

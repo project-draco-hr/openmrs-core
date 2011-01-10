@@ -1,0 +1,6 @@
+{
+  ConceptService conceptService=Context.getConceptService();
+  List<ConceptStopWord> conceptStopWordList=conceptService.getAllConceptStopWords();
+  session.setAttribute("conceptStopWordList",conceptStopWordList);
+  return "admin/concepts/conceptStopWordList";
+}

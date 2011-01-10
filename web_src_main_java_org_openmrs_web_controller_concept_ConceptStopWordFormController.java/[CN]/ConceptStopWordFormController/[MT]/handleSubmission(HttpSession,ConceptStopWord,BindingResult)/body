@@ -1,0 +1,16 @@
+{
+  ValidationUtils.rejectIfEmptyOrWhitespace(errors,"value","ConceptStopWord.error.value.empty");
+  if (errors.hasErrors()) {
+    return showForm();
+  }
+  try {
+    Context.getConceptService().saveConceptStopWord(conceptStopWord);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptStopWord.saved");
+  }
+ catch (  ConceptStopWordException e) {
+    log.error("Error on adding concept stop word",e);
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+    return showForm();
+  }
+  return "redirect:conceptStopWord.list";
+}
