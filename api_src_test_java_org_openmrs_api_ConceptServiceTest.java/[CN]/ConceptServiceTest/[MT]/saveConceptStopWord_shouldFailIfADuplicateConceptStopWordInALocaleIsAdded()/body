@@ -1,0 +1,11 @@
+{
+  ConceptStopWord conceptStopWord=new ConceptStopWord("A");
+  try {
+    conceptService.saveConceptStopWord(conceptStopWord);
+    conceptService.saveConceptStopWord(conceptStopWord);
+  }
+ catch (  ConceptStopWordException e) {
+    assertEquals("ConceptStopWord.duplicated",e.getMessage());
+    throw e;
+  }
+}

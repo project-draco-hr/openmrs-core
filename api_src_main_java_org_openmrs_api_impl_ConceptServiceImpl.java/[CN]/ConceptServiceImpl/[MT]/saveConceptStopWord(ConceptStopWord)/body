@@ -1,0 +1,11 @@
+{
+  try {
+    return dao.saveConceptStopWord(conceptStopWord);
+  }
+ catch (  DAOException e) {
+    if (e.getMessage().equalsIgnoreCase("Duplicate ConceptStopWord Entry")) {
+      throw new ConceptStopWordException("ConceptStopWord.duplicated",e);
+    }
+    throw new ConceptStopWordException("ConceptStopWord.notSaved",e);
+  }
+}

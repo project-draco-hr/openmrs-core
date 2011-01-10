@@ -1,10 +1,12 @@
 {
+  if (StringUtils.isBlank(phrase)) {
+    return null;
+  }
   if (phrase.length() > 2) {
     phrase=phrase.replaceAll(OpenmrsConstants.REGEX_LARGE," ");
   }
  else {
     phrase=phrase.replaceAll(OpenmrsConstants.REGEX_SMALL," ");
   }
-  String[] words=phrase.trim().replace('\n',' ').split(" ");
-  return words;
+  return phrase.trim().replace('\n',' ').split(" ");
 }

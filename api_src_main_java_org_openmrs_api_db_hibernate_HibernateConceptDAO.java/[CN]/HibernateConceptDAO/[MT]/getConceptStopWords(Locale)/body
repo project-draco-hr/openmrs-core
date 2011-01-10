@@ -1,0 +1,11 @@
+{
+  locale=(locale == null ? Context.getLocale() : locale);
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptStopWord.class);
+  criteria.add(Restrictions.eq("locale",locale));
+  List<ConceptStopWord> stopWordList=criteria.list();
+  List<String> stopWords=new ArrayList<String>();
+  for (  ConceptStopWord conceptStopWord : stopWordList) {
+    stopWords.add(conceptStopWord.getValue());
+  }
+  return stopWords;
+}

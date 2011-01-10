@@ -1,0 +1,7 @@
+{
+  ConceptStopWord conceptStopWord=new ConceptStopWord("AND",Locale.FRANCE);
+  conceptService.saveConceptStopWord(conceptStopWord);
+  List<String> conceptStopWords=conceptService.getConceptStopWords(Locale.FRANCE);
+  assertEquals(1,conceptStopWords.size());
+  assertEquals("AND",conceptStopWords.get(0));
+}

@@ -1,0 +1,7 @@
+{
+  List<String> conceptStopWords=conceptService.getConceptStopWords(Locale.US);
+  assertEquals(1,conceptStopWords.size());
+  conceptService.deleteConceptStopWord(4);
+  conceptStopWords=conceptService.getConceptStopWords(Locale.US);
+  assertEquals(0,conceptStopWords.size());
+}

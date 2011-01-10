@@ -1,0 +1,10 @@
+{
+  if (conceptStopWordId == null) {
+    throw new DAOException("conceptStopWordId is null");
+  }
+  Object csw=sessionFactory.getCurrentSession().createCriteria(ConceptStopWord.class).add(Restrictions.eq("conceptStopWordId",conceptStopWordId)).uniqueResult();
+  if (csw == null) {
+    throw new DAOException("Concept Stop Word not found or already deleted");
+  }
+  sessionFactory.getCurrentSession().delete(csw);
+}

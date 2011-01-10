@@ -1,0 +1,14 @@
+{
+  String[] parts=splitPhrase(phrase);
+  List<String> uniqueParts=new Vector<String>();
+  if (parts != null) {
+    List<String> conceptStopWords=Context.getConceptService().getConceptStopWords(locale);
+    for (    String part : parts) {
+      if (!StringUtils.isBlank(part)) {
+        String upper=part.trim().toUpperCase();
+        if (!conceptStopWords.contains(upper) && !uniqueParts.contains(upper))         uniqueParts.add(upper);
+      }
+    }
+  }
+  return uniqueParts;
+}

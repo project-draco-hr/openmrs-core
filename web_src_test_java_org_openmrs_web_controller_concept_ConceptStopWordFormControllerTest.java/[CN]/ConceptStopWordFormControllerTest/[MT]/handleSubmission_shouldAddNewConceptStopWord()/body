@@ -1,0 +1,9 @@
+{
+  ConceptStopWordFormController controller=(ConceptStopWordFormController)applicationContext.getBean("conceptStopWordFormController");
+  HttpSession mockSession=new MockHttpSession();
+  mockSession.setAttribute("value","As");
+  BindException errors=new BindException(new ConceptStopWord("As",Locale.ENGLISH),"value");
+  controller.handleSubmission(mockSession,new ConceptStopWord("As",Locale.ENGLISH),errors);
+  Assert.assertEquals("ConceptStopWord.saved",mockSession.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+  Assert.assertNull(mockSession.getAttribute(WebConstants.OPENMRS_ERROR_ATTR));
+}

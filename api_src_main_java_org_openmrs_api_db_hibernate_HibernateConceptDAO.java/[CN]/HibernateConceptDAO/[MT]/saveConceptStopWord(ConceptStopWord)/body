@@ -1,0 +1,13 @@
+{
+  if (conceptStopWord != null) {
+    Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptStopWord.class);
+    criteria.add(Restrictions.eq("value",conceptStopWord.getValue()));
+    criteria.add(Restrictions.eq("locale",conceptStopWord.getLocale()));
+    List<ConceptStopWord> stopWordList=criteria.list();
+    if (!stopWordList.isEmpty()) {
+      throw new DAOException("Duplicate ConceptStopWord Entry");
+    }
+    sessionFactory.getCurrentSession().saveOrUpdate(conceptStopWord);
+  }
+  return conceptStopWord;
+}

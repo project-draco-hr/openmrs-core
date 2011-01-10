@@ -1,0 +1,11 @@
+{
+  try {
+    dao.deleteConceptStopWord(conceptStopWordId);
+  }
+ catch (  DAOException e) {
+    if (contains(e.getMessage(),"Concept Stop Word not found or already deleted")) {
+      throw new ConceptStopWordException("ConceptStopWord.error.notfound",e);
+    }
+    throw new ConceptStopWordException("general.cannot.delete",e);
+  }
+}

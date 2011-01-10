@@ -1,0 +1,19 @@
+{
+  if (conceptStopWordsToBeDeleted != null) {
+    ConceptService conceptService=Context.getConceptService();
+    for (    String conceptStopWordToBeDeleted : conceptStopWordsToBeDeleted) {
+      try {
+        conceptService.deleteConceptStopWord(new Integer(conceptStopWordToBeDeleted));
+        session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"general.deleted");
+      }
+ catch (      ConceptStopWordException e) {
+        log.error("Error on deleting concept stop word",e);
+        session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+      }
+    }
+  }
+ else {
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"ConceptStopWord.error.notSelect");
+  }
+  return showForm(session);
+}

@@ -1,0 +1,10 @@
+{
+  ConceptStopWordListController controller=(ConceptStopWordListController)applicationContext.getBean("conceptStopWordListController");
+  HttpSession mockSession=new MockHttpSession();
+  controller.handleSubmission(mockSession,new String[]{"2"});
+  String successMessage=(String)mockSession.getAttribute(WebConstants.OPENMRS_MSG_ATTR);
+  String errorMessage=(String)mockSession.getAttribute(WebConstants.OPENMRS_ERROR_ATTR);
+  Assert.assertNotNull(successMessage);
+  Assert.assertNull(errorMessage);
+  Assert.assertEquals("general.deleted",successMessage);
+}
