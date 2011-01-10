@@ -1,0 +1,11 @@
+{
+  Patient patient=patientService.getPatient(2);
+  PersonAddress address=patient.getAddresses().iterator().next();
+  address.setAddress1("Modified Address");
+  patientService.savePatient(patient);
+  Context.evictFromSession(patient);
+  patient=patientService.getPatient(2);
+  PersonAddress personAddress=patient.getAddresses().iterator().next();
+  assertNotNull(personAddress.getDateChanged());
+  assertNotNull(personAddress.getChangedBy());
+}
