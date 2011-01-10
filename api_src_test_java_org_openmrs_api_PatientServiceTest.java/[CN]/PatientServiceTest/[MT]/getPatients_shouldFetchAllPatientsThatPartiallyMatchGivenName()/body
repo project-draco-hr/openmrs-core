@@ -1,0 +1,16 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(FIND_PATIENTS_XML);
+  authenticate();
+  List<Patient> patients=patientService.getPatients("Jea",null,null,false);
+  assertTrue("getPatients failed to find patient whose first name included partial match",patients.contains(patientService.getPatient(4)));
+  assertTrue("getPatients failed to find patient whose family name included partial match",patients.contains(patientService.getPatient(5)));
+  assertTrue("getPatients failed to find patient whose family name included partial match",patients.contains(patientService.getPatient(6)));
+  assertFalse("getPatients failed to exclude patient whose first name did not include the partial string",patients.contains(patientService.getPatient(2)));
+  assertFalse("getPatients failed to exclude patient whose first name did not include the partial string",patients.contains(patientService.getPatient(3)));
+  patients=patientService.getPatients("Claud",null,null,false);
+  assertTrue("getPatients failed to find patient whose family name included partial match",patients.contains(patientService.getPatient(5)));
+  assertTrue("getPatients failed to find patient whose family name included partial match",patients.contains(patientService.getPatient(6)));
+  assertFalse("getPatients failed to exclude patient whose name did not include the partial string",patients.contains(patientService.getPatient(2)));
+  assertFalse("getPatients failed to exclude patient whose name did not include the partial string",patients.contains(patientService.getPatient(3)));
+}

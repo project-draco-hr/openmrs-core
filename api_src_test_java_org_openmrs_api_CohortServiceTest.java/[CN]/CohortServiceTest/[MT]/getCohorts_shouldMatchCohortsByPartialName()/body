@@ -1,5 +1,5 @@
 {
-  executeDataSet("org/openmrs/api/include/CohortServiceTest-cohort.xml");
+  executeDataSet(COHORT_XML);
   List<Cohort> matchedCohorts=service.getCohorts("Example");
   assertEquals(2,matchedCohorts.size());
   matchedCohorts=service.getCohorts("e Coh");

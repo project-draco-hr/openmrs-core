@@ -1,0 +1,8 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(XML_FILENAME);
+  authenticate();
+  UserService userService=Context.getUserService();
+  List<User> users=userService.getUsersByName("Susy","Kingman",false);
+  assertEquals(1,users.size());
+}

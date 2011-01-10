@@ -1,0 +1,12 @@
+{
+  executeDataSet(COHORT_XML);
+  List<Cohort> allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(2,allCohorts.size());
+  Integer[] ids={2,3};
+  Cohort newCohort=new Cohort("a third cohort","a  cohort to add for testing",ids);
+  service.saveCohort(newCohort);
+  allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(3,allCohorts.size());
+}

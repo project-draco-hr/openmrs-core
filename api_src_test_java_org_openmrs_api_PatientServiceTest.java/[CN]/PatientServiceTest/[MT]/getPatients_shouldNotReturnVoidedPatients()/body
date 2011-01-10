@@ -1,0 +1,8 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(FIND_PATIENTS_XML);
+  authenticate();
+  assertTrue(patientService.getPatient(3).isVoided());
+  List<Patient> patients=patientService.getPatients("I am voided",null,null,false);
+  assertEquals(patients.size(),0);
+}

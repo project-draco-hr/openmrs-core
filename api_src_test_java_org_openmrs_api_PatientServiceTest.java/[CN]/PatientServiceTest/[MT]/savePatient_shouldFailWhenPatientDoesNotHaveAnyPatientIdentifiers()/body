@@ -1,0 +1,10 @@
+{
+  Patient patient=new Patient();
+  assertTrue(patient.getIdentifiers().isEmpty());
+  try {
+    patientService.savePatient(patient);
+    Assert.fail("should fail when patient does not have any patient identifiers");
+  }
+ catch (  Exception e) {
+  }
+}

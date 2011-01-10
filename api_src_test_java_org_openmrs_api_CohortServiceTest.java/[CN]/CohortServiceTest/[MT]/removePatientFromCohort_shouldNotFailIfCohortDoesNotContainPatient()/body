@@ -1,0 +1,11 @@
+{
+  executeDataSet(COHORT_XML);
+  Patient patientToAddThenRemove=new Patient(4);
+  assertFalse(service.getCohort(2).contains(patientToAddThenRemove));
+  try {
+    service.removePatientFromCohort(service.getCohort(2),patientToAddThenRemove);
+  }
+ catch (  Exception e) {
+    Assert.fail("removePatientFromCohort(Cohort,Patient) should not fail if cohort doesn't contain patient");
+  }
+}

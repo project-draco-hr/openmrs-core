@@ -1,0 +1,11 @@
+{
+  executeDataSet(COHORT_XML);
+  List<Cohort> allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(allCohorts.get(0).getName(),allCohorts.get(1).getName());
+  assertTrue(allCohorts.get(0).isVoided());
+  assertFalse(allCohorts.get(1).isVoided());
+  assertTrue(allCohorts.get(1).getCohortId() == 2);
+  Cohort cohortToGet=service.getCohort("Example Cohort");
+  assertTrue(cohortToGet.getCohortId() == 2);
+}

@@ -1,0 +1,21 @@
+{
+  executeDataSet(COHORT_XML);
+  Cohort exampleCohort=service.getCohort("Example Cohort");
+  assertNotNull(exampleCohort);
+  assertFalse(exampleCohort.isVoided());
+  try {
+    service.voidCohort(exampleCohort,null);
+    Assert.fail("voidCohort should fail with exception if reason is null.");
+  }
+ catch (  Exception e) {
+  }
+  exampleCohort=service.getCohort("Example Cohort");
+  assertNotNull(exampleCohort);
+  assertFalse(exampleCohort.isVoided());
+  try {
+    service.voidCohort(exampleCohort,"");
+    Assert.fail("voidCohort should fail with exception if reason is empty");
+  }
+ catch (  Exception e) {
+  }
+}

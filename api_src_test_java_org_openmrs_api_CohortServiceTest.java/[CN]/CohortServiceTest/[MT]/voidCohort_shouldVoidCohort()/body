@@ -1,0 +1,9 @@
+{
+  executeDataSet(COHORT_XML);
+  List<Cohort> allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(2,allCohorts.size());
+  assertFalse(allCohorts.get(1).isVoided());
+  Cohort voidedCohort=service.voidCohort(allCohorts.get(1),"voided for Test");
+  assertTrue(allCohorts.get(1).isVoided());
+}

@@ -1,0 +1,8 @@
+{
+  executeDataSet(COHORT_XML);
+  Patient patientToAdd=new Patient(4);
+  service.addPatientToCohort(service.getCohort(2),patientToAdd);
+  assertTrue(service.getCohort(2).contains(patientToAdd));
+  List<Cohort> cohortsWithGivenPatient=service.getCohortsContainingPatient(patientToAdd);
+  assertTrue(cohortsWithGivenPatient.contains(service.getCohort(2)));
+}

@@ -1,0 +1,9 @@
+{
+  initializeInMemoryDatabase();
+  executeDataSet(FIND_PATIENTS_XML);
+  authenticate();
+  Patient patientToPurge=patientService.getPatient(2);
+  assertNotNull(patientToPurge);
+  patientService.purgePatient(patientToPurge);
+  assertNull(patientService.getPatient(2));
+}

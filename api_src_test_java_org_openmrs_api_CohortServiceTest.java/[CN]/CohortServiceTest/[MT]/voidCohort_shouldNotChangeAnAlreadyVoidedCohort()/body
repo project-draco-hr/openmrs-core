@@ -1,0 +1,14 @@
+{
+  executeDataSet(COHORT_XML);
+  List<Cohort> allCohorts=service.getAllCohorts(true);
+  assertNotNull(allCohorts);
+  assertEquals(2,allCohorts.size());
+  assertTrue(allCohorts.get(0).isVoided());
+  assertNotNull(allCohorts.get(0).getVoidReason());
+  String reasonAlreadyVoided=allCohorts.get(0).getVoidReason();
+  String voidedForTest="Voided for test";
+  assertFalse(voidedForTest.equals(reasonAlreadyVoided));
+  Cohort voidedCohort=service.voidCohort(allCohorts.get(0),voidedForTest);
+  assertFalse(voidedCohort.getVoidReason().equals(voidedForTest));
+  assertTrue(voidedCohort.getVoidReason().equals(reasonAlreadyVoided));
+}
