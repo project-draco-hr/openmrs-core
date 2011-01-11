@@ -1,4 +1,6 @@
 {
   Role role=new Role(RoleConstants.SUPERUSER);
   assertTrue("Super users are super special and should have all privileges",role.hasPrivilege("Some weird privilege name that shouldn't be there"));
+  assertNotNull(role.getName());
+  assertEquals(role.getName(),RoleConstants.SUPERUSER);
 }
