@@ -1,0 +1,12 @@
+{
+  if (list != null) {
+    if (combineEqualResults) {
+      Collection<String> unique=new LinkedHashSet<String>();
+      for (      Obs obs : list)       unique.add(obs.getValueAsString(loc));
+      for (      String s : unique)       ret.append(s).append("<br/>");
+    }
+ else {
+      for (      Obs obs : list)       ret.append(obs.getValueAsString(loc)).append("<br/>");
+    }
+  }
+}

@@ -86,17 +86,7 @@
       ret.append("<tr>");
       ret.append("<th></th>");
       for (      Concept c : conceptList) {
-        ConceptName cn=c.getShortestName(loc,false);
-        String name=cn.getName();
-        ret.append("<th>");
-        if (conceptLink != null) {
-          ret.append("<a href=\"" + conceptLink + "conceptId="+ c.getConceptId()+ "\">");
-        }
-        ret.append(name);
-        if (conceptLink != null) {
-          ret.append("</a>");
-        }
-        ret.append("</th>");
+        showConceptHeader(loc,ret,c);
       }
       ret.append("</tr>");
     }
@@ -104,20 +94,7 @@
       ret.append("<tr>");
       if (showDateHeader)       ret.append("<th>" + df.format(date) + "</th>");
       for (      Concept c : conceptList) {
-        ret.append("<td align=\"center\">");
-        String key=c.getConceptId() + "." + date;
-        List<Obs> list=groupedObs.get(key);
-        if (list != null) {
-          if (combineEqualResults) {
-            Collection<String> unique=new LinkedHashSet<String>();
-            for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
-            for (            String s : unique)             ret.append(s).append("<br/>");
-          }
- else {
-            for (            Obs obs : list)             ret.append(obs.getValueAsString(loc)).append("<br/>");
-          }
-        }
-        ret.append("</td>");
+        showConcept(loc,groupedObs,ret,date,c);
       }
       ret.append("</tr>");
     }
@@ -133,33 +110,10 @@
     for (    Concept c : conceptList) {
       ret.append("<tr>");
       if (showConceptHeader) {
-        ConceptName cn=c.getShortestName(loc,false);
-        String name=cn.getName();
-        ret.append("<th>");
-        if (conceptLink != null) {
-          ret.append("<a href=\"" + conceptLink + "conceptId="+ c.getConceptId()+ "\">");
-        }
-        ret.append(name);
-        if (conceptLink != null) {
-          ret.append("</a>");
-        }
-        ret.append("</th>");
+        showConceptHeader(loc,ret,c);
       }
       for (      Date date : dateOrder) {
-        ret.append("<td align=\"center\">");
-        String key=c.getConceptId() + "." + date;
-        List<Obs> list=groupedObs.get(key);
-        if (list != null) {
-          if (combineEqualResults) {
-            Collection<String> unique=new LinkedHashSet<String>();
-            for (            Obs obs : list)             unique.add(obs.getValueAsString(loc));
-            for (            String s : unique)             ret.append(s).append("<br/>");
-          }
- else {
-            for (            Obs obs : list)             ret.append(obs.getValueAsString(loc)).append("<br/>");
-          }
-        }
-        ret.append("</td>");
+        showConcept(loc,groupedObs,ret,date,c);
       }
       ret.append("</tr>");
     }
