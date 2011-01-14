@@ -1,9 +1,9 @@
 {
   Concept c=new Concept();
   ConceptName synonymName=new ConceptName("my depot",Locale.ENGLISH);
-  ConceptWord shorterWord=new ConceptWord("my",c,synonymName,Locale.ENGLISH);
+  ConceptWord shorterWord=new ConceptWord("MY",c,synonymName,Locale.ENGLISH);
   ConceptName fullySpecName=new ConceptName("hom depot",Locale.ENGLISH);
-  ConceptWord longerWord=new ConceptWord("hom",c,fullySpecName,Locale.ENGLISH);
+  ConceptWord longerWord=new ConceptWord("HOM",c,fullySpecName,Locale.ENGLISH);
   fullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
   fullySpecName.setLocalePreferred(true);
   Assert.assertTrue("A shorter word should weigh more than a longer one if both words are at the start of their concept names",dao.weighConceptWord(shorterWord) > dao.weighConceptWord(longerWord));

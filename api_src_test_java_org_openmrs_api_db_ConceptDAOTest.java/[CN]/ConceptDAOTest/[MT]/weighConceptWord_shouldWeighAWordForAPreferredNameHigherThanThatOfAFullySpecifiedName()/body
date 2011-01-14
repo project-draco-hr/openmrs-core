@@ -1,10 +1,10 @@
 {
   Concept c=new Concept();
   ConceptName prefName=new ConceptName("my depot",Locale.ENGLISH);
-  ConceptWord prefWord=new ConceptWord("my",c,prefName,Locale.ENGLISH);
+  ConceptWord prefWord=new ConceptWord("MY",c,prefName,Locale.ENGLISH);
   prefName.setLocalePreferred(true);
   ConceptName fullySpecName=new ConceptName("my depot",Locale.ENGLISH);
-  ConceptWord fullySpecWord=new ConceptWord("my",c,fullySpecName,Locale.ENGLISH);
+  ConceptWord fullySpecWord=new ConceptWord("MY",c,fullySpecName,Locale.ENGLISH);
   fullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
   Assert.assertTrue("A word for a preferred name should weigh higher than that of a fully specified name",dao.weighConceptWord(prefWord) > dao.weighConceptWord(fullySpecWord));
 }

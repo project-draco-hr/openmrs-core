@@ -1,10 +1,10 @@
 {
   Concept c=new Concept();
   ConceptName indexTermName=new ConceptName("my depot",Locale.ENGLISH);
-  ConceptWord indexTermWord=new ConceptWord("my",c,indexTermName,Locale.ENGLISH);
+  ConceptWord indexTermWord=new ConceptWord("MY",c,indexTermName,Locale.ENGLISH);
   indexTermName.setConceptNameType(ConceptNameType.INDEX_TERM);
   ConceptName fullySpecName=new ConceptName("my depot",Locale.ENGLISH);
-  ConceptWord fullySpecWord=new ConceptWord("my",c,fullySpecName,Locale.ENGLISH);
+  ConceptWord fullySpecWord=new ConceptWord("MY",c,fullySpecName,Locale.ENGLISH);
   fullySpecName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
   Assert.assertTrue("A word for an index term should weigh higher than that of a fully specified name",dao.weighConceptWord(indexTermWord) > dao.weighConceptWord(fullySpecWord));
 }
