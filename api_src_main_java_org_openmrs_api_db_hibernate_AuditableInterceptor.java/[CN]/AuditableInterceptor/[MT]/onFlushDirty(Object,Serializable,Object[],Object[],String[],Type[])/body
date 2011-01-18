@@ -1,11 +1,20 @@
 {
   if (entity instanceof Auditable) {
     if (log.isDebugEnabled())     log.debug("Setting changed by fields on " + entity);
+    boolean objectWasChanged=false;
+    Date currentDate=new Date();
+    User authenticatedUser=Context.getAuthenticatedUser();
     for (int x=0; x < propertyNames.length; x++) {
-      if (propertyNames[x].equals("changedBy"))       currentState[x]=Context.getAuthenticatedUser();
- else       if (propertyNames[x].equals("dateChanged"))       currentState[x]=new Date();
+      if (propertyNames[x].equals("changedBy") && previousState != null && previousState[x] != authenticatedUser) {
+        currentState[x]=authenticatedUser;
+        objectWasChanged=true;
+      }
+ else       if (propertyNames[x].equals("dateChanged") && previousState != null && previousState[x] != currentDate) {
+        currentState[x]=currentDate;
+        objectWasChanged=true;
+      }
     }
-    return true;
+    return objectWasChanged;
   }
   return false;
 }
