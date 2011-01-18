@@ -1,0 +1,12 @@
+{
+  new AsDaemonTask(new AbstractTask(){
+    @Override public void execute(){
+      ConceptNumeric weight=Context.getConceptService().getConceptNumeric(5089);
+      Date dateChangedBefore=weight.getDateChanged();
+      weight.setHiAbsolute(75d);
+      Context.getConceptService().saveConcept(weight);
+      Assert.assertNotSame(dateChangedBefore,weight.getDateChanged());
+    }
+  }
+).runTheTask();
+}
