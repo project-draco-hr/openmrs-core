@@ -1,23 +1,57 @@
 {
+  String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  File runtimeProperties=getRuntimePropertiesFile();
-  if (!runtimeProperties.exists()) {
-    try {
-      runtimeProperties.createNewFile();
-      wizardModel.canCreate=true;
-      wizardModel.cannotCreateErrorMessage="";
+  if (page == null) {
+    File runtimeProperties=getRuntimePropertiesFile();
+    if (!runtimeProperties.exists()) {
+      try {
+        runtimeProperties.createNewFile();
+        wizardModel.canCreate=true;
+        wizardModel.cannotCreateErrorMessage="";
+      }
+ catch (      IOException io) {
+        wizardModel.canCreate=false;
+        wizardModel.cannotCreateErrorMessage=io.getMessage();
+      }
+      wizardModel.canWrite=runtimeProperties.canWrite();
+      runtimeProperties.delete();
     }
- catch (    IOException io) {
-      wizardModel.canCreate=false;
-      wizardModel.cannotCreateErrorMessage=io.getMessage();
-    }
-    wizardModel.canWrite=runtimeProperties.canWrite();
-    runtimeProperties.delete();
-  }
  else {
-    wizardModel.canWrite=runtimeProperties.canWrite();
+      wizardModel.canWrite=runtimeProperties.canWrite();
+    }
+    wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
+    httpResponse.setContentType("text/html");
+    renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
   }
-  wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
-  httpResponse.setContentType("text/html");
-  renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+ else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
+    httpResponse.setContentType("text/json");
+    httpResponse.setHeader("Cache-Control","no-cache");
+    Map<String,Object> result=new HashMap<String,Object>();
+    if (initJob != null) {
+      result.put("hasErrors",initJob.hasErrors());
+      if (initJob.hasErrors()) {
+        result.put("errorPage",initJob.getErrorPage());
+        errors.addAll(initJob.getErrors());
+      }
+      result.put("initializationComplete",isInitializationComplete());
+      result.put("message",initJob.getMessage());
+      result.put("actionCounter",initJob.getStepsComplete());
+      if (!isInitializationComplete()) {
+        result.put("executingTask",initJob.getExecutingTask());
+        result.put("executedTasks",initJob.getExecutedTasks());
+        result.put("completedPercentage",initJob.getCompletedPercentage());
+      }
+      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+      if (appender instanceof MemoryAppender) {
+        MemoryAppender memoryAppender=(MemoryAppender)appender;
+        List<String> logLines=memoryAppender.getLogLines();
+        if (logLines.size() > 5)         logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        result.put("logLines",logLines);
+      }
+ else {
+        result.put("logLines",new ArrayList<String>());
+      }
+    }
+    httpResponse.getWriter().write(toJSONString(result,true));
+  }
 }

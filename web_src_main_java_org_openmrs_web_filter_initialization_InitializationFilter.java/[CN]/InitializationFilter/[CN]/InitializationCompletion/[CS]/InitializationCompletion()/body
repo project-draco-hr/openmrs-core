@@ -14,7 +14,7 @@
           String sql="create database if not exists `?` default character set utf8";
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
-            reportError("Unable to create the database",DEFAULT_PAGE);
+            reportError("Unable to create the database. The password might be incorrect or the database is not started.",DEFAULT_PAGE);
             return;
           }
  else {
