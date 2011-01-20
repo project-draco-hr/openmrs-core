@@ -1,7 +1,43 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  if (DATABASE_SETUP.equals(page)) {
+  if (INSTALL_METHOD.equals(page)) {
+    wizardModel.installMethod=httpRequest.getParameter("install_method");
+    if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
+      page=SIMPLE_SETUP;
+    }
+ else {
+      page=DATABASE_SETUP;
+    }
+    renderTemplate(page,referenceMap,httpResponse);
+  }
+ else   if (SIMPLE_SETUP.equals(page)) {
+    if ("Back".equals(httpRequest.getParameter("back"))) {
+      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      return;
+    }
+    wizardModel.databaseRootPassword=httpRequest.getParameter("database_root_password");
+    checkForEmptyValue(wizardModel.databaseRootPassword,errors,"Database root password");
+    wizardModel.hasCurrentOpenmrsDatabase=false;
+    wizardModel.createTables=true;
+    wizardModel.createDatabasePassword=wizardModel.databaseRootPassword;
+    wizardModel.addDemoData=false;
+    wizardModel.hasCurrentDatabaseUser=false;
+    wizardModel.createDatabaseUser=true;
+    wizardModel.createUserPassword=wizardModel.databaseRootPassword;
+    wizardModel.moduleWebAdmin=true;
+    wizardModel.autoUpdateDatabase=false;
+    wizardModel.adminUserPassword=InitializationWizardModel.ADMIN_DEFAULT_PASSWORD;
+    if (errors.isEmpty()) {
+      page=WIZARD_COMPLETE;
+    }
+    renderTemplate(page,referenceMap,httpResponse);
+  }
+ else   if (DATABASE_SETUP.equals(page)) {
+    if ("Back".equals(httpRequest.getParameter("back"))) {
+      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      return;
+    }
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
     if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
@@ -121,7 +157,13 @@
   }
  else   if (WIZARD_COMPLETE.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,httpResponse);
+      if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
+        page=SIMPLE_SETUP;
+      }
+ else {
+        page=IMPLEMENTATION_ID_SETUP;
+      }
+      renderTemplate(page,referenceMap,httpResponse);
       return;
     }
     initJob=new InitializationCompletion();
@@ -137,36 +179,5 @@
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     initJob.start();
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
-  }
- else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
-    httpResponse.setContentType("text/json");
-    httpResponse.setHeader("Cache-Control","no-cache");
-    Map<String,Object> result=new HashMap<String,Object>();
-    if (initJob != null) {
-      result.put("hasErrors",initJob.hasErrors());
-      if (initJob.hasErrors()) {
-        result.put("errorPage",initJob.getErrorPage());
-        errors.addAll(initJob.getErrors());
-      }
-      result.put("initializationComplete",isInitializationComplete());
-      result.put("message",initJob.getMessage());
-      result.put("actionCounter",initJob.getStepsComplete());
-      if (!isInitializationComplete()) {
-        result.put("executingTask",initJob.getExecutingTask());
-        result.put("executedTasks",initJob.getExecutedTasks());
-        result.put("completedPercentage",initJob.getCompletedPercentage());
-      }
-      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
-      if (appender instanceof MemoryAppender) {
-        MemoryAppender memoryAppender=(MemoryAppender)appender;
-        List<String> logLines=memoryAppender.getLogLines();
-        if (logLines.size() > 5)         logLines=logLines.subList(logLines.size() - 5,logLines.size());
-        result.put("logLines",logLines);
-      }
- else {
-        result.put("logLines",new ArrayList<String>());
-      }
-    }
-    httpResponse.getWriter().write(toJSONString(result,true));
   }
 }
