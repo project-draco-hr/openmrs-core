@@ -1,6 +1,8 @@
 {
   if (patient.getPatientId() == null)   Context.requirePrivilege(PrivilegeConstants.ADD_PATIENTS);
  else   Context.requirePrivilege(PrivilegeConstants.EDIT_PATIENTS);
-  checkPatientIdentifiers(patient);
+  if (!patient.isVoided()) {
+    checkPatientIdentifiers(patient);
+  }
   return dao.savePatient(patient);
 }
