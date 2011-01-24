@@ -1,6 +1,7 @@
 {
   if (log.isDebugEnabled())   log.debug("Authenticating with username: " + username);
   this.user=contextDAO.authenticate(username,password);
+  setUserLocation();
   if (log.isDebugEnabled())   log.debug("Authenticated as: " + this.user);
   return this.user;
 }
