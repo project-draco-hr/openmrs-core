@@ -83,6 +83,7 @@
   props.add(new GlobalProperty(GP_SEARCH_WIDGET_BATCH_SIZE,"200","The maximum number of search results that are returned by an ajax call"));
   props.add(new GlobalProperty(GP_SEARCH_WIDGET_IN_SERIAL_MODE,"false","Specifes whether the search widgets should make ajax requests in serial or parallel order, a value of true is appropriate for implementations running on a slow network connection and vice versa"));
   props.add(new GlobalProperty(GP_SEARCH_WIDGET_DELAY_INTERVAL,"400","Specifies time interval in milliseconds when searching, between keyboard keyup event and triggering the search off, should be higher if most users are slow when typing so as to minimise the load on the server"));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME,"Unknown Location","The name of the location to use as a system default"));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }

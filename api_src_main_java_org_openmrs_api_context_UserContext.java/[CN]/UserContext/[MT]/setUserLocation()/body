@@ -1,0 +1,19 @@
+{
+  if (this.user != null) {
+    String locationId=this.user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
+    if (StringUtils.isNotBlank(locationId)) {
+      if (this.location == null || !this.location.getName().equalsIgnoreCase(locationId)) {
+        try {
+          this.location=Context.getLocationService().getLocation(Integer.valueOf(locationId));
+        }
+ catch (        NumberFormatException e) {
+          if (this.location != null)           this.location=null;
+          log.warn("The value of the default Location property of the user with id:" + this.user.getUserId() + " should be an integer",e);
+        }
+      }
+    }
+ else {
+      if (this.location != null)       this.location=null;
+    }
+  }
+}
