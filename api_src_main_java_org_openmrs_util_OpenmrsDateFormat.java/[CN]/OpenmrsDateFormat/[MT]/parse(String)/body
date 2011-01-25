@@ -1,0 +1,15 @@
+{
+  Matcher patternMatch=Pattern.compile("\\/yyyy$").matcher(this.toPattern());
+  if (patternMatch.find()) {
+    Matcher dateMatch=Pattern.compile("\\/\\d{4}$").matcher(text);
+    if (!dateMatch.find()) {
+      throw new ParseException("Unparseable date \"" + text + "\"",0);
+    }
+  }
+ else {
+    if (this.toPattern().length() != text.length()) {
+      throw new ParseException("Unparseable date \"" + text + "\"",0);
+    }
+  }
+  return super.parse(text);
+}

@@ -1,0 +1,30 @@
+{
+  try {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(new Locale("en","GB"));
+    sdf.parse("1/13/2001");
+    Assert.fail("Date with invalid month should throw exception.");
+  }
+ catch (  ParseException e) {
+  }
+  try {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(new Locale("en","GB"));
+    sdf.parse("32/1/2001");
+    Assert.fail("Date with invalid day should throw exception.");
+  }
+ catch (  ParseException e) {
+  }
+  try {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(new Locale("en","US"));
+    sdf.parse("13/1/2001");
+    Assert.fail("Date with invalid month should throw exception.");
+  }
+ catch (  ParseException e) {
+  }
+  try {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(new Locale("en","US"));
+    sdf.parse("1/32/2001");
+    Assert.fail("Date with invalid day should throw exception.");
+  }
+ catch (  ParseException e) {
+  }
+}
