@@ -1,6 +1,6 @@
 {
   if (dateFormatCache.containsKey(locale))   return (SimpleDateFormat)dateFormatCache.get(locale).clone();
-  SimpleDateFormat sdf=(SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT,locale);
+  SimpleDateFormat sdf=new OpenmrsDateFormat((SimpleDateFormat)DateFormat.getDateInstance(DateFormat.SHORT,locale),locale);
   String pattern=sdf.toPattern();
   if (!pattern.contains("yyyy")) {
     pattern=pattern.replaceFirst("yy","yyyy");

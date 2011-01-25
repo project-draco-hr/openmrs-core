@@ -1,0 +1,9 @@
+{
+  try {
+    SimpleDateFormat sdf=OpenmrsUtil.getDateFormat(new Locale("en"));
+    sdf.parse("01/01/01");
+    Assert.fail("Date with two-digit year should throw exception.");
+  }
+ catch (  ParseException e) {
+  }
+}
