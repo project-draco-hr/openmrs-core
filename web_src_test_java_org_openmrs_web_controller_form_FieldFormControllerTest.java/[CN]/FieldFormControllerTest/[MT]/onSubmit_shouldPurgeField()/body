@@ -1,14 +1,8 @@
 {
   final String FIELD_ID="1";
-  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
-  request.setParameter("fieldId",FIELD_ID);
   HttpServletResponse response=new MockHttpServletResponse();
   FieldFormController controller=(FieldFormController)applicationContext.getBean("fieldForm");
-  controller.handleRequest(request,response);
-  Context.closeSession();
-  Context.openSession();
-  authenticate();
-  request=new MockHttpServletRequest("POST","");
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
   response=new MockHttpServletResponse();
   request.setParameter("fieldId",FIELD_ID);
   request.setParameter("name","Some concept");
@@ -16,6 +10,7 @@
   request.setParameter("fieldTypeId","1");
   request.setParameter("name","Some concept");
   request.setParameter("conceptId","3");
-  request.setParameter("action","save");
+  request.setParameter("action","Delete");
   controller.handleRequest(request,response);
+  Assert.assertNull(Context.getFormService().getField(new Integer(FIELD_ID)));
 }
