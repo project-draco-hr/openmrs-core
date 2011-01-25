@@ -1,7 +1,16 @@
 {
   if (Context.isAuthenticated()) {
     Patient patient=null;
-    if (patientId != null)     patient=Context.getPatientService().getPatient(patientId);
+    if (patientId != null) {
+      try {
+        patient=Context.getPatientService().getPatient(patientId);
+      }
+ catch (      ClassCastException ex) {
+      }
+      if (patient == null) {
+        patient=new Patient(Context.getPersonService().getPerson(patientId));
+      }
+    }
  else {
       patient=new Patient();
       String name=request.getParameter("addName");
