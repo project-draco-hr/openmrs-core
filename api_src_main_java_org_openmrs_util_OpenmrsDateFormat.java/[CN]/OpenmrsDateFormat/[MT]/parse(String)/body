@@ -1,14 +1,14 @@
 {
-  Matcher patternMatch=Pattern.compile("\\/yyyy$").matcher(this.toPattern());
+  Matcher patternMatch=Pattern.compile("\\Wyyyy$").matcher(this.toPattern());
   if (patternMatch.find()) {
-    Matcher dateMatch=Pattern.compile("\\/\\d{4}$").matcher(text);
+    Matcher dateMatch=Pattern.compile("\\W\\d{4}$").matcher(text);
     if (!dateMatch.find()) {
-      throw new ParseException("Unparseable date \"" + text + "\"",0);
+      throw new ParseException("Unparseable date \"" + text + "\" - year must have 4 digits",0);
     }
   }
  else {
     if (this.toPattern().length() != text.length()) {
-      throw new ParseException("Unparseable date \"" + text + "\"",0);
+      throw new ParseException("Unparseable date \"" + text + "\" - length of date string doesn't match length of date pattern",0);
     }
   }
   return super.parse(text);
