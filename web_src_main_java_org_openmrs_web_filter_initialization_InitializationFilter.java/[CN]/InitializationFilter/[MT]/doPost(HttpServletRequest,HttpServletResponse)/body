@@ -40,6 +40,20 @@
     }
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
+    wizardModel.databaseDriver=httpRequest.getParameter("database_driver");
+    checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
+    String databaseDriver=httpRequest.getParameter("database_driver");
+    try {
+      driverString=DatabaseUtil.loadDatabaseDriver(wizardModel.databaseConnection,databaseDriver);
+      log.info("using database driver :" + driverString);
+    }
+ catch (    ClassNotFoundException e) {
+      errors.add("The given Database driver class was not found.");
+      renderTemplate(page,referenceMap,httpResponse);
+      return;
+    }
+    wizardModel.databaseDriver=driverString;
+    log.info("Asigned " + driverString + " to wizard model");
     if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
       wizardModel.databaseName=httpRequest.getParameter("openmrs_current_database_name");
       checkForEmptyValue(wizardModel.databaseName,errors,"Current database name");

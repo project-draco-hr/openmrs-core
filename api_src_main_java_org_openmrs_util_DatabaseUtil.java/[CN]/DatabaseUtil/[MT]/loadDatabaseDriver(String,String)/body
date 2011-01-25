@@ -1,0 +1,34 @@
+{
+  if (StringUtils.hasText(connectionDriver)) {
+    Class.forName(connectionDriver);
+    log.debug("set user defined Database driver class: " + connectionDriver);
+  }
+ else {
+    if (connectionUrl.contains("mysql")) {
+      Class.forName("com.mysql.jdbc.Driver");
+      connectionDriver="com.mysql.jdbc.Driver";
+    }
+ else     if (connectionUrl.contains("hsqldb")) {
+      Class.forName("org.hsqldb.jdbcDriver");
+      connectionDriver="org.hsqldb.jdbcDriver";
+    }
+ else     if (connectionUrl.contains("postgresql")) {
+      Class.forName("org.postgresql.Driver");
+      connectionDriver="org.postgresql.Driver";
+    }
+ else     if (connectionUrl.contains("oracle")) {
+      Class.forName("oracle.jdbc.driver.OracleDriver");
+      connectionDriver="oracle.jdbc.driver.OracleDriver";
+    }
+ else     if (connectionUrl.contains("jtds")) {
+      Class.forName("net.sourceforge.jtds.jdbc.Driver");
+      connectionDriver="net.sourceforge.jtds.jdbc.Driver";
+    }
+ else     if (connectionUrl.contains("sqlserver")) {
+      Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
+      connectionDriver="com.microsoft.jdbc.sqlserver.SQLServerDriver";
+    }
+  }
+  log.info("Set database driver class as " + connectionDriver);
+  return connectionDriver;
+}

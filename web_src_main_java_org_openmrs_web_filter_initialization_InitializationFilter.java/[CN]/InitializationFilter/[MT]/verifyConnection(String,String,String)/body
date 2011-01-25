@@ -1,6 +1,6 @@
 {
   try {
-    Class.forName("com.mysql.jdbc.Driver").newInstance();
+    Class.forName(driverString).newInstance();
     DriverManager.getConnection(databaseConnectionFinalUrl,connectionUsername,connectionPassword);
     return true;
   }
