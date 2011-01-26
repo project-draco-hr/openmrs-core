@@ -11,8 +11,8 @@
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.deleted");
         return new ModelAndView(new RedirectView("index.htm"));
       }
- catch (      APIException e) {
-        log.error(e);
+ catch (      DataIntegrityViolationException e) {
+        log.error("Unable to delete patient because of database FK errors: " + patient,e);
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Patient.cannot.delete");
         return new ModelAndView(new RedirectView(getSuccessView() + "?patientId=" + patient.getPatientId().toString()));
       }
