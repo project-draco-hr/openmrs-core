@@ -19,13 +19,18 @@
   }
   if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
-  for (  Module publicImport : requiredModules) {
-    if (seenModules.contains(publicImport.getModuleId()))     continue;
-    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-    if (mcl != null)     result=mcl.findResource(name,requestor,seenModules);
-    if (result != null) {
-      break;
+  if (requiredModules != null) {
+    for (    Module publicImport : requiredModules) {
+      if (seenModules.contains(publicImport.getModuleId()))       continue;
+      ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
+      if (mcl != null)       result=mcl.findResource(name,requestor,seenModules);
+      if (result != null) {
+        break;
+      }
     }
+  }
+ else {
+    result=result;
   }
   return result;
 }
