@@ -1,0 +1,6 @@
+{
+  Patient pa=new Patient(1);
+  Errors errors=new BindException(pa,"patient");
+  validator.validate(pa,errors);
+  Assert.assertTrue(errors.hasFieldErrors("gender"));
+}
