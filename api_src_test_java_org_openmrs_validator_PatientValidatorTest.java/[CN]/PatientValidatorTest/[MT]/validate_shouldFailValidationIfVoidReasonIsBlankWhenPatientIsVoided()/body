@@ -1,0 +1,7 @@
+{
+  Patient pa=Context.getPatientService().getPatient(2);
+  pa.setVoided(true);
+  Errors errors=new BindException(pa,"patient");
+  validator.validate(pa,errors);
+  Assert.assertTrue(errors.hasFieldErrors("voidReason"));
+}
