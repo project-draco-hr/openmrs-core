@@ -26,7 +26,7 @@
     model.addAttribute("relationshipsMap",getRelationshipsMap(patient,request));
     model.addAttribute("identifierTypes",Context.getPatientService().getAllPatientIdentifierTypes());
     model.addAttribute("locations",Context.getLocationService().getAllLocations());
-    model.addAttribute("defaultLocation",Context.getLocation());
+    model.addAttribute("defaultLocation",(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation());
     String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
     Concept conceptCause=Context.getConceptService().getConcept(propCause);
     String causeOfDeathOther="";
