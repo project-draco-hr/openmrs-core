@@ -10,7 +10,7 @@
   request.setParameter("fieldTypeId","1");
   request.setParameter("name","Some concept");
   request.setParameter("conceptId","3");
-  request.setParameter("action","Delete");
+  request.setParameter("action",Context.getMessageSourceService().getMessage("general.delete"));
   controller.handleRequest(request,response);
   Assert.assertNull(Context.getFormService().getField(new Integer(FIELD_ID)));
 }
