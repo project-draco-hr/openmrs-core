@@ -1,4 +1,6 @@
 {
-  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,"ja"));
+  GlobalProperty gp=Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,"ja"));
   Assert.assertEquals(Locale.JAPANESE,LocaleUtility.getDefaultLocale());
+  gp.setProperty("");
+  Context.getAdministrationService().saveGlobalProperty(gp);
 }

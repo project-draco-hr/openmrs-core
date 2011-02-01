@@ -4,6 +4,6 @@
   GlobalProperty defaultLocale=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,"lu","Test Allowed list of locales");
   Context.getAdministrationService().saveGlobalProperty(defaultLocale);
   Locale lu_UG=new Locale("lu","UG");
-  Context.getUserContext().setLocale(lu_UG);
+  Context.setLocale(lu_UG);
   Assert.assertEquals(5,LocaleUtility.getLocalesInOrder().size());
 }
