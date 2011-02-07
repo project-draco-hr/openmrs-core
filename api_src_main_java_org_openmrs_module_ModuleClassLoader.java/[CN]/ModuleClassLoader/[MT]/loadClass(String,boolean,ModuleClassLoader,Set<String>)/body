@@ -54,5 +54,15 @@ catch (    ClassNotFoundException cnfe) {
       }
     }
   }
+  for (  Module publicImport : awareOfModules) {
+    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
+    if (mcl != null) {
+      result=mcl.loadClass(name,resolve,requestor,seenModules);
+    }
+    if (result != null) {
+      break;
+    }
+  }
   return result;
 }

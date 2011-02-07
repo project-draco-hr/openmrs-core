@@ -1,0 +1,10 @@
+{
+  Map<String,Module> publicImportsMap=new WeakHashMap<String,Module>();
+  for (  String awareOfPackage : getModule().getAwareOfModules()) {
+    Module awareOfModule=ModuleFactory.getModuleByPackage(awareOfPackage);
+    if (ModuleFactory.isModuleStarted(awareOfModule)) {
+      publicImportsMap.put(awareOfModule.getModuleId(),awareOfModule);
+    }
+  }
+  awareOfModules=publicImportsMap.values().toArray(new Module[publicImportsMap.size()]);
+}
