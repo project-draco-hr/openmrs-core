@@ -6,8 +6,8 @@
   ComplexObsHandler dummyHandlerToOverride=os.getHandler("DummyHandlerToOverride");
   Assert.assertTrue(dummyHandlerToOverride instanceof ImageHandler);
   Map<String,ComplexObsHandler> handlersAgain=new HashMap<String,ComplexObsHandler>();
-  handlersAgain.put("DummyHandlerToOverride",new TextHandler());
+  handlersAgain.put("DummyHandlerToOverride",new BinaryDataHandler());
   os.setHandlers(handlersAgain);
   ComplexObsHandler dummyHandlerToOverrideAgain=os.getHandler("DummyHandlerToOverride");
-  Assert.assertTrue(dummyHandlerToOverrideAgain instanceof TextHandler);
+  Assert.assertTrue(dummyHandlerToOverrideAgain instanceof BinaryDataHandler);
 }
