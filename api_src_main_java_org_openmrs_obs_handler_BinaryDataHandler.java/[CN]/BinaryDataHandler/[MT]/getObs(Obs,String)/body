@@ -3,8 +3,13 @@
   log.debug("value complex: " + obs.getValueComplex());
   log.debug("file path: " + file.getAbsolutePath());
   ComplexData complexData=null;
+  String[] names=obs.getValueComplex().split("\\|");
+  String originalFilename=names[0];
+  if ("download".equals(view)) {
+    originalFilename=originalFilename.replaceAll(",","").replaceAll(" ","").replaceAll("file$","");
+  }
   try {
-    complexData=new ComplexData(file.getName(),OpenmrsUtil.getFileAsBytes(file));
+    complexData=new ComplexData(originalFilename,OpenmrsUtil.getFileAsBytes(file));
   }
  catch (  IOException e) {
     log.error("Trying to read file: " + file.getAbsolutePath(),e);
