@@ -3,6 +3,7 @@
   if (log.isDebugEnabled())   log.debug("URLs length: " + urls.size());
   this.module=module;
   collectRequiredModuleImports();
+  collectAwareOfModuleImports();
   collectFilters();
   libraryCache=new WeakHashMap<URL,File>();
 }
