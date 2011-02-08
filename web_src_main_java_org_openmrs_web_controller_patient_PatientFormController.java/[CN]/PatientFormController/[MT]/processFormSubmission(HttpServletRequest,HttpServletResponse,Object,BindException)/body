@@ -54,7 +54,9 @@
       String[] counties=ServletRequestUtils.getStringParameters(request,"countyDistrict");
       String[] cells=ServletRequestUtils.getStringParameters(request,"neighborhoodCell");
       String[] addPrefStatus=ServletRequestUtils.getStringParameters(request,"preferred");
-      if (add1s != null || add2s != null || cities != null || states != null || countries != null || lats != null || longs != null || pCodes != null || counties != null || cells != null) {
+      String[] startDates=ServletRequestUtils.getStringParameters(request,"startDate");
+      String[] endDates=ServletRequestUtils.getStringParameters(request,"endDate");
+      if (add1s != null || add2s != null || cities != null || states != null || countries != null || lats != null || longs != null || pCodes != null || counties != null || cells != null || startDates != null || endDates != null) {
         int maxAddrs=0;
         if (add1s != null)         if (add1s.length > maxAddrs)         maxAddrs=add1s.length;
         if (add2s != null)         if (add2s.length > maxAddrs)         maxAddrs=add2s.length;
@@ -66,6 +68,8 @@
         if (pCodes != null)         if (pCodes.length > maxAddrs)         maxAddrs=pCodes.length;
         if (counties != null)         if (counties.length > maxAddrs)         maxAddrs=counties.length;
         if (cells != null)         if (cells.length > maxAddrs)         maxAddrs=cells.length;
+        if (startDates != null)         if (startDates.length > maxAddrs)         maxAddrs=startDates.length;
+        if (endDates != null)         if (endDates.length > maxAddrs)         maxAddrs=endDates.length;
         log.debug("There appears to be " + maxAddrs + " addresses that need to be saved");
         for (int i=0; i < maxAddrs; i++) {
           PersonAddress pa=new PersonAddress();
@@ -80,6 +84,8 @@
           if (counties.length >= i + 1)           pa.setCountyDistrict(counties[i]);
           if (cells.length >= i + 1)           pa.setNeighborhoodCell(cells[i]);
           if (addPrefStatus != null && addPrefStatus.length > i)           pa.setPreferred(new Boolean(addPrefStatus[i]));
+          if (startDates.length >= i + 1 && StringUtils.isNotBlank(startDates[i]))           pa.setStartDate(Context.getDateFormat().parse(startDates[i]));
+          if (endDates.length >= i + 1 && StringUtils.isNotBlank(endDates[i]))           pa.setEndDate(Context.getDateFormat().parse(endDates[i]));
           patient.addAddress(pa);
         }
         Iterator<PersonAddress> addresses=patient.getAddresses().iterator();

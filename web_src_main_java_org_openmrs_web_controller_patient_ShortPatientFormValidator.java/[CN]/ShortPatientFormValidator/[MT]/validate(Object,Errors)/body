@@ -40,6 +40,15 @@
  else {
     errors.rejectValue("patient.birthdate","error.required",new Object[]{Context.getMessageSourceService().getMessage("Person.birthdate")},"");
   }
+  if (shortPatientModel.getPersonAddress() != null) {
+    try {
+      errors.pushNestedPath("personAddress");
+      ValidationUtils.invokeValidator(new PersonAddressValidator(),shortPatientModel.getPersonAddress(),errors);
+    }
+  finally {
+      errors.popNestedPath();
+    }
+  }
   if (shortPatientModel.getPatient().getDead()) {
     if (shortPatientModel.getPatient().getCauseOfDeath() == null)     errors.rejectValue("patient.causeOfDeath","Person.dead.causeOfDeathNull");
     if (shortPatientModel.getPatient().getDeathDate() != null) {
