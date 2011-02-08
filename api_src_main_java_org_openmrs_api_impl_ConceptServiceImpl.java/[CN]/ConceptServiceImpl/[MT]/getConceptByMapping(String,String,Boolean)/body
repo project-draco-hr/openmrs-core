@@ -3,6 +3,9 @@
   if (concepts.size() == 0) {
     return null;
   }
+ else   if (concepts.size() > 1 && !concepts.get(1).isRetired()) {
+    throw new APIException("Multiple non-retired concepts found for mapping " + code + " from source "+ sourceName);
+  }
  else {
     return concepts.get(0);
   }
