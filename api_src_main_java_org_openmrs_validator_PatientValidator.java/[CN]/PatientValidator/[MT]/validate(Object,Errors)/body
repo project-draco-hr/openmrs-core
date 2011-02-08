@@ -5,6 +5,17 @@
     for (    PersonName personName : patient.getNames()) {
       personNameValidator.validate(personName,errors);
     }
+    int index=0;
+    for (    PersonAddress address : patient.getAddresses()) {
+      try {
+        errors.pushNestedPath("addresses[" + index + "]");
+        ValidationUtils.invokeValidator(personAddressValidator,address,errors);
+      }
+  finally {
+        errors.popNestedPath();
+        index++;
+      }
+    }
   }
   if (StringUtils.isBlank(patient.getGender()))   errors.rejectValue("gender","Person.gender.required");
   if (patient.getBirthdate() != null) {

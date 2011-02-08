@@ -1,0 +1,10 @@
+{
+  PersonAddress personAddress=new PersonAddress();
+  Calendar c=Calendar.getInstance();
+  personAddress.setStartDate(c.getTime());
+  c.set(2010,3,15);
+  personAddress.setEndDate(c.getTime());
+  Errors errors=new BindException(personAddress,"personAddress");
+  validator.validate(personAddress,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors());
+}
