@@ -3,18 +3,15 @@
   if (Context.isAuthenticated()) {
     String view=getSuccessView();
     PatientService ps=Context.getPatientService();
-    String patient1Id=ServletRequestUtils.getRequiredStringParameter(request,"patient1");
-    String patient2Id=ServletRequestUtils.getRequiredStringParameter(request,"patient2");
-    String preferredId=ServletRequestUtils.getRequiredStringParameter(request,"preferred");
-    Patient preferred=null;
-    Patient notPreferred=null;
-    if (patient1Id.equals(preferredId)) {
-      preferred=ps.getPatient(Integer.valueOf(patient1Id));
-      notPreferred=ps.getPatient(Integer.valueOf(patient2Id));
-    }
- else {
-      notPreferred=ps.getPatient(Integer.valueOf(patient1Id));
-      preferred=ps.getPatient(Integer.valueOf(patient2Id));
+    String pref=request.getParameter("preferred");
+    String[] nonPreferred=request.getParameter("nonPreferred").split(",");
+    String redirectURL=request.getParameter("redirectURL");
+    Patient preferred=ps.getPatient(Integer.valueOf(pref));
+    List<Patient> notPreferred=new ArrayList<Patient>();
+    view=view + "?patientId=" + preferred.getPatientId();
+    for (int i=0; i < nonPreferred.length; i++) {
+      notPreferred.add(ps.getPatient(Integer.valueOf(nonPreferred[i])));
+      view=view + "&patientId=" + nonPreferred[i];
     }
     try {
       ps.mergePatients(preferred,notPreferred);
@@ -22,10 +19,16 @@
  catch (    APIException e) {
       log.error("Unable to merge patients",e);
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Patient.merge.fail");
-      return new ModelAndView(new RedirectView(view + "?patientId=" + preferred.getPatientId()+ "&patientId="+ notPreferred.getPatientId()));
+      return showForm(request,response,errors);
     }
+    int index=redirectURL.indexOf(request.getContextPath(),2);
+    if (index != -1) {
+      redirectURL=redirectURL.substring(index);
+      if (redirectURL.contains(getSuccessView()))       redirectURL="findDuplicatePatients.htm";
+    }
+ else     redirectURL=view;
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.merged");
-    return new ModelAndView(new RedirectView(view + "?patientId=" + preferred.getPatientId()+ "&patientId="+ notPreferred.getPatientId()));
+    return new ModelAndView(new RedirectView(redirectURL));
   }
   return new ModelAndView(new RedirectView(getFormView()));
 }

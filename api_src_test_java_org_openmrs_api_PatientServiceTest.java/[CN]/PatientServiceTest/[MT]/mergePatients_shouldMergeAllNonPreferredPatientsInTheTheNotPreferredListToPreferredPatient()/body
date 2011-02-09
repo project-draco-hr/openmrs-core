@@ -1,0 +1,10 @@
+{
+  Patient preferred=patientService.getPatient(6);
+  List<Patient> notPreferred=new ArrayList<Patient>();
+  notPreferred.add(patientService.getPatient(7));
+  notPreferred.add(patientService.getPatient(8));
+  patientService.mergePatients(preferred,notPreferred);
+  Assert.assertFalse(patientService.getPatient(6).isVoided());
+  Assert.assertTrue(patientService.getPatient(7).isVoided());
+  Assert.assertTrue(patientService.getPatient(8).isVoided());
+}
