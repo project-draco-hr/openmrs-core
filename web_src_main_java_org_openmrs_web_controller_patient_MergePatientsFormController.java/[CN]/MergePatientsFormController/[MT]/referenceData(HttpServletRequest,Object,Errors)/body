@@ -4,10 +4,16 @@
   Patient p2=new Patient();
   Collection<Encounter> patient1Encounters=new Vector<Encounter>();
   Collection<Encounter> patient2Encounters=new Vector<Encounter>();
+  List<Patient> patientList=new ArrayList<Patient>();
+  List<Collection<Encounter>> encounterList=new ArrayList<Collection<Encounter>>();
   if (Context.isAuthenticated()) {
     EncounterService es=Context.getEncounterService();
     patient1Encounters=es.getEncountersByPatient(p1);
     String[] patientIds=request.getParameterValues("patientId");
+    if (patientIds != null)     for (    String patient : patientIds) {
+      patientList.add(Context.getPatientService().getPatient(Integer.valueOf(patient)));
+      encounterList.add(es.getEncountersByPatient(Context.getPatientService().getPatient(Integer.valueOf(patient))));
+    }
     if (patientIds != null && patientIds.length > 1 && !patientIds[0].equals(patientIds[1])) {
       String patientId=patientIds[1];
       Integer pId=Integer.valueOf(patientId);
@@ -17,6 +23,8 @@
   }
   map.put("patient1Encounters",patient1Encounters);
   map.put("patient2Encounters",patient2Encounters);
+  map.put("patientEncounters",encounterList);
   map.put("patient2",p2);
+  map.put("patientList",patientList);
   return map;
 }
