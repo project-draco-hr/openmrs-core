@@ -1,0 +1,19 @@
+{
+  Patient p=Context.getPatientService().getPatient(2);
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  PersonAddress oldPersonAddress=patientModel.getPersonAddress();
+  String oldAddress1=oldPersonAddress.getAddress1();
+  int addressCount=p.getAddresses().size();
+  BindException errors=new BindException(patientModel,"patientModel");
+  ServletWebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  PersonAddress personAddressCache=(PersonAddress)p.getPersonAddress().clone();
+  patientModel.getPersonAddress().setAddress1("Kampala");
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)BeanUtils.cloneBean(p.getPersonName()),personAddressCache,patientModel,errors,new SimpleSessionStatus());
+  Assert.assertEquals(addressCount + 1,p.getAddresses().size());
+  Assert.assertTrue("The old address should be voided",oldPersonAddress.isVoided());
+  Assert.assertNotNull("The void reason should be set",oldPersonAddress.getVoidReason());
+  Assert.assertTrue("The old address should have remained the same",oldAddress1.equalsIgnoreCase(oldPersonAddress.getAddress1()));
+  Assert.assertEquals("Kampala",p.getPersonAddress().getAddress1());
+  Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+}

@@ -1,24 +1,23 @@
 {
   Patient patient=patientModel.getPatient();
-  patient.addName(patientModel.getPersonName());
+  PersonName personName=patientModel.getPersonName();
+  if (personName != null) {
+    personName.setPreferred(true);
+    patient.addName(personName);
+  }
   PersonAddress personAddress=patientModel.getPersonAddress();
   if (personAddress != null) {
     if (personAddress.isVoided() && StringUtils.isBlank(personAddress.getVoidReason())) {
       personAddress.setVoidReason(Context.getMessageSourceService().getMessage("general.default.voidReason"));
     }
- else     if (!(personAddress.isVoided() && personAddress.getPersonAddressId() == null))     patient.addAddress(personAddress);
+ else     if (!(personAddress.isVoided() && personAddress.getPersonAddressId() == null)) {
+      personAddress.setPreferred(true);
+      patient.addAddress(personAddress);
+    }
   }
   for (  PatientIdentifier id : patientModel.getIdentifiers()) {
     if (id.getPatientIdentifierId() == null && id.isVoided())     continue;
     patient.addIdentifier(id);
-  }
-  boolean foundPreferredIdentifier=false;
-  for (  PatientIdentifier possiblePreferredId : patient.getActiveIdentifiers()) {
-    if (possiblePreferredId.isPreferred() && !foundPreferredIdentifier)     foundPreferredIdentifier=true;
- else     if (possiblePreferredId.isPreferred()) {
-      log.info("Found multiple preferred identifiers, " + possiblePreferredId.getIdentifier() + " is being unset as preferred");
-      possiblePreferredId.setPreferred(false);
-    }
   }
   for (  PersonAttribute formAttribute : patientModel.getPersonAttributes())   patient.addAttribute(formAttribute);
   return patient;

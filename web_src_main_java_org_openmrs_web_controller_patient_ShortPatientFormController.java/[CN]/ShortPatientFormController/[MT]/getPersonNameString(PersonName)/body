@@ -1,0 +1,7 @@
+{
+  ArrayList<String> tempName=new ArrayList<String>();
+  if (StringUtils.isNotBlank(name.getGivenName()))   tempName.add(name.getGivenName().trim());
+  if (StringUtils.isNotBlank(name.getMiddleName()))   tempName.add(name.getMiddleName().trim());
+  if (StringUtils.isNotBlank(name.getFamilyName()))   tempName.add(name.getFamilyName().trim());
+  return StringUtils.join(tempName," ");
+}

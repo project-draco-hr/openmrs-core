@@ -2,6 +2,12 @@
   if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ": Validating patient data from the short patient form....");
   ShortPatientModel shortPatientModel=(ShortPatientModel)obj;
   PersonName personName=shortPatientModel.getPersonName();
+  for (  PersonName possibleDuplicate : shortPatientModel.getPatient().getNames()) {
+    if (OpenmrsUtil.nullSafeEquals(possibleDuplicate.getId(),personName.getId()))     continue;
+    if (OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getGivenName(),personName.getGivenName()) && OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getMiddleName(),personName.getMiddleName()) && OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getFamilyName(),personName.getFamilyName())) {
+      errors.reject("Patient.duplicateName",new Object[]{personName.toString()},personName.toString() + " is a duplicate name for the same patient");
+    }
+  }
   Errors nameErrors=new BindException(personName,"personName");
   new PersonNameValidator().validatePersonName(personName,nameErrors,false,true);
   if (nameErrors.hasErrors()) {
@@ -15,6 +21,13 @@
       }
     }
     errorCodesWithNoArguments=null;
+  }
+  PersonAddress personAddress=shortPatientModel.getPersonAddress();
+  for (  PersonAddress possibleDuplicate : shortPatientModel.getPatient().getAddresses()) {
+    if (OpenmrsUtil.nullSafeEquals(possibleDuplicate.getId(),personAddress.getId()))     continue;
+    if (!possibleDuplicate.isBlank() && !personAddress.isBlank() && possibleDuplicate.toString().equalsIgnoreCase(personAddress.toString())) {
+      errors.reject("Patient.duplicateAddress",new Object[]{personAddress.toString()},personAddress.toString() + " is a duplicate address for the same patient");
+    }
   }
   if (CollectionUtils.isEmpty(shortPatientModel.getIdentifiers()))   errors.reject("PatientIdentifier.error.insufficientIdentifiers");
  else {

@@ -1,0 +1,17 @@
+{
+  Patient patient=ps.getPatient(2);
+  PersonName oldName=patient.getPersonName();
+  Assert.assertEquals(1,patient.getNames().size());
+  PersonName name=new PersonName("my","duplicate","name");
+  patient.addName(name);
+  Context.getPatientService().savePatient(patient);
+  Assert.assertNotNull(name.getId());
+  ShortPatientModel model=new ShortPatientModel(patient);
+  Assert.assertEquals(oldName.getId(),model.getPersonName().getId());
+  model.getPersonName().setGivenName("My");
+  model.getPersonName().setMiddleName("duplicate");
+  model.getPersonName().setFamilyName("name");
+  Errors errors=new BindException(model,"patientModel");
+  validator.validate(model,errors);
+  Assert.assertEquals(true,errors.hasErrors());
+}

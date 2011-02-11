@@ -29,6 +29,10 @@
     model.addAttribute("identifierTypes",Context.getPatientService().getAllPatientIdentifierTypes());
     model.addAttribute("locations",Context.getLocationService().getAllLocations());
     model.addAttribute("defaultLocation",(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation());
+    if (patient.getPersonName() != null && patient.getPersonName().getId() != null)     model.addAttribute("personNameCache",PersonName.newInstance(patient.getPersonName()));
+ else     model.addAttribute("personNameCache",new PersonName());
+    if (patient.getPersonAddress() != null && patient.getPersonAddress().getId() != null)     model.addAttribute("personAddressCache",patient.getPersonAddress().clone());
+ else     model.addAttribute("personAddressCache",new PersonAddress());
     String propCause=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
     Concept conceptCause=Context.getConceptService().getConcept(propCause);
     String causeOfDeathOther="";

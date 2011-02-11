@@ -1,0 +1,16 @@
+{
+  Patient p=Context.getPatientService().getPatient(2);
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  SimpleSessionStatus status=new SimpleSessionStatus();
+  BindException errors=new BindException(patientModel,"patientModel");
+  mockWebRequest.setAttribute("personNameCache",BeanUtils.cloneBean(p.getPersonName()),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("personAddressCache",p.getPersonAddress().clone(),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("patientModel",patientModel,WebRequest.SCOPE_SESSION);
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)mockWebRequest.getAttribute("personNameCache",WebRequest.SCOPE_SESSION),(PersonAddress)mockWebRequest.getAttribute("personAddressCache",WebRequest.SCOPE_SESSION),(ShortPatientModel)mockWebRequest.getAttribute("patientModel",WebRequest.SCOPE_SESSION),errors,status);
+  Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
+  Assert.assertEquals("Patient.saved",mockWebRequest.getAttribute(WebConstants.OPENMRS_MSG_ATTR,WebRequest.SCOPE_SESSION));
+  Assert.assertTrue("Should set the status to complete",status.isComplete());
+  Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+}

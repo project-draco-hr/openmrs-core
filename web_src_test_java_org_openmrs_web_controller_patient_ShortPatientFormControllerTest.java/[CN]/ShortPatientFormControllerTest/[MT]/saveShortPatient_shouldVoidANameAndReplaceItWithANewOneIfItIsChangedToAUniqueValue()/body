@@ -1,0 +1,20 @@
+{
+  Patient p=Context.getPatientService().getPatient(2);
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  PersonName oldPersonName=p.getPersonName();
+  String oldGivenName=oldPersonName.getGivenName();
+  int nameCount=p.getNames().size();
+  BindException errors=new BindException(patientModel,"patientModel");
+  ServletWebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  PersonName personNameCache=(PersonName)BeanUtils.cloneBean(p.getPersonName());
+  patientModel.getPersonName().setGivenName("Changed");
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,personNameCache,(PersonAddress)p.getPersonAddress().clone(),patientModel,errors,new SimpleSessionStatus());
+  Assert.assertEquals(nameCount + 1,p.getNames().size());
+  Assert.assertTrue("The old name should be voided",oldPersonName.isVoided());
+  Assert.assertNotNull("The void reason should be set",oldPersonName.getVoidReason());
+  Assert.assertTrue("The old name should have remained un changed",oldGivenName.equalsIgnoreCase(oldPersonName.getGivenName()));
+  Assert.assertEquals("Changed",p.getGivenName());
+  Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
+  Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+}

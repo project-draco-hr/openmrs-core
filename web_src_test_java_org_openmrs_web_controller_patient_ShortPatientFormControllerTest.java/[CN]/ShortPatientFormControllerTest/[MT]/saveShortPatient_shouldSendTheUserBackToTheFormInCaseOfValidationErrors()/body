@@ -1,0 +1,13 @@
+{
+  Patient p=new Patient();
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  patientModel.setPersonName(new PersonName("new","","patient"));
+  List<PatientIdentifier> identifiers=new ArrayList<PatientIdentifier>();
+  patientModel.setIdentifiers(identifiers);
+  WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  BindException errors=new BindException(patientModel,"patientModel");
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String formUrl=controller.saveShortPatient(mockWebRequest,new PersonName(),new PersonAddress(),patientModel,errors,new SimpleSessionStatus());
+  Assert.assertTrue("Should report validation errors",errors.hasErrors());
+  Assert.assertEquals("/admin/patients/shortPatientForm",formUrl);
+}
