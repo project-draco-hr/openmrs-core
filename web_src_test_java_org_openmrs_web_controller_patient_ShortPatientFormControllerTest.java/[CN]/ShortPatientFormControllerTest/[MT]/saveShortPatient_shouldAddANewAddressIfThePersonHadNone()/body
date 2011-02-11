@@ -1,0 +1,18 @@
+{
+  Patient p=Context.getPatientService().getPatient(2);
+  p.getPersonAddress().setVoided(true);
+  Context.getPatientService().savePatient(p);
+  Assert.assertNull(p.getPersonAddress());
+  PersonAddress newAddress=new PersonAddress();
+  newAddress.setAddress1("Kampala");
+  newAddress.setDateCreated(new Date());
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  patientModel.setPersonAddress(newAddress);
+  BindException errors=new BindException(patientModel,"patientModel");
+  ServletWebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)BeanUtils.cloneBean(p.getPersonName()),new PersonAddress(),patientModel,errors,new SimpleSessionStatus());
+  Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
+  Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+  Assert.assertNotNull(newAddress.getId());
+}

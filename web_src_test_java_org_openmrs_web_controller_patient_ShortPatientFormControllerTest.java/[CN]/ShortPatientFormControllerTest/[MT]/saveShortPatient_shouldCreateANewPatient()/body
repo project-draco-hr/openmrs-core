@@ -1,0 +1,22 @@
+{
+  int patientCount=Context.getPatientService().getAllPatients().size();
+  Patient p=new Patient();
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  patientModel.setPersonName(new PersonName("new","","patient"));
+  List<PatientIdentifier> identifiers=new ArrayList<PatientIdentifier>();
+  identifiers.add(new PatientIdentifier("myID",Context.getPatientService().getPatientIdentifierType(2),LocationUtility.getDefaultLocation()));
+  patientModel.setIdentifiers(identifiers);
+  patientModel.getPatient().setBirthdate(new Date());
+  patientModel.getPatient().setGender("M");
+  WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  BindException errors=new BindException(patientModel,"patientModel");
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,new PersonName(),new PersonAddress(),patientModel,errors,new SimpleSessionStatus());
+  Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
+  Assert.assertNotNull(p.getId());
+  Assert.assertNotNull(p.getPersonName());
+  Assert.assertNotNull(p.getPersonName().getId());
+  Assert.assertEquals(patientCount + 1,Context.getPatientService().getAllPatients().size());
+  Assert.assertEquals("Patient.saved",mockWebRequest.getAttribute(WebConstants.OPENMRS_MSG_ATTR,WebRequest.SCOPE_SESSION));
+  Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+}

@@ -1,0 +1,55 @@
+{
+  boolean foundChanges=false;
+  PersonName personName=patient.getPersonName();
+  if (personNameCache.getId() != null) {
+    if (!getPersonNameString(personName).equalsIgnoreCase(getPersonNameString(personNameCache))) {
+      if (log.isDebugEnabled())       log.debug("Voiding person name with id: " + personName.getId() + " and replacing it with a new one: "+ personName.toString());
+      foundChanges=true;
+      PersonName newName=PersonName.newInstance(personName);
+      newName.setPersonNameId(null);
+      newName.setUuid(null);
+      newName.setChangedBy(null);
+      newName.setDateChanged(null);
+      newName.setCreator(Context.getAuthenticatedUser());
+      newName.setDateCreated(new Date());
+      personName.setGivenName(personNameCache.getGivenName());
+      personName.setMiddleName(personNameCache.getMiddleName());
+      personName.setFamilyName(personNameCache.getFamilyName());
+      personName.setPreferred(false);
+      personName.setVoided(true);
+      personName.setVoidReason(Context.getMessageSourceService().getMessage("general.voidReasonWithArgument",new Object[]{newName.toString()},"Voided because it was edited to: " + newName.toString(),Context.getLocale()));
+      patient.addName(newName);
+    }
+  }
+  PersonAddress personAddress=patient.getPersonAddress();
+  if (personAddress != null) {
+    if (personAddressCache.getId() != null) {
+      if (!personAddress.isBlank() && !personAddressCache.isBlank() && !personAddress.toString().equalsIgnoreCase(personAddressCache.toString())) {
+        if (log.isDebugEnabled())         log.debug("Voiding person address with id: " + personAddress.getId() + " and replacing it with a new one: "+ personAddress.toString());
+        foundChanges=true;
+        PersonAddress newAddress=(PersonAddress)personAddress.clone();
+        newAddress.setPersonAddressId(null);
+        newAddress.setUuid(null);
+        newAddress.setChangedBy(null);
+        newAddress.setDateChanged(null);
+        newAddress.setCreator(Context.getAuthenticatedUser());
+        newAddress.setDateCreated(new Date());
+        personAddress.setAddress1(personAddressCache.getAddress1());
+        personAddress.setAddress2(personAddressCache.getAddress2());
+        personAddress.setAddress3(personAddressCache.getAddress3());
+        personAddress.setCityVillage(personAddressCache.getCityVillage());
+        personAddress.setCountry(personAddressCache.getCountry());
+        personAddress.setCountyDistrict(personAddressCache.getCountyDistrict());
+        personAddress.setStateProvince(personAddressCache.getStateProvince());
+        personAddress.setPostalCode(personAddressCache.getPostalCode());
+        personAddress.setLatitude(personAddressCache.getLatitude());
+        personAddress.setLongitude(personAddressCache.getLongitude());
+        personAddress.setPreferred(false);
+        personAddress.setVoided(true);
+        personAddress.setVoidReason(Context.getMessageSourceService().getMessage("general.voidReasonWithArgument",new Object[]{newAddress.toString()},"Voided because it was edited to: " + newAddress.toString(),Context.getLocale()));
+        patient.addAddress(newAddress);
+      }
+    }
+  }
+  return foundChanges;
+}

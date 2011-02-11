@@ -1,0 +1,8 @@
+{
+  ServletWebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  ModelMap model=new ModelMap();
+  String redirectUrl=controller.showForm(2,model,mockWebRequest);
+  Assert.assertTrue(MapUtils.isNotEmpty(model));
+  Assert.assertEquals("/admin/patients/shortPatientForm",redirectUrl);
+}
