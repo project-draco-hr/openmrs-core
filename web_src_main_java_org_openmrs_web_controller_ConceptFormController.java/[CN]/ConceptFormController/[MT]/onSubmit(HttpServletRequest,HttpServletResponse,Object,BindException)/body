@@ -5,7 +5,37 @@
     ConceptFormBackingObject conceptBackingObject=(ConceptFormBackingObject)obj;
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
-    if (action.equals(msa.getMessage("Concept.delete","Delete Concept"))) {
+    if (action.equals(msa.getMessage("general.retire"))) {
+      Concept concept=conceptBackingObject.getConcept();
+      try {
+        String reason=request.getParameter(msa.getMessage("general.retiredReason"));
+        if (!StringUtils.hasText(reason)) {
+          httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"general.retiredReason.empty");
+          return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+        }
+        cs.retireConcept(concept,reason);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.retiredMessage");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+      }
+ catch (      Exception e) {
+        log.error("Unable to Retire concept because an error occurred: " + concept,e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept cannot retire");
+      }
+    }
+ else     if (action.equals(msa.getMessage("general.unretire"))) {
+      Concept concept=conceptBackingObject.getConcept();
+      try {
+        concept.setRetired(false);
+        cs.saveConcept(concept);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept UnRetired");
+        return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + concept.getConceptId()));
+      }
+ catch (      Exception e) {
+        log.error("Unable to unretire concept because an error occurred: " + concept,e);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept unable to Unretire");
+      }
+    }
+ else     if (action.equals(msa.getMessage("Concept.delete","Delete Concept"))) {
       Concept concept=conceptBackingObject.getConcept();
       try {
         cs.purgeConcept(concept);
@@ -53,8 +83,8 @@ catch (      APIException e) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Concept.cannot.save");
         errors.reject("concept","Concept.cannot.save");
       }
-      return showForm(request,response,errors);
     }
+    return showForm(request,response,errors);
   }
   return new ModelAndView(new RedirectView(getFormView()));
 }
