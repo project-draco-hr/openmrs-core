@@ -12,6 +12,7 @@
     if (optionHeader == null)     optionHeader="";
     ConceptService cs=Context.getConceptService();
     List<Drug> drugs=cs.getAllDrugs();
+    Collections.sort(drugs,new DrugsByNameComparator());
     if (drugs == null)     drugs=new ArrayList<Drug>();
     setParameter("initialValue",initialValue);
     setParameter("optionHeader",optionHeader);

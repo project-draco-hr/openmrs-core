@@ -1,0 +1,9 @@
+{
+  Drug drug1=new Drug();
+  drug1.setName("AB1AB");
+  Drug drug2=new Drug();
+  drug2.setName("ABAA");
+  DrugsByNameComparator dComparator=new DrugsByNameComparator();
+  int actualValue=dComparator.compare(drug1,drug2);
+  Assert.assertEquals(actualValue,1);
+}
