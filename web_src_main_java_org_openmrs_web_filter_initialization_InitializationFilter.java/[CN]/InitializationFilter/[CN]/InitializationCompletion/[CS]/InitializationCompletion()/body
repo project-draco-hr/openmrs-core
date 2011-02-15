@@ -68,7 +68,7 @@
         runtimeProperties.put("connection.url",finalDatabaseConnectionString);
         runtimeProperties.put("connection.username",connectionUsername);
         runtimeProperties.put("connection.password",connectionPassword);
-        if (StringUtils.hasText(driverString))         runtimeProperties.put("connection.driver_class",driverString);
+        if (StringUtils.hasText(wizardModel.databaseDriver))         runtimeProperties.put("connection.driver_class",wizardModel.databaseDriver);
         runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
         runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
         Context.setRuntimeProperties(runtimeProperties);
