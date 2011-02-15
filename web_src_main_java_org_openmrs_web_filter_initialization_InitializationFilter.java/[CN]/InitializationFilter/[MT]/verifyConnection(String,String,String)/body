@@ -1,6 +1,6 @@
 {
   try {
-    Class.forName(driverString).newInstance();
+    Class.forName(loadedDriverString).newInstance();
     DriverManager.getConnection(databaseConnectionFinalUrl,connectionUsername,connectionPassword);
     return true;
   }
