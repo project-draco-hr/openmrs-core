@@ -1,0 +1,12 @@
+{
+  KeyGenerator kgen=null;
+  try {
+    kgen=KeyGenerator.getInstance(OpenmrsConstants.ENCRYPTION_KEY_SPEC);
+  }
+ catch (  NoSuchAlgorithmException e) {
+    throw new APIException("Could not generate cipher key",e);
+  }
+  kgen.init(128);
+  SecretKey skey=kgen.generateKey();
+  return skey.getEncoded();
+}
