@@ -18,7 +18,6 @@
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.unretiredSuccessfully");
     }
  else {
-      drug.setConcept(conceptService.getConcept(Integer.valueOf(request.getParameter("conceptId"))));
       conceptService.saveDrug(drug);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.saved");
     }
