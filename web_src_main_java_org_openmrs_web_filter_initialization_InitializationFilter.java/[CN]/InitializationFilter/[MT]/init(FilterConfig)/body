@@ -1,11 +1,10 @@
 {
   super.init(filterConfig);
   wizardModel=new InitializationWizardModel();
-  if (Listener.runtimePropertiesFound()) {
-    boolean dbEmpty=isDatabaseEmpty(Listener.getRuntimeProperties());
-    setInitializationComplete(!dbEmpty);
+  if (isDatabaseEmpty(OpenmrsUtil.getRuntimeProperties(WebConstants.WEBAPP_NAME))) {
+    setInitializationComplete(false);
   }
  else {
-    setInitializationComplete(false);
+    setInitializationComplete(true);
   }
 }
