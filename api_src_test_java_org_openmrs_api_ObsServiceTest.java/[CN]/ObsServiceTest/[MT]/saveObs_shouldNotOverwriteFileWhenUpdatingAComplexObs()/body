@@ -5,14 +5,22 @@
   AdministrationService as=Context.getAdministrationService();
   File complexObsDir=OpenmrsUtil.getDirectoryInApplicationDataDirectory(as.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_COMPLEX_OBS_DIR));
   File previouslyCreatedFile=new File(complexObsDir,"nameOfFile.txt");
-  InputStream inputStream=new ByteArrayInputStream("a string to save to a file".getBytes());
-  OpenmrsUtil.copyFile(inputStream,new FileOutputStream(previouslyCreatedFile));
-  inputStream.close();
+  Reader input=new CharArrayReader("a string to save to a file".toCharArray());
+  Reader buffReader=new BufferedReader(input);
+  Writer buffWriter=new BufferedWriter(new FileWriter(previouslyCreatedFile));
+  while (true) {
+    int character=buffReader.read();
+    if (character == -1) {
+      break;
+    }
+    buffWriter.write(character);
+  }
+  input.close();
   File newComplexFile=null;
   try {
     long oldFileSize=previouslyCreatedFile.length();
-    InputStream inputStream2=new ByteArrayInputStream("diff string to save to a file with the same name".getBytes());
-    ComplexData complexData=new ComplexData("nameOfFile.txt",inputStream2);
+    Reader input2=new CharArrayReader("diff string to save to a file with the same name".toCharArray());
+    ComplexData complexData=new ComplexData("nameOfFile.txt",input2);
     Concept questionConcept=cs.getConcept(8474);
     Obs obsToSave=new Obs(new Person(1),questionConcept,new Date(),new Location(1));
     obsToSave.setComplexData(complexData);
