@@ -1,7 +1,7 @@
 {
   if (includeVoided)   return groupMembers;
   if (groupMembers == null)   return null;
-  Set<Obs> nonVoided=new HashSet<Obs>(groupMembers);
+  Set<Obs> nonVoided=new LinkedHashSet<Obs>(groupMembers);
   Iterator<Obs> i=nonVoided.iterator();
   while (i.hasNext()) {
     Obs obs=i.next();
