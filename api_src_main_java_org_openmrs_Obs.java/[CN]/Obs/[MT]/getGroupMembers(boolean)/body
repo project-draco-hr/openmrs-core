@@ -1,0 +1,11 @@
+{
+  if (includeVoided)   return groupMembers;
+  if (groupMembers == null)   return null;
+  Set<Obs> nonVoided=new HashSet<Obs>(groupMembers);
+  Iterator<Obs> i=nonVoided.iterator();
+  while (i.hasNext()) {
+    Obs obs=i.next();
+    if (obs.isVoided())     i.remove();
+  }
+  return nonVoided;
+}
