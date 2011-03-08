@@ -16,7 +16,10 @@
         throw e;
       }
       Assert.assertTrue("Some of the modules did not start successfully for " + testContext.getTestClass().getSimpleName() + ". Only "+ ModuleFactory.getStartedModules().size()+ " modules started instead of "+ startModuleAnnotation.value().length,startModuleAnnotation.value().length <= ModuleFactory.getStartedModules().size());
-      new ClassPathXmlApplicationContext(new String[]{"applicationContext-service.xml","classpath*:moduleApplicationContext.xml"});
+      GenericApplicationContext ctx=new GenericApplicationContext(testContext.getApplicationContext());
+      XmlBeanDefinitionReader xmlReader=new XmlBeanDefinitionReader(ctx);
+      xmlReader.loadBeanDefinitions(new ClassPathResource("moduleApplicationContext.xml"));
+      ctx.refresh();
     }
   }
 }
