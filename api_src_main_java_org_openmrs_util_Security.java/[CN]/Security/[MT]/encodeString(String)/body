@@ -1,13 +1,17 @@
 {
   String algorithm="SHA-512";
   MessageDigest md;
+  byte[] input;
   try {
     md=MessageDigest.getInstance(algorithm);
+    input=strToEncode.getBytes(encoding);
   }
  catch (  NoSuchAlgorithmException e) {
     log.error("Can't encode password because the given algorithm: " + algorithm + "was not found! (fail)",e);
     throw new APIException("System cannot find password encryption algorithm",e);
   }
-  byte[] input=strToEncode.getBytes();
+catch (  UnsupportedEncodingException e) {
+    throw new APIException("System cannot find " + encoding + " encoding",e);
+  }
   return hexString(md.digest(input));
 }
