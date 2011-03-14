@@ -7,7 +7,7 @@
     Reflect reflect=new Reflect(OpenmrsObject.class);
     if (reflect.isSuperClass(mainArgument)) {
       String other=null;
-      if (args.length > 1)       other=(String)args[1];
+      if (args.length > 1 && args[1] instanceof String)       other=(String)args[1];
       recursivelyHandle(SaveHandler.class,(OpenmrsObject)mainArgument,other);
     }
  else     if (Reflect.isCollection(mainArgument) && isOpenmrsObjectCollection(mainArgument)) {
