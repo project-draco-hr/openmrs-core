@@ -1,0 +1,8 @@
+{
+  Form form=Context.getFormService().getForm(1);
+  String owner="formentry";
+  String name="xslt";
+  byte[] expected=null;
+  byte[] actual=(byte[])Context.getFormService().getFormResource(form,owner,name);
+  Assert.assertArrayEquals(expected,actual);
+}

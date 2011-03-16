@@ -1,0 +1,13 @@
+{
+  Form form=Context.getFormService().getForm(1);
+  String owner="formentry";
+  String name="other";
+  byte[] expected=new String("whoopee").getBytes();
+  byte[] previous=(byte[])Context.getFormService().getFormResource(form,owner,name);
+  Context.clearSession();
+  form=Context.getFormService().getForm(1);
+  Context.getFormService().saveFormResource(form,owner,name,expected);
+  byte[] actual=(byte[])Context.getFormService().getFormResource(form,owner,name);
+  Assert.assertFalse(Arrays.equals(previous,actual));
+  Assert.assertArrayEquals(expected,actual);
+}

@@ -1,0 +1,5 @@
+{
+  Form form=Context.getFormService().getForm(1);
+  Set<String> names=Context.getFormService().getFormResourceNamesByOwner(form,"nothing");
+  Assert.assertTrue(names.isEmpty());
+}
