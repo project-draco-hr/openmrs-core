@@ -1,3 +1,11 @@
 {
+  FormService formService=this.getFormService();
+  String template;
+  try {
+    template=(String)formService.getFormResource(this,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER,FormConstants.FORM_RESOURCE_FORMENTRY_TEMPLATE);
+  }
+ catch (  DAOException e) {
+    return null;
+  }
   return template;
 }

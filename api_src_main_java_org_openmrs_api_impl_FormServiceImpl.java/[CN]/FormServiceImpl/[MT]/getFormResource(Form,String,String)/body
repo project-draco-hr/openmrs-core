@@ -1,0 +1,14 @@
+{
+  byte[] data=dao.getFormResource(form,owner,name);
+  if (data.length == 0)   return null;
+  try {
+    ObjectInputStream obj=new ObjectInputStream(new ByteArrayInputStream(data));
+    return (Serializable)obj.readObject();
+  }
+ catch (  ClassNotFoundException e) {
+    throw new APIException("could not convert form resource",e);
+  }
+catch (  IOException e) {
+    throw new APIException("could not deserialize form resource",e);
+  }
+}

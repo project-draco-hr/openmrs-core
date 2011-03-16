@@ -1,0 +1,37 @@
+{
+  DatabaseConnection connection=database.getConnection();
+  String getFormMetadataSql="SELECT form_id, xslt, template FROM form";
+  StringBuilder insertFormMetadataSql=new StringBuilder();
+  insertFormMetadataSql.append("INSERT INTO form_resource");
+  insertFormMetadataSql.append(" (form_id, owner, name, value, uuid)");
+  insertFormMetadataSql.append(" VALUES (?, ?, ?, ?, ?)");
+  PreparedStatement insertStatement=null;
+  try {
+    insertStatement=connection.prepareStatement(insertFormMetadataSql.toString());
+    ResultSet forms=connection.createStatement().executeQuery(getFormMetadataSql);
+    while (forms.next()) {
+      byte[] xslt=forms.getString(2) == null ? null : forms.getString(2).getBytes();
+      byte[] template=forms.getString(3) == null ? null : forms.getString(3).getBytes();
+      if (xslt != null) {
+        insertStatement.setInt(1,forms.getInt(1));
+        insertStatement.setString(2,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER);
+        insertStatement.setString(3,FormConstants.FORM_RESOURCE_FORMENTRY_XSLT);
+        insertStatement.setBytes(4,xslt);
+        insertStatement.setString(5,UUID.randomUUID().toString());
+        insertStatement.executeUpdate();
+      }
+      if (template != null) {
+        insertStatement.setInt(1,forms.getInt(1));
+        insertStatement.setString(2,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER);
+        insertStatement.setString(3,FormConstants.FORM_RESOURCE_FORMENTRY_TEMPLATE);
+        insertStatement.setBytes(4,template);
+        insertStatement.setString(5,UUID.randomUUID().toString());
+        insertStatement.executeUpdate();
+      }
+    }
+    if (insertStatement != null)     insertStatement.close();
+  }
+ catch (  SQLException e) {
+    throw new CustomChangeException("Unable to copy form metadata to form attributes table",e);
+  }
+}

@@ -1,0 +1,6 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormResource.class);
+  crit.add(Restrictions.eq("form",form));
+  crit.setProjection(Projections.property("owner"));
+  return new HashSet<String>(crit.list());
+}

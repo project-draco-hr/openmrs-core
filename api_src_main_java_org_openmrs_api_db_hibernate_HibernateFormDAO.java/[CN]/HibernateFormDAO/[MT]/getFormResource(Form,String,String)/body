@@ -1,0 +1,5 @@
+{
+  FormResource res=getFormResourceObject(form,owner,name);
+  if (res == null)   throw new DAOException("unable to find form resource for form #" + form.getId() + " with owner '"+ owner+ "' and name '"+ name+ "'");
+  return res.getValue();
+}

@@ -1,0 +1,12 @@
+{
+  FormResource res=getFormResourceObject(form,owner,name);
+  if (res == null) {
+    res=new FormResource();
+    res.setForm(form);
+    res.setOwner(owner);
+    res.setName(name);
+    res.setUuid(UUID.randomUUID().toString());
+  }
+  res.setValue(value);
+  sessionFactory.getCurrentSession().saveOrUpdate(res);
+}

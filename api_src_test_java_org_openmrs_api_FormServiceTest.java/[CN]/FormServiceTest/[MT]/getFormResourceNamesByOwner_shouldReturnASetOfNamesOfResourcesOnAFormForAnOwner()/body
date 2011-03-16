@@ -1,0 +1,7 @@
+{
+  Form form=Context.getFormService().getForm(1);
+  Set<String> names=Context.getFormService().getFormResourceNamesByOwner(form,"formentry");
+  Assert.assertTrue(names.contains("xslt"));
+  Assert.assertTrue(names.contains("template"));
+  Assert.assertTrue(names.contains("other"));
+}
