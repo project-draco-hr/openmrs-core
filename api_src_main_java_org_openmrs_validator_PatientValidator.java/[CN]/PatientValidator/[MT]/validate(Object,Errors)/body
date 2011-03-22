@@ -17,6 +17,15 @@
       }
     }
   }
+  Boolean preferredIdentifierChosen=false;
+  for (  PatientIdentifier pi : patient.getActiveIdentifiers()) {
+    if (pi.isPreferred()) {
+      preferredIdentifierChosen=true;
+    }
+  }
+  if (!preferredIdentifierChosen) {
+    errors.reject("error.preferredIdentifier");
+  }
   if (StringUtils.isBlank(patient.getGender()))   errors.rejectValue("gender","Person.gender.required");
   if (patient.getBirthdate() != null) {
     if (patient.getBirthdate().after(new Date()))     errors.rejectValue("birthdate","error.date.future");
