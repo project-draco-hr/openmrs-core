@@ -4,7 +4,7 @@
   parameterMap=OpenmrsUtil.parseParameterList(parameters);
   status=new HashMap<String,Object>();
   List<Extension> extensionList=null;
-  List<Extension> validExtensions=null;
+  List<Extension> validExtensions=new ArrayList<Extension>();
   if (type != null && type.length() > 0) {
     try {
       Extension.MEDIA_TYPE mediaType=Enum.valueOf(Extension.MEDIA_TYPE.class,type);
