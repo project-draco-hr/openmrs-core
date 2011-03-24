@@ -4,6 +4,7 @@
   parameterMap=OpenmrsUtil.parseParameterList(parameters);
   status=new HashMap<String,Object>();
   List<Extension> extensionList=null;
+  List<Extension> validExtensions=null;
   if (type != null && type.length() > 0) {
     try {
       Extension.MEDIA_TYPE mediaType=Enum.valueOf(Extension.MEDIA_TYPE.class,type);
@@ -25,7 +26,10 @@
         Class<?> clazz=Class.forName(requiredClass);
         for (        Extension ext : extensionList) {
           if (!clazz.isAssignableFrom(ext.getClass())) {
-            throw new ClassCastException("Extensions at this point (" + pointId + ") are "+ "required to be of "+ clazz+ " or a subclass. "+ ext.getClass()+ " is not.");
+            log.warn("Extensions at this point (" + pointId + ") are "+ "required to be of "+ clazz+ " or a subclass. "+ ext.getClass()+ " is not.");
+          }
+ else {
+            validExtensions.add(ext);
           }
         }
       }
@@ -33,7 +37,7 @@
         throw new IllegalArgumentException(ex);
       }
     }
-    extensions=extensionList.iterator();
+    extensions=validExtensions.iterator();
   }
   if (extensions == null || extensions.hasNext() == false) {
     extensions=null;
