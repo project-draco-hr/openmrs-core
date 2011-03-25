@@ -10,6 +10,6 @@
  else {
     name=query;
   }
-  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false);
+  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false,true);
   return criteria;
 }

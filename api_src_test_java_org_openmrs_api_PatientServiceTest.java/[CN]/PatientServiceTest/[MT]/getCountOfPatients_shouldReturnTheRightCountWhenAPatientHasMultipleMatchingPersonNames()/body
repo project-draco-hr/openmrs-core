@@ -1,0 +1,7 @@
+{
+  Patient patient=patientService.getPatient(2);
+  Assert.assertTrue(patient.getPersonName().getGivenName().startsWith("Horati"));
+  patient.addName(new PersonName("Horatio","Test","name"));
+  Context.getPatientService().savePatient(patient);
+  Assert.assertEquals(1,Context.getPatientService().getCountOfPatients("Hor").intValue());
+}
