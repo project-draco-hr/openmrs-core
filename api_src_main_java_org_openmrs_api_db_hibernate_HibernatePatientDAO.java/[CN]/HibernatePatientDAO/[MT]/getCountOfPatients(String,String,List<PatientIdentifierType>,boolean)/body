@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
-  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,identifierTypes,matchIdentifierExactly);
-  criteria.setProjection(Projections.rowCount());
+  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,identifierTypes,matchIdentifierExactly,false);
+  criteria.setProjection(Projections.countDistinct("patientId"));
   return (Integer)criteria.uniqueResult();
 }
