@@ -1,0 +1,30 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(18));
+  obs.setValueBoolean(false);
+  obs.setValueCoded(Context.getConceptService().getConcept(18));
+  obs.setValueComplex("test");
+  obs.setValueDatetime(new Date());
+  obs.setValueDrug(Context.getConceptService().getDrug(3));
+  obs.setValueGroupId(getLoadCount());
+  obs.setValueModifier("test");
+  obs.setValueNumeric(1212.0);
+  obs.setValueText("test");
+  Set<Obs> group=new HashSet<Obs>();
+  group.add(Context.getObsService().getObs(7));
+  group.add(Context.getObsService().getObs(9));
+  obs.setGroupMembers(group);
+  Errors errors=new BindException(obs,"obs");
+  new ObsValidator().validate(obs,errors);
+  Assert.assertFalse(errors.hasFieldErrors("person"));
+  Assert.assertFalse(errors.hasFieldErrors("concept"));
+  Assert.assertTrue(errors.hasFieldErrors("valueCoded"));
+  Assert.assertTrue(errors.hasFieldErrors("valueDrug"));
+  Assert.assertTrue(errors.hasFieldErrors("valueDatetime"));
+  Assert.assertTrue(errors.hasFieldErrors("valueNumeric"));
+  Assert.assertTrue(errors.hasFieldErrors("valueModifier"));
+  Assert.assertTrue(errors.hasFieldErrors("valueText"));
+  Assert.assertTrue(errors.hasFieldErrors("valueBoolean"));
+  Assert.assertTrue(errors.hasFieldErrors("valueComplex"));
+}
