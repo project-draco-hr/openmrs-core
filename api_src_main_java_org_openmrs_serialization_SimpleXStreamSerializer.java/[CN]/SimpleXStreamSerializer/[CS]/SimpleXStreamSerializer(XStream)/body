@@ -1,0 +1,9 @@
+{
+  if (customXstream == null) {
+    xstream=new XStream(new DomDriver());
+  }
+ else {
+    this.xstream=customXstream;
+  }
+  this.xstream.useAttributeFor(ImplementationId.class,"implementationId");
+}

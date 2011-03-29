@@ -9,8 +9,5 @@
  catch (  Exception e) {
     log.warn("No default serializer specified - trying first serializer found.");
   }
-  if (serializerMap != null && !serializerMap.isEmpty()) {
-    return serializerMap.values().iterator().next();
-  }
-  return null;
+  return serializerMap.get(SimpleXStreamSerializer.class);
 }
