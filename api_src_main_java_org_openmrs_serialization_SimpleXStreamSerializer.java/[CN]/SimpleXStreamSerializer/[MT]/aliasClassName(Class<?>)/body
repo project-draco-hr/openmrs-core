@@ -1,0 +1,7 @@
+{
+  String simpleName=c.getSimpleName();
+  String firstLetter=simpleName.substring(0,1);
+  String leftName=simpleName.substring(1);
+  String aliasName=firstLetter.toLowerCase() + leftName;
+  xstream.alias(aliasName,c);
+}
