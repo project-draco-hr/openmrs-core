@@ -29,6 +29,16 @@
       }
     }
   }
+  List<PatientIdentifierType> pits=Context.getPatientService().getAllPatientIdentifierTypes();
+  boolean identifierLocationUsed=false;
+  for (  PatientIdentifierType pit : pits) {
+    if (pit.getLocationBehavior() == null || pit.getLocationBehavior() == LocationBehavior.REQUIRED) {
+      identifierLocationUsed=true;
+    }
+  }
+  map.put("identifierTypes",pits);
+  map.put("identifierLocationUsed",identifierLocationUsed);
+  map.put("identifiers",patient.getIdentifiers());
   map.put("patientVariation",patientVariation);
   map.put("forms",forms);
   map.put("emptyIdentifier",new PatientIdentifier());

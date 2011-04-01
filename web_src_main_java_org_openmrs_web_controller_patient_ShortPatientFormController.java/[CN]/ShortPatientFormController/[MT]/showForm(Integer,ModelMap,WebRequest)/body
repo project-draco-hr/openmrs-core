@@ -26,7 +26,15 @@
     ShortPatientModel patientModel=new ShortPatientModel(patient);
     model.addAttribute("patientModel",patientModel);
     model.addAttribute("relationshipsMap",getRelationshipsMap(patient,request));
-    model.addAttribute("identifierTypes",Context.getPatientService().getAllPatientIdentifierTypes());
+    List<PatientIdentifierType> pits=Context.getPatientService().getAllPatientIdentifierTypes();
+    boolean identifierLocationUsed=false;
+    for (    PatientIdentifierType pit : pits) {
+      if (pit.getLocationBehavior() == null || pit.getLocationBehavior() == LocationBehavior.REQUIRED) {
+        identifierLocationUsed=true;
+      }
+    }
+    model.addAttribute("identifierTypes",pits);
+    model.addAttribute("identifierLocationUsed",identifierLocationUsed);
     model.addAttribute("locations",Context.getLocationService().getAllLocations());
     model.addAttribute("defaultLocation",(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation());
     if (patient.getPersonName() != null && patient.getPersonName().getId() != null)     model.addAttribute("personNameCache",PersonName.newInstance(patient.getPersonName()));
