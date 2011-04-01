@@ -4,5 +4,6 @@
   toReturn.put("patientIdentifierValidators",pivs);
   String defaultValidatorName=Context.getPatientService().getDefaultIdentifierValidator().getName();
   toReturn.put("defaultValidatorName",defaultValidatorName);
+  toReturn.put("locationBehaviors",PatientIdentifierType.LocationBehavior.values());
   return toReturn;
 }
