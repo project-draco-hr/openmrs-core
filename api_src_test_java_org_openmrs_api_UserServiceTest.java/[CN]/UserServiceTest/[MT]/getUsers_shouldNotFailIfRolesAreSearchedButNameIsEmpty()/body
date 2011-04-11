@@ -1,0 +1,6 @@
+{
+  Role role=new Role("Provider");
+  List<Role> roles=new ArrayList<Role>();
+  roles.add(role);
+  Assert.assertEquals(2,Context.getUserService().getUsers("",roles,true).size());
+}
