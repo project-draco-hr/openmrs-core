@@ -10,6 +10,6 @@
   assertNotNull(retiredLoc.getDateRetired());
   assertEquals(Context.getAuthenticatedUser(),retiredLoc.getRetiredBy());
   assertEquals("Just Testing",retiredLoc.getRetireReason());
-  assertEquals(locationsBeforeRetired,locationsAfterRetired);
+  assertEquals(locationsBeforeRetired.size(),locationsAfterRetired.size());
   assertNotSame(locationsNotRetiredBefore,locationsNotRetiredAfter);
 }

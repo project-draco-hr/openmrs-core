@@ -1,0 +1,7 @@
+{
+  LocationService ls=Context.getLocationService();
+  ls.retireLocation(ls.getAllLocations().get(0),"Just Testing");
+  List<Location> locations=ls.getAllLocations();
+  Assert.assertTrue("Retired locations should be at the end of the list",locations.get(locations.size() - 1).isRetired());
+  Assert.assertTrue("Retired locations should be at the end of the list",locations.get(locations.size() - 2).isRetired());
+}
