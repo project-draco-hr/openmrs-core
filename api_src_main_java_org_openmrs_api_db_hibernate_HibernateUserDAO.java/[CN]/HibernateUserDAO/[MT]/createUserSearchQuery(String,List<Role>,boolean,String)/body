@@ -23,12 +23,17 @@
     hql+="inner join user.roles as role ";
     searchOnRoles=true;
   }
-  if (criteria.size() > 0)   hql+="where ";
+  if (criteria.size() > 0 || searchOnRoles)   hql+="where ";
   for (Iterator<String> i=criteria.iterator(); i.hasNext(); ) {
     hql+=i.next() + " ";
     if (i.hasNext())     hql+="and ";
   }
-  if (searchOnRoles)   hql+=" and role in (:roleList)";
+  if (searchOnRoles) {
+    if (criteria.size() > 0) {
+      hql+=" and ";
+    }
+    hql+=" role in (:roleList)";
+  }
   Query query=sessionFactory.getCurrentSession().createQuery(hql);
   for (  Map.Entry<String,String> e : namesMap.entrySet())   query.setString(e.getKey(),e.getValue());
   if (searchOnRoles) {
