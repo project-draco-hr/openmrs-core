@@ -1,9 +1,3 @@
 {
-  Collection<ConceptAnswer> newAnswers=new HashSet<ConceptAnswer>();
-  if (answers != null) {
-    for (    ConceptAnswer ca : answers) {
-      if (!ca.getAnswerConcept().isRetired())       newAnswers.add(ca);
-    }
-  }
-  return newAnswers;
+  return (answers != null) ? answers : new HashSet<ConceptAnswer>();
 }

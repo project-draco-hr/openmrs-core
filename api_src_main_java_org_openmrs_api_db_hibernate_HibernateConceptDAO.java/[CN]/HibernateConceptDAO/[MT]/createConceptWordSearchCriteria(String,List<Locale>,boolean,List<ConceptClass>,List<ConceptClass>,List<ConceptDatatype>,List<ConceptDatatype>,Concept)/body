@@ -7,8 +7,8 @@
   locales.addAll(localesToAdd);
   List<String> words=ConceptWord.getUniqueWords(phrase);
   List<Concept> answers=new Vector<Concept>();
-  if (answersToConcept != null && answersToConcept.getAnswers() != null) {
-    for (    ConceptAnswer conceptAnswer : answersToConcept.getAnswers()) {
+  if (answersToConcept != null && answersToConcept.getAnswers(false) != null) {
+    for (    ConceptAnswer conceptAnswer : answersToConcept.getAnswers(false)) {
       answers.add(conceptAnswer.getAnswerConcept());
     }
   }

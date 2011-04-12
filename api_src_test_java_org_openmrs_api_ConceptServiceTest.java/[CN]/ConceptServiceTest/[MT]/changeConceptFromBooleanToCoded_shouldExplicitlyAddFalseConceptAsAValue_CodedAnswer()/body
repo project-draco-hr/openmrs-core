@@ -1,13 +1,13 @@
 {
   Concept concept=conceptService.getConcept(18);
-  Collection<ConceptAnswer> answers=concept.getAnswers();
+  Collection<ConceptAnswer> answers=concept.getAnswers(false);
   boolean falseConceptFound=false;
   for (  ConceptAnswer conceptAnswer : answers) {
     if (conceptAnswer.getAnswerConcept().equals(conceptService.getFalseConcept()))     falseConceptFound=true;
   }
   Assert.assertEquals(false,falseConceptFound);
   conceptService.convertBooleanConceptToCoded(concept);
-  answers=concept.getAnswers();
+  answers=concept.getAnswers(false);
   for (  ConceptAnswer conceptAnswer : answers) {
     if (conceptAnswer.getAnswerConcept().equals(conceptService.getFalseConcept()))     falseConceptFound=true;
   }

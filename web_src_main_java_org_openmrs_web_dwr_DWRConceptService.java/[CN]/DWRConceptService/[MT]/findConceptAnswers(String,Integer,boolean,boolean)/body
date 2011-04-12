@@ -6,7 +6,7 @@
   if (concept == null)   throw new Exception("Unable to find a concept with id: " + conceptId);
   List<ConceptSearchResult> searchResults=cs.findConceptAnswers(text,locale,concept);
   List<Drug> drugAnswers=new Vector<Drug>();
-  for (  ConceptAnswer conceptAnswer : concept.getAnswers()) {
+  for (  ConceptAnswer conceptAnswer : concept.getAnswers(false)) {
     if (conceptAnswer.getAnswerDrug() != null)     drugAnswers.add(conceptAnswer.getAnswerDrug());
   }
   List<Object> items=new Vector<Object>();
