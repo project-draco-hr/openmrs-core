@@ -1,0 +1,37 @@
+{
+  Patient patient=Context.getPatientService().getPatient(7);
+  Assert.assertFalse(patient.isVoided());
+  List<Encounter> encounters=Context.getEncounterService().getEncountersByPatient(patient);
+  List<Obs> observations=Context.getObsService().getObservationsByPerson(patient);
+  for (  Encounter encounter : encounters) {
+    Assert.assertNull(encounter.getDateVoided());
+    Assert.assertNull(encounter.getVoidedBy());
+    Assert.assertNull(encounter.getVoidReason());
+  }
+  for (  Obs obs : observations) {
+    Assert.assertNull(obs.getDateVoided());
+    Assert.assertNull(obs.getVoidedBy());
+    Assert.assertNull(obs.getVoidReason());
+  }
+  Assert.assertTrue(CollectionUtils.isNotEmpty(encounters));
+  Assert.assertTrue(CollectionUtils.isNotEmpty(observations));
+  Assert.assertFalse(patient.isVoided());
+  patient.setVoided(true);
+  new PatientVoidHandler().handle(patient,new User(1),new Date(),"voidReason");
+  for (  Encounter encounter : encounters) {
+    Assert.assertTrue(encounter.isVoided());
+    Assert.assertNotNull(encounter.getDateVoided());
+    Assert.assertNotNull(encounter.getVoidedBy());
+    Assert.assertNotNull(encounter.getVoidReason());
+  }
+  for (  Obs obs : observations) {
+    Assert.assertTrue(obs.isVoided());
+    Assert.assertNotNull(obs.getDateVoided());
+    Assert.assertNotNull(obs.getVoidedBy());
+    Assert.assertNotNull(obs.getVoidReason());
+  }
+  encounters=Context.getEncounterService().getEncountersByPatient(patient);
+  observations=Context.getObsService().getObservationsByPerson(patient);
+  Assert.assertTrue(CollectionUtils.isEmpty(encounters));
+  Assert.assertTrue(CollectionUtils.isEmpty(observations));
+}

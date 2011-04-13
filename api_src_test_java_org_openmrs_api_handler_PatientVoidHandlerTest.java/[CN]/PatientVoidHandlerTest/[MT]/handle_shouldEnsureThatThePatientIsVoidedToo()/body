@@ -1,0 +1,6 @@
+{
+  Patient patient=Context.getPatientService().getPatient(7);
+  Assert.assertFalse(patient.isVoided());
+  new PatientVoidHandler().handle(patient,new User(1),new Date(),"voidReason");
+  Assert.assertTrue(patient.isVoided());
+}
