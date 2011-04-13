@@ -18,7 +18,8 @@
     }
   }
   Boolean preferredIdentifierChosen=false;
-  for (  PatientIdentifier pi : patient.getActiveIdentifiers()) {
+  Collection<PatientIdentifier> identifiers=patient.isVoided() ? patient.getIdentifiers() : patient.getActiveIdentifiers();
+  for (  PatientIdentifier pi : identifiers) {
     if (pi.isPreferred()) {
       preferredIdentifierChosen=true;
     }

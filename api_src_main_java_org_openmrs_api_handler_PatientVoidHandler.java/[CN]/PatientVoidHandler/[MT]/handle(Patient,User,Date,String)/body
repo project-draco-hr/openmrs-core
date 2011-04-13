@@ -1,0 +1,15 @@
+{
+  BaseVoidHandler voidHandler=HandlerUtil.getHandlersForType(BaseVoidHandler.class,Voidable.class).get(0);
+  List<Encounter> encounters=Context.getEncounterService().getEncountersByPatient(patient);
+  if (CollectionUtils.isNotEmpty(encounters)) {
+    for (    Encounter encounter : encounters) {
+      if (!encounter.isVoided()) {
+        for (        Obs observation : encounter.getObs()) {
+          if (!observation.isVoided())           voidHandler.handle(observation,voidingUser,voidedDate,voidReason);
+        }
+        voidHandler.handle(encounter,voidingUser,voidedDate,voidReason);
+      }
+    }
+  }
+  if (!patient.isVoided())   voidHandler.handle(patient,voidingUser,voidedDate,voidReason);
+}
