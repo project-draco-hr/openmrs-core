@@ -1,10 +1,12 @@
 {
   try {
-    ModuleClassLoader classLoader=ModuleFactory.getModuleClassLoader(this);
-    if (classLoader == null)     throw new ModuleException("The classloader is null",getModuleId());
-    Class<?> c=classLoader.loadClass(getActivatorName());
-    Object o=c.newInstance();
-    if (ModuleActivator.class.isAssignableFrom(o.getClass()))     setModuleActivator((ModuleActivator)o);
+    if (moduleActivator == null) {
+      ModuleClassLoader classLoader=ModuleFactory.getModuleClassLoader(this);
+      if (classLoader == null)       throw new ModuleException("The classloader is null",getModuleId());
+      Class<?> c=classLoader.loadClass(getActivatorName());
+      Object o=c.newInstance();
+      if (ModuleActivator.class.isAssignableFrom(o.getClass()))       setModuleActivator((ModuleActivator)o);
+    }
   }
  catch (  ClassNotFoundException e) {
     throw new ModuleException("Unable to load/find moduleActivator: '" + getActivatorName() + "'",name,e);
