@@ -1,0 +1,15 @@
+{
+  final String PACKAGE_PREFIX="org.openmrs.module.";
+  int pos=classString.indexOf('.',PACKAGE_PREFIX.length());
+  if (pos == -1 || !classString.contains(PACKAGE_PREFIX)) {
+    log.warn(classString + " does not follow module naming convention.");
+    return;
+  }
+  String modulePackage=classString.substring(0,pos);
+  List<OpenmrsService> serviceList=moduleOpenmrsServices.get(modulePackage);
+  if (serviceList == null) {
+    serviceList=new ArrayList<OpenmrsService>();
+    moduleOpenmrsServices.put(modulePackage,serviceList);
+  }
+  serviceList.add(openmrsService);
+}

@@ -1,0 +1,29 @@
+{
+  DaemonThread onStartupThread=new DaemonThread(){
+    @Override public void run(){
+      isDaemonThread.set(true);
+      try {
+        Context.openSession();
+        service.onStartup();
+      }
+ catch (      Throwable t) {
+        exceptionThrown=t;
+      }
+ finally {
+        Context.closeSession();
+      }
+    }
+  }
+;
+  onStartupThread.start();
+  try {
+    onStartupThread.join();
+  }
+ catch (  InterruptedException e) {
+    e.printStackTrace();
+  }
+  if (onStartupThread.exceptionThrown != null) {
+    if (onStartupThread.exceptionThrown instanceof ModuleException)     throw (ModuleException)onStartupThread.exceptionThrown;
+ else     throw new ModuleException("Unable to run onStartup() method as Daemon",onStartupThread.exceptionThrown);
+  }
+}
