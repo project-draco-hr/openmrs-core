@@ -77,6 +77,10 @@
  catch (    Throwable t) {
       log.warn("Unable to call module's Activator.shutdown() method",t);
     }
+    mod.getExtensions().clear();
+    mod.setActivator(null);
+    mod.setModuleActivator(null);
+    mod.disposeAdvicePointsClassInstance();
     ModuleClassLoader cl=removeClassLoader(mod);
     if (cl != null) {
       cl.dispose();
