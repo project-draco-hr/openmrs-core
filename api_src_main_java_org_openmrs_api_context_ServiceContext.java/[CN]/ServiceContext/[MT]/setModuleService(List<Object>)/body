@@ -33,7 +33,7 @@
   }
   setService(cls,classInstance);
   if (OpenmrsService.class.isAssignableFrom(classInstance.getClass())) {
-    addModuleOpenmrsService(classString,(OpenmrsService)classInstance);
+    moduleOpenmrsServices.put(classString,(OpenmrsService)classInstance);
     runOpenmrsServiceOnStartup((OpenmrsService)classInstance,classString);
   }
 }
