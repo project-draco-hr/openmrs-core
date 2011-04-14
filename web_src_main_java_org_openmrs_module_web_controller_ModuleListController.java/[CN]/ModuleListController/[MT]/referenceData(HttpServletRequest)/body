@@ -1,4 +1,5 @@
 {
+  ClassLoader cl=Thread.currentThread().getContextClassLoader();
   Map<String,Object> map=new HashMap<String,Object>();
   MessageSourceAccessor msa=getMessageSourceAccessor();
   map.put("allowAdmin",ModuleUtil.allowAdmin().toString());

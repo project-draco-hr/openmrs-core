@@ -42,6 +42,9 @@
               Module existingModule=ModuleFactory.getModuleById(tmpModule.getModuleId());
               if (existingModule != null) {
                 dependentModulesStopped=ModuleFactory.stopModule(existingModule,false,true);
+                for (                Module depMod : dependentModulesStopped) {
+                  WebModuleUtil.stopModule(depMod,getServletContext());
+                }
                 WebModuleUtil.stopModule(existingModule,getServletContext());
                 ModuleFactory.unloadModule(existingModule);
               }
