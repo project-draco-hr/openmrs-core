@@ -3,6 +3,8 @@
   DateFormat dateFormat=null;
   if (type == FORMAT_TYPE.TIMESTAMP)   dateFormat=DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG,locale);
  else   if (type == FORMAT_TYPE.TIME)   dateFormat=DateFormat.getTimeInstance(DateFormat.MEDIUM,locale);
- else   dateFormat=DateFormat.getDateInstance(DateFormat.MEDIUM,locale);
+ else {
+    dateFormat=DateFormat.getDateInstance(DateFormat.SHORT,locale);
+  }
   return date == null ? "" : dateFormat.format(date);
 }
