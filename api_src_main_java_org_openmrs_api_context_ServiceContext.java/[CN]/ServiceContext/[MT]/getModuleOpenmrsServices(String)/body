@@ -1,3 +1,9 @@
 {
-  return moduleOpenmrsServices.get(modulePackage);
+  List<OpenmrsService> services=new ArrayList<OpenmrsService>();
+  for (  Entry<String,OpenmrsService> entry : moduleOpenmrsServices.entrySet()) {
+    if (entry.getKey().startsWith(modulePackage)) {
+      services.add(entry.getValue());
+    }
+  }
+  return services;
 }
