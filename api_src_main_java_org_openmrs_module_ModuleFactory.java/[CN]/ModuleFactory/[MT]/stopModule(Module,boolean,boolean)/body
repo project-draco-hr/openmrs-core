@@ -70,6 +70,12 @@
         log.warn("Error while getting extensions from module: " + moduleId,t);
       }
     }
+    List<OpenmrsService> services=Context.getModuleOpenmrsServices(modulePackage);
+    if (services != null) {
+      for (      OpenmrsService service : services) {
+        service.onShutdown();
+      }
+    }
     try {
       if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
  else       mod.getActivator().shutdown();

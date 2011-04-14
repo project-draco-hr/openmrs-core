@@ -32,4 +32,8 @@
     throw new APIException("Unable to set module service: " + classString,e);
   }
   setService(cls,classInstance);
+  if (OpenmrsService.class.isAssignableFrom(classInstance.getClass())) {
+    addModuleOpenmrsService(classString,(OpenmrsService)classInstance);
+    runOpenmrsServiceOnStartup((OpenmrsService)classInstance,classString);
+  }
 }

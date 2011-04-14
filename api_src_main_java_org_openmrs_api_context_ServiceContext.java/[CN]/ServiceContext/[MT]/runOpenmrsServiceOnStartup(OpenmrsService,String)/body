@@ -1,0 +1,16 @@
+{
+  new Thread(){
+    @Override public void run(){
+      try {
+synchronized (refreshingContext) {
+          refreshingContext.wait();
+        }
+        Daemon.runStartupForService(openmrsService);
+      }
+ catch (      InterruptedException e) {
+        log.warn("Refresh lock was interrupted while waiting to run OpenmrsService.onStartup() for " + classString,e);
+      }
+    }
+  }
+.start();
+}
