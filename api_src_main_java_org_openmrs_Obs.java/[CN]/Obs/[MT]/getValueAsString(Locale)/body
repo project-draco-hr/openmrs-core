@@ -21,7 +21,24 @@
         }
       }
     }
- else     if (abbrev.equals("NM") || abbrev.equals("SN"))     return getValueNumeric() == null ? "" : getValueNumeric().toString();
+ else     if (abbrev.equals("NM") || abbrev.equals("SN")) {
+      if (getValueNumeric() == null) {
+        return "";
+      }
+ else {
+        if (getConcept() instanceof ConceptNumeric) {
+          ConceptNumeric cn=(ConceptNumeric)getConcept();
+          if (cn.isPrecise() != true) {
+            double d=getValueNumeric();
+            int i=(int)d;
+            return Integer.toString(i);
+          }
+ else {
+            getValueNumeric().toString();
+          }
+        }
+      }
+    }
  else     if (abbrev.equals("DT"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.DATE));
  else     if (abbrev.equals("TM"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIME));
  else     if (abbrev.equals("TS"))     return (getValueDatetime() == null ? "" : Format.format(getValueDatetime(),locale,FORMAT_TYPE.TIMESTAMP));

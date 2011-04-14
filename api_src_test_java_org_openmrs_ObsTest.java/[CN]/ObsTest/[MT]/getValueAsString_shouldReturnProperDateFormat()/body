@@ -1,0 +1,13 @@
+{
+  Obs obs=new Obs();
+  obs.setValueDatetime(new Date());
+  Concept cn=new Concept();
+  ConceptDatatype cdt=new ConceptDatatype();
+  cdt.setHl7Abbreviation("DT");
+  cn.setDatatype(cdt);
+  obs.setConcept(cn);
+  Date utilDate=new Date();
+  DateFormat dateFormat=DateFormat.getDateInstance(DateFormat.SHORT,Locale.US);
+  String dateString=dateFormat.format(utilDate);
+  Assert.assertEquals(dateString,obs.getValueAsString(Locale.US));
+}
