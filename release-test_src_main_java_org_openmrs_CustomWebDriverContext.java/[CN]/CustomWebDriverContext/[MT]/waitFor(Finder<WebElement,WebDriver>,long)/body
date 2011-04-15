@@ -1,0 +1,12 @@
+{
+  long timeoutTime=clock.now() + timeoutMillis;
+  while (clock.now() < timeoutTime) {
+    Collection<WebElement> result=finder.findFrom(driver);
+    for (    WebElement webElement : result) {
+      if (((RenderedWebElement)webElement).isDisplayed()) {
+        return;
+      }
+    }
+  }
+  failWith("Element was not rendered within " + timeoutMillis + "ms");
+}
