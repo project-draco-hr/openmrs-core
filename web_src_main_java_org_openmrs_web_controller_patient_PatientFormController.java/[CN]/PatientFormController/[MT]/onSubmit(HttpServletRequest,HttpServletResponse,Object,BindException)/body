@@ -24,6 +24,11 @@
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.voided");
       return new ModelAndView(new RedirectView(getSuccessView() + "?patientId=" + patient.getPatientId()));
     }
+ else     if (action.equals(msa.getMessage("Patient.unvoid"))) {
+      ps.unvoidPatient(patient);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.unvoided");
+      return new ModelAndView(new RedirectView(getSuccessView() + "?patientId=" + patient.getPatientId()));
+    }
  else {
       boolean isError=false;
       try {

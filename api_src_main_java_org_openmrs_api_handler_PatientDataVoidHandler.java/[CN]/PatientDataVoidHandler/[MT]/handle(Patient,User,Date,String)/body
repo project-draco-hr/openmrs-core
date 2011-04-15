@@ -1,0 +1,22 @@
+{
+  EncounterService es=Context.getEncounterService();
+  List<Encounter> encounters=es.getEncountersByPatient(patient);
+  if (CollectionUtils.isNotEmpty(encounters)) {
+    for (    Encounter encounter : encounters) {
+      if (!encounter.isVoided()) {
+        encounter.setDateVoided(patient.getDateVoided());
+        es.voidEncounter(encounter,voidReason);
+      }
+    }
+  }
+  OrderService os=Context.getOrderService();
+  List<Order> orders=os.getOrdersByPatient(patient);
+  if (CollectionUtils.isNotEmpty(orders)) {
+    for (    Order order : orders) {
+      if (!order.isVoided()) {
+        order.setDateVoided(patient.getDateVoided());
+        os.voidOrder(order,voidReason);
+      }
+    }
+  }
+}

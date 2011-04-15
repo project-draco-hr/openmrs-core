@@ -14,7 +14,7 @@
   }
   encounter.setVoided(true);
   encounter.setVoidedBy(Context.getAuthenticatedUser());
-  encounter.setDateVoided(new Date());
+  if (encounter.getDateVoided() == null)   encounter.setDateVoided(new Date());
   encounter.setVoidReason(reason);
   saveEncounter(encounter);
   return encounter;
