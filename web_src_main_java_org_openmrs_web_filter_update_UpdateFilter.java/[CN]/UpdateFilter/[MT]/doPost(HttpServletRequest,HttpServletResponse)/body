@@ -8,7 +8,6 @@
     if (authenticateAsSuperUser(username,password)) {
       log.debug("Authentication successful.  Redirecting to 'reviewupdates' page.");
       authenticatedSuccessfully=true;
-      if (isDatabaseUpdateInProgress)       referenceMap.put("updateJobStarted",true);
       referenceMap.put("isDatabaseUpdateInProgress",isDatabaseUpdateInProgress);
       renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
     }
@@ -34,11 +33,12 @@
       isDatabaseUpdateInProgress=true;
       updateJob=new UpdateFilterCompletion();
       updateJob.start();
+      referenceMap.put("updateJobStarted",true);
     }
  else {
       referenceMap.put("isDatabaseUpdateInProgress",true);
+      referenceMap.put("updateJobStarted",false);
     }
-    referenceMap.put("updateJobStarted",true);
     renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {

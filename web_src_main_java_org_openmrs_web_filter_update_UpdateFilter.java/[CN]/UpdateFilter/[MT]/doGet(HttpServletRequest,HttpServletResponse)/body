@@ -1,9 +1,4 @@
 {
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  if (isDatabaseUpdateInProgress) {
-    referenceMap.put("updateJobStarted",true);
-    referenceMap.put("isDatabaseUpdateInProgress",isDatabaseUpdateInProgress);
-    renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
-  }
- else   renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+  renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
 }
