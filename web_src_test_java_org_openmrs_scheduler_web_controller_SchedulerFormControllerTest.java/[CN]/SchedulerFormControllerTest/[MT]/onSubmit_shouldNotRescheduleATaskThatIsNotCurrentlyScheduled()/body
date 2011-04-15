@@ -1,0 +1,22 @@
+{
+  executeDataSet(INITIAL_SCHEDULER_TASK_CONFIG_XML);
+  SchedulerService service=Context.getSchedulerService();
+  TaskDefinition task=service.getTaskByName("Hello World Task");
+  Assert.assertNull(task.getTaskInstance());
+  Calendar cal=Calendar.getInstance();
+  cal.add(Calendar.MINUTE,5);
+  task.setStartTime(cal.getTime());
+  service.saveTask(task);
+  Task oldTaskInstance=task.getTaskInstance();
+  SchedulerFormController controller=(SchedulerFormController)applicationContext.getBean("schedulerFormController");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("taskId","1");
+  cal.add(Calendar.MINUTE,2);
+  mockRequest.setParameter("startTime",new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(cal.getTime()));
+  ModelAndView mav=controller.handleRequest(mockRequest,new MockHttpServletResponse());
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  Assert.assertEquals(oldTaskInstance,task.getTaskInstance());
+}
