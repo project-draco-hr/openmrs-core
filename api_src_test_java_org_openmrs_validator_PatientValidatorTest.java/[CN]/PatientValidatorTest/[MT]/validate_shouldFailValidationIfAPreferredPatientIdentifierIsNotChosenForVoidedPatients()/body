@@ -1,0 +1,9 @@
+{
+  Patient pa=Context.getPatientService().getPatient(999);
+  Assert.assertTrue(pa.isVoided());
+  Assert.assertNotNull(pa.getPatientIdentifier());
+  for (  PatientIdentifier id : pa.getIdentifiers())   id.setPreferred(false);
+  Errors errors=new BindException(pa,"patient");
+  validator.validate(pa,errors);
+  Assert.assertTrue(errors.hasErrors());
+}

@@ -1,0 +1,38 @@
+{
+  Patient patient=Context.getPatientService().getPatient(7);
+  patient=Context.getPatientService().voidPatient(patient,"Void Reason");
+  Assert.assertTrue(patient.isVoided());
+  EncounterService es=Context.getEncounterService();
+  List<Encounter> encounters=es.getEncounters(patient,null,null,null,null,null,null,true);
+  Assert.assertTrue(CollectionUtils.isNotEmpty(encounters));
+  for (  Encounter encounter : encounters) {
+    Assert.assertTrue(encounter.isVoided());
+    Assert.assertNotNull(encounter.getDateVoided());
+    Assert.assertNotNull(encounter.getVoidedBy());
+    Assert.assertNotNull(encounter.getVoidReason());
+  }
+  OrderService os=Context.getOrderService();
+  List<Patient> patients=new ArrayList<Patient>();
+  patients.add(patient);
+  List<Order> orders=os.getOrders(Order.class,patients,null,ORDER_STATUS.ANY,null,null,null);
+  Assert.assertTrue(CollectionUtils.isNotEmpty(orders));
+  for (  Order order : orders) {
+    Assert.assertTrue(order.isVoided());
+    Assert.assertNotNull(order.getDateVoided());
+    Assert.assertNotNull(order.getVoidedBy());
+    Assert.assertNotNull(order.getVoidReason());
+  }
+  new PatientDataUnvoidHandler().handle(patient,new User(1),patient.getDateVoided(),null);
+  for (  Encounter encounter : encounters) {
+    Assert.assertFalse(encounter.isVoided());
+    Assert.assertNull(encounter.getDateVoided());
+    Assert.assertNull(encounter.getVoidedBy());
+    Assert.assertNull(encounter.getVoidReason());
+  }
+  for (  Order order : orders) {
+    Assert.assertFalse(order.isVoided());
+    Assert.assertNull(order.getDateVoided());
+    Assert.assertNull(order.getVoidedBy());
+    Assert.assertNull(order.getVoidReason());
+  }
+}
