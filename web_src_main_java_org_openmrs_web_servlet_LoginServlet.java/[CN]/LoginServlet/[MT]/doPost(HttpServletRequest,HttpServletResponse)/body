@@ -41,17 +41,11 @@
         if (user.getUserProperties() != null) {
           if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
             String localeString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
-            Locale locale=null;
-            if (localeString.length() == 5) {
-              String lang=localeString.substring(0,2);
-              String country=localeString.substring(3,5);
-              locale=new Locale(lang,country);
+            Locale locale=WebUtil.normalizeLocale(localeString);
+            if (locale != null) {
+              OpenmrsCookieLocaleResolver oclr=new OpenmrsCookieLocaleResolver();
+              oclr.setLocale(request,response,locale);
             }
- else {
-              locale=new Locale(localeString);
-            }
-            OpenmrsCookieLocaleResolver oclr=new OpenmrsCookieLocaleResolver();
-            oclr.setLocale(request,response,locale);
           }
         }
         if (new UserProperties(user.getUserProperties()).isSupposedToChangePassword()) {

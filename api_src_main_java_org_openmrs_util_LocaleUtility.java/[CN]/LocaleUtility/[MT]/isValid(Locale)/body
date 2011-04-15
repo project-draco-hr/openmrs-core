@@ -1,0 +1,8 @@
+{
+  try {
+    return locale.getISO3Language() != null && locale.getISO3Country() != null;
+  }
+ catch (  MissingResourceException e) {
+    return false;
+  }
+}
