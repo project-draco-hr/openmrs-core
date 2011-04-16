@@ -106,7 +106,7 @@
         Node node=root.getElementsByTagName("dwr").item(0);
         Node current=node.getFirstChild();
         while (current != null) {
-          if ("allow".equals(current.getNodeName()) || "signatures".equals(current.getNodeName())) {
+          if ("allow".equals(current.getNodeName()) || "signatures".equals(current.getNodeName()) || "init".equals(current.getNodeName())) {
             ((Element)current).setAttribute("moduleId",mod.getModuleId());
             outputRoot.appendChild(dwrmodulexml.importNode(current,true));
           }
