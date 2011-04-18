@@ -1,7 +1,7 @@
 {
   if (locale != null && getNames(locale).size() > 0) {
     for (    ConceptName conceptName : getNames(locale)) {
-      if (conceptName.isFullySpecifiedName())       return conceptName;
+      if (ObjectUtils.nullSafeEquals(conceptName.isFullySpecifiedName(),true))       return conceptName;
     }
   }
   return null;
