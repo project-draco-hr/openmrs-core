@@ -9,7 +9,7 @@
     return null;
   }
   for (  ConceptName nameInLocale : getNames(forLocale)) {
-    if (nameInLocale.isLocalePreferred())     return nameInLocale;
+    if (ObjectUtils.nullSafeEquals(nameInLocale.isLocalePreferred(),true))     return nameInLocale;
   }
   return getFullySpecifiedName(forLocale);
 }
