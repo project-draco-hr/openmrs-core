@@ -1,0 +1,13 @@
+{
+  VisitType visitType=Context.getVisitService().getVisitTypeByUuid("c0c579b0-8e59-401d-8a4a-976a0b183519");
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Initial HIV Clinic Visit".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitTypeByUuid("759799ab-c9a5-435e-b671-77773ada74e4");
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Return TB Clinic Visit".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitTypeByUuid("759799ab-c9a5-435e-b671-77773ada74e6");
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Hospitalization".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitTypeByUuid("759799ab-c9a5-435e-b671-77773ada74e1");
+  Assert.assertNull(visitType);
+}

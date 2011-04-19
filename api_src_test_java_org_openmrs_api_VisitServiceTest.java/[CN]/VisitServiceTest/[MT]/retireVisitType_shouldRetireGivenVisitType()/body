@@ -1,0 +1,12 @@
+{
+  VisitType visitType=Context.getVisitService().getVisitType(1);
+  Assert.assertNotNull(visitType);
+  Assert.assertFalse(visitType.isRetired());
+  Assert.assertNull(visitType.getRetireReason());
+  Context.getVisitService().retireVisitType(visitType,"retire reason");
+  visitType=Context.getVisitService().getVisitType(1);
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue(visitType.isRetired());
+  Assert.assertTrue("retire reason".equals(visitType.getRetireReason()));
+  Assert.assertEquals(3,Context.getVisitService().getAllVisitTypes().size());
+}
