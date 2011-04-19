@@ -1,0 +1,6 @@
+{
+  if (obj == null || !(obj instanceof VisitType))   return false;
+  VisitType visitType=(VisitType)obj;
+  if (this.visitTypeId != null && visitType.getVisitTypeId() != null)   return (this.visitTypeId.equals(visitType.getVisitTypeId()));
+ else   return this == visitType;
+}
