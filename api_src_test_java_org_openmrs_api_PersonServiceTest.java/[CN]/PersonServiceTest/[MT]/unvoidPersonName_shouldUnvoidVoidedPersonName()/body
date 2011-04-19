@@ -1,0 +1,10 @@
+{
+  executeDataSet("org/openmrs/api/include/PersionServiceTest-voidUnvoidPersonName.xml");
+  PersonName voidedPersonName=Context.getPersonService().getPersonNameByUuid("a6ghgh7e-1384-493a-a55b-d325924acd94");
+  Assert.assertTrue(voidedPersonName.isVoided());
+  PersonName unvoidedPersonName=Context.getPersonService().unvoidPersonName(voidedPersonName);
+  Assert.assertFalse(unvoidedPersonName.isVoided());
+  Assert.assertNull(unvoidedPersonName.getVoidedBy());
+  Assert.assertNull(unvoidedPersonName.getDateVoided());
+  Assert.assertNull(unvoidedPersonName.getVoidReason());
+}
