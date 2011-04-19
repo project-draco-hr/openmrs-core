@@ -1,0 +1,13 @@
+{
+  VisitType visitType=Context.getVisitService().getVisitType(1);
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Initial HIV Clinic Visit".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitType(2);
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Return TB Clinic Visit".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitType(3);
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Hospitalization".equals(visitType.getName()));
+  visitType=Context.getVisitService().getVisitType(4);
+  Assert.assertNull(visitType);
+}

@@ -1,0 +1,10 @@
+{
+  VisitType visitType=Context.getVisitService().getVisitType(4);
+  Assert.assertNull(visitType);
+  visitType=new VisitType("Some Name","Description");
+  Context.getVisitService().saveVisitType(visitType);
+  visitType=Context.getVisitService().getVisitType(4);
+  Assert.assertNotNull(visitType);
+  Assert.assertTrue("Some Name".equals(visitType.getName()));
+  Assert.assertEquals(4,Context.getVisitService().getAllVisitTypes().size());
+}
