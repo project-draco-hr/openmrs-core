@@ -1,0 +1,8 @@
+{
+  List<VisitType> visitTypeList=new Vector<VisitType>();
+  if (Context.isAuthenticated()) {
+    VisitService es=Context.getVisitService();
+    visitTypeList=es.getAllVisitTypes();
+  }
+  return visitTypeList;
+}
