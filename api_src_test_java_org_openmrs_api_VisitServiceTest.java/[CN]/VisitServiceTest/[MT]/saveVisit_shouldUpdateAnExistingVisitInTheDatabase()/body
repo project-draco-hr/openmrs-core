@@ -1,0 +1,10 @@
+{
+  Visit visit=Context.getVisitService().getVisit(1);
+  Assert.assertNull(visit.getLocation());
+  Assert.assertNull(visit.getChangedBy());
+  Assert.assertNull(visit.getDateChanged());
+  visit.setLocation(new Location(1));
+  visit=Context.getVisitService().saveVisit(visit);
+  Assert.assertNotNull(visit.getChangedBy());
+  Assert.assertNotNull(visit.getDateChanged());
+}

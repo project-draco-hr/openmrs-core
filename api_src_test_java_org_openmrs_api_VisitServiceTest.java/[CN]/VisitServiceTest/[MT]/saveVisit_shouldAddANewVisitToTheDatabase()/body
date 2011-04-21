@@ -1,0 +1,11 @@
+{
+  VisitService vs=Context.getVisitService();
+  Integer originalSize=vs.getAllVisits().size();
+  Visit visit=new Visit(new Patient(2),new VisitType(1),new Date());
+  visit=vs.saveVisit(visit);
+  Assert.assertNotNull(visit.getId());
+  Assert.assertNotNull(visit.getUuid());
+  Assert.assertNotNull(visit.getCreator());
+  Assert.assertNotNull(visit.getDateCreated());
+  Assert.assertEquals(originalSize + 1,vs.getAllVisits().size());
+}

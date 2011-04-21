@@ -1,0 +1,12 @@
+{
+  Visit visit=Context.getVisitService().getVisit(6);
+  Assert.assertTrue(visit.isVoided());
+  Assert.assertNotNull(visit.getVoidReason());
+  Assert.assertNotNull(visit.getVoidedBy());
+  Assert.assertNotNull(visit.getDateVoided());
+  visit=Context.getVisitService().unvoidVisit(visit);
+  Assert.assertFalse(visit.isVoided());
+  Assert.assertNull(visit.getVoidReason());
+  Assert.assertNull(visit.getVoidedBy());
+  Assert.assertNull(visit.getDateVoided());
+}

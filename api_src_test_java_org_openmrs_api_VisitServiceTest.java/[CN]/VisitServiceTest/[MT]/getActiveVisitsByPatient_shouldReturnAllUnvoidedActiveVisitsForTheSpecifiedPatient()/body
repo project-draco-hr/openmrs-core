@@ -1,0 +1,4 @@
+{
+  executeDataSet(VISITS_WITH_DATES_XML);
+  Assert.assertEquals(4,Context.getVisitService().getActiveVisitsByPatient(new Patient(2)).size());
+}
