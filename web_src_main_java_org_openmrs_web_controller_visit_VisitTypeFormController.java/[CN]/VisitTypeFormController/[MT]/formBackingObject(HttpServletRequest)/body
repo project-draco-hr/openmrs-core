@@ -1,0 +1,10 @@
+{
+  VisitType visitType=null;
+  if (Context.isAuthenticated()) {
+    VisitService os=Context.getVisitService();
+    String visitTypeId=request.getParameter("visitTypeId");
+    if (visitTypeId != null)     visitType=os.getVisitType(Integer.valueOf(visitTypeId));
+  }
+  if (visitType == null)   visitType=new VisitType();
+  return visitType;
+}

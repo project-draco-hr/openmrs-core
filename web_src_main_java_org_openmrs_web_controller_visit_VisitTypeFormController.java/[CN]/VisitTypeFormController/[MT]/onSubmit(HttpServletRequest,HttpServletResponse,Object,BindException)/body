@@ -1,0 +1,39 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    VisitType visitType=(VisitType)obj;
+    VisitService es=Context.getVisitService();
+    if (request.getParameter("save") != null) {
+      es.saveVisitType(visitType);
+      view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitType.saved");
+    }
+ else     if (request.getParameter("retire") != null) {
+      String retireReason=request.getParameter("retireReason");
+      if (visitType.getVisitTypeId() != null && !(StringUtils.hasText(retireReason))) {
+        errors.reject("retireReason","general.retiredReason.empty");
+        return showForm(request,response,errors);
+      }
+      es.retireVisitType(visitType,retireReason);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitType.retiredSuccessfully");
+      view=getSuccessView();
+    }
+ else     if (request.getParameter("purge") != null) {
+      try {
+        es.purgeVisitType(visitType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitType.purgedSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+        view="visitType.form?visitTypeId=" + visitType.getVisitTypeId();
+      }
+catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="visitType.form?visitTypeId=" + visitType.getVisitTypeId();
+      }
+    }
+  }
+  return new ModelAndView(new RedirectView(view));
+}
