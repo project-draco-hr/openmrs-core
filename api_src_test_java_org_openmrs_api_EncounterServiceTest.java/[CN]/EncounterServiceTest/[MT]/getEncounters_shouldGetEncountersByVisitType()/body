@@ -1,0 +1,6 @@
+{
+  List<VisitType> visitTypes=new Vector<VisitType>();
+  visitTypes.add(new VisitType(2));
+  List<Encounter> encounters=Context.getEncounterService().getEncounters(null,null,null,null,null,null,null,visitTypes,null,true);
+  assertEquals(1,encounters.size());
+}
