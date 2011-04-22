@@ -10,7 +10,7 @@
       throw new PatientIdentifierException(Context.getMessageSourceService().getMessage("PatientIdentifier.location.null",new Object[]{identifierString},Context.getLocale()));
     }
     if (Context.getPatientService().isIdentifierInUseByAnotherPatient(pi)) {
-      throw new IdentifierNotUniqueException(Context.getMessageSourceService().getMessage("PatientIdentifier.error.notUniqueWithParameter",new Object[]{pi.getIdentifier()},Context.getLocale()));
+      throw new IdentifierNotUniqueException(Context.getMessageSourceService().getMessage("PatientIdentifier.error.notUniqueWithParameter",new Object[]{pi.getIdentifier()},Context.getLocale()),pi);
     }
   }
 }
