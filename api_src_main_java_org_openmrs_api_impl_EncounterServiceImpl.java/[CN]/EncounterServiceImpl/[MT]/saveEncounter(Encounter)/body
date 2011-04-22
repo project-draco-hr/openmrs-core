@@ -29,6 +29,8 @@
       if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
         obs.setPerson(p);
       }
+      if (obs.getObsId() != null) {
+      }
     }
     for (    Order o : encounter.getOrders()) {
       if (!p.equals(o.getPatient())) {

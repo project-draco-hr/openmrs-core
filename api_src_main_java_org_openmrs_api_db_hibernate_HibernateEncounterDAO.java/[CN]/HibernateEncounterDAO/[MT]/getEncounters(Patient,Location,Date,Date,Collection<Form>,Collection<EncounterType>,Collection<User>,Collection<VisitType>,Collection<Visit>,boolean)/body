@@ -21,6 +21,13 @@
   if (providers != null && providers.size() > 0) {
     crit.add(Expression.in("provider",providers));
   }
+  if (visitTypes != null && visitTypes.size() > 0) {
+    crit.createAlias("visit","v");
+    crit.add(Expression.in("v.visitType",visitTypes));
+  }
+  if (visits != null && visits.size() > 0) {
+    crit.add(Expression.in("visit",visits));
+  }
   if (!includeVoided) {
     crit.add(Expression.eq("voided",false));
   }
