@@ -1,0 +1,16 @@
+{
+  if (prioritizedHandlerClasses == null) {
+    prioritizeHandlers();
+  }
+  Class<? extends AttributeHandler<?>> handlerClass=prioritizedHandlerClasses.get(logicalType);
+  if (handlerClass == null)   return newDefaultHandler();
+  AttributeHandler<?> handler;
+  try {
+    handler=handlerClass.newInstance();
+    if (handlerConfig != null)     handler.setConfiguration(handlerConfig);
+    return handler;
+  }
+ catch (  Exception ex) {
+    throw new APIException("Error instantiating handler",ex);
+  }
+}

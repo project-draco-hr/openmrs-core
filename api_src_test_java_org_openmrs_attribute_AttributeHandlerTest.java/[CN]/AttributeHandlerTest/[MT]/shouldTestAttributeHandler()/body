@@ -1,0 +1,17 @@
+{
+  VisitAttributeType paymentDateAttrType=new VisitAttributeType();
+  paymentDateAttrType.setLogicalType("date");
+  try {
+    VisitAttribute legalDate=new VisitAttribute();
+    legalDate.setAttributeType(paymentDateAttrType);
+    legalDate.setObjectValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
+    Assert.assertEquals("2011-04-15",legalDate.getSerializedValue());
+    Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15"),legalDate.getObjectValue());
+  }
+ catch (  InvalidAttributeValueException ex) {
+    throw new RuntimeException(ex);
+  }
+  VisitAttribute illegalDate=new VisitAttribute();
+  illegalDate.setAttributeType(paymentDateAttrType);
+  illegalDate.setObjectValue(new Date(System.currentTimeMillis() + 100000));
+}
