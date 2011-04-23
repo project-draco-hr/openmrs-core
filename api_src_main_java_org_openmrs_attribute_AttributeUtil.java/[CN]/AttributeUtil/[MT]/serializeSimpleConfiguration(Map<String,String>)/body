@@ -1,0 +1,9 @@
+{
+  if (simpleConfig == null || simpleConfig.size() == 0)   return "";
+  try {
+    return Context.getSerializationService().getDefaultSerializer().serialize(simpleConfig);
+  }
+ catch (  SerializationException ex) {
+    throw new APIException(ex);
+  }
+}

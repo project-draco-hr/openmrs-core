@@ -1,0 +1,8 @@
+{
+  try {
+    return new SimpleDateFormat(dateFormat).parse(stringValue);
+  }
+ catch (  ParseException ex) {
+    throw new InvalidAttributeValueException("Cannot convert: " + stringValue,ex);
+  }
+}
