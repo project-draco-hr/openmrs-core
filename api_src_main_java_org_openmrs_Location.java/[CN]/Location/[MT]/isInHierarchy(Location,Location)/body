@@ -1,8 +1,8 @@
 {
-  if (location == null || root == null)   return false;
-  if (root.equals(location))   return true;
-  if (root.getChildLocations() != null) {
-    for (    Location l : root.getChildLocations())     return isInHierarchy(location,l);
+  if (root == null)   return false;
+  while (true) {
+    if (location == null)     return false;
+ else     if (root.equals(location))     return true;
+    location=location.getParentLocation();
   }
-  return false;
 }
