@@ -6,7 +6,7 @@
   Assert.assertNull(visit.getDateVoided());
   visit=Context.getVisitService().voidVisit(visit,"test reason");
   Assert.assertTrue(visit.isVoided());
-  Assert.assertNotNull(visit.getVoidReason());
-  Assert.assertNotNull(visit.getVoidedBy());
+  Assert.assertEquals("test reason",visit.getVoidReason());
+  Assert.assertEquals(Context.getAuthenticatedUser(),visit.getVoidedBy());
   Assert.assertNotNull(visit.getDateVoided());
 }
