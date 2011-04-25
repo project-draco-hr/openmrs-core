@@ -1,4 +1,7 @@
 {
+  if (errors.hasErrors()) {
+    return showForm(request,response,errors);
+  }
   Patient patient=(Patient)object;
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
