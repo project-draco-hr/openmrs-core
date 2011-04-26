@@ -1,0 +1,8 @@
+{
+  List<VisitAttributeType> visitAttributeTypeList=new Vector<VisitAttributeType>();
+  if (Context.isAuthenticated()) {
+    VisitService es=Context.getVisitService();
+    visitAttributeTypeList=es.getAllVisitAttributeTypes();
+  }
+  return visitAttributeTypeList;
+}
