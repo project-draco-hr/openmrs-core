@@ -1,0 +1,12 @@
+{
+  Map<VisitAttributeType,String> serializedAttributeValues=null;
+  if (attributeValues != null) {
+    serializedAttributeValues=new HashMap<VisitAttributeType,String>();
+    AttributeService attrService=Context.getAttributeService();
+    for (    Map.Entry<VisitAttributeType,Object> e : attributeValues.entrySet()) {
+      VisitAttributeType vat=e.getKey();
+      serializedAttributeValues.put(vat,attrService.getHandler(vat).serialize(e.getValue()));
+    }
+  }
+  return dao.getVisits(visitTypes,patients,locations,indications,minStartDatetime,maxStartDatetime,minEndDatetime,maxEndDatetime,serializedAttributeValues,true,includeVoided);
+}
