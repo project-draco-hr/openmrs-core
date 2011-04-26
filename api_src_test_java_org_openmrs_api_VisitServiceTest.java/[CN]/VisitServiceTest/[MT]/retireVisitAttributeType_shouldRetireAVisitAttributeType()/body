@@ -1,0 +1,11 @@
+{
+  executeDataSet(VISITS_ATTRIBUTES_XML);
+  VisitAttributeType vat=service.getVisitAttributeType(1);
+  Assert.assertFalse(vat.isRetired());
+  service.retireVisitAttributeType(vat,"for testing");
+  vat=service.getVisitAttributeType(1);
+  Assert.assertTrue(vat.isRetired());
+  Assert.assertNotNull(vat.getRetiredBy());
+  Assert.assertNotNull(vat.getDateRetired());
+  Assert.assertEquals("for testing",vat.getRetireReason());
+}

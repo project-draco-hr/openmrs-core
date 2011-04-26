@@ -1,0 +1,35 @@
+{
+  Criteria criteria=getCurrentSession().createCriteria(Visit.class);
+  if (visitTypes != null)   criteria.add(Restrictions.in("visitType",visitTypes));
+  if (patients != null)   criteria.add(Restrictions.in("patient",patients));
+  if (locations != null)   criteria.add(Restrictions.in("location",locations));
+  if (indications != null)   criteria.add(Restrictions.in("indication",indications));
+  if (minStartDatetime != null)   criteria.add(Restrictions.ge("startDatetime",minStartDatetime));
+  if (maxStartDatetime != null)   criteria.add(Restrictions.le("startDatetime",maxStartDatetime));
+  if (!includeInactive)   criteria.add(Restrictions.isNull("stopDatetime"));
+ else {
+    if (minEndDatetime != null)     criteria.add(Restrictions.ge("stopDatetime",minEndDatetime));
+    if (maxEndDatetime != null)     criteria.add(Restrictions.le("stopDatetime",maxEndDatetime));
+  }
+  if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
+  if (serializedAttributeValues == null)   return criteria.list();
+  List<Visit> ret=new ArrayList<Visit>();
+  for (  Visit visit : (List<Visit>)criteria.list()) {
+    boolean allMatch=true;
+    for (    Map.Entry<VisitAttributeType,String> e : serializedAttributeValues.entrySet()) {
+      boolean match=false;
+      for (      VisitAttribute attr : visit.getActiveAttributes(e.getKey())) {
+        if (attr.getSerializedValue().equals(e.getValue())) {
+          match=true;
+          break;
+        }
+      }
+      if (!match) {
+        allMatch=false;
+        break;
+      }
+    }
+    if (allMatch)     ret.add(visit);
+  }
+  return ret;
+}
