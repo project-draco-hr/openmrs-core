@@ -1,0 +1,10 @@
+{
+  VisitAttributeType visitAttributeType=null;
+  if (Context.isAuthenticated()) {
+    VisitService os=Context.getVisitService();
+    String visitAttributeTypeId=request.getParameter("visitAttributeTypeId");
+    if (visitAttributeTypeId != null)     visitAttributeType=os.getVisitAttributeType(Integer.valueOf(visitAttributeTypeId));
+  }
+  if (visitAttributeType == null)   visitAttributeType=new VisitAttributeType();
+  return visitAttributeType;
+}
