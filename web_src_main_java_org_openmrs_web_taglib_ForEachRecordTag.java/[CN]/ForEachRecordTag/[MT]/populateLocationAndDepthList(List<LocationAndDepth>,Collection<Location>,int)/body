@@ -1,0 +1,8 @@
+{
+  for (  Location location : locations) {
+    locationAndDepths.add(new LocationAndDepth(depth,location));
+    if (location.getChildLocations() != null && location.getChildLocations().size() > 0) {
+      populateLocationAndDepthList(locationAndDepths,location.getChildLocations(),depth + 1);
+    }
+  }
+}
