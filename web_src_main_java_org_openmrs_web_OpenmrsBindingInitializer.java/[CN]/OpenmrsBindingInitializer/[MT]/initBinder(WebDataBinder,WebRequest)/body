@@ -1,9 +1,33 @@
 {
+  wdb.registerCustomEditor(Cohort.class,new CohortEditor());
   wdb.registerCustomEditor(Concept.class,new ConceptEditor());
-  wdb.registerCustomEditor(Person.class,new PersonEditor());
-  wdb.registerCustomEditor(Patient.class,new PatientEditor());
+  wdb.registerCustomEditor(ConceptAnswer.class,new ConceptAnswerEditor());
+  wdb.registerCustomEditor(ConceptClass.class,new ConceptClassEditor());
+  wdb.registerCustomEditor(ConceptDatatype.class,new ConceptDatatypeEditor());
+  wdb.registerCustomEditor(ConceptName.class,new ConceptNameEditor());
+  wdb.registerCustomEditor(ConceptNumeric.class,new ConceptNumericEditor());
+  wdb.registerCustomEditor(ConceptSource.class,new ConceptSourceEditor());
+  wdb.registerCustomEditor(DataExportReportObject.class,new DataExportReportObjectEditor());
+  wdb.registerCustomEditor(Drug.class,new DrugEditor());
+  wdb.registerCustomEditor(Encounter.class,new EncounterEditor());
+  wdb.registerCustomEditor(Form.class,new FormEditor());
   wdb.registerCustomEditor(Location.class,new LocationEditor());
+  wdb.registerCustomEditor(LocationTag.class,new LocationTagEditor());
+  wdb.registerCustomEditor(Order.class,new OrderEditor());
+  wdb.registerCustomEditor(OrderType.class,new OrderTypeEditor());
+  wdb.registerCustomEditor(Patient.class,new PatientEditor());
+  wdb.registerCustomEditor(PatientIdentifierType.class,new PatientIdentifierTypeEditor());
+  wdb.registerCustomEditor(PersonAttribute.class,new PersonAttributeEditor());
+  wdb.registerCustomEditor(PersonAttributeType.class,new PersonAttributeTypeEditor());
+  wdb.registerCustomEditor(Person.class,new PersonEditor());
+  wdb.registerCustomEditor(Privilege.class,new PrivilegeEditor());
+  wdb.registerCustomEditor(Program.class,new ProgramEditor());
+  wdb.registerCustomEditor(ProgramWorkflow.class,new ProgramWorkflowEditor());
+  wdb.registerCustomEditor(ProgramWorkflowState.class,new ProgramWorkflowStateEditor());
+  wdb.registerCustomEditor(ReportDefinition.class,new ReportDefinitionEditor());
+  wdb.registerCustomEditor(ReportSchemaXml.class,new ReportSchemaXmlEditor());
+  wdb.registerCustomEditor(Role.class,new RoleEditor());
+  wdb.registerCustomEditor(User.class,new UserEditor());
   wdb.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,NumberFormat.getInstance(Context.getLocale()),true));
   wdb.registerCustomEditor(java.util.Date.class,new CustomDateEditor(Context.getDateFormat(),true,10));
-  wdb.registerCustomEditor(PatientIdentifierType.class,new PatientIdentifierTypeEditor());
 }
