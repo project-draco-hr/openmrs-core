@@ -2,11 +2,13 @@
   PersonService ps=Context.getPersonService();
   if (StringUtils.hasText(text)) {
     try {
-      setValue(ps.getPerson(Integer.valueOf(text)));
+      Integer personId=Integer.valueOf(text);
+      setValue(ps.getPerson(personId));
     }
- catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Person not found: " + ex.getMessage());
+ catch (    NumberFormatException e) {
+      Person person=ps.getPersonByUuid(text);
+      setValue(person);
+      if (person == null)       log.trace("Unable to get Person by primary key or uuid using input: " + text);
     }
   }
  else {
