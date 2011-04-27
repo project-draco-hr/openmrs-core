@@ -3,9 +3,9 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     VisitAttributeType visitAttributeType=(VisitAttributeType)obj;
-    VisitService es=Context.getVisitService();
+    VisitService visitService=Context.getVisitService();
     if (request.getParameter("save") != null) {
-      es.saveVisitAttributeType(visitAttributeType);
+      visitService.saveVisitAttributeType(visitAttributeType);
       view=getSuccessView();
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitAttributeType.saved");
     }
@@ -15,13 +15,13 @@
         errors.reject("retireReason","general.retiredReason.empty");
         return showForm(request,response,errors);
       }
-      es.retireVisitAttributeType(visitAttributeType,retireReason);
+      visitService.retireVisitAttributeType(visitAttributeType,retireReason);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitAttributeType.retiredSuccessfully");
       view=getSuccessView();
     }
  else     if (request.getParameter("purge") != null) {
       try {
-        es.purgeVisitAttributeType(visitAttributeType);
+        visitService.purgeVisitAttributeType(visitAttributeType);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitAttributeType.purgedSuccessfully");
         view=getSuccessView();
       }
@@ -30,6 +30,17 @@
         view="visitAttributeType.form?visitAttributeTypeId=" + visitAttributeType.getVisitAttributeTypeId();
       }
 catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="visitAttributeType.form?visitAttributeTypeId=" + visitAttributeType.getVisitAttributeTypeId();
+      }
+    }
+ else     if (request.getParameter("unretire") != null) {
+      try {
+        visitService.unretireVisitAttributeType(visitAttributeType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"VisitAttributeType.unretiredSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      APIException e) {
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
         view="visitAttributeType.form?visitAttributeTypeId=" + visitAttributeType.getVisitAttributeTypeId();
       }
