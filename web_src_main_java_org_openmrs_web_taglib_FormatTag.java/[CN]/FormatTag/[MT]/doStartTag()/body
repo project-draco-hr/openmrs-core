@@ -23,6 +23,10 @@
   if (encounterType != null) {
     printMetadata(sb,encounterType);
   }
+  if (visitTypeId != null)   visitType=Context.getVisitService().getVisitType(visitTypeId);
+  if (visitType != null) {
+    printMetadata(sb,visitType);
+  }
   if (locationId != null)   location=Context.getLocationService().getLocation(locationId);
   if (location != null) {
     printMetadata(sb,location);

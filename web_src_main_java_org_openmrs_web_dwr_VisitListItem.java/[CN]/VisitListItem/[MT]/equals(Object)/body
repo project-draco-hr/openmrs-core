@@ -1,0 +1,8 @@
+{
+  if (!(obj instanceof VisitListItem)) {
+    return false;
+  }
+  VisitListItem rhs=(VisitListItem)obj;
+  if (this.visitId != null && rhs.visitId != null)   return (this.visitId.equals(rhs.visitId));
+  return this == obj;
+}

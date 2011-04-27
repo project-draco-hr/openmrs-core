@@ -1,0 +1,20 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  MessageSourceService mss=Context.getMessageSourceService();
+  try {
+    List<Visit> visits=new Vector<Visit>();
+    if (patientId != null) {
+      Patient p=Context.getPatientService().getPatient(patientId);
+      if (p != null)       visits=Context.getVisitService().getActiveVisitsByPatient(p);
+    }
+    if (visits.size() > 0) {
+      objectList=new Vector<Object>(visits.size());
+      for (      Visit v : visits)       objectList.add(new VisitListItem(v));
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for visits",e);
+    objectList.add(mss.getMessage("Visit.search.error") + " - " + e.getMessage());
+  }
+  return objectList;
+}
