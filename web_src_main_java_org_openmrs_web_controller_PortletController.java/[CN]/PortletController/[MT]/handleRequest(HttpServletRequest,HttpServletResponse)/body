@@ -57,6 +57,7 @@
           Patient p=Context.getPatientService().getPatient(patientId);
           model.put("patient",p);
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
+          if (Context.hasPrivilege(PrivilegeConstants.VIEW_VISITS))           model.put("patientVisits",Context.getVisitService().getVisitsByPatient(p));
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_OBS)) {
             List<Obs> patientObs=Context.getObsService().getObservationsByPerson(p);
             model.put("patientObs",patientObs);
