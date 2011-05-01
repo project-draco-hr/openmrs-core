@@ -27,6 +27,14 @@
   if (visitType != null) {
     printMetadata(sb,visitType);
   }
+  if (visitId != null)   visit=Context.getVisitService().getVisit(visitId);
+  if (visit != null) {
+    printMetadata(sb,visit.getVisitType());
+    sb.append(" @");
+    printMetadata(sb,visit.getLocation());
+    sb.append(" | ");
+    printDate(sb,visit.getStartDatetime());
+  }
   if (locationId != null)   location=Context.getLocationService().getLocation(locationId);
   if (location != null) {
     printMetadata(sb,location);
