@@ -1,0 +1,17 @@
+{
+  List<Encounter> patientEncounters=null;
+  List<Encounter> visitEncounters=null;
+  if (visit.getPatient() != null && visit.getPatient().getPatientId() != null)   patientEncounters=Context.getEncounterService().getEncountersByPatient(visit.getPatient());
+  if (visit.getVisitId() != null)   visitEncounters=Context.getEncounterService().getEncountersByVisit(visit);
+  if (patientEncounters == null)   patientEncounters=new ArrayList<Encounter>();
+  if (visitEncounters == null)   visitEncounters=new ArrayList<Encounter>();
+  CollectionUtils.filter(patientEncounters,new Predicate(){
+    @Override public boolean evaluate(    Object object){
+      Encounter e=(Encounter)object;
+      return e.getVisit() == null;
+    }
+  }
+);
+  model.addAttribute("visitEncounters",visitEncounters);
+  model.addAttribute("encountersToAdd",patientEncounters);
+}

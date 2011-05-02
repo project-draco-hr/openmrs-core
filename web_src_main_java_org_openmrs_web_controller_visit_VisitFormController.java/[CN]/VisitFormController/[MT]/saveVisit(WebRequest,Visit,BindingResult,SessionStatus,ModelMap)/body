@@ -1,0 +1,18 @@
+{
+  new VisitValidator().validate(visit,result);
+  if (!result.hasErrors()) {
+    try {
+      Context.getVisitService().saveVisit(visit);
+      if (log.isDebugEnabled())       log.debug("Saved visit: " + visit.toString());
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved",WebRequest.SCOPE_SESSION);
+      status.setComplete();
+      return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
+    }
+ catch (    APIException e) {
+      log.warn("Error while saving visit(s)",e);
+      request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Visit.save.error",WebRequest.SCOPE_SESSION);
+    }
+  }
+  setEncounterDetails(visit,model);
+  return VISIT_FORM_URL;
+}

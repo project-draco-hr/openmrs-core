@@ -1,0 +1,10 @@
+{
+  EncounterService es=Context.getEncounterService();
+  Encounter e=es.getEncounter(encounterId);
+  if (e != null) {
+    if (visitId != null)     e.setVisit(Context.getVisitService().getVisit(visitId));
+ else     e.setVisit(null);
+    es.saveEncounter(e);
+  }
+  return e == null ? null : new EncounterListItem(e);
+}
