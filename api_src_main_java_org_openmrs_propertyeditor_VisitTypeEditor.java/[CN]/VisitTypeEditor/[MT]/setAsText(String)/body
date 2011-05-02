@@ -1,0 +1,15 @@
+{
+  VisitService vs=Context.getVisitService();
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(vs.getVisitType(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      log.error("Error setting text" + text,ex);
+      throw new IllegalArgumentException("Visit Type not found: " + ex.getMessage());
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

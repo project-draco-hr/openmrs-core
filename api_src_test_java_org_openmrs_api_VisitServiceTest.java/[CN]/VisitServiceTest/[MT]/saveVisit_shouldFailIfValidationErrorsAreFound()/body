@@ -1,0 +1,7 @@
+{
+  VisitService vs=Context.getVisitService();
+  Visit visit=new Visit();
+  visit.setVisitType(vs.getVisitType(1));
+  visit.setStartDatetime(new Date());
+  Context.getVisitService().saveVisit(visit);
+}

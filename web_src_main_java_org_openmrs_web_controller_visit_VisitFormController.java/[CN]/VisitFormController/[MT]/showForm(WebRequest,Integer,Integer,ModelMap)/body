@@ -1,0 +1,13 @@
+{
+  Visit visit=null;
+  if (visitId != null) {
+    visit=Context.getVisitService().getVisit(visitId);
+  }
+ else {
+    visit=new Visit();
+    if (patientId != null)     visit.setPatient(Context.getPatientService().getPatient(patientId));
+  }
+  model.addAttribute("visit",visit);
+  model.addAttribute("visitTypes",Context.getVisitService().getAllVisitTypes());
+  setEncounterDetails(visit,model);
+}

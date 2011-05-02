@@ -1,5 +1,8 @@
 {
   if (visit.getVisitId() == null)   Context.requirePrivilege(PrivilegeConstants.ADD_VISITS);
  else   Context.requirePrivilege(PrivilegeConstants.EDIT_VISITS);
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  if (errors.hasErrors())   throw new APIException("Validation errors found");
   return dao.saveVisit(visit);
 }

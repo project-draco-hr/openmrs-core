@@ -1,0 +1,15 @@
+{
+  try {
+    Context.getVisitService().unvoidVisit(visit);
+    if (log.isDebugEnabled())     log.debug("Unvoided visit with id: " + visit.getId());
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.unvoided"),WebRequest.SCOPE_SESSION);
+    status.setComplete();
+    return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
+  }
+ catch (  APIException e) {
+    log.warn("Error occurred while attempting to unvoid visit",e);
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.unvoid.error"),WebRequest.SCOPE_SESSION);
+  }
+  setEncounterDetails(visit,model);
+  return VISIT_FORM_URL;
+}

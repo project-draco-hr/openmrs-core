@@ -30,4 +30,6 @@
   wdb.registerCustomEditor(User.class,new UserEditor());
   wdb.registerCustomEditor(java.lang.Integer.class,new CustomNumberEditor(java.lang.Integer.class,NumberFormat.getInstance(Context.getLocale()),true));
   wdb.registerCustomEditor(java.util.Date.class,new CustomDateEditor(Context.getDateFormat(),true,10));
+  wdb.registerCustomEditor(VisitType.class,new VisitTypeEditor());
+  wdb.registerCustomEditor(Visit.class,new VisitEditor());
 }

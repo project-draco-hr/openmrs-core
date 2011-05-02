@@ -1,0 +1,10 @@
+{
+  Visit visit=new Visit();
+  Calendar c=Calendar.getInstance();
+  visit.setStartDatetime(c.getTime());
+  c.set(2010,3,15);
+  visit.setStopDatetime(c.getTime());
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("startDatetime"));
+}

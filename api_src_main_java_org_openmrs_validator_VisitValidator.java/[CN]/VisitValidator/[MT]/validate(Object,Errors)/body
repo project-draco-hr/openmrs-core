@@ -1,5 +1,11 @@
 {
   Visit visit=(Visit)target;
+  ValidationUtils.rejectIfEmpty(errors,"patient","Visit.error.patient.required","Patient is required");
+  ValidationUtils.rejectIfEmpty(errors,"visitType","Visit.error.visitType.required","Visit Type is required");
+  ValidationUtils.rejectIfEmpty(errors,"startDatetime","Visit.error.startDate.required","Start Date is required");
+  if (visit.getStartDatetime() != null && OpenmrsUtil.compareWithNullAsLatest(visit.getStartDatetime(),visit.getStopDatetime()) > 0) {
+    errors.rejectValue("startDatetime","Visit.error.endDateBeforeStartDate","Start date should be earlier than end date");
+  }
   for (  VisitAttributeType vat : Context.getVisitService().getAllVisitAttributeTypes()) {
     if (vat.getMinOccurs() > 0 || vat.getMaxOccurs() != null) {
       int numFound=0;
