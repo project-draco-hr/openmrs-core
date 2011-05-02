@@ -1,0 +1,6 @@
+{
+  Encounter encounter=new Encounter();
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  Assert.assertTrue(errors.hasFieldErrors("patient"));
+}
