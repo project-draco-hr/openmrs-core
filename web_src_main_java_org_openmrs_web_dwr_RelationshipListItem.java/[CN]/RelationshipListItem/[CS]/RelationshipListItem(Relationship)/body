@@ -20,4 +20,12 @@
  catch (  Exception ex) {
     personAType="User";
   }
+  Date startDate=r.getStartDate();
+  if (startDate != null) {
+    this.startDate=Context.getDateFormat().format(startDate);
+  }
+  Date endDate=r.getEndDate();
+  if (endDate != null) {
+    this.endDate=Context.getDateFormat().format(endDate);
+  }
 }

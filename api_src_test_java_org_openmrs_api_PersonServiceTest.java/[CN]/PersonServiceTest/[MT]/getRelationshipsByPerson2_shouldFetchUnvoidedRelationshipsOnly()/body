@@ -1,0 +1,8 @@
+{
+  executeDataSet("org/openmrs/api/include/PersonServiceTest-createRetiredRelationship.xml");
+  PersonService personService=Context.getPersonService();
+  Person person=personService.getPerson(6);
+  List<Relationship> relationships=personService.getRelationshipsByPerson(person,new Date());
+  Assert.assertNotNull(relationships);
+  Assert.assertTrue("There should be no relationship found given the person",relationships.isEmpty());
+}

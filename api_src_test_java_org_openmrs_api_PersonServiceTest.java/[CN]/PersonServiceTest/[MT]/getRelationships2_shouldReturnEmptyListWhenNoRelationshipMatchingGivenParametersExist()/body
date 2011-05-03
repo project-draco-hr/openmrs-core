@@ -1,0 +1,9 @@
+{
+  PersonService personService=Context.getPersonService();
+  Person firstPerson=personService.getPerson(501);
+  Person secondPerson=personService.getPerson(2);
+  RelationshipType relationshipType=personService.getRelationshipType(1);
+  List<Relationship> relationships=personService.getRelationships(firstPerson,secondPerson,relationshipType,new Date());
+  Assert.assertNotNull(relationships);
+  Assert.assertTrue("There should be no relationship found given the from person",relationships.isEmpty());
+}
