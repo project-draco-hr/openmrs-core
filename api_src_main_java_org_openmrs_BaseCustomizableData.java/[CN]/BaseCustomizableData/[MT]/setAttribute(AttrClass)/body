@@ -1,0 +1,6 @@
+{
+  if (getAttributes() == null)   setAttributes(new HashSet<AttrClass>());
+  for (  AttrClass existing : getAttributes())   if (existing.getAttributeType().equals(attribute.getAttributeType()))   existing.setVoided(true);
+  getAttributes().add(attribute);
+  attribute.setOwner(this);
+}
