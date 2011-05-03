@@ -8,6 +8,6 @@
     if (patientId != null)     visit.setPatient(Context.getPatientService().getPatient(patientId));
   }
   model.addAttribute("visit",visit);
-  model.addAttribute("visitTypes",Context.getVisitService().getAllVisitTypes());
   setEncounterDetails(visit,model);
+  return VISIT_FORM;
 }
