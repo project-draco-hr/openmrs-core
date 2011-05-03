@@ -1,0 +1,27 @@
+{
+  executeDataSet(CREATE_PATIENT_XML);
+  executeDataSet(CREATE_RELATIONSHIP_XML);
+  Patient patient=createTestPatient();
+  List<Relationship> rels=createTestDatedRelationships(ps.getPatient(2),patient,personService.getRelationshipType(4));
+  List<Relationship> res=personService.getRelationships(ps.getPatient(2),patient,null,df.parse("1988-01-01"));
+  assertEquals(5,res.size());
+  for (  Relationship rr : res) {
+    if (!rr.equals(rels.get(0)) && !rr.equals(rels.get(2)) && !rr.equals(rels.get(3))&& !rr.equals(rels.get(7))&& !rr.equals(rels.get(8))) {
+      if (rr.equals(rels.get(1))) {
+        fail("unexpected relationship 1 in results from getRelationshipsByPerson with effeciveDate of 1988-01-01");
+      }
+ else       if (rr.equals(rels.get(4))) {
+        fail("unexpected relationship 4 in results from getRelationshipsByPerson with effeciveDate of 1988-01-01");
+      }
+ else       if (rr.equals(rels.get(5))) {
+        fail("unexpected relationship 5 in results from getRelationshipsByPerson with effeciveDate of 1988-01-01");
+      }
+ else       if (rr.equals(rels.get(6))) {
+        fail("unexpected relationship 6 in results from getRelationshipsByPerson with effeciveDate of 1988-01-01");
+      }
+ else {
+        fail("unrecognized unexpected relationship in results from getRelationshipsByPerson with effeciveDate of 1988-01-01");
+      }
+    }
+  }
+}

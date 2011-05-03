@@ -1,0 +1,14 @@
+{
+  Relationship r=Context.getPersonService().getRelationship(relationshipId);
+  Date startDate=null;
+  if (StringUtils.isNotBlank(startDateStr)) {
+    startDate=Context.getDateFormat().parse(startDateStr);
+  }
+  Date endDate=null;
+  if (StringUtils.isNotBlank(endDateStr)) {
+    endDate=Context.getDateFormat().parse(endDateStr);
+  }
+  r.setStartDate(startDate);
+  r.setEndDate(endDate);
+  Context.getPersonService().saveRelationship(r);
+}

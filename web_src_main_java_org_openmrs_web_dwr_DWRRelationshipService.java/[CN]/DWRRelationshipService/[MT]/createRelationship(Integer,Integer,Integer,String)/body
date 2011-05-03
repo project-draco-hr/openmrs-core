@@ -7,5 +7,8 @@
   rel.setPersonA(personA);
   rel.setPersonB(personB);
   rel.setRelationshipType(relType);
+  if (StringUtils.isNotBlank(startDateStr)) {
+    rel.setStartDate(Context.getDateFormat().parse(startDateStr));
+  }
   ps.saveRelationship(rel);
 }
