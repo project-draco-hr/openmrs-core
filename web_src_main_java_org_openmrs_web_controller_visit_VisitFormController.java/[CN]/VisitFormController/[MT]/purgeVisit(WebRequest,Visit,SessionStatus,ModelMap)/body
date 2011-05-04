@@ -1,15 +1,14 @@
 {
   try {
+    Integer patientId=visit.getPatient().getPatientId();
     Context.getVisitService().purgeVisit(visit);
     if (log.isDebugEnabled())     log.debug("Purged visit with id: " + visit.getId());
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.purged"),WebRequest.SCOPE_SESSION);
-    status.setComplete();
-    return "redirect:/admin/";
+    return "redirect:/patientDashboard.form?patientId=" + patientId;
   }
  catch (  APIException e) {
     log.warn("Error occurred while attempting to purge visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.purge.error"),WebRequest.SCOPE_SESSION);
   }
-  setEncounterDetails(visit,model);
   return VISIT_FORM;
 }

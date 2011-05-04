@@ -2,12 +2,11 @@
   Visit visit=null;
   if (visitId != null) {
     visit=Context.getVisitService().getVisit(visitId);
+    model.addAttribute("visit",visit);
   }
  else {
     visit=new Visit();
     if (patientId != null)     visit.setPatient(Context.getPatientService().getPatient(patientId));
   }
-  model.addAttribute("visit",visit);
-  setEncounterDetails(visit,model);
-  return VISIT_FORM;
+  return visit;
 }

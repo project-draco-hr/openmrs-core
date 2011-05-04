@@ -4,13 +4,11 @@
     Context.getVisitService().voidVisit(visit,voidReason);
     if (log.isDebugEnabled())     log.debug("Voided visit with id: " + visit.getId());
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.voided"),WebRequest.SCOPE_SESSION);
-    status.setComplete();
     return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
   }
  catch (  APIException e) {
     log.warn("Error occurred while attempting to void visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.void.error"),WebRequest.SCOPE_SESSION);
   }
-  setEncounterDetails(visit,model);
   return VISIT_FORM;
 }
