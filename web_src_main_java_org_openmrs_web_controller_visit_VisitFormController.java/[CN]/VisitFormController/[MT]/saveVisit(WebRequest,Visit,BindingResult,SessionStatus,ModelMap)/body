@@ -1,4 +1,25 @@
 {
+  for (  VisitAttributeType vat : (List<VisitAttributeType>)model.get("visitAttributeTypes")) {
+    if (vat.getMaxOccurs() == null || vat.getMaxOccurs() != 1)     throw new RuntimeException("For now only attributes with maxOccurs=1 are supported");
+    AttributeHandler<?> handler=Context.getAttributeService().getHandler(vat);
+    List<Object> attributeValues=new ArrayList<Object>();
+    for (Iterator<String> iter=request.getParameterNames(); iter.hasNext(); ) {
+      String paramName=iter.next();
+      if (paramName.startsWith("attribute." + vat.getId())) {
+        String paramValue=request.getParameter(paramName);
+        if (StringUtils.hasText(paramValue)) {
+          Object realValue=handler.deserialize(paramValue);
+          VisitAttribute va=new VisitAttribute();
+          va.setAttributeType(vat);
+          va.setSerializedValue(paramValue);
+          visit.setAttribute(va);
+        }
+ else {
+          for (          VisitAttribute va : visit.getActiveAttributes(vat))           va.setVoided(true);
+        }
+      }
+    }
+  }
   new VisitValidator().validate(visit,result);
   if (!result.hasErrors()) {
     try {

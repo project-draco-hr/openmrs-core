@@ -1,0 +1,7 @@
+{
+  Reflect reflect=new Reflect(OpenmrsObject.class);
+  Field field=ReflectionUtils.findField(Visit.class,"attributes");
+  ParameterizedType setOfAttr=(ParameterizedType)field.getGenericType();
+  Type genericType=setOfAttr.getActualTypeArguments()[0];
+  Assert.assertTrue(reflect.isSuperClass(genericType));
+}
