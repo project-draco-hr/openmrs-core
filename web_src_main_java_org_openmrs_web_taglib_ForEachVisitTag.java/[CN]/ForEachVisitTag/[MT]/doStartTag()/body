@@ -3,24 +3,24 @@
     log.debug("ForEachVisitTag skipping body due to 'visits' param = " + visits);
     return SKIP_BODY;
   }
-  matchingEncs=new ArrayList<Visit>();
+  matchingVisits=new ArrayList<Visit>();
   for (Iterator<Visit> i=visits.iterator(); i.hasNext(); ) {
     Visit e=i.next();
     if (type == null || e.getVisitType().getVisitTypeId().intValue() == type.intValue()) {
-      matchingEncs.add(e);
+      matchingVisits.add(e);
     }
   }
-  log.debug("ForEachVisitTag found " + matchingEncs.size() + " visits matching type = "+ type);
+  log.debug("ForEachVisitTag found " + matchingVisits.size() + " visits matching type = "+ type);
   if (sortBy == null || sortBy.equals("")) {
     sortBy="visitDatetime";
   }
   Comparator comp=new BeanComparator(sortBy,(descending ? new ReverseComparator(new ComparableComparator()) : new ComparableComparator()));
-  Collections.sort(matchingEncs,comp);
-  if (matchingEncs.isEmpty()) {
+  Collections.sort(matchingVisits,comp);
+  if (matchingVisits.isEmpty()) {
     return SKIP_BODY;
   }
  else {
-    pageContext.setAttribute(var,matchingEncs.get(count++));
+    pageContext.setAttribute(var,matchingVisits.get(count++));
     return EVAL_BODY_BUFFERED;
   }
 }
