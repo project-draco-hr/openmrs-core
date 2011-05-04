@@ -1,5 +1,5 @@
 {
-  if (encounterId == null)   throw new APIException(Context.getMessageSourceService().getMessage("Encounter.encounterIdCannotBeNull"));
+  if (encounterId == null)   throw new APIException(Context.getMessageSourceService().getMessage("Encounter.error.encounterIdCannotBeNull"));
   EncounterService es=Context.getEncounterService();
   Encounter e=es.getEncounter(encounterId);
   if (e == null)   throw new APIException(Context.getMessageSourceService().getMessage("Encounter.noMatchesFound",new Object[]{encounterId},Context.getLocale()));
