@@ -3,6 +3,11 @@
     return new SimpleDateFormat(dateFormat).parse(stringValue);
   }
  catch (  ParseException ex) {
-    throw new InvalidAttributeValueException("Cannot convert: " + stringValue,ex);
+    try {
+      return Context.getDateFormat().parse(stringValue);
+    }
+ catch (    ParseException ex2) {
+      throw new InvalidAttributeValueException("Cannot convert: " + stringValue,ex);
+    }
   }
 }

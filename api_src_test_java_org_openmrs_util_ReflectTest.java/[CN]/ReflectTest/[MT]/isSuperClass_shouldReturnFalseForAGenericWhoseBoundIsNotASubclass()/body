@@ -1,0 +1,7 @@
+{
+  Reflect reflect=new Reflect(Number.class);
+  Field field=ReflectionUtils.findField(Visit.class,"attributes");
+  ParameterizedType setOfAttr=(ParameterizedType)field.getGenericType();
+  Type genericType=setOfAttr.getActualTypeArguments()[0];
+  Assert.assertFalse(reflect.isSuperClass(genericType));
+}

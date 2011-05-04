@@ -2,7 +2,14 @@
   if (isCollection(field.getType())) {
     try {
       ParameterizedType type=(ParameterizedType)field.getGenericType();
-      return (parametrizedClass.isAssignableFrom((Class)type.getActualTypeArguments()[0]));
+      if (type.getActualTypeArguments()[0] instanceof Class) {
+        return (parametrizedClass.isAssignableFrom((Class)type.getActualTypeArguments()[0]));
+      }
+ else       if (type.getActualTypeArguments()[0] instanceof TypeVariable) {
+        return isSuperClass((TypeVariable<?>)type.getActualTypeArguments()[0]);
+      }
+ else {
+      }
     }
  catch (    ClassCastException e) {
     }
