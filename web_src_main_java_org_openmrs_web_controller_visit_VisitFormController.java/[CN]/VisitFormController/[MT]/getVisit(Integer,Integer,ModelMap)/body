@@ -1,9 +1,6 @@
 {
   Visit visit=null;
-  if (visitId != null) {
-    visit=Context.getVisitService().getVisit(visitId);
-    model.addAttribute("visit",visit);
-  }
+  if (visitId != null)   visit=Context.getVisitService().getVisit(visitId);
  else {
     visit=new Visit();
     if (patientId != null)     visit.setPatient(Context.getPatientService().getPatient(patientId));
