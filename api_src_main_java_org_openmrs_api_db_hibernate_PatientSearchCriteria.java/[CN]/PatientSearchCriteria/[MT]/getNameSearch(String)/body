@@ -1,13 +1,30 @@
 {
-  MatchMode mode=MatchMode.START;
-  String matchModeConstant=OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE;
-  String modeGp=Context.getAdministrationService().getGlobalProperty(matchModeConstant);
-  if (OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_ANYWHERE.equalsIgnoreCase(modeGp)) {
-    mode=MatchMode.ANYWHERE;
+  String givenNameProperty="name.givenName";
+  String middleNameProperty="name.middleName";
+  String familyNameProperty="name.familyName";
+  String familyName2Property="name.familyName2";
+  SimpleExpression givenName;
+  SimpleExpression middleName;
+  SimpleExpression familyName;
+  SimpleExpression familyName2;
+  Integer minChars=Context.getAdministrationService().getGlobalPropertyValue(OpenmrsConstants.GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_MIN_SEARCH_CHARACTERS);
+  if (name != null && name.length() < minChars) {
+    givenName=Expression.eq(givenNameProperty,name).ignoreCase();
+    middleName=Expression.eq(middleNameProperty,name).ignoreCase();
+    familyName=Expression.eq(familyNameProperty,name).ignoreCase();
+    familyName2=Expression.eq(familyName2Property,name).ignoreCase();
   }
-  SimpleExpression givenName=Expression.like("name.givenName",name,mode);
-  SimpleExpression middleName=Expression.like("name.middleName",name,mode);
-  SimpleExpression familyName=Expression.like("name.familyName",name,mode);
-  SimpleExpression familyName2=Expression.like("name.familyName2",name,mode);
+ else {
+    MatchMode mode=MatchMode.START;
+    String matchModeConstant=OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE;
+    String modeGp=Context.getAdministrationService().getGlobalProperty(matchModeConstant);
+    if (OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_ANYWHERE.equalsIgnoreCase(modeGp)) {
+      mode=MatchMode.ANYWHERE;
+    }
+    givenName=Expression.like(givenNameProperty,name,mode);
+    middleName=Expression.like(middleNameProperty,name,mode);
+    familyName=Expression.like(familyNameProperty,name,mode);
+    familyName2=Expression.like(familyName2Property,name,mode);
+  }
   return Expression.and(Expression.eq("name.voided",false),Expression.or(familyName2,Expression.or(familyName,Expression.or(middleName,givenName))));
 }
