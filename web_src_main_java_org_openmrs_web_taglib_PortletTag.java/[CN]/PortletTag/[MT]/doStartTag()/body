@@ -7,7 +7,7 @@
   try {
     if (url.equals(""))     pageContext.getOut().print("Every portlet must be defined with a URI");
  else {
-      if (!url.endsWith("portlet"))       url+=".portlet";
+      if (!url.endsWith(".portlet"))       url+=".portlet";
       if (moduleId != null && moduleId.length() > 0) {
         Module mod=ModuleFactory.getModuleById(moduleId);
         if (mod == null)         log.warn("no module found with id: " + moduleId);
