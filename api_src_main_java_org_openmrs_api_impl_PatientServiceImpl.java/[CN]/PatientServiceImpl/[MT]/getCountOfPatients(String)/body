@@ -1,6 +1,6 @@
 {
   int count=0;
-  if (StringUtils.isBlank(query) || query.length() < getMinSearchCharacters())   return count;
+  if (StringUtils.isBlank(query))   return count;
   List<PatientIdentifierType> emptyList=new Vector<PatientIdentifierType>();
   if (query.matches(".*\\d+.*")) {
     log.debug("[Identifier search] Query: " + query);
