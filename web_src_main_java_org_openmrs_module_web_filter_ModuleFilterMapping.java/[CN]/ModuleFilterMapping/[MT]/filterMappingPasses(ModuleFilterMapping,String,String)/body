@@ -3,7 +3,7 @@
     return false;
   }
   for (  String patternToCheck : filterMapping.getUrlPatterns()) {
-    if (urlPatternMatches(patternToCheck,requestPath)) {
+    if (urlPatternMatches(patternToCheck,requestPathWithoutContext)) {
       return true;
     }
   }
