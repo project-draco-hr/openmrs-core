@@ -17,8 +17,8 @@
   for (  Relationship r : allRels) {
     personService.voidRelationship(r,"Because of a JUnit test.");
   }
-  List<Relationship> updatedARels=personService.getRelationshipsByPerson(p1);
-  List<Relationship> updatedBRels=personService.getRelationshipsByPerson(p2);
+  List<Relationship> updatedARels=personService.getRelationshipsByPerson(p1,new Date());
+  List<Relationship> updatedBRels=personService.getRelationshipsByPerson(p2,new Date());
   assertEquals(0,updatedARels.size());
   assertEquals(updatedARels,updatedBRels);
 }
