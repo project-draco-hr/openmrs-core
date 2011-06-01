@@ -13,7 +13,7 @@
   WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
   BindException errors=new BindException(patientModel,"patientModel");
   ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
-  String redirectUrl=controller.saveShortPatient(mockWebRequest,new PersonName(),new PersonAddress(),patientModel,errors,new SimpleSessionStatus());
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,new PersonName(),new PersonAddress(),patientModel,errors);
   Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
   Assert.assertNotNull(p.getId());
   Assert.assertNotNull(p.getPersonName());

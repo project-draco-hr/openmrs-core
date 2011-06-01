@@ -1,0 +1,10 @@
+{
+  List<PatientIdentifierType> pits=Context.getPatientService().getAllPatientIdentifierTypes();
+  boolean identifierLocationUsed=false;
+  for (  PatientIdentifierType pit : pits) {
+    if (pit.getLocationBehavior() == null || pit.getLocationBehavior() == LocationBehavior.REQUIRED) {
+      identifierLocationUsed=true;
+    }
+  }
+  return identifierLocationUsed;
+}
