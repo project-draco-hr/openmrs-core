@@ -16,7 +16,7 @@
       request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Patient.saved"),WebRequest.SCOPE_SESSION);
       saveDeathInfo(patientModel,request);
       if (!patient.getVoided()) {
-        Map<String,Relationship> relationships=getRelationshipsMap(patient,request);
+        Map<String,Relationship> relationships=getRelationshipsMap(patientModel,request);
         for (        Relationship relationship : relationships.values()) {
           if (relationship.getPersonA() != null && relationship.getPersonB() != null)           Context.getPersonService().saveRelationship(relationship);
         }
@@ -25,13 +25,8 @@
  catch (    APIException e) {
       log.error("Error occurred while attempting to save patient",e);
       request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Patient.save.error"),WebRequest.SCOPE_SESSION);
-      if (foundChanges) {
-        status.setComplete();
-        return "redirect:" + PATIENT_DASHBOARD_URL + "?patientId="+ patient.getPatientId();
-      }
-      return SHORT_PATIENT_FORM_URL;
+      if (!foundChanges)       return SHORT_PATIENT_FORM_URL;
     }
-    status.setComplete();
     return "redirect:" + PATIENT_DASHBOARD_URL + "?patientId="+ patient.getPatientId();
   }
   return FIND_PATIENT_PAGE;

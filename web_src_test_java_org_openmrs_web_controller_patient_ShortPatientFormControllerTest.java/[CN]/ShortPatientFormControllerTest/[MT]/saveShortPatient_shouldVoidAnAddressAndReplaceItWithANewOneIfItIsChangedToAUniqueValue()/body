@@ -9,7 +9,7 @@
   PersonAddress personAddressCache=(PersonAddress)p.getPersonAddress().clone();
   patientModel.getPersonAddress().setAddress1("Kampala");
   ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
-  String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)BeanUtils.cloneBean(p.getPersonName()),personAddressCache,patientModel,errors,new SimpleSessionStatus());
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)BeanUtils.cloneBean(p.getPersonName()),personAddressCache,patientModel,errors);
   Assert.assertEquals(addressCount + 1,p.getAddresses().size());
   Assert.assertTrue("The old address should be voided",oldPersonAddress.isVoided());
   Assert.assertNotNull("The void reason should be set",oldPersonAddress.getVoidReason());

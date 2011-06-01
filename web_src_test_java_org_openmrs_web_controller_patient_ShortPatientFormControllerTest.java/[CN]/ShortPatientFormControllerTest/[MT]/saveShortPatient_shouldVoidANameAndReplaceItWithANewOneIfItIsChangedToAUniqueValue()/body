@@ -9,7 +9,7 @@
   PersonName personNameCache=(PersonName)BeanUtils.cloneBean(p.getPersonName());
   patientModel.getPersonName().setGivenName("Changed");
   ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
-  String redirectUrl=controller.saveShortPatient(mockWebRequest,personNameCache,(PersonAddress)p.getPersonAddress().clone(),patientModel,errors,new SimpleSessionStatus());
+  String redirectUrl=controller.saveShortPatient(mockWebRequest,personNameCache,(PersonAddress)p.getPersonAddress().clone(),patientModel,errors);
   Assert.assertEquals(nameCount + 1,p.getNames().size());
   Assert.assertTrue("The old name should be voided",oldPersonName.isVoided());
   Assert.assertNotNull("The void reason should be set",oldPersonName.getVoidReason());
