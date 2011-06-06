@@ -5,8 +5,12 @@
       setValue(cs.getConceptNumeric(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text" + text,ex);
-      throw new IllegalArgumentException("Concept not found: " + ex.getMessage());
+      ConceptNumeric conceptNumeric=cs.getConceptNumericByUuid(text);
+      setValue(conceptNumeric);
+      if (conceptNumeric == null) {
+        log.error("Error setting text" + text,ex);
+        throw new IllegalArgumentException("Concept not found: " + ex.getMessage());
+      }
     }
   }
  else {

@@ -5,7 +5,9 @@
       setValue(vs.getVisit(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      throw new IllegalArgumentException("Visit not found: " + ex.getMessage());
+      Visit v=vs.getVisitByUuid(text);
+      setValue(v);
+      if (v == null)       throw new IllegalArgumentException("Visit not found: " + ex.getMessage());
     }
   }
  else {

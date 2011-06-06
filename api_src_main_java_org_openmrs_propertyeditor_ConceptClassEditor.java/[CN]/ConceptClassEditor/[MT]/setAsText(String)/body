@@ -6,7 +6,11 @@
       setValue(cs.getConceptClass(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      throw new IllegalArgumentException("ConceptClass not found: " + ex.getMessage());
+      ConceptClass conceptClass=cs.getConceptClassByUuid(text);
+      setValue(conceptClass);
+      if (conceptClass == null) {
+        throw new IllegalArgumentException("ConceptClass not found: " + ex.getMessage());
+      }
     }
   }
  else {

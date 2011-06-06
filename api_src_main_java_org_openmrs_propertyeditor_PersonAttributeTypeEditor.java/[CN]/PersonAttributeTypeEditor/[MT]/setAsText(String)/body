@@ -5,8 +5,12 @@
       setValue(ps.getPersonAttributeType(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Person Attribute Type not found: " + ex.getMessage());
+      PersonAttributeType personAttributeType=ps.getPersonAttributeTypeByUuid(text);
+      setValue(personAttributeType);
+      if (personAttributeType == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Person Attribute Type not found: " + ex.getMessage());
+      }
     }
   }
  else {

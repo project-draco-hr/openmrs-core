@@ -5,8 +5,12 @@
       setValue(ps.getOrder(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Order not found: " + ex.getMessage());
+      Order order=ps.getOrderByUuid(text);
+      setValue(order);
+      if (order == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Order not found: " + ex.getMessage());
+      }
     }
   }
  else {

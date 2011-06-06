@@ -5,8 +5,12 @@
       setValue(ps.getPatient(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Patient not found: " + ex.getMessage());
+      Patient patient=ps.getPatientByUuid(text);
+      setValue(patient);
+      if (patient == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Patient not found: " + ex.getMessage());
+      }
     }
   }
  else {

@@ -6,8 +6,12 @@
       setValue(cs.getConceptDatatype(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("ConceptDatatype not found: " + ex.getMessage());
+      ConceptDatatype conceptDatatype=cs.getConceptDatatypeByUuid(text);
+      setValue(conceptDatatype);
+      if (conceptDatatype == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("ConceptDatatype not found: " + ex.getMessage());
+      }
     }
   }
  else {

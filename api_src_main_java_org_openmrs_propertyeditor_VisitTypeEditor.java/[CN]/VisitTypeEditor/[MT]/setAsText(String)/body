@@ -5,7 +5,11 @@
       setValue(vs.getVisitType(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      throw new IllegalArgumentException("Visit Type not found: " + ex.getMessage());
+      VisitType v=vs.getVisitTypeByUuid(text);
+      setValue(v);
+      if (v == null) {
+        throw new IllegalArgumentException("Visit Type not found: " + ex.getMessage());
+      }
     }
   }
  else {

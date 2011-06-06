@@ -5,8 +5,12 @@
       setValue(ps.getUser(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("User not found: " + ex.getMessage());
+      User u=ps.getUserByUuid(text);
+      setValue(u);
+      if (u == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("User not found: " + ex.getMessage());
+      }
     }
   }
  else {

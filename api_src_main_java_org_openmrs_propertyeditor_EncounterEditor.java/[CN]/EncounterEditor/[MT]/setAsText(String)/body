@@ -5,8 +5,12 @@
       setValue(es.getEncounter(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Encounter not found: " + ex.getMessage());
+      Encounter encounter=es.getEncounterByUuid(text);
+      setValue(encounter);
+      if (encounter == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Encounter not found: " + ex.getMessage());
+      }
     }
   }
  else {

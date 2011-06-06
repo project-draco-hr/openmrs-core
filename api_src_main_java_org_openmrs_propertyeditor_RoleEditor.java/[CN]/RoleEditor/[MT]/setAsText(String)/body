@@ -2,11 +2,17 @@
   UserService es=Context.getUserService();
   if (StringUtils.hasText(text)) {
     try {
-      setValue(es.getRole(text));
+      Role r=es.getRole(text);
+      setValue(r);
+      if (r == null)       throw new Exception();
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Role not found: " + ex.getMessage());
+      Role r=es.getRoleByUuid(text);
+      setValue(r);
+      if (r == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Role not found: " + ex.getMessage());
+      }
     }
   }
  else {

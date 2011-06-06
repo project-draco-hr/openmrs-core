@@ -5,8 +5,12 @@
       setValue(ls.getLocationTag(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("LocationTag not found: " + ex.getMessage());
+      LocationTag locationTag=ls.getLocationTagByUuid(text);
+      setValue(locationTag);
+      if (locationTag == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("LocationTag not found: " + ex.getMessage());
+      }
     }
   }
  else {

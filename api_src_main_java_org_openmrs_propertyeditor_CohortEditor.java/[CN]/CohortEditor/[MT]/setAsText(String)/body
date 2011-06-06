@@ -4,8 +4,12 @@
       setValue(Context.getCohortService().getCohort(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Cohort not found: " + ex.getMessage());
+      Cohort cohort=Context.getCohortService().getCohortByUuid(text);
+      setValue(cohort);
+      if (cohort == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Cohort not found: " + ex.getMessage());
+      }
     }
   }
  else {
