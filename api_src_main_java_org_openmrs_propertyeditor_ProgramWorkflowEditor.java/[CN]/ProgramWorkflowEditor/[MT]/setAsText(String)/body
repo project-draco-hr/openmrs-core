@@ -5,8 +5,12 @@
       setValue(pws.getWorkflow(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text" + text,ex);
-      throw new IllegalArgumentException("Program Workflow not found: " + ex.getMessage());
+      ProgramWorkflow pw=pws.getWorkflowByUuid(text);
+      setValue(pw);
+      if (pw == null) {
+        log.error("Error setting text" + text,ex);
+        throw new IllegalArgumentException("Program Workflow not found: " + ex.getMessage());
+      }
     }
   }
  else {

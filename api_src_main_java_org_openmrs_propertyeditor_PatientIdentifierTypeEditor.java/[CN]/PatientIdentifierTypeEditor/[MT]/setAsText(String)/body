@@ -5,8 +5,12 @@
       setValue(ps.getPatientIdentifierType(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Identifier Type not found: " + ex.getMessage());
+      PatientIdentifierType patientIdentifierType=ps.getPatientIdentifierTypeByUuid(text);
+      setValue(patientIdentifierType);
+      if (patientIdentifierType == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Identifier Type not found: " + ex.getMessage());
+      }
     }
   }
  else {

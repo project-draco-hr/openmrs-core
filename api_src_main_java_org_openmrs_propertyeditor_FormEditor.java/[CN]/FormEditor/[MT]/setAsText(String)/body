@@ -5,8 +5,12 @@
       setValue(ps.getForm(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Form not found: " + ex.getMessage());
+      Form form=ps.getFormByUuid(text);
+      setValue(form);
+      if (form == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Form not found: " + ex.getMessage());
+      }
     }
   }
  else {

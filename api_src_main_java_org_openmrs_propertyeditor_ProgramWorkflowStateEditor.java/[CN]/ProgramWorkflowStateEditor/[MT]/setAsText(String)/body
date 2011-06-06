@@ -5,8 +5,12 @@
       setValue(pws.getState(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text" + text,ex);
-      throw new IllegalArgumentException("Program Workflow State not found: " + ex.getMessage());
+      ProgramWorkflowState s=pws.getStateByUuid(text);
+      setValue(s);
+      if (s == null) {
+        log.error("Error setting text" + text,ex);
+        throw new IllegalArgumentException("Program Workflow State not found: " + ex.getMessage());
+      }
     }
   }
  else {

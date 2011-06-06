@@ -5,8 +5,12 @@
       setValue(es.getDrug(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Drug not found: " + ex.getMessage());
+      Drug drug=es.getDrugByUuid(text);
+      setValue(drug);
+      if (drug == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Drug not found: " + ex.getMessage());
+      }
     }
   }
  else {

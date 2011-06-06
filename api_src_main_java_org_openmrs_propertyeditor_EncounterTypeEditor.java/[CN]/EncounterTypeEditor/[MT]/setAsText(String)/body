@@ -5,8 +5,12 @@
       setValue(ps.getEncounterType(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Encounter Type not found: " + ex.getMessage());
+      EncounterType encounterType=ps.getEncounterTypeByUuid(text);
+      setValue(encounterType);
+      if (encounterType == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Encounter Type not found: " + ex.getMessage());
+      }
     }
   }
  else {

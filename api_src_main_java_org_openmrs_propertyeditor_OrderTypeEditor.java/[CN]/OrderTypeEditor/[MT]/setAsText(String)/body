@@ -5,8 +5,12 @@
       setValue(os.getOrderType(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      log.error("Error setting text: " + text,ex);
-      throw new IllegalArgumentException("Order type not found: " + ex.getMessage());
+      OrderType orderType=os.getOrderTypeByUuid(text);
+      setValue(orderType);
+      if (orderType == null) {
+        log.error("Error setting text: " + text,ex);
+        throw new IllegalArgumentException("Order type not found: " + ex.getMessage());
+      }
     }
   }
  else {

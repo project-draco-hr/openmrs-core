@@ -6,7 +6,12 @@
       setValue(cs.getConceptSource(Integer.valueOf(text)));
     }
  catch (    Exception ex) {
-      throw new IllegalArgumentException("ConceptSource not found: " + text,ex);
+      ConceptSource conceptSource=cs.getConceptSourceByUuid(text);
+      setValue(conceptSource);
+      if (conceptSource == null) {
+        log.trace("ConceptSource not found by ID or UUID");
+        throw new IllegalArgumentException("ConceptSource not found: " + text,ex);
+      }
     }
   }
  else {
