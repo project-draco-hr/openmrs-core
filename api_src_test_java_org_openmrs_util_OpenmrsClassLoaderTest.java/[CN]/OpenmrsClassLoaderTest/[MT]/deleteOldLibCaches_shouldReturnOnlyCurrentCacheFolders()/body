@@ -1,0 +1,17 @@
+{
+  FilenameFilter cacheDirFilter=new FilenameFilter(){
+    @Override public boolean accept(    File dir,    String name){
+      return name.endsWith(".openmrs-lib-cache");
+    }
+  }
+;
+  File oldCache=new File(System.getProperty("java.io.tmpdir"),"oldCache.openmrs-lib-cache");
+  oldCache.mkdirs();
+  File currentCache=new File(System.getProperty("java.io.tmpdir"),"currentCache.openmrs-lib-cache");
+  currentCache.mkdirs();
+  File tempDir=currentCache.getParentFile();
+  Assert.assertEquals(tempDir.listFiles(cacheDirFilter).length,2);
+  OpenmrsClassLoader.deleteOldLibCaches(currentCache);
+  Assert.assertEquals(tempDir.listFiles(cacheDirFilter).length,1);
+  Assert.assertEquals(tempDir.listFiles(cacheDirFilter)[0],currentCache);
+}
