@@ -5,14 +5,26 @@
     }
   }
 ;
-  File oldCache=new File(System.getProperty("java.io.tmpdir"),"oldCache.openmrs-lib-cache");
-  OpenmrsClassLoader.deleteOldLibCaches(oldCache);
+  FilenameFilter lockFilter=new FilenameFilter(){
+    @Override public boolean accept(    File dir,    String name){
+      return name.equals("lock");
+    }
+  }
+;
+  File oldCache=new File(System.getProperty("java.io.tmpdir"),"001.openmrs-lib-cache");
   oldCache.mkdirs();
-  File currentCache=new File(System.getProperty("java.io.tmpdir"),"currentCache.openmrs-lib-cache");
+  File currentCache=new File(System.getProperty("java.io.tmpdir"),"002.openmrs-lib-cache");
   currentCache.mkdirs();
   File tempDir=currentCache.getParentFile();
-  Assert.assertEquals(2,tempDir.listFiles(cacheDirFilter).length);
+  int folderCount=0;
+  File tempFolder=new File(System.getProperty("java.io.tmpdir"));
+  File[] listFiles=tempFolder.listFiles(cacheDirFilter);
+  for (  File cacheDir : listFiles) {
+    if (cacheDir.list(lockFilter).length != 0) {
+      folderCount++;
+    }
+  }
   OpenmrsClassLoader.deleteOldLibCaches(currentCache);
-  Assert.assertEquals(1,tempDir.listFiles(cacheDirFilter).length);
+  Assert.assertEquals(folderCount + 1,tempDir.listFiles(cacheDirFilter).length);
   Assert.assertEquals(tempDir.listFiles(cacheDirFilter)[0],currentCache);
 }
