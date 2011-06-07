@@ -1,0 +1,6 @@
+{
+  if (!(obj instanceof EncounterSearchResult))   return false;
+  EncounterSearchResult rhs=(EncounterSearchResult)obj;
+  if (this.encounterId != null && rhs.encounterId != null)   return this.encounterId.equals(rhs.encounterId);
+  return this == obj;
+}
