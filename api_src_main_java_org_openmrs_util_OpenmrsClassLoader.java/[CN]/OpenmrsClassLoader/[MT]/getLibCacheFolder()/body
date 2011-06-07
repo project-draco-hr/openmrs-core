@@ -1,7 +1,7 @@
 {
   if (libCacheFolder != null)   return libCacheFolderInitialized ? libCacheFolder : null;
 synchronized (ModuleClassLoader.class) {
-    libCacheFolder=new File(System.getProperty("java.io.tmpdir"),System.currentTimeMillis() + ".openmrs-lib-cache");
+    libCacheFolder=new File(System.getProperty("java.io.tmpdir"),System.currentTimeMillis() + LIBCACHESUFFIX);
     if (log.isDebugEnabled())     log.debug("libraries cache folder is " + libCacheFolder);
     File lockFile=new File(libCacheFolder,"lock");
     if (lockFile.exists()) {
@@ -17,6 +17,7 @@ synchronized (ModuleClassLoader.class) {
       }
     }
  else {
+      deleteOldLibCaches(libCacheFolder);
       libCacheFolder.mkdirs();
     }
     try {
