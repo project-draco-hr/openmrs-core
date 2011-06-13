@@ -1,5 +1,5 @@
 {
   executeDataSet(UNIQUE_ENC_WITH_PAGING_XML);
-  List<EncounterSearchResult> encs=Context.getEncounterService().getEncounters("qwerty",0,4,true,false);
+  List<Encounter> encs=Context.getEncounterService().getEncounters("qwerty",0,4,true);
   Assert.assertEquals(4,encs.size());
 }

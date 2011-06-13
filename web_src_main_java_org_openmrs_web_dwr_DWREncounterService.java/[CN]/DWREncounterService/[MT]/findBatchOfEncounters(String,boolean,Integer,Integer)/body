@@ -3,7 +3,7 @@
   MessageSourceService mss=Context.getMessageSourceService();
   try {
     EncounterService es=Context.getEncounterService();
-    List<EncounterSearchResult> encs=new Vector<EncounterSearchResult>();
+    List<Encounter> encs=new Vector<Encounter>();
     if (phrase == null) {
       objectList.add(mss.getMessage("Encounter.searchPhraseCannotBeNull"));
       return objectList;
@@ -11,20 +11,20 @@
     if (phrase.matches("\\d+")) {
       Encounter e=es.getEncounter(Integer.valueOf(phrase));
       if (e != null) {
-        if (!e.isVoided() || includeVoided == true)         encs.add(new EncounterSearchResult(e));
+        if (!e.isVoided() || includeVoided == true)         encs.add(e);
       }
     }
     if (phrase == null || phrase.equals("")) {
     }
  else {
-      encs.addAll(es.getEncounters(phrase,start,length,includeVoided,true));
+      encs.addAll(es.getEncounters(phrase,start,length,includeVoided));
     }
     if (encs.size() == 0) {
       objectList.add(mss.getMessage("Encounter.noMatchesFound",new Object[]{phrase},Context.getLocale()));
     }
  else {
       objectList=new Vector<Object>(encs.size());
-      for (      EncounterSearchResult e : encs) {
+      for (      Encounter e : encs) {
         objectList.add(new EncounterListItem(e));
       }
     }
