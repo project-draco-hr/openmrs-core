@@ -16,7 +16,13 @@
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Encounter.saved");
     }
   }
-  finally {
+ catch (  APIException e) {
+    log.error("Error while trying to save the encounter",e);
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Encounter.cannot.save");
+    errors.reject("encounter","Encounter.cannot.save");
+    return showForm(request,response,errors);
+  }
+ finally {
     Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
     Context.removeProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
   }

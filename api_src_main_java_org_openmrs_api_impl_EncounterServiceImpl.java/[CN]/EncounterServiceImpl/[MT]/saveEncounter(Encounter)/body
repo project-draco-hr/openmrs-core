@@ -1,4 +1,7 @@
 {
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  if (errors.hasErrors())   throw new APIException(Context.getMessageSourceService().getMessage("error.foundValidationErrors"));
   boolean isNewEncounter=false;
   Date newDate=encounter.getEncounterDatetime();
   Date originalDate=null;
@@ -13,7 +16,7 @@
   }
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);
-    originalLocation=dao.getSavedEncounterLocation(encounter);
+    if (encounter.getLocation() != null)     originalLocation=dao.getSavedEncounterLocation(encounter);
     Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs(true)) {
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
