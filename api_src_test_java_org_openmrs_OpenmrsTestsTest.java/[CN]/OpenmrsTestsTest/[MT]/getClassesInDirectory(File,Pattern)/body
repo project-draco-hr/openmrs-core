@@ -7,7 +7,7 @@
     if (pattern.matcher(currentFile.getName()).matches()) {
       String className=currentFile.getAbsolutePath().replace(".class","");
       className=className.replace(File.separator,".");
-      className=className.substring(className.indexOf("org.openmrs."));
+      className=className.substring(className.lastIndexOf("org.openmrs."));
       try {
         Class<?> currentClass=classLoader.loadClass(className);
         currentDirTestClasses.add(currentClass);
