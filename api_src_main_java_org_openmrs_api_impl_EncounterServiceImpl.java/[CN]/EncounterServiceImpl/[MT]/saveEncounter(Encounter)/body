@@ -1,7 +1,18 @@
 {
   Errors errors=new BindException(encounter,"encounter");
   new EncounterValidator().validate(encounter,errors);
-  if (errors.hasErrors())   throw new APIException(Context.getMessageSourceService().getMessage("error.foundValidationErrors"));
+  if (errors.hasErrors()) {
+    StringBuilder sb=new StringBuilder(Context.getMessageSourceService().getMessage("error.foundValidationErrors") + ": [");
+    boolean isFirst=true;
+    for (    ObjectError error : errors.getAllErrors()) {
+      if (isFirst) {
+        sb.append(Context.getMessageSourceService().getMessage(error.getCode()));
+        isFirst=false;
+      }
+ else       sb.append(", ").append(Context.getMessageSourceService().getMessage(error.getCode()));
+    }
+    throw new APIException(sb.toString() + "]");
+  }
   boolean isNewEncounter=false;
   Date newDate=encounter.getEncounterDatetime();
   Date originalDate=null;
