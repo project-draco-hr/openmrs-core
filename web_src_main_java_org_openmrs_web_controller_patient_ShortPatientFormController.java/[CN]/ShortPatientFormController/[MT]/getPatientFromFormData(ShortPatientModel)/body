@@ -15,10 +15,14 @@
       patient.addAddress(personAddress);
     }
   }
-  for (  PatientIdentifier id : patientModel.getIdentifiers()) {
-    if (id.getPatientIdentifierId() == null && id.isVoided())     continue;
-    patient.addIdentifier(id);
+  if (patientModel.getIdentifiers() != null) {
+    for (    PatientIdentifier id : patientModel.getIdentifiers()) {
+      if (id.getPatientIdentifierId() == null && id.isVoided())       continue;
+      patient.addIdentifier(id);
+    }
   }
-  for (  PersonAttribute formAttribute : patientModel.getPersonAttributes())   patient.addAttribute(formAttribute);
+  if (patientModel.getPersonAttributes() != null) {
+    for (    PersonAttribute formAttribute : patientModel.getPersonAttributes())     patient.addAttribute(formAttribute);
+  }
   return patient;
 }
