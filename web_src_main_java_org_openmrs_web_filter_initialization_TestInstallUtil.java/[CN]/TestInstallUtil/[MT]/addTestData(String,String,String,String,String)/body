@@ -1,0 +1,45 @@
+{
+  Process proc=null;
+  BufferedReader br=null;
+  String errorMsg=null;
+  String[] command=new String[]{"mysql","--host=" + host,"--port=" + port,"--user=" + user,"--password=" + pwd,"--database=" + databaseName,"-e","source " + SQL_DUMP_FILE.getAbsolutePath()};
+  try {
+    proc=Runtime.getRuntime().exec(command);
+    try {
+      br=new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+      String line;
+      StringBuffer sb=new StringBuffer();
+      while ((line=br.readLine()) != null) {
+        sb.append(System.getProperty("line.separator"));
+        sb.append(line);
+      }
+      errorMsg=sb.toString();
+    }
+ catch (    IOException e) {
+      log.error("Failed to add test data:",e);
+    }
+ finally {
+      if (br != null) {
+        try {
+          br.close();
+        }
+ catch (        Exception e) {
+          log.error("Failed to close the inputstream:",e);
+        }
+      }
+    }
+    if (StringUtils.isNotBlank(errorMsg))     log.error(errorMsg);
+    if (proc.waitFor() == 0) {
+      if (log.isDebugEnabled())       log.debug("Added test data successfully");
+      return true;
+    }
+    log.error("The process terminated abnormally while adding test data");
+  }
+ catch (  IOException e) {
+    log.error("Failed to create the sql dump",e);
+  }
+catch (  InterruptedException e) {
+    log.error("The back up was interrupted while adding test data",e);
+  }
+  return false;
+}

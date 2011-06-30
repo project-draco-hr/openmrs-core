@@ -6,6 +6,9 @@
     if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
       page=SIMPLE_SETUP;
     }
+ else     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+      page=TESTING_SETUP;
+    }
  else {
       page=DATABASE_SETUP;
     }
@@ -50,11 +53,8 @@
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
     wizardModel.databaseDriver=httpRequest.getParameter("database_driver");
     checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
-    try {
-      loadedDriverString=DatabaseUtil.loadDatabaseDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
-      log.info("using database driver :" + loadedDriverString);
-    }
- catch (    ClassNotFoundException e) {
+    loadedDriverString=loadDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
+    if (!StringUtils.hasText(loadedDriverString)) {
       errors.add("The given database driver class was not found. " + "Please ensure that the database driver jar file is on the class path " + "(like in the webapp's lib folder)");
       renderTemplate(page,referenceMap,httpResponse);
       return;
@@ -179,6 +179,9 @@
       if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
         page=SIMPLE_SETUP;
       }
+ else       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+        page=TESTING_SETUP;
+      }
  else {
         page=IMPLEMENTATION_ID_SETUP;
       }
@@ -187,16 +190,78 @@
     }
     initJob=new InitializationCompletion();
     wizardModel.tasksToExecute=new ArrayList<WizardTask>();
-    if (!wizardModel.hasCurrentOpenmrsDatabase)     wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
-    if (wizardModel.createDatabaseUser)     wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
-    if (wizardModel.createTables) {
-      wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
-      wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
+    if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+      loadedDriverString=loadDriver(testDatabaseConnection,null);
+      if (!StringUtils.hasText(loadedDriverString)) {
+        page=TESTING_SETUP;
+        errors.add("The given database driver class was not found. " + "Please ensure that the database driver jar file is on the class path " + "(like in the webapp's lib folder)");
+        renderTemplate(page,referenceMap,httpResponse);
+        return;
+      }
+      wizardModel.tasksToExecute.add(WizardTask.CREATE_TEST_INSTALLATION);
     }
-    if (wizardModel.addDemoData)     wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
+ else {
+      if (!wizardModel.hasCurrentOpenmrsDatabase)       wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
+      if (wizardModel.createDatabaseUser)       wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
+      if (wizardModel.createTables) {
+        wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
+        wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
+      }
+      if (wizardModel.addDemoData)       wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
+    }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     initJob.start();
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+  }
+ else   if (TESTING_SETUP.equals(page)) {
+    if ("Back".equals(httpRequest.getParameter("back"))) {
+      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      return;
+    }
+    wizardModel.currentDatabaseHost=httpRequest.getParameter("currentDatabaseIpAddress");
+    checkForEmptyValue(wizardModel.currentDatabaseHost,errors,"Current database Host Name/IP Address");
+    wizardModel.currentDatabasePort=httpRequest.getParameter("currentDatabasePort");
+    checkForEmptyValue(wizardModel.currentDatabasePort,errors,"Current database connection Port");
+    wizardModel.currentDatabaseName=httpRequest.getParameter("currentDatabaseName");
+    checkForEmptyValue(wizardModel.currentDatabaseName,errors,"Current database name");
+    wizardModel.currentDatabaseUsername=httpRequest.getParameter("currentDatabaseUsername");
+    checkForEmptyValue(wizardModel.currentDatabaseUsername,errors,"A database user with ALL privileges");
+    wizardModel.currentDatabasePassword=httpRequest.getParameter("currentDatabasePassword");
+    checkForEmptyValue(wizardModel.currentDatabasePassword,errors,"Password for database user with ALL privileges");
+    wizardModel.testDatabaseHost=httpRequest.getParameter("test_database_host");
+    checkForEmptyValue(wizardModel.testDatabaseHost,errors,"Test Connection Host Name/IP Address");
+    wizardModel.testDatabasePort=httpRequest.getParameter("test_database_port");
+    checkForEmptyValue(wizardModel.testDatabasePort,errors,"Test Connection Port");
+    wizardModel.testDatabaseUsername=httpRequest.getParameter("test_database_username");
+    checkForEmptyValue(wizardModel.testDatabaseUsername,errors,"Test Database Username");
+    wizardModel.testDatabasePassword=httpRequest.getParameter("test_database_password");
+    checkForEmptyValue(wizardModel.testDatabasePassword,errors,"Test Database Password");
+    if (!errors.isEmpty()) {
+      renderTemplate(page,referenceMap,httpResponse);
+      return;
+    }
+    String addModules=httpRequest.getParameter("addModules");
+    if (OpenmrsUtil.nullSafeEquals(addModules,"true"))     wizardModel.addModules=true;
+ else {
+      wizardModel.addModules=false;
+      testModulesZipFile=null;
+    }
+    page=WIZARD_COMPLETE;
+    renderTemplate(page,referenceMap,httpResponse);
+    return;
+  }
+ else   if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+    httpResponse.setContentType("text/html");
+    httpResponse.setHeader("Cache-Control","no-cache");
+    PrintWriter pw=httpResponse.getWriter();
+    String errorMsg=uploadFile(httpRequest);
+    wizardModel.addModules=true;
+    pw.write("<html><body>");
+    pw.write("<script type=\"text/javascript\">window.parent.document.getElementById(\"spinner\").style.visibility=\"hidden\";</script>");
+    if (errorMsg != null)     pw.write("<div align=\"center\"><font color=\"#FF0000\">" + errorMsg + "</font></div>");
+ else     pw.write("<div align=\"center\"><font color=\"#0BA603\">File uploaded successfully!</font></div>");
+    pw.write("</body></html>");
+    return;
   }
 }

@@ -1,0 +1,43 @@
+{
+  Connection connection=null;
+  Statement statement=null;
+  try {
+    Class.forName(databaseDriver).newInstance();
+    connection=DriverManager.getConnection(connectionUrl,user,pwd);
+    statement=connection.createStatement();
+    String createDBsql="create database if not exists `" + databaseName + "` default character set utf8";
+    if (!connectionUrl.contains("mysql"))     createDBsql=createDBsql.replaceAll("`","\"");
+    return statement.executeUpdate(createDBsql);
+  }
+ catch (  InstantiationException e) {
+    log.error("error:",e);
+  }
+catch (  IllegalAccessException e) {
+    log.error("error:",e);
+  }
+catch (  ClassNotFoundException e) {
+    log.error("error:",e);
+  }
+catch (  SQLException sqlEx) {
+    log.error("Failed to create a test database:",sqlEx);
+  }
+ finally {
+    if (statement != null) {
+      try {
+        statement.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Error while closing sql statemnt: ",e);
+      }
+    }
+    if (connection != null) {
+      try {
+        connection.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Error while closing connection: ",e);
+      }
+    }
+  }
+  return -1;
+}

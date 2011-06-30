@@ -59,10 +59,17 @@
           connectionPassword=wizardModel.currentDatabasePassword;
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
-          setMessage("Verify that the database connection works");
-          reportError("Unable to connect to database",DEFAULT_PAGE);
-          return;
+        if (!InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+          if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+            setMessage("Verify that the database connection works");
+            reportError("Unable to connect to database",DEFAULT_PAGE);
+            return;
+          }
+        }
+ else {
+          finalDatabaseConnectionString=testDatabaseConnection.replace("@HOST@",wizardModel.testDatabaseHost).replace("@PORT@",wizardModel.testDatabasePort).replace("@DBNAME@",InitializationWizardModel.TEST_DATABASE_NAME);
+          connectionUsername=wizardModel.testDatabaseUsername;
+          connectionPassword=wizardModel.testDatabasePassword;
         }
         Properties runtimeProperties=new Properties();
         runtimeProperties.put("connection.url",finalDatabaseConnectionString);
@@ -121,6 +128,19 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             reportError(e.getMessage() + " See the error log for more details",null);
             log.warn("Error while trying to add demo data",e);
           }
+        }
+        if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+          setMessage("Creating testing installation");
+          setCompletedPercentage(0);
+          setExecutingTask(WizardTask.CREATE_TEST_INSTALLATION);
+          createTestInstallation();
+          if (!errors.isEmpty()) {
+            reportError("Error while trying to Creating installation: " + StringUtils.collectionToCommaDelimitedString(errors),null);
+            log.warn(StringUtils.collectionToCommaDelimitedString(errors));
+            return;
+          }
+          wizardModel.workLog.add("Created test installation");
+          addExecutedTask(WizardTask.CREATE_TEST_INSTALLATION);
         }
         try {
           setMessage("Updating the database to the latest version");
