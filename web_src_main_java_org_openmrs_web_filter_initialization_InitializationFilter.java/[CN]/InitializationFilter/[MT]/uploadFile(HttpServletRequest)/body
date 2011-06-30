@@ -1,0 +1,37 @@
+{
+  RequestContext requestContext=new ServletRequestContext(httpRequest);
+  if (!ServletFileUpload.isMultipartContent(requestContext))   return "The request is not a valid multipart/form-data upload request";
+  FileItemFactory factory=new DiskFileItemFactory();
+  ServletFileUpload upload=new ServletFileUpload(factory);
+  InputStream uploadedStream=null;
+  try {
+    List<FileItem> items=upload.parseRequest(requestContext);
+    if (CollectionUtils.isNotEmpty(items)) {
+      FileItem item=items.get(0);
+      String fileName=item.getName();
+      if (StringUtils.hasText(fileName)) {
+        uploadedStream=item.getInputStream();
+        testModulesZipFile=new File(System.getProperty("java.io.tmpdir"),fileName);
+        OpenmrsUtil.copyFile(uploadedStream,new FileOutputStream(testModulesZipFile));
+      }
+ else       return "Please attach a file to upload!";
+    }
+  }
+ catch (  FileUploadException ex) {
+    log.error("Error while uploading file: ",ex);
+    return "An error occured while uploading the file";
+  }
+catch (  IOException e) {
+    log.error("Error while uploading file: ",e);
+    return "An error occured while uploading the file";
+  }
+ finally {
+    if (uploadedStream != null)     try {
+      uploadedStream.close();
+    }
+ catch (    IOException e) {
+      log.error("Error: ",e);
+    }
+  }
+  return null;
+}

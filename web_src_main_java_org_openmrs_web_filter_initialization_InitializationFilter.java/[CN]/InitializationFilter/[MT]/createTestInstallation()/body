@@ -1,0 +1,31 @@
+{
+  try {
+    if (TestInstallUtil.createSqlDump(wizardModel.currentDatabaseHost,wizardModel.currentDatabasePort,wizardModel.currentDatabaseName,wizardModel.currentDatabaseUsername,wizardModel.currentDatabasePassword)) {
+      initJob.setCompletedPercentage(26);
+      String replacedDatabaseConnection=testDatabaseConnection.replace("@HOST@",wizardModel.testDatabaseHost).replace("@PORT@",wizardModel.testDatabasePort);
+      int value=TestInstallUtil.createTestDatabase(replacedDatabaseConnection.replace("@DBNAME@",""),InitializationWizardModel.TEST_DATABASE_NAME,loadDriver(testDatabaseConnection,null),wizardModel.testDatabaseUsername,wizardModel.testDatabasePassword);
+      initJob.setCompletedPercentage(27);
+      if (value > -1) {
+        if (TestInstallUtil.addTestData(wizardModel.testDatabaseHost,wizardModel.testDatabasePort,InitializationWizardModel.TEST_DATABASE_NAME,wizardModel.testDatabaseUsername,wizardModel.testDatabasePassword)) {
+          initJob.setCompletedPercentage(97);
+          wizardModel.databaseConnection=replacedDatabaseConnection;
+          wizardModel.databaseName=InitializationWizardModel.TEST_DATABASE_NAME;
+          if (wizardModel.addModules && testModulesZipFile != null) {
+            log.info("Adding modules...");
+            wizardModel.addModules=true;
+            TestInstallUtil.addZippedTestModules(testModulesZipFile);
+          }
+ else           log.info("Ignoring modules...");
+          initJob.setCompletedPercentage(100);
+        }
+ else         errors.add("Failed to export data to the test server, see logs for details");
+      }
+ else       errors.add("Failed to create the test database, see logs for details");
+    }
+ else     errors.add("Failed to create a sql dump file, see logs for details");
+  }
+ catch (  Exception e) {
+    log.error("Errror while creating a testing environment",e);
+    errors.add("Failed to create a testing environment, please see logs for details");
+  }
+}
