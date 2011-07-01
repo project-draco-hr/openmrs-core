@@ -21,5 +21,7 @@
     weight+=((weightCoefficient / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
     weight+=computeBonusWeight(weightCoefficient,word);
   }
-  return Double.parseDouble(new DecimalFormat("0.000").format(weight));
+  NumberFormat nf=NumberFormat.getNumberInstance();
+  nf.setMaximumFractionDigits(3);
+  return Double.parseDouble(nf.format(weight));
 }
