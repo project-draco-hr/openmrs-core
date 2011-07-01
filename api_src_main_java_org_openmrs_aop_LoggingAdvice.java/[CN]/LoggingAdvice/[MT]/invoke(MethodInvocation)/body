@@ -46,7 +46,7 @@
     if (logGetter || logSetter) {
       StringBuilder output=new StringBuilder();
       output.append("Exiting method ").append(name);
-      if (log.isDebugEnabled())       output.append(". execution time: " + (new Date().getTime() - startTime)).append(" ms");
+      if (log.isDebugEnabled())       output.append(". execution time: " + (System.currentTimeMillis() - startTime)).append(" ms");
       if (logGetter)       log.debug(output.toString());
  else       if (logSetter)       log.info(output.toString());
     }

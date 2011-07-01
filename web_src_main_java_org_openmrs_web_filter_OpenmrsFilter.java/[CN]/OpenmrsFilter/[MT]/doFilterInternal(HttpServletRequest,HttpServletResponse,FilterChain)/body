@@ -1,6 +1,6 @@
 {
   HttpSession httpSession=httpRequest.getSession();
-  httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(new Date().getTime()));
+  httpRequest.setAttribute(WebConstants.INIT_REQ_UNIQUE_ID,String.valueOf(System.currentTimeMillis()));
   if (log.isDebugEnabled()) {
     log.debug("requestURI " + httpRequest.getRequestURI());
     log.debug("requestURL " + httpRequest.getRequestURL());
