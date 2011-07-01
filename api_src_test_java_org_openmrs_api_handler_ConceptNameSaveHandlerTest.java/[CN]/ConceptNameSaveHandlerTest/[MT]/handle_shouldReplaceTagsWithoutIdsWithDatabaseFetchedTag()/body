@@ -2,7 +2,14 @@
   ConceptNameSaveHandler handler=new ConceptNameSaveHandler();
   ConceptName name=new ConceptName();
   name.addTag(ConceptNameTag.PREFERRED);
+  name.addTag(ConceptNameTag.SHORT);
   handler.handle(name,null,null,null);
-  ConceptNameTag newTag=name.getTags().iterator().next();
-  Assert.assertEquals(4,newTag.getConceptNameTagId().intValue());
+  for (  ConceptNameTag tag : name.getTags()) {
+    if (tag.getTag().equals(ConceptNameTag.PREFERRED)) {
+      Assert.assertEquals(4,tag.getConceptNameTagId().intValue());
+    }
+ else     if (tag.getTag().equals(ConceptNameTag.SHORT)) {
+      Assert.assertEquals(2,tag.getConceptNameTagId().intValue());
+    }
+  }
 }
