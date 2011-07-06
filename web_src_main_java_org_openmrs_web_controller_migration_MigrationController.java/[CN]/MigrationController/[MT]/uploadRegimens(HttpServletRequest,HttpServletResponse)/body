@@ -1,5 +1,0 @@
-{
-  String csv=request.getParameter("regimen_csv");
-  int numAdded=importRegimens(csv);
-  return new ModelAndView(new RedirectView("migration.form?message=" + URLEncoder.encode("Uploaded " + numAdded + " regimens","UTF-8")));
-}
