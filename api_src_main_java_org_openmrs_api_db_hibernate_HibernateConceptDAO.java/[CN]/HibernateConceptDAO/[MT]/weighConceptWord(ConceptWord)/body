@@ -21,7 +21,10 @@
     weight+=((weightCoefficient / (conceptName.indexOf(wordString) + 1)) * ((conceptName.length() - wordString.length()) / new Double(conceptName.length())));
     weight+=computeBonusWeight(weightCoefficient,word);
   }
-  NumberFormat nf=NumberFormat.getNumberInstance();
-  nf.setMaximumFractionDigits(3);
-  return Double.parseDouble(nf.format(weight));
+  DecimalFormat df=new DecimalFormat();
+  df.setMaximumFractionDigits(3);
+  Character separator=df.getDecimalFormatSymbols().getDecimalSeparator();
+  String formattedWeight=df.format(weight);
+  if (!separator.equals('.'))   formattedWeight=formattedWeight.replace(separator,'.');
+  return Double.parseDouble(formattedWeight);
 }
