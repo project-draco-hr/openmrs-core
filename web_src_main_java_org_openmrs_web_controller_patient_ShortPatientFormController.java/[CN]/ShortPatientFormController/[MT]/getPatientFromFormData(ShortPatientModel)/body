@@ -22,7 +22,10 @@
     }
   }
   if (patientModel.getPersonAttributes() != null) {
-    for (    PersonAttribute formAttribute : patientModel.getPersonAttributes())     patient.addAttribute(formAttribute);
+    for (    PersonAttribute formAttribute : patientModel.getPersonAttributes()) {
+      if (formAttribute.getPersonAttributeId() == null && StringUtils.isBlank(formAttribute.getValue()))       continue;
+      patient.addAttribute(formAttribute);
+    }
   }
   return patient;
 }
