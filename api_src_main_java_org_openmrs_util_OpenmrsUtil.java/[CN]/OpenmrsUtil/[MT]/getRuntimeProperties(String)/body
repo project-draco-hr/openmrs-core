@@ -9,7 +9,7 @@
     propertyStream=new FileInputStream(filepath);
   }
  catch (  FileNotFoundException e) {
-    log.warn("Also unable to find a runtime properties file at " + new File(filepath).getAbsolutePath());
+    log.warn("Unable to find a runtime properties file at " + new File(filepath).getAbsolutePath());
   }
   if (propertyStream == null) {
     String envVarName=applicationName.toUpperCase() + "_RUNTIME_PROPERTIES_FILE";
