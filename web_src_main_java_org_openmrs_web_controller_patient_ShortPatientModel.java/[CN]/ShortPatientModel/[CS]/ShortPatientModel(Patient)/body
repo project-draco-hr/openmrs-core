@@ -6,12 +6,13 @@
     List<PatientIdentifier> activeIdentifiers=patient.getActiveIdentifiers();
     if (activeIdentifiers.isEmpty())     activeIdentifiers.add(new PatientIdentifier(null,null,(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation()));
     identifiers=ListUtils.lazyList(new ArrayList<PatientIdentifier>(activeIdentifiers),FactoryUtils.instantiateFactory(PatientIdentifier.class));
-    List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING);
-    List<PersonAttribute> activePatientAttributes=patient.getActiveAttributes();
+    List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,null);
     personAttributes=new ArrayList<PersonAttribute>();
     if (!CollectionUtils.isEmpty(viewableAttributeTypes)) {
-      for (      PersonAttribute personAttribute : activePatientAttributes) {
-        if (viewableAttributeTypes.contains(personAttribute.getAttributeType()))         personAttributes.add(personAttribute);
+      for (      PersonAttributeType personAttributeType : viewableAttributeTypes) {
+        PersonAttribute attribute=patient.getAttribute(personAttributeType);
+        if (attribute == null)         attribute=new PersonAttribute(personAttributeType,null);
+        personAttributes.add(attribute);
       }
     }
   }

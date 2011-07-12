@@ -1,6 +1,8 @@
 {
   Patient p=Context.getPatientService().getPatient(2);
+  int originalAttributeCount=p.getAttributes().size();
   ShortPatientModel patientModel=new ShortPatientModel(p);
+  patientModel.getPersonAttributes().add(new PersonAttribute(new PersonAttributeType(2),null));
   WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
   BindException errors=new BindException(patientModel,"patientModel");
   mockWebRequest.setAttribute("personNameCache",BeanUtils.cloneBean(p.getPersonName()),WebRequest.SCOPE_SESSION);
@@ -11,4 +13,5 @@
   Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
   Assert.assertEquals("Patient.saved",mockWebRequest.getAttribute(WebConstants.OPENMRS_MSG_ATTR,WebRequest.SCOPE_SESSION));
   Assert.assertEquals("redirect:/patientDashboard.form?patientId=" + p.getPatientId(),redirectUrl);
+  Assert.assertEquals(originalAttributeCount,p.getAttributes().size());
 }
