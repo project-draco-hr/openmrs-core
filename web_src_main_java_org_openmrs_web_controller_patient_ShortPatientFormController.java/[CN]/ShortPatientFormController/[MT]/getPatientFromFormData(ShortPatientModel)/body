@@ -24,6 +24,11 @@
   if (patientModel.getPersonAttributes() != null) {
     for (    PersonAttribute formAttribute : patientModel.getPersonAttributes()) {
       if (formAttribute.getPersonAttributeId() == null && StringUtils.isBlank(formAttribute.getValue()))       continue;
+      if (formAttribute.getPersonAttributeId() != null && !OpenmrsUtil.nullSafeEquals(formAttribute.getValue(),patient.getAttribute(formAttribute.getAttributeType()).getValue())) {
+        formAttribute=new PersonAttribute(formAttribute.getAttributeType(),formAttribute.getValue());
+        formAttribute.setDateCreated(new Date());
+        formAttribute.setCreator(Context.getAuthenticatedUser());
+      }
       patient.addAttribute(formAttribute);
     }
   }

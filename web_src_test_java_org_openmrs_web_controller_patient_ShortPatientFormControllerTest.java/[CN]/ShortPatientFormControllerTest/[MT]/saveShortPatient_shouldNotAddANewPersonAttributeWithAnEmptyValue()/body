@@ -2,11 +2,11 @@
   Patient p=Context.getPatientService().getPatient(2);
   int originalAttributeCount=p.getAttributes().size();
   ShortPatientModel patientModel=new ShortPatientModel(p);
-  patientModel.getPersonAttributes().add(new PersonAttribute(new PersonAttributeType(2),null));
+  patientModel.getPersonAttributes().add(new PersonAttribute(Context.getPersonService().getPersonAttributeType(2),null));
   WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
   BindException errors=new BindException(patientModel,"patientModel");
-  mockWebRequest.setAttribute("personNameCache",BeanUtils.cloneBean(p.getPersonName()),WebRequest.SCOPE_SESSION);
-  mockWebRequest.setAttribute("personAddressCache",p.getPersonAddress().clone(),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("personNameCache",p.getPersonName(),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("personAddressCache",p.getPersonAddress(),WebRequest.SCOPE_SESSION);
   mockWebRequest.setAttribute("patientModel",patientModel,WebRequest.SCOPE_SESSION);
   ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
   String redirectUrl=controller.saveShortPatient(mockWebRequest,(PersonName)mockWebRequest.getAttribute("personNameCache",WebRequest.SCOPE_SESSION),(PersonAddress)mockWebRequest.getAttribute("personAddressCache",WebRequest.SCOPE_SESSION),(ShortPatientModel)mockWebRequest.getAttribute("patientModel",WebRequest.SCOPE_SESSION),errors);

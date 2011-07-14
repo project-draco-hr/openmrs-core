@@ -1,0 +1,47 @@
+{
+  int attributeTypeId=2;
+  PersonAttributeType pat=Context.getPersonService().getPersonAttributeType(attributeTypeId);
+  AdministrationService as=Context.getAdministrationService();
+  GlobalProperty gp=as.getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES);
+  if (gp == null)   gp=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES);
+  gp.setPropertyValue(pat.getName());
+  as.saveGlobalProperty(gp);
+  Patient p=Context.getPatientService().getPatient(2);
+  int originalAttributeCount=p.getAttributes().size();
+  ShortPatientModel patientModel=new ShortPatientModel(p);
+  PersonAttribute attributeToEdit=null;
+  String oldValue=null;
+  String newValue="New";
+  for (  PersonAttribute at : patientModel.getPersonAttributes()) {
+    if (at.getAttributeType().equals(pat)) {
+      oldValue=at.getValue();
+      at.setValue(newValue);
+      attributeToEdit=at;
+      break;
+    }
+  }
+  Assert.assertNotNull(attributeToEdit);
+  Assert.assertNotNull(oldValue);
+  WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
+  BindException errors=new BindException(patientModel,"patientModel");
+  mockWebRequest.setAttribute("personNameCache",p.getPersonName(),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("personAddressCache",p.getPersonAddress(),WebRequest.SCOPE_SESSION);
+  mockWebRequest.setAttribute("patientModel",patientModel,WebRequest.SCOPE_SESSION);
+  ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
+  controller.saveShortPatient(mockWebRequest,(PersonName)mockWebRequest.getAttribute("personNameCache",WebRequest.SCOPE_SESSION),(PersonAddress)mockWebRequest.getAttribute("personAddressCache",WebRequest.SCOPE_SESSION),(ShortPatientModel)mockWebRequest.getAttribute("patientModel",WebRequest.SCOPE_SESSION),errors);
+  Assert.assertTrue("Should pass with no validation errors",!errors.hasErrors());
+  Assert.assertEquals("Patient.saved",mockWebRequest.getAttribute(WebConstants.OPENMRS_MSG_ATTR,WebRequest.SCOPE_SESSION));
+  PersonAttribute newAttribute=p.getAttribute(attributeTypeId);
+  Assert.assertEquals(originalAttributeCount + 1,p.getAttributes().size());
+  Assert.assertEquals(newValue,newAttribute.getValue());
+  PersonAttribute oldAttribute=null;
+  for (  PersonAttribute at : p.getAttributes()) {
+    if (at.getAttributeType().equals(pat) && OpenmrsUtil.nullSafeEquals("New value: " + newValue,at.getVoidReason())) {
+      oldAttribute=at;
+      break;
+    }
+  }
+  Assert.assertNotNull(oldAttribute);
+  Assert.assertEquals(oldValue,oldAttribute.getValue());
+  Assert.assertTrue(oldAttribute.isVoided());
+}
