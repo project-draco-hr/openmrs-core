@@ -6,13 +6,14 @@
     List<PatientIdentifier> activeIdentifiers=patient.getActiveIdentifiers();
     if (activeIdentifiers.isEmpty())     activeIdentifiers.add(new PatientIdentifier(null,null,(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation()));
     identifiers=ListUtils.lazyList(new ArrayList<PatientIdentifier>(activeIdentifiers),FactoryUtils.instantiateFactory(PatientIdentifier.class));
-    List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,null);
+    List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING);
     personAttributes=new ArrayList<PersonAttribute>();
     if (!CollectionUtils.isEmpty(viewableAttributeTypes)) {
       for (      PersonAttributeType personAttributeType : viewableAttributeTypes) {
-        PersonAttribute attribute=patient.getAttribute(personAttributeType);
-        if (attribute == null)         attribute=new PersonAttribute(personAttributeType,null);
-        personAttributes.add(attribute);
+        PersonAttribute persistedAttribute=patient.getAttribute(personAttributeType);
+        PersonAttribute formAttribute=new PersonAttribute(personAttributeType,null);
+        if (persistedAttribute != null)         BeanUtils.copyProperties(persistedAttribute,formAttribute);
+        personAttributes.add(formAttribute);
       }
     }
   }
