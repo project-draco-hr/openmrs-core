@@ -25,6 +25,7 @@
     try {
       Context.getVisitService().saveVisit(visit);
       if (log.isDebugEnabled())       log.debug("Saved visit: " + visit.toString());
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved",WebRequest.SCOPE_SESSION);
       return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
     }
  catch (    APIException e) {
