@@ -4,6 +4,9 @@
   props.add(new GlobalProperty("a.property.key","something"));
   props.add(new GlobalProperty("a.property.KEY","somethingelse"));
   adminService.saveGlobalProperties(props);
-  props=adminService.getAllGlobalProperties();
-  Assert.assertEquals(originalSize + 2,props.size());
+  int afterSaveSize=adminService.getAllGlobalProperties().size();
+  Assert.assertEquals(originalSize + 2,afterSaveSize);
+  adminService.purgeGlobalProperties(props);
+  int afterPurgeSize=adminService.getAllGlobalProperties().size();
+  Assert.assertEquals(originalSize,afterPurgeSize);
 }

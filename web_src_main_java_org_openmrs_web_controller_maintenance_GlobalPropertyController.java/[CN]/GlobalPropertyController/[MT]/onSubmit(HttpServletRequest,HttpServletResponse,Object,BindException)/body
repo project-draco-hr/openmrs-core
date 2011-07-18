@@ -29,6 +29,9 @@
         }
       }
       try {
+        List<GlobalProperty> purgeGlobalPropList=new ArrayList<GlobalProperty>(as.getAllGlobalProperties());
+        purgeGlobalPropList.removeAll(globalPropList);
+        as.purgeGlobalProperties(purgeGlobalPropList);
         as.saveGlobalProperties(globalPropList);
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
         OpenmrsUtil.applyLogLevels();
