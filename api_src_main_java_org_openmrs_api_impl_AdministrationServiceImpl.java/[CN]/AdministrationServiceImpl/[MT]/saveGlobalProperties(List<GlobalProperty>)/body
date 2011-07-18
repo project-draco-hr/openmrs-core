@@ -1,8 +1,5 @@
 {
   log.debug("saving a list of global properties");
-  for (  GlobalProperty gp : getAllGlobalProperties()) {
-    if (!props.contains(gp))     purgeGlobalProperty(gp);
-  }
   for (  GlobalProperty prop : props) {
     if (prop.getProperty() != null && prop.getProperty().length() > 0) {
       saveGlobalProperty(prop);
