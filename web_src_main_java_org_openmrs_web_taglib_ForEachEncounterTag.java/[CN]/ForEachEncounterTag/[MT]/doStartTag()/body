@@ -3,6 +3,11 @@
     log.debug("ForEachEncounterTag skipping body due to 'encounters' param = " + encounters);
     return SKIP_BODY;
   }
+  if (sortBy == null || sortBy.equals("")) {
+    sortBy="encounterDatetime";
+  }
+  Comparator comp=new BeanComparator(sortBy,(descending ? new ReverseComparator(new ComparableComparator()) : new ComparableComparator()));
+  Collections.sort((List)encounters,comp);
   matchingEncs=new ArrayList<Encounter>();
   for (Iterator<Encounter> i=encounters.iterator(); i.hasNext(); ) {
     if (getNum() != null && getNum() <= matchingEncs.size())     break;
@@ -12,11 +17,6 @@
     }
   }
   log.debug("ForEachEncounterTag found " + matchingEncs.size() + " encounters matching type = "+ type);
-  if (sortBy == null || sortBy.equals("")) {
-    sortBy="encounterDatetime";
-  }
-  Comparator comp=new BeanComparator(sortBy,(descending ? new ReverseComparator(new ComparableComparator()) : new ComparableComparator()));
-  Collections.sort(matchingEncs,comp);
   if (matchingEncs.isEmpty()) {
     return SKIP_BODY;
   }
