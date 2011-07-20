@@ -1,4 +1,5 @@
 {
+  int num=3;
   executeDataSet("org/openmrs/web/taglib/include/ForEachEncounterTagTest.xml");
   Patient patient=Context.getPatientService().getPatient(7);
   List<Encounter> encounters=Context.getEncounterService().getEncountersByPatient(patient);
@@ -7,8 +8,10 @@
   tag.setDescending(true);
   tag.setEncounters(encounters);
   tag.setVar("enc");
+  tag.setNum(num);
   Assert.assertEquals(BodyTag.EVAL_BODY_BUFFERED,tag.doStartTag());
-  Assert.assertEquals(7,encounters.get(0).getId().intValue());
-  Assert.assertEquals(8,encounters.get(1).getId().intValue());
-  Assert.assertEquals(6,encounters.get(2).getId().intValue());
+  Assert.assertTrue(num >= tag.matchingEncs.size());
+  Assert.assertEquals(11,tag.matchingEncs.get(0).getId().intValue());
+  Assert.assertEquals(16,tag.matchingEncs.get(1).getId().intValue());
+  Assert.assertEquals(7,tag.matchingEncs.get(2).getId().intValue());
 }
