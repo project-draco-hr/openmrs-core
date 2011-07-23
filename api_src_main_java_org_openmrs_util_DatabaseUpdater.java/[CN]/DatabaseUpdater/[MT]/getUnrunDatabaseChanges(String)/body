@@ -1,0 +1,29 @@
+{
+  log.debug("Getting unrun changesets");
+  Database database=null;
+  try {
+    if (changeLogFilenames == null)     return Collections.EMPTY_LIST;
+    if (changeLogFilenames.length == 0)     changeLogFilenames=new String[]{CHANGE_LOG_FILE};
+    List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();
+    for (    String changelogFile : changeLogFilenames) {
+      Liquibase liquibase=getLiquibase(changelogFile,null);
+      database=liquibase.getDatabase();
+      List<ChangeSet> changeSets=liquibase.listUnrunChangeSets(CONTEXT);
+      for (      ChangeSet changeSet : changeSets) {
+        OpenMRSChangeSet omrschangeset=new OpenMRSChangeSet(changeSet,database);
+        results.add(omrschangeset);
+      }
+    }
+    return results;
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Error occurred while trying to get the updates needed for the database. " + e.getMessage(),e);
+  }
+ finally {
+    try {
+      database.getConnection().close();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}
