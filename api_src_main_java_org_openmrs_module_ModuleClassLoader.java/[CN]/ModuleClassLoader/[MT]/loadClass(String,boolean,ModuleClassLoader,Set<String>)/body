@@ -23,22 +23,20 @@
     checkClassVisibility(result,requestor);
     return result;
   }
-synchronized (this) {
-    try {
-      result=findClass(name);
+  try {
+    result=findClass(name);
+  }
+ catch (  LinkageError le) {
+    throw le;
+  }
+catch (  ClassNotFoundException cnfe) {
+  }
+  if (result != null) {
+    checkClassVisibility(result,requestor);
+    if (resolve) {
+      resolveClass(result);
     }
- catch (    LinkageError le) {
-      throw le;
-    }
-catch (    ClassNotFoundException cnfe) {
-    }
-    if (result != null) {
-      checkClassVisibility(result,requestor);
-      if (resolve) {
-        resolveClass(result);
-      }
-      return result;
-    }
+    return result;
   }
   if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
