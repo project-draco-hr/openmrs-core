@@ -1,0 +1,15 @@
+{
+  Patient patient=null;
+  try {
+    patient=getPatient(patientOrPersonId);
+  }
+ catch (  ClassCastException ex) {
+  }
+  if (patient == null) {
+    Person toPromote=Context.getPersonService().getPerson(patientOrPersonId);
+    if (toPromote != null) {
+      patient=new Patient(toPromote);
+    }
+  }
+  return patient;
+}

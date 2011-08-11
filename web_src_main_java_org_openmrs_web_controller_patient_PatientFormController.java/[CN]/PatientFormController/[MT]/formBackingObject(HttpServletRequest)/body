@@ -3,25 +3,18 @@
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
     String patientId=request.getParameter("patientId");
-    Integer id=null;
+    Integer id;
     if (patientId != null) {
       try {
         id=Integer.valueOf(patientId);
-        patient=ps.getPatient(id);
-        if (patient == null)         throw new ObjectRetrievalFailureException(Patient.class,id);
+        patient=ps.getPatientOrPromotePerson(id);
+        if (patient == null) {
+          log.warn("There is no patient or person with id: '" + patientId + "'");
+          throw new ServletException("There is no patient or person with id: '" + patientId + "'");
+        }
       }
  catch (      NumberFormatException numberError) {
         log.warn("Invalid patientId supplied: '" + patientId + "'",numberError);
-      }
-catch (      ObjectRetrievalFailureException noPatientEx) {
-        try {
-          Person person=Context.getPersonService().getPerson(id);
-          patient=new Patient(person);
-        }
- catch (        ObjectRetrievalFailureException noPersonEx) {
-          log.warn("There is no patient or person with id: '" + patientId + "'",noPersonEx);
-          throw new ServletException("There is no patient or person with id: '" + patientId + "'");
-        }
       }
     }
   }
