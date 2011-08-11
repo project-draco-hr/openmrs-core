@@ -1,0 +1,6 @@
+{
+  executeDataSet(USER_WHO_IS_NOT_PATIENT_XML);
+  Patient patient=patientService.getPatientOrPromotePerson(202);
+  Assert.assertNotNull(patient);
+  Assert.assertEquals(202,patient.getId().intValue());
+}
