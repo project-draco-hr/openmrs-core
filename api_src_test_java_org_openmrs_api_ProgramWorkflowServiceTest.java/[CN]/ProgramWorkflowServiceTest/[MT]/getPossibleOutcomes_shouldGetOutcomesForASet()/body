@@ -1,0 +1,5 @@
+{
+  executeDataSet(PROGRAM_WITH_OUTCOMES_XML);
+  List<Concept> possibleOutcomes=Context.getProgramWorkflowService().getPossibleOutcomes(4);
+  assertEquals(2,possibleOutcomes.size());
+}

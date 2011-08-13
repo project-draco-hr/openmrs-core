@@ -1,0 +1,9 @@
+{
+  Concept outcomesConcept=Context.getConceptService().getConcept(3);
+  Program program=createProgram();
+  program.setOutcomesConcept(outcomesConcept);
+  int id=dao.saveProgram(program).getId();
+  clearHibernateCache();
+  Program savedProgram=dao.getProgram(id);
+  Assert.assertEquals(3,savedProgram.getOutcomesConcept().getId().intValue());
+}

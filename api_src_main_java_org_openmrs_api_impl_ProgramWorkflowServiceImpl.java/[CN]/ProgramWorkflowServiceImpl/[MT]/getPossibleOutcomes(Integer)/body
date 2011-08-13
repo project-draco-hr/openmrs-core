@@ -1,0 +1,21 @@
+{
+  List<Concept> possibleOutcomes=new ArrayList<Concept>();
+  Program program=getProgram(programId);
+  if (program == null) {
+    return possibleOutcomes;
+  }
+  Concept outcomesConcept=program.getOutcomesConcept();
+  if (outcomesConcept == null) {
+    return possibleOutcomes;
+  }
+  if (!outcomesConcept.getAnswers().isEmpty()) {
+    for (    ConceptAnswer conceptAnswer : outcomesConcept.getAnswers()) {
+      possibleOutcomes.add(conceptAnswer.getConcept());
+    }
+    return possibleOutcomes;
+  }
+  if (!outcomesConcept.getSetMembers().isEmpty()) {
+    return outcomesConcept.getSetMembers();
+  }
+  return possibleOutcomes;
+}

@@ -1,6 +1,10 @@
 {
   patientProgramId=p.getPatientProgramId();
   patientId=p.getPatient().getPatientId();
+  programId=p.getProgram().getProgramId();
+  if (p.getOutcome() != null) {
+    outcomeId=p.getOutcome().getId();
+  }
   dateEnrolled=p.getDateEnrolled();
   dateCompleted=p.getDateCompleted();
   location=new LocationListItem(p.getLocation());
