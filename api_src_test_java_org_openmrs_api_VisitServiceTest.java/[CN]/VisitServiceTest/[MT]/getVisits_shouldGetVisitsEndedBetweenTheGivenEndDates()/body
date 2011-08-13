@@ -1,9 +1,9 @@
 {
   executeDataSet(VISITS_WITH_DATES_XML);
   Calendar cal=Calendar.getInstance();
-  cal.set(2005,01,01,00,00,00);
+  cal.set(2005,1,1,0,0,0);
   Date minEndDate=cal.getTime();
-  cal.set(2005,01,02,23,59,00);
+  cal.set(2005,1,2,23,59,0);
   Date maxEndDate=cal.getTime();
   Assert.assertEquals(2,Context.getVisitService().getVisits(null,null,null,null,null,null,minEndDate,maxEndDate,null,false).size());
 }
