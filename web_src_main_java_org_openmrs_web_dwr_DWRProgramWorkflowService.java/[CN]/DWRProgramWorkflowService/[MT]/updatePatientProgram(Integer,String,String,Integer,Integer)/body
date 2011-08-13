@@ -4,11 +4,16 @@
   if (locationId != null) {
     loc=Context.getLocationService().getLocation(locationId);
   }
+  Concept outcomeConcept=null;
+  if (outcomeId != null) {
+    outcomeConcept=Context.getConceptService().getConcept(outcomeId);
+  }
   Date dateEnrolled=null;
   Date dateCompleted=null;
   Date ppDateEnrolled=null;
   Date ppDateCompleted=null;
   Location ppLocation=pp.getLocation();
+  Concept ppOutcome=pp.getOutcome();
   if (null != pp.getDateEnrolled()) {
     String enrolled=ymdDf.format(pp.getDateEnrolled());
     if (null != enrolled && enrolled.length() > 0)     ppDateEnrolled=ymdDf.parse(enrolled);
@@ -22,6 +27,7 @@
   boolean anyChange=OpenmrsUtil.nullSafeEquals(dateEnrolled,ppDateEnrolled);
   anyChange|=OpenmrsUtil.nullSafeEquals(dateCompleted,ppDateCompleted);
   anyChange|=OpenmrsUtil.nullSafeEquals(loc,ppLocation);
+  anyChange|=OpenmrsUtil.nullSafeEquals(outcomeConcept,ppOutcome);
   if (null != dateEnrolled && null != dateCompleted && dateCompleted.before(dateEnrolled)) {
     anyChange=false;
   }
@@ -29,6 +35,7 @@
     pp.setDateEnrolled(dateEnrolled);
     pp.setDateCompleted(dateCompleted);
     pp.setLocation(loc);
+    pp.setOutcome(outcomeConcept);
     Context.getProgramWorkflowService().savePatientProgram(pp);
   }
 }

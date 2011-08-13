@@ -1,0 +1,11 @@
+{
+  Vector<ListItem> ret=new Vector<ListItem>();
+  List<Concept> possibleOutcomes=Context.getProgramWorkflowService().getPossibleOutcomes(programId);
+  for (  Concept possibleOutcome : possibleOutcomes) {
+    ListItem li=new ListItem();
+    li.setName(possibleOutcome.getName().getName());
+    li.setId(possibleOutcome.getConceptId());
+    ret.add(li);
+  }
+  return ret;
+}
