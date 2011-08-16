@@ -1,5 +1,5 @@
 {
-  DatabaseConnection connection=database.getConnection();
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
   String getFormMetadataSql="SELECT form_id, xslt, template FROM form";
   StringBuilder insertFormMetadataSql=new StringBuilder();
   insertFormMetadataSql.append("INSERT INTO form_resource");
@@ -31,7 +31,10 @@
     }
     if (insertStatement != null)     insertStatement.close();
   }
- catch (  SQLException e) {
+ catch (  DatabaseException e) {
+    throw new CustomChangeException("Unable to copy form metadata to form attributes table",e);
+  }
+catch (  SQLException e) {
     throw new CustomChangeException("Unable to copy form metadata to form attributes table",e);
   }
 }

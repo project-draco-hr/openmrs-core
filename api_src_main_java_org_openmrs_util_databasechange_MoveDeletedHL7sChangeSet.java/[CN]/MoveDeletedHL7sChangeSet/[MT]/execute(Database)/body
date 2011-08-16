@@ -1,5 +1,5 @@
 {
-  DatabaseConnection connection=database.getConnection();
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
   StringBuilder getDeletedHL7sSql=new StringBuilder();
   getDeletedHL7sSql.append("SELECT hl7_source, hl7_source_key, hl7_data, date_created, uuid, hl7_in_archive_id");
   getDeletedHL7sSql.append(" FROM hl7_in_archive WHERE message_state=");
@@ -31,5 +31,8 @@
   }
  catch (  SQLException e) {
     throw new CustomChangeException("Unable to move deleted HL7s from archive table to queue table",e);
+  }
+catch (  DatabaseException dbex) {
+    throw new CustomChangeException("Unable to move deleted HL7s from archive table to queue table",dbex);
   }
 }

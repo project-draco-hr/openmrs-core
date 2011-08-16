@@ -1,5 +1,5 @@
 {
-  Connection conn=database.getConnection().getUnderlyingConnection();
+  Connection conn=((JdbcConnection)database.getConnection()).getUnderlyingConnection();
   List<String> messages=new ArrayList<String>();
   StringBuilder message=new StringBuilder();
   message.append("Starting now, when you transition a patient into a state that is configured as terminal, ");
@@ -22,7 +22,7 @@
   }
  else {
     for (    List<Object> row : results) {
-      message.append(row.get(1).toString() + "<br/>");
+      message.append(row.get(1).toString()).append("<br/>");
     }
   }
   message.append("<br/>The following workflows have no initial states...<br/>");
@@ -51,7 +51,7 @@
     for (    Integer conceptId : missingInitial) {
       String sql="select min(name) from concept_name where concept_id = " + conceptId;
       String name=DatabaseUtil.executeSQL(conn,sql,true).get(0).get(0).toString();
-      message.append(name + "<br/>");
+      message.append(name).append("<br/>");
     }
   }
   messages.add(message.toString());

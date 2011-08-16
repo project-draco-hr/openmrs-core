@@ -1,5 +1,5 @@
 {
-  DatabaseConnection connection=database.getConnection();
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
   validateAndCleanUpConcepts(connection);
   if (!updatedConceptNames.isEmpty())   runBatchUpdate(connection);
  else   log.debug("No concept names to update");

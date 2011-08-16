@@ -3,7 +3,7 @@
   try {
     Liquibase liquibase=getLiquibase(CHANGE_LOG_FILE,null);
     database=liquibase.getDatabase();
-    DatabaseChangeLog changeLog=new ChangeLogParser(new HashMap<String,Object>()).parse(CHANGE_LOG_FILE,liquibase.getFileOpener());
+    DatabaseChangeLog changeLog=new XMLChangeLogSAXParser().parse(CHANGE_LOG_FILE,new ChangeLogParameters(),liquibase.getFileOpener());
     List<ChangeSet> changeSets=changeLog.getChangeSets();
     List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();
     for (    ChangeSet changeSet : changeSets) {

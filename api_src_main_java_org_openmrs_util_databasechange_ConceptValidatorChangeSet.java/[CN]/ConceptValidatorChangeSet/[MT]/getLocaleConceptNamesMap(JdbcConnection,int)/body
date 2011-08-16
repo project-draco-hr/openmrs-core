@@ -1,0 +1,46 @@
+{
+  PreparedStatement pStmt=null;
+  Map<Locale,List<ConceptName>> localeConceptNamesMap=null;
+  try {
+    pStmt=connection.prepareStatement("SELECT concept_name_id, name, concept_name_type, locale, locale_preferred FROM concept_name WHERE voided = 0 AND concept_id = ?");
+    pStmt.setInt(1,conceptId);
+    ResultSet rs=pStmt.executeQuery();
+    while (rs.next()) {
+      if (localeConceptNamesMap == null)       localeConceptNamesMap=new HashMap<Locale,List<ConceptName>>();
+      ConceptName conceptName=new ConceptName();
+      conceptName.setConceptNameId(rs.getInt("concept_name_id"));
+      conceptName.setName(rs.getString("name"));
+      String cnType=rs.getString("concept_name_type");
+      if (!StringUtils.isBlank(cnType)) {
+        ConceptNameType conceptNameType=null;
+        if (cnType.equals(ConceptNameType.FULLY_SPECIFIED.toString()))         conceptNameType=ConceptNameType.FULLY_SPECIFIED;
+ else         if (cnType.equals(ConceptNameType.SHORT.toString()))         conceptNameType=ConceptNameType.SHORT;
+ else         if (cnType.equals(ConceptNameType.INDEX_TERM.toString()))         conceptNameType=ConceptNameType.INDEX_TERM;
+        conceptName.setConceptNameType(conceptNameType);
+      }
+      String localeString=rs.getString("locale");
+      conceptName.setLocale(!StringUtils.isBlank(localeString) ? LocaleUtility.fromSpecification(localeString) : null);
+      conceptName.setLocalePreferred((rs.getInt("locale_preferred") == 1) ? true : false);
+      conceptName.setVoided(false);
+      if (!localeConceptNamesMap.containsKey(conceptName.getLocale()))       localeConceptNamesMap.put(conceptName.getLocale(),new LinkedList<ConceptName>());
+      localeConceptNamesMap.get(conceptName.getLocale()).add(conceptName);
+    }
+  }
+ catch (  DatabaseException e) {
+    log.warn("Error generated",e);
+  }
+catch (  SQLException e) {
+    log.warn("Error generated",e);
+  }
+ finally {
+    if (pStmt != null) {
+      try {
+        pStmt.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Failed to close the prepared statement object");
+      }
+    }
+  }
+  return localeConceptNamesMap;
+}

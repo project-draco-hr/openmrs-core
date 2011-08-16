@@ -1,7 +1,7 @@
 {
   if (Context.getRuntimeProperties().size() == 0)   return;
   if (tableNamesArray == null || tableNamesArray.length == 0)   throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
-  DatabaseConnection connection=database.getConnection();
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
   for (  String tableName : tableNamesArray) {
     try {
       Statement idStatement=null;
@@ -27,7 +27,10 @@
         if (updateStatement != null)         updateStatement.close();
       }
     }
- catch (    SQLException e) {
+ catch (    DatabaseException e) {
+      throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
+    }
+catch (    SQLException e) {
       throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
     }
   }

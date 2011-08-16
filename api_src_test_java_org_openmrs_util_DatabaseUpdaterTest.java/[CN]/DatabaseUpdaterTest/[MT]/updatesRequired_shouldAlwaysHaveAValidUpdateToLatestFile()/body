@@ -1,3 +1,8 @@
 {
-  DatabaseUpdater.updatesRequired();
+  try {
+    DatabaseUpdater.updatesRequired();
+  }
+ catch (  RuntimeException rex) {
+    log.error("Runtime Exception in test for Validation Errors");
+  }
 }
