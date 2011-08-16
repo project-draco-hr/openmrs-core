@@ -1,5 +1,5 @@
 {
-  DatabaseConnection connection=database.getConnection();
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
   trueConceptId=findConceptByName(connection,trueNames);
   falseConceptId=findConceptByName(connection,falseNames);
   if (trueConceptId == null)   trueConceptId=createConcept(connection,trueNames);

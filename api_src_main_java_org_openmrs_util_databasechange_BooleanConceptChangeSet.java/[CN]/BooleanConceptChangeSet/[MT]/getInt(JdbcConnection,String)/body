@@ -1,0 +1,33 @@
+{
+  Statement stmt=null;
+  try {
+    stmt=connection.createStatement();
+    ResultSet rs=stmt.executeQuery(sql);
+    Integer result=null;
+    if (rs.next()) {
+      result=rs.getInt(1);
+    }
+ else {
+      log.debug("Query returned no results: " + sql);
+    }
+    if (rs.next()) {
+      log.warn("Query returned multiple results when we expected just one: " + sql);
+    }
+    return result;
+  }
+ catch (  DatabaseException e) {
+    throw new CustomChangeException("Unable to get int",e);
+  }
+catch (  SQLException e) {
+    throw new CustomChangeException("Unable to get int",e);
+  }
+ finally {
+    if (stmt != null) {
+      try {
+        stmt.close();
+      }
+ catch (      SQLException e) {
+      }
+    }
+  }
+}

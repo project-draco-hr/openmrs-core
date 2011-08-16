@@ -93,7 +93,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
           /** 
  * @see org.openmrs.util.DatabaseUpdater.ChangeSetExecutorCallback#executing(liquibase.ChangeSet,int)
  */
-          public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
+          @Override public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
             setMessage(message + " (" + i+++ "/"+ numChangeSetsToRun+ "): Author: "+ changeSet.getAuthor()+ " Comments: "+ changeSet.getComments()+ " Description: "+ changeSet.getDescription());
             setCompletedPercentage(Math.round(i * 100 / numChangeSetsToRun));
           }

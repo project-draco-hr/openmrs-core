@@ -28,7 +28,7 @@
     databaseName=connection.getCatalog();
     commands.add(databaseName);
   }
- catch (  SQLException e) {
+ catch (  DatabaseException e) {
     throw new CustomChangeException("Unable to generate command string for file: " + sqlFile,e);
   }
   String errorCommand="\"mysql -u" + runtimeProperties.getProperty("connection.username") + " -p -e\"source "+ tmpOutputFile.getAbsolutePath()+ "\""+ databaseName;
@@ -39,16 +39,16 @@
   }
  catch (  IOException io) {
     if (io.getMessage().endsWith("not found")) {
-      throw new UnsupportedChangeException("Unable to run command: " + commands.get(0) + ".  Make sure that it is on the PATH and then restart your server and try again. "+ " Or run "+ errorCommand+ " at the command line with the appropriate full mysql path",io);
+      throw new CustomChangeException("Unable to run command: " + commands.get(0) + ".  Make sure that it is on the PATH and then restart your server and try again. "+ " Or run "+ errorCommand+ " at the command line with the appropriate full mysql path",io);
     }
   }
 catch (  Exception e) {
-    throw new UnsupportedChangeException("Error while executing command: '" + commands.get(0) + "'",e);
+    throw new CustomChangeException("Error while executing command: '" + commands.get(0) + "'",e);
   }
   log.debug("Exec called: " + Arrays.asList(commands));
   if (exitValue != 0) {
     log.error("There was an error while running the " + commands.get(0) + " command.  Command output: "+ output.toString());
-    throw new UnsupportedChangeException("There was an error while running the " + commands.get(0) + " command. See your server's error log for the full error output. As an alternative, you"+ " can run this command manually on your database to skip over this error.  Run this at the command line "+ errorCommand+ "  ");
+    throw new CustomChangeException("There was an error while running the " + commands.get(0) + " command. See your server's error log for the full error output. As an alternative, you"+ " can run this command manually on your database to skip over this error.  Run this at the command line "+ errorCommand+ "  ");
   }
  else {
     log.debug("Output of exec: " + output);
