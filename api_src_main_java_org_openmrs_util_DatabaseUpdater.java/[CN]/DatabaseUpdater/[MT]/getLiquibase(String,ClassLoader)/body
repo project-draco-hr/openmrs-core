@@ -18,6 +18,7 @@
     ResourceAccessor openmrsFO=new ClassLoaderFileOpener(cl);
     ResourceAccessor fsFO=new FileSystemResourceAccessor();
     if (changeLogFile == null)     changeLogFile=CHANGE_LOG_FILE;
+    database.checkDatabaseChangeLogTable(false,null,null);
     return new Liquibase(changeLogFile,new CompositeResourceAccessor(openmrsFO,fsFO),database);
   }
  catch (  Exception e) {
