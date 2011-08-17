@@ -1,0 +1,6 @@
+{
+  Pattern betweenSquareBrackets=Pattern.compile("\\[(\\d*)\\]");
+  Matcher matcher=betweenSquareBrackets.matcher(input);
+  matcher.find();
+  return Integer.valueOf(matcher.group(1));
+}
