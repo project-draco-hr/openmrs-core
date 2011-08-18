@@ -1,0 +1,3 @@
+{
+  return (LocationAttribute)sessionFactory.getCurrentSession().createCriteria(LocationAttribute.class).add(Restrictions.eq("uuid",uuid)).uniqueResult();
+}
