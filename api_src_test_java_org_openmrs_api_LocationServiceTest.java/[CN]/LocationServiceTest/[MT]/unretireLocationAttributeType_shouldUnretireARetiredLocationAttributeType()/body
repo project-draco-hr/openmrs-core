@@ -1,0 +1,14 @@
+{
+  executeDataSet(LOC_ATTRIBUTE_DATA_XML);
+  LocationService service=Context.getLocationService();
+  LocationAttributeType lat=service.getLocationAttributeType(2);
+  Assert.assertTrue(lat.isRetired());
+  Assert.assertNotNull(lat.getDateRetired());
+  Assert.assertNotNull(lat.getRetiredBy());
+  Assert.assertNotNull(lat.getRetireReason());
+  service.unretireLocationAttributeType(lat);
+  Assert.assertFalse(lat.isRetired());
+  Assert.assertNull(lat.getDateRetired());
+  Assert.assertNull(lat.getRetiredBy());
+  Assert.assertNull(lat.getRetireReason());
+}

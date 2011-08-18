@@ -1,0 +1,10 @@
+{
+  executeDataSet(LOC_ATTRIBUTE_DATA_XML);
+  LocationService service=Context.getLocationService();
+  Assert.assertEquals(2,service.getAllLocationAttributeTypes().size());
+  LocationAttributeType lat=service.getLocationAttributeType(1);
+  lat.setName("A new name");
+  service.saveLocationAttributeType(lat);
+  Assert.assertEquals(2,service.getAllLocationAttributeTypes().size());
+  Assert.assertEquals("A new name",service.getLocationAttributeType(1).getName());
+}
