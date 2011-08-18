@@ -1,4 +1,5 @@
 {
+  if (getValue() == null)   return null;
   try {
     Class c=OpenmrsClassLoader.getInstance().loadClass(getAttributeType().getFormat());
     try {
@@ -15,7 +16,7 @@
     }
   }
  catch (  Throwable t) {
-    if (!((t.getCause() instanceof NumberFormatException && (getValue() == null || getValue().isEmpty())) || t instanceof NoSuchMethodException)) {
+    if (!((t.getCause() instanceof NumberFormatException && StringUtils.isBlank(getValue())) || t instanceof NoSuchMethodException)) {
       log.warn("Unable to hydrate value: " + getValue() + " for type: "+ getAttributeType(),t);
     }
   }
