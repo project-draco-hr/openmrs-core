@@ -1,0 +1,11 @@
+{
+  executeDataSet(LOC_ATTRIBUTE_DATA_XML);
+  LocationAttributeType vat=Context.getLocationService().getLocationAttributeType(1);
+  Assert.assertFalse(vat.isRetired());
+  Context.getLocationService().retireLocationAttributeType(vat,"for testing");
+  vat=Context.getLocationService().getLocationAttributeType(1);
+  Assert.assertTrue(vat.isRetired());
+  Assert.assertNotNull(vat.getRetiredBy());
+  Assert.assertNotNull(vat.getDateRetired());
+  Assert.assertEquals("for testing",vat.getRetireReason());
+}
