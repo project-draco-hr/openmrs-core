@@ -1,0 +1,18 @@
+{
+  LocationService ls=Context.getLocationService();
+  if (Context.isAuthenticated() && StringUtils.hasText(text)) {
+    try {
+      setValue(ls.getLocationAttributeType(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      LocationAttributeType lat=ls.getLocationAttributeTypeByUuid(text);
+      setValue(lat);
+      if (lat == null) {
+        throw new IllegalArgumentException("LocationAttributeType not found for " + text,ex);
+      }
+    }
+  }
+ else {
+    setValue(null);
+  }
+}
