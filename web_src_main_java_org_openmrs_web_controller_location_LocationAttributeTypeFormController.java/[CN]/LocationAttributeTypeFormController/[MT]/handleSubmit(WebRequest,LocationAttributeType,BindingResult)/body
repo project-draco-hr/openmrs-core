@@ -1,0 +1,37 @@
+{
+  LocationService service=Context.getLocationService();
+  if (request.getParameter("purge") != null) {
+    try {
+      service.purgeLocationAttributeType(attributeType);
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"LocationAttributeType.purgedSuccessfully",WebRequest.SCOPE_SESSION);
+    }
+ catch (    Exception e) {
+      request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge",WebRequest.SCOPE_SESSION);
+    }
+    return "redirect:locationAttributeTypes.list";
+  }
+  new LocationAttributeTypeValidator().validate(attributeType,errors);
+  if (errors.hasErrors()) {
+    return null;
+  }
+ else {
+    if (request.getParameter("save") != null) {
+      Context.getLocationService().saveLocationAttributeType(attributeType);
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationAttributeType.saved"),WebRequest.SCOPE_SESSION);
+    }
+ else     if (request.getParameter("retire") != null) {
+      String retireReason=request.getParameter("retireReason");
+      if (attributeType.getId() != null && !(StringUtils.hasText(retireReason))) {
+        errors.reject("retireReason","general.retiredReason.empty");
+        return null;
+      }
+      Context.getLocationService().retireLocationAttributeType(attributeType,retireReason);
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationAttributeType.retired"),WebRequest.SCOPE_SESSION);
+    }
+ else     if (request.getParameter("unretire") != null) {
+      Context.getLocationService().unretireLocationAttributeType(attributeType);
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocationAttributeType.unretired"),WebRequest.SCOPE_SESSION);
+    }
+    return "redirect:/admin/locations/locationAttributeTypes.list";
+  }
+}
