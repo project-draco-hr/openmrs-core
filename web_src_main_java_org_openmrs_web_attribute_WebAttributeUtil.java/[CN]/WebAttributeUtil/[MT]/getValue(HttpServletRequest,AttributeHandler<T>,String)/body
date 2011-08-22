@@ -1,0 +1,9 @@
+{
+  if (handler instanceof FieldGenAttributeHandler) {
+    return ((FieldGenAttributeHandler<T>)handler).getValue(request,paramName);
+  }
+ else {
+    String submittedValue=request.getParameter(paramName);
+    return handler.deserialize(submittedValue);
+  }
+}
