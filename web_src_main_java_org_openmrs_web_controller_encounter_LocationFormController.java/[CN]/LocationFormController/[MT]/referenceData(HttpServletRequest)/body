@@ -3,5 +3,6 @@
   List<LocationTag> tags=Context.getLocationService().getAllLocationTags();
   Collections.sort(tags,new MetadataComparator(Context.getLocale()));
   ret.put("locationTags",tags);
+  ret.put("attributeTypes",Context.getLocationService().getAllLocationAttributeTypes());
   return ret;
 }

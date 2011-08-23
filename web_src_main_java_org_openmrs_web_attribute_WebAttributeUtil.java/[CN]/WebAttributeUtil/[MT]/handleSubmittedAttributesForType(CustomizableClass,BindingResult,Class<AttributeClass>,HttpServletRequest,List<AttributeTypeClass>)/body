@@ -1,0 +1,56 @@
+{
+  List<AttributeClass> toVoid=new ArrayList<AttributeClass>();
+  for (  AttributeType<?> attrType : attributeTypes) {
+    AttributeHandler<?> handler=Context.getAttributeService().getHandler(attrType);
+    for (@SuppressWarnings("unchecked") Enumeration<String> iter=request.getParameterNames(); iter.hasMoreElements(); ) {
+      String paramName=iter.nextElement();
+      if (paramName.startsWith("attribute." + attrType.getId())) {
+        String afterPrefix=paramName.substring(("attribute." + attrType.getId()).length());
+        Object valueAsObject;
+        try {
+          valueAsObject=getValue(request,handler,paramName);
+        }
+ catch (        Exception ex) {
+          errors.rejectValue("activeAttributes","attribute.error.invalid",new Object[]{attrType.getName()},"Illegal value for " + attrType.getName());
+          continue;
+        }
+        if (afterPrefix.startsWith(".new[")) {
+          if (valueAsObject != null && !"".equals(valueAsObject)) {
+            AttributeClass attr;
+            try {
+              attr=attributeClass.newInstance();
+            }
+ catch (            Exception ex) {
+              throw new RuntimeException(ex);
+            }
+            attr.setAttributeType(attrType);
+            attr.setObjectValue(valueAsObject);
+            owner.addAttribute(attr);
+          }
+        }
+ else         if (afterPrefix.startsWith(".existing[")) {
+          Integer existingAttributeId=getFromSquareBrackets(afterPrefix);
+          AttributeClass existing=findAttributeById(owner,existingAttributeId);
+          if (existing == null)           throw new RuntimeException("Visit was modified between page load and submit. Try again.");
+          if (valueAsObject == null) {
+            toVoid.add(existing);
+          }
+ else           if (!existing.getObjectValue().equals(valueAsObject)) {
+            toVoid.add(existing);
+            AttributeClass newVal;
+            try {
+              newVal=attributeClass.newInstance();
+            }
+ catch (            Exception ex) {
+              throw new RuntimeException(ex);
+            }
+            newVal.setAttributeType(attrType);
+            newVal.setObjectValue(valueAsObject);
+            owner.addAttribute(newVal);
+          }
+        }
+      }
+    }
+  }
+  for (  Attribute<?> attr : toVoid)   voidAttribute(attr);
+}

@@ -4,6 +4,8 @@
   if (Context.isAuthenticated()) {
     try {
       Location location=(Location)obj;
+      WebAttributeUtil.handleSubmittedAttributesForType(location,errors,LocationAttribute.class,request,Context.getLocationService().getAllLocationAttributeTypes());
+      if (errors.hasErrors())       return showForm(request,response,errors);
       LocationService locationService=Context.getLocationService();
       if (request.getParameter("saveLocation") != null) {
         locationService.saveLocation(location);

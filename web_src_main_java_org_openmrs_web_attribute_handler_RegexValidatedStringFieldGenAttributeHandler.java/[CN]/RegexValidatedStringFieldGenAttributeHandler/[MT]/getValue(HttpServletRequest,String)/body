@@ -1,5 +1,6 @@
 {
   String val=request.getParameter(formFieldName);
+  if (val.isEmpty())   return null;
   validate(val);
   return val;
 }

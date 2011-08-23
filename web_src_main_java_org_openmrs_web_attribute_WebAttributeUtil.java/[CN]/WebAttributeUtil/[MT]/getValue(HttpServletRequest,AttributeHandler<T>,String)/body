@@ -4,6 +4,7 @@
   }
  else {
     String submittedValue=request.getParameter(paramName);
-    return handler.deserialize(submittedValue);
+    if (StringUtils.isNotEmpty(submittedValue))     return handler.deserialize(submittedValue);
+ else     return null;
   }
 }
