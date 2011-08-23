@@ -16,8 +16,9 @@
     }
   }
  catch (  Throwable t) {
-    if (t.getCause() instanceof NumberFormatException && StringUtils.isBlank(getValue()))     return null;
-    if (t instanceof NoSuchMethodException)     return null;
+    if (StringUtils.isBlank(getValue())) {
+      return null;
+    }
     log.warn("Unable to hydrate value: " + getValue() + " for type: "+ getAttributeType(),t);
   }
   log.debug("Returning value: '" + getValue() + "'");
