@@ -1,46 +1,6 @@
 {
-  List<Attribute> toVoid=new ArrayList<Attribute>();
-  for (  VisitAttributeType vat : (List<VisitAttributeType>)model.get("visitAttributeTypes")) {
-    AttributeHandler<?> handler=Context.getAttributeService().getHandler(vat);
-    for (@SuppressWarnings("unchecked") Enumeration<String> iter=request.getParameterNames(); iter.hasMoreElements(); ) {
-      String paramName=iter.nextElement();
-      if (paramName.startsWith("attribute." + vat.getId())) {
-        String afterPrefix=paramName.substring(("attribute." + vat.getId()).length());
-        Object valueAsObject;
-        try {
-          valueAsObject=WebAttributeUtil.getValue(request,handler,paramName);
-        }
- catch (        Exception ex) {
-          result.rejectValue("activeAttributes","attribute.error.invalid",new Object[]{vat.getName()},"Illegal value for " + vat.getName());
-          continue;
-        }
-        if (afterPrefix.startsWith(".new[")) {
-          if (valueAsObject != null && !"".equals(valueAsObject)) {
-            VisitAttribute va=new VisitAttribute();
-            va.setAttributeType(vat);
-            va.setObjectValue(valueAsObject);
-            visit.addAttribute(va);
-          }
-        }
- else         if (afterPrefix.startsWith(".existing[")) {
-          Integer existingAttributeId=getFromSquareBrackets(afterPrefix);
-          VisitAttribute existing=findAttributeById(visit,existingAttributeId);
-          if (existing == null)           throw new RuntimeException("Visit was modified between page load and submit. Try again.");
-          if (valueAsObject == null) {
-            toVoid.add(existing);
-          }
- else           if (!existing.getObjectValue().equals(valueAsObject)) {
-            toVoid.add(existing);
-            VisitAttribute newVal=new VisitAttribute();
-            newVal.setAttributeType(vat);
-            newVal.setObjectValue(valueAsObject);
-            visit.addAttribute(newVal);
-          }
-        }
-      }
-    }
-  }
-  for (  Attribute<?> attr : toVoid)   voidAttribute(attr);
+  @SuppressWarnings("unchecked") List<VisitAttributeType> attributeTypes=(List<VisitAttributeType>)model.get("attributeTypes");
+  WebAttributeUtil.handleSubmittedAttributesForType(visit,result,VisitAttribute.class,request,attributeTypes);
   new VisitValidator().validate(visit,result);
   if (!result.hasErrors()) {
     try {
