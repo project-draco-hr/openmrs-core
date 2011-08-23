@@ -21,7 +21,12 @@
     }
     wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
     httpResponse.setContentType("text/html");
-    renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+    if (isInstallationStarted()) {
+      renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+    }
+ else {
+      renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+    }
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
     httpResponse.setContentType("text/json");

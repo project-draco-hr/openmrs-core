@@ -1,6 +1,11 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  if (isInstallationStarted()) {
+    httpResponse.setContentType("text/html");
+    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+    return;
+  }
   if (INSTALL_METHOD.equals(page)) {
     wizardModel.installMethod=httpRequest.getParameter("install_method");
     if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
@@ -188,7 +193,6 @@
       renderTemplate(page,referenceMap,httpResponse);
       return;
     }
-    initJob=new InitializationCompletion();
     wizardModel.tasksToExecute=new ArrayList<WizardTask>();
     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
       loadedDriverString=loadDriver(testDatabaseConnection,null);
@@ -211,7 +215,12 @@
     }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
-    initJob.start();
+    if (!isInstallationStarted()) {
+      initJob=new InitializationCompletion();
+      setInstallationStarted(true);
+      initJob.start();
+    }
+    referenceMap.put("isInstallationStarted",isInstallationStarted());
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
  else   if (TESTING_SETUP.equals(page)) {
