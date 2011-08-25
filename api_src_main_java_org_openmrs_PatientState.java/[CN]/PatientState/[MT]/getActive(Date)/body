@@ -2,5 +2,5 @@
   if (onDate == null) {
     onDate=new Date();
   }
-  return !getVoided() && (startDate == null || OpenmrsUtil.compare(startDate,onDate) <= 0) && (endDate == null || OpenmrsUtil.compare(endDate,onDate) > 0);
+  return !getVoided() && (OpenmrsUtil.compareWithNullAsEarliest(startDate,onDate) <= 0) && (OpenmrsUtil.compareWithNullAsLatest(endDate,onDate) > 0);
 }

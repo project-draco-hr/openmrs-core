@@ -1,0 +1,8 @@
+{
+  PatientState patientState=new PatientState();
+  patientState.setStartDate(leftRange);
+  patientState.setEndDate(null);
+  patientState.setVoided(false);
+  boolean active=patientState.getActive(inRange);
+  Assert.assertTrue(active);
+}

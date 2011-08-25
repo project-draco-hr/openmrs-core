@@ -1,9 +1,10 @@
 {
   Date now=new Date();
-  for (  PatientState state : getStates()) {
+  PatientState currentState=null;
+  for (  PatientState state : getSortedStates()) {
     if ((programWorkflow == null || state.getState().getProgramWorkflow().equals(programWorkflow)) && state.getActive(now)) {
-      return state;
+      currentState=state;
     }
   }
-  return null;
+  return currentState;
 }
