@@ -1,0 +1,13 @@
+{
+  AddressTemplate addressTemplate;
+  try {
+    addressTemplate=Context.getSerializationService().getDefaultSerializer().deserialize(xml,AddressTemplate.class);
+  }
+ catch (  SerializationException e) {
+    log.error("Error in deserializing address template",e);
+    addressTemplate=new AddressTemplate("Error while deserializing address layout template.");
+  }
+  List<AddressTemplate> list=new ArrayList<AddressTemplate>();
+  list.add(addressTemplate);
+  setAddressTemplate(list);
+}

@@ -1,0 +1,10 @@
+{
+  if (!OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE.equals(newValue.getProperty()))   return;
+  try {
+    setAddressTemplate(newValue.getPropertyValue());
+  }
+ catch (  Exception ex) {
+    log.error("Error in new xml global property value",ex);
+    setAddressTemplate(new Vector<AddressTemplate>());
+  }
+}

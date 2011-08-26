@@ -1,0 +1,25 @@
+{
+  if (!initialized) {
+    Context.getAdministrationService().addGlobalPropertyListener(singleton);
+    String layoutTemplateXml=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE);
+    setAddressTemplate(layoutTemplateXml);
+    List<String> specialTokens=new ArrayList<String>();
+    specialTokens.add("address1");
+    specialTokens.add("address2");
+    specialTokens.add("address3");
+    specialTokens.add("address4");
+    specialTokens.add("address5");
+    specialTokens.add("address6");
+    specialTokens.add("cityVillage");
+    specialTokens.add("countyDistrict");
+    specialTokens.add("stateProvince");
+    specialTokens.add("country");
+    specialTokens.add("latitude");
+    specialTokens.add("longitude");
+    specialTokens.add("postalCode");
+    specialTokens.add("startDate");
+    specialTokens.add("endDate");
+    setSpecialTokens(specialTokens);
+    initialized=true;
+  }
+}

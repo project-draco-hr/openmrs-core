@@ -1,0 +1,11 @@
+{
+  if (layoutTemplates == null) {
+    try {
+      String xml=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE);
+      setAddressTemplate(xml);
+    }
+ catch (    Exception ex) {
+    }
+  }
+  return layoutTemplates;
+}
