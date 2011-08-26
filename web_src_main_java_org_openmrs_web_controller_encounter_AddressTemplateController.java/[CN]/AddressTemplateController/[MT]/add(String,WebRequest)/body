@@ -1,0 +1,16 @@
+{
+  if (!StringUtils.hasText(xml) || xml.trim().equals("")) {
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("AddressTemplate.error.empty"),WebRequest.SCOPE_SESSION);
+  }
+ else {
+    try {
+      AddressTemplate test=Context.getSerializationService().getDefaultSerializer().deserialize(xml,AddressTemplate.class);
+      Context.getLocationService().saveAddressTemplate(xml);
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("AddressTemplate.saved"),WebRequest.SCOPE_SESSION);
+    }
+ catch (    Exception e) {
+      request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("AddressTemplate.error"),WebRequest.SCOPE_SESSION);
+    }
+  }
+  return "redirect:addressTemplate.form";
+}
