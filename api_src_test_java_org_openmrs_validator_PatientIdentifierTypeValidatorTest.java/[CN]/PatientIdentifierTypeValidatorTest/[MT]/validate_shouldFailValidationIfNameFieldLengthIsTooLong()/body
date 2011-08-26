@@ -1,0 +1,11 @@
+{
+  PatientIdentifierType type=new PatientIdentifierType();
+  String invalid51charInput="123456789012345678901234567890123456789012345678901";
+  type.setName(invalid51charInput);
+  type.setDescription("helps");
+  type.setFormat("format");
+  Errors errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasErrors());
+  Assert.assertEquals(1,errors.getFieldErrorCount("name"));
+}

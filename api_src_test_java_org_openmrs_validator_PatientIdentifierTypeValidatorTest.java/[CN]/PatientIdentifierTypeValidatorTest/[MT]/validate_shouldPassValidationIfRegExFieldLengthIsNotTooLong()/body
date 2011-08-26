@@ -1,0 +1,10 @@
+{
+  PatientIdentifierType type=new PatientIdentifierType();
+  type.setName("Martin");
+  type.setDescription("helps");
+  String valid50charInput="12345678901234567890123456789012345678901234567890";
+  type.setFormat(valid50charInput);
+  Errors errors=new BindException(type,"type");
+  new PatientIdentifierTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

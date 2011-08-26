@@ -1,0 +1,11 @@
+{
+  Assert.notNull(errors,"Errors object must not be null");
+  for (  String field : fields) {
+    Object value=errors.getFieldValue(field);
+    if (value == null || !(value instanceof String))     return;
+    int length=Context.getAdministrationService().getMaximumPropertyLength(aClass,field);
+    if (((String)value).length() > length) {
+      errors.rejectValue(field,"error.exceededMaxLengthOfField",new Object[]{length},null);
+    }
+  }
+}
