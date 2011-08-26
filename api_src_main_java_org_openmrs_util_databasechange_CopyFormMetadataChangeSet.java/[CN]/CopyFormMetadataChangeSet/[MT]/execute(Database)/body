@@ -10,10 +10,23 @@
     insertStatement=connection.prepareStatement(insertFormMetadataSql.toString());
     ResultSet forms=connection.createStatement().executeQuery(getFormMetadataSql);
     while (forms.next()) {
-      byte[] xslt=forms.getString(2) == null ? null : forms.getString(2).getBytes();
-      byte[] template=forms.getString(3) == null ? null : forms.getString(3).getBytes();
+      int formId=forms.getInt(1);
+      byte[] xslt=null;
+      byte[] template=null;
+      try {
+        xslt=forms.getString(2) == null ? null : convertToObjectStreamOutputByteArray(forms.getString(2));
+      }
+ catch (      CustomChangeException e) {
+        throw new CustomChangeException("error converting Form #" + formId + " XSLT to ObjectStreamOutputByteArray",e);
+      }
+      try {
+        template=forms.getString(3) == null ? null : convertToObjectStreamOutputByteArray(forms.getString(3));
+      }
+ catch (      CustomChangeException e) {
+        throw new CustomChangeException("error converting Form #" + formId + " Template to ObjectStreamOutputByteArray",e);
+      }
       if (xslt != null) {
-        insertStatement.setInt(1,forms.getInt(1));
+        insertStatement.setInt(1,formId);
         insertStatement.setString(2,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER);
         insertStatement.setString(3,FormConstants.FORM_RESOURCE_FORMENTRY_XSLT);
         insertStatement.setBytes(4,xslt);
@@ -29,7 +42,9 @@
         insertStatement.executeUpdate();
       }
     }
-    if (insertStatement != null)     insertStatement.close();
+    if (insertStatement != null) {
+      insertStatement.close();
+    }
   }
  catch (  DatabaseException e) {
     throw new CustomChangeException("Unable to copy form metadata to form attributes table",e);

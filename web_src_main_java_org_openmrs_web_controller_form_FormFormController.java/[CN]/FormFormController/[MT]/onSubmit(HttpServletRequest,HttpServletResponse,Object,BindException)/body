@@ -11,16 +11,7 @@
  else {
       if (action.equals(msa.getMessage("Form.save"))) {
         try {
-          MultipartFile xsltFile=null;
-          if (request instanceof MultipartHttpServletRequest) {
-            MultipartHttpServletRequest multipartRequest=(MultipartHttpServletRequest)request;
-            xsltFile=multipartRequest.getFile("xslt_file");
-          }
           form=Context.getFormService().saveForm(form);
-          if (xsltFile != null && !xsltFile.isEmpty()) {
-            String xslt=IOUtils.toString(xsltFile.getInputStream());
-            Context.getFormService().saveFormResource(form,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER,FormConstants.FORM_RESOURCE_FORMENTRY_XSLT,xslt);
-          }
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Form.saved");
         }
  catch (        Exception e) {
