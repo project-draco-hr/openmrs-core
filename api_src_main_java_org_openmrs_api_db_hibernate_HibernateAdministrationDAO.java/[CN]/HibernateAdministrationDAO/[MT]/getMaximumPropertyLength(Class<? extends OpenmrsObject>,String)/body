@@ -1,0 +1,7 @@
+{
+  if (configuration == null) {
+    configuration=new Configuration().configure();
+  }
+  PersistentClass persistentClass=configuration.getClassMapping(aClass.getName());
+  return persistentClass.getTable().getColumn(new Column(fieldName)).getLength();
+}

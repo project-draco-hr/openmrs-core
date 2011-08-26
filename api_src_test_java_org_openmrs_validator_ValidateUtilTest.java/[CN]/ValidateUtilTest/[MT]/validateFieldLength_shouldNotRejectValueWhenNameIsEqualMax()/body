@@ -1,0 +1,7 @@
+{
+  PatientIdentifierType patientIdentifierType=new PatientIdentifierType();
+  patientIdentifierType.setName("asdfghjkl asdfghjkl asdfghjkl asdfghjkl asdfghjkl ");
+  BindException errors=new BindException(patientIdentifierType,"patientIdentifierType");
+  ValidateUtil.validateFieldLengths(errors,PatientIdentifierType.class,"name");
+  assertFalse(errors.hasFieldErrors("name"));
+}
