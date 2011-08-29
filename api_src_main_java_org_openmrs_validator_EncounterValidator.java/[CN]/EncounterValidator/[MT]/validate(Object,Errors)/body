@@ -7,5 +7,12 @@
     if (encounter.getVisit() != null && !encounter.getVisit().getPatient().equals(encounter.getPatient())) {
       errors.rejectValue("visit","Encounter.visit.patients.dontMatch","The patient for the encounter and visit should be the same");
     }
+    Visit visit=encounter.getVisit();
+    if (visit != null) {
+      Date encounterDateTime=encounter.getEncounterDatetime();
+      if (encounterDateTime.before(visit.getStartDatetime()) || (visit.getStopDatetime() != null && encounterDateTime.after(visit.getStopDatetime()))) {
+        errors.rejectValue("encounterDatetime","Encounter.datetimeShouldBeInVisitDatesRange","The encounter datetime should be within the visit start and stop dates.");
+      }
+    }
   }
 }
