@@ -25,4 +25,19 @@
       }
     }
   }
+  if (visit.getId() != null) {
+    Date startDateTime=visit.getStartDatetime();
+    Date stopDateTime=visit.getStopDatetime();
+    List<Encounter> encounters=Context.getEncounterService().getEncountersByVisit(visit);
+    for (    Encounter encounter : encounters) {
+      if (encounter.getEncounterDatetime().before(startDateTime)) {
+        errors.rejectValue("startDatetime","Visit.encountersCannotBeBeforeStartDate","This visit has encounters whose dates cannot be before the start date of the visit.");
+        break;
+      }
+ else       if (stopDateTime != null && encounter.getEncounterDatetime().after(stopDateTime)) {
+        errors.rejectValue("stopDatetime","Visit.encountersCannotBeAfterStopDate","This visit has encounters whose dates cannot be after the stop date of the visit.");
+        break;
+      }
+    }
+  }
 }

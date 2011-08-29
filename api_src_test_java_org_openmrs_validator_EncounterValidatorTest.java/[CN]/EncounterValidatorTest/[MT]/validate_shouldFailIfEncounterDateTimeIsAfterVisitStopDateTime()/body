@@ -1,0 +1,12 @@
+{
+  Visit visit=Context.getVisitService().getVisit(1);
+  Encounter encounter=Context.getEncounterService().getEncounter(3);
+  visit.setPatient(encounter.getPatient());
+  encounter.setVisit(visit);
+  visit.setStopDatetime(new Date());
+  Date date=new Date(visit.getStopDatetime().getTime() + 1);
+  encounter.setEncounterDatetime(date);
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("encounterDatetime"));
+}
