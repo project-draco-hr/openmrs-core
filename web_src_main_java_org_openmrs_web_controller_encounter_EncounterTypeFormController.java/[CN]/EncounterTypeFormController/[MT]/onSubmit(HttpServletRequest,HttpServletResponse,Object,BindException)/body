@@ -19,6 +19,11 @@
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"EncounterType.retiredSuccessfully");
       view=getSuccessView();
     }
+ else     if (request.getParameter("unretire") != null) {
+      es.unretireEncounterType(encounterType);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"EncounterType.unretiredSuccessfully");
+      view=getSuccessView();
+    }
  else     if (request.getParameter("purge") != null) {
       try {
         es.purgeEncounterType(encounterType);
