@@ -1,0 +1,32 @@
+{
+  Person person=null;
+  if (Context.isAuthenticated()) {
+    PersonService ps=Context.getPersonService();
+    String personId=request.getParameter("personId");
+    Integer id;
+    if (personId != null) {
+      try {
+        id=Integer.valueOf(personId);
+        person=ps.getPerson(id);
+        if (person == null) {
+          throw new ServletException("There is no person with id: '" + personId + "'");
+        }
+      }
+ catch (      NumberFormatException numberError) {
+        log.warn("Invalid personId supplied: '" + personId + "'",numberError);
+      }
+    }
+  }
+  if (person == null) {
+    person=new Person();
+    String name=request.getParameter("addName");
+    if (name != null) {
+      String gender=request.getParameter("addGender");
+      String date=request.getParameter("addBirthdate");
+      String age=request.getParameter("addAge");
+      getMiniPerson(person,name,gender,date,age);
+    }
+  }
+  setupFormBackingObject(person);
+  return person;
+}

@@ -1,0 +1,118 @@
+{
+  if (!Context.isAuthenticated()) {
+    errors.reject("auth.invalid");
+  }
+  if (errors.hasErrors()) {
+    return showForm(request,response,errors);
+  }
+  HttpSession httpSession=request.getSession();
+  Person person=(Person)command;
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String action=request.getParameter("action");
+  PersonService ps=Context.getPersonService();
+  if (action.equals(msa.getMessage("Person.delete"))) {
+    try {
+      ps.purgePerson(person);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Person.deleted");
+      return new ModelAndView(new RedirectView("index.htm"));
+    }
+ catch (    DataIntegrityViolationException e) {
+      log.error("Unable to delete person because of database FK errors: " + person,e);
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Person.cannot.delete");
+      return new ModelAndView(new RedirectView(getSuccessView() + "?personId=" + person.getPersonId().toString()));
+    }
+  }
+ else   if (action.equals(msa.getMessage("Person.void"))) {
+    String voidReason=request.getParameter("voidReason");
+    if (StringUtils.isBlank(voidReason))     voidReason=msa.getMessage("PersonForm.default.voidReason",null,"Voided from person form",Context.getLocale());
+    ps.voidPerson(person,voidReason);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Person.voided");
+    return new ModelAndView(new RedirectView(getSuccessView() + "?personId=" + person.getPersonId()));
+  }
+ else   if (action.equals(msa.getMessage("Person.unvoid"))) {
+    ps.unvoidPerson(person);
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Person.unvoided");
+    return new ModelAndView(new RedirectView(getSuccessView() + "?personId=" + person.getPersonId()));
+  }
+ else {
+    ps.savePerson(person);
+    if (person.getDead()) {
+      log.debug("Person is dead, so let's make sure there's an Obs for it");
+      String causeOfDeathConceptId=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
+      Concept causeOfDeath=Context.getConceptService().getConcept(causeOfDeathConceptId);
+      if (causeOfDeath != null) {
+        List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(person,causeOfDeath);
+        if (obssDeath != null) {
+          if (obssDeath.size() > 1) {
+            log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
+          }
+ else {
+            Obs obsDeath=null;
+            if (obssDeath.size() == 1) {
+              log.debug("Already has a cause of death, so changing it");
+              obsDeath=obssDeath.iterator().next();
+            }
+ else {
+              log.debug("No cause of death yet, let's create one.");
+              obsDeath=new Obs();
+              obsDeath.setPerson(person);
+              obsDeath.setConcept(causeOfDeath);
+              Location location=Context.getLocationService().getDefaultLocation();
+              if (location != null)               obsDeath.setLocation(location);
+ else               log.error("Could not find a suitable location for which to create this new Obs");
+            }
+            Concept currCause=person.getCauseOfDeath();
+            if (currCause == null) {
+              log.debug("Current cause is null, attempting to set to NONE");
+              String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
+              currCause=Context.getConceptService().getConcept(noneConcept);
+            }
+            if (currCause != null) {
+              log.debug("Current cause is not null, setting to value_coded");
+              obsDeath.setValueCoded(currCause);
+              obsDeath.setValueCodedName(currCause.getName());
+              Date dateDeath=person.getDeathDate();
+              if (dateDeath == null)               dateDeath=new Date();
+              obsDeath.setObsDatetime(dateDeath);
+              String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
+              Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
+              boolean deathReasonChanged=false;
+              if (conceptOther != null) {
+                String otherInfo=ServletRequestUtils.getStringParameter(request,"causeOfDeath_other","");
+                if (conceptOther.equals(currCause)) {
+                  deathReasonChanged=!otherInfo.equals(obsDeath.getValueText());
+                  log.debug("Setting value_text as " + otherInfo);
+                  obsDeath.setValueText(otherInfo);
+                }
+ else {
+                  deathReasonChanged=!otherInfo.equals("");
+                  log.debug("New concept is NOT the OTHER concept, so setting to blank");
+                  obsDeath.setValueText("");
+                }
+              }
+ else {
+                log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
+                obsDeath.setValueText("");
+              }
+              boolean shouldSaveObs=(null == obsDeath.getId()) || deathReasonChanged;
+              if (shouldSaveObs) {
+                if (null == obsDeath.getVoidReason())                 obsDeath.setVoidReason("Changed in patient demographics editor");
+                Context.getObsService().saveObs(obsDeath,obsDeath.getVoidReason());
+              }
+            }
+ else {
+              log.debug("Current cause is still null - aborting mission");
+            }
+          }
+        }
+      }
+ else {
+        log.debug("Cause of death is null - should not have gotten here without throwing an error on the form.");
+      }
+    }
+    String view=getSuccessView();
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Person.saved");
+    view=view + "?personId=" + person.getPersonId();
+    return new ModelAndView(new RedirectView(view));
+  }
+}

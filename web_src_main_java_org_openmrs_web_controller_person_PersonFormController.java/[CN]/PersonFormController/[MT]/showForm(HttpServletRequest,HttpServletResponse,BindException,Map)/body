@@ -1,0 +1,10 @@
+{
+  Object person=errors.getTarget();
+  if (person instanceof Patient) {
+    Patient patient=(Patient)person;
+    if (!getFormView().contains("patient")) {
+      return new ModelAndView(new RedirectView("../patients/patient.form?patientId=" + patient.getId()));
+    }
+  }
+  return super.showForm(request,response,errors,controlModel);
+}

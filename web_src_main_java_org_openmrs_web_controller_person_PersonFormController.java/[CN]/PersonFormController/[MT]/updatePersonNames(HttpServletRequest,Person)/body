@@ -1,0 +1,46 @@
+{
+  Object[] objs=null;
+  objs=person.getNames().toArray();
+  for (int i=0; i < objs.length; i++) {
+    if (request.getParameter("names[" + i + "].givenName") == null)     person.removeName((PersonName)objs[i]);
+  }
+  String[] gNames=ServletRequestUtils.getStringParameters(request,"givenName");
+  String[] mNames=ServletRequestUtils.getStringParameters(request,"middleName");
+  String[] fNamePrefixes=ServletRequestUtils.getStringParameters(request,"familyNamePrefix");
+  String[] fNames=ServletRequestUtils.getStringParameters(request,"familyName");
+  String[] fName2s=ServletRequestUtils.getStringParameters(request,"familyName2");
+  String[] fNameSuffixes=ServletRequestUtils.getStringParameters(request,"familyNameSuffix");
+  String[] degrees=ServletRequestUtils.getStringParameters(request,"degree");
+  String[] namePrefStatus=ServletRequestUtils.getStringParameters(request,"preferred");
+  if (gNames != null) {
+    for (int i=0; i < gNames.length; i++) {
+      if (!"".equals(gNames[i])) {
+        PersonName pn=new PersonName();
+        if (namePrefStatus != null && namePrefStatus.length > i)         pn.setPreferred(new Boolean(namePrefStatus[i]));
+        if (gNames.length >= i + 1)         pn.setGivenName(gNames[i]);
+        if (mNames.length >= i + 1)         pn.setMiddleName(mNames[i]);
+        if (fNamePrefixes.length >= i + 1)         pn.setFamilyNamePrefix(fNamePrefixes[i]);
+        if (fNames.length >= i + 1)         pn.setFamilyName(fNames[i]);
+        if (fName2s.length >= i + 1)         pn.setFamilyName2(fName2s[i]);
+        if (fNameSuffixes.length >= i + 1)         pn.setFamilyNameSuffix(fNameSuffixes[i]);
+        if (degrees.length >= i + 1)         pn.setDegree(degrees[i]);
+        person.addName(pn);
+      }
+    }
+    Iterator<PersonName> names=person.getNames().iterator();
+    PersonName currentName=null;
+    PersonName preferredName=null;
+    while (names.hasNext()) {
+      currentName=names.next();
+      if (currentName.isPreferred()) {
+        if (preferredName != null) {
+          preferredName.setPreferred(false);
+        }
+        preferredName=currentName;
+      }
+    }
+    if ((preferredName == null) && (currentName != null)) {
+      currentName.setPreferred(true);
+    }
+  }
+}

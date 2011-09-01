@@ -1,0 +1,26 @@
+{
+  for (  PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PERSON,null)) {
+    String paramName=type.getPersonAttributeTypeId().toString();
+    String value=request.getParameter(paramName);
+    if (value != null) {
+      PersonAttribute attribute=new PersonAttribute(type,value);
+      try {
+        Object hydratedObject=attribute.getHydratedObject();
+        if (hydratedObject == null || "".equals(hydratedObject.toString())) {
+          attribute.setValue("");
+        }
+ else         if (hydratedObject instanceof Attributable) {
+          attribute.setValue(((Attributable)hydratedObject).serialize());
+        }
+ else         if (!hydratedObject.getClass().getName().equals(type.getFormat()))         throw new APIException();
+      }
+ catch (      APIException e) {
+        errors.rejectValue("attributes","Invalid value for " + type.getName() + ": '"+ value+ "'");
+        log.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
+        attribute.setValue("");
+      }
+      person.addAttribute(attribute);
+    }
+  }
+  if (log.isDebugEnabled())   log.debug("Person Attributes: \n" + person.printAttributes());
+}
