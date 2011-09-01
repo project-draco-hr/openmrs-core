@@ -1,0 +1,6 @@
+{
+  Encounter encounter=Context.getEncounterService().getEncounter(1);
+  Assert.assertNull(encounter.getVisit());
+  new ExistingVisitAssignmentHandler().beforeCreateEncounter(encounter);
+  Assert.assertNotNull(encounter.getVisit());
+}
