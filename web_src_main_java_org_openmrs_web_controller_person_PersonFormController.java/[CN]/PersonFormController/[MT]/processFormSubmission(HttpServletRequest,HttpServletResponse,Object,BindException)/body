@@ -1,34 +1,18 @@
 {
-  Person person=(Person)obj;
   if (!Context.isAuthenticated()) {
     errors.reject("auth.invalid");
   }
- else {
-    for (    PersonAttributeType type : Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PERSON,null)) {
-      String paramName=type.getPersonAttributeTypeId().toString();
-      String value=request.getParameter(paramName);
-      if (value != null) {
-        PersonAttribute attribute=new PersonAttribute(type,value);
-        try {
-          Object hydratedObject=attribute.getHydratedObject();
-          if (hydratedObject == null || "".equals(hydratedObject.toString())) {
-            attribute.setValue("");
-          }
- else           if (hydratedObject instanceof Attributable) {
-            attribute.setValue(((Attributable)hydratedObject).serialize());
-          }
- else           if (!hydratedObject.getClass().getName().equals(type.getFormat()))           throw new APIException();
-        }
- catch (        APIException e) {
-          errors.rejectValue("attributes","Invalid value for " + type.getName() + ": '"+ value+ "'");
-          log.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
-          attribute.setValue("");
-        }
-        person.addAttribute(attribute);
-      }
-    }
+  if (errors.hasErrors()) {
+    return showForm(request,response,errors);
   }
-  if (log.isDebugEnabled())   log.debug("Person Attributes: \n" + person.printAttributes());
+  Person person=(Person)obj;
+  MessageSourceAccessor msa=getMessageSourceAccessor();
+  String action=request.getParameter("action");
+  if (action.equals(msa.getMessage("Person.save"))) {
+    updatePersonAddresses(request,person);
+    updatePersonNames(request,person);
+    updatePersonAttributes(request,errors,person);
+  }
   if (errors.hasErrors())   return showForm(request,response,errors);
   return super.processFormSubmission(request,response,person,errors);
 }
