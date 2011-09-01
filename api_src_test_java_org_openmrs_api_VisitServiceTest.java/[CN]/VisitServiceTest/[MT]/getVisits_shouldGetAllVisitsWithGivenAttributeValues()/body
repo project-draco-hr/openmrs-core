@@ -2,7 +2,7 @@
   executeDataSet(VISITS_ATTRIBUTES_XML);
   Map<VisitAttributeType,Object> attrs=new HashMap<VisitAttributeType,Object>();
   attrs.put(service.getVisitAttributeType(1),new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-25"));
-  List<Visit> visits=service.getVisits(null,null,null,null,null,null,null,null,attrs,false);
+  List<Visit> visits=service.getVisits(null,null,null,null,null,null,null,null,attrs,true,false);
   Assert.assertEquals(1,visits.size());
   Assert.assertEquals(Integer.valueOf(1),visits.get(0).getVisitId());
 }

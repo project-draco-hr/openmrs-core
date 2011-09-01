@@ -8,5 +8,5 @@
       serializedAttributeValues.put(vat,attrService.getHandler(vat).serialize(e.getValue()));
     }
   }
-  return dao.getVisits(visitTypes,patients,locations,indications,minStartDatetime,maxStartDatetime,minEndDatetime,maxEndDatetime,serializedAttributeValues,true,includeVoided);
+  return dao.getVisits(visitTypes,patients,locations,indications,minStartDatetime,maxStartDatetime,minEndDatetime,maxEndDatetime,serializedAttributeValues,includeInactive,includeVoided);
 }
