@@ -1,7 +1,7 @@
 {
-  List<EncounterToVisitAssignmentHandler> handlers=Context.getEncounterService().getVisitAssignmentHandlers();
+  List<EncounterVisitHandler> handlers=Context.getEncounterService().getEncounterVisitHandlers();
   boolean found=false;
-  for (  EncounterToVisitAssignmentHandler handler : handlers) {
+  for (  EncounterVisitHandler handler : handlers) {
     if (handler instanceof NoVisitAssignmentHandler)     found=true;
   }
   Assert.assertTrue("The basic 'no assignment' handler was not found",found);
