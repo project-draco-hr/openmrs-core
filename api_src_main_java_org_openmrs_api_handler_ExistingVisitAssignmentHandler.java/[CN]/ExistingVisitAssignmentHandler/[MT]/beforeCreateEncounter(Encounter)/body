@@ -1,0 +1,18 @@
+{
+  if (encounter.getVisit() != null)   return;
+  List<Visit> visits=Context.getVisitService().getVisitsByPatient(encounter.getPatient(),true,false);
+  if (visits == null)   return;
+  Date encounterDate=encounter.getEncounterDatetime();
+  for (  Visit visit : visits) {
+    if (visit.getStartDatetime().after(encounterDate)) {
+      continue;
+    }
+    if (visit.getStopDatetime() != null && visit.getStopDatetime().before(encounterDate)) {
+      continue;
+    }
+    if (visit.getLocation() == null || visit.getLocation().equals(encounter.getLocation())) {
+      encounter.setVisit(visit);
+      return;
+    }
+  }
+}
