@@ -1,4 +1,10 @@
 {
+  if (encounter.getEncounterId() == null) {
+    EncounterVisitHandler encounterVisitHandler=getActiveEncounterVisitHandler();
+    if (encounterVisitHandler != null) {
+      encounterVisitHandler.beforeCreateEncounter(encounter);
+    }
+  }
   Errors errors=new BindException(encounter,"encounter");
   new EncounterValidator().validate(encounter,errors);
   if (errors.hasErrors()) {
