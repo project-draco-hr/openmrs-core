@@ -1,0 +1,14 @@
+{
+  Integer id=conceptMapType.getId();
+  try {
+    Context.getConceptService().purgeConceptMapType(conceptMapType);
+    if (log.isDebugEnabled())     log.debug("Purged concept map type with id: " + id);
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptMapType.purged"),WebRequest.SCOPE_SESSION);
+    return "redirect:" + CONCEPT_MAP_TYPE_LIST_URL + ".list";
+  }
+ catch (  APIException e) {
+    log.warn("Error occurred while attempting to purge concept map type",e);
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("ConceptMapType.purge.error"),WebRequest.SCOPE_SESSION);
+  }
+  return "redirect:" + CONCEPT_MAP_TYPE_FORM_URL + ".form?conceptMapTypeId="+ id;
+}

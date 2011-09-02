@@ -82,4 +82,32 @@
     log.debug("Concept has no fully specified name");
     errors.reject("Concept.error.no.FullySpecifiedName");
   }
+  if (CollectionUtils.isNotEmpty(conceptToValidate.getConceptMappings())) {
+    int index=0;
+    Set<Integer> mappedTermIds=null;
+    for (    ConceptMap map : conceptToValidate.getConceptMappings()) {
+      if (map.getConceptReferenceTerm() == null) {
+        errors.rejectValue("conceptMappings[" + index + "].conceptReferenceTerm","Concept.map.termRequired","The concept reference term property is required for a concept map");
+        return;
+      }
+ else       if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
+        errors.rejectValue("conceptMappings[" + index + "].conceptReferenceTerm","ConceptReferenceTerm.term.notInDatabase","Only existing concept reference terms can be mapped");
+        return;
+      }
+ else       if (map.getConceptMapType() == null) {
+        errors.rejectValue("conceptMappings[" + index + "].conceptMapType","Concept.map.typeRequired","The concept map type is required for a concept map");
+        return;
+      }
+ else       if (map.getConceptMapType().getConceptMapTypeId() == null) {
+        errors.rejectValue("conceptMappings[" + index + "].conceptMapType","ConceptReferenceTerm.mapType.notInDatabase","Only existing concept map types can be used");
+        return;
+      }
+      if (errors.hasErrors())       return;
+      if (mappedTermIds == null)       mappedTermIds=new HashSet<Integer>();
+      if (!mappedTermIds.add(map.getConceptReferenceTerm().getId())) {
+        errors.rejectValue("conceptMappings[" + index + "]","ConceptReferenceTerm.term.alreadyMapped","Cannot map a reference term multiple times to the same concept");
+      }
+      index++;
+    }
+  }
 }

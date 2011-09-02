@@ -1,0 +1,12 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  term.setName("name");
+  term.setCode("code");
+  term.setConceptSource(Context.getConceptService().getConceptSource(1));
+  Set<ConceptReferenceTermMap> maps=new LinkedHashSet<ConceptReferenceTermMap>();
+  maps.add(new ConceptReferenceTermMap(null,new ConceptMapType(1)));
+  term.setConceptReferenceTermMaps(maps);
+  Errors errors=new BindException(term,"term");
+  new ConceptReferenceTermValidator().validate(term,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptReferenceTermMaps[0].termB"));
+}

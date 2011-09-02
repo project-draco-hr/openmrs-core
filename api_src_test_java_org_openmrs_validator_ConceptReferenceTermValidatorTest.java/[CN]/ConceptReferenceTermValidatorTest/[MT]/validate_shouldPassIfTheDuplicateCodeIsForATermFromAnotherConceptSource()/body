@@ -1,0 +1,9 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  term.setName("unique name");
+  term.setCode("2332523");
+  term.setConceptSource(Context.getConceptService().getConceptSource(1));
+  Errors errors=new BindException(term,"term");
+  new ConceptReferenceTermValidator().validate(term,errors);
+  Assert.assertEquals(false,errors.hasErrors());
+}

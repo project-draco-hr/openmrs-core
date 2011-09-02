@@ -1,0 +1,8 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("my name",Context.getLocale()));
+  concept.addConceptMapping(new ConceptMap(null,Context.getConceptService().getConceptMapType(1)));
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptMappings[0].conceptReferenceTerm"));
+}

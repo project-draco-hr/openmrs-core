@@ -1,0 +1,16 @@
+{
+  new ConceptMapTypeValidator().validate(conceptMapType,result);
+  if (!result.hasErrors()) {
+    try {
+      Context.getConceptService().saveConceptMapType(conceptMapType);
+      if (log.isDebugEnabled())       log.debug("Saved concept map type: " + conceptMapType.toString());
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptMapType.saved",WebRequest.SCOPE_SESSION);
+      return "redirect:" + CONCEPT_MAP_TYPE_LIST_URL + ".list";
+    }
+ catch (    APIException e) {
+      log.error("Error while saving concept map type(s)",e);
+      request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"ConceptMapType.save.error",WebRequest.SCOPE_SESSION);
+    }
+  }
+  return CONCEPT_MAP_TYPE_FORM;
+}

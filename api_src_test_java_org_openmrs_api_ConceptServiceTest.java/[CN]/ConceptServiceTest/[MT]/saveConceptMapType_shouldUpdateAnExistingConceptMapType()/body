@@ -1,0 +1,12 @@
+{
+  ConceptMapType mapType=Context.getConceptService().getConceptMapType(1);
+  Assert.assertNull(mapType.getDateChanged());
+  Assert.assertNull(mapType.getChangedBy());
+  mapType.setName("random name");
+  mapType.setDescription("random description");
+  ConceptMapType editedMapType=Context.getConceptService().saveConceptMapType(mapType);
+  Assert.assertEquals("random name",editedMapType.getName());
+  Assert.assertEquals("random description",editedMapType.getDescription());
+  Assert.assertNotNull(editedMapType.getDateChanged());
+  Assert.assertNotNull(editedMapType.getChangedBy());
+}

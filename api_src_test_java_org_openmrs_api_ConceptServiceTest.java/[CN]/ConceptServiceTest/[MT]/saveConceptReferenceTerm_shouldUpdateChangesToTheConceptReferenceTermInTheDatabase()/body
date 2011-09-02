@@ -1,0 +1,17 @@
+{
+  ConceptReferenceTerm term=Context.getConceptService().getConceptReferenceTerm(1);
+  Assert.assertEquals(Context.getConceptService().getConceptSource(1),term.getConceptSource());
+  Assert.assertNull(term.getChangedBy());
+  Assert.assertNull(term.getDateChanged());
+  term.setName("new name");
+  term.setCode("new code");
+  term.setDescription("new descr");
+  term.setConceptSource(Context.getConceptService().getConceptSource(2));
+  ConceptReferenceTerm editedTerm=Context.getConceptService().saveConceptReferenceTerm(term);
+  Assert.assertEquals("new name",editedTerm.getName());
+  Assert.assertEquals("new code",editedTerm.getCode());
+  Assert.assertEquals("new descr",editedTerm.getDescription());
+  Assert.assertEquals(new ConceptSource(2),editedTerm.getConceptSource());
+  Assert.assertNotNull(term.getChangedBy());
+  Assert.assertNotNull(term.getDateChanged());
+}

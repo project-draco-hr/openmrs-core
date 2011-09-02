@@ -1,0 +1,12 @@
+{
+  ConceptMapType mapType=Context.getConceptService().getConceptMapType(6);
+  Assert.assertTrue(mapType.isRetired());
+  Assert.assertNotNull(mapType.getRetiredBy());
+  Assert.assertNotNull(mapType.getDateRetired());
+  Assert.assertNotNull(mapType.getRetireReason());
+  ConceptMapType unRetiredMapType=Context.getConceptService().unretireConceptMapType(mapType);
+  Assert.assertFalse(unRetiredMapType.isRetired());
+  Assert.assertNull(unRetiredMapType.getRetireReason());
+  Assert.assertNull(unRetiredMapType.getRetiredBy());
+  Assert.assertNull(unRetiredMapType.getDateRetired());
+}

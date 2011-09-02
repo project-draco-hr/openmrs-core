@@ -15,7 +15,7 @@
     synonymsByLocale.put(locale,ListUtils.lazyList(synonymsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
     indexTermsByLocale.put(locale,ListUtils.lazyList(indexTermsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
   }
-  mappings=ListUtils.lazyList(new Vector(concept.getConceptMappings()),FactoryUtils.instantiateFactory(ConceptMap.class));
+  conceptMappings=ListUtils.lazyList(new ArrayList<ConceptMap>(concept.getConceptMappings()),FactoryUtils.instantiateFactory(ConceptMap.class));
   if (concept.isNumeric()) {
     ConceptNumeric cn=(ConceptNumeric)concept;
     this.hiAbsolute=cn.getHiAbsolute();

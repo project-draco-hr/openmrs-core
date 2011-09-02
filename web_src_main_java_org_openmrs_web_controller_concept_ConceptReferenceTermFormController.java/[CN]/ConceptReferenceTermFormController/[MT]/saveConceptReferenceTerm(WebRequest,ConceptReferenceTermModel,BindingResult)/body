@@ -1,0 +1,51 @@
+{
+  ConceptReferenceTerm conceptReferenceTerm=conceptReferenceTermModel.getConceptReferenceTerm();
+  Set<Integer> mappedTermIds=null;
+  for (int x=0; x < conceptReferenceTermModel.getTermMaps().size(); x++) {
+    if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
+    ConceptReferenceTermMap map=conceptReferenceTermModel.getTermMaps().get(x);
+    if (map.getTermB() != null && !mappedTermIds.add(map.getTermB().getConceptReferenceTermId()))     continue;
+    if (map != null && map.getTermB() != null) {
+      if (request.getParameter("_termMaps[" + x + "].exists") == null) {
+        conceptReferenceTerm.removeConceptReferenceTermMap(map);
+      }
+ else {
+        if (map.getConceptMapType() == null) {
+          result.rejectValue("termMaps[" + x + "]","ConceptReferenceTerm.error.mapTypeRequired","Concept Map Type is required");
+          log.warn("Concept Map Type is required");
+          break;
+        }
+ else         if (map.getTermB().equals(conceptReferenceTerm)) {
+          result.rejectValue("termMaps[" + x + "]","ConceptReferenceTerm.map.sameTerm","Cannot map a concept reference term to itself");
+          log.warn("Cannot map a concept reference term to itself");
+          break;
+        }
+ else         if (!conceptReferenceTerm.getConceptReferenceTermMaps().contains(map)) {
+          conceptReferenceTerm.addConceptReferenceTermMap(map);
+        }
+      }
+    }
+  }
+  if (!result.hasErrors()) {
+    try {
+      result.pushNestedPath("conceptReferenceTerm");
+      ValidationUtils.invokeValidator(new ConceptReferenceTermValidator(),conceptReferenceTerm,result);
+    }
+  finally {
+      result.popNestedPath();
+    }
+  }
+  if (!result.hasErrors()) {
+    try {
+      conceptReferenceTerm=Context.getConceptService().saveConceptReferenceTerm(conceptReferenceTerm);
+      if (log.isDebugEnabled())       log.debug("Saved concept reference term: " + conceptReferenceTerm.toString());
+      request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptReferenceTerm.saved",WebRequest.SCOPE_SESSION);
+      return "redirect:" + CONCEPT_REFERENCE_TERM_FORM_URL + ".form?conceptReferenceTermId="+ conceptReferenceTerm.getConceptReferenceTermId();
+    }
+ catch (    APIException e) {
+      log.error("Error while saving concept reference term",e);
+      request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"ConceptReferenceTerm.save.error",WebRequest.SCOPE_SESSION);
+    }
+  }
+  return CONCEPT_REFERENCE_TERM_FORM;
+}

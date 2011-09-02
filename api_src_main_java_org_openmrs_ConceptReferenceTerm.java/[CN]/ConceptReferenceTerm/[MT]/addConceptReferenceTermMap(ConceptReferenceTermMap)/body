@@ -1,0 +1,9 @@
+{
+  if (conceptReferenceTermMap != null) {
+    if (conceptReferenceTermMap.getTermB() != null && !this.equals(conceptReferenceTermMap.getTermB())) {
+      conceptReferenceTermMap.setTermA(this);
+      if (conceptReferenceTermMaps == null)       conceptReferenceTermMaps=new LinkedHashSet<ConceptReferenceTermMap>();
+      if (conceptReferenceTermMap != null && !conceptReferenceTermMaps.contains(conceptReferenceTermMap))       conceptReferenceTermMaps.add(conceptReferenceTermMap);
+    }
+  }
+}

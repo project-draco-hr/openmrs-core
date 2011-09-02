@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTermMap.class);
+  criteria.add(Restrictions.eq("termB",term));
+  return criteria.list();
+}

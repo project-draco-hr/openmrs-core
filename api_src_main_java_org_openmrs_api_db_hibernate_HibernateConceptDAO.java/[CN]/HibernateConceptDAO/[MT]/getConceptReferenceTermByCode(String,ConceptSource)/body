@@ -1,0 +1,8 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTerm.class);
+  criteria.add(Expression.eq("code",code));
+  criteria.add(Expression.eq("conceptSource",conceptSource));
+  List terms=criteria.list();
+  if (terms.size() < 1)   return null;
+  return (ConceptReferenceTerm)terms.get(0);
+}

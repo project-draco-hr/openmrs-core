@@ -1,0 +1,14 @@
+{
+  log.debug("Setting text: " + text);
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(Context.getConceptService().getConceptReferenceTerm(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      throw new IllegalArgumentException("ConceptReferenceTerm not found: " + text,ex);
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

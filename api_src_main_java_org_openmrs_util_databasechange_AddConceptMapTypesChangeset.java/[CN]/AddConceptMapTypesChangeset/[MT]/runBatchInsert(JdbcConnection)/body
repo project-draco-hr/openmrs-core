@@ -1,0 +1,102 @@
+{
+  PreparedStatement pStmt=null;
+  ResultSet rs=null;
+  List<String> existingMapTypes=new ArrayList<String>();
+  try {
+    connection.setAutoCommit(false);
+    Integer userId=DatabaseUpdater.getAuthenticatedUserId();
+    if (userId == null || userId < 1) {
+      userId=getInt(connection,"SELECT min(user_id) FROM users");
+      if (userId < 1)       userId=null;
+    }
+    pStmt=connection.prepareStatement("SELECT name FROM concept_map_type");
+    rs=pStmt.executeQuery();
+    while (rs.next())     existingMapTypes.add(rs.getString("name").trim().toUpperCase());
+    pStmt=connection.prepareStatement("INSERT INTO concept_map_type (name, isHidden, creator, date_created, uuid) VALUES(?,?," + userId + ", NOW(),?)");
+    for (    String mapType : visibleConceptMapTypeArray) {
+      mapType=mapType.trim();
+      if (mapType.length() < 1 || existingMapTypes.contains(mapType.toUpperCase()))       continue;
+      pStmt.setString(1,mapType);
+      pStmt.setString(2,"0");
+      pStmt.setString(3,UUID.randomUUID().toString());
+      pStmt.addBatch();
+    }
+    for (    String mapType : hiddenConceptMapTypeArray) {
+      mapType=mapType.trim();
+      if (mapType.length() < 1 || existingMapTypes.contains(mapType.toUpperCase()))       continue;
+      pStmt.setString(1,mapType);
+      pStmt.setString(2,"1");
+      pStmt.setString(3,UUID.randomUUID().toString());
+      pStmt.addBatch();
+    }
+    try {
+      int[] updateCounts=pStmt.executeBatch();
+      for (int i=0; i < updateCounts.length; i++) {
+        if (updateCounts[i] > -1) {
+          log.debug("Successfully executed: updateCount=" + updateCounts[i]);
+        }
+ else         if (updateCounts[i] == Statement.SUCCESS_NO_INFO) {
+          log.debug("Successfully executed; No Success info");
+        }
+ else         if (updateCounts[i] == Statement.EXECUTE_FAILED) {
+          log.warn("Failed to execute insert");
+        }
+      }
+      log.debug("Committing inserts...");
+      connection.commit();
+    }
+ catch (    BatchUpdateException be) {
+      log.warn("Error generated while processsing batch insert",be);
+      int[] updateCounts=be.getUpdateCounts();
+      for (int i=0; i < updateCounts.length; i++) {
+        if (updateCounts[i] > -1) {
+          log.warn("Executed with exception: insertCount=" + updateCounts[i]);
+        }
+ else         if (updateCounts[i] == Statement.SUCCESS_NO_INFO) {
+          log.warn("Executed with exception; No Success info");
+        }
+ else         if (updateCounts[i] == Statement.EXECUTE_FAILED) {
+          log.warn("Failed to execute insert with exception");
+        }
+      }
+      try {
+        log.debug("Rolling back batch",be);
+        connection.rollback();
+      }
+ catch (      Exception rbe) {
+        log.warn("Error generated while rolling back batch insert",be);
+        throw new CustomChangeException("Failed to insert one or more concet map types:",be);
+      }
+    }
+  }
+ catch (  DatabaseException e) {
+    throw new CustomChangeException("Failed to insert one or more concet map types:",e);
+  }
+catch (  SQLException e) {
+    throw new CustomChangeException("Failed to insert one or more concet map types:",e);
+  }
+ finally {
+    try {
+      connection.setAutoCommit(true);
+    }
+ catch (    DatabaseException e) {
+      log.warn("Failed to reset auto commit back to true",e);
+    }
+    if (rs != null) {
+      try {
+        rs.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Failed to close the resultset object");
+      }
+    }
+    if (pStmt != null) {
+      try {
+        pStmt.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Failed to close the prepared statement object");
+      }
+    }
+  }
+}

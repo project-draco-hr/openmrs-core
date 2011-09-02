@@ -1,0 +1,5 @@
+{
+  Criteria criteria=createConceptReferenceTermCriteria(query,conceptSource,includeRetired);
+  criteria.setProjection(Projections.rowCount());
+  return (Integer)criteria.uniqueResult();
+}

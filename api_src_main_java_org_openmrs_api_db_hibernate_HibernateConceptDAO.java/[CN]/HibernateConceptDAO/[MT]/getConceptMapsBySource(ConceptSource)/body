@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class);
+  criteria.createAlias("conceptReferenceTerm","term");
+  criteria.add(Expression.eq("term.conceptSource",conceptSource));
+  return (List<ConceptMap>)criteria.list();
+}

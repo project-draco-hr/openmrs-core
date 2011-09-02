@@ -1,0 +1,5 @@
+{
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
+  if (log.isInfoEnabled())   log.debug("Generating and inserting concept reference terms");
+  insertRows(connection,getPropertyObjectsMap(connection,true));
+}

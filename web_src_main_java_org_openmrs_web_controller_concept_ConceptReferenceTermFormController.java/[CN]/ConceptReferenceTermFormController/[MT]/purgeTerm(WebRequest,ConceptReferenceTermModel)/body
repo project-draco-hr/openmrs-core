@@ -1,0 +1,14 @@
+{
+  Integer id=conceptReferenceTermModel.getConceptReferenceTerm().getId();
+  try {
+    Context.getConceptService().purgeConceptReferenceTerm(conceptReferenceTermModel.getConceptReferenceTerm());
+    if (log.isDebugEnabled())     log.debug("Purged concept reference term with id: " + id);
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptReferenceTerm.purged"),WebRequest.SCOPE_SESSION);
+    return "redirect:" + FIND_CONCEPT_REFERENCE_TERM_URL;
+  }
+ catch (  APIException e) {
+    log.warn("Error occurred while attempting to purge concept reference term",e);
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("ConceptReferenceTerm.purge.error"),WebRequest.SCOPE_SESSION);
+  }
+  return "redirect:" + CONCEPT_REFERENCE_TERM_FORM_URL + ".form?conceptReferenceTermId="+ id;
+}
