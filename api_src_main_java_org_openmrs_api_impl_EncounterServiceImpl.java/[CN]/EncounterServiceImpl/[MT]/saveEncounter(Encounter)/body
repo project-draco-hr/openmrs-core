@@ -1,8 +1,11 @@
 {
   if (encounter.getEncounterId() == null) {
-    EncounterVisitHandler encounterVisitHandler=getActiveEncounterVisitHandler();
+    EncounterVisitHandler encounterVisitHandler=Context.getEncounterService().getActiveEncounterVisitHandler();
     if (encounterVisitHandler != null) {
       encounterVisitHandler.beforeCreateEncounter(encounter);
+      if (encounter.getVisit() != null && encounter.getVisit().getVisitId() == null) {
+        Context.getVisitService().saveVisit(encounter.getVisit());
+      }
     }
   }
   Errors errors=new BindException(encounter,"encounter");

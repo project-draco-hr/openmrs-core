@@ -6,13 +6,7 @@
     if (!(handler instanceof EncounterVisitHandler))     throw new APIException("The registered visit assignment handler should implement the EncounterVisitHandler interface");
     return (EncounterVisitHandler)handler;
   }
- catch (  ClassNotFoundException ex) {
-    throw new APIException("Failed to load visit assignment handler class: " + value,ex);
-  }
-catch (  IllegalAccessException ex) {
-    throw new APIException("Failed to access assignment handler object for class: " + value,ex);
-  }
-catch (  InstantiationException ex) {
+ catch (  Exception ex) {
     throw new APIException("Failed to instantiate assignment handler object for class class: " + value,ex);
   }
 }
