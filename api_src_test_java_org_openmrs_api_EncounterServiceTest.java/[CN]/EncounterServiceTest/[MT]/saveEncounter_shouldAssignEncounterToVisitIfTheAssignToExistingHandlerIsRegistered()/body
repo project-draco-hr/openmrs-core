@@ -11,4 +11,5 @@
   Context.getAdministrationService().saveGlobalProperty(gp);
   Context.getEncounterService().saveEncounter(encounter);
   assertNotNull(encounter.getVisit());
+  assertNotNull(encounter.getVisit().getVisitId());
 }
