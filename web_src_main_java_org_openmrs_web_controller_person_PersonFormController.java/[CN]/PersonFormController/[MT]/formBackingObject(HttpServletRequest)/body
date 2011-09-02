@@ -13,7 +13,7 @@
         }
       }
  catch (      NumberFormatException numberError) {
-        log.warn("Invalid personId supplied: '" + personId + "'",numberError);
+        throw new ServletException("Invalid personId supplied: '" + personId + "'",numberError);
       }
     }
   }
