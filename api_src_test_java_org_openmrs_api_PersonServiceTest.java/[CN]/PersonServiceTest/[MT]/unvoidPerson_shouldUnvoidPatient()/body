@@ -1,0 +1,6 @@
+{
+  Person person=personService.getPerson(2);
+  personService.voidPerson(person,"reason");
+  personService.unvoidPerson(person);
+  Assert.assertFalse(person.isVoided());
+}
