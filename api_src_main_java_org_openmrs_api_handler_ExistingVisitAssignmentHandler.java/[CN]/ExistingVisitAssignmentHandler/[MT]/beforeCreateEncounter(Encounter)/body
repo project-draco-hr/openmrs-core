@@ -1,5 +1,7 @@
 {
   if (encounter.getVisit() != null)   return;
+  List<Patient> patients=new ArrayList<Patient>();
+  patients.add(encounter.getPatient());
   List<Visit> visits=Context.getVisitService().getVisitsByPatient(encounter.getPatient(),true,false);
   if (visits == null)   return;
   Date encounterDate=encounter.getEncounterDatetime();
@@ -10,7 +12,7 @@
     if (visit.getStopDatetime() != null && visit.getStopDatetime().before(encounterDate)) {
       continue;
     }
-    if (visit.getLocation() == null || visit.getLocation().equals(encounter.getLocation())) {
+    if (visit.getLocation() == null || Location.isInHierarchy(encounter.getLocation(),visit.getLocation())) {
       encounter.setVisit(visit);
       return;
     }
