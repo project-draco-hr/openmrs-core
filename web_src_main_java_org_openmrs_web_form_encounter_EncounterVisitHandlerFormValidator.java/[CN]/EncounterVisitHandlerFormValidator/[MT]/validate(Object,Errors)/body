@@ -1,0 +1,6 @@
+{
+  EncounterVisitHandlerForm form=(EncounterVisitHandlerForm)target;
+  if (form.isEnableVisits()) {
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"encounterVisitHandler","Encounter.error.visits.handler.empty");
+  }
+}
