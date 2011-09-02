@@ -1,23 +1,4 @@
 {
-  for (  PersonName pn : person.getNames()) {
-    if (!pn.isVoided()) {
-      pn.setVoided(true);
-      pn.setVoidReason(reason);
-    }
-  }
-  for (  PersonAddress pa : person.getAddresses()) {
-    if (!pa.isVoided()) {
-      pa.setVoided(true);
-      pa.setVoidReason(reason);
-    }
-  }
-  person.setPersonVoided(true);
-  person.setPersonVoidedBy(Context.getAuthenticatedUser());
-  person.setPersonDateVoided(new Date());
-  person.setPersonVoidReason(reason);
-  savePerson(person);
-  Context.getPatientService().voidPatient(Context.getPatientService().getPatient(person.getPersonId()),reason);
-  UserService us=Context.getUserService();
-  for (  User user : us.getUsersByPerson(person,false))   us.retireUser(user,reason);
-  return person;
+  if (person == null)   return null;
+  return dao.savePerson(person);
 }

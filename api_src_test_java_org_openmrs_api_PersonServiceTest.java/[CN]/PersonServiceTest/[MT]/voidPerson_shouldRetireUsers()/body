@@ -1,0 +1,8 @@
+{
+  Person person=personService.getPerson(2);
+  User user=new User(person);
+  Context.getUserService().saveUser(user,"Admin123");
+  Assert.assertFalse(Context.getUserService().getUsersByPerson(person,false).isEmpty());
+  personService.voidPerson(person,"reason");
+  Assert.assertTrue(Context.getUserService().getUsersByPerson(person,false).isEmpty());
+}

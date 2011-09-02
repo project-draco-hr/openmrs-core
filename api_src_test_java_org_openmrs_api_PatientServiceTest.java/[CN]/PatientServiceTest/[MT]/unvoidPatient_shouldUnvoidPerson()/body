@@ -1,0 +1,7 @@
+{
+  Patient patient=patientService.getPatient(2);
+  patientService.voidPatient(patient,"reason");
+  Assert.assertTrue(patient.isPersonVoided());
+  patientService.unvoidPatient(patient);
+  Assert.assertFalse(patient.isPersonVoided());
+}

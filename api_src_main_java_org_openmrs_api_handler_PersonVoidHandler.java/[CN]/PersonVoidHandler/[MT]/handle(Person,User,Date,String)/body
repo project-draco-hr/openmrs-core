@@ -1,5 +1,9 @@
 {
   if (!person.isPersonVoided()) {
+    if (person.getPersonId() != null) {
+      UserService us=Context.getUserService();
+      for (      User user : us.getUsersByPerson(person,false))       us.retireUser(user,voidReason);
+    }
     person.setPersonVoided(true);
     person.setPersonVoidReason(voidReason);
     if (person.getPersonVoidedBy() == null) {

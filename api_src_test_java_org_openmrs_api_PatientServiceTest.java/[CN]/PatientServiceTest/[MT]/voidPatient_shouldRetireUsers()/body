@@ -1,0 +1,8 @@
+{
+  Patient patient=patientService.getPatient(2);
+  User user=new User(patient);
+  Context.getUserService().saveUser(user,"Admin123");
+  Assert.assertFalse(Context.getUserService().getUsersByPerson(patient,false).isEmpty());
+  patientService.voidPatient(patient,"reason");
+  Assert.assertTrue(Context.getUserService().getUsersByPerson(patient,false).isEmpty());
+}
