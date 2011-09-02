@@ -1,0 +1,15 @@
+{
+  if (!StringUtils.hasText(retireReason))   retireReason=Context.getMessageSourceService().getMessage("general.default.retireReason");
+  try {
+    ConceptReferenceTerm conceptReferenceTerm=conceptReferenceTermModel.getConceptReferenceTerm();
+    Context.getConceptService().retireConceptReferenceTerm(conceptReferenceTerm,retireReason);
+    if (log.isDebugEnabled())     log.debug("Retired concept reference term with id: " + conceptReferenceTerm.getId());
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptReferenceTerm.retired"),WebRequest.SCOPE_SESSION);
+    return "redirect:" + FIND_CONCEPT_REFERENCE_TERM_URL;
+  }
+ catch (  APIException e) {
+    log.error("Error occurred while retiring concept reference term",e);
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("ConceptReferenceTerm.retire.error"),WebRequest.SCOPE_SESSION);
+  }
+  return CONCEPT_REFERENCE_TERM_FORM;
+}

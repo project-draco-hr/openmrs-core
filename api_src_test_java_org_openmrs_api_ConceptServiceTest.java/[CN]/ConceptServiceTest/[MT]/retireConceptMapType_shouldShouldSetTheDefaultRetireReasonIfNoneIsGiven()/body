@@ -1,0 +1,6 @@
+{
+  ConceptMapType mapType=Context.getConceptService().getConceptMapType(1);
+  Assert.assertNull(mapType.getRetireReason());
+  ConceptMapType retiredMapType=Context.getConceptService().retireConceptMapType(mapType,null);
+  Assert.assertNotNull(retiredMapType.getRetireReason());
+}

@@ -1,0 +1,14 @@
+{
+  if (!StringUtils.hasText(retireReason))   retireReason=Context.getMessageSourceService().getMessage("general.default.retireReason");
+  try {
+    Context.getConceptService().retireConceptMapType(conceptMapType,retireReason);
+    if (log.isDebugEnabled())     log.debug("Retired concept map type with id: " + conceptMapType.getId());
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptMapType.retired"),WebRequest.SCOPE_SESSION);
+    return "redirect:" + CONCEPT_MAP_TYPE_LIST_URL + ".list";
+  }
+ catch (  APIException e) {
+    log.error("Error occurred while attempting to retire concept map type",e);
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("ConceptMapType.retire.error"),WebRequest.SCOPE_SESSION);
+  }
+  return CONCEPT_MAP_TYPE_FORM;
+}

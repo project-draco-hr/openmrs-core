@@ -1,0 +1,12 @@
+{
+  ConceptReferenceTerm term=Context.getConceptService().getConceptReferenceTerm(1);
+  Assert.assertFalse(term.isRetired());
+  Assert.assertNull(term.getRetireReason());
+  Assert.assertNull(term.getRetiredBy());
+  Assert.assertNull(term.getDateRetired());
+  ConceptReferenceTerm retiredTerm=Context.getConceptService().retireConceptReferenceTerm(term,"test retire reason");
+  Assert.assertTrue(retiredTerm.isRetired());
+  Assert.assertEquals("test retire reason",retiredTerm.getRetireReason());
+  Assert.assertNotNull(retiredTerm.getRetiredBy());
+  Assert.assertNotNull(retiredTerm.getDateRetired());
+}

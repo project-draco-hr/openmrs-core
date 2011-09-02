@@ -1,0 +1,24 @@
+{
+  Map<String,Object> resultsMap=new HashMap<String,Object>();
+  List<Object> objectList=new Vector<Object>();
+  try {
+    ConceptService cs=Context.getConceptService();
+    int conceptReferenceTermCount=0;
+    if (getMatchCount) {
+      ConceptSource source=null;
+      if (sourceId != null)       source=cs.getConceptSource(sourceId);
+      conceptReferenceTermCount+=cs.getCountOfConceptReferenceTerms(phrase,source,includeRetired);
+    }
+    if (conceptReferenceTermCount > 0 || !getMatchCount)     objectList=findBatchOfConceptReferenceTerms(phrase,sourceId,start,length,includeRetired);
+    resultsMap.put("count",conceptReferenceTermCount);
+    resultsMap.put("objectList",objectList);
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for conceptReferenceTerms",e);
+    objectList.clear();
+    objectList.add(Context.getMessageSourceService().getMessage("ConceptReferenceTerm.search.error") + " - " + e.getMessage());
+    resultsMap.put("count",0);
+    resultsMap.put("objectList",objectList);
+  }
+  return resultsMap;
+}

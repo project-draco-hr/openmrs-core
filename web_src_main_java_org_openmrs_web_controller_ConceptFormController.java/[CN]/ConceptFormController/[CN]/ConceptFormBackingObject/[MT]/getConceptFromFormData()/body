@@ -42,14 +42,15 @@
       concept.addDescription(descInLocale);
     }
   }
-  for (  ConceptMap map : mappings) {
-    if (map != null) {
-      if (map.getSourceCode() == null) {
-        concept.removeConceptMapping(map);
-      }
- else       if (!concept.getConceptMappings().contains(map)) {
-        concept.addConceptMapping(map);
-      }
+  Set<Integer> mappedTermIds=null;
+  for (  ConceptMap map : conceptMappings) {
+    if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
+    if (map.getConceptReferenceTerm() != null && !mappedTermIds.add(map.getConceptReferenceTerm().getConceptReferenceTermId()))     continue;
+    if (map.getConceptReferenceTerm() == null) {
+      concept.removeConceptMapping(map);
+    }
+ else     if (!concept.getConceptMappings().contains(map)) {
+      concept.addConceptMapping(map);
     }
   }
   if (!concept.isSet()) {

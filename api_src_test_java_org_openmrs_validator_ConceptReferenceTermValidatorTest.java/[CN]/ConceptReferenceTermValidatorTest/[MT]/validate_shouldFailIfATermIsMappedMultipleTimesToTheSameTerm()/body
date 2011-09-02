@@ -1,0 +1,14 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  ConceptService cs=Context.getConceptService();
+  term.setCode("unique code");
+  term.setConceptSource(Context.getConceptService().getConceptSource(1));
+  ConceptReferenceTermMap map1=new ConceptReferenceTermMap(cs.getConceptReferenceTerm(1),cs.getConceptMapType(1));
+  term.addConceptReferenceTermMap(map1);
+  ConceptReferenceTermMap map2=new ConceptReferenceTermMap(cs.getConceptReferenceTerm(1),cs.getConceptMapType(1));
+  term.addConceptReferenceTermMap(map2);
+  Errors errors=new BindException(term,"term");
+  new ConceptReferenceTermValidator().validate(term,errors);
+  System.err.println(errors.getAllErrors());
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptReferenceTermMaps[1].termB"));
+}

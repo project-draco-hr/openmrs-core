@@ -1,0 +1,10 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMap.class);
+  criteria.add(Restrictions.eq("conceptMapType",mapType));
+  criteria.setProjection(Projections.rowCount());
+  if ((Integer)criteria.uniqueResult() > 0)   return true;
+  criteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTermMap.class);
+  criteria.add(Restrictions.eq("conceptMapType",mapType));
+  criteria.setProjection(Projections.rowCount());
+  return (Integer)criteria.uniqueResult() > 0;
+}

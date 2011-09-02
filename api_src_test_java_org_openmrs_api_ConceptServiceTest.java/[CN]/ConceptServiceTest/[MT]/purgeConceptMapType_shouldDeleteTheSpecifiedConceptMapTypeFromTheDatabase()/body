@@ -1,0 +1,6 @@
+{
+  ConceptMapType mapType=Context.getConceptService().getConceptMapType(1);
+  Assert.assertNotNull(mapType);
+  Context.getConceptService().purgeConceptMapType(mapType);
+  Assert.assertNull(Context.getConceptService().getConceptMapType(1));
+}

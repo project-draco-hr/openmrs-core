@@ -1,0 +1,11 @@
+{
+  Errors errors=new BindException(conceptMapType,"conceptMapType");
+  new ConceptMapTypeValidator().validate(conceptMapType,errors);
+  if (errors.hasErrors()) {
+    log.error("Validation errors found while saving the concept map type");
+    throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation",null,"Found validation errors",Context.getLocale()));
+  }
+  conceptMapType.setName(conceptMapType.getName().trim());
+  if (conceptMapType.getDescription() != null)   conceptMapType.setDescription(conceptMapType.getDescription().trim());
+  return dao.saveConceptMapType(conceptMapType);
+}

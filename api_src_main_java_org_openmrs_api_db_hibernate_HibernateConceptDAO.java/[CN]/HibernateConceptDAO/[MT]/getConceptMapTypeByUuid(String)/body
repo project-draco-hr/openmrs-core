@@ -1,0 +1,3 @@
+{
+  return (ConceptMapType)sessionFactory.getCurrentSession().createQuery("from ConceptMapType cmt where cmt.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

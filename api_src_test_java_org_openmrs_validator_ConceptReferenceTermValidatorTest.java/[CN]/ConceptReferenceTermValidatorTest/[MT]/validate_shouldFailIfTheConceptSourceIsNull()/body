@@ -1,0 +1,8 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  term.setName("name");
+  term.setCode("code");
+  Errors errors=new BindException(term,"term");
+  new ConceptReferenceTermValidator().validate(term,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptSource"));
+}

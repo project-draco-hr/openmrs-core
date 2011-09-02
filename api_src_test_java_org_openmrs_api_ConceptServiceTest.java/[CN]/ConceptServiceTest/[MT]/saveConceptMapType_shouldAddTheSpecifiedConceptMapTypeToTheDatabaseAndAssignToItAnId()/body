@@ -1,0 +1,7 @@
+{
+  ConceptMapType mapType=new ConceptMapType();
+  mapType.setName("test type");
+  mapType=Context.getConceptService().saveConceptMapType(mapType);
+  Assert.assertNotNull(mapType.getId());
+  Assert.assertNotNull(Context.getConceptService().getConceptMapTypeByName("test type"));
+}

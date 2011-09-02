@@ -1,0 +1,29 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  MessageSourceService mss=Context.getMessageSourceService();
+  try {
+    ConceptService cs=Context.getConceptService();
+    List<ConceptReferenceTerm> terms=new Vector<ConceptReferenceTerm>();
+    if (StringUtils.isEmpty(phrase)) {
+      objectList.add(mss.getMessage("searchWidget.searchPhraseCannotBeNull"));
+      return objectList;
+    }
+    ConceptSource source=null;
+    if (sourceId != null)     source=cs.getConceptSource(sourceId);
+    terms.addAll(cs.getConceptReferenceTerms(phrase,source,start,length,includeRetired));
+    if (terms.size() == 0) {
+      objectList.add(mss.getMessage("general.noMatchesFound",new Object[]{"'" + phrase + "'"},Context.getLocale()));
+    }
+ else {
+      objectList=new Vector<Object>(terms.size());
+      for (      ConceptReferenceTerm term : terms) {
+        objectList.add(new ConceptReferenceTermListItem(term));
+      }
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for concept reference terms",e);
+    objectList.add(mss.getMessage("ConceptReferenceTerm.search.error") + " - " + e.getMessage());
+  }
+  return objectList;
+}

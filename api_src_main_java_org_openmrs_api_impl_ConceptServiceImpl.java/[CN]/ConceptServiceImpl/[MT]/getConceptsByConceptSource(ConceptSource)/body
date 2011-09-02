@@ -1,5 +1,16 @@
 {
-  List<ConceptMap> ret=dao.getConceptsByConceptSource(conceptSource);
-  if (ret != null)   return ret;
- else   return new ArrayList<ConceptMap>();
+  List<ConceptMap> maps=getConceptMapsBySource(conceptSource);
+  List<ConceptMap> ret=new ArrayList<ConceptMap>();
+  for (  ConceptMap newMap : maps) {
+    ConceptMap oldMap=new ConceptMap();
+    try {
+      BeanUtils.copyProperties(newMap,oldMap);
+      ret.add(oldMap);
+    }
+ catch (    Exception e) {
+      log.error("Error generated",e);
+      throw new APIException("Error occured, use: Concept.getConceptReferenceMapsBySource(ConceptSource)",e);
+    }
+  }
+  return ret;
 }

@@ -1,0 +1,7 @@
+{
+  ConceptMapType mapType=new ConceptMapType();
+  mapType.setName("");
+  Errors errors=new BindException(mapType,"mapType");
+  new ConceptMapTypeValidator().validate(mapType,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("name"));
+}

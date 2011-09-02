@@ -1,0 +1,10 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  term.setName("test term");
+  term.setCode("test code");
+  ConceptSource source=Context.getConceptService().getConceptSource(1);
+  term.setConceptSource(source);
+  ConceptReferenceTerm savedTerm=Context.getConceptService().saveConceptReferenceTerm(term);
+  Assert.assertNotNull(savedTerm.getId());
+  Assert.assertNotNull(Context.getConceptService().getConceptReferenceTermByName("test term",source));
+}

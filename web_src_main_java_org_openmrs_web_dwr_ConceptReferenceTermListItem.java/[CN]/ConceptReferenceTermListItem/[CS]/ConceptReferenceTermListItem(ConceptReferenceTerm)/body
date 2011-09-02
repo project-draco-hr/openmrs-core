@@ -1,0 +1,12 @@
+{
+  if (conceptReferenceTerm != null) {
+    conceptReferenceTermId=conceptReferenceTerm.getConceptReferenceTermId();
+    name=conceptReferenceTerm.getName();
+    code=conceptReferenceTerm.getCode();
+    if (conceptReferenceTerm.getConceptSource() != null) {
+      conceptSourceId=conceptReferenceTerm.getConceptSource().getConceptSourceId();
+      conceptSourceName=conceptReferenceTerm.getConceptSource().getName();
+    }
+    retired=conceptReferenceTerm.isRetired();
+  }
+}

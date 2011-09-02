@@ -5,10 +5,13 @@
     errors.rejectValue("concept","error.general");
   }
  else {
-    for (int x=0; x < backingObject.getMappings().size(); x++) {
-      ConceptMap map=backingObject.getMappings().get(x);
-      if (map.getSourceCode() != null && map.getSourceCode().length() == 0) {
-        errors.rejectValue("mappings[" + x + "].sourceCode","Concept.mappings.sourceCodeRequired");
+    for (int x=0; x < backingObject.getConceptMappings().size(); x++) {
+      ConceptMap map=backingObject.getConceptMappings().get(x);
+      if (map.getConceptReferenceTerm() == null)       continue;
+      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
+        if (!StringUtils.hasText(map.getConceptReferenceTerm().getCode()))         errors.rejectValue("conceptMappings[" + x + "]","ConceptReferenceTerm.error.codeRequired");
+ else         if (map.getConceptMapType() == null)         errors.rejectValue("conceptMappings[" + x + "]","ConceptReferenceTerm.error.mapTypeRequired");
+ else         if (map.getConceptReferenceTerm().getConceptSource() == null)         errors.rejectValue("conceptMappings[" + x + "]","ConceptReferenceTerm.error.sourceRequired");
       }
     }
     boolean foundAtLeastOneFullySpecifiedName=false;

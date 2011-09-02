@@ -10,4 +10,6 @@
   binder.registerCustomEditor(java.util.Collection.class,"concept.conceptSets",new ConceptSetsEditor(commandObject.getConcept().getConceptSets()));
   binder.registerCustomEditor(java.util.Collection.class,"concept.answers",new ConceptAnswersEditor(commandObject.getConcept().getAnswers(true)));
   binder.registerCustomEditor(org.openmrs.ConceptSource.class,new ConceptSourceEditor());
+  binder.registerCustomEditor(ConceptMapType.class,new ConceptMapTypeEditor());
+  binder.registerCustomEditor(ConceptReferenceTerm.class,new ConceptReferenceTermEditor());
 }
