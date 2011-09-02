@@ -1,0 +1,15 @@
+{
+  if (errors.hasErrors()) {
+    return;
+  }
+  GlobalProperty gpEnableVisits=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENABLE_VISITS,Boolean.toString(form.isEnableVisits()));
+  administrationService.saveGlobalProperty(gpEnableVisits);
+  if (form.isEnableVisits()) {
+    String type=form.getEncounterVisitHandler();
+    GlobalProperty gpEncounterVisitHandler=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_VISIT_HANDLER,type);
+    administrationService.saveGlobalProperty(gpEncounterVisitHandler);
+  }
+ else {
+    form.setEncounterVisitHandler(administrationService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_VISIT_HANDLER));
+  }
+}
