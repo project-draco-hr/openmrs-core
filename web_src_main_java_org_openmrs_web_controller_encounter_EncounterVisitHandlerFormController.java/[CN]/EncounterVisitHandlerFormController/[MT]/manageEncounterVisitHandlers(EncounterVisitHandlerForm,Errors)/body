@@ -1,4 +1,5 @@
 {
+  Context.requirePrivilege(PrivilegeConstants.MANAGE_ENCOUNTER_VISITS);
   if (errors.hasErrors()) {
     return;
   }
@@ -6,10 +7,10 @@
   administrationService.saveGlobalProperty(gpEnableVisits);
   if (form.isEnableVisits()) {
     String type=form.getEncounterVisitHandler();
-    GlobalProperty gpEncounterVisitHandler=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_VISIT_HANDLER,type);
+    GlobalProperty gpEncounterVisitHandler=new GlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,type);
     administrationService.saveGlobalProperty(gpEncounterVisitHandler);
   }
  else {
-    form.setEncounterVisitHandler(administrationService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_VISIT_HANDLER));
+    form.setEncounterVisitHandler(administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER));
   }
 }
