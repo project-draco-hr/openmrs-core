@@ -3,16 +3,9 @@
   if (encounter.getVisit() != null)   return;
   Visit visit=new Visit();
   visit.setStartDatetime(encounter.getEncounterDatetime());
-  visit.setCreator(encounter.getCreator());
-  visit.setDateCreated(encounter.getDateCreated());
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
   visit.setVisitType(Context.getVisitService().getAllVisitTypes().get(0));
-  Calendar calender=Calendar.getInstance();
-  calender.setTime(encounter.getEncounterDatetime());
-  calender.set(Calendar.HOUR_OF_DAY,23);
-  calender.set(Calendar.MINUTE,59);
-  calender.set(Calendar.SECOND,59);
-  visit.setStopDatetime(calender.getTime());
+  visit.setStopDatetime(OpenmrsUtil.getLastMillisecondOfDay(encounter.getEncounterDatetime()));
   encounter.setVisit(visit);
 }
