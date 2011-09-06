@@ -1,0 +1,22 @@
+{
+  Vector<Object> objectList=new Vector<Object>();
+  try {
+    List<Encounter> encounters=new Vector<Encounter>();
+    if (visitId != null) {
+      Visit v=Context.getVisitService().getVisit(visitId);
+      if (v != null)       encounters=Context.getEncounterService().getEncountersByVisit(v);
+    }
+ else {
+      throw new APIException(Context.getMessageSourceService().getMessage("VisitId.cannotBeNull"));
+    }
+    if (encounters.size() > 0) {
+      objectList=new Vector<Object>(encounters.size());
+      for (      Encounter e : encounters)       objectList.add(new EncounterListItem(e));
+    }
+  }
+ catch (  Exception e) {
+    log.warn("Error while finding encounters for the visit with id:" + visitId,e);
+    objectList.add(Context.getMessageSourceService().getMessage("Visit.find.encounters.error"));
+  }
+  return objectList;
+}
