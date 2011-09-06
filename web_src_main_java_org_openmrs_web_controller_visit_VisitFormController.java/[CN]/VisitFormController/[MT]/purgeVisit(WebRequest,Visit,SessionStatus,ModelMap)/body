@@ -10,5 +10,5 @@
     log.warn("Error occurred while attempting to purge visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.purge.error"),WebRequest.SCOPE_SESSION);
   }
-  return VISIT_FORM;
+  return VISIT_FORM_URL + ".form?visitId=" + visit.getVisitId();
 }
