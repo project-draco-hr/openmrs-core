@@ -2,7 +2,7 @@
   PreparedStatement pStmt=null;
   Map<Locale,List<ConceptName>> localeConceptNamesMap=null;
   try {
-    pStmt=connection.prepareStatement("SELECT concept_name_id, name, concept_name_type, locale, locale_preferred FROM concept_name WHERE voided = 0 AND concept_id = ?");
+    pStmt=connection.prepareStatement("SELECT concept_name_id, name, concept_name_type, locale, locale_preferred FROM concept_name WHERE voided = '0' AND concept_id = ?");
     pStmt.setInt(1,conceptId);
     ResultSet rs=pStmt.executeQuery();
     while (rs.next()) {
@@ -20,7 +20,7 @@
       }
       String localeString=rs.getString("locale");
       conceptName.setLocale(!StringUtils.isBlank(localeString) ? LocaleUtility.fromSpecification(localeString) : null);
-      conceptName.setLocalePreferred((rs.getInt("locale_preferred") == 1) ? true : false);
+      conceptName.setLocalePreferred(rs.getBoolean("locale_preferred"));
       conceptName.setVoided(false);
       if (!localeConceptNamesMap.containsKey(conceptName.getLocale()))       localeConceptNamesMap.put(conceptName.getLocale(),new LinkedList<ConceptName>());
       localeConceptNamesMap.get(conceptName.getLocale()).add(conceptName);

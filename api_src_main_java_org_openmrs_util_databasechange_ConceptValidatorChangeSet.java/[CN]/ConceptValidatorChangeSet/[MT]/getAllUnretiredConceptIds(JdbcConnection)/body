@@ -3,7 +3,7 @@
   Statement stmt=null;
   try {
     stmt=connection.createStatement();
-    ResultSet rs=stmt.executeQuery("SELECT concept_id FROM concept WHERE retired = 0");
+    ResultSet rs=stmt.executeQuery("SELECT concept_id FROM concept WHERE retired = '0'");
     while (rs.next()) {
       if (conceptIds == null)       conceptIds=new LinkedList<Integer>();
       conceptIds.add(rs.getInt("concept_id"));
