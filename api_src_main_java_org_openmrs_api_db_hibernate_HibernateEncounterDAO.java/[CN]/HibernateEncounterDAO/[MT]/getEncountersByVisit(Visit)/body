@@ -1,4 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class).createAlias("visit","visit").add(Expression.eq("visit",visit)).add(Expression.eq("voided",false)).addOrder(Order.asc("encounterDatetime"));
-  return crit.list();
-}
