@@ -2,7 +2,7 @@
   Connection connection=null;
   try {
     connection=DatabaseUpdater.getConnection();
-    String select="select user_id, password, salt from users where (username = ? or system_id = ?) and retired = 0";
+    String select="select user_id, password, salt from users where (username = ? or system_id = ?) and retired = '0'";
     PreparedStatement statement=connection.prepareStatement(select);
     statement.setString(1,usernameOrSystemId);
     statement.setString(2,usernameOrSystemId);
@@ -21,7 +21,7 @@
  catch (  Throwable t) {
     log.error("Error while trying to authenticate as super user. Ignore this if you are upgrading from OpenMRS 1.5 to 1.6",t);
     try {
-      String select="select user_id, password, salt from users where (username = ? or system_id = ?) and voided = 0";
+      String select="select user_id, password, salt from users where (username = ? or system_id = ?) and voided = '0'";
       PreparedStatement statement=connection.prepareStatement(select);
       statement.setString(1,usernameOrSystemId);
       statement.setString(2,usernameOrSystemId);
