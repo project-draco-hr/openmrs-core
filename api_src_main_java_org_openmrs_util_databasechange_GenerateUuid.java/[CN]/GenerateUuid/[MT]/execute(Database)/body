@@ -17,7 +17,7 @@
         updateStatement=connection.prepareStatement(updateSql);
         ResultSet ids=idStatement.executeQuery(idSql);
         while (ids.next()) {
-          updateStatement.setInt(2,ids.getInt(1));
+          updateStatement.setObject(2,ids.getObject(1));
           updateStatement.setString(1,UUID.randomUUID().toString());
           updateStatement.executeUpdate();
         }
