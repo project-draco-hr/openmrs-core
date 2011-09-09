@@ -15,9 +15,9 @@ case LPAREN:
       }
 case LITERAL_CALL:
 {
-      AST tmp552_AST=null;
-      tmp552_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp552_AST);
+      AST tmp553_AST=null;
+      tmp553_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp553_AST);
       match(LITERAL_CALL);
       evoke_statement_AST=(AST)currentAST.root;
       break;
@@ -37,7 +37,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_25);
+recover(ex,_tokenSet_24);
 }
  else {
 throw ex;

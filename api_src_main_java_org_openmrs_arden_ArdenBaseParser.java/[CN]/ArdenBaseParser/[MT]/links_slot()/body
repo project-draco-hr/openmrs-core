@@ -10,13 +10,13 @@
       links_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LINKS)) {
-      AST tmp234_AST=null;
-      tmp234_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp234_AST);
-      match(LINKS);
       AST tmp235_AST=null;
       tmp235_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp235_AST);
+      astFactory.makeASTRoot(currentAST,tmp235_AST);
+      match(LINKS);
+      AST tmp236_AST=null;
+      tmp236_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp236_AST);
       match(COLON);
 {
         if ((LA(1) == ENDBLOCK)) {
@@ -24,13 +24,13 @@
  else         if ((LA(1) == ENDBLOCK)) {
         }
  else         if ((LA(1) == HTTP)) {
-          AST tmp236_AST=null;
-          tmp236_AST=astFactory.create(LT(1));
-          astFactory.makeASTRoot(currentAST,tmp236_AST);
-          match(HTTP);
           AST tmp237_AST=null;
           tmp237_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp237_AST);
+          astFactory.makeASTRoot(currentAST,tmp237_AST);
+          match(HTTP);
+          AST tmp238_AST=null;
+          tmp238_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp238_AST);
           match(NOT_COMMENT);
 {
             _loop108:             do {
@@ -49,9 +49,9 @@
 {
             _loop113:             do {
               if ((LA(1) == SINGLE_QUOTE)) {
-                AST tmp238_AST=null;
-                tmp238_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp238_AST);
+                AST tmp239_AST=null;
+                tmp239_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp239_AST);
                 match(SINGLE_QUOTE);
 {
                   _loop111:                   do {
@@ -60,15 +60,15 @@
                       astFactory.addASTChild(currentAST,returnAST);
                     }
  else                     if ((LA(1) == DOT)) {
-                      AST tmp239_AST=null;
-                      tmp239_AST=astFactory.create(LT(1));
-                      astFactory.addASTChild(currentAST,tmp239_AST);
-                      match(DOT);
-                    }
- else                     if ((LA(1) == INTLIT)) {
                       AST tmp240_AST=null;
                       tmp240_AST=astFactory.create(LT(1));
                       astFactory.addASTChild(currentAST,tmp240_AST);
+                      match(DOT);
+                    }
+ else                     if ((LA(1) == INTLIT)) {
+                      AST tmp241_AST=null;
+                      tmp241_AST=astFactory.create(LT(1));
+                      astFactory.addASTChild(currentAST,tmp241_AST);
                       match(INTLIT);
                     }
  else {
@@ -77,17 +77,17 @@
                   }
  while (true);
                 }
-                AST tmp241_AST=null;
-                tmp241_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp241_AST);
+                AST tmp242_AST=null;
+                tmp242_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp242_AST);
                 match(SINGLE_QUOTE);
 {
 switch (LA(1)) {
 case SEMI:
 {
-                      AST tmp242_AST=null;
-                      tmp242_AST=astFactory.create(LT(1));
-                      astFactory.addASTChild(currentAST,tmp242_AST);
+                      AST tmp243_AST=null;
+                      tmp243_AST=astFactory.create(LT(1));
+                      astFactory.addASTChild(currentAST,tmp243_AST);
                       match(SEMI);
                       break;
                     }
@@ -114,9 +114,9 @@ default :
     throw new NoViableAltException(LT(1),getFilename());
   }
 }
-AST tmp243_AST=null;
-tmp243_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp243_AST);
+AST tmp244_AST=null;
+tmp244_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp244_AST);
 match(ENDBLOCK);
 links_slot_AST=(AST)currentAST.root;
 }

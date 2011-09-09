@@ -10,21 +10,21 @@
       citations_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == CITATIONS)) {
-      AST tmp231_AST=null;
-      tmp231_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp231_AST);
-      match(CITATIONS);
       AST tmp232_AST=null;
       tmp232_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp232_AST);
+      astFactory.makeASTRoot(currentAST,tmp232_AST);
+      match(CITATIONS);
+      AST tmp233_AST=null;
+      tmp233_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp233_AST);
       match(COLON);
 {
         citations_list();
         astFactory.addASTChild(currentAST,returnAST);
       }
-      AST tmp233_AST=null;
-      tmp233_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp233_AST);
+      AST tmp234_AST=null;
+      tmp234_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp234_AST);
       match(ENDBLOCK);
       citations_slot_AST=(AST)currentAST.root;
     }

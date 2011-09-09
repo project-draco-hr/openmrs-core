@@ -32,20 +32,20 @@ default :
       }
   }
 }
-AST tmp452_AST=null;
-tmp452_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp452_AST);
+AST tmp453_AST=null;
+tmp453_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp453_AST);
 match(ID);
 {
   _loop161:   do {
     if ((LA(1) == COMMA)) {
-      AST tmp453_AST=null;
-      tmp453_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp453_AST);
-      match(COMMA);
       AST tmp454_AST=null;
       tmp454_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp454_AST);
+      match(COMMA);
+      AST tmp455_AST=null;
+      tmp455_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp455_AST);
       match(ID);
     }
  else {
@@ -77,13 +77,13 @@ break;
 }
 case NOW:
 {
-AST tmp457_AST=null;
-tmp457_AST=astFactory.create(LT(1));
-astFactory.addASTChild(currentAST,tmp457_AST);
-match(NOW);
 AST tmp458_AST=null;
 tmp458_AST=astFactory.create(LT(1));
 astFactory.addASTChild(currentAST,tmp458_AST);
+match(NOW);
+AST tmp459_AST=null;
+tmp459_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp459_AST);
 match(BECOMES);
 identifier_becomes_AST=(AST)currentAST.root;
 break;
@@ -97,7 +97,7 @@ throw new NoViableAltException(LT(1),getFilename());
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_36);
+recover(ex,_tokenSet_35);
 }
  else {
 throw ex;

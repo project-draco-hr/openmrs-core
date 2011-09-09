@@ -10,9 +10,9 @@
           astFactory.addASTChild(currentAST,returnAST);
         }
  else         if ((LA(1) == INTLIT)) {
-          AST tmp423_AST=null;
-          tmp423_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp423_AST);
+          AST tmp424_AST=null;
+          tmp424_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp424_AST);
           match(INTLIT);
         }
  else {
@@ -24,9 +24,9 @@
 {
       _loop103:       do {
         if ((LA(1) == COLON)) {
-          AST tmp424_AST=null;
-          tmp424_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp424_AST);
+          AST tmp425_AST=null;
+          tmp425_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp425_AST);
           match(COLON);
 {
             _loop98:             do {
@@ -42,16 +42,16 @@
           }
 {
             if ((LA(1) == MINUS)) {
-              AST tmp425_AST=null;
-              tmp425_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp425_AST);
-              match(MINUS);
               AST tmp426_AST=null;
               tmp426_AST=astFactory.create(LT(1));
               astFactory.addASTChild(currentAST,tmp426_AST);
+              match(MINUS);
+              AST tmp427_AST=null;
+              tmp427_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp427_AST);
               match(INTLIT);
             }
- else             if ((_tokenSet_28.member(LA(1)))) {
+ else             if ((_tokenSet_27.member(LA(1)))) {
             }
  else {
               throw new NoViableAltException(LT(1),getFilename());
@@ -73,9 +73,9 @@
 switch (LA(1)) {
 case DOT:
 {
-                AST tmp427_AST=null;
-                tmp427_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp427_AST);
+                AST tmp428_AST=null;
+                tmp428_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp428_AST);
                 match(DOT);
                 break;
               }
@@ -103,7 +103,7 @@ citation_text_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_29);
+recover(ex,_tokenSet_28);
 }
  else {
 throw ex;

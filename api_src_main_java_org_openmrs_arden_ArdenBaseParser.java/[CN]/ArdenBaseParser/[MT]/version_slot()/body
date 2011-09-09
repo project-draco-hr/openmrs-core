@@ -3,29 +3,29 @@
   ASTPair currentAST=new ASTPair();
   AST version_slot_AST=null;
   try {
-    AST tmp200_AST=null;
-    tmp200_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp200_AST);
-    match(VERSION);
     AST tmp201_AST=null;
     tmp201_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp201_AST);
-    match(COLON);
+    astFactory.makeASTRoot(currentAST,tmp201_AST);
+    match(VERSION);
     AST tmp202_AST=null;
     tmp202_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp202_AST);
-    match(INTLIT);
+    match(COLON);
     AST tmp203_AST=null;
     tmp203_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp203_AST);
-    match(DOT);
+    match(INTLIT);
     AST tmp204_AST=null;
     tmp204_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp204_AST);
-    match(INTLIT);
+    match(DOT);
     AST tmp205_AST=null;
     tmp205_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp205_AST);
+    match(INTLIT);
+    AST tmp206_AST=null;
+    tmp206_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp206_AST);
     match(ENDBLOCK);
     version_slot_AST=(AST)currentAST.root;
   }

@@ -3,49 +3,65 @@
   ASTPair currentAST=new ASTPair();
   AST action_slot_AST=null;
   try {
-    AST tmp261_AST=null;
-    tmp261_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp261_AST);
-    match(ACTION);
     AST tmp262_AST=null;
     tmp262_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp262_AST);
+    astFactory.makeASTRoot(currentAST,tmp262_AST);
+    match(ACTION);
+    AST tmp263_AST=null;
+    tmp263_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp263_AST);
     match(COLON);
 {
       _loop254:       do {
-        if ((_tokenSet_19.member(LA(1)))) {
-          action_statement();
-          astFactory.addASTChild(currentAST,returnAST);
-          match(SEMI);
-        }
- else         if ((LA(1) == IF)) {
+switch (LA(1)) {
+case WRITE:
+case LET:
+case NOW:
+case CALL:
+case SEMI:
+case ID:
+{
+            action_statement();
+            astFactory.addASTChild(currentAST,returnAST);
+            match(SEMI);
+            break;
+          }
+case IF:
+{
           if_statement();
           astFactory.addASTChild(currentAST,returnAST);
+          break;
         }
- else         if (((LA(1) >= ELSE && LA(1) <= ENDIF))) {
-          logic_elseif();
-          astFactory.addASTChild(currentAST,returnAST);
-        }
- else {
-          break _loop254;
-        }
+case ELSE:
+case ELSEIF:
+case ENDIF:
+{
+        logic_elseif();
+        astFactory.addASTChild(currentAST,returnAST);
+        break;
       }
+default :
+{
+      break _loop254;
+    }
+}
+}
  while (true);
-    }
-    AST tmp264_AST=null;
-    tmp264_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp264_AST);
-    match(ENDBLOCK);
-    action_slot_AST=(AST)currentAST.root;
-  }
- catch (  RecognitionException ex) {
-    if (inputState.guessing == 0) {
-      reportError(ex);
-      recover(ex,_tokenSet_20);
-    }
+}
+AST tmp265_AST=null;
+tmp265_AST=astFactory.create(LT(1));
+astFactory.addASTChild(currentAST,tmp265_AST);
+match(ENDBLOCK);
+action_slot_AST=(AST)currentAST.root;
+}
+ catch (RecognitionException ex) {
+if (inputState.guessing == 0) {
+reportError(ex);
+recover(ex,_tokenSet_19);
+}
  else {
-      throw ex;
-    }
-  }
-  returnAST=action_slot_AST;
+throw ex;
+}
+}
+returnAST=action_slot_AST;
 }

@@ -4,25 +4,25 @@
   AST datepart_AST=null;
   try {
 {
-      AST tmp395_AST=null;
-      tmp395_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp395_AST);
-      match(INTLIT);
       AST tmp396_AST=null;
       tmp396_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp396_AST);
-      match(MINUS);
+      match(INTLIT);
       AST tmp397_AST=null;
       tmp397_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp397_AST);
-      match(INTLIT);
+      match(MINUS);
       AST tmp398_AST=null;
       tmp398_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp398_AST);
-      match(MINUS);
+      match(INTLIT);
       AST tmp399_AST=null;
       tmp399_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp399_AST);
+      match(MINUS);
+      AST tmp400_AST=null;
+      tmp400_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp400_AST);
       match(INTLIT);
     }
 {
@@ -30,40 +30,40 @@ switch (LA(1)) {
 case ID:
 {
 {
-            AST tmp400_AST=null;
-            tmp400_AST=astFactory.create(LT(1));
-            astFactory.addASTChild(currentAST,tmp400_AST);
-            match(ID);
-          }
-{
             AST tmp401_AST=null;
             tmp401_AST=astFactory.create(LT(1));
             astFactory.addASTChild(currentAST,tmp401_AST);
-            match(COLON);
+            match(ID);
+          }
+{
             AST tmp402_AST=null;
             tmp402_AST=astFactory.create(LT(1));
             astFactory.addASTChild(currentAST,tmp402_AST);
-            match(INTLIT);
+            match(COLON);
             AST tmp403_AST=null;
             tmp403_AST=astFactory.create(LT(1));
             astFactory.addASTChild(currentAST,tmp403_AST);
-            match(COLON);
+            match(INTLIT);
             AST tmp404_AST=null;
             tmp404_AST=astFactory.create(LT(1));
             astFactory.addASTChild(currentAST,tmp404_AST);
+            match(COLON);
+            AST tmp405_AST=null;
+            tmp405_AST=astFactory.create(LT(1));
+            astFactory.addASTChild(currentAST,tmp405_AST);
             match(INTLIT);
           }
 {
 switch (LA(1)) {
 case DOT:
 {
-                AST tmp405_AST=null;
-                tmp405_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp405_AST);
-                match(DOT);
                 AST tmp406_AST=null;
                 tmp406_AST=astFactory.create(LT(1));
                 astFactory.addASTChild(currentAST,tmp406_AST);
+                match(DOT);
+                AST tmp407_AST=null;
+                tmp407_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp407_AST);
                 match(DIGIT);
                 break;
               }
@@ -101,7 +101,7 @@ datepart_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_26);
+recover(ex,_tokenSet_25);
 }
  else {
 throw ex;

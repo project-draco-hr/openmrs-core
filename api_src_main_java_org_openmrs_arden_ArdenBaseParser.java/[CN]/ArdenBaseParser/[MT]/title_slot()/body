@@ -4,13 +4,13 @@
   AST title_slot_AST=null;
   try {
 {
-      AST tmp185_AST=null;
-      tmp185_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp185_AST);
-      match(TITLE);
       AST tmp186_AST=null;
       tmp186_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp186_AST);
+      astFactory.makeASTRoot(currentAST,tmp186_AST);
+      match(TITLE);
+      AST tmp187_AST=null;
+      tmp187_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp187_AST);
       match(COLON);
 {
         _loop13:         do {
@@ -24,9 +24,9 @@
         }
  while (true);
       }
-      AST tmp187_AST=null;
-      tmp187_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp187_AST);
+      AST tmp188_AST=null;
+      tmp188_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp188_AST);
       match(ENDBLOCK);
     }
     title_slot_AST=(AST)currentAST.root;

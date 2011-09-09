@@ -21,9 +21,9 @@ case ACTION_OP:
         }
 case CALL:
 {
-        AST tmp561_AST=null;
-        tmp561_AST=astFactory.create(LT(1));
-        astFactory.makeASTRoot(currentAST,tmp561_AST);
+        AST tmp562_AST=null;
+        tmp562_AST=astFactory.create(LT(1));
+        astFactory.makeASTRoot(currentAST,tmp562_AST);
         match(CALL);
         call_phrase();
         astFactory.addASTChild(currentAST,returnAST);
@@ -42,7 +42,7 @@ logic_statement_AST=(AST)currentAST.root;
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_33);
+recover(ex,_tokenSet_32);
 }
  else {
 throw ex;

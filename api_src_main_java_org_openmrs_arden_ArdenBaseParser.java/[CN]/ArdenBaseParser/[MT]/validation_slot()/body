@@ -3,19 +3,19 @@
   ASTPair currentAST=new ASTPair();
   AST validation_slot_AST=null;
   try {
-    AST tmp219_AST=null;
-    tmp219_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp219_AST);
-    match(LITERAL_validation);
     AST tmp220_AST=null;
     tmp220_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp220_AST);
-    match(COLON);
-    validation_code();
-    astFactory.addASTChild(currentAST,returnAST);
+    match(LITERAL_validation);
     AST tmp221_AST=null;
     tmp221_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp221_AST);
+    match(COLON);
+    validation_code();
+    astFactory.addASTChild(currentAST,returnAST);
+    AST tmp222_AST=null;
+    tmp222_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp222_AST);
     match(ENDBLOCK);
     validation_slot_AST=(AST)currentAST.root;
   }

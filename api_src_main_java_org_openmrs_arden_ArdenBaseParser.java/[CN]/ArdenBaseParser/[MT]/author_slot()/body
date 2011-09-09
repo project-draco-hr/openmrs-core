@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST author_slot_AST=null;
   try {
-    AST tmp209_AST=null;
-    tmp209_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp209_AST);
-    match(AUTHOR);
     AST tmp210_AST=null;
     tmp210_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp210_AST);
+    astFactory.makeASTRoot(currentAST,tmp210_AST);
+    match(AUTHOR);
+    AST tmp211_AST=null;
+    tmp211_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp211_AST);
     match(COLON);
 {
       _loop36:       do {
@@ -26,9 +26,9 @@
 {
       _loop40:       do {
         if ((LA(1) == SEMI)) {
-          AST tmp211_AST=null;
-          tmp211_AST=astFactory.create(LT(1));
-          astFactory.addASTChild(currentAST,tmp211_AST);
+          AST tmp212_AST=null;
+          tmp212_AST=astFactory.create(LT(1));
+          astFactory.addASTChild(currentAST,tmp212_AST);
           match(SEMI);
 {
             _loop39:             do {
@@ -49,9 +49,9 @@
       }
  while (true);
     }
-    AST tmp212_AST=null;
-    tmp212_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp212_AST);
+    AST tmp213_AST=null;
+    tmp213_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp213_AST);
     match(ENDBLOCK);
     author_slot_AST=(AST)currentAST.root;
   }

@@ -6,34 +6,34 @@
 switch (LA(1)) {
 case LITERAL_arden:
 {
-        AST tmp192_AST=null;
-        tmp192_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp192_AST);
-        match(LITERAL_arden);
         AST tmp193_AST=null;
         tmp193_AST=astFactory.create(LT(1));
         astFactory.addASTChild(currentAST,tmp193_AST);
+        match(LITERAL_arden);
+        AST tmp194_AST=null;
+        tmp194_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp194_AST);
         match(COLON);
 {
 switch (LA(1)) {
 case 107:
 {
 {
-                AST tmp194_AST=null;
-                tmp194_AST=astFactory.create(LT(1));
-                astFactory.addASTChild(currentAST,tmp194_AST);
-                match(107);
                 AST tmp195_AST=null;
                 tmp195_AST=astFactory.create(LT(1));
                 astFactory.addASTChild(currentAST,tmp195_AST);
-                match(INTLIT);
+                match(107);
                 AST tmp196_AST=null;
                 tmp196_AST=astFactory.create(LT(1));
                 astFactory.addASTChild(currentAST,tmp196_AST);
-                match(MINUS);
+                match(INTLIT);
                 AST tmp197_AST=null;
                 tmp197_AST=astFactory.create(LT(1));
                 astFactory.addASTChild(currentAST,tmp197_AST);
+                match(MINUS);
+                AST tmp198_AST=null;
+                tmp198_AST=astFactory.create(LT(1));
+                astFactory.addASTChild(currentAST,tmp198_AST);
                 match(INTLIT);
               }
               break;
@@ -41,9 +41,9 @@ case 107:
 case VERSION:
 {
 {
-              AST tmp198_AST=null;
-              tmp198_AST=astFactory.create(LT(1));
-              astFactory.addASTChild(currentAST,tmp198_AST);
+              AST tmp199_AST=null;
+              tmp199_AST=astFactory.create(LT(1));
+              astFactory.addASTChild(currentAST,tmp199_AST);
               match(VERSION);
               version_num();
               astFactory.addASTChild(currentAST,returnAST);
@@ -56,9 +56,9 @@ default :
         }
     }
   }
-  AST tmp199_AST=null;
-  tmp199_AST=astFactory.create(LT(1));
-  astFactory.addASTChild(currentAST,tmp199_AST);
+  AST tmp200_AST=null;
+  tmp200_AST=astFactory.create(LT(1));
+  astFactory.addASTChild(currentAST,tmp200_AST);
   match(ENDBLOCK);
   arden_version_slot_AST=(AST)currentAST.root;
   break;
