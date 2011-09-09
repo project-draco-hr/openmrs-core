@@ -16,7 +16,7 @@
 switch (_t.getType()) {
 case ID:
 {
-          AST __t492=_t;
+          AST __t491=_t;
           ift=_t == ASTNULL ? null : (AST)_t;
           match(_t,ID);
           _t=_t.getFirstChild();
@@ -46,7 +46,7 @@ case ID:
             obj.SetAnswer(section,a,instr);
             s=a;
           }
-          _t=__t492;
+          _t=__t491;
           _t=_t.getNextSibling();
           break;
         }
@@ -58,23 +58,23 @@ case FALSE:
 switch (_t.getType()) {
 case TRUE:
 {
-              AST __t494=_t;
+              AST __t493=_t;
               AST tmp82_AST_in=(AST)_t;
               match(_t,TRUE);
               _t=_t.getFirstChild();
               obj.SetAnswer(section,true,instr);
-              _t=__t494;
+              _t=__t493;
               _t=_t.getNextSibling();
               break;
             }
 case FALSE:
 {
-            AST __t495=_t;
+            AST __t494=_t;
             AST tmp83_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getFirstChild();
             obj.SetAnswer(section,false,instr);
-            _t=__t495;
+            _t=__t494;
             _t=_t.getNextSibling();
             break;
           }
@@ -157,6 +157,7 @@ case COMMA:
 case STRING_LITERAL:
 case ARDEN_CURLY_BRACKETS:
 case EQUALS:
+case NE:
 case ACTION_OP:
 case TERM_LITERAL:
 {
@@ -224,7 +225,7 @@ break;
 }
 case ACTION_OP:
 {
-AST __t502=_t;
+AST __t501=_t;
 AST tmp85_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getFirstChild();
@@ -240,7 +241,7 @@ match(_t,STRING_LITERAL);
 _t=_t.getNextSibling();
 b=str.getText();
 obj.addLogicAssignment(a,b);
-_t=__t502;
+_t=__t501;
 _t=_t.getNextSibling();
 break;
 }

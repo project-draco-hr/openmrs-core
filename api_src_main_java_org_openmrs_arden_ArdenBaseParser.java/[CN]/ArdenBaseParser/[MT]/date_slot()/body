@@ -3,19 +3,19 @@
   ASTPair currentAST=new ASTPair();
   AST date_slot_AST=null;
   try {
-    AST tmp216_AST=null;
-    tmp216_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp216_AST);
-    match(DATE);
     AST tmp217_AST=null;
     tmp217_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp217_AST);
-    match(COLON);
-    mlm_date();
-    astFactory.addASTChild(currentAST,returnAST);
+    astFactory.makeASTRoot(currentAST,tmp217_AST);
+    match(DATE);
     AST tmp218_AST=null;
     tmp218_AST=astFactory.create(LT(1));
     astFactory.addASTChild(currentAST,tmp218_AST);
+    match(COLON);
+    mlm_date();
+    astFactory.addASTChild(currentAST,returnAST);
+    AST tmp219_AST=null;
+    tmp219_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp219_AST);
     match(ENDBLOCK);
     date_slot_AST=(AST)currentAST.root;
   }

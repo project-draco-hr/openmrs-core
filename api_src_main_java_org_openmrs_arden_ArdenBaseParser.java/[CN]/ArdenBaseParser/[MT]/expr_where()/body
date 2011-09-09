@@ -3,11 +3,11 @@
   ASTPair currentAST=new ASTPair();
   AST expr_where_AST=null;
   try {
-    if ((_tokenSet_66.member(LA(1)))) {
+    if ((_tokenSet_65.member(LA(1)))) {
       expr_range();
       astFactory.addASTChild(currentAST,returnAST);
 {
-        _loop288:         do {
+        _loop287:         do {
           if ((LA(1) == WHERE)) {
             AST tmp607_AST=null;
             tmp607_AST=astFactory.create(LT(1));
@@ -17,14 +17,14 @@
             astFactory.addASTChild(currentAST,returnAST);
           }
  else {
-            break _loop288;
+            break _loop287;
           }
         }
  while (true);
       }
       expr_where_AST=(AST)currentAST.root;
     }
- else     if ((_tokenSet_67.member(LA(1)))) {
+ else     if ((_tokenSet_66.member(LA(1)))) {
       expr_where_AST=(AST)currentAST.root;
     }
  else {
@@ -34,7 +34,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_67);
+      recover(ex,_tokenSet_66);
     }
  else {
       throw ex;

@@ -10,23 +10,23 @@
       age_min_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == AGE_MIN)) {
-      AST tmp268_AST=null;
-      tmp268_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp268_AST);
-      match(AGE_MIN);
       AST tmp269_AST=null;
       tmp269_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp269_AST);
-      match(COLON);
+      astFactory.makeASTRoot(currentAST,tmp269_AST);
+      match(AGE_MIN);
       AST tmp270_AST=null;
       tmp270_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp270_AST);
-      match(INTLIT);
-      age_code();
-      astFactory.addASTChild(currentAST,returnAST);
+      match(COLON);
       AST tmp271_AST=null;
       tmp271_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp271_AST);
+      match(INTLIT);
+      age_code();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp272_AST=null;
+      tmp272_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp272_AST);
       match(ENDBLOCK);
       age_min_slot_AST=(AST)currentAST.root;
     }
@@ -37,7 +37,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_22);
+      recover(ex,_tokenSet_21);
     }
  else {
       throw ex;

@@ -6,13 +6,13 @@
 switch (LA(1)) {
 case MLMNAME:
 {
-        AST tmp188_AST=null;
-        tmp188_AST=astFactory.create(LT(1));
-        astFactory.makeASTRoot(currentAST,tmp188_AST);
-        match(MLMNAME);
         AST tmp189_AST=null;
         tmp189_AST=astFactory.create(LT(1));
-        astFactory.addASTChild(currentAST,tmp189_AST);
+        astFactory.makeASTRoot(currentAST,tmp189_AST);
+        match(MLMNAME);
+        AST tmp190_AST=null;
+        tmp190_AST=astFactory.create(LT(1));
+        astFactory.addASTChild(currentAST,tmp190_AST);
         match(COLON);
         mlmname_text();
         astFactory.addASTChild(currentAST,returnAST);
@@ -21,13 +21,13 @@ case MLMNAME:
       }
 case FILENAME:
 {
-      AST tmp190_AST=null;
-      tmp190_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp190_AST);
-      match(FILENAME);
       AST tmp191_AST=null;
       tmp191_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp191_AST);
+      astFactory.makeASTRoot(currentAST,tmp191_AST);
+      match(FILENAME);
+      AST tmp192_AST=null;
+      tmp192_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp192_AST);
       match(COLON);
       mlmname_text();
       astFactory.addASTChild(currentAST,returnAST);

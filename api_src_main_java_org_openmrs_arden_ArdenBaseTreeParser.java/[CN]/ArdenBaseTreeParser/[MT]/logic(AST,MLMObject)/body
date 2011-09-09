@@ -5,13 +5,13 @@
   Integer i=1;
   try {
 {
-      _loop435:       do {
+      _loop434:       do {
         if (_t == null)         _t=ASTNULL;
 switch (_t.getType()) {
 case IF:
 {
             System.err.println("-----------Starting IF -------");
-            a=ifAST(_t,obj);
+            a=ifAST(_t,obj,"logic");
             _t=_retTree;
 {
               if (_t == null)               _t=ASTNULL;
@@ -199,14 +199,14 @@ break;
 }
 case ENDIF:
 {
-AST __t434=_t;
+AST __t433=_t;
 AST tmp67_AST_in=(AST)_t;
 match(_t,ENDIF);
 _t=_t.getFirstChild();
 System.err.println("ENDIF FOUND");
 a="ENDIF";
 obj.AddToEvaluateList("logic",a);
-_t=__t434;
+_t=__t433;
 _t=_t.getNextSibling();
 break;
 }
@@ -235,7 +235,7 @@ break;
 }
 default :
 {
-break _loop435;
+break _loop434;
 }
 }
 }

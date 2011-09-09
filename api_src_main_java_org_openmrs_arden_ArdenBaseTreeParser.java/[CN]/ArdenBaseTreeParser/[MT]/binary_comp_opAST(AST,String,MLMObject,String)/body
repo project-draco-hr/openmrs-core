@@ -7,19 +7,19 @@
 switch (_t.getType()) {
 case EQUALS:
 {
-        AST __t511=_t;
+        AST __t510=_t;
         AST tmp94_AST_in=(AST)_t;
         match(_t,EQUALS);
         _t=_t.getFirstChild();
         System.err.println("Found = ");
         obj.addCompOperator(section,EQUALS,key);
-        _t=__t511;
+        _t=__t510;
         _t=_t.getNextSibling();
         break;
       }
 case GREATER:
 {
-      AST __t512=_t;
+      AST __t511=_t;
       AST tmp95_AST_in=(AST)_t;
       match(_t,GREATER);
       _t=_t.getFirstChild();
@@ -53,26 +53,26 @@ default :
 }
 System.err.println("Found >= ");
 obj.addCompOperator(section,GTE,key);
-_t=__t512;
+_t=__t511;
 _t=_t.getNextSibling();
 break;
 }
 case IN:
 {
-AST __t516=_t;
+AST __t515=_t;
 AST tmp99_AST_in=(AST)_t;
 match(_t,IN);
 _t=_t.getFirstChild();
 System.err.println("Found IN ");
 obj.addCompOperator(section,IN,key);
-_t=__t516;
+_t=__t515;
 _t=_t.getNextSibling();
 break;
 }
 default :
 if (_t == null) _t=ASTNULL;
 if ((_t.getType() == LESS)) {
-AST __t514=_t;
+AST __t513=_t;
 AST tmp100_AST_in=(AST)_t;
 match(_t,LESS);
 _t=_t.getFirstChild();
@@ -81,11 +81,11 @@ match(_t,THAN);
 _t=_t.getNextSibling();
 System.err.println("Found < ");
 obj.addCompOperator(section,LT,key);
-_t=__t514;
+_t=__t513;
 _t=_t.getNextSibling();
 }
  else if ((_t.getType() == LESS)) {
-AST __t515=_t;
+AST __t514=_t;
 AST tmp102_AST_in=(AST)_t;
 match(_t,LESS);
 _t=_t.getFirstChild();
@@ -100,7 +100,7 @@ match(_t,EQUAL);
 _t=_t.getNextSibling();
 System.err.println("Found <= ");
 obj.addCompOperator(section,LTE,key);
-_t=__t515;
+_t=__t514;
 _t=_t.getNextSibling();
 }
  else {

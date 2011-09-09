@@ -7,69 +7,73 @@
 switch (_t.getType()) {
 case EQUALS:
 {
-        AST __t504=_t;
+        AST __t503=_t;
         AST tmp88_AST_in=(AST)_t;
         match(_t,EQUALS);
         _t=_t.getFirstChild();
         System.err.println("Found = ");
         obj.addCompOperator(section,EQUALS,key);
-        _t=__t504;
+        _t=__t503;
         _t=_t.getNextSibling();
         break;
       }
 case GTE:
 {
-      AST __t505=_t;
+      AST __t504=_t;
       AST tmp89_AST_in=(AST)_t;
       match(_t,GTE);
       _t=_t.getFirstChild();
       System.err.println("Found >= ");
       obj.addCompOperator(section,GTE,key);
-      _t=__t505;
+      _t=__t504;
       _t=_t.getNextSibling();
       break;
     }
 case GT:
 {
-    AST __t506=_t;
+    AST __t505=_t;
     AST tmp90_AST_in=(AST)_t;
     match(_t,GT);
     _t=_t.getFirstChild();
     System.err.println("Found > ");
     obj.addCompOperator(section,GT,key);
-    _t=__t506;
+    _t=__t505;
     _t=_t.getNextSibling();
     break;
   }
 case LT:
 {
-  AST __t507=_t;
+  AST __t506=_t;
   AST tmp91_AST_in=(AST)_t;
   match(_t,LT);
   _t=_t.getFirstChild();
   System.err.println("Found < ");
   obj.addCompOperator(section,LT,key);
-  _t=__t507;
+  _t=__t506;
   _t=_t.getNextSibling();
   break;
 }
 case LTE:
 {
-AST __t508=_t;
+AST __t507=_t;
 AST tmp92_AST_in=(AST)_t;
 match(_t,LTE);
 _t=_t.getFirstChild();
 System.err.println("Found <= ");
 obj.addCompOperator(section,LTE,key);
-_t=__t508;
+_t=__t507;
 _t=_t.getNextSibling();
-AST __t509=_t;
+break;
+}
+case NE:
+{
+AST __t508=_t;
 AST tmp93_AST_in=(AST)_t;
 match(_t,NE);
 _t=_t.getFirstChild();
 System.err.println("Found <> ");
 obj.addCompOperator(section,NE,key);
-_t=__t509;
+_t=__t508;
 _t=_t.getNextSibling();
 break;
 }

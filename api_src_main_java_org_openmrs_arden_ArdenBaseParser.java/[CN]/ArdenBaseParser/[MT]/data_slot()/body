@@ -3,13 +3,13 @@
   ASTPair currentAST=new ASTPair();
   AST data_slot_AST=null;
   try {
-    AST tmp247_AST=null;
-    tmp247_AST=astFactory.create(LT(1));
-    astFactory.makeASTRoot(currentAST,tmp247_AST);
-    match(DATA);
     AST tmp248_AST=null;
     tmp248_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp248_AST);
+    astFactory.makeASTRoot(currentAST,tmp248_AST);
+    match(DATA);
+    AST tmp249_AST=null;
+    tmp249_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp249_AST);
     match(COLON);
 {
       _loop118:       do {
@@ -23,9 +23,9 @@
       }
  while (true);
     }
-    AST tmp249_AST=null;
-    tmp249_AST=astFactory.create(LT(1));
-    astFactory.addASTChild(currentAST,tmp249_AST);
+    AST tmp250_AST=null;
+    tmp250_AST=astFactory.create(LT(1));
+    astFactory.addASTChild(currentAST,tmp250_AST);
     match(ENDBLOCK);
     data_slot_AST=(AST)currentAST.root;
   }

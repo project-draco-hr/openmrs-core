@@ -21,6 +21,7 @@ case GTE:
 case LT:
 case LTE:
 case EQUALS:
+case NE:
 {
 {
                   if (_t == null)                   _t=ASTNULL;
@@ -37,14 +38,14 @@ case EQUALS:
                   }
                 }
 {
-                  _loop456:                   do {
+                  _loop455:                   do {
                     if (_t == null)                     _t=ASTNULL;
                     if ((_tokenSet_1.member(_t.getType()))) {
                       b=exprStringAST(_t,section,obj,a);
                       _t=_retTree;
                     }
  else {
-                      break _loop456;
+                      break _loop455;
                     }
                   }
  while (true);
@@ -117,7 +118,7 @@ case EQUALS:
           b=exprStringAST(_t,section,obj,a);
           _t=_retTree;
 {
-            _loop461:             do {
+            _loop460:             do {
               if (_t == null)               _t=ASTNULL;
               if ((_t.getType() == COMMA)) {
                 AST tmp87_AST_in=(AST)_t;
@@ -128,7 +129,7 @@ case EQUALS:
                 s=a;
               }
  else {
-                break _loop461;
+                break _loop460;
               }
             }
  while (true);

@@ -10,23 +10,23 @@
       age_max_slot_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == AGE_MAX)) {
-      AST tmp272_AST=null;
-      tmp272_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp272_AST);
-      match(AGE_MAX);
       AST tmp273_AST=null;
       tmp273_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp273_AST);
-      match(COLON);
+      astFactory.makeASTRoot(currentAST,tmp273_AST);
+      match(AGE_MAX);
       AST tmp274_AST=null;
       tmp274_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp274_AST);
-      match(INTLIT);
-      age_code();
-      astFactory.addASTChild(currentAST,returnAST);
+      match(COLON);
       AST tmp275_AST=null;
       tmp275_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp275_AST);
+      match(INTLIT);
+      age_code();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp276_AST=null;
+      tmp276_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp276_AST);
       match(ENDBLOCK);
       age_max_slot_AST=(AST)currentAST.root;
     }

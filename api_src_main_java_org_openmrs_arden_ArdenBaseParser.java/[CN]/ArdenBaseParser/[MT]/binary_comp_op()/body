@@ -4,69 +4,69 @@
   AST binary_comp_op_AST=null;
   try {
     if ((LA(1) == LESS)) {
-      AST tmp519_AST=null;
-      tmp519_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp519_AST);
-      match(LESS);
       AST tmp520_AST=null;
       tmp520_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp520_AST);
-      match(THAN);
-      binary_comp_op_AST=(AST)currentAST.root;
-    }
- else     if ((LA(1) == GREATER)) {
+      astFactory.makeASTRoot(currentAST,tmp520_AST);
+      match(LESS);
       AST tmp521_AST=null;
       tmp521_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp521_AST);
-      match(GREATER);
-      AST tmp522_AST=null;
-      tmp522_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp522_AST);
+      astFactory.addASTChild(currentAST,tmp521_AST);
       match(THAN);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == GREATER)) {
+      AST tmp522_AST=null;
+      tmp522_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp522_AST);
+      match(GREATER);
       AST tmp523_AST=null;
       tmp523_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp523_AST);
-      match(GREATER);
+      astFactory.addASTChild(currentAST,tmp523_AST);
+      match(THAN);
+      binary_comp_op_AST=(AST)currentAST.root;
+    }
+ else     if ((LA(1) == GREATER)) {
       AST tmp524_AST=null;
       tmp524_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp524_AST);
-      match(THAN);
+      astFactory.makeASTRoot(currentAST,tmp524_AST);
+      match(GREATER);
       AST tmp525_AST=null;
       tmp525_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp525_AST);
-      match(OR);
+      match(THAN);
       AST tmp526_AST=null;
       tmp526_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp526_AST);
+      match(OR);
+      AST tmp527_AST=null;
+      tmp527_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp527_AST);
       match(EQUAL);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == LESS)) {
-      AST tmp527_AST=null;
-      tmp527_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp527_AST);
-      match(LESS);
       AST tmp528_AST=null;
       tmp528_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp528_AST);
-      match(THAN);
+      astFactory.makeASTRoot(currentAST,tmp528_AST);
+      match(LESS);
       AST tmp529_AST=null;
       tmp529_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp529_AST);
-      match(OR);
+      match(THAN);
       AST tmp530_AST=null;
       tmp530_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp530_AST);
+      match(OR);
+      AST tmp531_AST=null;
+      tmp531_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp531_AST);
       match(EQUAL);
       binary_comp_op_AST=(AST)currentAST.root;
     }
  else     if ((LA(1) == IN)) {
-      AST tmp531_AST=null;
-      tmp531_AST=astFactory.create(LT(1));
-      astFactory.makeASTRoot(currentAST,tmp531_AST);
+      AST tmp532_AST=null;
+      tmp532_AST=astFactory.create(LT(1));
+      astFactory.makeASTRoot(currentAST,tmp532_AST);
       match(IN);
       binary_comp_op_AST=(AST)currentAST.root;
     }
@@ -77,7 +77,7 @@
  catch (  RecognitionException ex) {
     if (inputState.guessing == 0) {
       reportError(ex);
-      recover(ex,_tokenSet_46);
+      recover(ex,_tokenSet_45);
     }
  else {
       throw ex;

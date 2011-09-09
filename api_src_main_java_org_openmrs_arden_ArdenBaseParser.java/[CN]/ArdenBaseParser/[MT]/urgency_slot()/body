@@ -13,19 +13,19 @@ case LITERAL_end:
       }
 case LITERAL_urgency:
 {
-      AST tmp265_AST=null;
-      tmp265_AST=astFactory.create(LT(1));
-      astFactory.addASTChild(currentAST,tmp265_AST);
-      match(LITERAL_urgency);
       AST tmp266_AST=null;
       tmp266_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp266_AST);
-      match(COLON);
-      urgency_val();
-      astFactory.addASTChild(currentAST,returnAST);
+      match(LITERAL_urgency);
       AST tmp267_AST=null;
       tmp267_AST=astFactory.create(LT(1));
       astFactory.addASTChild(currentAST,tmp267_AST);
+      match(COLON);
+      urgency_val();
+      astFactory.addASTChild(currentAST,returnAST);
+      AST tmp268_AST=null;
+      tmp268_AST=astFactory.create(LT(1));
+      astFactory.addASTChild(currentAST,tmp268_AST);
       match(ENDBLOCK);
       urgency_slot_AST=(AST)currentAST.root;
       break;
@@ -39,7 +39,7 @@ default :
  catch (RecognitionException ex) {
 if (inputState.guessing == 0) {
 reportError(ex);
-recover(ex,_tokenSet_21);
+recover(ex,_tokenSet_20);
 }
  else {
 throw ex;
