@@ -15,5 +15,14 @@
     if (encounter.getEncounterType() != null)     encounterType=encounter.getEncounterType().getName();
     if (encounter.getForm() != null)     formName=encounter.getForm().getName();
     voided=encounter.isVoided();
+    if (encounter.getCreator() != null) {
+      PersonName entererPersonName=encounter.getCreator().getPersonName();
+      if (entererPersonName != null) {
+        entererName="";
+        if (entererPersonName.getGivenName() != null)         entererName+=entererPersonName.getGivenName();
+        if (entererPersonName.getMiddleName() != null)         entererName+=" " + entererPersonName.getMiddleName();
+        if (entererPersonName.getFamilyName() != null)         entererName+=" " + entererPersonName.getFamilyName();
+      }
+    }
   }
 }
