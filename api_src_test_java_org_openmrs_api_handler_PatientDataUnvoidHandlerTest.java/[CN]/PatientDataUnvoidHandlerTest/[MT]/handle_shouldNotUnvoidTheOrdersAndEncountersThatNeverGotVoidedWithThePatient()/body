@@ -16,7 +16,7 @@
   Assert.assertNull(testOrder.getVoidReason());
   os.voidOrder(testOrder,"random reason");
   Assert.assertTrue(testOrder.isVoided());
-  Thread.sleep(20);
+  TestUtil.waitForClockTick();
   patient=Context.getPatientService().voidPatient(patient,"Void Reason");
   Assert.assertTrue(patient.isVoided());
   new PatientDataUnvoidHandler().handle(patient,patient.getVoidedBy(),patient.getDateVoided(),null);
