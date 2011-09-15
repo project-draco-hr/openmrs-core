@@ -3,6 +3,6 @@
  else   Context.requirePrivilege(PrivilegeConstants.EDIT_VISITS);
   Errors errors=new BindException(visit,"visit");
   new VisitValidator().validate(visit,errors);
-  if (errors.hasErrors())   throw new APIException("Validation errors found");
+  if (errors.hasErrors())   throw new APIException("Validation errors found. " + errors);
   return dao.saveVisit(visit);
 }
