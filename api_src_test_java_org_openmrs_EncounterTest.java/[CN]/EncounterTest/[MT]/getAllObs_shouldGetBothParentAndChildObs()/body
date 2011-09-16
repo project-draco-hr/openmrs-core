@@ -8,6 +8,6 @@
   assertEquals(1,encounter.getAllObs(true).size());
   assertNotNull(encounter.getAllObs(false));
   assertEquals(1,encounter.getAllObs(false).size());
-  Obs obsInEncounter=encounter.getAllObs(false).toArray(new Obs[]{})[0];
+  Obs obsInEncounter=(Obs)encounter.getAllObs(false).toArray()[0];
   assertTrue(obsInEncounter.isObsGrouping());
 }

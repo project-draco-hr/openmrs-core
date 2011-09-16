@@ -1,4 +1,4 @@
 {
   if (privileges == null)   privileges=new HashSet<Privilege>();
-  if (!privileges.contains(privilege) && privilege != null)   privileges.add(privilege);
+  if (privilege != null && !containsPrivilege(privileges,privilege.getPrivilege()))   privileges.add(privilege);
 }

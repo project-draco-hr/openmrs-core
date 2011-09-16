@@ -1,11 +1,11 @@
 {
   Concept mockConcept=new Concept();
   mockConcept.setConceptId(conceptId);
-  Locale desiredLocale=null;
+  Locale desiredLocale;
   if (locale == null)   desiredLocale=Context.getLocale();
  else   desiredLocale=locale;
-  ConceptName shortName=ConceptNameTest.createMockConceptName(1,desiredLocale,ConceptNameType.SHORT,false);
-  ConceptName fullySpecifiedName=ConceptNameTest.createMockConceptName(2,desiredLocale,ConceptNameType.FULLY_SPECIFIED,false);
+  ConceptName shortName=createMockConceptName(1,desiredLocale,ConceptNameType.SHORT,false);
+  ConceptName fullySpecifiedName=createMockConceptName(2,desiredLocale,ConceptNameType.FULLY_SPECIFIED,false);
   mockConcept.addName(fullySpecifiedName);
   mockConcept.addName(shortName);
   return mockConcept;

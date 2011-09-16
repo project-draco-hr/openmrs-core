@@ -1,0 +1,9 @@
+{
+  Encounter enc=new Encounter();
+  enc.setLocation(Context.getLocationService().getLocation(1));
+  enc.setEncounterType(Context.getEncounterService().getEncounterType(1));
+  enc.setEncounterDatetime(new Date());
+  enc.setPatient(Context.getPatientService().getPatient(3));
+  enc.setProvider(Context.getPersonService().getPerson(1));
+  return enc;
+}

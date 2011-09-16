@@ -5,7 +5,7 @@
   Obs childObs=new Obs();
   parentObs.addGroupMember(childObs);
   assertEquals(1,encounter.getObs().size());
-  Obs obsInEncounter=encounter.getObs().toArray(new Obs[]{})[0];
+  Obs obsInEncounter=(Obs)encounter.getObs().toArray()[0];
   assertTrue(childObs.equals(obsInEncounter));
   assertFalse(obsInEncounter.isObsGrouping());
 }

@@ -7,6 +7,6 @@
   childObs.setEncounter(encounter);
   encounter.addObs(childObs);
   assertEquals(1,encounter.getObs().size());
-  Obs obsInEncounter=encounter.getObs().toArray(new Obs[]{})[0];
+  Obs obsInEncounter=(Obs)encounter.getObs().toArray()[0];
   assertFalse(obsInEncounter.isObsGrouping());
 }

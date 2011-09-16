@@ -1,5 +1,5 @@
 {
   List<Concept> concepts=conceptService.getConceptsByMapping("766554","SSTRM",false);
   Assert.assertEquals(1,concepts.size());
-  Assert.assertTrue(concepts.contains(new Concept(16)));
+  Assert.assertTrue(containsId(concepts,16));
 }

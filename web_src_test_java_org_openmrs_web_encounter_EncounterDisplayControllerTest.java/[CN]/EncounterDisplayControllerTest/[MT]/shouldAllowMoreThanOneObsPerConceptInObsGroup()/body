@@ -13,10 +13,16 @@
     Assert.assertTrue(fieldHolder.isObsGrouping());
     Map<Obs,List<List<Obs>>> matrix=fieldHolder.getObsGroupMatrix();
     Assert.assertEquals(1,matrix.keySet().size());
-    List<List<Obs>> listOfCells=matrix.get(new Obs(16));
+    List<List<Obs>> listOfCells=null;
+    for (    Obs obs : matrix.keySet()) {
+      if (obs.getId() == 16) {
+        listOfCells=matrix.get(obs);
+      }
+    }
+    Assert.assertNotNull(listOfCells);
     List<Obs> firstAndOnlyCell=listOfCells.get(0);
     Assert.assertEquals(2,firstAndOnlyCell.size());
-    Assert.assertTrue(firstAndOnlyCell.contains(new Obs(17)));
-    Assert.assertTrue(firstAndOnlyCell.contains(new Obs(18)));
+    Assert.assertTrue(containsId(firstAndOnlyCell,17));
+    Assert.assertTrue(containsId(firstAndOnlyCell,18));
   }
 }

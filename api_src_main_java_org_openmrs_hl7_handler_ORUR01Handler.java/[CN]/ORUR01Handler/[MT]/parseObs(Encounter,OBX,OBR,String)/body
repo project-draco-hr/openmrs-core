@@ -49,7 +49,7 @@
         Collection<ConceptAnswer> conceptAnswers=concept.getAnswers();
         if (conceptAnswers != null && conceptAnswers.size() > 0) {
           for (          ConceptAnswer conceptAnswer : conceptAnswers) {
-            if (conceptAnswer.getAnswerConcept().equals(answer)) {
+            if (conceptAnswer.getAnswerConcept().getId().equals(answer.getId())) {
               obs.setValueCoded(answer);
               isValidAnswer=true;
               break;

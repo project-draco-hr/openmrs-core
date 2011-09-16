@@ -7,5 +7,5 @@
   Concept question=new Concept(10);
   List<Obs> obsForPatient=Context.getObsService().getObservationsByPersonAndConcept(patient,question);
   assertEquals(1,obsForPatient.size());
-  assertEquals(new Encounter(3),obsForPatient.get(0).getEncounter());
+  assertEquals(3,obsForPatient.get(0).getEncounter().getId().intValue());
 }

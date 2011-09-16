@@ -1,9 +1,9 @@
 {
   Concept testConcept=createMockConcept(1,Locale.US);
-  ConceptName preferredNameEN_US=ConceptNameTest.createMockConceptName(3,Locale.US,null,false);
+  ConceptName preferredNameEN_US=createMockConceptName(3,Locale.US,null,false);
   testConcept.addName(preferredNameEN_US);
   String fullySpecName=testConcept.getFullySpecifiedName(Locale.US).getName();
-  ConceptName preferredNameEN=ConceptNameTest.createMockConceptName(4,new Locale("en"),null,false);
+  ConceptName preferredNameEN=createMockConceptName(4,new Locale("en"),null,false);
   testConcept.addName(preferredNameEN);
   Assert.assertEquals(fullySpecName,testConcept.getPreferredName(Locale.US).getName());
 }

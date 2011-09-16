@@ -22,7 +22,8 @@
     Assert.assertNotNull(order.getVoidedBy());
     Assert.assertNotNull(order.getVoidReason());
   }
-  new PatientDataUnvoidHandler().handle(patient,new User(1),patient.getDateVoided(),null);
+  User user=Context.getUserService().getUser(1);
+  new PatientDataUnvoidHandler().handle(patient,user,patient.getDateVoided(),null);
   for (  Encounter encounter : encounters) {
     Assert.assertFalse(encounter.isVoided());
     Assert.assertNull(encounter.getDateVoided());

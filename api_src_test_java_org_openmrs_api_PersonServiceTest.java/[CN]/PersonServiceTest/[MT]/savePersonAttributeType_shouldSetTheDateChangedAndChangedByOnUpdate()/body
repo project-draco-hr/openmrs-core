@@ -3,6 +3,6 @@
   PersonAttributeType pat=service.getPersonAttributeType(2);
   pat.setName("attr type name");
   service.savePersonAttributeType(pat);
-  assertEquals(new User(1),pat.getChangedBy());
+  assertEquals(1,pat.getChangedBy().getId().intValue());
   assertNotNull(pat.getDateChanged());
 }

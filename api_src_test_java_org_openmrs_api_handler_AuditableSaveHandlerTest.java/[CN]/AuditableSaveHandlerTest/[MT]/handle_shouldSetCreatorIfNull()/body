@@ -2,5 +2,5 @@
   AuditableSaveHandler handler=new AuditableSaveHandler();
   Auditable auditable=new ConceptName();
   handler.handle(auditable,new User(2),null,null);
-  Assert.assertEquals(new User(2),auditable.getCreator());
+  Assert.assertEquals(2,auditable.getCreator().getId().intValue());
 }

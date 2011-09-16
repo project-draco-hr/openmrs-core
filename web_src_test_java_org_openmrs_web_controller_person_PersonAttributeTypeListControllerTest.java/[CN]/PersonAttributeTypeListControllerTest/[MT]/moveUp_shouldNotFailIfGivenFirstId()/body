@@ -1,5 +1,5 @@
 {
   List<PersonAttributeType> allTypes=Context.getPersonService().getAllPersonAttributeTypes();
-  Assert.assertEquals(new PersonAttributeType(1),allTypes.get(0));
+  Assert.assertEquals(1,allTypes.get(0).getId().intValue());
   new PersonAttributeTypeListController().moveUp(new Integer[]{1},new MockHttpSession());
 }

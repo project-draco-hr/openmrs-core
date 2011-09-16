@@ -2,13 +2,13 @@
   executeDataSet("org/openmrs/api/include/PersonServiceTest-names.xml");
   Set<Person> matches=Context.getPersonService().getSimilarPeople("Darius",1979,"M");
   Assert.assertEquals(9,matches.size());
-  Assert.assertTrue(matches.contains(new Person(1000)));
-  Assert.assertTrue(matches.contains(new Person(1001)));
-  Assert.assertTrue(matches.contains(new Person(1002)));
-  Assert.assertTrue(matches.contains(new Person(1003)));
-  Assert.assertTrue(matches.contains(new Person(1004)));
-  Assert.assertTrue(matches.contains(new Person(1005)));
-  Assert.assertTrue(matches.contains(new Person(1006)));
-  Assert.assertTrue(matches.contains(new Person(1007)));
-  Assert.assertTrue(matches.contains(new Person(1008)));
+  Assert.assertTrue(containsId(matches,1000));
+  Assert.assertTrue(containsId(matches,1001));
+  Assert.assertTrue(containsId(matches,1002));
+  Assert.assertTrue(containsId(matches,1003));
+  Assert.assertTrue(containsId(matches,1004));
+  Assert.assertTrue(containsId(matches,1005));
+  Assert.assertTrue(containsId(matches,1006));
+  Assert.assertTrue(containsId(matches,1007));
+  Assert.assertTrue(containsId(matches,1008));
 }

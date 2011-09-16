@@ -1,4 +1,7 @@
 {
-  if (getConcept() != null && valueCoded != null && getConcept().getDatatype().isBoolean())   return valueCoded.equals(Context.getConceptService().getTrueConcept());
+  if (getConcept() != null && valueCoded != null && getConcept().getDatatype().isBoolean()) {
+    Concept trueConcept=Context.getConceptService().getTrueConcept();
+    return trueConcept != null && valueCoded.getId().equals(trueConcept.getId());
+  }
   return null;
 }

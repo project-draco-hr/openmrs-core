@@ -1,6 +1,3 @@
 {
-  Set<Role> tmproles=getAllRoles();
-  Role role=new Role(RoleConstants.SUPERUSER);
-  if (tmproles.contains(role))   return true;
-  return false;
+  return containsRole(RoleConstants.SUPERUSER);
 }
