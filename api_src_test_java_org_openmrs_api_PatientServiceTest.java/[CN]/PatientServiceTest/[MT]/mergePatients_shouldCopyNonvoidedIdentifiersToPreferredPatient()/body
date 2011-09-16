@@ -1,15 +1,19 @@
 {
   Patient preferred=patientService.getPatient(7);
   Patient notPreferred=patientService.getPatient(8);
-  patientService.mergePatients(preferred,notPreferred);
-  PatientIdentifier nonvoidedPI=new PatientIdentifier("7TU-8",new PatientIdentifierType(1),new Location(1));
-  nonvoidedPI.setPatient(preferred);
-  PatientIdentifier voidedPI=new PatientIdentifier("ABC123",new PatientIdentifierType(2),new Location(1));
-  voidedPI.setPatient(preferred);
-  boolean containsNonVoidedPI=false;
-  for (  PatientIdentifier id : preferred.getIdentifiers()) {
-    if (id.equalsContent(nonvoidedPI))     containsNonVoidedPI=true;
+  PatientIdentifier nonvoidedPI=null;
+  PatientIdentifier voidedPI=null;
+  for (  PatientIdentifier patientIdentifier : notPreferred.getIdentifiers()) {
+    if (patientIdentifier.getIdentifier().equals("7TU-8")) {
+      nonvoidedPI=patientIdentifier;
+    }
+    if (patientIdentifier.getIdentifier().equals("ABC123")) {
+      voidedPI=patientIdentifier;
+    }
   }
-  Assert.assertTrue(containsNonVoidedPI);
-  Assert.assertFalse("The voided identifier: " + voidedPI + " should not have been moved over because it was voided",OpenmrsUtil.collectionContains(preferred.getIdentifiers(),voidedPI));
+  patientService.mergePatients(preferred,notPreferred);
+  Assert.assertNotNull(nonvoidedPI);
+  Assert.assertTrue(contains(new ArrayList<PatientIdentifier>(preferred.getIdentifiers()),nonvoidedPI.getIdentifier()));
+  Assert.assertNotNull(voidedPI);
+  Assert.assertFalse(contains(new ArrayList<PatientIdentifier>(preferred.getIdentifiers()),voidedPI.getIdentifier()));
 }

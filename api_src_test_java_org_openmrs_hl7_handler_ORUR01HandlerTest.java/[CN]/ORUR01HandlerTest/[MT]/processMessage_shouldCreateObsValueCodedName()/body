@@ -9,5 +9,5 @@
   List<Obs> obss=obsService.getObservationsByPersonAndConcept(patient,concept);
   ConceptName name=obss.get(0).getValueCodedName();
   Assert.assertNotNull(name);
-  junit.framework.Assert.assertEquals("The valueCodedName should be 2471",new ConceptName(2471),name);
+  Assert.assertEquals("The valueCodedName should be 2471",2471,name.getId().intValue());
 }

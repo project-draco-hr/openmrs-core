@@ -3,5 +3,5 @@
   Auditable auditable=new ConceptName();
   auditable.setCreator(new User(3));
   handler.handle(auditable,new User(2),null,null);
-  Assert.assertEquals(new User(3),auditable.getCreator());
+  Assert.assertEquals(3,auditable.getCreator().getId().intValue());
 }

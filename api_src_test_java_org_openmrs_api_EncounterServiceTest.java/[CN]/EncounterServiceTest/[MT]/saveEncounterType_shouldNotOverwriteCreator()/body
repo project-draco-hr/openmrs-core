@@ -4,10 +4,10 @@
   encounterType.setCreator(new User(4));
   assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
   encounterService.saveEncounterType(encounterType);
-  assertEquals(encounterType.getCreator(),new User(4));
+  assertEquals(4,encounterType.getCreator().getId().intValue());
   assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
   EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
   assertNotNull(newEncounterType);
-  assertEquals(encounterType.getCreator(),new User(4));
+  assertEquals(4,encounterType.getCreator().getId().intValue());
   assertNotSame(encounterType.getCreator(),Context.getAuthenticatedUser());
 }

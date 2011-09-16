@@ -6,5 +6,5 @@
   request.addParameter("secretAnswer","valid secret answer");
   HttpServletResponse response=new MockHttpServletResponse();
   controller.handleRequest(request,response);
-  Assert.assertEquals(new User(2),Context.getAuthenticatedUser());
+  Assert.assertEquals(2,Context.getAuthenticatedUser().getId().intValue());
 }

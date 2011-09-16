@@ -1,6 +1,6 @@
 {
   Concept concept=conceptService.getConcept(18);
-  Assert.assertEquals(conceptService.getConceptDatatypeByName("Boolean"),concept.getDatatype());
+  Assert.assertEquals(conceptService.getConceptDatatypeByName("Boolean").getConceptDatatypeId(),concept.getDatatype().getConceptDatatypeId());
   conceptService.convertBooleanConceptToCoded(concept);
-  Assert.assertEquals(conceptService.getConceptDatatypeByName("Coded"),concept.getDatatype());
+  Assert.assertEquals(conceptService.getConceptDatatypeByName("Coded").getConceptDatatypeId(),concept.getDatatype().getConceptDatatypeId());
 }

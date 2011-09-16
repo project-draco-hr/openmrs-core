@@ -1,11 +1,6 @@
 {
   EncounterService es=Context.getEncounterService();
-  Encounter enc=new Encounter();
-  enc.setLocation(new Location(1));
-  enc.setEncounterType(new EncounterType(1));
-  enc.setEncounterDatetime(new Date());
-  enc.setPatient(new Patient(3));
-  enc.setProvider(new Person(1));
+  Encounter enc=buildEncounter();
   es.saveEncounter(enc);
   Obs newObs=new Obs();
   newObs.setConcept(new Concept(1));

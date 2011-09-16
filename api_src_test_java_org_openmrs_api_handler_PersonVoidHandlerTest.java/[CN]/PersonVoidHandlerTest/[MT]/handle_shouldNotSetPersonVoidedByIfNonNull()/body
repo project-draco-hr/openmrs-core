@@ -3,5 +3,5 @@
   Person person=new Person();
   person.setPersonVoidedBy(new User(3));
   handler.handle(person,new User(2),null," ");
-  Assert.assertEquals(new User(3),person.getPersonVoidedBy());
+  assertEquals(3,person.getPersonVoidedBy().getId().intValue());
 }

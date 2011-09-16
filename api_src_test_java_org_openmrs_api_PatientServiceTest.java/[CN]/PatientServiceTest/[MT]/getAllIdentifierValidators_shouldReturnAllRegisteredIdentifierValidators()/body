@@ -3,5 +3,5 @@
   expectedValidators.add(patientService.getIdentifierValidator("org.openmrs.patient.impl.LuhnIdentifierValidator"));
   expectedValidators.add(patientService.getIdentifierValidator("org.openmrs.patient.impl.VerhoeffIdentifierValidator"));
   Assert.assertEquals(2,patientService.getAllIdentifierValidators().size());
-  TestUtil.assertCollectionContentsEquals(expectedValidators,patientService.getAllIdentifierValidators());
+  assertCollectionContentsEquals(expectedValidators,patientService.getAllIdentifierValidators());
 }

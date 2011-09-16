@@ -4,6 +4,6 @@
   pat.setName("attr type name");
   pat.setDescription("attr type desc");
   service.savePersonAttributeType(pat);
-  assertEquals(new User(1),pat.getCreator());
+  assertEquals(1,pat.getCreator().getId().intValue());
   assertNotNull(pat.getDateCreated());
 }

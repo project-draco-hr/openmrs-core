@@ -1,10 +1,6 @@
 {
   EncounterService encounterService=Context.getEncounterService();
-  Encounter encounter=new Encounter();
-  encounter.setLocation(new Location(1));
-  encounter.setEncounterType(new EncounterType(1));
-  encounter.setEncounterDatetime(new Date());
-  encounter.setPatient(new Patient(2));
+  Encounter encounter=buildEncounter();
   Date date=new Date(System.currentTimeMillis() - 5000);
   encounter.setDateCreated(date);
   User creator=new User(1);

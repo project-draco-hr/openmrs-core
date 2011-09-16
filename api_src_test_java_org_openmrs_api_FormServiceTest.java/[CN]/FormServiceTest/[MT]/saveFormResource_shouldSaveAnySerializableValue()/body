@@ -5,5 +5,5 @@
   Privilege expected=new Privilege("hey","that's cool");
   Context.getFormService().saveFormResource(form,owner,name,expected);
   Privilege actual=(Privilege)Context.getFormService().getFormResource(form,owner,name);
-  Assert.assertEquals(expected,actual);
+  assertEquals(expected.getName(),actual.getName());
 }

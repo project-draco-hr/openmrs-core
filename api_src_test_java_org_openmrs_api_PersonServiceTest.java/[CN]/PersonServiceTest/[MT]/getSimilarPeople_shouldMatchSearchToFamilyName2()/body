@@ -2,6 +2,6 @@
   executeDataSet("org/openmrs/api/include/PersonServiceTest-extranames.xml");
   Set<Person> people=Context.getPersonService().getSimilarPeople("Johnson",null,"M");
   Assert.assertEquals(2,people.size());
-  Assert.assertTrue(people.contains(new Patient(2)));
-  Assert.assertTrue(people.contains(new Patient(4)));
+  Assert.assertTrue(TestUtil.containsId(people,2));
+  Assert.assertTrue(TestUtil.containsId(people,4));
 }

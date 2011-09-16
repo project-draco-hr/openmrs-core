@@ -5,5 +5,5 @@
   Collection<IdentifierValidator> actualValidators=patientService.getAllIdentifierValidators();
   Assert.assertNotNull(actualValidators);
   Assert.assertEquals(2,actualValidators.size());
-  TestUtil.assertCollectionContentsEquals(expectedValidators,actualValidators);
+  assertCollectionContentsEquals(expectedValidators,actualValidators);
 }
