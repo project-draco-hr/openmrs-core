@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-words.xml");
+  Concept concept=dao.getConcept(5497);
+  dao.updateConceptWord(concept);
+  assertNotNull(dao.getConcept(5497));
+}

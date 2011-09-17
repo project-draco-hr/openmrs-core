@@ -3,6 +3,6 @@
   Locale.setDefault(locale);
   ConceptName cn=new ConceptName("bonjour monsieur",locale);
   ConceptWord word=new ConceptWord("BONJOUR",new Concept(),cn,locale);
-  Assert.assertTrue(cn.getName().toUpperCase().indexOf(word.getWord()) > -1);
+  Assert.assertTrue(cn.getName().toUpperCase().contains(word.getWord()));
   dao.weighConceptWord(word);
 }
