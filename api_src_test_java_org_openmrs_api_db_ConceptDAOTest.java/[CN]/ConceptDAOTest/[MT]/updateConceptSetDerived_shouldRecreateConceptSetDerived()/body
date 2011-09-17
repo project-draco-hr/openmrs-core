@@ -1,0 +1,9 @@
+{
+  Concept concept=dao.getConcept(5497);
+  List<ConceptSet> conceptSetsByConcept=dao.getConceptSetsByConcept(concept);
+  assertNotNull(conceptSetsByConcept);
+  dao.updateConceptSetDerived();
+  List<ConceptSet> conceptSetsByConceptAfterUpdate=dao.getConceptSetsByConcept(concept);
+  assertNotNull(conceptSetsByConceptAfterUpdate);
+  assertEquals(conceptSetsByConcept.size(),conceptSetsByConceptAfterUpdate.size());
+}
