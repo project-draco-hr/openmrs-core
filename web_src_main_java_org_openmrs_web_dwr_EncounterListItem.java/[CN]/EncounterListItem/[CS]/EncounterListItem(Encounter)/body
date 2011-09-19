@@ -13,7 +13,10 @@
     if (encounter.getProvider() != null)     providerName=encounter.getProvider().getPersonName().toString();
     if (encounter.getLocation() != null)     location=encounter.getLocation().getName();
     if (encounter.getEncounterType() != null)     encounterType=encounter.getEncounterType().getName();
-    if (encounter.getForm() != null)     formName=encounter.getForm().getName();
+    if (encounter.getForm() != null) {
+      formName=encounter.getForm().getName();
+      formId=encounter.getForm().getFormId();
+    }
     voided=encounter.isVoided();
     if (encounter.getCreator() != null) {
       PersonName entererPersonName=encounter.getCreator().getPersonName();
