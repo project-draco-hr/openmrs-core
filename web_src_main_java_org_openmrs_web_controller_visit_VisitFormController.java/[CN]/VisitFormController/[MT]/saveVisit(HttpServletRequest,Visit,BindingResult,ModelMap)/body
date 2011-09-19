@@ -1,0 +1,43 @@
+{
+  List<VisitAttributeType> attributeTypes=(List<VisitAttributeType>)model.get("attributeTypes");
+  WebAttributeUtil.handleSubmittedAttributesForType(visit,result,VisitAttribute.class,request,attributeTypes);
+  new VisitValidator().validate(visit,result);
+  if (!result.hasErrors()) {
+    try {
+      Context.getVisitService().saveVisit(visit);
+      if (log.isDebugEnabled())       log.debug("Saved visit: " + visit.toString());
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved");
+      String[] ids=ServletRequestUtils.getStringParameters(request,"encounterIds");
+      List<Integer> encounterIds=new ArrayList<Integer>();
+      EncounterService es=Context.getEncounterService();
+      if (!ArrayUtils.isEmpty(ids)) {
+        for (        String id : ids) {
+          if (StringUtils.hasText(id))           encounterIds.add(Integer.valueOf(id));
+        }
+        List<Encounter> visitEncounters=(List<Encounter>)model.get("visitEncounters");
+        for (        Encounter e : visitEncounters) {
+          if (!encounterIds.contains(e.getEncounterId())) {
+            e.setVisit(null);
+            es.saveEncounter(e);
+          }
+ else {
+            encounterIds.remove(e.getEncounterId());
+          }
+        }
+        for (        Integer encounterId : encounterIds) {
+          Encounter e=es.getEncounter(encounterId);
+          if (e != null && (e.getPatient().equals(visit.getPatient()))) {
+            e.setVisit(visit);
+            es.saveEncounter(e);
+          }
+        }
+      }
+      return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
+    }
+ catch (    APIException e) {
+      log.warn("Error while saving visit(s)",e);
+      request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Visit.save.error");
+    }
+  }
+  return VISIT_FORM;
+}
