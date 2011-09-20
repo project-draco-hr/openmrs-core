@@ -1,0 +1,14 @@
+{
+  Context.requirePrivilege(PrivilegeConstants.MANAGE_ENCOUNTER_VISITS);
+  String visitEncounterHandler=administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER);
+  String enableVisits=administrationService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENABLE_VISITS,Boolean.FALSE.toString());
+  VisitEncounterHandlerForm form=new VisitEncounterHandlerForm();
+  form.setEnableVisits(Boolean.valueOf(enableVisits));
+  for (  EncounterVisitHandler visitHandler : getEncounterVisitHandlers()) {
+    if (visitHandler.getClass().getName().equals(visitEncounterHandler)) {
+      form.setVisitEncounterHandler(visitHandler.getClass().getName());
+      break;
+    }
+  }
+  model.addAttribute(VISIT_ENCOUNTER_HANDLER_FORM,form);
+}

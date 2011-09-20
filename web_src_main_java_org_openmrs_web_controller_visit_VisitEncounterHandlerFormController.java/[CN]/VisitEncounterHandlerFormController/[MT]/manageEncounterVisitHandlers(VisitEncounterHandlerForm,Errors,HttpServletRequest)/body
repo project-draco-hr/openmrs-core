@@ -6,12 +6,12 @@
   GlobalProperty gpEnableVisits=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENABLE_VISITS,Boolean.toString(form.isEnableVisits()));
   administrationService.saveGlobalProperty(gpEnableVisits);
   if (form.isEnableVisits()) {
-    String type=form.getEncounterVisitHandler();
-    GlobalProperty gpEncounterVisitHandler=new GlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,type);
-    administrationService.saveGlobalProperty(gpEncounterVisitHandler);
+    String type=form.getVisitEncounterHandler();
+    GlobalProperty gpVisitEncounterHandler=new GlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,type);
+    administrationService.saveGlobalProperty(gpVisitEncounterHandler);
   }
  else {
-    form.setEncounterVisitHandler(administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER));
+    form.setVisitEncounterHandler(administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER));
   }
   request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Encounter.visits.configuration.savedSuccessfully");
 }
