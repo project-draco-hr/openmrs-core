@@ -6,6 +6,6 @@
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
   visit.setVisitType(Context.getVisitService().getAllVisitTypes().get(0));
-  visit.setStopDatetime(OpenmrsUtil.getLastMillisecondOfDay(encounter.getEncounterDatetime()));
+  visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime()));
   encounter.setVisit(visit);
 }
