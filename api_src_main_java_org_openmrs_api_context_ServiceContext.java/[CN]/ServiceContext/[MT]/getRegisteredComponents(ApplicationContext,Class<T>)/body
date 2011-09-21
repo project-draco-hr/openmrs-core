@@ -1,7 +1,7 @@
 {
   Map<String,T> components=new HashMap<String,T>();
   Map registeredComponents=context.getBeansOfType(type);
-  log.debug("getRegisteredComponents(" + context + ", "+ type+ ") = "+ registeredComponents);
+  if (log.isTraceEnabled())   log.trace("getRegisteredComponents(" + context + ", "+ type+ ") = "+ registeredComponents);
   if (registeredComponents != null) {
     components.putAll(registeredComponents);
   }
