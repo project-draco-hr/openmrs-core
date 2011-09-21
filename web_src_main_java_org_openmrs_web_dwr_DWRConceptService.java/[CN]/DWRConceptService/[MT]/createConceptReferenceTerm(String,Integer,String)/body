@@ -6,6 +6,7 @@
   if (conceptSourceId != null)   source=cs.getConceptSource(conceptSourceId);
   ConceptReferenceTerm term=new ConceptReferenceTerm();
   term.setCode(code);
+  term.setName(name);
   term.setConceptSource(source);
   Errors bindErrors=new BindException(term,"term");
   new ConceptReferenceTermValidator().validate(term,bindErrors);
