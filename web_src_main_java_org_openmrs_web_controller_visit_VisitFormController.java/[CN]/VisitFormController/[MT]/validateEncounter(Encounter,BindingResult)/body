@@ -1,0 +1,7 @@
+{
+  Errors encounterErrors=new BindException(e,"encounter");
+  ValidationUtils.invokeValidator(new EncounterValidator(),e,encounterErrors);
+  if (encounterErrors.hasErrors()) {
+    for (    ObjectError error : encounterErrors.getAllErrors())     result.reject(error.getCode(),error.getArguments(),error.getDefaultMessage());
+  }
+}
