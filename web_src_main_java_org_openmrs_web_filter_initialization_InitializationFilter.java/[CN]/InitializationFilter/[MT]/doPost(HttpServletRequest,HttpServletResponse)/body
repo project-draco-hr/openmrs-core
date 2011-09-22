@@ -29,7 +29,7 @@
     wizardModel.hasCurrentOpenmrsDatabase=false;
     wizardModel.createTables=true;
     wizardModel.createDatabasePassword=wizardModel.databaseRootPassword;
-    wizardModel.addDemoData=false;
+    wizardModel.addDemoData="yes".equals(httpRequest.getParameter("add_demo_data"));
     wizardModel.hasCurrentDatabaseUser=false;
     wizardModel.createDatabaseUser=true;
     wizardModel.createUserPassword=wizardModel.databaseRootPassword;
