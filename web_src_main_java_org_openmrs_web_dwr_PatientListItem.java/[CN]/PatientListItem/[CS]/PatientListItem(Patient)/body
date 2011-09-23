@@ -1,18 +1,3 @@
 {
-  super(patient);
-  if (patient != null) {
-    patientId=patient.getPatientId();
-    boolean first=true;
-    for (    PatientIdentifier pi : patient.getIdentifiers()) {
-      if (first) {
-        identifier=pi.getIdentifier();
-        identifierCheckDigit=pi.getIdentifierType().hasCheckDigit();
-        first=false;
-      }
- else {
-        if (!"".equals(otherIdentifiers))         otherIdentifiers+=",";
-        otherIdentifiers+=" " + pi.getIdentifier();
-      }
-    }
-  }
+  this(patient,null);
 }

@@ -12,7 +12,7 @@
     return patientList;
   }
   patientList=new Vector<Object>(patients.size());
-  for (  Patient p : patients)   patientList.add(new PatientListItem(p));
+  for (  Patient p : patients)   patientList.add(new PatientListItem(p,searchValue));
   if ((length == null || length > 2) && patients.size() < 3 && !searchValue.matches(".*\\d+.*")) {
     String[] names=searchValue.split(" ");
     String newSearch="";
@@ -27,7 +27,7 @@
       if (newPatients.size() > 0) {
         patientList=new Vector<Object>(patients.size());
         for (        Patient p : newPatients) {
-          PatientListItem pi=new PatientListItem(p);
+          PatientListItem pi=new PatientListItem(p,newSearch);
           patientList.add(pi);
         }
       }
