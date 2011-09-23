@@ -11,7 +11,7 @@
         first=false;
       }
  else {
-        if (!"".equals(otherNames))         otherNames+=",";
+        if (!StringUtils.isBlank(otherNames))         otherNames+=",";
         otherNames+=" " + pn.getGivenName() + " "+ pn.getMiddleName()+ " "+ pn.getFamilyName();
       }
     }

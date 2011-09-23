@@ -1,7 +1,7 @@
 {
   String name="";
-  if (StringUtils.hasText(givenName))   name=givenName;
-  if (StringUtils.hasText(middleName))   name=name + (name.length() > 0 ? " " : "") + middleName;
-  if (StringUtils.hasText(familyName))   name=name + (name.length() > 0 ? " " : "") + familyName;
+  if (!StringUtils.isBlank(givenName))   name=givenName;
+  if (!StringUtils.isBlank(middleName))   name=name + (name.length() > 0 ? " " : "") + middleName;
+  if (!StringUtils.isBlank(familyName))   name=name + (name.length() > 0 ? " " : "") + familyName;
   return name;
 }

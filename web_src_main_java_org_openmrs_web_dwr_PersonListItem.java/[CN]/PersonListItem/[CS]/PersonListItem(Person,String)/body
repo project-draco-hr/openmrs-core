@@ -1,0 +1,20 @@
+{
+  this(person);
+  if (person != null && !StringUtils.isBlank(searchName)) {
+    String[] searchNames=searchName.split(" ");
+    String fullName;
+    boolean foundABestMatch=false;
+    for (    PersonName personName : person.getNames()) {
+      fullName=personName.getFullName();
+      if (!foundABestMatch && containsAll(fullName,searchNames)) {
+        familyName=personName.getFamilyName();
+        givenName=personName.getGivenName();
+        middleName=personName.getMiddleName();
+        foundABestMatch=true;
+        continue;
+      }
+      if (!StringUtils.isBlank(otherNames))       otherNames+=",";
+      otherNames+=" " + fullName;
+    }
+  }
+}
