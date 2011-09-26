@@ -1,0 +1,12 @@
+{
+  HL7QueueItem result=getHL7InQueueByUuid(uuid);
+  if (result != null) {
+    return result;
+  }
+  result=getHL7InArchiveByUuid(uuid);
+  if (result != null) {
+    return result;
+  }
+  result=getHL7InErrorByUuid(uuid);
+  return result;
+}
