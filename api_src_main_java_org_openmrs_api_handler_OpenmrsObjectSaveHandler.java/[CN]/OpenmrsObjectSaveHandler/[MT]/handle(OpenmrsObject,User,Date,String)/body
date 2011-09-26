@@ -11,6 +11,9 @@
     try {
       Object value=PropertyUtils.getProperty(openmrsObject,field.getName());
       if (value != null && value.toString().isEmpty()) {
+        if (!(openmrsObject instanceof Voidable && ((Voidable)openmrsObject).isVoided())) {
+          PropertyUtils.setProperty(openmrsObject,field.getName(),null);
+        }
       }
     }
  catch (    Exception ex) {
