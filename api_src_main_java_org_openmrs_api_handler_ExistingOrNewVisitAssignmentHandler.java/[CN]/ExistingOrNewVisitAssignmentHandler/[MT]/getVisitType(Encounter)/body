@@ -1,7 +1,7 @@
 {
   String value=Context.getAdministrationService().getGlobalPropertyValue(OpenmrsConstants.GP_ENCOUNTER_TYPE_TO_VISIT_TYPE_MAPPING,"");
   if (!StringUtils.isBlank(value)) {
-    String targetEncounterTypeId=encounterType.getId().toString();
+    String targetEncounterTypeId=encounter.getEncounterType().getId().toString();
     String[] mappings=value.split(",");
     for (    String mapping : mappings) {
       int index=mapping.indexOf(':');
@@ -16,6 +16,7 @@
         }
       }
     }
+    throw new APIException("Failed to find visit type for encounterTypeId:" + encounter.getEncounterType().getEncounterTypeId());
   }
   return Context.getVisitService().getAllVisitTypes().get(0);
 }
