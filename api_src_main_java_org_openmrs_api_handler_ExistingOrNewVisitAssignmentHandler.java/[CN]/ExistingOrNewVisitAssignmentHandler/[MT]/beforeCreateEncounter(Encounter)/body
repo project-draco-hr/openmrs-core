@@ -5,7 +5,7 @@
   visit.setStartDatetime(encounter.getEncounterDatetime());
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
-  visit.setVisitType(getVisitType(encounter.getEncounterType()));
+  visit.setVisitType(getVisitType(encounter));
   visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime()));
   encounter.setVisit(visit);
 }

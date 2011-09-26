@@ -1,4 +1,5 @@
 {
+  VisitType visitType=Context.getVisitService().getAllVisitTypes().get(0);
   Encounter encounter=Context.getEncounterService().getEncounter(1);
   Assert.assertNull(encounter.getVisit());
   Calendar calendar=Calendar.getInstance();
@@ -7,9 +8,5 @@
   encounter.setEncounterDatetime(calendar.getTime());
   new ExistingOrNewVisitAssignmentHandler().beforeCreateEncounter(encounter);
   Assert.assertNotNull(encounter.getVisit());
-  Visit visit=encounter.getVisit();
-  encounter.setVisit(null);
-  Context.getVisitService().saveVisit(visit);
-  encounter.setVisit(visit);
-  Assert.assertEquals(Context.getVisitService().getAllVisitTypes().get(0),encounter.getVisit().getVisitType());
+  Assert.assertEquals(visitType,encounter.getVisit().getVisitType());
 }
