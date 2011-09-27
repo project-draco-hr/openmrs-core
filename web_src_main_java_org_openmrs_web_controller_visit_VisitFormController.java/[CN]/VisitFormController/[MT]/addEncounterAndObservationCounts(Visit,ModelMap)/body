@@ -1,0 +1,13 @@
+{
+  int encounterCount=0;
+  int observationCount=0;
+  if (visit != null && visit.getId() != null) {
+    List<Encounter> encounters=Context.getEncounterService().getEncountersByVisit(visit,false);
+    encounterCount=encounters.size();
+    if (encounters.isEmpty()) {
+      observationCount=Context.getObsService().getObservationCount(null,encounters,null,null,null,null,null,null,null,false);
+    }
+  }
+  model.put("encounterCount",encounterCount);
+  model.put("observationCount",observationCount);
+}
