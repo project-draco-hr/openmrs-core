@@ -1,0 +1,14 @@
+{
+  Encounter encounter=new Encounter();
+  EncounterRole role=new EncounterRole();
+  Provider provider=new Provider();
+  encounter.addProvider(role,provider);
+  Provider provider2=new Provider();
+  encounter.addProvider(role,provider2);
+  EncounterRole role2=new EncounterRole();
+  Provider provider3=new Provider();
+  encounter.addProvider(role2,provider3);
+  Set<Provider> providers=encounter.getProvidersByRole(role);
+  Assert.assertEquals(2,providers.size());
+  Assert.assertTrue(providers.containsAll(Arrays.asList(provider,provider2)));
+}

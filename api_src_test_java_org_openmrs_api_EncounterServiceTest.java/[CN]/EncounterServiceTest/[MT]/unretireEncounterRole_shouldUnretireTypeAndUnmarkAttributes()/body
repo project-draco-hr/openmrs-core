@@ -1,0 +1,14 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterRole encounterRole=encounterService.getEncounterRole(2);
+  assertTrue(encounterRole.isRetired());
+  assertNotNull(encounterRole.getRetiredBy());
+  assertNotNull(encounterRole.getRetireReason());
+  assertNotNull(encounterRole.getDateRetired());
+  EncounterRole unretiredEncounterRole=encounterService.unretireEncounterRole(encounterRole);
+  assertEquals(unretiredEncounterRole,encounterRole);
+  assertFalse(unretiredEncounterRole.isRetired());
+  assertNull(unretiredEncounterRole.getDateRetired());
+  assertNull(unretiredEncounterRole.getRetiredBy());
+  assertNull(unretiredEncounterRole.getRetireReason());
+}

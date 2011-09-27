@@ -12,6 +12,7 @@
     FormService fs=Context.getFormService();
     Form form=encounter.getForm();
     map.put("encounterTypes",es.getAllEncounterTypes());
+    map.put("encounterRoles",es.getAllEncounterRoles(false));
     map.put("forms",Context.getFormService().getAllForms());
     String reason="";
     for (    Obs o : encounter.getObsAtTopLevel(true)) {

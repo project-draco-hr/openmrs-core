@@ -1,0 +1,4 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(EncounterRole.class);
+  return includeRetired ? criteria.list() : criteria.add(Restrictions.eq("retired",includeRetired)).list();
+}

@@ -1,0 +1,12 @@
+{
+  EncounterRole encounterRole=new EncounterRole();
+  encounterRole.setName("Attending physician");
+  encounterRole.setDescription("The person in charge");
+  EncounterService encounterService=Context.getEncounterService();
+  encounterService.saveEncounterRole(encounterRole);
+  assertNotNull("The saved encounter role should have an encounter role id now",encounterRole.getEncounterRoleId());
+  EncounterRole newSavedEncounterRole=encounterService.getEncounterRole(encounterRole.getEncounterRoleId());
+  assertNotNull("We should get back an encounter role",newSavedEncounterRole);
+  assertEquals(encounterRole,newSavedEncounterRole);
+  assertTrue("The created encounter role needs to equal the pojo encounter role",encounterRole.equals(newSavedEncounterRole));
+}

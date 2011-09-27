@@ -1,0 +1,9 @@
+{
+  executeDataSet(VISITS_ATTRIBUTES_XML);
+  VisitService vs=Context.getVisitService();
+  Visit visit=new Visit(new Patient(2),new VisitType(3),new Date());
+  VisitAttribute visitAttribute=createVisitAttributeWithoutCreatorAndDateCreated();
+  visit.setAttribute(visitAttribute);
+  visit=vs.saveVisit(visit);
+  Assert.assertNotNull(visit.getId());
+}

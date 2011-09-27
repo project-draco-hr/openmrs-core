@@ -1,0 +1,18 @@
+{
+  if (eps != null) {
+    LinkedHashSet<Provider> providerList=getDisplayEncounterProviders(eps);
+    String providers=null;
+    for (    Provider provider : providerList) {
+      if (providers == null) {
+        providers="";
+      }
+ else {
+        providers+=", ";
+      }
+      providers+=getProviderName(provider);
+    }
+    if (providers != null) {
+      sb.append(providers);
+    }
+  }
+}

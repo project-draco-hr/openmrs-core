@@ -25,22 +25,20 @@
   if (excludeDatatypeNames == null)   excludeDatatypeNames=new Vector<String>();
   try {
     ConceptService cs=Context.getConceptService();
-    if (!StringUtils.isBlank(phrase)) {
-      List<ConceptClass> includeClasses=new Vector<ConceptClass>();
-      for (      String name : includeClassNames)       if (!"".equals(name))       includeClasses.add(cs.getConceptClassByName(name));
-      List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
-      for (      String name : excludeClassNames)       if (!"".equals(name))       excludeClasses.add(cs.getConceptClassByName(name));
-      List<ConceptDatatype> includeDatatypes=new Vector<ConceptDatatype>();
-      for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
-      List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
-      for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      int matchCount=0;
-      if (getMatchCount) {
-        matchCount+=cs.getCountOfConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null);
-        if (phrase.matches("\\d+")) {
-          Concept c=cs.getConcept(Integer.valueOf(phrase));
-          if (c != null && (!c.isRetired() || includeRetired))           matchCount++;
-        }
+    List<ConceptClass> includeClasses=new Vector<ConceptClass>();
+    for (    String name : includeClassNames)     if (!"".equals(name))     includeClasses.add(cs.getConceptClassByName(name));
+    List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
+    for (    String name : excludeClassNames)     if (!"".equals(name))     excludeClasses.add(cs.getConceptClassByName(name));
+    List<ConceptDatatype> includeDatatypes=new Vector<ConceptDatatype>();
+    for (    String name : includeDatatypeNames)     if (!"".equals(name))     includeDatatypes.add(cs.getConceptDatatypeByName(name));
+    List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
+    for (    String name : excludeDatatypeNames)     if (!"".equals(name))     excludeDatatypes.add(cs.getConceptDatatypeByName(name));
+    int matchCount=0;
+    if (getMatchCount) {
+      matchCount+=cs.getCountOfConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null);
+      if (phrase.matches("\\d+")) {
+        Concept c=cs.getConcept(Integer.valueOf(phrase));
+        if (c != null && (!c.isRetired() || includeRetired))         matchCount++;
       }
       if (matchCount > 0 || !getMatchCount) {
         objectList.addAll(findBatchOfConcepts(phrase,includeRetired,includeClassNames,excludeClassNames,includeDatatypeNames,excludeDatatypeNames,start,length));

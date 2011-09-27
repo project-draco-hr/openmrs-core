@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(name)) {
+    name="%";
+  }
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Concept.class);
   criteria.add(Expression.eq("retired",false));
   if (name != null) {

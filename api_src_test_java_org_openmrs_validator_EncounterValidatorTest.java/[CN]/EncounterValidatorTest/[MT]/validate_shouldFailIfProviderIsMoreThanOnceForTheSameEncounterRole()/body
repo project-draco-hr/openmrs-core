@@ -1,0 +1,9 @@
+{
+  Encounter encounter=new Encounter();
+  encounter.setPatient(new Patient(2));
+  encounter.addProvider(new EncounterRole(1),new Provider(1));
+  encounter.addProvider(new EncounterRole(1),new Provider(1));
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  Assert.assertTrue(errors.hasFieldErrors("providersByRoles"));
+}

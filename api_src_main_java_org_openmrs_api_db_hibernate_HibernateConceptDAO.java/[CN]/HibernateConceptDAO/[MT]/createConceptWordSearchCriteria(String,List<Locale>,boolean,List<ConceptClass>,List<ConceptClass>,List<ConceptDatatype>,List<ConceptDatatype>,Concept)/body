@@ -5,7 +5,13 @@
     if (locales.contains(languageOnly) == false)     localesToAdd.add(languageOnly);
   }
   locales.addAll(localesToAdd);
-  List<String> words=ConceptWord.getUniqueWords(phrase);
+  List<String> words=new ArrayList<String>();
+  if (phrase.equals("%")) {
+    words.add(phrase);
+  }
+ else {
+    words=ConceptWord.getUniqueWords(phrase);
+  }
   List<Concept> answers=new Vector<Concept>();
   if (answersToConcept != null && answersToConcept.getAnswers(false) != null) {
     for (    ConceptAnswer conceptAnswer : answersToConcept.getAnswers(false)) {

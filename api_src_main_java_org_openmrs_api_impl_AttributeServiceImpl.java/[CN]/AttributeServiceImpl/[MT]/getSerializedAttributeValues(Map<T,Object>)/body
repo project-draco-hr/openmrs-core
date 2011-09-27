@@ -1,0 +1,12 @@
+{
+  Map<T,String> serializedAttributeValues=null;
+  if (attributeValues != null) {
+    serializedAttributeValues=new HashMap<T,String>();
+    AttributeService attrService=Context.getAttributeService();
+    for (    Map.Entry<T,Object> e : attributeValues.entrySet()) {
+      T vat=e.getKey();
+      serializedAttributeValues.put(vat,attrService.getHandler(vat).serialize(e.getValue()));
+    }
+  }
+  return serializedAttributeValues;
+}

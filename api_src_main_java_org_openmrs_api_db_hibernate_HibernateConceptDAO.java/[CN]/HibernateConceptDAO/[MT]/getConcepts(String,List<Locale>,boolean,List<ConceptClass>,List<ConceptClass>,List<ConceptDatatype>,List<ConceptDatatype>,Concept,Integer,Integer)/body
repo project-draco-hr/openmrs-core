@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(phrase)) {
+    phrase="%";
+  }
   Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
   List<ConceptSearchResult> results=new Vector<ConceptSearchResult>();
   if (searchCriteria != null) {
