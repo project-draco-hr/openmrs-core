@@ -1,0 +1,11 @@
+{
+  if (visit != null && visit.getId() != null) {
+    List<Encounter> encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
+    int obsByVisitCount=0;
+    for (    Encounter encounter : encountersByVisit) {
+      obsByVisitCount+=encounter.getObs().size();
+    }
+    return obsByVisitCount;
+  }
+  return null;
+}

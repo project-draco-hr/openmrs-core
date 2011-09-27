@@ -1,0 +1,7 @@
+{
+  if (visit != null && visit.getId() != null) {
+    List<Encounter> encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
+    return encountersByVisit.size();
+  }
+  return null;
+}
