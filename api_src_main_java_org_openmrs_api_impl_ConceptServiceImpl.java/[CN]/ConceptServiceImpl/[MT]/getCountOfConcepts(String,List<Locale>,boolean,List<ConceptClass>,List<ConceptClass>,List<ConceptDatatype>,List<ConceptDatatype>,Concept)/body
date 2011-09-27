@@ -1,3 +1,7 @@
 {
+  if (requireClasses == null)   requireClasses=new Vector<ConceptClass>();
+  if (excludeClasses == null)   excludeClasses=new Vector<ConceptClass>();
+  if (requireDatatypes == null)   requireDatatypes=new Vector<ConceptDatatype>();
+  if (excludeDatatypes == null)   excludeDatatypes=new Vector<ConceptDatatype>();
   return dao.getCountOfConceptWords(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept,true);
 }
