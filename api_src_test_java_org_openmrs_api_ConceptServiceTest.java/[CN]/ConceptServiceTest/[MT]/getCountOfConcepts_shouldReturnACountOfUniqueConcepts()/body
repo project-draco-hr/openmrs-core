@@ -1,0 +1,4 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-words.xml");
+  Assert.assertEquals(2,conceptService.getCountOfConcepts("trust",Collections.singletonList(Locale.ENGLISH),false,null,null,null,null,null).intValue());
+}
