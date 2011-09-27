@@ -1,0 +1,11 @@
+{
+  new EncounterRoleValidator().validate(encounterRole,errors);
+  if (!errors.hasErrors()) {
+    if (Context.isAuthenticated()) {
+      EncounterService service=Context.getEncounterService();
+      purgeEncounterRole(session,encounterRole,service);
+      return showEncounterList();
+    }
+  }
+  return showForm();
+}

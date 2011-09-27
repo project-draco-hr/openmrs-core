@@ -1,0 +1,5 @@
+{
+  Criteria criteria=getSession().createCriteria(clazz);
+  criteria.add(Restrictions.eq("uuid",uuid));
+  return (T)criteria.uniqueResult();
+}

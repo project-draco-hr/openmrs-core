@@ -1,0 +1,13 @@
+{
+  executeDataSet(ENC_INITIAL_DATA_XML);
+  EncounterRoleFormController controller=new EncounterRoleFormController();
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  HttpSession session=request.getSession();
+  EncounterRole encounterRole=Context.getEncounterService().getEncounterRole(1);
+  encounterRole.setRetireReason("this role is no more existing");
+  BindException errors=new BindException(encounterRole,"encounterRole");
+  controller.retire(session,encounterRole,errors);
+  assertNotNull(encounterRole.getId());
+  assertTrue(encounterRole.isRetired());
+  assertEquals("EncounterRole.retiredSuccessfully",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+}

@@ -1,0 +1,13 @@
+{
+  provider.setIdentifier("id");
+  provider.setRetired(true);
+  provider.setPerson(new Person());
+  providerValidator.validate(provider,errors);
+  Assert.assertTrue(errors.hasErrors());
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+  Assert.assertEquals("Provider.error.retireReason.required",errors.getFieldError("retireReason").getCode());
+  errors=new BindException(provider,"provider");
+  provider.setRetireReason("getting old..");
+  providerValidator.validate(provider,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

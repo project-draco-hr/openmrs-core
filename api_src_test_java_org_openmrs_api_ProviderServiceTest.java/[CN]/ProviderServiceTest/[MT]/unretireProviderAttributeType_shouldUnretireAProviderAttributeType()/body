@@ -1,0 +1,7 @@
+{
+  ProviderAttributeType providerAttributeType=service.getProviderAttributeType(2);
+  assertTrue(providerAttributeType.isRetired());
+  service.unretireProviderAttributeType(providerAttributeType);
+  assertFalse(providerAttributeType.isRetired());
+  assertNull(providerAttributeType.getRetireReason());
+}

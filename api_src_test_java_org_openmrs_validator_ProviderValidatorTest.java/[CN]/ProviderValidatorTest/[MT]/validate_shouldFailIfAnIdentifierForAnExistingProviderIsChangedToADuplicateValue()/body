@@ -1,0 +1,8 @@
+{
+  executeDataSet(OTHERS_PROVIDERS_XML);
+  Provider duplicateProvider=providerService.getProvider(200);
+  Provider existingProviderToEdit=providerService.getProvider(1);
+  existingProviderToEdit.setIdentifier(duplicateProvider.getIdentifier());
+  providerValidator.validate(existingProviderToEdit,errors);
+  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+}

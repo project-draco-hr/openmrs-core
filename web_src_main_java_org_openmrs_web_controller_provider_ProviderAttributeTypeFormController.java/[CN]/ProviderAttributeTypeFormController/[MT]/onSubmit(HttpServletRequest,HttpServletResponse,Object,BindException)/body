@@ -1,0 +1,50 @@
+{
+  HttpSession httpSession=request.getSession();
+  String view=getFormView();
+  if (Context.isAuthenticated()) {
+    ProviderAttributeType providerAttributeType=(ProviderAttributeType)obj;
+    ProviderService providerService=Context.getProviderService();
+    if (request.getParameter("save") != null) {
+      providerService.saveProviderAttributeType(providerAttributeType);
+      view=getSuccessView();
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ProviderAttributeType.saved");
+    }
+ else     if (request.getParameter("retire") != null) {
+      String retireReason=request.getParameter("retireReason");
+      if (providerAttributeType.getProviderAttributeTypeId() != null && !(StringUtils.hasText(retireReason))) {
+        errors.reject("retireReason","general.retiredReason.empty");
+        return showForm(request,response,errors);
+      }
+      providerService.retireProviderAttributeType(providerAttributeType,retireReason);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ProviderAttributeType.retiredSuccessfully");
+      view=getSuccessView();
+    }
+ else     if (request.getParameter("purge") != null) {
+      try {
+        providerService.purgeProviderAttributeType(providerAttributeType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ProviderAttributeType.purgedSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+        view="providerAttributeType.form?providerAttributeTypeId=" + providerAttributeType.getProviderAttributeTypeId();
+      }
+catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="providerAttributeType.form?providerAttributeTypeId=" + providerAttributeType.getProviderAttributeTypeId();
+      }
+    }
+ else     if (request.getParameter("unretire") != null) {
+      try {
+        providerService.unretireProviderAttributeType(providerAttributeType);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ProviderAttributeType.unretiredSuccessfully");
+        view=getSuccessView();
+      }
+ catch (      APIException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+        view="providerAttributeType.form?providerAttributeTypeId=" + providerAttributeType.getProviderAttributeTypeId();
+      }
+    }
+  }
+  return new ModelAndView(new RedirectView(view));
+}

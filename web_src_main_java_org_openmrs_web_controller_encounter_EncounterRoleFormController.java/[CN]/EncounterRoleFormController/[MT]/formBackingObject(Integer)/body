@@ -1,0 +1,10 @@
+{
+  EncounterRole encounterRole=new EncounterRole();
+  if (Context.isAuthenticated()) {
+    if (encounterRoleId != null) {
+      EncounterService encounterService=Context.getEncounterService();
+      encounterRole=encounterService.getEncounterRole(encounterRoleId);
+    }
+  }
+  return encounterRole;
+}

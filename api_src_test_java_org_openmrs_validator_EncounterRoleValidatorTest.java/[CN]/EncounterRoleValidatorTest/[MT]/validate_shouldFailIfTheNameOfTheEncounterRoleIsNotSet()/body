@@ -1,0 +1,6 @@
+{
+  EncounterRole encounterRole=new EncounterRole();
+  Errors errors=new BindException(encounterRole,"encounterRole");
+  new EncounterRoleValidator().validate(encounterRole,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}

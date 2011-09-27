@@ -1,0 +1,10 @@
+{
+  Criteria criteria=prepareProviderCriteria(name);
+  if (start != null)   criteria.setFirstResult(start);
+  if (length != null)   criteria.setMaxResults(length);
+  List<Provider> providers=criteria.list();
+  if (serializedAttributeValues != null) {
+    CollectionUtils.filter(providers,new AttributeMatcherPredicate<Provider,ProviderAttributeType>(serializedAttributeValues));
+  }
+  return providers;
+}

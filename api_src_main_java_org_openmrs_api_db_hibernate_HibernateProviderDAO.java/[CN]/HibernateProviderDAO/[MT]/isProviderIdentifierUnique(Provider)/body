@@ -1,0 +1,8 @@
+{
+  Criteria criteria=getSession().createCriteria(Provider.class);
+  criteria.add(Restrictions.eq("identifier",provider.getIdentifier()));
+  criteria.add(Restrictions.eq("retired",false));
+  if (provider.getProviderId() != null)   criteria.add(Restrictions.not(Restrictions.eq("providerId",provider.getProviderId())));
+  criteria.setProjection(Projections.countDistinct("providerId"));
+  return (Integer)criteria.uniqueResult() == 0;
+}

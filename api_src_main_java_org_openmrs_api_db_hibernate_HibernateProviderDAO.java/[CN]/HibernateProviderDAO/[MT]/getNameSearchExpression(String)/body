@@ -1,0 +1,10 @@
+{
+  MatchMode mode=MatchMode.ANYWHERE;
+  IlikeExpression providerNameExpression=(IlikeExpression)Expression.ilike("name",name,mode);
+  IlikeExpression givenName=(IlikeExpression)Expression.ilike("personName.givenName",name,mode);
+  IlikeExpression middleName=(IlikeExpression)Expression.ilike("personName.middleName",name,mode);
+  IlikeExpression familyName=(IlikeExpression)Expression.ilike("personName.familyName",name,mode);
+  IlikeExpression familyName2=(IlikeExpression)Expression.ilike("personName.familyName2",name,mode);
+  LogicalExpression personNameExpression=Expression.and(Expression.eq("personName.voided",false),Expression.or(familyName2,Expression.or(familyName,Expression.or(middleName,givenName))));
+  return Expression.or(providerNameExpression,personNameExpression);
+}

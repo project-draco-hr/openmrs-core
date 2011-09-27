@@ -1,0 +1,10 @@
+{
+  Person person=Context.getPersonService().getPerson(999);
+  Provider provider=new Provider();
+  provider.setIdentifier("unique");
+  provider.setPerson(person);
+  provider=service.saveProvider(provider);
+  Collection<Provider> providers=service.getProvidersByPerson(person);
+  Assert.assertEquals(1,providers.size());
+  Assert.assertTrue(providers.contains(provider));
+}

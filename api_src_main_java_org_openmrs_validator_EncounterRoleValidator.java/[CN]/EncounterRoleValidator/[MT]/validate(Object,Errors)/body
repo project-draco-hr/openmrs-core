@@ -1,0 +1,8 @@
+{
+  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
+  if (obj == null || !(obj instanceof EncounterRole))   throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + EncounterRole.class);
+  EncounterRole encounterRole=(EncounterRole)obj;
+  if (encounterRole != null) {
+    ValidationUtils.rejectIfEmpty(errors,"name","error.null");
+  }
+}

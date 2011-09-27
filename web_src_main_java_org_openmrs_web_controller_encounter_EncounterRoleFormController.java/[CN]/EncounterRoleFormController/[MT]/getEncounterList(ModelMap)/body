@@ -1,0 +1,9 @@
+{
+  List<EncounterRole> encounterRoles=new ArrayList<EncounterRole>();
+  if (Context.isAuthenticated()) {
+    EncounterService encounterService=Context.getEncounterService();
+    encounterRoles=encounterService.getAllEncounterRoles(true);
+  }
+  modelMap.addAttribute("encounterRoles",encounterRoles);
+  return "admin/encounters/encounterRoleList";
+}
