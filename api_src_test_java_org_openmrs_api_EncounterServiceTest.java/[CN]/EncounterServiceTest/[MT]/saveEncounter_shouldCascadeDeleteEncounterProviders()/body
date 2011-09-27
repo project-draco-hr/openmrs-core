@@ -1,0 +1,29 @@
+{
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterType(new EncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(new Patient(3));
+  EncounterRole role=new EncounterRole();
+  role.setName("role");
+  role=Context.getEncounterService().saveEncounterRole(role);
+  Provider provider=new Provider();
+  provider.setName("provider");
+  provider.setIdentifier("id1");
+  provider=Context.getProviderService().saveProvider(provider);
+  Provider provider2=new Provider();
+  provider2.setName("provider2");
+  provider2.setIdentifier("id2");
+  provider2=Context.getProviderService().saveProvider(provider2);
+  encounter.addProvider(role,provider);
+  encounter.addProvider(role,provider2);
+  EncounterService es=Context.getEncounterService();
+  encounter=es.saveEncounter(encounter);
+  encounter.setProvider(role,provider);
+  encounter=es.saveEncounter(encounter);
+  Context.flushSession();
+  Context.clearSession();
+  encounter=Context.getEncounterService().getEncounter(encounter.getEncounterId());
+  Assert.assertEquals(1,encounter.getProvidersByRole(role).size());
+  Assert.assertTrue("Role",encounter.getProvidersByRole(role).contains(provider));
+}

@@ -1,6 +1,6 @@
 {
   executeDataSet(VISITS_ATTRIBUTES_XML);
-  Assert.assertEquals(2,service.getAllVisitAttributeTypes().size());
+  Assert.assertEquals(3,service.getAllVisitAttributeTypes().size());
   service.purgeVisitAttributeType(service.getVisitAttributeType(2));
-  Assert.assertEquals(1,service.getAllVisitAttributeTypes().size());
+  Assert.assertEquals(2,service.getAllVisitAttributeTypes().size());
 }

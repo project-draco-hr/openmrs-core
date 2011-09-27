@@ -1,0 +1,10 @@
+{
+  Encounter encounter=new Encounter();
+  Person person=Context.getPersonService().getPerson(1);
+  Collection<Provider> providers=Context.getProviderService().getProvidersByPerson(person);
+  EncounterRole role=Context.getEncounterService().getEncounterRoleByUuid(EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID);
+  Assert.assertNotNull("Unknown role",role);
+  encounter.setProvider(person);
+  Assert.assertEquals(1,encounter.getProvidersByRole(role).size());
+  Assert.assertTrue(encounter.getProvidersByRole(role).contains(providers.iterator().next()));
+}

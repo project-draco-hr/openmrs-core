@@ -1,3 +1,13 @@
 {
-  return provider;
+  if (encounterProviders == null || encounterProviders.isEmpty()) {
+    return null;
+  }
+ else {
+    for (    EncounterProvider encounterProvider : encounterProviders) {
+      if (encounterProvider.getProvider().getPerson() != null) {
+        return encounterProvider.getProvider().getPerson();
+      }
+    }
+  }
+  return null;
 }

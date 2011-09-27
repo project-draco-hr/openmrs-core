@@ -1,0 +1,11 @@
+{
+  String encounterRoles=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_DASHBOARD_PROVIDER_DISPLAY_ENCOUNTER_ROLES,null);
+  if (!StringUtils.hasText(encounterRoles)) {
+    LinkedHashSet<Provider> allProviders=new LinkedHashSet<Provider>();
+    for (    Set<Provider> providers : encounterProviders.values()) {
+      allProviders.addAll(providers);
+    }
+    return allProviders;
+  }
+  return filterProviders(encounterProviders,trimStringArray(encounterRoles.split(",")));
+}

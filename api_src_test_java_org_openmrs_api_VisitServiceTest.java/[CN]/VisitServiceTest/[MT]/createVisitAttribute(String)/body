@@ -1,0 +1,12 @@
+{
+  UserService us=Context.getUserService();
+  User user=us.getUserByUsername("admin");
+  VisitAttribute visitAttribute=new VisitAttribute();
+  VisitAttributeType attributeType=Context.getVisitService().getVisitAttributeType(1);
+  attributeType.setName("visit type");
+  visitAttribute.setSerializedValue(serializedValue);
+  visitAttribute.setCreator(user);
+  visitAttribute.setDateCreated(new Date());
+  visitAttribute.setAttributeType(attributeType);
+  return visitAttribute;
+}

@@ -1,0 +1,10 @@
+{
+  LinkedHashSet<Provider> filteredProviders=new LinkedHashSet<Provider>();
+  Set<EncounterRole> roles=encounterProviders.keySet();
+  for (  EncounterRole encounterRole : roles) {
+    if (containsRole(encounterRole,rolesArray)) {
+      filteredProviders.addAll(encounterProviders.get(encounterRole));
+    }
+  }
+  return filteredProviders;
+}

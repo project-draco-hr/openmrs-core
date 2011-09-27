@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(phrase)) {
+    phrase="%";
+  }
   Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
   if (searchCriteria != null) {
     if (forUniqueConcepts)     searchCriteria.setProjection(Projections.countDistinct("concept"));

@@ -1,0 +1,7 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterRole encounterRole=encounterService.getEncounterRole(1);
+  encounterService.purgeEncounterRole(encounterRole);
+  EncounterRole fetchedEncounterRole=encounterService.getEncounterRole(encounterRole.getEncounterRoleId());
+  assertNull("We shouldn't find the encounter after deletion",fetchedEncounterRole);
+}

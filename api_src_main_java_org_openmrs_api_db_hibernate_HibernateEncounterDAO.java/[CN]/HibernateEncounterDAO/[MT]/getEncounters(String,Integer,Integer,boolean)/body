@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(query)) {
+    return Collections.emptyList();
+  }
   Criteria criteria=createEncounterByQueryCriteria(query,includeVoided);
   if (start != null)   criteria.setFirstResult(start);
   if (length != null && length > 0)   criteria.setMaxResults(length);

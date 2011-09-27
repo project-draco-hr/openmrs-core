@@ -17,5 +17,15 @@
         errors.rejectValue("encounterDatetime","Encounter.datetimeShouldBeInVisitDatesRange","The encounter datetime should be between the visit start and stop dates.");
       }
     }
+    Map<Integer,EncounterRole> encounterMap=new HashMap<Integer,EncounterRole>();
+    Map<EncounterRole,Set<Provider>> providers=encounter.getProvidersByRoles();
+    for (    Entry<EncounterRole,Set<Provider>> entry : providers.entrySet()) {
+      EncounterRole encounterRole=entry.getKey();
+      if (encounterMap.containsKey(encounterRole.getEncounterRoleId())) {
+        errors.rejectValue("providersByRoles","Encounter.error.duplicateProviderEncounterRole","Provider cannot be added more than once for the same encounter role");
+        break;
+      }
+      encounterMap.put(encounterRole.getEncounterRoleId(),encounterRole);
+    }
   }
 }

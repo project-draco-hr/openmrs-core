@@ -1,0 +1,8 @@
+{
+  Encounter encounter=new Encounter();
+  EncounterRole role=new EncounterRole();
+  Provider provider=new Provider();
+  encounter.addProvider(role,provider);
+  Set<Provider> providers=encounter.getProvidersByRole(null);
+  Assert.assertEquals(0,providers.size());
+}

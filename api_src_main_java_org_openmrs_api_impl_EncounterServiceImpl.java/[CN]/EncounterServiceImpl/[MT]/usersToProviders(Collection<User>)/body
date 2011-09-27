@@ -1,0 +1,9 @@
+{
+  if (users == null)   return null;
+  ProviderService providerService=Context.getProviderService();
+  Collection<Provider> ret=new HashSet<Provider>();
+  for (  User u : users) {
+    ret.addAll(providerService.getProvidersByPerson(u.getPerson()));
+  }
+  return ret;
+}

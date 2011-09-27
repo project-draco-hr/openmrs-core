@@ -52,6 +52,11 @@
       printConcept(sb,program.getConcept());
     }
   }
+  if (providerId != null)   provider=Context.getProviderService().getProvider(providerId);
+  if (provider != null)   printProvider(sb,provider);
+  if (encounterProviders != null) {
+    printEncounterProviders(sb,encounterProviders);
+  }
   if (StringUtils.hasText(var)) {
     if (javaScriptEscape)     pageContext.setAttribute(var,JavaScriptUtils.javaScriptEscape(sb.toString()));
  else     pageContext.setAttribute(var,sb.toString());

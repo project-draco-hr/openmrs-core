@@ -14,24 +14,9 @@
     if (maxEndDatetime != null)     criteria.add(Restrictions.le("stopDatetime",maxEndDatetime));
   }
   if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
-  if (serializedAttributeValues == null)   return criteria.list();
-  List<Visit> ret=new ArrayList<Visit>();
-  for (  Visit visit : (List<Visit>)criteria.list()) {
-    boolean allMatch=true;
-    for (    Map.Entry<VisitAttributeType,String> e : serializedAttributeValues.entrySet()) {
-      boolean match=false;
-      for (      VisitAttribute attr : visit.getActiveAttributes(e.getKey())) {
-        if (attr.getSerializedValue().equals(e.getValue())) {
-          match=true;
-          break;
-        }
-      }
-      if (!match) {
-        allMatch=false;
-        break;
-      }
-    }
-    if (allMatch)     ret.add(visit);
+  List<Visit> visits=criteria.list();
+  if (serializedAttributeValues != null) {
+    CollectionUtils.filter(visits,new AttributeMatcherPredicate<Visit,VisitAttributeType>(serializedAttributeValues));
   }
-  return ret;
+  return visits;
 }
