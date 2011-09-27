@@ -16,7 +16,7 @@
         }
       }
     }
-    throw new APIException("Failed to find visit type for encounterTypeId:" + encounter.getEncounterType().getEncounterTypeId());
+    throw new APIException("Global Property: visit.encounterTypeToVisitTypeMapping does not have a mapping for encounter type: " + encounter.getEncounterType().getName());
   }
   return Context.getVisitService().getAllVisitTypes().get(0);
 }
