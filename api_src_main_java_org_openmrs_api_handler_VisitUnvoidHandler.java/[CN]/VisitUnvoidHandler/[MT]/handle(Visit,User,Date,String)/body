@@ -1,0 +1,6 @@
+{
+  List<Encounter> encountersByVisit=Context.getEncounterService().getEncountersByVisit(voidableObject,true);
+  for (  Encounter encounter : encountersByVisit) {
+    Context.getEncounterService().unvoidEncounter(encounter);
+  }
+}

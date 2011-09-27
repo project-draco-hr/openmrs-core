@@ -1,0 +1,12 @@
+{
+  executeDataSet(VISITS_WITH_DATES_XML);
+  Visit visit=service.getVisit(7);
+  service.voidVisit(visit,"test reason");
+  Assert.assertTrue(visit.isVoided());
+  List<Encounter> encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
+  Assert.assertTrue(encountersByVisit.isEmpty());
+  visit=service.unvoidVisit(visit);
+  Assert.assertFalse(visit.isVoided());
+  encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
+  Assert.assertFalse(encountersByVisit.isEmpty());
+}
