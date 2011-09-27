@@ -1,0 +1,7 @@
+{
+  List<Encounter> encounters=Context.getEncounterService().getEncountersByVisit(visit,false);
+  model.put("encounterCount",encounters.size());
+  Integer observationCount=Context.getObsService().getObservationCount(null,encounters,null,null,null,null,null,null,null,false);
+  model.put("observationCount",observationCount);
+  return VISIT_FORM;
+}
