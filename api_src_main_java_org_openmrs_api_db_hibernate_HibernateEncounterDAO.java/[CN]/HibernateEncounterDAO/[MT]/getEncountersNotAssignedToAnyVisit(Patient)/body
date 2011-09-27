@@ -1,0 +1,3 @@
+{
+  return sessionFactory.getCurrentSession().createCriteria(Encounter.class).add(Restrictions.eq("patient",patient)).add(Restrictions.isNull("visit")).add(Restrictions.eq("voided",false)).addOrder(Order.desc("encounterDatetime")).setMaxResults(100).list();
+}

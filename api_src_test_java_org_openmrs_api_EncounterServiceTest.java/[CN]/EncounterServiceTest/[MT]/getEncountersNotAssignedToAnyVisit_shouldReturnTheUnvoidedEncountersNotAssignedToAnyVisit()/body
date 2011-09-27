@@ -1,0 +1,7 @@
+{
+  executeDataSet(UNIQUE_ENC_WITH_PAGING_XML);
+  List<Encounter> encs=Context.getEncounterService().getEncountersNotAssignedToAnyVisit(Context.getPatientService().getPatient(10));
+  Assert.assertEquals(2,encs.size());
+  Assert.assertEquals(17,encs.get(0).getEncounterId().intValue());
+  Assert.assertEquals(18,encs.get(1).getEncounterId().intValue());
+}
