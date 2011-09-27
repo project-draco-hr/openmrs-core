@@ -1,0 +1,7 @@
+{
+  Map<ProviderAttributeType,Object> attributes=new HashMap<ProviderAttributeType,Object>();
+  attributes.put(service.getProviderAttributeType(1),new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-25"));
+  List<Provider> providers=service.getProviders("RobertClive",0,null,attributes);
+  Assert.assertEquals(1,providers.size());
+  Assert.assertEquals(Integer.valueOf(1),providers.get(0).getProviderId());
+}

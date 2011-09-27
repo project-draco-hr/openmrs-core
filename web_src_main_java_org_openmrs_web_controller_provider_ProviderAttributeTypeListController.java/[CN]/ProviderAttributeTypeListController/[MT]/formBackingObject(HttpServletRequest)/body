@@ -1,0 +1,8 @@
+{
+  List<ProviderAttributeType> providerAttributeTypeList=new Vector<ProviderAttributeType>();
+  if (Context.isAuthenticated()) {
+    ProviderService es=Context.getProviderService();
+    providerAttributeTypeList=es.getAllProviderAttributeTypes();
+  }
+  return providerAttributeTypeList;
+}

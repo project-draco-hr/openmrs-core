@@ -1,0 +1,12 @@
+{
+  Vector<Object> providers=service.findProvider("provider",false,0,10);
+  Assert.assertEquals(2,providers.size());
+  final ArrayList<String> providerNames=new ArrayList<String>();
+  CollectionUtils.forAllDo(providers,new Closure(){
+    @Override public void execute(    Object input){
+      providerNames.add(((ProviderListItem)input).getDisplayName());
+    }
+  }
+);
+  Assert.assertTrue(providerNames.containsAll(Arrays.asList("Bruno Otterbourg","Hippocrates of Cos")));
+}

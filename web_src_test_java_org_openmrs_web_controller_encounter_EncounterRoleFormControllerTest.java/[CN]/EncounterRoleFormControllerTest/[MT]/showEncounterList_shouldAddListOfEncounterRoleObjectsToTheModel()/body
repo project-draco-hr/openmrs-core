@@ -1,0 +1,8 @@
+{
+  ModelMap modelMap=new ModelMap();
+  executeDataSet(ENC_INITIAL_DATA_XML);
+  EncounterRoleFormController controller=new EncounterRoleFormController();
+  String viewName=controller.getEncounterList(modelMap);
+  assertEquals("admin/encounters/encounterRoleList",viewName);
+  assertEquals(3,((List)modelMap.get("encounterRoles")).size());
+}

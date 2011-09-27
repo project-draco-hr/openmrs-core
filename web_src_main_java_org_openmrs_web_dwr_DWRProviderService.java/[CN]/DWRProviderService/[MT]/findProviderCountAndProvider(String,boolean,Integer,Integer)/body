@@ -1,0 +1,16 @@
+{
+  Map<String,Object> providerMap=new HashMap<String,Object>();
+  Vector<Object> objectList=findProvider(name,includeVoided,start,length);
+  try {
+    providerMap.put("count",Context.getProviderService().getCountOfProviders(name));
+    providerMap.put("objectList",objectList);
+  }
+ catch (  Exception e) {
+    log.error("Error while searching for providers",e);
+    objectList.clear();
+    objectList.add(Context.getMessageSourceService().getMessage("Provider.search.error") + " - " + e.getMessage());
+    providerMap.put("count",0);
+    providerMap.put("objectList",objectList);
+  }
+  return providerMap;
+}

@@ -1,0 +1,10 @@
+{
+  Provider provider=new Provider();
+  if (Context.isAuthenticated()) {
+    if (providerId != null) {
+      ProviderService ps=Context.getProviderService();
+      return ps.getProvider(providerId);
+    }
+  }
+  return provider;
+}

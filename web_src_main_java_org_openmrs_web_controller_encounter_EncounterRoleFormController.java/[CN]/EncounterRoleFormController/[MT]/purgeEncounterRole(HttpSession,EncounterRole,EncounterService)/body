@@ -1,0 +1,12 @@
+{
+  try {
+    service.purgeEncounterRole(encounterRole);
+    session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"EncounterRole.purgedSuccessfully");
+  }
+ catch (  DataIntegrityViolationException e) {
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+  }
+catch (  APIException e) {
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.general: " + e.getLocalizedMessage());
+  }
+}

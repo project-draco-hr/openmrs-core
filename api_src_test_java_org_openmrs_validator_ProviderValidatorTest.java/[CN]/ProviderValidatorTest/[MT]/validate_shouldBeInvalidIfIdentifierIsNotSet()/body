@@ -1,0 +1,6 @@
+{
+  provider.setIdentifier(null);
+  providerValidator.validate(provider,errors);
+  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+  Assert.assertEquals("Provider.error.identifier.required",errors.getFieldError("identifier").getCode());
+}

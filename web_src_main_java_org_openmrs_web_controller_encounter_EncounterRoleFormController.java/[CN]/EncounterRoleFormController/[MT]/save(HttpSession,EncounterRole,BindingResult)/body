@@ -1,0 +1,12 @@
+{
+  new EncounterRoleValidator().validate(encounterRole,errors);
+  if (!errors.hasErrors()) {
+    if (Context.isAuthenticated()) {
+      EncounterService service=Context.getEncounterService();
+      String message=saveEncounterRole(encounterRole,service);
+      session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,message);
+      return showEncounterList();
+    }
+  }
+  return showForm();
+}

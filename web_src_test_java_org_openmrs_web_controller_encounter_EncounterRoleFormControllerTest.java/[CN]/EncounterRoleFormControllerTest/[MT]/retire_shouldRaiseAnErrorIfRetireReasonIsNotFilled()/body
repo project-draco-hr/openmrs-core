@@ -1,0 +1,11 @@
+{
+  executeDataSet(ENC_INITIAL_DATA_XML);
+  EncounterRoleFormController controller=new EncounterRoleFormController();
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  HttpSession session=request.getSession();
+  EncounterRole encounterRole=Context.getEncounterService().getEncounterRole(1);
+  encounterRole.setRetireReason("");
+  BindException errors=new BindException(encounterRole,"encounterRole");
+  controller.retire(session,encounterRole,errors);
+  assertEquals(1,errors.getErrorCount());
+}

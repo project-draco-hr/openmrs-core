@@ -1,0 +1,6 @@
+{
+  Provider existingProviderToEdit=providerService.getProvider(1);
+  existingProviderToEdit.setIdentifier("unique");
+  providerValidator.validate(existingProviderToEdit,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

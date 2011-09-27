@@ -1,0 +1,6 @@
+{
+  int size=service.getAllProviderAttributeTypes().size();
+  ProviderAttributeType providerAttributeType=service.getProviderAttributeType(2);
+  service.purgeProviderAttributeType(providerAttributeType);
+  assertEquals(size - 1,service.getAllProviderAttributeTypes().size());
+}

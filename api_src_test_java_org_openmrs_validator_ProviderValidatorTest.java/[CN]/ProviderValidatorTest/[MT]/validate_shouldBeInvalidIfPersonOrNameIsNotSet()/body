@@ -1,0 +1,9 @@
+{
+  provider.setIdentifier("id");
+  provider.setPerson(null);
+  provider.setName(null);
+  providerValidator.validate(provider,errors);
+  Assert.assertTrue(errors.hasErrors());
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertEquals("Provider.error.personOrName.required",errors.getFieldError("name").getCode());
+}

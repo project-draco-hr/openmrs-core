@@ -1,0 +1,12 @@
+{
+  if (StringUtils.isBlank(name)) {
+    name="%";
+  }
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Provider.class).createAlias("person","p",Criteria.LEFT_JOIN);
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  if (name != null) {
+    criteria.createAlias("p.names","personName",Criteria.LEFT_JOIN);
+    criteria.add(getNameSearchExpression(name));
+  }
+  return criteria;
+}

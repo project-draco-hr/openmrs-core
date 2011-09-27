@@ -1,0 +1,11 @@
+{
+  EncounterRoleFormController controller=new EncounterRoleFormController();
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  HttpSession session=request.getSession();
+  EncounterRole encounterRole=new EncounterRole();
+  encounterRole.setName("attending physician");
+  encounterRole.setDescription("person in charge");
+  BindException errors=new BindException(encounterRole,"encounterRole");
+  controller.save(session,encounterRole,errors);
+  assertNotNull(encounterRole.getId());
+}

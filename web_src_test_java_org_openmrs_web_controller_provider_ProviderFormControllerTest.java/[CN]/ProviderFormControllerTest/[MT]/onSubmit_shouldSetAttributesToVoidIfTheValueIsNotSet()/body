@@ -1,0 +1,14 @@
+{
+  executeDataSet(PROVIDERS_ATTRIBUTES_XML);
+  Provider provider=Context.getProviderService().getProvider(1);
+  ProviderAttributeType providerAttributeType=Context.getProviderService().getProviderAttributeType(1);
+  providerAttributeType.setName("provider type");
+  MockHttpServletRequest mockHttpServletRequest=new MockHttpServletRequest();
+  mockHttpServletRequest.setParameter("attribute." + providerAttributeType.getId(),"");
+  ServletWebRequest mockWebRequest=new ServletWebRequest(mockHttpServletRequest);
+  BindException errors=new BindException(provider,"provider");
+  ProviderFormController visitFormController=(ProviderFormController)applicationContext.getBean("providerFormController");
+  visitFormController.onSubmit(mockWebRequest,"save",null,null,true,provider,errors,createModelMap(providerAttributeType));
+  Assert.assertEquals(1,provider.getAttributes().size());
+  Assert.assertTrue(((ProviderAttribute)(provider.getAttributes().toArray()[0])).isVoided());
+}

@@ -1,0 +1,9 @@
+{
+  Provider duplicateProvider=providerService.getProvider(1);
+  Assert.assertFalse(duplicateProvider.isRetired());
+  Provider provider=new Provider();
+  provider.setIdentifier(duplicateProvider.getIdentifier());
+  provider.setName("name");
+  providerValidator.validate(provider,errors);
+  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+}
