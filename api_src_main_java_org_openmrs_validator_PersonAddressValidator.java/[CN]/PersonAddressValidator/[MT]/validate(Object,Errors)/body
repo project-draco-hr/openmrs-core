@@ -8,6 +8,5 @@
  else   if (StringUtils.isNotBlank(personAddress.getCityVillage()))   addressString=personAddress.getCityVillage();
  else   addressString=personAddress.toString();
   if (OpenmrsUtil.compareWithNullAsEarliest(personAddress.getStartDate(),new Date()) > 0)   errors.rejectValue("startDate","PersonAddress.error.startDateInFuture",new Object[]{"'" + addressString + "'"},"The Start Date for address '" + addressString + "' shouldn't be in the future");
-  if (OpenmrsUtil.compareWithNullAsEarliest(personAddress.getEndDate(),new Date()) > 0)   errors.rejectValue("endDate","PersonAddress.error.endDateInFuture",new Object[]{"'" + addressString + "'"},"The EndDate for address '" + addressString + "' shouldn't be in the future");
   if (personAddress.getStartDate() != null && OpenmrsUtil.compareWithNullAsLatest(personAddress.getStartDate(),personAddress.getEndDate()) > 0)   errors.rejectValue("endDate","PersonAddress.error.endDateBeforeStartDate",new Object[]{"'" + addressString + "'"},"The End Date for address '" + addressString + "' shouldn't be earlier than the Start Date");
 }
