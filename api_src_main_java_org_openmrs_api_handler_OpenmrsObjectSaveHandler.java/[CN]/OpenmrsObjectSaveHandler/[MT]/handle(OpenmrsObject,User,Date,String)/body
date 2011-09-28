@@ -8,26 +8,27 @@
     if (property.getWriteMethod() == null) {
       continue;
     }
-    if (!property.getPropertyType().getName().equals("java.lang.String")) {
+    if (!property.getPropertyType().equals(String.class)) {
+      continue;
+    }
+    if (property.getWriteMethod().getAnnotation(AllowEmptyStrings.class) != null) {
       continue;
     }
     try {
       Object value=PropertyUtils.getProperty(openmrsObject,property.getName());
-      if (value != null && ((String)value).isEmpty()) {
+      if (value == null) {
+        continue;
+      }
+      if (property.getWriteMethod().getAnnotation(AllowLeadingOrTrailingWhitespace.class) == null) {
+        value=((String)value).trim();
+      }
+      if ("".equals(value)) {
         if (!(openmrsObject instanceof Voidable && ((Voidable)openmrsObject).isVoided())) {
           PropertyUtils.setProperty(openmrsObject,property.getName(),null);
         }
       }
     }
- catch (    InvocationTargetException ex) {
-      if (ex.getTargetException() instanceof TransientObjectException) {
-        log.error("Failed to change property value from empty string to null for " + property.getName(),ex);
-      }
- else {
-        throw new APIException("Failed to change property value from empty string to null for " + property.getName(),ex);
-      }
-    }
-catch (    Exception ex) {
+ catch (    Exception ex) {
       throw new APIException("Failed to change property value from empty string to null for " + property.getName(),ex);
     }
   }
