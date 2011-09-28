@@ -4,8 +4,10 @@
   TaskDefinition task=(TaskDefinition)command;
   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
   log.info("task started? " + task.getStarted());
-  if (task.getStarted() && OpenmrsUtil.compareWithNullAsEarliest(task.getStartTime(),new Date()) > 0 && (task.getTaskInstance() == null || !task.getTaskInstance().isExecuting()))   Context.getSchedulerService().rescheduleTask(task);
- else   Context.getSchedulerService().saveTask(task);
+  if (task.getStarted() && OpenmrsUtil.compareWithNullAsEarliest(task.getStartTime(),new Date()) > 0 && (task.getTaskInstance() == null || !task.getTaskInstance().isExecuting())) {
+    Context.getSchedulerService().rescheduleTask(task);
+  }
+  Context.getSchedulerService().saveTask(task);
   view=getSuccessView();
   Object[] args=new Object[]{task.getName()};
   String success=getMessageSourceAccessor().getMessage("Scheduler.taskForm.saved",args);
