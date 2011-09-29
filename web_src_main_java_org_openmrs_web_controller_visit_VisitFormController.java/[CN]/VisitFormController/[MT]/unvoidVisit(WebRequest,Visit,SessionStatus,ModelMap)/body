@@ -1,5 +1,4 @@
 {
-  addEncounterAndObservationCounts(visit,model);
   try {
     Context.getVisitService().unvoidVisit(visit);
     if (log.isDebugEnabled())     log.debug("Unvoided visit with id: " + visit.getId());
@@ -10,5 +9,6 @@
     log.warn("Error occurred while attempting to unvoid visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.unvoid.error"),WebRequest.SCOPE_SESSION);
   }
+  addEncounterAndObservationCounts(visit,model);
   return VISIT_FORM;
 }
