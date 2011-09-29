@@ -1,0 +1,10 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-conceptWithDuplicateName.xml");
+  Concept conceptToEdit=conceptService.getConcept(10000);
+  Locale locale=Locale.ENGLISH;
+  ConceptName duplicateNameToEdit=conceptToEdit.getFullySpecifiedName(locale);
+  Concept otherConcept=conceptService.getConcept(5497);
+  Assert.assertTrue(duplicateNameToEdit.getName().equalsIgnoreCase(otherConcept.getFullySpecifiedName(locale).getName()));
+  duplicateNameToEdit.setName("new unique name");
+  conceptService.saveConcept(conceptToEdit);
+}
