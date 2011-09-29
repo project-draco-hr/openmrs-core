@@ -1,0 +1,12 @@
+{
+  List<SettingsProperty> settings=new ArrayList<SettingsProperty>();
+  List<GlobalProperty> globalProperties=getService().getAllGlobalProperties();
+  for (  GlobalProperty globalProperty : globalProperties) {
+    SettingsProperty property=new SettingsProperty(globalProperty);
+    if (section.equals(property.getSection()) && !isHidden(property)) {
+      settings.add(property);
+    }
+  }
+  Collections.sort(settings);
+  return settings;
+}
