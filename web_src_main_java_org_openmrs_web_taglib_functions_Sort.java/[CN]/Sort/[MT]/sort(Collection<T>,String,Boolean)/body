@@ -2,6 +2,8 @@
   if (sortProperty == null || sortProperty.equals("")) {
     throw new IllegalArgumentException("sortProperty = " + sortProperty);
   }
+  if (c == null)   return null;
+  if (c.size() == 0)   return Collections.emptyList();
   List<T> l=new ArrayList<T>(c);
   Comparator comp=new BeanComparator(sortProperty,new ComparableComparator());
   Collections.sort(l,comp);
