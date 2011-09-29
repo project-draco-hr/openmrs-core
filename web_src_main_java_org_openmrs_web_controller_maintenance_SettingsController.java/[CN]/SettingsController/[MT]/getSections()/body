@@ -1,0 +1,11 @@
+{
+  SortedSet<String> sections=new TreeSet<String>();
+  List<GlobalProperty> globalProperties=getService().getAllGlobalProperties();
+  for (  GlobalProperty globalProperty : globalProperties) {
+    SettingsProperty property=new SettingsProperty(globalProperty);
+    if (!isHidden(property)) {
+      sections.add(property.getSection());
+    }
+  }
+  return new ArrayList<String>(sections);
+}
