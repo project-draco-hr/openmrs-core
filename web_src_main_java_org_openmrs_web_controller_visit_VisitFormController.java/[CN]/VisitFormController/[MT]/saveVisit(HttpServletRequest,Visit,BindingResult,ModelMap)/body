@@ -1,5 +1,4 @@
 {
-  addEncounterAndObservationCounts(visit,model);
   String[] ids=ServletRequestUtils.getStringParameters(request,"encounterIds");
   List<Integer> encounterIds=new ArrayList<Integer>();
   EncounterService es=Context.getEncounterService();
@@ -13,7 +12,10 @@
       if (!encounterIds.contains(e.getEncounterId())) {
         e.setVisit(null);
         validateEncounter(e,result);
-        if (result.hasErrors())         return VISIT_FORM;
+        if (result.hasErrors()) {
+          addEncounterAndObservationCounts(visit,model);
+          return VISIT_FORM;
+        }
         encountersToSave.add(e);
       }
  else {
@@ -25,7 +27,10 @@
       if (e != null) {
         e.setVisit(visit);
         validateEncounter(e,result);
-        if (result.hasErrors())         return VISIT_FORM;
+        if (result.hasErrors()) {
+          addEncounterAndObservationCounts(visit,model);
+          return VISIT_FORM;
+        }
         encountersToSave.add(e);
       }
     }
@@ -46,5 +51,6 @@
       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Visit.save.error");
     }
   }
+  addEncounterAndObservationCounts(visit,model);
   return VISIT_FORM;
 }

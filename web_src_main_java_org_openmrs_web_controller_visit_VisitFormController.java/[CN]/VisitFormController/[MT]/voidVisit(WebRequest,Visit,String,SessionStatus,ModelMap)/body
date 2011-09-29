@@ -1,5 +1,4 @@
 {
-  addEncounterAndObservationCounts(visit,model);
   if (!StringUtils.hasText(voidReason))   voidReason=Context.getMessageSourceService().getMessage("general.default.voidReason");
   try {
     Context.getVisitService().voidVisit(visit,voidReason);
@@ -11,5 +10,6 @@
     log.warn("Error occurred while attempting to void visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.void.error"),WebRequest.SCOPE_SESSION);
   }
+  addEncounterAndObservationCounts(visit,model);
   return VISIT_FORM;
 }
