@@ -2,7 +2,6 @@
   Errors errors=new BindException(conceptReferenceTerm,"conceptReferenceTerm");
   new ConceptReferenceTermValidator().validate(conceptReferenceTerm,errors);
   if (errors.hasErrors()) {
-    log.error("Validation errors found while saving the concept reference term");
     throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
   }
   return dao.saveConceptReferenceTerm(conceptReferenceTerm);
