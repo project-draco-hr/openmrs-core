@@ -1,8 +1,4 @@
 {
-  if (conceptReferenceTerm.getConceptReferenceTermId() == null) {
-    if (conceptReferenceTerm.getCreator() == null)     conceptReferenceTerm.setCreator(Context.getAuthenticatedUser());
-    if (conceptReferenceTerm.getDateCreated() == null)     conceptReferenceTerm.setDateCreated(new Date());
-  }
   if (conceptReferenceTerm.getName() != null) {
     conceptReferenceTerm.setName(conceptReferenceTerm.getName().trim());
   }
@@ -17,8 +13,9 @@
     if (conceptReferenceTerm.getVersion().trim().length() == 0)     conceptReferenceTerm.setVersion(null);
  else     conceptReferenceTerm.setVersion(conceptReferenceTerm.getVersion().trim());
   }
+  if (StringUtils.isBlank(conceptReferenceTerm.getConceptSource().getHl7Code()))   throw new APIException("ConceptSource.hl7Code.required");
   conceptReferenceTerm.setUuid(conceptReferenceTerm.getConceptSource().getHl7Code().concat("-").concat(conceptReferenceTerm.getCode()));
-  if (CollectionUtils.isNotEmpty(conceptReferenceTerm.getConceptReferenceTermMaps())) {
+  if (conceptReferenceTerm.getConceptReferenceTermMaps() != null) {
     for (    ConceptReferenceTermMap map : conceptReferenceTerm.getConceptReferenceTermMaps())     map.setTermA(conceptReferenceTerm);
   }
 }
