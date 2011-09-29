@@ -29,9 +29,6 @@ catch (          InvocationTargetException e) {
       }
     }
   }
-  Errors errors=new BindException(concept,"concept");
-  new ConceptValidator().validate(concept,errors);
-  if (errors.hasErrors())   throw new APIException("Validation errors found");
   if (CollectionUtils.isNotEmpty(changedConceptNames)) {
     for (    ConceptName changedName : changedConceptNames) {
       ConceptName nameInDB=changedName;
@@ -46,6 +43,9 @@ catch (          InvocationTargetException e) {
       concept.addName(clone);
     }
   }
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  if (errors.hasErrors())   throw new APIException("Validation errors found");
   for (  Locale locale : LocaleUtility.getLocalesInOrder()) {
     ConceptName possiblePreferredName=concept.getPreferredName(locale);
     if (possiblePreferredName == null || !possiblePreferredName.isLocalePreferred()) {

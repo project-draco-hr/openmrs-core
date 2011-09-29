@@ -1,0 +1,17 @@
+{
+  ConceptService cs=Context.getConceptService();
+  ConceptName otherName=cs.getConceptName(1439);
+  Assert.assertTrue(otherName.isFullySpecifiedName() || otherName.isPreferred());
+  Assert.assertFalse(otherName.isVoided());
+  Assert.assertFalse(otherName.getConcept().isRetired());
+  ConceptName duplicateName=cs.getConceptName(2477);
+  duplicateName.setName(otherName.getName());
+  Concept concept=duplicateName.getConcept();
+  concept.setPreferredName(duplicateName);
+  Assert.assertEquals(duplicateName,concept.getPreferredName(duplicateName.getLocale()));
+  Assert.assertTrue(duplicateName.isPreferred());
+  duplicateName.setVoided(true);
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
