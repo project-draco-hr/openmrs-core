@@ -1,12 +1,18 @@
 {
   HL7QueueItem result=getHL7InQueueByUuid(uuid);
   if (result != null) {
+    Context.hasPrivilege(PrivilegeConstants.PRIV_VIEW_HL7_IN_QUEUE);
+    return result;
+  }
+  result=getHL7InErrorByUuid(uuid);
+  if (result != null) {
+    Context.hasPrivilege(PrivilegeConstants.PRIV_VIEW_HL7_IN_EXCEPTION);
     return result;
   }
   result=getHL7InArchiveByUuid(uuid);
   if (result != null) {
+    Context.hasPrivilege(PrivilegeConstants.PRIV_VIEW_HL7_IN_ARCHIVE);
     return result;
   }
-  result=getHL7InErrorByUuid(uuid);
-  return result;
+  return null;
 }
