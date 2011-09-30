@@ -1,4 +1,7 @@
 {
+  if (form.getId() == null) {
+    return null;
+  }
   byte[] data=dao.getFormResource(form,owner,name);
   if (data.length == 0)   return null;
   try {
