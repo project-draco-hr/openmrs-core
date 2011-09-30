@@ -92,6 +92,7 @@
         Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);
         Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
         us.saveUser(user,null);
+        PseudoStaticContentController.invalidateCachedResources(properties);
         Context.refreshAuthenticatedUser();
       }
   finally {
