@@ -3,6 +3,7 @@
   criteria.add(Expression.eq("name",name));
   criteria.add(Expression.eq("conceptSource",conceptSource));
   List terms=criteria.list();
-  if (terms.size() < 1)   return null;
+  if (terms.size() == 0)   return null;
+ else   if (terms.size() > 1)   throw new APIException(Context.getMessageSourceService().getMessage("ConceptReferenceTerm.foundMultipleTermsWithNameInSource",new Object[]{name,conceptSource.getName()},null));
   return (ConceptReferenceTerm)terms.get(0);
 }
