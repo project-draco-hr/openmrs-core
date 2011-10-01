@@ -1,8 +1,0 @@
-{
-  executeDataSet(OTHERS_PROVIDERS_XML);
-  Provider duplicateRetiredProvider=service.getProvider(201);
-  Assert.assertTrue(duplicateRetiredProvider.isRetired());
-  Provider duplicateProvider=service.getProvider(1);
-  duplicateProvider.setIdentifier(duplicateRetiredProvider.getIdentifier());
-  Assert.assertTrue(service.isProviderIdentifierUnique(duplicateProvider));
-}
