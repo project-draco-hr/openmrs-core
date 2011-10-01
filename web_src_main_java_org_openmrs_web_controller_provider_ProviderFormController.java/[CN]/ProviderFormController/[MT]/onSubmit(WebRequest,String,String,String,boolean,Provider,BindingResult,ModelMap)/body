@@ -1,7 +1,9 @@
 {
-  if (provider.getProviderId() != null) {
-    if (linkToPerson)     provider.setName(null);
- else     provider.setPerson(null);
+  if (saveProviderButton != null) {
+    if (provider.getProviderId() != null) {
+      if (linkToPerson)       provider.setName(null);
+ else       provider.setPerson(null);
+    }
   }
   handleAttributeParameteres(request,provider,model);
   new ProviderValidator().validate(provider,errors);
