@@ -2,6 +2,6 @@
   Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTerm.class);
   if (conceptSource != null)   searchCriteria.add(Restrictions.eq("conceptSource",conceptSource));
   if (!includeRetired)   searchCriteria.add(Restrictions.eq("retired",false));
-  searchCriteria.add(Restrictions.or(Restrictions.ilike("name",query,MatchMode.START),Restrictions.ilike("code",query,MatchMode.START)));
+  searchCriteria.add(Restrictions.or(Restrictions.ilike("name",query,MatchMode.ANYWHERE),Restrictions.ilike("code",query,MatchMode.ANYWHERE)));
   return searchCriteria;
 }

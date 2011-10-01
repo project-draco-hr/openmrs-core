@@ -1,0 +1,6 @@
+{
+  List<ConceptReferenceTerm> matches=Context.getConceptService().getConceptReferenceTerms("cd4",null,null,null,true);
+  Assert.assertEquals(3,matches.size());
+  Set<ConceptReferenceTerm> uniqueTerms=new HashSet<ConceptReferenceTerm>();
+  for (  ConceptReferenceTerm conceptReferenceTerm : matches)   Assert.assertTrue(uniqueTerms.add(conceptReferenceTerm));
+}
