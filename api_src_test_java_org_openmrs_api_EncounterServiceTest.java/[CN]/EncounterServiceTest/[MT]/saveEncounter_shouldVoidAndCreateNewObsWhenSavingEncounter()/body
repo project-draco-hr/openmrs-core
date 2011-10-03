@@ -1,0 +1,20 @@
+{
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterType(new EncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(new Patient(3));
+  Obs obs=new Obs();
+  obs.setConcept(new Concept(1));
+  obs.setValueNumeric(50d);
+  encounter.addObs(obs);
+  EncounterService es=Context.getEncounterService();
+  es.saveEncounter(encounter);
+  int oldObsId=obs.getObsId();
+  obs.setValueNumeric(100d);
+  es.saveEncounter(encounter);
+  int newObsId=encounter.getAllObs().iterator().next().getId();
+  Assert.assertTrue(oldObsId != newObsId);
+  Assert.assertEquals(2,encounter.getAllObs(true).size());
+  Assert.assertEquals(1,encounter.getAllObs().size());
+}
