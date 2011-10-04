@@ -2,20 +2,34 @@
   if (!isExecuting) {
     isExecuting=true;
     shouldExecute=true;
+    AdministrationService as=Context.getAdministrationService();
+    ConceptService cs=Context.getConceptService();
+    GlobalProperty gp=as.getGlobalPropertyObject(OpenmrsConstants.GP_CONCEPT_INDEX_UPDATE_TASK_LAST_UPDATED_CONCEPT);
+    if (gp == null)     gp=new GlobalProperty(OpenmrsConstants.GP_CONCEPT_INDEX_UPDATE_TASK_LAST_UPDATED_CONCEPT);
     if (log.isDebugEnabled())     log.debug("Updating concept words ... ");
     try {
-      ConceptService cs=Context.getConceptService();
-      Concept currentConcept=cs.getNextConcept(new Concept(0));
+      Concept currentConcept=null;
+      try {
+        currentConcept=cs.getConcept(Integer.valueOf(gp.getPropertyValue()));
+      }
+ catch (      NumberFormatException e) {
+      }
+      if (currentConcept == null)       currentConcept=new Concept(0);
+      currentConcept=cs.getNextConcept(currentConcept);
       int counter=0;
       while (currentConcept != null && shouldExecute) {
         if (log.isDebugEnabled())         log.debug("updateConceptWords() : current concept: " + currentConcept);
         cs.updateConceptIndex(currentConcept);
+        gp.setPropertyValue(currentConcept.getConceptId().toString());
+        as.saveGlobalProperty(gp);
         if (counter++ > 200) {
+          Context.flushSession();
           Context.clearSession();
           counter=0;
         }
         currentConcept=cs.getNextConcept(currentConcept);
       }
+      if (currentConcept == null)       as.purgeGlobalProperty(gp);
     }
  catch (    APIException e) {
       log.error("ConceptWordUpdateTask failed, because:",e);
