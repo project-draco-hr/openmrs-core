@@ -27,7 +27,20 @@
       getMiniPerson(patient,name,gender,date,age);
     }
   }
-  if (patient.getIdentifiers().size() < 1)   patient.addIdentifier(new PatientIdentifier());
+  if (patient.getIdentifiers().size() < 1) {
+    patient.addIdentifier(new PatientIdentifier());
+  }
+ else {
+    if (patient.getPatientIdentifier() != null && !patient.getPatientIdentifier().isPreferred()) {
+      List<PatientIdentifier> pi=patient.getActiveIdentifiers();
+      for (      PatientIdentifier patientIdentifier : pi) {
+        if (!patientIdentifier.isVoided() && !patientIdentifier.getIdentifierType().isRetired()) {
+          patientIdentifier.setPreferred(true);
+          break;
+        }
+      }
+    }
+  }
   super.setupFormBackingObject(patient);
   return patient;
 }
