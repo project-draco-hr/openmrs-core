@@ -7,7 +7,6 @@
     if (Context.isAuthenticated()) {
       Encounter encounter=(Encounter)obj;
       if (request.getParameter("patientId") != null)       encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
-      encounter.setProvider(Context.getPersonService().getPerson(Integer.valueOf(request.getParameter("providerId"))));
       if (encounter.isVoided() && encounter.getVoidedBy() == null)       Context.getEncounterService().voidEncounter(encounter,encounter.getVoidReason());
  else       if (!encounter.isVoided() && encounter.getVoidedBy() != null)       Context.getEncounterService().unvoidEncounter(encounter);
  else       Context.getEncounterService().saveEncounter(encounter);
