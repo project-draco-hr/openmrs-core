@@ -1,0 +1,79 @@
+{
+  DatatableRequest datatable=DatatableRequest.parseRequest(request);
+  DatatableResponse response=new DatatableResponse(datatable);
+  Integer totalVisitsCount=Context.getEncounterService().getEncountersByVisitsAndPatientCount(patient,false,null);
+  response.setiTotalRecords(totalVisitsCount);
+  Map<String,Object> model=new HashMap<String,Object>();
+  model.put("person",patient);
+  PortletControllerUtil.addFormToEditAndViewUrlMaps(model);
+  @SuppressWarnings("unchecked") Map<Form,String> formToViewUrlMap=(Map<Form,String>)model.get("formToViewUrlMap");
+  @SuppressWarnings("unchecked") Map<Form,String> formToEditUrlMap=(Map<Form,String>)model.get("formToEditUrlMap");
+  if (!StringUtils.isBlank(datatable.getsSearch())) {
+    Integer filteredVisitsCount=Context.getEncounterService().getEncountersByVisitsAndPatientCount(patient,false,datatable.getsSearch());
+    response.setiTotalDisplayRecords(filteredVisitsCount);
+  }
+ else {
+    response.setiTotalDisplayRecords(totalVisitsCount);
+  }
+  List<Encounter> encounters=Context.getEncounterService().getEncountersByVisitsAndPatient(patient,false,datatable.getsSearch(),datatable.getiDisplayStart(),datatable.getiDisplayLength());
+  response.setsColumns("visitId","visitActive","visitType","visitLocation","visitFrom","visitTo","visitIndication","encounterId","encounterDate","encounterType","encounterProviders","encounterLocation","encounterEnterer","formViewURL","formEditURL");
+  String[] row;
+  for (  Encounter encounter : encounters) {
+    row=new String[15];
+    Arrays.fill(row,"");
+    if (encounter.getVisit() != null) {
+      Visit visit=encounter.getVisit();
+      row[0]=visit.getId().toString();
+      row[1]=Boolean.toString(isActive(visit.getStartDatetime(),visit.getStopDatetime()));
+      row[2]=visit.getVisitType().getName();
+      row[3]=(visit.getLocation() != null) ? visit.getLocation().getName() : "";
+      row[4]=Context.getDateFormat().format(visit.getStartDatetime());
+      if (visit.getStopDatetime() != null) {
+        row[5]=Context.getDateFormat().format(visit.getStopDatetime());
+      }
+      if (visit.getIndication() != null && visit.getIndication().getName() != null) {
+        row[6]=visit.getIndication().getName().getName();
+      }
+    }
+    if (encounter.getId() != null) {
+      row[7]=encounter.getId().toString();
+      row[8]=Context.getDateFormat().format(encounter.getEncounterDatetime());
+      row[9]=encounter.getEncounterType().getName();
+      StringBuilder providersBuilder=new StringBuilder();
+      for (      Set<Provider> providers : encounter.getProvidersByRoles().values()) {
+        for (        Provider provider : providers) {
+          if (provider.getPerson() != null) {
+            providersBuilder.append(provider.getPerson().getPersonName().getFullName());
+          }
+ else {
+            providersBuilder.append(provider.getIdentifier());
+          }
+          providersBuilder.append(", ");
+        }
+      }
+      if (providersBuilder.length() > 1) {
+        row[10]=providersBuilder.substring(0,providersBuilder.length() - 2);
+      }
+      row[11]=(encounter.getLocation() != null) ? encounter.getLocation().getName() : "";
+      row[12]=(encounter.getCreator() != null) ? encounter.getCreator().getPersonName().toString() : "";
+      String viewFormURL=formToViewUrlMap.get(encounter.getForm());
+      if (viewFormURL != null) {
+        viewFormURL=request.getContextPath() + "/" + viewFormURL+ "?encounterId="+ encounter.getId();
+      }
+ else {
+        viewFormURL=request.getContextPath() + "/admin/encounters/encounterDisplay.list?encounterId=" + encounter.getId();
+      }
+      row[13]=viewFormURL;
+      String editFormURL=formToEditUrlMap.get(encounter.getForm());
+      if (editFormURL != null) {
+        editFormURL=request.getContextPath() + "/" + editFormURL+ "&encounterId="+ encounter.getId();
+      }
+ else {
+        editFormURL=request.getContextPath() + "/admin/encounters/encounter.form?encounterId=" + encounter.getId();
+      }
+      row[14]=editFormURL;
+    }
+    response.addRow(row);
+  }
+  return response;
+}

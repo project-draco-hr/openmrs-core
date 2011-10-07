@@ -1,0 +1,25 @@
+{
+  DatatableRequest d=new DatatableRequest();
+  d.setiDisplayStart(Integer.valueOf(request.getParameter("iDisplayStart")));
+  d.setiDisplayLength(Integer.valueOf(request.getParameter("iDisplayLength")));
+  d.setiColumns(Integer.valueOf(request.getParameter("iColumns")));
+  d.setsSearch(request.getParameter("sSearch"));
+  d.setbRegex(Boolean.valueOf(request.getParameter("bRegex")));
+  d.setsEcho(Integer.valueOf(request.getParameter("sEcho")));
+  d.setiSortingCols(Integer.valueOf(request.getParameter("iSortingCols")));
+  String[] values=parseColumns("bSearchable",request);
+  d.setbSearchableCol(convertToBoolean(values));
+  values=parseColumns("sSearch",request);
+  d.setsSearchCol(values);
+  values=parseColumns("bRegex",request);
+  d.setbRegexCol(convertToBoolean(values));
+  values=parseColumns("bSortable",request);
+  d.setbSortableCol(convertToBoolean(values));
+  values=parseColumns("iSortCol",request);
+  d.setiSortCol(convertToInteger(values));
+  values=parseColumns("sSortDir",request);
+  d.setsSortDirCol(values);
+  values=parseColumns("mDataProp",request);
+  d.setmDataPropCol(values);
+  return d;
+}

@@ -1,0 +1,21 @@
+{
+  criteria.add(Restrictions.eq("patient",patient));
+  criteria.createAlias("visit","visit",Criteria.LEFT_JOIN);
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",includeVoided));
+  }
+  if (query != null && !StringUtils.isBlank(query)) {
+    criteria.createAlias("visit.visitType","visitType",Criteria.LEFT_JOIN);
+    criteria.createAlias("visit.location","visitLocation",Criteria.LEFT_JOIN);
+    criteria.createAlias("location","location",Criteria.LEFT_JOIN);
+    criteria.createAlias("encounterType","encounterType",Criteria.LEFT_JOIN);
+    Disjunction or=Restrictions.disjunction();
+    criteria.add(or);
+    or.add(Restrictions.ilike("visitType.name",query,MatchMode.ANYWHERE));
+    or.add(Restrictions.ilike("visitLocation.name",query,MatchMode.ANYWHERE));
+    or.add(Restrictions.ilike("location.name",query,MatchMode.ANYWHERE));
+    or.add(Restrictions.ilike("encounterType.name",query,MatchMode.ANYWHERE));
+  }
+  criteria.addOrder(Order.desc("visit.startDatetime"));
+  criteria.addOrder(Order.desc("encounterDatetime"));
+}
