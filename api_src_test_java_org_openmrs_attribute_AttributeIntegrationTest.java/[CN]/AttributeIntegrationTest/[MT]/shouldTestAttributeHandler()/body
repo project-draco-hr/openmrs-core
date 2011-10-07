@@ -1,20 +1,12 @@
 {
   Visit visit=new Visit();
   VisitAttributeType paymentDateAttrType=new VisitAttributeType();
-  paymentDateAttrType.setDatatype("date");
-  try {
-    VisitAttribute legalDate=new VisitAttribute();
-    legalDate.setAttributeType(paymentDateAttrType);
-    legalDate.setObjectValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
-    Assert.assertEquals("2011-04-15",legalDate.getSerializedValue());
-    Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15"),legalDate.getObjectValue());
-    visit.addAttribute(legalDate);
-  }
- catch (  InvalidAttributeValueException ex) {
-    Assert.fail("should not fail on a legal date");
-  }
+  paymentDateAttrType.setDatatypeClassname(org.openmrs.customdatatype.datatype.Date.class.getName());
+  VisitAttribute legalDate=new VisitAttribute();
+  legalDate.setAttributeType(paymentDateAttrType);
+  legalDate.setValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
+  Assert.assertEquals("2011-04-15",legalDate.getValueReference());
+  Assert.assertEquals(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15"),legalDate.getValue());
+  visit.addAttribute(legalDate);
   Assert.assertEquals(1,visit.getAttributes().size());
-  VisitAttribute illegalDate=new VisitAttribute();
-  illegalDate.setAttributeType(paymentDateAttrType);
-  illegalDate.setObjectValue(new Date(System.currentTimeMillis() + 100000));
 }

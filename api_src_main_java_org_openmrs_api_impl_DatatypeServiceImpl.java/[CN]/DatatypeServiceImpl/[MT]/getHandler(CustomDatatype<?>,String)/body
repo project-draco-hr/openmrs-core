@@ -1,0 +1,15 @@
+{
+  if (prioritizedHandlerClasses == null)   prioritizeHandlers();
+  Class<? extends CustomDatatypeHandler> clazz=prioritizedHandlerClasses.get(datatype.getClass());
+  if (clazz == null) {
+    return null;
+  }
+  try {
+    CustomDatatypeHandler<?,?> ret=clazz.newInstance();
+    ret.setHandlerConfiguration(handlerConfig);
+    return ret;
+  }
+ catch (  Exception ex) {
+    throw new CustomDatatypeException("Failed to instantiate handler for " + datatype + " with config "+ handlerConfig,ex);
+  }
+}

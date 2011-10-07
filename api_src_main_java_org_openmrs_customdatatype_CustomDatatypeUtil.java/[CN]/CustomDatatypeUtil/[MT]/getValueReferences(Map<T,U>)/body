@@ -1,0 +1,11 @@
+{
+  Map<T,String> serializedAttributeValues=null;
+  if (datatypeValues != null) {
+    serializedAttributeValues=new HashMap<T,String>();
+    for (    Map.Entry<T,U> e : datatypeValues.entrySet()) {
+      T vat=e.getKey();
+      serializedAttributeValues.put(vat,((CustomDatatype<U>)getDatatype(vat)).toReferenceString(e.getValue()));
+    }
+  }
+  return serializedAttributeValues;
+}

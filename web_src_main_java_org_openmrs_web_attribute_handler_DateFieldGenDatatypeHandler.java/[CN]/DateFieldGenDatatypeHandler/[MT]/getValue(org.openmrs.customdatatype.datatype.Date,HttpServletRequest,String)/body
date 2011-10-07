@@ -1,0 +1,16 @@
+{
+  String stringVal=request.getParameter(formFieldName);
+  if (StringUtils.isBlank(stringVal)) {
+    return null;
+  }
+ else {
+    try {
+      java.util.Date date=Context.getDateFormat().parse(stringVal);
+      datatype.validate(date);
+      return date;
+    }
+ catch (    ParseException ex) {
+      throw new InvalidCustomValueException("general.invalid",ex);
+    }
+  }
+}

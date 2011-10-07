@@ -1,4 +1,4 @@
 {
-  Map<VisitAttributeType,String> serializedAttributeValues=AttributeUtil.getSerializedAttributeValues(attributeValues);
+  Map<VisitAttributeType,String> serializedAttributeValues=CustomDatatypeUtil.getValueReferences(attributeValues);
   return dao.getVisits(visitTypes,patients,locations,indications,minStartDatetime,maxStartDatetime,minEndDatetime,maxEndDatetime,serializedAttributeValues,includeInactive,includeVoided);
 }

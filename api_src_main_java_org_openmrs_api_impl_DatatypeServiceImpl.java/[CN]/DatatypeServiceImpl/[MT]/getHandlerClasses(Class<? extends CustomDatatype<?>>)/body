@@ -1,0 +1,7 @@
+{
+  List<Class<? extends CustomDatatypeHandler>> ret=new ArrayList<Class<? extends CustomDatatypeHandler>>();
+  for (  Class<? extends CustomDatatypeHandler<?,?>> candidate : getAllHandlerClasses()) {
+    if (datatypeClassHandled(candidate).equals(datatype))     ret.add(candidate);
+  }
+  return ret;
+}
