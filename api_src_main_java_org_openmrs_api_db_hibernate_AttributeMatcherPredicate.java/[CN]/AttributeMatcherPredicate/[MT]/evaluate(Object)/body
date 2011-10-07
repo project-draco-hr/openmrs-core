@@ -3,7 +3,7 @@
   for (  Map.Entry<AT,String> entry : serializedAttributeValues.entrySet()) {
     for (    Object attr : customizable.getActiveAttributes(entry.getKey())) {
       Attribute attribute=(Attribute)attr;
-      if (attribute.getSerializedValue().equals(entry.getValue())) {
+      if (attribute.getValueReference().equals(entry.getValue())) {
         return true;
       }
     }

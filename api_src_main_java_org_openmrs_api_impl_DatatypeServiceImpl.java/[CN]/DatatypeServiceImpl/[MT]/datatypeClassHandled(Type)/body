@@ -1,0 +1,19 @@
+{
+  if (t instanceof ParameterizedType) {
+    ParameterizedType pt=(ParameterizedType)t;
+    Type first=pt.getActualTypeArguments()[0];
+    if (first instanceof Class && CustomDatatype.class.isAssignableFrom((Class)first)) {
+      return (Class)first;
+    }
+ else {
+      return datatypeClassHandled(pt.getRawType());
+    }
+  }
+ else   if (t instanceof Class) {
+    for (    Type candidate : ((Class)t).getGenericInterfaces()) {
+      Class ret=datatypeClassHandled(candidate);
+      if (ret != null)       return ret;
+    }
+  }
+  return null;
+}

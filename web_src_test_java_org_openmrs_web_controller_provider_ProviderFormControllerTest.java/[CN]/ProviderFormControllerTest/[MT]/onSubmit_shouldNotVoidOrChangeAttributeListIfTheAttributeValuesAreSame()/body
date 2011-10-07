@@ -5,10 +5,9 @@
   providerAttributeType.setName("provider joined date");
   MockHttpServletRequest mockHttpServletRequest=new MockHttpServletRequest();
   mockHttpServletRequest.setParameter("attribute." + providerAttributeType.getId(),"2011-04-25");
-  ServletWebRequest mockWebRequest=new ServletWebRequest(mockHttpServletRequest);
   BindException errors=new BindException(provider,"provider");
   ProviderFormController providerFormController=(ProviderFormController)applicationContext.getBean("providerFormController");
-  providerFormController.onSubmit(mockWebRequest,"save",null,null,true,provider,errors,createModelMap(providerAttributeType));
+  providerFormController.onSubmit(mockHttpServletRequest,"save",null,null,true,provider,errors,createModelMap(providerAttributeType));
   Assert.assertFalse(((ProviderAttribute)(provider.getAttributes().toArray()[0])).getVoided());
   Assert.assertEquals(1,provider.getAttributes().size());
 }

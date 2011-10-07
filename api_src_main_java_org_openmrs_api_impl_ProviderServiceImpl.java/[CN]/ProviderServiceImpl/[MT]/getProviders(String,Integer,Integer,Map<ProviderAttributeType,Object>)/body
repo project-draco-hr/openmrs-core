@@ -1,4 +1,4 @@
 {
-  Map<ProviderAttributeType,String> serializedAttributeValues=AttributeUtil.getSerializedAttributeValues(attributeValues);
+  Map<ProviderAttributeType,String> serializedAttributeValues=CustomDatatypeUtil.getValueReferences(attributeValues);
   return dao.getProviders(query,serializedAttributeValues,start,length);
 }

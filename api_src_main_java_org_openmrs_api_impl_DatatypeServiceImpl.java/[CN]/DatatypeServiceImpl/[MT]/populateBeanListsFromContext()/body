@@ -1,0 +1,12 @@
+{
+  if (datatypeClasses == null) {
+    List<CustomDatatype> datatypeBeans=Context.getRegisteredComponents(CustomDatatype.class);
+    datatypeClasses=new ArrayList<Class<? extends CustomDatatype>>();
+    for (    CustomDatatype<?> dt : datatypeBeans)     datatypeClasses.add(dt.getClass());
+  }
+  if (handlerClasses == null) {
+    List<CustomDatatypeHandler> handlerBeans=Context.getRegisteredComponents(CustomDatatypeHandler.class);
+    handlerClasses=new ArrayList<Class<? extends CustomDatatypeHandler>>();
+    for (    CustomDatatypeHandler<?,?> h : handlerBeans)     handlerClasses.add(h.getClass());
+  }
+}

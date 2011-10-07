@@ -1,0 +1,10 @@
+{
+  try {
+    T dt=clazz.newInstance();
+    dt.setConfiguration(config);
+    return dt;
+  }
+ catch (  Exception ex) {
+    throw new CustomDatatypeException("Failed to instantiate " + clazz + " with config "+ config,ex);
+  }
+}

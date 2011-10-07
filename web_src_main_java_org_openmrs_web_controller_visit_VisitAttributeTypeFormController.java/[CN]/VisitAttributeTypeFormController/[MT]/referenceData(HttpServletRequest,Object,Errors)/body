@@ -1,5 +1,6 @@
 {
   Map<String,Object> map=new HashMap<String,Object>();
-  map.put("datatypes",Context.getAttributeService().getDatatypes());
+  map.put("datatypes",CustomDatatypeUtil.getDatatypeClassnames());
+  map.put("handlers",CustomDatatypeUtil.getHandlerClassnames());
   return map;
 }

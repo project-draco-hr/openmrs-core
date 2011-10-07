@@ -2,7 +2,7 @@
   Provider provider=new Provider();
   provider.setIdentifier("test");
   provider.setName("test provider");
-  AttributeType<Provider> providerAttributeType=service.getProviderAttributeType(3);
+  ProviderAttributeType providerAttributeType=service.getProviderAttributeType(3);
   provider.setAttribute(createProviderAttribute(providerAttributeType,"bangalore"));
   provider.setAttribute(createProviderAttribute(providerAttributeType,"chennai"));
   Assert.assertEquals(1,provider.getAttributes().size());
