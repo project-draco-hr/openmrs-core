@@ -1,0 +1,17 @@
+{
+  if (sColumns != null && sColumns.length != row.length) {
+    throw new IllegalArgumentException("Must contain " + sColumns.length + " columns as declared in sColumns whereas "+ row.length+ " given");
+  }
+  if (aaData != null && aaData.get(0).length != row.length) {
+    throw new IllegalArgumentException("Must contain " + aaData.get(0).length + " columns whereas "+ row.length+ " given");
+  }
+  if (aaData == null) {
+    aaData=new ArrayList<String[]>();
+  }
+  for (int i=0; i < row.length; i++) {
+    if (row[i] == null) {
+      row[i]="";
+    }
+  }
+  aaData.add(row);
+}

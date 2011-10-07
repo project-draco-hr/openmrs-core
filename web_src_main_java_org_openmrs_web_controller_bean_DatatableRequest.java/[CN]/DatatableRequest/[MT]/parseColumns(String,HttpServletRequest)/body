@@ -1,0 +1,17 @@
+{
+  @SuppressWarnings("unchecked") Map<String,String[]> parameterMap=request.getParameterMap();
+  Map<Integer,String> parameters=new HashMap<Integer,String>();
+  type=type + "_";
+  for (  Entry<String,String[]> parameter : parameterMap.entrySet()) {
+    if (parameter.getKey().startsWith(type)) {
+      Integer index=Integer.valueOf(parameter.getKey().replace(type,""));
+      String value=parameter.getValue()[0];
+      parameters.put(index,value);
+    }
+  }
+  String[] values=new String[parameters.size()];
+  for (  Entry<Integer,String> parameter : parameters.entrySet()) {
+    values[parameter.getKey()]=parameter.getValue();
+  }
+  return values;
+}

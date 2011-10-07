@@ -1,0 +1,34 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  addEncountersByPatientCriteria(criteria,patient,includeVoided,query);
+  @SuppressWarnings("unchecked") List<Encounter> encounters=criteria.list();
+  criteria=sessionFactory.getCurrentSession().createCriteria(Visit.class);
+  addEmptyVisitsByPatientCriteria(criteria,patient,includeVoided,query);
+  @SuppressWarnings("unchecked") List<Visit> emptyVisits=criteria.list();
+  if (!emptyVisits.isEmpty()) {
+    for (    Visit emptyVisit : emptyVisits) {
+      Encounter mockEncounter=new Encounter();
+      mockEncounter.setVisit(emptyVisit);
+      encounters.add(mockEncounter);
+    }
+    Collections.sort(encounters,new Comparator<Encounter>(){
+      @Override public int compare(      Encounter o1,      Encounter o2){
+        Date o1start=(o1.getVisit() != null) ? o1.getVisit().getStartDatetime() : o1.getEncounterDatetime();
+        Date o2start=(o2.getVisit() != null) ? o2.getVisit().getStartDatetime() : o2.getEncounterDatetime();
+        return o2start.compareTo(o1start);
+      }
+    }
+);
+  }
+  if (start == null) {
+    start=0;
+  }
+  if (length == null) {
+    length=encounters.size();
+  }
+  int end=start + length;
+  if (end > encounters.size()) {
+    end=encounters.size();
+  }
+  return encounters.subList(start,end);
+}

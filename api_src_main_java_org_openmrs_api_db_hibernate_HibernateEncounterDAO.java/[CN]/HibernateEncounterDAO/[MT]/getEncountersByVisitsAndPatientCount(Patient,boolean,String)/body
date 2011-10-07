@@ -1,0 +1,11 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Visit.class);
+  addEmptyVisitsByPatientCriteria(criteria,patient,includeVoided,query);
+  criteria.setProjection(Projections.rowCount());
+  Integer count=((Number)criteria.uniqueResult()).intValue();
+  criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  addEncountersByPatientCriteria(criteria,patient,includeVoided,query);
+  criteria.setProjection(Projections.rowCount());
+  count=count + ((Number)criteria.uniqueResult()).intValue();
+  return count;
+}
