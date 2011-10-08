@@ -1,5 +1,8 @@
 {
+  MessageSourceService mss=Context.getMessageSourceService();
   Map<String,Object> ret=new HashMap<String,Object>();
   ret.put("isNullable","false");
+  ret.put("trueLabel",mss.getMessage("general.true"));
+  ret.put("falseLabel",mss.getMessage("general.false"));
   return ret;
 }
