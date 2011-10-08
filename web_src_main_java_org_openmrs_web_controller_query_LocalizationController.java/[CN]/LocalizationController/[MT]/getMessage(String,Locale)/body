@@ -1,0 +1,10 @@
+{
+  String ret;
+  if (locale != null) {
+    ret=Context.getMessageSourceService().getMessage(key);
+  }
+ else {
+    ret=Context.getMessageSourceService().getMessage(key,null,locale);
+  }
+  return (ret == null || key.equals(ret)) ? "" : ret;
+}
