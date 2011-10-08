@@ -1,0 +1,39 @@
+{
+  List<GlobalProperty> toSave=new ArrayList<GlobalProperty>();
+  try {
+    for (int i=0; i < settingsForm.getSettings().size(); ++i) {
+      SettingsProperty property=settingsForm.getSettings().get(i);
+      if (StringUtils.isNotEmpty(property.getGlobalProperty().getDatatypeClassname())) {
+        CustomDatatype dt=CustomDatatypeUtil.getDatatype(property.getGlobalProperty());
+        CustomDatatypeHandler handler=CustomDatatypeUtil.getHandler(property.getGlobalProperty());
+        if (handler != null) {
+          try {
+            Object value=WebAttributeUtil.getValue(request,dt,handler,"settings[" + i + "].globalProperty.propertyValue");
+            property.getGlobalProperty().setPropertyValue(dt.toReferenceString(value));
+          }
+ catch (          Exception ex) {
+            String originalValue=request.getParameter("originalValue[" + i + "]");
+            property.getGlobalProperty().setPropertyValue(originalValue);
+            errors.rejectValue("settings[" + i + "].globalProperty.propertyValue","general.invalid");
+          }
+        }
+      }
+      toSave.add(property.getGlobalProperty());
+    }
+  }
+ catch (  Exception e) {
+    log.error("Error saving global property",e);
+    errors.reject("GlobalProperty.not.saved");
+    session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,e.getMessage());
+  }
+  if (errors.hasErrors()) {
+    session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.not.saved");
+  }
+ else {
+    for (    GlobalProperty gp : toSave) {
+      getService().saveGlobalProperty(gp);
+    }
+    session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
+    OpenmrsUtil.applyLogLevels();
+  }
+}
