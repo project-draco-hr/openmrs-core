@@ -1,6 +1,0 @@
-{
-  Form form=Context.getFormService().getForm(1);
-  Context.getFormService().purgeFormResource(form,"formentry","other");
-  Set<String> names=Context.getFormService().getFormResourceNamesByOwner(form,"formentry");
-  Assert.assertFalse(names.contains("other"));
-}

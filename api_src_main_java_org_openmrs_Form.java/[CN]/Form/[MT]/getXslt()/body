@@ -1,11 +1,3 @@
 {
-  FormService formService=this.getFormService();
-  String xslt;
-  try {
-    xslt=(String)formService.getFormResource(this,FormConstants.FORM_RESOURCE_FORMENTRY_OWNER,FormConstants.FORM_RESOURCE_FORMENTRY_XSLT);
-  }
- catch (  DAOException e) {
-    return null;
-  }
-  return xslt;
+  throw new UnsupportedOperationException("XSLTs no longer exist on Forms. Use Form Attributes.");
 }

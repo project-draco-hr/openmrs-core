@@ -1,10 +1,4 @@
 {
-  Map<String,Map<String,Serializable>> resources=new HashMap<String,Map<String,Serializable>>();
-  for (  String owner : getFormResourceOwners(form)) {
-    resources.put(owner,new HashMap<String,Serializable>());
-    Set<String> names=getFormResourceNamesByOwner(form,owner);
-    for (    String name : names)     resources.get(owner).put(name,Context.getFormService().getFormResource(form,owner,name));
-  }
   for (  FormField formField : form.getFormFields()) {
     formField.setUuid(null);
     formField.setFormFieldId(null);
@@ -19,6 +13,5 @@
   Context.clearSession();
   RequiredDataAdvice.recursivelyHandle(SaveHandler.class,form,null);
   Form newForm=dao.duplicateForm(form);
-  for (  String owner : resources.keySet())   for (  String name : resources.get(owner).keySet())   Context.getFormService().saveFormResource(newForm,owner,name,resources.get(owner).get(name));
   return newForm;
 }
