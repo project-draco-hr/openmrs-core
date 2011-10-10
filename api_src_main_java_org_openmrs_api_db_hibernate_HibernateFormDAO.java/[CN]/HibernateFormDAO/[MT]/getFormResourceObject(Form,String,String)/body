@@ -1,7 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormResource.class);
-  crit.add(Restrictions.eq("form",form));
-  crit.add(Restrictions.eq("owner",owner));
-  crit.add(Restrictions.eq("name",name));
-  return (FormResource)crit.uniqueResult();
-}

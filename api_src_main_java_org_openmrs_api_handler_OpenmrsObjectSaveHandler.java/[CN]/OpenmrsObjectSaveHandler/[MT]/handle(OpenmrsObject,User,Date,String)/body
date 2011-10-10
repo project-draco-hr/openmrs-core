@@ -28,7 +28,10 @@
         }
       }
     }
- catch (    Exception ex) {
+ catch (    InvocationTargetException ex) {
+      if (log.isWarnEnabled())       log.warn("Failed to access property " + property.getName() + "; accessor threw exception.",ex);
+    }
+catch (    Exception ex) {
       throw new APIException("Failed to change property value from empty string to null for " + property.getName(),ex);
     }
   }
