@@ -3,6 +3,9 @@
     if (handler instanceof FieldGenDatatypeHandler) {
       return ((FieldGenDatatypeHandler<CustomDatatype<T>,T>)handler).getValue(dt,request,paramName);
     }
+ else     if (handler instanceof WebDatatypeHandler) {
+      return ((WebDatatypeHandler<CustomDatatype<T>,T>)handler).getValue(dt,request,paramName);
+    }
   }
   String submittedValue=request.getParameter(paramName);
   if (StringUtils.isNotEmpty(submittedValue))   return dt.fromReferenceString(submittedValue);
