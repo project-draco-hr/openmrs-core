@@ -8,6 +8,28 @@
       if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"patient","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"encounterDatetime","error.null");
+      if (ArrayUtils.isEmpty(ServletRequestUtils.getStringParameters(request,"providerIds")))       errors.reject("Encounter.provider.atleastOneProviderRequired");
+      String[] providerIdsArray=ServletRequestUtils.getStringParameters(request,"providerIds");
+      String[] roleIdsArray=ServletRequestUtils.getStringParameters(request,"encounterRoleIds");
+      ProviderService ps=Context.getProviderService();
+      EncounterService es=Context.getEncounterService();
+      if (providerIdsArray != null && roleIdsArray != null) {
+        ArrayList<String> unremovedRoleAndProviders=new ArrayList<String>();
+        for (int i=0; i < providerIdsArray.length; i++) {
+          if (StringUtils.hasText(providerIdsArray[i]) && StringUtils.hasText(roleIdsArray[i])) {
+            unremovedRoleAndProviders.add(roleIdsArray[i] + "-" + providerIdsArray[i]);
+            Provider provider=ps.getProvider(Integer.valueOf(providerIdsArray[i]));
+            EncounterRole encounterRole=es.getEncounterRole(Integer.valueOf(roleIdsArray[i]));
+            if (encounter.getProvidersByRole(encounterRole).contains(provider))             continue;
+            encounter.addProvider(encounterRole,provider);
+          }
+        }
+        for (        Map.Entry<EncounterRole,Set<Provider>> entry : encounter.getProvidersByRoles().entrySet()) {
+          for (          Provider p : entry.getValue()) {
+            if (!unremovedRoleAndProviders.contains(entry.getKey().getEncounterRoleId() + "-" + p.getProviderId()))             encounter.removeProvider(entry.getKey(),p);
+          }
+        }
+      }
     }
   }
   finally {
