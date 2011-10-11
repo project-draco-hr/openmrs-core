@@ -1,0 +1,10 @@
+{
+  String viewFormURL=formToViewUrlMap.get(encounter.getForm());
+  if (viewFormURL != null) {
+    viewFormURL=request.getContextPath() + "/" + viewFormURL+ "?encounterId="+ encounter.getId();
+  }
+ else {
+    viewFormURL=request.getContextPath() + "/admin/encounters/encounterDisplay.list?encounterId=" + encounter.getId();
+  }
+  return viewFormURL;
+}

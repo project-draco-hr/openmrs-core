@@ -17,5 +17,7 @@
     or.add(Restrictions.ilike("encounterType.name",query,MatchMode.ANYWHERE));
   }
   criteria.addOrder(Order.desc("visit.startDatetime"));
+  criteria.addOrder(Order.desc("visit.visitId"));
   criteria.addOrder(Order.desc("encounterDatetime"));
+  criteria.addOrder(Order.desc("encounterId"));
 }
