@@ -8,8 +8,8 @@
       if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"patient","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"encounterDatetime","error.null");
-      if (ArrayUtils.isEmpty(ServletRequestUtils.getStringParameters(request,"providerIds")))       errors.reject("Encounter.provider.atleastOneProviderRequired");
       String[] providerIdsArray=ServletRequestUtils.getStringParameters(request,"providerIds");
+      if (ArrayUtils.isEmpty(providerIdsArray))       errors.reject("Encounter.provider.atleastOneProviderRequired");
       String[] roleIdsArray=ServletRequestUtils.getStringParameters(request,"encounterRoleIds");
       ProviderService ps=Context.getProviderService();
       EncounterService es=Context.getEncounterService();
