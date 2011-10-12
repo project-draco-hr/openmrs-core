@@ -60,6 +60,8 @@
           model.put("patient",p);
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_VISITS)) {
+            model.put("person",p);
+            PortletControllerUtil.addFormToEditAndViewUrlMaps(model);
             model.put("patientVisits",Context.getVisitService().getVisitsByPatient(p));
             model.put("activeVisits",Context.getVisitService().getActiveVisitsByPatient(p));
           }
