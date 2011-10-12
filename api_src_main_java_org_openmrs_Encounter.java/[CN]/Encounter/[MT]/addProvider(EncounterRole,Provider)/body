@@ -3,5 +3,7 @@
   encounterProvider.setEncounter(this);
   encounterProvider.setEncounterRole(role);
   encounterProvider.setProvider(provider);
+  encounterProvider.setDateCreated(new Date());
+  encounterProvider.setCreator(Context.getAuthenticatedUser());
   encounterProviders.add(encounterProvider);
 }
