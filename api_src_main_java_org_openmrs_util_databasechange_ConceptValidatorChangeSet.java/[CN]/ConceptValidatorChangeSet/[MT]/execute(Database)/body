@@ -1,2 +1,13 @@
 {
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
+  validateAndCleanUpConcepts(connection);
+  if (!updatedConceptNames.isEmpty())   runBatchUpdate(connection);
+ else   log.debug("No concept names to update");
+  if (!logMessages.isEmpty() || !updateWarnings.isEmpty())   writeWarningsToFile();
+  if (!updateWarnings.isEmpty()) {
+    DatabaseUpdater.reportUpdateWarnings(updateWarnings);
+  }
+  updateWarnings=null;
+  updatedConceptNames=null;
+  logMessages=null;
 }
