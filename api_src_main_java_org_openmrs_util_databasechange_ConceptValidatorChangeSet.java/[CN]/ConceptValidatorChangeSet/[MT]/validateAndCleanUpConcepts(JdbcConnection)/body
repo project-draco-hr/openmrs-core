@@ -79,17 +79,6 @@
       for (      Map.Entry<String,List<ConceptName>> entry : nameDuplicateConceptNamesMap.entrySet()) {
         if (entry.getValue().size() < 2)         continue;
         logMessages.add("The name '" + entry.getKey() + "' was found multiple times for the concept with id '"+ conceptId+ "' in locale '"+ conceptNameLocale.getDisplayName()+ "'");
-        ConceptName chosenName=null;
-        List<ConceptName> voidedNames=new ArrayList<ConceptName>();
-        for (        ConceptName duplicate : entry.getValue()) {
-          if (chosenName == null)           chosenName=duplicate;
- else {
-            duplicate.setVoided(true);
-            duplicate.setVoidReason("Duplicate name in locale");
-            voidedNames.add(duplicate);
-            reportUpdatedName(duplicate,"ConceptName with id: " + duplicate.getConceptNameId() + " has been voided because it is a duplicate name for concept with id "+ conceptId+ " in locale '"+ conceptNameLocale.getDisplayName()+ "'");
-          }
-        }
       }
       if (!preferredNameForLocaleFound) {
         for (        ConceptName cn : localeConceptNamesMap.get(conceptNameLocale)) {
