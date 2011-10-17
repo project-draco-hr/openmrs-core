@@ -1,11 +1,8 @@
 {
-  if (StringUtils.isBlank(name)) {
-    name="%";
-  }
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Concept.class);
   criteria.add(Expression.eq("retired",false));
-  if (name != null) {
-    if (loc == null)     throw new DAOException("Locale must be not null");
+  if (!StringUtils.isBlank(name)) {
+    if (loc == null)     loc=Context.getLocale();
     criteria.createAlias("names","names");
     MatchMode matchmode=MatchMode.EXACT;
     if (searchOnPhrase)     matchmode=MatchMode.ANYWHERE;
