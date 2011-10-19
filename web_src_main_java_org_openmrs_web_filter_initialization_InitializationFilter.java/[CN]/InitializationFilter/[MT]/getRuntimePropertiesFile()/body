@@ -1,6 +1,9 @@
 {
-  String filename=WebConstants.WEBAPP_NAME + "-runtime.properties";
-  File file=new File(OpenmrsUtil.getApplicationDataDirectory(),filename);
+  File file=new File(OpenmrsUtil.getApplicationDataDirectory(),WebConstants.WEBAPP_NAME + "-runtime.properties");
+  String pathName=OpenmrsUtil.getRuntimePropertiesFilePathName(WebConstants.WEBAPP_NAME);
+  if (pathName != null) {
+    file=new File(pathName);
+  }
   log.debug("Using file: " + file.getAbsolutePath());
   return file;
 }
