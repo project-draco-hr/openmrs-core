@@ -1,0 +1,36 @@
+{
+  if (applicationName == null)   applicationName="openmrs";
+  String filename=applicationName + "-runtime.properties";
+  String pathName=filename;
+  log.debug("Attempting to look for properties file in current directory: " + pathName);
+  if (new File(pathName).exists()) {
+    return pathName;
+  }
+ else {
+    log.warn("Unable to find a runtime properties file at " + new File(pathName).getAbsolutePath());
+  }
+  String envVarName=applicationName.toUpperCase() + "_RUNTIME_PROPERTIES_FILE";
+  pathName=System.getenv(envVarName);
+  if (pathName != null) {
+    log.debug("Atempting to look for runtime properties from: " + pathName);
+    if (new File(pathName).exists()) {
+      return pathName;
+    }
+ else {
+      log.warn("Unable to find properties file with path: " + pathName + ". (derived from environment variable "+ envVarName+ ")");
+    }
+  }
+ else {
+    log.info("Couldn't find an environment variable named " + envVarName);
+    if (log.isDebugEnabled())     log.debug("Available environment variables are named: " + System.getenv().keySet());
+  }
+  pathName=OpenmrsUtil.getApplicationDataDirectory() + filename;
+  log.debug("Attempting to look for property file from: " + pathName);
+  if (new File(pathName).exists()) {
+    return pathName;
+  }
+ else {
+    log.warn("Unable to find properties file: " + pathName);
+  }
+  return null;
+}
