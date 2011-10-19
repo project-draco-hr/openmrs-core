@@ -12,7 +12,7 @@
     pStmt=connection.prepareStatement("SELECT name FROM concept_map_type");
     rs=pStmt.executeQuery();
     while (rs.next())     existingMapTypes.add(rs.getString("name").trim().toUpperCase());
-    pStmt=connection.prepareStatement("INSERT INTO concept_map_type (name, isHidden, retired, creator, date_created, uuid) VALUES(?,?,?," + userId + ", ?,?)");
+    pStmt=connection.prepareStatement("INSERT INTO concept_map_type (name, is_hidden, retired, creator, date_created, uuid) VALUES(?,?,?," + userId + ", ?,?)");
     for (    String mapType : visibleConceptMapTypeArray) {
       mapType=mapType.trim();
       if (mapType.length() < 1 || existingMapTypes.contains(mapType.toUpperCase()))       continue;
