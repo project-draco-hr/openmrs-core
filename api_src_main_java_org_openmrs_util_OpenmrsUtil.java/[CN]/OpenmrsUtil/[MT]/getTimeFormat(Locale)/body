@@ -1,0 +1,11 @@
+{
+  if (timeFormatCache.containsKey(locale))   return (SimpleDateFormat)timeFormatCache.get(locale).clone();
+  SimpleDateFormat sdf=(SimpleDateFormat)DateFormat.getTimeInstance(DateFormat.SHORT,locale);
+  String pattern=sdf.toPattern();
+  if (!(pattern.contains("hh") || pattern.contains("HH"))) {
+    pattern=pattern.replaceFirst("h","hh").replaceFirst("H","HH");
+    sdf.applyPattern(pattern);
+  }
+  timeFormatCache.put(locale,sdf);
+  return (SimpleDateFormat)sdf.clone();
+}

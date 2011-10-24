@@ -1,0 +1,20 @@
+{
+  SimpleDateFormat dateFormat=Context.getTimeFormat();
+  try {
+    String pattern;
+    if ((localize != null) && "false".equals(localize)) {
+      pattern=dateFormat.toPattern().toLowerCase();
+    }
+ else {
+      pattern=dateFormat.toLocalizedPattern();
+    }
+    if (null != format && format.equals("jquery")) {
+      pattern=pattern.toLowerCase().replaceAll("a","TT");
+    }
+    pageContext.getOut().write(pattern);
+  }
+ catch (  Exception e) {
+    log.error("error getting date pattern",e);
+  }
+  return SKIP_BODY;
+}

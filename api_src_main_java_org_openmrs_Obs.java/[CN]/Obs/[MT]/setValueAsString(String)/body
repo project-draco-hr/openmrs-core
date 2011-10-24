@@ -11,8 +11,14 @@
  else     if (abbrev.equals("NM") || abbrev.equals("SN")) {
       setValueNumeric(Double.valueOf(s));
     }
- else     if (abbrev.equals("DT") || abbrev.equals("TM") || abbrev.equals("TS")) {
-      setValueDatetime(df.parse(s));
+ else     if (abbrev.equals("DT")) {
+      setValueDatetime(dateFormat.parse(s));
+    }
+ else     if (abbrev.equals("TM")) {
+      setValueDatetime(timeFormat.parse(s));
+    }
+ else     if (abbrev.equals("TS")) {
+      setValueDatetime(datetimeFormat.parse(s));
     }
  else     if (abbrev.equals("ST")) {
       setValueText(s);
