@@ -1,11 +1,8 @@
 {
-  if (clazz != null) {
-    aliasClassName(clazz);
-  }
   try {
     return (T)xstream.fromXML(serializedObject);
   }
  catch (  XStreamException e) {
-    throw new SerializationException("Unable to deserialize class: " + clazz.getSimpleName(),e);
+    throw new SerializationException("Unable to deserialize class: " + clazz.getName(),e);
   }
 }
