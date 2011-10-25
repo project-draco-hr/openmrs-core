@@ -1,0 +1,11 @@
+{
+  ConceptAnswer ca=new ConceptAnswer(new Concept(123));
+  Concept c=new Concept();
+  Assert.assertEquals(0,c.getAnswers().size());
+  ca.getAnswerConcept().setRetired(false);
+  c.addAnswer(ca);
+  ConceptAnswer ca2=new ConceptAnswer(new Concept(456));
+  ca2.getAnswerConcept().setRetired(true);
+  c.addAnswer(ca2);
+  Assert.assertEquals(2,c.getAnswers().size());
+}
