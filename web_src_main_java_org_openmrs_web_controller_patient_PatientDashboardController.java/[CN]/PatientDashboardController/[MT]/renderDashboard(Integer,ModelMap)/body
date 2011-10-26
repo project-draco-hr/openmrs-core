@@ -59,5 +59,10 @@
   map.put("emptyName",new PersonName());
   map.put("emptyAddress",new PersonAddress());
   map.put("causeOfDeathOther",causeOfDeathOther);
+  ExtensionUtil extensionUtil=new ExtensionUtil();
+  Set<Form> forms=extensionUtil.getFormsModulesCanAddEncounterToVisit();
+  map.put("formsModulesCanAddEncounterToVisit",forms);
+  Map<Form,FormEntryHandler> formsModuleCanEnter=extensionUtil.getFormsModuleCanEnter(patient);
+  map.put("formsModuleCanEnter",formsModuleCanEnter);
   return "patientDashboardForm";
 }

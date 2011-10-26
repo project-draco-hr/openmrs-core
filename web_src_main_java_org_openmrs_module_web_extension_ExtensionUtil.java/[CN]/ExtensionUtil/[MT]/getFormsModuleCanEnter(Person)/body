@@ -1,0 +1,17 @@
+{
+  List<Extension> handlers=ModuleFactory.getExtensions("org.openmrs.module.web.extension.FormEntryHandler");
+  if (handlers == null) {
+    return Collections.emptyMap();
+  }
+  Map<Form,FormEntryHandler> formToEntry=new HashMap<Form,FormEntryHandler>();
+  for (  Extension ext : handlers) {
+    FormEntryHandler handler=(FormEntryHandler)ext;
+    Collection<Form> toEnter=handler.getFormsModuleCanEnter(new FormEntryContext(person));
+    if (toEnter != null) {
+      for (      Form form : toEnter) {
+        formToEntry.put(form,handler);
+      }
+    }
+  }
+  return formToEntry;
+}
