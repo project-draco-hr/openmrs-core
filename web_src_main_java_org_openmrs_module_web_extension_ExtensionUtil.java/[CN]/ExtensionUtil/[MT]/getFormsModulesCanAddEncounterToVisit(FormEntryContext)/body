@@ -11,7 +11,7 @@
 );
   for (  Extension extension : extensions) {
     AddEncounterToVisitExtension ext=(AddEncounterToVisitExtension)extension;
-    Set<Form> tmpForms=ext.getFormsModuleCanAddEncounterToVisit();
+    Set<Form> tmpForms=ext.getFormsModuleCanAddEncounterToVisit(context);
     if (tmpForms != null) {
       forms.addAll(tmpForms);
     }
