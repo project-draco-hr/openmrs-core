@@ -1,0 +1,26 @@
+{
+  if (toolContext == null) {
+    ToolManager velocityToolManager=new ToolManager();
+    FactoryConfiguration factoryConfig=new FactoryConfiguration();
+    ToolboxConfiguration toolbox=new ToolboxConfiguration();
+    toolbox.setScope(Scope.APPLICATION);
+    ToolConfiguration localizationTool=new ToolConfiguration();
+    localizationTool.setClassname(LocalizationTool.class.getName());
+    localizationTool.setProperty(ToolContext.LOCALE_KEY,LocaleUtility.fromSpecification(locale));
+    localizationTool.setProperty(LocalizationTool.BUNDLES_KEY,"messages");
+    toolbox.addTool(localizationTool);
+    factoryConfig.addToolbox(toolbox);
+    velocityToolManager.configure(factoryConfig);
+    toolContext=velocityToolManager.createContext();
+    toolContext.setUserCanOverwriteTools(true);
+  }
+ else {
+    Annotation annotation=LocalizationTool.class.getAnnotation(DefaultKey.class);
+    DefaultKey defaultKeyAnnotation=(DefaultKey)annotation;
+    String key=defaultKeyAnnotation.value();
+    LocalizationTool localizationTool=(LocalizationTool)toolContext.get(key);
+    localizationTool.setLocale(LocaleUtility.fromSpecification(locale));
+    toolContext.put(key,localizationTool);
+  }
+  return toolContext;
+}

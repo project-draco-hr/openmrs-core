@@ -1,0 +1,13 @@
+{
+  File propertiesDir=new File(basedir);
+  for (  File possibleFile : propertiesDir.listFiles()) {
+    if (possibleFile.getName().startsWith(PREFIX) && possibleFile.getName().endsWith(SUFFIX)) {
+      Locale locale=parseLocaleFrom(possibleFile.getName(),PREFIX);
+      getResource().put(locale,getFileSystemResource(possibleFile.getAbsolutePath(),PREFIX,locale));
+      getAvailablelocales().add(locale);
+    }
+  }
+  if (log.isWarnEnabled() && (getResource().size() == 0)) {
+    log.warn("No properties files found.");
+  }
+}

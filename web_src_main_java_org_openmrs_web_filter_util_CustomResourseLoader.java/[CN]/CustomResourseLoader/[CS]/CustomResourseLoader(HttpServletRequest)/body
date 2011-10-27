@@ -1,0 +1,16 @@
+{
+  this.resources=new HashMap<Locale,ResourceBundle>();
+  this.availablelocales=new HashSet<Locale>();
+  String basePath=null;
+  if (httpRequest != null) {
+    basePath=httpRequest.getSession().getServletContext().getRealPath("/WEB-INF");
+  }
+  File basedir=null;
+  if (StringUtils.isBlank(basePath)) {
+    basedir=new File(getClass().getClassLoader().getResource("").getPath()).getParentFile();
+  }
+ else {
+    basedir=new File(basePath);
+  }
+  loadResources(basedir.getAbsolutePath());
+}

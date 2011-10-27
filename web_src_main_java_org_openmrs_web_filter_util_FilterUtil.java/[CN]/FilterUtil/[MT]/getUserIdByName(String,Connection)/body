@@ -1,0 +1,12 @@
+{
+  String select="select user_id from users where system_id = ? or username = ?";
+  PreparedStatement statement=connection.prepareStatement(select);
+  statement.setString(1,userNameOrSystemId);
+  statement.setString(2,userNameOrSystemId);
+  Integer userId=null;
+  if (statement.execute()) {
+    ResultSet results=statement.getResultSet();
+    if (results.next())     userId=results.getInt(1);
+  }
+  return userId;
+}

@@ -1,0 +1,17 @@
+{
+  File resourceFile=new File(path);
+  try {
+    resourceURL=resourceFile.getParentFile().toURI().toURL();
+  }
+ catch (  MalformedURLException e) {
+    log.warn("Unable to get URL of object by specified path " + path + ", because of ",e);
+    return null;
+  }
+  try {
+    return ResourceBundle.getBundle(basename,locale,getURLClassLoader());
+  }
+ catch (  Exception e) {
+    log.warn("Unable to load bundle by path " + path + ", because of ",e);
+  }
+  return null;
+}

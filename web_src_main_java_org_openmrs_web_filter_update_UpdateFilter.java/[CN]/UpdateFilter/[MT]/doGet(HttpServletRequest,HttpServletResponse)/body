@@ -1,4 +1,8 @@
 {
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  checkLocaleAttributesForFirstTime(httpRequest);
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  }
   renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
 }

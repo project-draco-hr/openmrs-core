@@ -1,0 +1,13 @@
+{
+  Locale result=null;
+  if (filename.startsWith(basename))   filename=filename.substring(basename.length());
+  String localespec=filename.substring(0,filename.indexOf('.'));
+  if (localespec.equals("")) {
+    result=Locale.ENGLISH;
+  }
+ else {
+    localespec=localespec.substring(1);
+    result=LocaleUtility.fromSpecification(localespec);
+  }
+  return result;
+}

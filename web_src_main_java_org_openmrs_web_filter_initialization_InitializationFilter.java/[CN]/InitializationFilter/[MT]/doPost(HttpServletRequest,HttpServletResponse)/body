@@ -1,12 +1,51 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  }
   if (isInstallationStarted()) {
     httpResponse.setContentType("text/html");
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
     return;
   }
-  if (INSTALL_METHOD.equals(page)) {
+  if (isInstallationStarted()) {
+    httpResponse.setContentType("text/html");
+    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+    return;
+  }
+  if (DEFAULT_PAGE.equals(page)) {
+    File runtimeProperties=getRuntimePropertiesFile();
+    if (!runtimeProperties.exists()) {
+      try {
+        runtimeProperties.createNewFile();
+        wizardModel.canCreate=true;
+        wizardModel.cannotCreateErrorMessage="";
+      }
+ catch (      IOException io) {
+        wizardModel.canCreate=false;
+        wizardModel.cannotCreateErrorMessage=io.getMessage();
+      }
+      wizardModel.canWrite=runtimeProperties.canWrite();
+      runtimeProperties.delete();
+    }
+ else {
+      wizardModel.canWrite=runtimeProperties.canWrite();
+    }
+    wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
+    checkLocaleAttributes(httpRequest);
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+    log.info("Locale stored in session is " + httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+    httpResponse.setContentType("text/html");
+    renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+  }
+ else   if (INSTALL_METHOD.equals(page)) {
+    if ("Back".equals(httpRequest.getParameter("back"))) {
+      referenceMap.put(FilterUtil.REMEMBER_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null);
+      referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+      renderTemplate(CHOOSE_LANG,referenceMap,httpResponse);
+      return;
+    }
     wizardModel.installMethod=httpRequest.getParameter("install_method");
     if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
       page=SIMPLE_SETUP;
@@ -28,7 +67,7 @@
     wizardModel.createDatabaseUsername=Context.getRuntimeProperties().getProperty("connection.username",wizardModel.createDatabaseUsername);
     wizardModel.createUserUsername=wizardModel.createDatabaseUsername;
     wizardModel.databaseRootPassword=httpRequest.getParameter("database_root_password");
-    checkForEmptyValue(wizardModel.databaseRootPassword,errors,"Database root password");
+    checkForEmptyValue(wizardModel.databaseRootPassword,errors,ErrorMessageConstants.ERROR_DB_PSDW_REQ);
     wizardModel.hasCurrentOpenmrsDatabase=false;
     wizardModel.createTables=true;
     wizardModel.createDatabasePassword=wizardModel.databaseRootPassword;
@@ -43,7 +82,7 @@
       loadedDriverString=DatabaseUtil.loadDatabaseDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
     }
  catch (    ClassNotFoundException e) {
-      errors.add("The given database driver class was not found. " + "Please ensure that the database driver jar file is on the class path " + "(like in the webapp's lib folder)");
+      errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
       renderTemplate(page,referenceMap,httpResponse);
       return;
     }
@@ -58,29 +97,29 @@
       return;
     }
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
-    checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
+    checkForEmptyValue(wizardModel.databaseConnection,errors,ErrorMessageConstants.ERROR_DB_CONN_REQ);
     wizardModel.databaseDriver=httpRequest.getParameter("database_driver");
-    checkForEmptyValue(wizardModel.databaseConnection,errors,"Database connection string");
+    checkForEmptyValue(wizardModel.databaseConnection,errors,ErrorMessageConstants.ERROR_DB_DRIVER_REQ);
     loadedDriverString=loadDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
     if (!StringUtils.hasText(loadedDriverString)) {
-      errors.add("The given database driver class was not found. " + "Please ensure that the database driver jar file is on the class path " + "(like in the webapp's lib folder)");
+      errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
       renderTemplate(page,referenceMap,httpResponse);
       return;
     }
     if ("yes".equals(httpRequest.getParameter("current_openmrs_database"))) {
       wizardModel.databaseName=httpRequest.getParameter("openmrs_current_database_name");
-      checkForEmptyValue(wizardModel.databaseName,errors,"Current database name");
+      checkForEmptyValue(wizardModel.databaseName,errors,ErrorMessageConstants.ERROR_DB_CURR_NAME_REQ);
       wizardModel.hasCurrentOpenmrsDatabase=true;
     }
  else {
       wizardModel.hasCurrentOpenmrsDatabase=false;
       wizardModel.createTables=true;
       wizardModel.databaseName=httpRequest.getParameter("openmrs_new_database_name");
-      checkForEmptyValue(wizardModel.databaseName,errors,"New database name");
+      checkForEmptyValue(wizardModel.databaseName,errors,ErrorMessageConstants.ERROR_DB_NEW_NAME_REQ);
       wizardModel.createDatabaseUsername=httpRequest.getParameter("create_database_username");
-      checkForEmptyValue(wizardModel.createDatabaseUsername,errors,"A user that has 'CREATE DATABASE' privileges");
+      checkForEmptyValue(wizardModel.createDatabaseUsername,errors,ErrorMessageConstants.ERROR_DB_USER_NAME_REQ);
       wizardModel.createDatabasePassword=httpRequest.getParameter("create_database_password");
-      checkForEmptyValue(wizardModel.createDatabasePassword,errors,"Password for user with 'CREATE DATABASE' privileges");
+      checkForEmptyValue(wizardModel.createDatabasePassword,errors,ErrorMessageConstants.ERROR_DB_USER_PSWD_REQ);
     }
     if (errors.isEmpty()) {
       page=DATABASE_TABLES_AND_USER;
@@ -98,9 +137,9 @@
     wizardModel.addDemoData="yes".equals(httpRequest.getParameter("add_demo_data"));
     if ("yes".equals(httpRequest.getParameter("current_database_user"))) {
       wizardModel.currentDatabaseUsername=httpRequest.getParameter("current_database_username");
-      checkForEmptyValue(wizardModel.currentDatabaseUsername,errors,"Curent user account");
+      checkForEmptyValue(wizardModel.currentDatabaseUsername,errors,ErrorMessageConstants.ERROR_DB_CUR_USER_NAME_REQ);
       wizardModel.currentDatabasePassword=httpRequest.getParameter("current_database_password");
-      checkForEmptyValue(wizardModel.currentDatabasePassword,errors,"Current user account password");
+      checkForEmptyValue(wizardModel.currentDatabasePassword,errors,ErrorMessageConstants.ERROR_DB_CUR_USER_PSWD_REQ);
       wizardModel.hasCurrentDatabaseUser=true;
       wizardModel.createDatabaseUser=false;
     }
@@ -108,9 +147,9 @@
       wizardModel.hasCurrentDatabaseUser=false;
       wizardModel.createDatabaseUser=true;
       wizardModel.createUserUsername=httpRequest.getParameter("create_user_username");
-      checkForEmptyValue(wizardModel.createUserUsername,errors,"A user that has 'CREATE USER' privileges");
+      checkForEmptyValue(wizardModel.createUserUsername,errors,ErrorMessageConstants.ERROR_DB_USER_NAME_REQ);
       wizardModel.createUserPassword=httpRequest.getParameter("create_user_password");
-      checkForEmptyValue(wizardModel.createUserPassword,errors,"Password for user that has 'CREATE USER' privileges");
+      checkForEmptyValue(wizardModel.createUserPassword,errors,ErrorMessageConstants.ERROR_DB_USER_PSWD_REQ);
     }
     if (errors.isEmpty()) {
       page=OTHER_RUNTIME_PROPS;
@@ -140,12 +179,12 @@
     wizardModel.adminUserPassword=httpRequest.getParameter("new_admin_password");
     String adminUserConfirm=httpRequest.getParameter("new_admin_password_confirm");
     if (!wizardModel.adminUserPassword.equals(adminUserConfirm)) {
-      errors.add("Admin passwords don't match");
+      errors.put(ErrorMessageConstants.ERROR_DB_ADM_PSWDS_MATCH,null);
       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
     if (wizardModel.adminUserPassword.equals("")) {
-      errors.add("An admin password is required");
+      errors.put(ErrorMessageConstants.ERROR_DB_ADM_PSDW_EMPTY,null);
       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
@@ -153,7 +192,7 @@
       OpenmrsUtil.validatePassword("admin",wizardModel.adminUserPassword,"admin");
     }
  catch (    PasswordException p) {
-      errors.add("The password is not long enough, does not contain both uppercase characters and a number, or matches the username.");
+      errors.put(ErrorMessageConstants.ERROR_DB_ADM_PSDW_WEAK,null);
       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
@@ -173,7 +212,7 @@
     wizardModel.implementationIdPassPhrase=httpRequest.getParameter("pass_phrase");
     wizardModel.implementationIdDescription=httpRequest.getParameter("description");
     if (wizardModel.implementationId.indexOf('^') != -1 || wizardModel.implementationId.indexOf('|') != -1) {
-      errors.add("Implementation ID cannot contain '^' or '|'");
+      errors.put(ErrorMessageConstants.ERROR_DB_IMPL_ID_REQ,null);
       renderTemplate(IMPLEMENTATION_ID_SETUP,referenceMap,httpResponse);
       return;
     }
@@ -200,9 +239,8 @@
     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
       loadedDriverString=loadDriver(testDatabaseConnection,null);
       if (!StringUtils.hasText(loadedDriverString)) {
-        page=TESTING_SETUP;
-        errors.add("The given database driver class was not found. " + "Please ensure that the database driver jar file is on the class path " + "(like in the webapp's lib folder)");
-        renderTemplate(page,referenceMap,httpResponse);
+        errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
+        renderTemplate(TESTING_SETUP,referenceMap,httpResponse);
         return;
       }
       wizardModel.tasksToExecute.add(WizardTask.CREATE_TEST_INSTALLATION);
@@ -217,6 +255,9 @@
       if (wizardModel.addDemoData)       wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
     }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
+    if (httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
+      wizardModel.localeToSave=String.valueOf(httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+    }
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     if (!isInstallationStarted()) {
       initJob=new InitializationCompletion();
