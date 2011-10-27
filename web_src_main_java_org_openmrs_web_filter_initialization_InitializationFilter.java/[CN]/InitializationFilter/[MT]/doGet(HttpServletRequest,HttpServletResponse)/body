@@ -1,7 +1,16 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  }
   if (page == null) {
+    checkLocaleAttributesForFirstTime(httpRequest);
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+    httpResponse.setContentType("text/html");
+    renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+  }
+ else   if (INSTALL_METHOD.equals(page)) {
     File runtimeProperties=getRuntimePropertiesFile();
     if (!runtimeProperties.exists()) {
       try {
@@ -28,7 +37,7 @@
       renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
     }
  else {
-      renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
+      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
     }
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
@@ -39,7 +48,7 @@
       result.put("hasErrors",initJob.hasErrors());
       if (initJob.hasErrors()) {
         result.put("errorPage",initJob.getErrorPage());
-        errors.addAll(initJob.getErrors());
+        errors.putAll(initJob.getErrors());
       }
       result.put("initializationComplete",isInitializationComplete());
       result.put("message",initJob.getMessage());

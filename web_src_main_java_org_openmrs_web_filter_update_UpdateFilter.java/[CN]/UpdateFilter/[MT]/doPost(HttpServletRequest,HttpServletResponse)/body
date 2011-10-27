@@ -1,6 +1,7 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null)   referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
   if (DEFAULT_PAGE.equals(page)) {
     String username=httpRequest.getParameter("username");
     String password=httpRequest.getParameter("password");
@@ -9,6 +10,9 @@
       log.debug("Authentication successful.  Redirecting to 'reviewupdates' page.");
       authenticatedSuccessfully=true;
       referenceMap.put("isDatabaseUpdateInProgress",isDatabaseUpdateInProgress);
+      String localeParameter=FilterUtil.restoreLocale(username);
+      httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
+      referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
       renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
     }
  else {
@@ -20,7 +24,7 @@
         log.error("Unable to sleep",e);
         throw new ServletException("Got interrupted while trying to sleep thread",e);
       }
-      errors.add("Unable to authenticate as a User with the " + RoleConstants.SUPERUSER + " role. Invalid username or password");
+      errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,null);
       renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
     }
   }
@@ -48,7 +52,7 @@
     if (updateJob != null) {
       result.put("hasErrors",updateJob.hasErrors());
       if (updateJob.hasErrors()) {
-        errors.addAll(updateJob.getErrors());
+        errors.putAll(updateJob.getErrors());
       }
       if (updateJob.hasWarnings() && updateJob.getExecutingChangesetId() == null) {
         result.put("hasWarnings",updateJob.hasWarnings());

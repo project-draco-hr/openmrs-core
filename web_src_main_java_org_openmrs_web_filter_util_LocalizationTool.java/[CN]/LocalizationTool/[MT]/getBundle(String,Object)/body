@@ -1,0 +1,7 @@
+{
+  Locale locale=(loc == null) ? getLocale() : LocaleUtility.fromSpecification(String.valueOf(loc));
+  if (baseName == null || locale == null) {
+    return null;
+  }
+  return CustomResourseLoader.getInstance(null).getResourceBundle(locale);
+}

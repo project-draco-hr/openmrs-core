@@ -1,5 +1,6 @@
 {
-  VelocityContext velocityContext=new VelocityContext();
+  ToolContext toolContext=getToolContext(referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE).toString());
+  VelocityContext velocityContext=new VelocityContext(toolContext);
   if (referenceMap != null) {
     for (    Map.Entry<String,Object> entry : referenceMap.entrySet()) {
       velocityContext.put(entry.getKey(),entry.getValue());

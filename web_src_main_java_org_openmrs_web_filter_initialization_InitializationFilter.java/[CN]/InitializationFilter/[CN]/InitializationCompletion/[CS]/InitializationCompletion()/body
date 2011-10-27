@@ -14,7 +14,7 @@
           String sql="create database if not exists `?` default character set utf8";
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
-            reportError("Unable to create the database. The password might be incorrect or the database is not started.",DEFAULT_PAGE);
+            reportError(ErrorMessageConstants.ERROR_DB_CREATE_NEW,DEFAULT_PAGE);
             return;
           }
  else {
@@ -40,13 +40,13 @@
             wizardModel.workLog.add("Created user " + connectionUsername);
           }
  else {
-            reportError("Unable to create a database user",DEFAULT_PAGE);
+            reportError(ErrorMessageConstants.ERROR_DB_CREATE_DB_USER,DEFAULT_PAGE);
             return;
           }
           sql="GRANT ALL ON `?`.* TO '?'@'localhost'";
           int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
           if (result < 0) {
-            reportError("Unable to grant privileges on openmrs database to user",DEFAULT_PAGE);
+            reportError(ErrorMessageConstants.ERROR_DB_GRANT_PRIV,DEFAULT_PAGE);
             return;
           }
  else {
@@ -114,7 +114,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             addExecutedTask(WizardTask.ADD_CORE_DATA);
           }
  catch (          Exception e) {
-            reportError(e.getMessage() + " See the error log for more details",null);
+            reportError(ErrorMessageConstants.ERROR_DB_CREATE_TABLES_OR_ADD_DEMO_DATA,DEFAULT_PAGE,e.getMessage());
             log.warn("Error while trying to create tables and demo data",e);
           }
         }
@@ -128,7 +128,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             addExecutedTask(WizardTask.ADD_DEMO_DATA);
           }
  catch (          Exception e) {
-            reportError(e.getMessage() + " See the error log for more details",null);
+            reportError(ErrorMessageConstants.ERROR_DB_CREATE_TABLES_OR_ADD_DEMO_DATA,DEFAULT_PAGE,e.getMessage());
             log.warn("Error while trying to add demo data",e);
           }
         }
@@ -138,8 +138,8 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
           setExecutingTask(WizardTask.CREATE_TEST_INSTALLATION);
           createTestInstallation();
           if (!errors.isEmpty()) {
-            reportError("Error while trying to Creating installation: " + StringUtils.collectionToCommaDelimitedString(errors),null);
-            log.warn(StringUtils.collectionToCommaDelimitedString(errors));
+            reportError("Error while trying to Creating installation: " + StringUtils.collectionToCommaDelimitedString(errors.values()),null);
+            log.warn(StringUtils.collectionToCommaDelimitedString(errors.values()));
             return;
           }
           wizardModel.workLog.add("Created test installation");
@@ -153,7 +153,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
           addExecutedTask(WizardTask.UPDATE_TO_LATEST);
         }
  catch (        Exception e) {
-          reportError(e.getMessage() + " Error while trying to update to the latest database version",DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_DB_UPDATE_TO_LATEST,DEFAULT_PAGE,e.getMessage());
           log.warn("Error while trying to update to the latest database version",e);
           return;
         }
@@ -168,22 +168,22 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         }
  catch (        DatabaseUpdateException updateEx) {
           log.warn("Error while running the database update file",updateEx);
-          reportError(updateEx.getMessage() + " There was an error while running the database update file: " + updateEx.getMessage(),DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_DB_UPDATE,DEFAULT_PAGE,updateEx.getMessage());
           return;
         }
 catch (        InputRequiredException inputRequiredEx) {
           log.warn("Unable to continue because user input is required for the db updates and we cannot do anything about that right now");
-          reportError("Unable to continue because user input is required for the db updates and we cannot do anything about that right now",DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_INPUT_REQ,DEFAULT_PAGE);
           return;
         }
 catch (        MandatoryModuleException mandatoryModEx) {
           log.warn("A mandatory module failed to start. Fix the error or unmark it as mandatory to continue.",mandatoryModEx);
-          reportError(mandatoryModEx.getMessage(),DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_MANDATORY_MOD_REQ,DEFAULT_PAGE,mandatoryModEx.getMessage());
           return;
         }
 catch (        OpenmrsCoreModuleException coreModEx) {
           log.warn("A core module failed to start. Make sure that all core modules (with the required minimum versions) are installed and starting properly.",coreModEx);
-          reportError(coreModEx.getMessage(),DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_CORE_MOD_REQ,DEFAULT_PAGE,coreModEx.getMessage());
           return;
         }
         if (!wizardModel.implementationId.equals("")) {
@@ -200,7 +200,7 @@ catch (        OpenmrsCoreModuleException coreModEx) {
             Context.getAdministrationService().setImplementationId(implId);
           }
  catch (          Throwable t) {
-            reportError(t.getMessage() + " Implementation ID could not be set.",DEFAULT_PAGE);
+            reportError(ErrorMessageConstants.ERROR_SET_INPL_ID,DEFAULT_PAGE,t.getMessage());
             log.warn("Implementation ID could not be set.",t);
             Context.shutdown();
             WebModuleUtil.shutdownModules(filterConfig.getServletContext());
@@ -227,7 +227,7 @@ catch (        OpenmrsCoreModuleException coreModEx) {
           Context.shutdown();
           WebModuleUtil.shutdownModules(filterConfig.getServletContext());
           contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
-          reportError(t.getMessage() + " Unable to complete the startup.",DEFAULT_PAGE);
+          reportError(ErrorMessageConstants.ERROR_COMPLETE_STARTUP,DEFAULT_PAGE,t.getMessage());
           log.warn("Unable to complete the startup.",t);
           return;
         }
@@ -245,11 +245,12 @@ catch (        OpenmrsCoreModuleException coreModEx) {
         Context.closeSession();
       }
  catch (      IOException e) {
-        reportError(e.getMessage() + " Unable to complete the startup.",DEFAULT_PAGE);
+        reportError(ErrorMessageConstants.ERROR_COMPLETE_STARTUP,DEFAULT_PAGE,e.getMessage());
       }
  finally {
         if (!hasErrors()) {
           setInitializationComplete(true);
+          FilterUtil.storeLocale(wizardModel.localeToSave);
         }
         setInstallationStarted(false);
       }

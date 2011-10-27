@@ -1,0 +1,22 @@
+{
+  String localeParameter=httpRequest.getParameter(FilterUtil.LOCALE_ATTRIBUTE);
+  Boolean rememberLocale=false;
+  if (httpRequest.getParameter(FilterUtil.REMEMBER_ATTRIBUTE) != null)   rememberLocale=true;
+  if (localeParameter != null) {
+    String storedLocale=null;
+    if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
+      storedLocale=httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE).toString();
+    }
+    if ((storedLocale == null) || (storedLocale != null && !storedLocale.equals(localeParameter))) {
+      log.info("Stored locale parameter to session " + localeParameter);
+      httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
+    }
+    if (rememberLocale) {
+      httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
+      httpRequest.getSession().setAttribute(FilterUtil.REMEMBER_ATTRIBUTE,true);
+    }
+ else {
+      httpRequest.getSession().setAttribute(FilterUtil.REMEMBER_ATTRIBUTE,null);
+    }
+  }
+}

@@ -34,14 +34,16 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
  catch (        InputRequiredException inputRequired) {
           log.error("Not implemented",inputRequired);
           model.updateChanges();
-          reportError("Input during database updates is not yet implemented. " + inputRequired.getMessage());
+          reportError(ErrorMessageConstants.UPDATE_ERROR_INPUT_NOT_IMPLEMENTED,inputRequired.getMessage());
           return;
         }
 catch (        DatabaseUpdateException e) {
           log.error("Unable to update the database",e);
-          List<String> errors=new ArrayList<String>();
-          errors.add("Unable to update the database.  See server error logs for the full stacktrace.");
-          errors.addAll(Arrays.asList(e.getMessage().split("\n")));
+          Map<String,Object[]> errors=new HashMap<String,Object[]>();
+          errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE,null);
+          for (          String message : Arrays.asList(e.getMessage().split("\n"))) {
+            errors.put(message,null);
+          }
           model.updateChanges();
           reportErrors(errors);
           return;
@@ -52,7 +54,7 @@ catch (        DatabaseUpdateException e) {
         }
  catch (        Throwable t) {
           log.error("Unable to complete the startup.",t);
-          reportError("Unable to complete the startup.  See the server error log for the complete stacktrace." + t.getMessage());
+          reportError(ErrorMessageConstants.UPDATE_ERROR_COMPLETE_STARTUP,t.getMessage());
           return;
         }
         setUpdatesRequired(false);

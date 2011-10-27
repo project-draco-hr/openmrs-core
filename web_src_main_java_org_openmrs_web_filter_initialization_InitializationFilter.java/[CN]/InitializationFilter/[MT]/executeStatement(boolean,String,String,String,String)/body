@@ -26,7 +26,7 @@
  catch (  SQLException sqlex) {
     if (!silent) {
       log.warn("error executing sql: " + sql,sqlex);
-      errors.add("Error executing sql: " + sql + " - "+ sqlex.getMessage());
+      errors.put("Error executing sql: " + sql + " - "+ sqlex.getMessage(),null);
     }
   }
 catch (  InstantiationException e) {

@@ -5,7 +5,7 @@
     return true;
   }
  catch (  Exception e) {
-    errors.add("User account " + connectionUsername + " does not work. "+ e.getMessage()+ " See the error log for more details");
+    errors.put("User account " + connectionUsername + " does not work. "+ e.getMessage()+ " See the error log for more details",null);
     log.warn("Error while checking the connection user account",e);
     return false;
   }

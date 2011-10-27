@@ -18,14 +18,14 @@
  else           log.info("Ignoring modules...");
           initJob.setCompletedPercentage(100);
         }
- else         errors.add("Failed to export data to the test server, see logs for details");
+ else         errors.put(ErrorMessageConstants.ERROR_UNABLE_COPY_DATA,null);
       }
- else       errors.add("Failed to create the test database, see logs for details");
+ else       errors.put(ErrorMessageConstants.ERROR_UNABLE_CREATE_DB,null);
     }
- else     errors.add("Failed to create a sql dump file, see logs for details");
+ else     errors.put(ErrorMessageConstants.ERROR_UNABLE_CREATE_DUMP,null);
   }
  catch (  Exception e) {
     log.error("Errror while creating a testing environment",e);
-    errors.add("Failed to create a testing environment, please see logs for details");
+    errors.put(ErrorMessageConstants.ERROR_UNABLE_CREATE_ENV,null);
   }
 }

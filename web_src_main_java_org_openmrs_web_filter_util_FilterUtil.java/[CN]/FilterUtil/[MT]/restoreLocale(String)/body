@@ -1,0 +1,38 @@
+{
+  String currentLocale=null;
+  if (StringUtils.isNotBlank(username)) {
+    Connection connection=null;
+    try {
+      connection=DatabaseUpdater.getConnection();
+      Integer userId=getUserIdByName(username,connection);
+      if (userId != null) {
+        String select="select property_value from user_property where user_id = ? and property = ?";
+        PreparedStatement statement=connection.prepareStatement(select);
+        statement.setInt(1,userId);
+        statement.setString(2,OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
+        if (statement.execute()) {
+          ResultSet results=statement.getResultSet();
+          if (results.next())           currentLocale=results.getString(1);
+        }
+      }
+      if (currentLocale == null) {
+        currentLocale=readSystemDefaultLocale(connection);
+      }
+    }
+ catch (    Throwable t) {
+      log.error("Error while retriving locale property",t);
+    }
+ finally {
+      if (connection != null) {
+        try {
+          connection.close();
+        }
+ catch (        SQLException e) {
+          log.debug("Error while closing the database",e);
+        }
+      }
+    }
+  }
+  if (currentLocale == null)   currentLocale=OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE;
+  return currentLocale;
+}

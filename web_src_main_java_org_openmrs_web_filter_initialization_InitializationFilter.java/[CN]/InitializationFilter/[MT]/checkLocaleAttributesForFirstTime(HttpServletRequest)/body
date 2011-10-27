@@ -1,0 +1,9 @@
+{
+  Locale locale=httpRequest.getLocale();
+  if (CustomResourseLoader.getInstance(httpRequest).getAvailablelocales().contains(locale)) {
+    httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,locale.toString());
+  }
+ else {
+    httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,Locale.ENGLISH.toString());
+  }
+}
