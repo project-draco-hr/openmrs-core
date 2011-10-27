@@ -1,5 +1,5 @@
 {
-  if (HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
+  if (codingSystem == null || HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
     try {
       Integer conceptId=new Integer(hl7ConceptId);
       Concept concept=new Concept(conceptId);
