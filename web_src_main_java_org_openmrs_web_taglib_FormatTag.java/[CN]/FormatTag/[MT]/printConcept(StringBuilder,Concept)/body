@@ -1,3 +1,22 @@
 {
+  Locale loc=Context.getLocale();
+  if (withConceptNameType != null || withConceptNameTag != null) {
+    ConceptNameType lookForNameType=null;
+    if (withConceptNameType != null) {
+      lookForNameType=ConceptNameType.valueOf(withConceptNameType);
+    }
+    ConceptNameTag lookForNameTag=null;
+    if (withConceptNameTag != null)     lookForNameTag=Context.getConceptService().getConceptNameTagByName(withConceptNameTag);
+    ConceptName name=concept.getName(loc,lookForNameType,lookForNameTag);
+    if (name != null) {
+      sb.append(name.getName());
+      return;
+    }
+  }
+  ConceptName name=concept.getPreferredName(loc);
+  if (name != null) {
+    sb.append(name.getName());
+    return;
+  }
   sb.append(concept.getDisplayString());
 }
