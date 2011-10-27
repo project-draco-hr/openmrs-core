@@ -1,0 +1,9 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(7);
+  User user=Context.getUserService().getUser(501);
+  user.setPerson(notPreferred);
+  Context.getUserService().saveUser(user,null);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  Assert.assertTrue("user association change not audited",isValueInList(Context.getUserService().getUser(501).getUuid(),audit.getPersonMergeLogData().getMovedUsers()));
+}

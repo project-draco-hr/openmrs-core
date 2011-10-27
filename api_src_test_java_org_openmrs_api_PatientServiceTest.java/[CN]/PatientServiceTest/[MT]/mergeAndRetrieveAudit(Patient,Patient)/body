@@ -1,0 +1,6 @@
+{
+  patientService.mergePatients(preferred,notPreferred);
+  List<PersonMergeLog> result=personService.getAllPersonMergeLogs(true);
+  Assert.assertTrue("person merge was not audited",result.size() > 0);
+  return result.get(0);
+}

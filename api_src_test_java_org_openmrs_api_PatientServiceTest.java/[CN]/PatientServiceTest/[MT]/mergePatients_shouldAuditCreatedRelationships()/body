@@ -1,0 +1,15 @@
+{
+  executeDataSet(PATIENT_RELATIONSHIPS_XML);
+  Patient preferred=patientService.getPatient(7);
+  Patient notPreferred=patientService.getPatient(2);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String createdRelationshipUuid=null;
+  List<Relationship> relationships=personService.getRelationshipsByPerson(preferred);
+  for (  Relationship r : relationships) {
+    if (r.getPersonB().getId().equals(1) || r.getPersonA().getId().equals(1)) {
+      createdRelationshipUuid=r.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected relationship was not found for the preferred patient after the merge",createdRelationshipUuid);
+  Assert.assertTrue("relationship creation not audited",isValueInList(createdRelationshipUuid,audit.getPersonMergeLogData().getCreatedRelationships()));
+}

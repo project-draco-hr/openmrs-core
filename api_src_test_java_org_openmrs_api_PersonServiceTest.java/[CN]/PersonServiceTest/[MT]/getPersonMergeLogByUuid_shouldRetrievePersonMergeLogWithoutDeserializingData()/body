@@ -1,0 +1,6 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  PersonMergeLog persisted=Context.getPersonService().savePersonMergeLog(personMergeLog);
+  PersonMergeLog retrieved=Context.getPersonService().getPersonMergeLogByUuid(persisted.getUuid(),false);
+  Assert.assertNotNull("problem retrieving PersonMergeLog by UUID",retrieved);
+}

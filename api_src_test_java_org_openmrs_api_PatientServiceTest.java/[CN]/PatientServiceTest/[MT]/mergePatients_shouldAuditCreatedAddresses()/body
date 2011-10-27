@@ -1,0 +1,21 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PersonAddress address=new PersonAddress();
+  address.setAddress1("another address123");
+  address.setAddress2("another address234");
+  address.setCityVillage("another city");
+  address.setCountry("another country");
+  notPreferred.addAddress(address);
+  patientService.savePatient(notPreferred);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String addedAddressUuid=null;
+  preferred=patientService.getPatient(999);
+  for (  PersonAddress a : preferred.getAddresses()) {
+    if (a.getAddress1().equals(address.getAddress1())) {
+      addedAddressUuid=a.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected new address was not found in the preferred patient after the merge",addedAddressUuid);
+  Assert.assertTrue("person address creation not audited",isValueInList(addedAddressUuid,audit.getPersonMergeLogData().getCreatedAddresses()));
+}

@@ -1,0 +1,20 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PatientIdentifier patientIdentifier=new PatientIdentifier();
+  patientIdentifier.setIdentifier("123-0");
+  patientIdentifier.setIdentifierType(patientService.getPatientIdentifierType(1));
+  patientIdentifier.setLocation(new Location(1));
+  notPreferred.addIdentifier(patientIdentifier);
+  patientService.savePatient(notPreferred);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String addedIdentifierUuid=null;
+  preferred=patientService.getPatient(999);
+  for (  PatientIdentifier id : preferred.getIdentifiers()) {
+    if (id.getIdentifier().equals(patientIdentifier.getIdentifier())) {
+      addedIdentifierUuid=id.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected new identifier was not found in the preferred patient after the merge",addedIdentifierUuid);
+  Assert.assertTrue("person identifier creation not audited",isValueInList(addedIdentifierUuid,audit.getPersonMergeLogData().getCreatedIdentifiers()));
+}

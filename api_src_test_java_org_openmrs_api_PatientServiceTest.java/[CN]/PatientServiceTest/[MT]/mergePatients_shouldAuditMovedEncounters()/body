@@ -1,0 +1,6 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(7);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  Assert.assertTrue("encounter creation not audited",isValueInList(Context.getEncounterService().getEncounter(3).getUuid(),audit.getPersonMergeLogData().getMovedEncounters()));
+}

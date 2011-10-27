@@ -1,0 +1,19 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PersonAttribute attribute=new PersonAttribute(2);
+  attribute.setValue("5089");
+  attribute.setAttributeType(personService.getPersonAttributeType(1));
+  notPreferred.addAttribute(attribute);
+  patientService.savePatient(notPreferred);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String addedAttributeUuid=null;
+  preferred=patientService.getPatient(999);
+  for (  PersonAttribute a : preferred.getAttributes()) {
+    if (a.getValue().equals(attribute.getValue())) {
+      addedAttributeUuid=a.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected new attribute was not found in the preferred patient after the merge",addedAttributeUuid);
+  Assert.assertTrue("person attribute creation not audited",isValueInList(addedAttributeUuid,audit.getPersonMergeLogData().getCreatedAttributes()));
+}

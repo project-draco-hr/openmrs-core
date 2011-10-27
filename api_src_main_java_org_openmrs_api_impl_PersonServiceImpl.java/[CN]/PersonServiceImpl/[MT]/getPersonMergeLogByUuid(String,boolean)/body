@@ -1,0 +1,9 @@
+{
+  if (uuid == null)   throw new APIException("UUID cannot be null");
+  PersonMergeLog personMergeLog=dao.getPersonMergeLogByUuid(uuid);
+  if (deserialize) {
+    PersonMergeLogData data=Context.getSerializationService().getDefaultSerializer().deserialize(personMergeLog.getSerializedMergedData(),PersonMergeLogData.class);
+    personMergeLog.setPersonMergeLogData(data);
+  }
+  return personMergeLog;
+}

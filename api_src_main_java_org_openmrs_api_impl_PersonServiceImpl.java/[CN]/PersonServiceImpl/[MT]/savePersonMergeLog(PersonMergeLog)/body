@@ -1,0 +1,12 @@
+{
+  if (personMergeLog.getPersonMergeLogData() == null)   throw new APIException("PersonMergeLog cannot be saved without providing a non-null PersonMergeLogData");
+  if (personMergeLog.getWinner() == null || personMergeLog.getLoser() == null)   throw new APIException("Both winner and loser person fields need to be set in order to save a PersonMergeLog");
+  if (Context.getSerializationService().getDefaultSerializer() == null)   throw new APIException("A default serializer was not found. Cannot proceed without at least one installed serializer");
+  log.debug("Auditing merging of non-preferred person " + personMergeLog.getLoser().getUuid() + " with preferred person "+ personMergeLog.getWinner().getId());
+  if (personMergeLog.getDateCreated() == null)   personMergeLog.setDateCreated(new Date());
+  if (personMergeLog.getCreator() == null)   personMergeLog.setCreator(Context.getAuthenticatedUser());
+  String serialized=Context.getSerializationService().getDefaultSerializer().serialize(personMergeLog.getPersonMergeLogData());
+  personMergeLog.setSerializedMergedData(serialized);
+  log.debug(serialized);
+  return dao.savePersonMergeLog(personMergeLog);
+}

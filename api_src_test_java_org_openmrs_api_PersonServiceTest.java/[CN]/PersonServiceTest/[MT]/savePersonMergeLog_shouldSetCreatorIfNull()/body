@@ -1,0 +1,6 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  personMergeLog.setCreator(null);
+  PersonMergeLog persisted=Context.getPersonService().savePersonMergeLog(personMergeLog);
+  Assert.assertEquals("creator has not been correctly set",Context.getAuthenticatedUser().getUserId(),persisted.getCreator().getUserId());
+}

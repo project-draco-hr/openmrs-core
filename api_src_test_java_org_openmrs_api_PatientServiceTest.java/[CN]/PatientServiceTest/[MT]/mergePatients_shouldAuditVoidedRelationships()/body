@@ -1,0 +1,7 @@
+{
+  executeDataSet(PATIENT_RELATIONSHIPS_XML);
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  Assert.assertTrue("relationship voiding not audited",isValueInList(personService.getRelationship(4).getUuid(),audit.getPersonMergeLogData().getVoidedRelationships()));
+}

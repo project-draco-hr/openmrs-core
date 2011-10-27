@@ -1,0 +1,10 @@
+{
+  List<PersonMergeLog> lst=dao.getAllPersonMergeLogs();
+  if (deserialize) {
+    for (    PersonMergeLog personMergeLog : lst) {
+      PersonMergeLogData data=Context.getSerializationService().getDefaultSerializer().deserialize(personMergeLog.getSerializedMergedData(),PersonMergeLogData.class);
+      personMergeLog.setPersonMergeLogData(data);
+    }
+  }
+  return lst;
+}
