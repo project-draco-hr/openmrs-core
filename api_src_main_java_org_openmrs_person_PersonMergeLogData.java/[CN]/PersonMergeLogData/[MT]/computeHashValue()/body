@@ -1,0 +1,20 @@
+{
+  String str="";
+  if (getCreatedAddresses() != null)   str+=getCreatedAddresses().toString();
+  if (getCreatedAttributes() != null)   str+=getCreatedAttributes().toString();
+  if (getCreatedIdentifiers() != null)   str+=getCreatedIdentifiers().toString();
+  if (getCreatedNames() != null)   str+=getCreatedNames().toString();
+  if (getCreatedOrders() != null)   str+=getCreatedOrders().toString();
+  if (getCreatedPrograms() != null)   str+=getCreatedPrograms().toString();
+  if (getCreatedRelationships() != null)   str+=getCreatedRelationships().toString();
+  if (getVoidedRelationships() != null)   str+=getVoidedRelationships().toString();
+  if (getMovedEncounters() != null)   str+=getMovedEncounters().toString();
+  if (getMovedIndependentObservations() != null)   str+=getMovedIndependentObservations().toString();
+  if (getMovedUsers() != null)   str+=getMovedUsers().toString();
+  str+=getPriorCauseOfDeath();
+  str+=getPriorGender();
+  str+=(getPriorDateOfBirth() != null) ? getPriorDateOfBirth().toString() : getPriorDateOfBirth();
+  str+=(getPriorDateOfBirth() != null) ? getPriorDateOfDeath().toString() : getPriorDateOfDeath();
+  str+=isPriorDateOfBirthEstimated();
+  return str.hashCode();
+}

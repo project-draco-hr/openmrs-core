@@ -1,0 +1,17 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PersonName name=new PersonName("first1234","middle","last1234");
+  notPreferred.addName(name);
+  patientService.savePatient(notPreferred);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String addedNameUuid=null;
+  preferred=patientService.getPatient(999);
+  for (  PersonName n : preferred.getNames()) {
+    if (n.getFullName().equals(name.getFullName())) {
+      addedNameUuid=n.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected new name was not found in the preferred patient after the merge",addedNameUuid);
+  Assert.assertTrue("person name creation not audited",isValueInList(addedNameUuid,audit.getPersonMergeLogData().getCreatedNames()));
+}

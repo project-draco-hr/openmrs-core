@@ -1,0 +1,17 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(7);
+  Obs obs=Context.getObsService().getObs(7);
+  obs.setEncounter(null);
+  obs.setComment("this observation is for testing the merge");
+  Context.getObsService().saveObs(obs,"");
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String uuid=null;
+  List<Obs> observations=Context.getObsService().getObservationsByPerson(preferred);
+  for (  Obs o : observations) {
+    if (obs.getComment().equals(o.getComment())) {
+      uuid=o.getUuid();
+    }
+  }
+  Assert.assertTrue("moving of independent observation was not audited",isValueInList(uuid,audit.getPersonMergeLogData().getMovedIndependentObservations()));
+}

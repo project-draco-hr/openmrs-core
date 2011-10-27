@@ -1,0 +1,3 @@
+{
+  return (PersonMergeLog)sessionFactory.getCurrentSession().createQuery("from PersonMergeLog p where p.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

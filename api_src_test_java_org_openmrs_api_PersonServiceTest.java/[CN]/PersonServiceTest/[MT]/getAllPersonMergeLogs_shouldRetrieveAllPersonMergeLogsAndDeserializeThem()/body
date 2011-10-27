@@ -1,0 +1,8 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  Context.getPersonService().savePersonMergeLog(personMergeLog);
+  List<PersonMergeLog> result=Context.getPersonService().getAllPersonMergeLogs(true);
+  Assert.assertEquals("could not retrieve expected number of PersonMergeLog objects",1,result.size());
+  Assert.assertNotNull("PersonMergeLog at index 0 is null",result.get(0));
+  Assert.assertNotNull("PersonMergeLog data has not been deserialized",result.get(0).getPersonMergeLogData());
+}

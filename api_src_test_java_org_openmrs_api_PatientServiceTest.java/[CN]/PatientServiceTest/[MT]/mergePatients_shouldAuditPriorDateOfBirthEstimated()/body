@@ -1,0 +1,11 @@
+{
+  GregorianCalendar cDate=new GregorianCalendar();
+  cDate.setTime(new Date());
+  Patient preferred=patientService.getPatient(999);
+  preferred.setBirthdate(cDate.getTime());
+  preferred.setBirthdateEstimated(true);
+  patientService.savePatient(preferred);
+  Patient notPreferred=patientService.getPatient(7);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  Assert.assertTrue("prior date of birth was not audited",audit.getPersonMergeLogData().isPriorDateOfBirthEstimated());
+}

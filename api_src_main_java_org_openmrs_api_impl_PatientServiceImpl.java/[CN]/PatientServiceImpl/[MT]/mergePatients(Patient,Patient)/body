@@ -4,11 +4,13 @@
     log.debug("Merge operation cancelled: Cannot merge user" + preferred.getPatientId() + " to self");
     throw new APIException("Merge operation cancelled: Cannot merge user " + preferred.getPatientId() + " to self");
   }
+  PersonMergeLogData mergedData=new PersonMergeLogData();
   EncounterService es=Context.getEncounterService();
   for (  Encounter e : es.getEncountersByPatient(notPreferred)) {
     e.setPatient(preferred);
     log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
-    es.saveEncounter(e);
+    Encounter persisted=es.saveEncounter(e);
+    mergedData.addMovedEncounter(persisted.getUuid());
   }
   ProgramWorkflowService programService=Context.getProgramWorkflowService();
   for (  PatientProgram pp : programService.getPatientPrograms(notPreferred,null,null,null,null,null,false)) {
@@ -16,7 +18,8 @@
       PatientProgram enroll=pp.copy();
       enroll.setPatient(preferred);
       log.debug("Copying patientProgram " + pp.getPatientProgramId() + " to "+ preferred.getPatientId());
-      programService.savePatientProgram(enroll);
+      PatientProgram persisted=programService.savePatientProgram(enroll);
+      mergedData.addCreatedProgram(persisted.getUuid());
     }
   }
   PersonService personService=Context.getPersonService();
@@ -42,17 +45,20 @@
         if (personAisNotPreferred)         tmpRel.setPersonA(preferred);
         if (personBisNotPreferred)         tmpRel.setPersonB(preferred);
         log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
-        personService.saveRelationship(tmpRel);
+        Relationship persisted=personService.saveRelationship(tmpRel);
+        mergedData.addCreatedRelationship(persisted.getUuid());
         personService.voidRelationship(rel,"person " + (personAisNotPreferred ? "A" : "B") + " was merged, relationship copied to #"+ tmpRel.getRelationshipId());
         existingRelationships.add(relHash);
       }
+      mergedData.addVoidedRelationship(rel.getUuid());
     }
   }
   ObsService obsService=Context.getObsService();
   for (  Obs obs : obsService.getObservationsByPerson(notPreferred)) {
     if (obs.getEncounter() == null && !obs.isVoided()) {
       obs.setPerson(preferred);
-      obsService.saveObs(obs,"Merged from patient #" + notPreferred.getPatientId());
+      Obs persisted=obsService.saveObs(obs,"Merged from patient #" + notPreferred.getPatientId());
+      mergedData.addMovedIndependentObservation(persisted.getUuid());
     }
   }
   OrderService os=Context.getOrderService();
@@ -60,7 +66,8 @@
     if (o.getEncounter() == null && !o.getVoided()) {
       Order tmpOrder=o.copy();
       tmpOrder.setPatient(preferred);
-      os.saveOrder(tmpOrder);
+      Order persisted=os.saveOrder(tmpOrder);
+      mergedData.addCreatedOrder(persisted.getUuid());
     }
   }
   for (  PatientIdentifier pi : notPreferred.getActiveIdentifiers()) {
@@ -83,6 +90,7 @@
       tmpIdentifier.setUuid(UUID.randomUUID().toString());
       tmpIdentifier.setPreferred(false);
       preferred.addIdentifier(tmpIdentifier);
+      mergedData.addCreatedIdentifier(tmpIdentifier.getUuid());
       log.debug("Merging identifier " + tmpIdentifier.getIdentifier() + " to "+ preferred.getPatientId());
     }
   }
@@ -105,6 +113,7 @@
       tmpName.setPreferred(false);
       tmpName.setUuid(UUID.randomUUID().toString());
       preferred.addName(tmpName);
+      mergedData.addCreatedName(tmpName.getUuid());
       log.debug("Merging name " + newName.getGivenName() + " to "+ preferred.getPatientId());
     }
   }
@@ -126,6 +135,7 @@
       tmpAddress.setVoidReason(null);
       tmpAddress.setUuid(UUID.randomUUID().toString());
       preferred.addAddress(tmpAddress);
+      mergedData.addCreatedAddress(tmpAddress.getUuid());
       log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
     }
   }
@@ -135,17 +145,28 @@
       tmpAttr.setPerson(null);
       tmpAttr.setUuid(UUID.randomUUID().toString());
       preferred.addAttribute(tmpAttr);
+      mergedData.addCreatedAttribute(tmpAttr.getUuid());
     }
   }
+  mergedData.setPriorGender(preferred.getGender());
   if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());
+  mergedData.setPriorDateOfBirth(preferred.getBirthdate());
+  mergedData.setPriorDateOfBirthEstimated(preferred.isBirthdateEstimated());
   if (preferred.getBirthdate() == null || preferred.getBirthdate().equals("") || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
     preferred.setBirthdate(notPreferred.getBirthdate());
     preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
   }
+  mergedData.setPriorDateOfDeath(preferred.getDeathDate());
   if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
+  if (preferred.getCauseOfDeath() != null)   mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());
   if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
   Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
   personService.voidPerson(notPreferred,"The patient corresponding to this person has been voided and Merged with patient #" + preferred.getPatientId());
-  changeUserAssociations(preferred,notPreferred);
+  changeUserAssociations(preferred,notPreferred,mergedData);
   savePatient(preferred);
+  PersonMergeLog personMergeLog=new PersonMergeLog();
+  personMergeLog.setWinner(preferred);
+  personMergeLog.setLoser(notPreferred);
+  personMergeLog.setPersonMergeLogData(mergedData);
+  Context.getPersonService().savePersonMergeLog(personMergeLog);
 }

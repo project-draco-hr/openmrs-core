@@ -1,0 +1,10 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  try {
+    PersonMergeLog persisted=Context.getPersonService().savePersonMergeLog(personMergeLog);
+    Assert.assertNotNull("patientMergeLogId has not been set which indicates a problem saving the object",persisted.getPersonMergeLogId());
+  }
+ catch (  Exception ex) {
+    Assert.fail("should not fail when all required fields are set. " + ex.getMessage());
+  }
+}

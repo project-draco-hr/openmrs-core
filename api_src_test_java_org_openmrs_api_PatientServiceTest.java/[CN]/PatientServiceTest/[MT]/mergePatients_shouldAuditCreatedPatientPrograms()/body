@@ -1,0 +1,15 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  Patient notPreferred=patientService.getPatient(2);
+  PatientProgram program=Context.getProgramWorkflowService().getPatientPrograms(notPreferred,null,null,null,null,null,false).get(0);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String enrolledProgramUuid=null;
+  List<PatientProgram> programs=Context.getProgramWorkflowService().getPatientPrograms(preferred,null,null,null,null,null,false);
+  for (  PatientProgram p : programs) {
+    if (p.getDateCreated().equals(program.getDateCreated())) {
+      enrolledProgramUuid=p.getUuid();
+    }
+  }
+  Assert.assertNotNull("expected enrolled program was not found for the preferred patient after the merge",enrolledProgramUuid);
+  Assert.assertTrue("program enrollment not audited",isValueInList(enrolledProgramUuid,audit.getPersonMergeLogData().getCreatedPrograms()));
+}

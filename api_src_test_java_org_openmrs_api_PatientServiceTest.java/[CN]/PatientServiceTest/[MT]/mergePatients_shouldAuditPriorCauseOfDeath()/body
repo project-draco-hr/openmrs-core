@@ -1,0 +1,10 @@
+{
+  Patient preferred=patientService.getPatient(999);
+  preferred.setCauseOfDeath(Context.getConceptService().getConcept(3));
+  preferred.setDeathDate(new Date());
+  preferred.setDead(true);
+  patientService.savePatient(preferred);
+  Patient notPreferred=patientService.getPatient(7);
+  PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  Assert.assertEquals("prior cause of death was not audited",Context.getConceptService().getConcept(3).getUuid(),audit.getPersonMergeLogData().getPriorCauseOfDeath());
+}

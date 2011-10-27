@@ -1,0 +1,6 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  personMergeLog.setSerializedMergedData(null);
+  PersonMergeLog persisted=Context.getPersonService().savePersonMergeLog(personMergeLog);
+  Assert.assertNotNull("PatientMergeLogData has not been serialized",persisted.getSerializedMergedData());
+}

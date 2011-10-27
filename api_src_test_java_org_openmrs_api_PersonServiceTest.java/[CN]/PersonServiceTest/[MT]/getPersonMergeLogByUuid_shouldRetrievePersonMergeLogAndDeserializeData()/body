@@ -1,0 +1,8 @@
+{
+  PersonMergeLog personMergeLog=getTestPersonMergeLog();
+  int originalHashValue=personMergeLog.getPersonMergeLogData().computeHashValue();
+  PersonMergeLog persisted=Context.getPersonService().savePersonMergeLog(personMergeLog);
+  PersonMergeLog retrieved=Context.getPersonService().getPersonMergeLogByUuid(persisted.getUuid(),true);
+  Assert.assertNotNull("problem retrieving PersonMergeLog by UUID",retrieved);
+  Assert.assertEquals("deserialized data is not identical to original data",originalHashValue,retrieved.getPersonMergeLogData().computeHashValue());
+}

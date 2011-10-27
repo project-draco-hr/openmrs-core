@@ -3,6 +3,7 @@
   List<User> users=userService.getUsersByPerson(notPreferred,true);
   for (  User user : users) {
     user.setPerson(preferred);
-    userService.saveUser(user,null);
+    User persisted=userService.saveUser(user,null);
+    if (mergedData != null)     mergedData.addMovedUser(persisted.getUuid());
   }
 }
