@@ -12,11 +12,12 @@
     if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
     List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
     Set<User> uniqueProposers=new HashSet<User>();
+    Locale conceptNameLocale=new Locale(request.getParameter("conceptNamelocale"));
     for (    ConceptProposal conceptProposal : allProposals) {
       uniqueProposers.add(conceptProposal.getCreator());
       conceptProposal.setFinalText(finalText);
       conceptProposal.setState(cp.getState());
-      cs.mapConceptProposalToConcept(conceptProposal,c);
+      cs.mapConceptProposalToConcept(conceptProposal,c,conceptNameLocale);
     }
     String msg="";
     if (c != null) {
