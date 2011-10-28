@@ -1,0 +1,17 @@
+{
+  if (asString == null || asString.equals("")) {
+    setValue(null);
+    return;
+  }
+  try {
+    setValue(Context.getDateTimeFormat().parse(asString));
+  }
+ catch (  ParseException dateTimeEx) {
+    try {
+      setValue(Context.getDateFormat().parse(asString));
+    }
+ catch (    ParseException dateEx) {
+      throw new IllegalArgumentException(dateTimeEx);
+    }
+  }
+}
