@@ -9,6 +9,9 @@
     if (visit.getStartDatetime().after(encounterDate)) {
       continue;
     }
+    if (visit.getStopDatetime() != null && visit.getStopDatetime().before(encounterDate)) {
+      continue;
+    }
     if (visit.getLocation() == null || Location.isInHierarchy(encounter.getLocation(),visit.getLocation())) {
       encounter.setVisit(visit);
       return;
