@@ -88,7 +88,7 @@
   props.add(new GlobalProperty(GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,"START","Specifies how patient names are matched while searching patient. Valid values are 'ANYWHERE' or 'START'. Defaults to start if missing or invalid value is present."));
   props.add(new GlobalProperty(GP_ENABLE_CONCEPT_MAP_TYPE_MANAGEMENT,"false","Enable or disables management of concept map types",Boolean.class,null));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ENABLE_VISITS,"true","Set to true to enable the Visits feature. This will replace the 'Encounters' tab with a 'Visits' tab on the dashboard.",Boolean.class,null));
-  props.add(new GlobalProperty(GP_VISIT_ASSIGNMENT_HANDLER,"","Set to the name of the class responsible for assigning encounters to visits."));
+  props.add(new GlobalProperty(GP_VISIT_ASSIGNMENT_HANDLER,ExistingVisitAssignmentHandler.class.getName(),"Set to the name of the class responsible for assigning encounters to visits."));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_APPLICATION_NAME,"OpenMRS","The name of this application, as presented to the user, for example on the login and welcome pages."));
   props.add(new GlobalProperty(GP_ENCOUNTER_TYPE_TO_VISIT_TYPE_MAPPING,"","Specifies how encounter types are mapped to visit types when automatically assigning encounters to visits. e.g 1:1, 2:1, 3:2 in the format encounterTypeId:visitTypeId"));
   props.add(new GlobalProperty(GP_DASHBOARD_PROVIDER_DISPLAY_ENCOUNTER_ROLES,"","A comma-separated list of encounter roles (by name or id). Providers with these roles in an encounter will be displayed on the encounter tab of the patient dashboard."));
