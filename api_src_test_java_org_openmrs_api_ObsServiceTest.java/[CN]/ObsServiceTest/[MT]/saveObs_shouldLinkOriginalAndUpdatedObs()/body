@@ -1,0 +1,11 @@
+{
+  int obsId=7;
+  ObsService obsService=Context.getObsService();
+  Obs obs=obsService.getObs(obsId);
+  obs.setComment("A new comment");
+  Obs obsSaved=obsService.saveObs(obs,"Testing linkage");
+  obs=obsService.getObs(obsId);
+  assertNotNull(obsSaved);
+  assertNotNull(obs);
+  assertEquals(obs,obsSaved.getPreviousVersion());
+}
