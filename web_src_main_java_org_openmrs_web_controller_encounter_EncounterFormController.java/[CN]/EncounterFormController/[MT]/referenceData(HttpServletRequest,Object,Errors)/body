@@ -16,17 +16,7 @@
     map.put("forms",Context.getFormService().getAllForms());
     String reason="";
     for (    Obs o : encounter.getObsAtTopLevel(true)) {
-      if (o.isVoided()) {
-        reason=o.getVoidReason();
-        int start=reason.lastIndexOf(" ") + 1;
-        int end=reason.length() - 1;
-        try {
-          reason=reason.substring(start,end);
-          editedObs.add(Integer.valueOf(reason));
-        }
- catch (        Exception e) {
-        }
-      }
+      if (o.hasPreviousVersion())       editedObs.add(o.getObsId());
       FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);
       if (ff == null)       ff=new FormField();
       if (o.getObsGroup() == null) {

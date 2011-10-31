@@ -22,11 +22,12 @@
     newObs.setVoidedBy(null);
     newObs.setCreator(null);
     newObs.setDateCreated(null);
+    newObs.setPreviousVersion(obs);
     RequiredDataAdvice.recursivelyHandle(SaveHandler.class,newObs,changeMessage);
     dao.saveObs(newObs);
     try {
       Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
-      String reason=changeMessage + " (new obsId: " + newObs.getObsId()+ ")";
+      String reason=changeMessage + "voidReason looks like" + " (new obsId: "+ newObs.getObsId()+ ")";
       Context.evictFromSession(obs);
       obs=getObs(obs.getObsId());
       Context.getObsService().voidObs(obs,reason);
