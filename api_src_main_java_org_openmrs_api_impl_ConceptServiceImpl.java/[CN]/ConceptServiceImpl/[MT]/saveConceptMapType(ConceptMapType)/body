@@ -2,7 +2,7 @@
   Errors errors=new BindException(conceptMapType,"conceptMapType");
   new ConceptMapTypeValidator().validate(conceptMapType,errors);
   if (errors.hasErrors()) {
-    throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
+    throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation") + ": " + errors.toString());
   }
   conceptMapType.setName(conceptMapType.getName().trim());
   if (conceptMapType.getDescription() != null)   conceptMapType.setDescription(conceptMapType.getDescription().trim());

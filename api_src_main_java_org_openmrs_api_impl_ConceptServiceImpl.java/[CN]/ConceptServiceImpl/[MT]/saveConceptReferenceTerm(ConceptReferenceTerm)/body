@@ -2,7 +2,7 @@
   Errors errors=new BindException(conceptReferenceTerm,"conceptReferenceTerm");
   new ConceptReferenceTermValidator().validate(conceptReferenceTerm,errors);
   if (errors.hasErrors()) {
-    throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation"));
+    throw new APIException(Context.getMessageSourceService().getMessage("error.failed.validation" + ": " + errors.toString()));
   }
   return dao.saveConceptReferenceTerm(conceptReferenceTerm);
 }
