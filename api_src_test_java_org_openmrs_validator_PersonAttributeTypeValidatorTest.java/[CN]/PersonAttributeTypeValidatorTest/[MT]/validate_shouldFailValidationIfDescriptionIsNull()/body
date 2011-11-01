@@ -1,8 +1,7 @@
 {
   PersonAttributeType type=new PersonAttributeType();
   type.setName("Zodiac");
-  type.setDescription("Zodiac Description");
   Errors errors=new BindException(type,"patObj");
   new PersonAttributeTypeValidator().validate(type,errors);
-  Assert.assertFalse(errors.hasErrors());
+  Assert.assertTrue(errors.hasFieldErrors("description"));
 }
