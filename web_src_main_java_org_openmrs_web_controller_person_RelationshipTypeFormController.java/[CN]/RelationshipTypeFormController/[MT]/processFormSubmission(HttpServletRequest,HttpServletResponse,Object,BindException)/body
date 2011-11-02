@@ -2,5 +2,6 @@
   RelationshipType type=(RelationshipType)command;
   if (type.getaIsToB() == null || type.getaIsToB().equals(""))   errors.rejectValue("aIsToB","RelationshipType.aIsToB.required");
   if (type.getbIsToA() == null || type.getbIsToA().equals(""))   errors.rejectValue("bIsToA","RelationshipType.bIsToA.required");
+  if (!StringUtils.hasText(type.getDescription()))   errors.rejectValue("description","error.required",new Object[]{Context.getMessageSourceService().getMessage("general.description")},null);
   return super.processFormSubmission(request,response,type,errors);
 }
