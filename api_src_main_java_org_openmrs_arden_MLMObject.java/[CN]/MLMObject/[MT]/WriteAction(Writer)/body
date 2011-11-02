@@ -1,7 +1,7 @@
 {
   try {
-    w.append("\tpublic void initAction() {\n");
-    w.append("\t\tthis.actions = new ArrayList<String>();\n");
+    w.append("\tpublic ArrayList<String> initAction() {\n");
+    w.append("\t\tArrayList<String> actions = new ArrayList<String>();\n");
     int pos=1;
     for (    Action action : this.actions) {
       w.append("\t\tactions.add(\"" + action.getActionString());
@@ -11,9 +11,10 @@
       w.append("\");\n");
       pos++;
     }
+    w.append("\n\n\t\treturn actions;\n");
     w.append("\t}\n\n");
     w.flush();
-    w.append("\tprivate String substituteString(String variable,String outStr){\n");
+    w.append("\tprivate String substituteString(String variable,String outStr, HashMap<String, String> userVarMap, HashMap<String, Result> resultLookup){\n");
     w.append("\t\t//see if the variable is in the user map\n");
     w.append("\t\tString value = userVarMap.get(variable);\n");
     w.append("\t\tif (value != null)\n");
@@ -49,7 +50,7 @@
     w.append("\t\t}\n");
     w.append("\t\treturn outStr;\n");
     w.append("\t}\n");
-    w.append("\tpublic String doAction(String inStr)\n");
+    w.append("\tpublic String doAction(String inStr, HashMap<String, String> userVarMap, HashMap<String, Result> resultLookup)\n");
     w.append("\t{\n");
     w.append("\t\tint startindex = -1;\n");
     w.append("\t\tint endindex = -1;\n");
@@ -63,7 +64,7 @@
     w.append("\t\t\t}else if(endindex == -1){\n");
     w.append("\t\t\t\tendindex = index-1;\n");
     w.append("\t\t\t\tString variable = inStr.substring(startindex, endindex).trim();\n");
-    w.append("\t\t\t\toutStr = substituteString(variable,outStr);\n");
+    w.append("\t\t\t\toutStr = substituteString(variable,outStr,userVarMap,resultLookup);\n");
     w.append("\t\t\t\tstartindex = -1;\n");
     w.append("\t\t\t\tendindex = -1;\n");
     w.append("\t\t\t}\n");
