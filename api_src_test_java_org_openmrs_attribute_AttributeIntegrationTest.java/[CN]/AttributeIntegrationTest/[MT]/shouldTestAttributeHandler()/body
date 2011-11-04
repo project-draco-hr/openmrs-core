@@ -1,7 +1,7 @@
 {
   Visit visit=new Visit();
   VisitAttributeType paymentDateAttrType=new VisitAttributeType();
-  paymentDateAttrType.setDatatypeClassname(org.openmrs.customdatatype.datatype.Date.class.getName());
+  paymentDateAttrType.setDatatypeClassname(org.openmrs.customdatatype.datatype.DateDatatype.class.getName());
   VisitAttribute legalDate=new VisitAttribute();
   legalDate.setAttributeType(paymentDateAttrType);
   legalDate.setValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
