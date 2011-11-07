@@ -38,6 +38,9 @@ catch (      SchedulerException ex) {
       }
     }
   }
+ else {
+    error.append(msa.getMessage("Scheduler.taskList.requireTask"));
+  }
   view=getSuccessView();
   if (!success.toString().equals("")) {
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
