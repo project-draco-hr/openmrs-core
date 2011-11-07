@@ -7,7 +7,7 @@
   if (minStartDatetime != null)   criteria.add(Restrictions.ge("startDatetime",minStartDatetime));
   if (maxStartDatetime != null)   criteria.add(Restrictions.le("startDatetime",maxStartDatetime));
   if (!includeInactive) {
-    criteria.add(Restrictions.or(Restrictions.isNull("stopDatetime"),Restrictions.ge("stopDatetime",new Date())));
+    criteria.add(Restrictions.or(Restrictions.isNull("stopDatetime"),Restrictions.gt("stopDatetime",new Date())));
   }
  else {
     if (minEndDatetime != null)     criteria.add(Restrictions.ge("stopDatetime",minEndDatetime));
