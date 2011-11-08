@@ -20,7 +20,7 @@
     }
   }
  else {
-    if (!method.getName().endsWith(mainArgument.getClass().getSimpleName()))     return;
+    if (!methodNameEndsWithClassName(method,mainArgument.getClass()))     return;
     if (methodName.startsWith("void")) {
       Voidable voidable=(Voidable)args[0];
       String voidReason=(String)args[1];

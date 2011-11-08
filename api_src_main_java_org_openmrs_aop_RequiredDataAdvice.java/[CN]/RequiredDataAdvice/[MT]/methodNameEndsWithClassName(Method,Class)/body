@@ -1,0 +1,8 @@
+{
+  if (method.getName().endsWith(mainArgumentClass.getSimpleName()))   return true;
+ else {
+    mainArgumentClass=mainArgumentClass.getSuperclass();
+    if (mainArgumentClass != null)     return methodNameEndsWithClassName(method,mainArgumentClass);
+  }
+  return false;
+}
