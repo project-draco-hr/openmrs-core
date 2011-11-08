@@ -1,9 +1,9 @@
 {
   String methodName=method.getName();
+  if (args == null || args.length == 0)   return;
+  Object mainArgument=args[0];
+  if (mainArgument == null)   return;
   if (methodName.startsWith("save") || methodName.startsWith("create")) {
-    if (args == null || args.length == 0)     return;
-    Object mainArgument=args[0];
-    if (mainArgument == null)     return;
     Reflect reflect=new Reflect(OpenmrsObject.class);
     if (reflect.isSuperClass(mainArgument)) {
       String other=null;
@@ -19,25 +19,28 @@
       }
     }
   }
- else   if (methodName.startsWith("void")) {
-    Voidable voidable=(Voidable)args[0];
-    String voidReason=(String)args[1];
-    recursivelyHandle(VoidHandler.class,voidable,voidReason);
-  }
- else   if (methodName.startsWith("unvoid")) {
-    Voidable voidable=(Voidable)args[0];
-    Date originalDateVoided=voidable.getDateVoided();
-    User originalVoidingUser=voidable.getVoidedBy();
-    recursivelyHandle(UnvoidHandler.class,voidable,originalVoidingUser,originalDateVoided,null,null);
-  }
- else   if (methodName.startsWith("retire")) {
-    Retireable retirable=(Retireable)args[0];
-    String retireReason=(String)args[1];
-    recursivelyHandle(RetireHandler.class,retirable,retireReason);
-  }
- else   if (methodName.startsWith("unretire")) {
-    Retireable retirable=(Retireable)args[0];
-    Date originalDateRetired=retirable.getDateRetired();
-    recursivelyHandle(UnretireHandler.class,retirable,Context.getAuthenticatedUser(),originalDateRetired,null,null);
+ else {
+    if (!method.getName().endsWith(mainArgument.getClass().getSimpleName()))     return;
+    if (methodName.startsWith("void")) {
+      Voidable voidable=(Voidable)args[0];
+      String voidReason=(String)args[1];
+      recursivelyHandle(VoidHandler.class,voidable,voidReason);
+    }
+ else     if (methodName.startsWith("unvoid")) {
+      Voidable voidable=(Voidable)args[0];
+      Date originalDateVoided=voidable.getDateVoided();
+      User originalVoidingUser=voidable.getVoidedBy();
+      recursivelyHandle(UnvoidHandler.class,voidable,originalVoidingUser,originalDateVoided,null,null);
+    }
+ else     if (methodName.startsWith("retire")) {
+      Retireable retirable=(Retireable)args[0];
+      String retireReason=(String)args[1];
+      recursivelyHandle(RetireHandler.class,retirable,retireReason);
+    }
+ else     if (methodName.startsWith("unretire")) {
+      Retireable retirable=(Retireable)args[0];
+      Date originalDateRetired=retirable.getDateRetired();
+      recursivelyHandle(UnretireHandler.class,retirable,Context.getAuthenticatedUser(),originalDateRetired,null,null);
+    }
   }
 }
