@@ -279,7 +279,7 @@
         String settingsPageSuffix="module/testingmodulehelper/settings.htm";
         String testModuleSeTargetResourcePath=wizardModel.productionUrl.endsWith("/") ? settingsPageSuffix : "/" + settingsPageSuffix;
         if (TestInstallUtil.testConnection(wizardModel.productionUrl.concat(testModuleSeTargetResourcePath))) {
-          page=WIZARD_COMPLETE;
+          page=TESTING_AUTHENTICATION_PAGE;
         }
  else {
           errors.put("install.testing.noTestingModule",null);
@@ -289,6 +289,19 @@
         errors.put("install.testing.invalidProductionUrl",new Object[]{wizardModel.productionUrl});
       }
     }
+    renderTemplate(page,referenceMap,httpResponse);
+    return;
+  }
+ else   if (TESTING_AUTHENTICATION_PAGE.equals(page)) {
+    if ("Back".equals(httpRequest.getParameter("back"))) {
+      renderTemplate(TESTING_PRODUCTION_URL_PAGE,referenceMap,httpResponse);
+      return;
+    }
+    wizardModel.productionUsername=httpRequest.getParameter("username");
+    wizardModel.productionPassword=httpRequest.getParameter("password");
+    checkForEmptyValue(wizardModel.productionUsername,errors,"install.testing.username.required");
+    checkForEmptyValue(wizardModel.productionPassword,errors,"install.testing.password.required");
+    if (errors.isEmpty())     page=WIZARD_COMPLETE;
     renderTemplate(page,referenceMap,httpResponse);
     return;
   }
