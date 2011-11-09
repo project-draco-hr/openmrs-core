@@ -1,0 +1,16 @@
+{
+  try {
+    HttpURLConnection urlConnect=(HttpURLConnection)new URL(urlString).openConnection();
+    urlConnect.setConnectTimeout(15000);
+    urlConnect.setUseCaches(false);
+    urlConnect.getContent();
+    return true;
+  }
+ catch (  UnknownHostException e) {
+    log.error("Error generated:",e);
+  }
+catch (  IOException e) {
+    log.error("Error generated:",e);
+  }
+  return false;
+}
