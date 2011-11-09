@@ -1,0 +1,23 @@
+{
+  ZipInputStream zipIn=new ZipInputStream(in);
+  zipIn.getNextEntry();
+  BufferedReader reader=new BufferedReader(new InputStreamReader(zipIn));
+  String line;
+  StringBuffer query=new StringBuffer();
+  boolean queryEnds=false;
+  while ((line=reader.readLine()) != null) {
+    if ((line.startsWith("#") || line.startsWith("--"))) {
+      continue;
+    }
+    queryEnds=line.endsWith(";");
+    query.append(line);
+    if (queryEnds) {
+      int result=executeStatement(false,user,pw,query.toString());
+      if (result < 0) {
+        throw new IOException("Failed to execute query: " + query.toString());
+      }
+      query.setLength(0);
+    }
+  }
+  in.close();
+}

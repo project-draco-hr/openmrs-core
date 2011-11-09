@@ -51,7 +51,7 @@
       page=SIMPLE_SETUP;
     }
  else     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-      page=TESTING_PRODUCTION_URL_PAGE;
+      page=TESTING_PRODUCTION_URL_SETUP;
     }
  else {
       page=DATABASE_SETUP;
@@ -93,7 +93,12 @@
   }
  else   if (DATABASE_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+        page=TESTING_AUTHENTICATION_SETUP;
+      }
+ else {
+        renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      }
       return;
     }
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
@@ -226,9 +231,6 @@
       if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
         page=SIMPLE_SETUP;
       }
- else       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-        page=TESTING_PRODUCTION_URL_PAGE;
-      }
  else {
         page=IMPLEMENTATION_ID_SETUP;
       }
@@ -236,24 +238,14 @@
       return;
     }
     wizardModel.tasksToExecute=new ArrayList<WizardTask>();
-    if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-      loadedDriverString=loadDriver(testDatabaseConnection,null);
-      if (!StringUtils.hasText(loadedDriverString)) {
-        errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
-        renderTemplate(TESTING_PRODUCTION_URL_PAGE,referenceMap,httpResponse);
-        return;
-      }
-      wizardModel.tasksToExecute.add(WizardTask.CREATE_TEST_INSTALLATION);
+    if (!wizardModel.hasCurrentOpenmrsDatabase)     wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
+    if (wizardModel.createDatabaseUser)     wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
+    if (wizardModel.importTestData)     wizardModel.tasksToExecute.add(WizardTask.IMPORT_TEST_DATA);
+    if (wizardModel.createTables) {
+      wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
+      wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
     }
- else {
-      if (!wizardModel.hasCurrentOpenmrsDatabase)       wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
-      if (wizardModel.createDatabaseUser)       wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
-      if (wizardModel.createTables) {
-        wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
-        wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
-      }
-      if (wizardModel.addDemoData)       wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
-    }
+    if (wizardModel.addDemoData)     wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
     if (httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
       wizardModel.localeToSave=String.valueOf(httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
@@ -267,7 +259,7 @@
     referenceMap.put("isInstallationStarted",isInstallationStarted());
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
- else   if (TESTING_PRODUCTION_URL_PAGE.equals(page)) {
+ else   if (TESTING_PRODUCTION_URL_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
       renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
       return;
@@ -276,10 +268,8 @@
     checkForEmptyValue(wizardModel.productionUrl,errors,"install.testing.production.url.required");
     if (errors.isEmpty()) {
       if (TestInstallUtil.testConnection(wizardModel.productionUrl)) {
-        String settingsPageSuffix="module/testingmodulehelper/settings.htm";
-        String testModuleSeTargetResourcePath=wizardModel.productionUrl.endsWith("/") ? settingsPageSuffix : "/" + settingsPageSuffix;
-        if (TestInstallUtil.testConnection(wizardModel.productionUrl.concat(testModuleSeTargetResourcePath))) {
-          page=TESTING_AUTHENTICATION_PAGE;
+        if (TestInstallUtil.testConnection(wizardModel.productionUrl.concat(RELEASE_TESTING_MODULE_PATH + "settings.htm"))) {
+          page=TESTING_AUTHENTICATION_SETUP;
         }
  else {
           errors.put("install.testing.noTestingModule",null);
@@ -292,30 +282,18 @@
     renderTemplate(page,referenceMap,httpResponse);
     return;
   }
- else   if (TESTING_AUTHENTICATION_PAGE.equals(page)) {
+ else   if (TESTING_AUTHENTICATION_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(TESTING_PRODUCTION_URL_PAGE,referenceMap,httpResponse);
+      renderTemplate(TESTING_PRODUCTION_URL_SETUP,referenceMap,httpResponse);
       return;
     }
     wizardModel.productionUsername=httpRequest.getParameter("username");
     wizardModel.productionPassword=httpRequest.getParameter("password");
     checkForEmptyValue(wizardModel.productionUsername,errors,"install.testing.username.required");
     checkForEmptyValue(wizardModel.productionPassword,errors,"install.testing.password.required");
-    if (errors.isEmpty())     page=WIZARD_COMPLETE;
+    if (errors.isEmpty())     page=DATABASE_SETUP;
+    wizardModel.importTestData=true;
     renderTemplate(page,referenceMap,httpResponse);
-    return;
-  }
- else   if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-    httpResponse.setContentType("text/html");
-    httpResponse.setHeader("Cache-Control","no-cache");
-    PrintWriter pw=httpResponse.getWriter();
-    String errorMsg=uploadFile(httpRequest);
-    wizardModel.addModules=true;
-    pw.write("<html><body>");
-    pw.write("<script type=\"text/javascript\">window.parent.document.getElementById(\"spinner\").style.visibility=\"hidden\";</script>");
-    if (errorMsg != null)     pw.write("<div align=\"center\"><font color=\"#FF0000\">" + errorMsg + "</font></div>");
- else     pw.write("<div align=\"center\"><font color=\"#0BA603\">File uploaded successfully!</font></div>");
-    pw.write("</body></html>");
     return;
   }
 }

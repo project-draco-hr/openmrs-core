@@ -59,17 +59,10 @@
           connectionPassword=wizardModel.currentDatabasePassword;
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-        if (!InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-          if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
-            setMessage("Verify that the database connection works");
-            reportError("Unable to connect to database",DEFAULT_PAGE);
-            return;
-          }
-        }
- else {
-          finalDatabaseConnectionString=testDatabaseConnection.replace("@HOST@",wizardModel.testDatabaseHost).replace("@PORT@",wizardModel.testDatabasePort).replace("@DBNAME@",InitializationWizardModel.TEST_DATABASE_NAME);
-          connectionUsername=wizardModel.testDatabaseUsername;
-          connectionPassword=wizardModel.testDatabasePassword;
+        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+          setMessage("Verify that the database connection works");
+          reportError("Unable to connect to database",DEFAULT_PAGE);
+          return;
         }
         Properties runtimeProperties=new Properties();
         runtimeProperties.put("connection.url",finalDatabaseConnectionString);
@@ -99,6 +92,23 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
           @Override public void executing(          ChangeSet changeSet,          int numChangeSetsToRun){
             setMessage(message + " (" + i+++ "/"+ numChangeSetsToRun+ "): Author: "+ changeSet.getAuthor()+ " Comments: "+ changeSet.getComments()+ " Description: "+ changeSet.getDescription());
             setCompletedPercentage(Math.round(i * 100 / numChangeSetsToRun));
+          }
+        }
+        if (wizardModel.importTestData) {
+          try {
+            setMessage("Importing test data");
+            setExecutingTask(WizardTask.IMPORT_TEST_DATA);
+            setCompletedPercentage(0);
+            HttpURLConnection urlConnection=(HttpURLConnection)new URL(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "generateTestDataSet.form").openConnection();
+            urlConnection.setConnectTimeout(5000);
+            urlConnection.setUseCaches(false);
+            importTestDataSet(urlConnection.getInputStream(),connectionUsername,connectionPassword);
+            wizardModel.workLog.add("Imported test data");
+            addExecutedTask(WizardTask.IMPORT_TEST_DATA);
+          }
+ catch (          Exception e) {
+            reportError(ErrorMessageConstants.ERROR_DB_IMPORT_TEST_DATA,DEFAULT_PAGE,e.getMessage());
+            log.warn("Error while trying to import test data",e);
           }
         }
         if (wizardModel.createTables) {
@@ -131,19 +141,6 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_TABLES_OR_ADD_DEMO_DATA,DEFAULT_PAGE,e.getMessage());
             log.warn("Error while trying to add demo data",e);
           }
-        }
-        if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-          setMessage("Creating testing installation");
-          setCompletedPercentage(0);
-          setExecutingTask(WizardTask.CREATE_TEST_INSTALLATION);
-          createTestInstallation();
-          if (!errors.isEmpty()) {
-            reportError("Error while trying to Creating installation: " + StringUtils.collectionToCommaDelimitedString(errors.values()),null);
-            log.warn(StringUtils.collectionToCommaDelimitedString(errors.values()));
-            return;
-          }
-          wizardModel.workLog.add("Created test installation");
-          addExecutedTask(WizardTask.CREATE_TEST_INSTALLATION);
         }
         try {
           setMessage("Updating the database to the latest version");
