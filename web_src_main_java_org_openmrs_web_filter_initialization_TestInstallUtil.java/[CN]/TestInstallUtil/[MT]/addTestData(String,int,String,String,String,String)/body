@@ -2,7 +2,7 @@
   Process proc=null;
   BufferedReader br=null;
   String errorMsg=null;
-  String[] command=new String[]{"mysql","--host=" + host,"--port=" + port,"--user=" + user,"--password=" + pwd,"--database=" + databaseName,"-e","source " + SQL_DUMP_FILE.getAbsolutePath()};
+  String[] command=new String[]{"mysql","--host=" + host,"--port=" + port,"--user=" + user,"--password=" + pwd,"--database=" + databaseName,"-e","source " + filePath};
   try {
     proc=Runtime.getRuntime().exec(command);
     try {

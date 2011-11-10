@@ -1,0 +1,24 @@
+{
+  File tempFile=null;
+  FileOutputStream fileOut=null;
+  try {
+    ZipInputStream zipIn=new ZipInputStream(in);
+    zipIn.getNextEntry();
+    tempFile=File.createTempFile("testDataSet","dump");
+    fileOut=new FileOutputStream(tempFile);
+    IOUtils.copy(zipIn,fileOut);
+    fileOut.close();
+    zipIn.close();
+    URI uri=URI.create(connectionUrl.substring(5));
+    String host=uri.getHost();
+    int port=uri.getPort();
+    TestInstallUtil.addTestData(host,port,wizardModel.databaseName,connectionUsername,connectionPassword,tempFile.getAbsolutePath());
+  }
+  finally {
+    IOUtils.closeQuietly(in);
+    IOUtils.closeQuietly(fileOut);
+    if (tempFile != null) {
+      tempFile.delete();
+    }
+  }
+}
