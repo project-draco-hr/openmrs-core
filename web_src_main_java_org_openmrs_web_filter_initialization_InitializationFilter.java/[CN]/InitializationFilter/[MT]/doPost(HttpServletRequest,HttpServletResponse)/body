@@ -52,6 +52,7 @@
     }
  else     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
       page=TESTING_PRODUCTION_URL_SETUP;
+      wizardModel.databaseName=InitializationWizardModel.DEFAULT_TEST_DATABASE_NAME;
     }
  else {
       page=DATABASE_SETUP;
@@ -157,7 +158,7 @@
       checkForEmptyValue(wizardModel.createUserPassword,errors,ErrorMessageConstants.ERROR_DB_USER_PSWD_REQ);
     }
     if (errors.isEmpty()) {
-      page=OTHER_RUNTIME_PROPS;
+      page=InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod) ? WIZARD_COMPLETE : OTHER_RUNTIME_PROPS;
     }
     renderTemplate(page,referenceMap,httpResponse);
   }
@@ -240,12 +241,19 @@
     wizardModel.tasksToExecute=new ArrayList<WizardTask>();
     if (!wizardModel.hasCurrentOpenmrsDatabase)     wizardModel.tasksToExecute.add(WizardTask.CREATE_SCHEMA);
     if (wizardModel.createDatabaseUser)     wizardModel.tasksToExecute.add(WizardTask.CREATE_DB_USER);
-    if (wizardModel.importTestData)     wizardModel.tasksToExecute.add(WizardTask.IMPORT_TEST_DATA);
-    if (wizardModel.createTables) {
-      wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
-      wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
+    if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+      wizardModel.importTestData=true;
+      wizardModel.createTables=false;
+      wizardModel.addDemoData=false;
+      wizardModel.tasksToExecute.add(WizardTask.IMPORT_TEST_DATA);
     }
-    if (wizardModel.addDemoData)     wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
+ else {
+      if (wizardModel.createTables) {
+        wizardModel.tasksToExecute.add(WizardTask.CREATE_TABLES);
+        wizardModel.tasksToExecute.add(WizardTask.ADD_CORE_DATA);
+      }
+      if (wizardModel.addDemoData)       wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
+    }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
     if (httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
       wizardModel.localeToSave=String.valueOf(httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
@@ -292,7 +300,6 @@
     checkForEmptyValue(wizardModel.productionUsername,errors,"install.testing.username.required");
     checkForEmptyValue(wizardModel.productionPassword,errors,"install.testing.password.required");
     if (errors.isEmpty())     page=DATABASE_SETUP;
-    wizardModel.importTestData=true;
     renderTemplate(page,referenceMap,httpResponse);
     return;
   }
