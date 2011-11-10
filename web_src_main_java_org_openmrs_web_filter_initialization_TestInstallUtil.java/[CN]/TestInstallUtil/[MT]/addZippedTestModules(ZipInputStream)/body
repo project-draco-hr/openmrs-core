@@ -1,0 +1,35 @@
+{
+  boolean successfullyAdded=true;
+  ZipInputStream zipIn=in;
+  BufferedOutputStream out=null;
+  try {
+    File moduleRepository=OpenmrsUtil.getDirectoryInApplicationDataDirectory(ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+    ZipEntry entry=zipIn.getNextEntry();
+    while (entry != null) {
+      String fileName=entry.getName();
+      if (fileName.endsWith(".omod")) {
+        if (fileName.contains(System.getProperty("file.separator")))         fileName=new File(entry.getName()).getName();
+        if (log.isDebugEnabled())         log.debug("Extracting module file: " + fileName);
+        out=new BufferedOutputStream(new FileOutputStream(new File(moduleRepository,fileName)));
+        IOUtils.copy(zipIn,out);
+      }
+ else {
+        if (log.isDebugEnabled())         log.debug("Ignoring file that is not a .omod '" + fileName);
+      }
+      entry=zipIn.getNextEntry();
+    }
+  }
+ catch (  IOException e) {
+    log.error("An error occured while copying modules to the test server:",e);
+    successfullyAdded=false;
+  }
+ finally {
+    if (zipIn != null) {
+      IOUtils.closeQuietly(zipIn);
+    }
+    if (out != null) {
+      IOUtils.closeQuietly(out);
+    }
+  }
+  return successfullyAdded;
+}
