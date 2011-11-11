@@ -1,5 +1,6 @@
 {
-  ToolContext toolContext=getToolContext(referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE).toString());
+  Object locale=referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE);
+  ToolContext toolContext=getToolContext(locale != null ? locale.toString() : Context.getLocale().toString());
   VelocityContext velocityContext=new VelocityContext(toolContext);
   if (referenceMap != null) {
     for (    Map.Entry<String,Object> entry : referenceMap.entrySet()) {
