@@ -118,7 +118,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             setCompletedPercentage(0);
             importTestDataSet(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "generateTestDataSet.form"),finalDatabaseConnectionString,connectionUsername,connectionPassword);
             setMessage("Importing installed modules...");
-            if (!TestInstallUtil.addZippedTestModules(new ZipInputStream(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "getModules.htm")))) {
+            if (!TestInstallUtil.addZippedTestModules(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "getModules.htm"))) {
               reportError(ErrorMessageConstants.ERROR_DB_UNABLE_TO_ADD_MODULES,DEFAULT_PAGE,new Object[]{});
               log.warn("Failed to add modules");
             }
