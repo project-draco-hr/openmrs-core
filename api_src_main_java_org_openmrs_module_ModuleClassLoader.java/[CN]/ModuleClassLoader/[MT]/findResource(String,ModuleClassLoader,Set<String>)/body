@@ -25,7 +25,7 @@
       ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
       if (mcl != null)       result=mcl.findResource(name,requestor,seenModules);
       if (result != null) {
-        break;
+        return result;
       }
     }
   }
@@ -37,7 +37,7 @@
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
     if (mcl != null)     result=mcl.findResource(name,requestor,seenModules);
     if (result != null) {
-      break;
+      return result;
     }
   }
   return result;

@@ -48,7 +48,7 @@ catch (  ClassNotFoundException cnfe) {
         result=mcl.loadClass(name,resolve,requestor,seenModules);
       }
       if (result != null) {
-        break;
+        return result;
       }
     }
   }
@@ -59,7 +59,7 @@ catch (  ClassNotFoundException cnfe) {
       result=mcl.loadClass(name,resolve,requestor,seenModules);
     }
     if (result != null) {
-      break;
+      return result;
     }
   }
   return result;
