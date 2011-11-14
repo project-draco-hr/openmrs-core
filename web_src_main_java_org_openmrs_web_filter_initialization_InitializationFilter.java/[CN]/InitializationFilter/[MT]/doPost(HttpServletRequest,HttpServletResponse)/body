@@ -98,8 +98,9 @@
   }
  else   if (DATABASE_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
+      wizardModel.currentStepNumber-=1;
       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-        page=TESTING_AUTHENTICATION_SETUP;
+        renderTemplate(TESTING_AUTHENTICATION_SETUP,referenceMap,httpResponse);
       }
  else {
         renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
@@ -136,11 +137,15 @@
       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
         wizardModel.currentStepNumber=4;
       }
+ else {
+        wizardModel.currentStepNumber=2;
+      }
     }
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (DATABASE_TABLES_AND_USER.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
+      wizardModel.currentStepNumber-=1;
       renderTemplate(DATABASE_SETUP,referenceMap,httpResponse);
       return;
     }
@@ -239,6 +244,9 @@
       if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
         page=SIMPLE_SETUP;
       }
+ else       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+        page=DATABASE_TABLES_AND_USER;
+      }
  else {
         page=IMPLEMENTATION_ID_SETUP;
       }
@@ -276,6 +284,7 @@
   }
  else   if (TESTING_PRODUCTION_URL_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
+      wizardModel.currentStepNumber-=1;
       renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
       return;
     }
@@ -300,6 +309,7 @@
   }
  else   if (TESTING_AUTHENTICATION_SETUP.equals(page)) {
     if ("Back".equals(httpRequest.getParameter("back"))) {
+      wizardModel.currentStepNumber-=1;
       renderTemplate(TESTING_PRODUCTION_URL_SETUP,referenceMap,httpResponse);
       return;
     }
