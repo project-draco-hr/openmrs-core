@@ -9,6 +9,9 @@
     IOUtils.copy(zipIn,fileOut);
     fileOut.close();
     zipIn.close();
+    if (connectionUrl.contains(":mxj:")) {
+      connectionUrl=connectionUrl.replace(":mxj:",":");
+    }
     URI uri=URI.create(connectionUrl.substring(5));
     String host=uri.getHost();
     int port=uri.getPort();
