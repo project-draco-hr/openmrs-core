@@ -136,11 +136,6 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
               reportError(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,TESTING_AUTHENTICATION_SETUP,"");
               return;
             }
-catch (            APIException e) {
-              log.warn("An error occured on the remote server");
-              reportError(ErrorMessageConstants.ERROR_REMOTE_SERVER,DEFAULT_PAGE,"");
-              return;
-            }
             wizardModel.workLog.add("Imported test data");
             addExecutedTask(WizardTask.IMPORT_TEST_DATA);
           }
