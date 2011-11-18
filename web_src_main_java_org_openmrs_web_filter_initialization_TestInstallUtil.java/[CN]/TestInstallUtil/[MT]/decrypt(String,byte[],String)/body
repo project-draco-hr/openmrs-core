@@ -1,0 +1,14 @@
+{
+  try {
+    PBEKeySpec keySpec=new PBEKeySpec(secretToken.toCharArray());
+    SecretKeyFactory keyFactory=SecretKeyFactory.getInstance(ALGORITHM);
+    SecretKey secretKey=keyFactory.generateSecret(keySpec);
+    PBEParameterSpec parameterSpec=new PBEParameterSpec(salt,20);
+    Cipher cipher=Cipher.getInstance(TRANSFORMATION);
+    cipher.init(Cipher.DECRYPT_MODE,secretKey,parameterSpec);
+    return new String(cipher.doFinal(Base64.decode(text)),Charset.forName("UTF-8"));
+  }
+ catch (  GeneralSecurityException e) {
+    throw new APIException("Failed to decrypt string:",e);
+  }
+}

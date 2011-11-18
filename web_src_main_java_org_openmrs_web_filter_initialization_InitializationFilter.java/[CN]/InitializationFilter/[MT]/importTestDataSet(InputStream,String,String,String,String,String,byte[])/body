@@ -1,6 +1,7 @@
 {
   File tempFile=null;
   FileOutputStream fileOut=null;
+  File decryptedTempFile=null;
   try {
     ZipInputStream zipIn=new ZipInputStream(in);
     zipIn.getNextEntry();
@@ -9,17 +10,24 @@
     IOUtils.copy(zipIn,fileOut);
     fileOut.close();
     zipIn.close();
+    decryptedTempFile=File.createTempFile("decTestDataSet","dump");
+    String encryptedContents=FileUtils.readFileToString(tempFile,"UTF-8");
+    String decryptedText=TestInstallUtil.decrypt(encryptedContents,salt,openmrsUsername + ":" + openmrsPassword);
+    FileUtils.writeStringToFile(decryptedTempFile,decryptedText,"UTF-8");
     if (connectionUrl.contains(":mxj:")) {
       connectionUrl=connectionUrl.replace(":mxj:",":");
     }
     URI uri=URI.create(connectionUrl.substring(5));
     String host=uri.getHost();
     int port=uri.getPort();
-    TestInstallUtil.addTestData(host,port,wizardModel.databaseName,connectionUsername,connectionPassword,tempFile.getAbsolutePath());
+    TestInstallUtil.addTestData(host,port,wizardModel.databaseName,connectionUsername,connectionPassword,decryptedTempFile.getAbsolutePath());
   }
   finally {
     IOUtils.closeQuietly(in);
     IOUtils.closeQuietly(fileOut);
+    if (decryptedTempFile != null) {
+      decryptedTempFile.delete();
+    }
     if (tempFile != null) {
       tempFile.delete();
     }

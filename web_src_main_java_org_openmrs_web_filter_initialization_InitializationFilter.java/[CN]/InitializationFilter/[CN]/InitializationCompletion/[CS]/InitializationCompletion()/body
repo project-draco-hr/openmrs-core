@@ -117,9 +117,17 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             setExecutingTask(WizardTask.IMPORT_TEST_DATA);
             setCompletedPercentage(0);
             try {
-              importTestDataSet(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "generateTestDataSet.form",wizardModel.productionUsername,wizardModel.productionPassword),finalDatabaseConnectionString,connectionUsername,connectionPassword);
+              byte[] saltBytes=new byte[8];
+              new SecureRandom().nextBytes(saltBytes);
+              String salt=Base64.encode(saltBytes);
+              Map<String,String> parameterMap=new HashMap<String,String>();
+              parameterMap.put("u",Base64.encode(wizardModel.productionUsername.getBytes(Charset.forName("UTF-8"))));
+              parameterMap.put("p",Base64.encode(wizardModel.productionPassword.getBytes(Charset.forName("UTF-8"))));
+              parameterMap.put("s",salt);
+              importTestDataSet(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "generateTestDataSet.form",parameterMap),finalDatabaseConnectionString,connectionUsername,connectionPassword,wizardModel.productionUsername,wizardModel.productionPassword,saltBytes);
               setMessage("Importing installed modules...");
-              if (!TestInstallUtil.addZippedTestModules(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "getModules.htm",wizardModel.productionUsername,wizardModel.productionPassword))) {
+              parameterMap.remove("s");
+              if (!TestInstallUtil.addZippedTestModules(TestInstallUtil.getResourceInputStream(wizardModel.productionUrl + RELEASE_TESTING_MODULE_PATH + "getModules.htm",parameterMap))) {
                 reportError(ErrorMessageConstants.ERROR_DB_UNABLE_TO_ADD_MODULES,DEFAULT_PAGE,"");
                 log.warn("Failed to add modules");
               }
@@ -129,17 +137,12 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
               reportError(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,TESTING_AUTHENTICATION_SETUP,"");
               return;
             }
-catch (            APIException e) {
-              log.warn("An error occured on the remote server");
-              reportError(ErrorMessageConstants.ERROR_REMOTE_SERVER,DEFAULT_PAGE,"");
-              return;
-            }
             wizardModel.workLog.add("Imported test data");
             addExecutedTask(WizardTask.IMPORT_TEST_DATA);
           }
  catch (          Exception e) {
+            log.warn("Error occurred while trying to import test data",e);
             reportError(ErrorMessageConstants.ERROR_DB_IMPORT_TEST_DATA,DEFAULT_PAGE,e.getMessage());
-            log.warn("Error while trying to import test data",e);
             return;
           }
         }
