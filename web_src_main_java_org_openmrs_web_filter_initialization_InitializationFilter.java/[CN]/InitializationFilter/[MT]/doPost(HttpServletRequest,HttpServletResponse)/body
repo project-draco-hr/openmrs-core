@@ -288,9 +288,6 @@
       if (wizardModel.addDemoData)       wizardModel.tasksToExecute.add(WizardTask.ADD_DEMO_DATA);
     }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
-    if (httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
-      wizardModel.localeToSave=String.valueOf(httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
-    }
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     if (!isInstallationStarted()) {
       initJob=new InitializationCompletion();
