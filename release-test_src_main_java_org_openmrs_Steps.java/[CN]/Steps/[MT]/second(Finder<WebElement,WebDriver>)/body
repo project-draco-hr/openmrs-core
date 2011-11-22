@@ -1,0 +1,23 @@
+{
+  return new BaseFinder<WebElement,WebDriver>(){
+    @Override public Collection<WebElement> findFrom(    WebDriver context){
+      Collection<WebElement> collection=super.findFrom(context);
+      if (collection.size() > 1) {
+        Iterator<WebElement> iter=collection.iterator();
+        iter.next();
+        return Collections.singletonList(iter.next());
+      }
+ else {
+        return collection;
+      }
+    }
+    protected Collection<WebElement> extractFrom(    WebDriver context){
+      return finder.findFrom(context);
+    }
+    protected void describeTargetTo(    Description description){
+      description.appendText("second ");
+      finder.describeTo(description);
+    }
+  }
+;
+}

@@ -1,0 +1,9 @@
+{
+  String username=System.getProperty(usernameProp,"admin");
+  String password=System.getProperty(passwordProp,"Admin123");
+  if (!userAlreadyLoggedIn()) {
+    type(username,into(textbox().with(attribute("id",equalTo("username")))));
+    type(password,into(passwordtextbox().with(attribute("id",equalTo("password")))));
+    clickOn(button());
+  }
+}

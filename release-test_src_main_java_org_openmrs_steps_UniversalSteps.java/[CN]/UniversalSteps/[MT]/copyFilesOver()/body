@@ -1,0 +1,11 @@
+{
+  try {
+    String style="reports/style";
+    File viewDirectory=createDirectoryIfDoesNotExist("view");
+    URL styleResource=getClass().getClassLoader().getResource(style);
+    if (styleResource != null)     FileUtils.copyDirectoryToDirectory(new File(styleResource.toURI()),viewDirectory);
+  }
+ catch (  Exception e) {
+    e.printStackTrace();
+  }
+}

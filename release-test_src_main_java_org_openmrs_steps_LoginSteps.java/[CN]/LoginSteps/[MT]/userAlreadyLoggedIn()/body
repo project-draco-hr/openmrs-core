@@ -1,0 +1,4 @@
+{
+  Finder<WebElement,WebDriver> f=finderByXpath("//span[@id='userLoggedInAs']").with(text(containsString("Currently logged in")));
+  return f.findFrom(getWebDriver()).size() > 0;
+}

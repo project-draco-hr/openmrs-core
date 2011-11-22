@@ -1,0 +1,6 @@
+{
+  File outputDirectory=createStoryReporter().outputDirectory();
+  List<Steps> steps=new ArrayList<Steps>(includeSteps());
+  steps.add(new UniversalSteps(outputDirectory,driver));
+  return new InstanceStepsFactory(configuration(),toArray(steps)).createCandidateSteps();
+}

@@ -1,0 +1,9 @@
+{
+  type(name,into(textbox().with(attribute("id",equalTo("patientId_id_selection")))));
+  type(provider,into(textbox().with(attribute("id",equalTo("providerId_id_selection")))));
+  waitAndClickOn(first(link().with(attribute("class",equalTo("ui-corner-all")))));
+  waitAndClickOn(second(link().with(attribute("class",equalTo("ui-corner-all")))));
+  clickOn(textbox().with(attribute("name",equalTo("encounterDatetime"))));
+  type(location,into(selectbox().with(attribute("id",equalTo("location")))));
+  type(date,into(textbox().with(attribute("name",equalTo("encounterDatetime")))));
+}

@@ -1,0 +1,9 @@
+{
+  type(random(given),into(textbox().with(attribute("name",equalTo("person.names[0].givenName")))));
+  type(middle,into(textbox().with(attribute("name",equalTo("person.names[0].middleName")))));
+  type(family,into(textbox().with(attribute("name",equalTo("person.names[0].familyName")))));
+  clickOn(radioButton().with(attribute("name",equalTo("person.gender"))).with(attribute("value",equalTo(gender))));
+  type(random(username),into(textbox().with(attribute("name",equalTo("username")))));
+  type(password,into(passwordtextbox().with(attribute("name",equalTo("userFormPassword")))));
+  type(confirmPassword,into(passwordtextbox().with(attribute("name",equalTo("confirm")))));
+}
