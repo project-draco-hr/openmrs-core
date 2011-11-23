@@ -2,6 +2,9 @@
   Log log=LogFactory.getLog(getClass());
   try {
     changes=DatabaseUpdater.getUnrunDatabaseChanges();
+    if (changes == null && DatabaseUpdater.isLocked()) {
+      changes=DatabaseUpdater.getUnrunDatabaseChanges();
+    }
   }
  catch (  Exception e) {
     log.error("Unable to get the database changes",e);
