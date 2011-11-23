@@ -1,0 +1,12 @@
+{
+  Encounter encounter=Context.getEncounterService().getEncounter(1);
+  Assert.assertNull(encounter.getVisit());
+  Visit visit=Context.getVisitService().getVisit(1);
+  Calendar calendar=Calendar.getInstance();
+  calendar.setTime(visit.getStartDatetime());
+  calendar.set(Calendar.YEAR,2004);
+  visit.setStopDatetime(calendar.getTime());
+  Context.getVisitService().saveVisit(visit);
+  new ExistingVisitAssignmentHandler().beforeCreateEncounter(encounter);
+  Assert.assertNull(encounter.getVisit());
+}
