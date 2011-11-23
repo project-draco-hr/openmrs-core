@@ -11,9 +11,6 @@
     if (!property.getPropertyType().equals(String.class)) {
       continue;
     }
-    if (property.getWriteMethod().getAnnotation(AllowEmptyStrings.class) != null) {
-      continue;
-    }
     try {
       Object value=PropertyUtils.getProperty(openmrsObject,property.getName());
       if (value == null) {
@@ -22,14 +19,17 @@
       Object valueBeforeTrim=value;
       if (property.getWriteMethod().getAnnotation(AllowLeadingOrTrailingWhitespace.class) == null) {
         value=((String)value).trim();
+        if (!valueBeforeTrim.equals(value)) {
+          PropertyUtils.setProperty(openmrsObject,property.getName(),value);
+        }
+      }
+      if (property.getWriteMethod().getAnnotation(AllowEmptyStrings.class) != null) {
+        continue;
       }
       if ("".equals(value)) {
         if (!(openmrsObject instanceof Voidable && ((Voidable)openmrsObject).isVoided())) {
           PropertyUtils.setProperty(openmrsObject,property.getName(),null);
         }
-      }
- else       if (!valueBeforeTrim.equals(value)) {
-        PropertyUtils.setProperty(openmrsObject,property.getName(),value);
       }
     }
  catch (    InvocationTargetException ex) {
