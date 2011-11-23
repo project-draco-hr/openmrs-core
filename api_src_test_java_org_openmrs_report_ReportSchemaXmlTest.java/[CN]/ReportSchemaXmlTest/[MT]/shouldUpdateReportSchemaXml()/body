@@ -36,7 +36,7 @@
   rs.saveReportSchemaXml(reportSchemaXml);
   ReportSchemaXml reportSchemaXmlFromDB=rs.getReportSchemaXml(2);
   ReportSchemaXml reportSchemaXmlJodion=rs.getReportSchemaXml(2);
-  assertEquals(xml.toString(),reportSchemaXmlFromDB.getXml());
+  assertEquals(xml.toString().trim(),reportSchemaXmlFromDB.getXml().trim());
   StringBuilder xml2=new StringBuilder();
   xml2.append("<reportSchema id=\"2\" reportSchemaId=\"2\">\n");
   xml2.append("    <name>PEPFAR report updated</name>\n");
@@ -80,7 +80,7 @@
   reportSchemaXmlFromDB.setDescription(newDescription);
   rs.saveReportSchemaXml(reportSchemaXmlFromDB);
   ReportSchemaXml reportSchemaXmlUpdateFromDB=rs.getReportSchemaXml(reportSchemaXmlFromDB.getReportSchemaId());
-  assertEquals(xml2.toString(),reportSchemaXmlUpdateFromDB.getXml());
+  assertEquals(xml2.toString().trim(),reportSchemaXmlUpdateFromDB.getXml().trim());
   assertEquals(newName,reportSchemaXmlUpdateFromDB.getName());
   assertEquals(newDescription,reportSchemaXmlUpdateFromDB.getDescription());
 }
