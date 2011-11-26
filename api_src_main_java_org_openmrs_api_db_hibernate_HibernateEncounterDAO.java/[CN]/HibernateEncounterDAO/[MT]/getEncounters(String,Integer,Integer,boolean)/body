@@ -2,7 +2,7 @@
   if (StringUtils.isBlank(query)) {
     return Collections.emptyList();
   }
-  Criteria criteria=createEncounterByQueryCriteria(query,includeVoided);
+  Criteria criteria=createEncounterByQueryCriteria(query,includeVoided,true);
   if (start != null)   criteria.setFirstResult(start);
   if (length != null && length > 0)   criteria.setMaxResults(length);
   return criteria.list();
