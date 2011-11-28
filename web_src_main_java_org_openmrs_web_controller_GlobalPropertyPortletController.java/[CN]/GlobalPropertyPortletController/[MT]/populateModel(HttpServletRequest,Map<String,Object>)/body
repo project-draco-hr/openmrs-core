@@ -15,7 +15,6 @@
     if (excludePrefix != null) {
       prefixes=excludePrefix.split(";");
     }
-    model.put("portletId",System.currentTimeMillis());
     List<GlobalProperty> properties=new ArrayList<GlobalProperty>();
     for (    GlobalProperty p : Context.getAdministrationService().getAllGlobalProperties()) {
       if (p.getProperty().startsWith(propertyPrefix)) {
