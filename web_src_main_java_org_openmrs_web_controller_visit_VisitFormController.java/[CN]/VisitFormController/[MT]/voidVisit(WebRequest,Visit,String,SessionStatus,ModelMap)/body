@@ -4,7 +4,7 @@
     Context.getVisitService().voidVisit(visit,voidReason);
     if (log.isDebugEnabled())     log.debug("Voided visit with id: " + visit.getId());
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.voided"),WebRequest.SCOPE_SESSION);
-    return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
+    return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId()+ "&patientId="+ visit.getPatient().getPatientId();
   }
  catch (  APIException e) {
     log.warn("Error occurred while attempting to void visit",e);
