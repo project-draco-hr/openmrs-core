@@ -44,7 +44,7 @@
       if (log.isDebugEnabled())       log.debug("Saved visit: " + visit.toString());
       request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved");
       for (      Encounter encounter : encountersToSave)       es.saveEncounter(encounter);
-      return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId();
+      return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId()+ "&patientId="+ visit.getPatient().getPatientId();
     }
  catch (    APIException e) {
       log.warn("Error while saving visit(s)",e);
