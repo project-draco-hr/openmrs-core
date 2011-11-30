@@ -1,6 +1,6 @@
 {
-  String user=System.getProperty(userProp,"openmrs");
-  String password=System.getProperty(passwordProp,"test");
+  String user=System.getProperty(userProp,"root");
+  String password=System.getProperty(passwordProp,"password");
   clickOn(radioButton().with(attribute("name",equalTo("create_tables"))).with(attribute("value",equalTo("yes"))));
   clickOn(radioButton().with(attribute("name",equalTo("add_demo_data"))).with(attribute("value",equalTo("yes"))));
   clickOn(radioButton().with(attribute("name",equalTo("current_database_user"))).with(attribute("value",equalTo("yes"))));
