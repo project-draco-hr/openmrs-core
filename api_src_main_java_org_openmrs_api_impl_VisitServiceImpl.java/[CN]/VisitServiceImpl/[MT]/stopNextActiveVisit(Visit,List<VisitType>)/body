@@ -1,0 +1,8 @@
+{
+  Visit nextVisit=dao.getNextVisitToClose(previousVisit,visitTypesToStop);
+  if (nextVisit != null) {
+    nextVisit.setStopDatetime(new Date());
+    return dao.saveVisit(nextVisit);
+  }
+  return null;
+}
