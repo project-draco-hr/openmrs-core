@@ -45,7 +45,13 @@
           pp.transitionToState(state,enrollmentDate);
         }
       }
-      Context.getProgramWorkflowService().savePatientProgram(pp);
+      try {
+        ValidateUtil.validate(pp);
+        Context.getProgramWorkflowService().savePatientProgram(pp);
+      }
+ catch (      APIException e) {
+        request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+      }
     }
   }
   return new ModelAndView(new RedirectView(returnPage));

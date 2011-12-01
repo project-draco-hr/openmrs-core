@@ -1,0 +1,25 @@
+{
+  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
+  if (obj == null)   throw new IllegalArgumentException("The parameter obj should not be null");
+  PatientProgram program=(PatientProgram)obj;
+  ValidationUtils.rejectIfEmpty(errors,"patient","error.required",Context.getMessageSourceService().getMessage("general.patient"));
+  Set<PatientState> patientStates=program.getStates();
+  if (patientStates != null) {
+    Map<ProgramWorkflowState,Date> stateStartDateMap=null;
+    for (    PatientState patientState : patientStates) {
+      if (patientState.isVoided())       continue;
+      if (patientState.getStartDate() != null) {
+        if (OpenmrsUtil.compareWithNullAsLatest(patientState.getEndDate(),patientState.getStartDate()) < 0) {
+          errors.reject("PatientState.error.endDateCannotBeBeforeEndDate");
+          return;
+        }
+      }
+      if (stateStartDateMap == null)       stateStartDateMap=new HashMap<ProgramWorkflowState,Date>();
+      if (stateStartDateMap.containsKey(patientState.getState()) && OpenmrsUtil.nullSafeEquals(stateStartDateMap.get(patientState.getState()),patientState.getStartDate())) {
+        errors.reject("PatientState.error.duplicatePatientStates");
+        return;
+      }
+      stateStartDateMap.put(patientState.getState(),patientState.getStartDate());
+    }
+  }
+}

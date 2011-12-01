@@ -3,5 +3,6 @@
   PatientProgram pp=s.getPatientProgram(patientProgramId);
   ProgramWorkflow wf=s.getWorkflow(programWorkflowId);
   pp.voidLastState(wf,Context.getAuthenticatedUser(),new Date(),voidReason);
+  ValidateUtil.validate(pp);
   Context.getProgramWorkflowService().savePatientProgram(pp);
 }
