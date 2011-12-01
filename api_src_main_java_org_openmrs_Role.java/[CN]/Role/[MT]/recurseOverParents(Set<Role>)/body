@@ -1,10 +1,10 @@
 {
-  if (!this.inheritsRoles())   return children;
+  if (!this.inheritsRoles())   return total;
   Set<Role> allRoles=new HashSet<Role>();
   Set<Role> myRoles=new HashSet<Role>();
-  allRoles.addAll(children);
+  allRoles.addAll(total);
   myRoles.addAll(this.getInheritedRoles());
-  myRoles.removeAll(children);
+  myRoles.removeAll(total);
   myRoles.remove(this);
   allRoles.addAll(myRoles);
   for (  Role r : myRoles) {
