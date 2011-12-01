@@ -1,8 +1,6 @@
 {
   AuditableInterceptor interceptor=new AuditableInterceptor();
-  GlobalProperty o=new GlobalProperty();
-  Assert.assertTrue(o instanceof OpenmrsObject);
-  Assert.assertFalse(o instanceof Auditable);
+  Object o=new Object();
   boolean returnValue=interceptor.onFlushDirty(o,null,null,null,null,null);
-  Assert.assertFalse("false should have been returned because we didn't pass in an Auditable",returnValue);
+  Assert.assertFalse("false should have been returned because we didn't pass in an Auditable or OpenmrsObject",returnValue);
 }

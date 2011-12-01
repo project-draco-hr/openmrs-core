@@ -18,9 +18,12 @@
   encounter.addProvider(role,provider);
   encounter.addProvider(role,provider2);
   EncounterService es=Context.getEncounterService();
-  encounter=es.saveEncounter(encounter);
+  es.saveEncounter(encounter);
+  Context.flushSession();
+  Context.clearSession();
+  encounter=Context.getEncounterService().getEncounter(encounter.getEncounterId());
   encounter.setProvider(role,provider);
-  encounter=es.saveEncounter(encounter);
+  es.saveEncounter(encounter);
   Context.flushSession();
   Context.clearSession();
   encounter=Context.getEncounterService().getEncounter(encounter.getEncounterId());
