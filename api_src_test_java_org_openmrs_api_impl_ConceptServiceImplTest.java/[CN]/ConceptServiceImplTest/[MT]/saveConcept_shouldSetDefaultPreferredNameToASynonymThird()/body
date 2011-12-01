@@ -1,0 +1,26 @@
+{
+  Locale loc=new Locale("fr","CA");
+  ConceptName fullySpecifiedName=new ConceptName("fully specified",loc);
+  fullySpecifiedName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  ConceptName shortName=new ConceptName("short name",loc);
+  shortName.setConceptNameType(ConceptNameType.SHORT);
+  ConceptName synonym=new ConceptName("synonym",loc);
+  synonym.setConceptNameType(null);
+  ConceptName indexTerm=new ConceptName("indexTerm",loc);
+  indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
+  Concept c=new Concept();
+  java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
+  allNames.add(indexTerm);
+  allNames.add(synonym);
+  c.setNames(allNames);
+  Assert.assertNull("check test assumption - the API hasn't promoted a name to a fully specified name",c.getFullySpecifiedName(loc));
+  try {
+    Context.getConceptService().saveConcept(c);
+  }
+ catch (  org.openmrs.api.APIException e) {
+    ;
+  }
+  Assert.assertNotNull("there's a preferred name",c.getPreferredName(loc));
+  Assert.assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
+  Assert.assertEquals("name matches",c.getPreferredName(loc).getName(),synonym.getName());
+}
