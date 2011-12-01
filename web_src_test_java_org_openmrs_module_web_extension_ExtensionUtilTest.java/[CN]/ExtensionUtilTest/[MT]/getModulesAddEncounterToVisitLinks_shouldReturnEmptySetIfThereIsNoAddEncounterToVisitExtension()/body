@@ -1,0 +1,7 @@
+{
+  mockStatic(ModuleFactory.class);
+  when(ModuleFactory.getExtensions("org.openmrs.module.web.extension.AddEncounterToVisitExtension")).thenReturn(null);
+  Set<Link> links=ExtensionUtil.getAllAddEncounterToVisitLinks();
+  assertNotNull(links);
+  assertEquals(0,links.size());
+}
