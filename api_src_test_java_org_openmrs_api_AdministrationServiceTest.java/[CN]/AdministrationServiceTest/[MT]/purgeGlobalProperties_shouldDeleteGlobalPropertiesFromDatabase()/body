@@ -5,7 +5,7 @@
   props.add(new GlobalProperty("a.property.KEY","somethingelse"));
   adminService.saveGlobalProperties(props);
   int afterSaveSize=adminService.getAllGlobalProperties().size();
-  Assert.assertEquals(originalSize + 2,afterSaveSize);
+  Assert.assertEquals(originalSize + 1,afterSaveSize);
   adminService.purgeGlobalProperties(props);
   int afterPurgeSize=adminService.getAllGlobalProperties().size();
   Assert.assertEquals(originalSize,afterPurgeSize);

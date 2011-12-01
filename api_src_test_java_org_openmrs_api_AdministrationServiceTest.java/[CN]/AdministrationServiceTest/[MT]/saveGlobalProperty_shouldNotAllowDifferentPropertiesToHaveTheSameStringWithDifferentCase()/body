@@ -6,4 +6,6 @@
   adminService.saveGlobalProperty(gp);
   String prop=adminService.getGlobalProperty("ANOTher-global-property","boo");
   Assert.assertEquals("somethingelse",prop);
+  orig=adminService.getGlobalProperty("another-global-property");
+  Assert.assertEquals("somethingelse",orig);
 }
