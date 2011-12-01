@@ -12,6 +12,6 @@
       searchCriteria.add(Expression.ilike("names.name",drugName,matchMode));
     }
   }
-  searchCriteria.setProjection(Projections.rowCount());
+  searchCriteria.setProjection(Projections.countDistinct("drug.drugId"));
   return (Integer)searchCriteria.uniqueResult();
 }
