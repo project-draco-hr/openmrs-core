@@ -1,5 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
-  GlobalProperty gp=(GlobalProperty)criteria.add(Restrictions.eq("property",propertyName)).uniqueResult();
+  GlobalProperty gp=(GlobalProperty)criteria.add(Restrictions.eq("property",propertyName).ignoreCase()).uniqueResult();
   return gp;
 }
