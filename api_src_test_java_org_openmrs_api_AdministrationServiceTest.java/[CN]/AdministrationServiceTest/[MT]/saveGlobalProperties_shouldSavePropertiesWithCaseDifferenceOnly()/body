@@ -5,5 +5,6 @@
   props.add(new GlobalProperty("a.property.KEY","somethingelse"));
   adminService.saveGlobalProperties(props);
   props=adminService.getAllGlobalProperties();
-  Assert.assertEquals(originalSize + 2,props.size());
+  Assert.assertEquals(originalSize + 1,props.size());
+  Assert.assertTrue(props.contains(adminService.getGlobalPropertyObject("a.property.KEY")));
 }
