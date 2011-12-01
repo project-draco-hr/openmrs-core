@@ -1,7 +1,7 @@
 {
   if (applicationName == null)   applicationName="openmrs";
   String defaultFileName=applicationName + "-runtime.properties";
-  String fileNameInTestMode=getFileNameInTestMode();
+  String fileNameInTestMode=getRuntimePropertiesFileNameInTestMode();
   String pathName=fileNameInTestMode != null ? fileNameInTestMode : defaultFileName;
   log.debug("Attempting to look for properties file in current directory: " + pathName);
   if (new File(pathName).exists()) {
