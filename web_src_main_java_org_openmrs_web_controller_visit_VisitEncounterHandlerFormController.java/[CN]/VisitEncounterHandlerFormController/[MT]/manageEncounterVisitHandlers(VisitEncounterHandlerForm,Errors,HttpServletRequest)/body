@@ -13,5 +13,15 @@
  else {
     form.setVisitEncounterHandler(administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER));
   }
+  TaskDefinition closeVisitsTask=Context.getSchedulerService().getTaskByName(OpenmrsConstants.AUTO_CLOSE_VISITS_TASK_NAME);
+  if (closeVisitsTask != null) {
+    try {
+      if (form.getCloseVisitsTaskStarted() && !closeVisitsTask.getStarted())       Context.getSchedulerService().scheduleTask(closeVisitsTask);
+ else       if (!form.getCloseVisitsTaskStarted() && closeVisitsTask.getStarted())       Context.getSchedulerService().shutdownTask(closeVisitsTask);
+    }
+ catch (    SchedulerException e) {
+      errors.rejectValue("closeVisitsTaskStarted",(form.getCloseVisitsTaskStarted()) ? "Visit.configure.closeVisitsTask.failedToStart" : "Visit.configure.closeVisitsTask.failedToStop");
+    }
+  }
   request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Encounter.visits.configuration.savedSuccessfully");
 }
