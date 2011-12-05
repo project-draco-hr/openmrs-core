@@ -1,18 +1,9 @@
 {
   try {
     Daemon.executeScheduledTask(task);
-    if (!Context.isSessionOpen()) {
-      Context.openSession();
-    }
-    saveLastExecutionTime();
   }
  catch (  Throwable t) {
     log.error("FATAL ERROR: Task [" + task.getClass() + "] failed due to exception ["+ t.getClass().getName()+ "]",t);
     SchedulerUtil.sendSchedulerError(t);
-  }
- finally {
-    if (Context.isSessionOpen()) {
-      Context.closeSession();
-    }
   }
 }
