@@ -4,7 +4,7 @@
     throw new MappingException("enumClassName parameter not specified");
   }
   try {
-    this.clazz=Class.forName(enumClassName);
+    this.clazz=Context.loadClass(enumClassName);
   }
  catch (  ClassNotFoundException e) {
     throw new MappingException("enumClass " + enumClassName + " not found",e);
