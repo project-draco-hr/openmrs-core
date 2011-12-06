@@ -1,0 +1,7 @@
+{
+  ConceptReferenceTerm term=new ConceptReferenceTerm();
+  term.setCode(" code ");
+  term.setConceptSource(new ConceptSource(1));
+  new OpenmrsObjectSaveHandler().handle(term,null,null,null);
+  Assert.assertEquals("code",term.getCode());
+}
