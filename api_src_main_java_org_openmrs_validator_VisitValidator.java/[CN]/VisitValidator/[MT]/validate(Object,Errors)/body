@@ -40,4 +40,17 @@
       }
     }
   }
+  boolean errorsInAttributes=false;
+  for (  VisitAttribute va : visit.getActiveAttributes()) {
+    try {
+      ValidateUtil.validate(va);
+    }
+ catch (    APIException ex) {
+      errorsInAttributes=true;
+      break;
+    }
+  }
+  if (errorsInAttributes) {
+    errors.rejectValue("attributes","Customizable.error.inAttributes");
+  }
 }

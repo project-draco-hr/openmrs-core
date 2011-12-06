@@ -34,7 +34,6 @@
   oGP.setLocation(new Location(1));
   oGP.setObsDatetime(new Date());
   oGP.setPerson(new Patient(2));
-  oGP.setValueText("grandparent obs value text");
   oGP.addGroupMember(oParent);
   Obs o3=new Obs();
   o3.setConcept(cs.getConcept(3));
@@ -51,7 +50,6 @@
   oGGP.setCreator(Context.getAuthenticatedUser());
   oGGP.setLocation(new Location(1));
   oGGP.setObsDatetime(new Date());
-  oGGP.setValueText("great grandparent value text");
   oGGP.setPerson(new Patient(2));
   oGGP.addGroupMember(oGP);
   Obs oGGGP=new Obs();
@@ -60,7 +58,6 @@
   oGGGP.setCreator(Context.getAuthenticatedUser());
   oGGGP.setLocation(new Location(1));
   oGGGP.setObsDatetime(new Date());
-  oGGGP.setValueText("great great grandparent value text");
   oGGGP.setPerson(new Patient(2));
   oGGGP.addGroupMember(oGGP);
   os.saveObs(oGGGP,null);
@@ -120,6 +117,7 @@
   }
   Obs oVoidTest=new Obs();
   oVoidTest.setConcept(cs.getConcept(1));
+  oVoidTest.setValueNumeric(50d);
   oVoidTest.setDateCreated(new Date());
   oVoidTest.setCreator(Context.getAuthenticatedUser());
   oVoidTest.setLocation(new Location(1));

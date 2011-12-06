@@ -3,8 +3,10 @@
   Assert.assertNull(visit.getLocation());
   Assert.assertNull(visit.getChangedBy());
   Assert.assertNull(visit.getDateChanged());
-  visit.setLocation(new Location(1));
+  visit.setLocation(Context.getLocationService().getLocation(1));
   visit=Context.getVisitService().saveVisit(visit);
+  Context.flushSession();
   Assert.assertNotNull(visit.getChangedBy());
   Assert.assertNotNull(visit.getDateChanged());
+  Assert.assertEquals(Integer.valueOf(1),visit.getLocation().getLocationId());
 }
