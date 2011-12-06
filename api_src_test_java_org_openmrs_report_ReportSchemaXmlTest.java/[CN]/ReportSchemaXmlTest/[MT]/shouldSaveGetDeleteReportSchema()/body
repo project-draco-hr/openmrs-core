@@ -37,7 +37,7 @@
   Context.clearSession();
   ReportSchemaXml reportSchemaXmlFromDB=rs.getReportSchemaXml(1);
   assertNotNull("The schema xml was not saved correctly, none found in the db",reportSchemaXmlFromDB);
-  assertEquals(xml.toString(),reportSchemaXmlFromDB.getXml());
+  assertEquals(xml.toString().trim(),reportSchemaXmlFromDB.getXml().trim());
   assertEquals(new Integer(1),reportSchemaXmlFromDB.getReportSchemaId());
   rs.deleteReportSchemaXml(reportSchemaXmlFromDB);
   ReportSchemaXml deletedXml=rs.getReportSchemaXml(1);
