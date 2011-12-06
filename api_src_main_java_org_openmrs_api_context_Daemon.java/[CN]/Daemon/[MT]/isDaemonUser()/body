@@ -1,0 +1,8 @@
+{
+  if (isDaemonThread()) {
+    return true;
+  }
+  Boolean b=isDaemonUser.get();
+  if (b == null)   return false;
+ else   return b.booleanValue();
+}

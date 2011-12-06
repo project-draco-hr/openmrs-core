@@ -1,15 +1,23 @@
 {
   Set<TaskDefinition> tasks=new HashSet<TaskDefinition>();
-  for (  TaskDefinition task : getScheduledTasks()) {
-    tasks.add(task);
-    try {
-      shutdownTask(task);
-    }
- catch (    SchedulerException e) {
-      log.debug("Failed to stop task while saving memento " + task.getName(),e);
-    }
-  }
   TimerSchedulerMemento memento=new TimerSchedulerMemento(tasks);
-  memento.saveErrorTasks();
+  try {
+    if (Context.getAuthenticatedUser() == null) {
+      Daemon.setRunningAsDaemonUser(true);
+    }
+    for (    TaskDefinition task : getScheduledTasks()) {
+      tasks.add(task);
+      try {
+        shutdownTask(task);
+      }
+ catch (      SchedulerException e) {
+        log.debug("Failed to stop task while saving memento " + task.getName(),e);
+      }
+    }
+    memento.saveErrorTasks();
+  }
+  finally {
+    Daemon.setRunningAsDaemonUser(false);
+  }
   return memento;
 }

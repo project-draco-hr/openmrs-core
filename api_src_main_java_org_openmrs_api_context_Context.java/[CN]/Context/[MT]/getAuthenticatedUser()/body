@@ -1,4 +1,4 @@
 {
-  if (Daemon.isDaemonThread())   return contextDAO.getUserByUuid(Daemon.DAEMON_USER_UUID);
+  if (Daemon.isDaemonUser())   return contextDAO.getUserByUuid(Daemon.DAEMON_USER_UUID);
   return getUserContext().getAuthenticatedUser();
 }
