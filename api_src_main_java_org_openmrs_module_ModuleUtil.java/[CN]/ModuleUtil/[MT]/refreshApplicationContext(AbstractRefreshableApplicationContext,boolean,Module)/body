@@ -7,7 +7,18 @@
       log.warn("Unable to call willRefreshContext() method in the module's activator",t);
     }
   }
-  OpenmrsClassLoader.saveState();
+  Thread daemonThread=Daemon.runInDaemonThread(new Runnable(){
+    public void run(){
+      OpenmrsClassLoader.saveState();
+    }
+  }
+);
+  try {
+    daemonThread.join();
+  }
+ catch (  InterruptedException ex) {
+    log.warn("Daemon thread interrupted while saving the current state",ex);
+  }
   ServiceContext.destroyInstance();
   try {
     ctx.stop();
