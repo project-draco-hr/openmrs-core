@@ -12,5 +12,19 @@
       break;
     }
   }
+  String gpValue=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_VISIT_TYPES_TO_AUTO_CLOSE);
+  if (StringUtils.isNotBlank(gpValue)) {
+    List<VisitType> visitTypes=new ArrayList<VisitType>();
+    String[] visitTypeNames=StringUtils.split(gpValue.trim(),",");
+    for (int i=0; i < visitTypeNames.length; i++) {
+      String currName=visitTypeNames[i];
+      visitTypeNames[i]=currName.trim().toLowerCase();
+    }
+    List<VisitType> allVisitTypes=visitService.getAllVisitTypes();
+    for (    VisitType visitType : allVisitTypes) {
+      if (ArrayUtils.contains(visitTypeNames,visitType.getName().toLowerCase()))       visitTypes.add(visitType);
+    }
+    form.setVisitTypesToClose(visitTypes);
+  }
   model.addAttribute(VISIT_ENCOUNTER_HANDLER_FORM,form);
 }

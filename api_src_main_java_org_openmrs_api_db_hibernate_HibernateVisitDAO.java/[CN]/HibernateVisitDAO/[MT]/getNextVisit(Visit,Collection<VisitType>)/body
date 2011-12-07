@@ -1,6 +1,0 @@
-{
-  Criteria criteria=getCurrentSession().createCriteria(Visit.class);
-  criteria.add(Restrictions.eq("voided",false)).add(Restrictions.gt("visitId",previousVisit.getVisitId())).addOrder(Order.asc("visitId")).add(Restrictions.isNull("stopDatetime")).setMaxResults(1);
-  if (CollectionUtils.isNotEmpty(visitTypes))   criteria.add(Restrictions.in("visitType",visitTypes));
-  return (Visit)criteria.uniqueResult();
-}
