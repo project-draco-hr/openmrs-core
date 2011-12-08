@@ -1,0 +1,8 @@
+{
+  User u=new User();
+  u.setSystemId("user");
+  u.setPerson(Context.getPersonService().getPerson(1));
+  Context.getUserService().saveUser(u,"Admin123");
+  Assert.assertSame(Context.getAuthenticatedUser(),u.getCreator());
+  Assert.assertNotNull(u.getDateCreated());
+}

@@ -1,0 +1,8 @@
+{
+  AuditableInterceptor interceptor=new AuditableInterceptor();
+  User u=new User();
+  String[] propertyNames=new String[]{"creator","dateCreated"};
+  Object[] currentState=new Object[]{null,new Date()};
+  boolean result=interceptor.onSave(u,0,currentState,propertyNames,null);
+  Assert.assertTrue(result);
+}
