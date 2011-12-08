@@ -6,7 +6,7 @@
       isDaemonThread.set(true);
       try {
         Context.openSession();
-        task.execute();
+        TimerSchedulerTask.execute(task);
       }
  catch (      Throwable t) {
         exceptionThrown=t;
