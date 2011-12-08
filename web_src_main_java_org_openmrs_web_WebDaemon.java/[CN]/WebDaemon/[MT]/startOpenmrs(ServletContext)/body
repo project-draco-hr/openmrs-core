@@ -1,0 +1,26 @@
+{
+  DaemonThread startOpenmrsThread=new DaemonThread(){
+    @Override public void run(){
+      isDaemonThread.set(true);
+      try {
+        Listener.startOpenmrs(servletContext);
+      }
+ catch (      Throwable t) {
+        exceptionThrown=t;
+      }
+ finally {
+        Context.closeSession();
+      }
+    }
+  }
+;
+  startOpenmrsThread.start();
+  try {
+    startOpenmrsThread.join();
+  }
+ catch (  InterruptedException e) {
+  }
+  if (startOpenmrsThread.getExceptionThrown() != null) {
+    throw new ModuleException("Unable to start openmrs as Daemon",startOpenmrsThread.getExceptionThrown());
+  }
+}
