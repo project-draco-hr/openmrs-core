@@ -57,13 +57,15 @@
           errors.reject("Concept.error.multipleShortNames");
         }
       }
-      if (nameInLocale.isLocalePreferred() || nameInLocale.isFullySpecifiedName()) {
-        List<Concept> conceptsWithPossibleDuplicateNames=Context.getConceptService().getConceptsByName(nameInLocale.getName());
-        if (conceptsWithPossibleDuplicateNames.size() > 0) {
-          for (          Concept concept : conceptsWithPossibleDuplicateNames) {
-            if (concept.isRetired() || (conceptToValidate.getConceptId() != null && conceptToValidate.getConceptId().equals(concept.getConceptId())))             continue;
-            if ((concept.getFullySpecifiedName(conceptNameLocale) != null && concept.getFullySpecifiedName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName())) || (concept.getPreferredName(conceptNameLocale) != null && concept.getPreferredName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName()))) {
-              throw new DuplicateConceptNameException("'" + nameInLocale.getName() + "' is a duplicate name in locale '"+ conceptNameLocale.toString()+ "'");
+      if (!conceptToValidate.isRetired()) {
+        if (nameInLocale.isLocalePreferred() || nameInLocale.isFullySpecifiedName()) {
+          List<Concept> conceptsWithPossibleDuplicateNames=Context.getConceptService().getConceptsByName(nameInLocale.getName());
+          if (conceptsWithPossibleDuplicateNames.size() > 0) {
+            for (            Concept concept : conceptsWithPossibleDuplicateNames) {
+              if (concept.isRetired() || (conceptToValidate.getConceptId() != null && conceptToValidate.getConceptId().equals(concept.getConceptId())))               continue;
+              if ((concept.getFullySpecifiedName(conceptNameLocale) != null && concept.getFullySpecifiedName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName())) || (concept.getPreferredName(conceptNameLocale) != null && concept.getPreferredName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName()))) {
+                throw new DuplicateConceptNameException("'" + nameInLocale.getName() + "' is a duplicate name in locale '"+ conceptNameLocale.toString()+ "'");
+              }
             }
           }
         }
