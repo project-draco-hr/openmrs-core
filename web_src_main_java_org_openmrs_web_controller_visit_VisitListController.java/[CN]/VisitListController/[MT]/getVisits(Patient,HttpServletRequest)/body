@@ -7,6 +7,7 @@
   model.put("person",patient);
   PortletControllerUtil.addFormToEditAndViewUrlMaps(model);
   @SuppressWarnings("unchecked") Map<Form,String> formToViewUrlMap=(Map<Form,String>)model.get("formToViewUrlMap");
+  @SuppressWarnings("unchecked") Map<Form,String> formToEditUrlMap=(Map<Form,String>)model.get("formToEditUrlMap");
   if (!StringUtils.isBlank(datatable.getsSearch())) {
     Integer filteredVisitsCount=Context.getEncounterService().getEncountersByVisitsAndPatientCount(patient,false,datatable.getsSearch());
     response.setiTotalDisplayRecords(filteredVisitsCount);
@@ -52,7 +53,7 @@
       row.put("encounterProviders",getProviders(encounter));
       row.put("encounterLocation",(encounter.getLocation() != null) ? encounter.getLocation().getName() : "");
       row.put("encounterEnterer",(encounter.getCreator() != null) ? encounter.getCreator().getPersonName().toString() : "");
-      row.put("formViewURL",getViewFormURL(request,formToViewUrlMap,encounter));
+      row.put("formViewURL",getViewFormURL(request,formToViewUrlMap,formToEditUrlMap,encounter));
     }
     response.addRow(row);
   }
