@@ -1,0 +1,10 @@
+{
+  try {
+    TestTask task=new TestTask();
+    new PrivateSchedulerTask(task).runTask();
+    Assert.assertTrue(true);
+  }
+ catch (  NullPointerException e) {
+    Assert.fail("Daemon user should have an associated person");
+  }
+}
