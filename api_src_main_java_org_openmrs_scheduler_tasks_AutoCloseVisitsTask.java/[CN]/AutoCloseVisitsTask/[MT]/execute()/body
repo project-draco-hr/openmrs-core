@@ -3,7 +3,7 @@
     if (log.isDebugEnabled())     log.debug("Starting Auto Close Visits Task...");
     startExecuting();
     try {
-      Context.getVisitService().stopVisits(OpenmrsUtil.getEndOfDay(new Date()));
+      Context.getVisitService().stopVisits(new Date());
     }
  catch (    Exception e) {
       log.error("Error while auto closing visits:",e);

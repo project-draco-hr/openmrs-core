@@ -2,7 +2,7 @@
   String gpValue=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_VISIT_TYPES_TO_AUTO_CLOSE);
   VisitService vs=Context.getVisitService();
   if (StringUtils.isNotBlank(gpValue)) {
-    if (maximumStartDate == null)     maximumStartDate=OpenmrsUtil.getEndOfDay(new Date());
+    if (maximumStartDate == null)     maximumStartDate=new Date();
     List<VisitType> visitTypesToStop=new ArrayList<VisitType>();
     String[] visitTypeNames=StringUtils.split(gpValue.trim(),",");
     for (int i=0; i < visitTypeNames.length; i++) {
