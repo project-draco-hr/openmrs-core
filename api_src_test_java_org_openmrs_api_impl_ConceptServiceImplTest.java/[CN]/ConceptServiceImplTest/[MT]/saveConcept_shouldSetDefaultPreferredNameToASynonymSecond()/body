@@ -1,6 +1,7 @@
 {
   Locale loc=new Locale("fr","CA");
-  ConceptName fullySpecifiedName=new ConceptName("fully specified",loc);
+  Locale otherLocale=new Locale("en","US");
+  ConceptName fullySpecifiedName=new ConceptName("fully specified",otherLocale);
   fullySpecifiedName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
   ConceptName shortName=new ConceptName("short name",loc);
   shortName.setConceptNameType(ConceptNameType.SHORT);
@@ -11,6 +12,7 @@
   Concept c=new Concept();
   java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
   allNames.add(indexTerm);
+  allNames.add(fullySpecifiedName);
   allNames.add(synonym);
   c.setNames(allNames);
   Assert.assertNull("check test assumption - the API hasn't promoted a name to a fully specified name",c.getFullySpecifiedName(loc));
@@ -23,4 +25,5 @@
   Assert.assertNotNull("there's a preferred name",c.getPreferredName(loc));
   Assert.assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
   Assert.assertEquals("name matches",c.getPreferredName(loc).getName(),synonym.getName());
+  Assert.assertEquals("fully specified name unchanged",c.getPreferredName(otherLocale).getName(),fullySpecifiedName.getName());
 }
