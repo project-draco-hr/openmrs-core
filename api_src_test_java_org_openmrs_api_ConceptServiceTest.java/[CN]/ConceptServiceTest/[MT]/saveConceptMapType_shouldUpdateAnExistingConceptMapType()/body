@@ -5,6 +5,7 @@
   mapType.setName("random name");
   mapType.setDescription("random description");
   ConceptMapType editedMapType=Context.getConceptService().saveConceptMapType(mapType);
+  Context.flushSession();
   Assert.assertEquals("random name",editedMapType.getName());
   Assert.assertEquals("random description",editedMapType.getDescription());
   Assert.assertNotNull(editedMapType.getDateChanged());
