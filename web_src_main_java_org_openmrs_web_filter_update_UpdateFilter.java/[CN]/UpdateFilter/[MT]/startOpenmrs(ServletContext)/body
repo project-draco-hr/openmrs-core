@@ -2,7 +2,7 @@
   ContextLoader contextLoader=new ContextLoader();
   contextLoader.initWebApplicationContext(servletContext);
   try {
-    Listener.startOpenmrs(servletContext);
+    WebDaemon.startOpenmrs(servletContext);
   }
  catch (  ServletException servletException) {
     contextLoader.closeWebApplicationContext(servletContext);

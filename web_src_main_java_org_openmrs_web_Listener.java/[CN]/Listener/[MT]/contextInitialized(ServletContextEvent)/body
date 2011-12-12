@@ -15,7 +15,7 @@
     if (!setupNeeded()) {
       copyCustomizationIntoWebapp(servletContext,props);
       super.contextInitialized(event);
-      startOpenmrs(event.getServletContext());
+      WebDaemon.startOpenmrs(event.getServletContext());
     }
   }
  catch (  Throwable t) {
