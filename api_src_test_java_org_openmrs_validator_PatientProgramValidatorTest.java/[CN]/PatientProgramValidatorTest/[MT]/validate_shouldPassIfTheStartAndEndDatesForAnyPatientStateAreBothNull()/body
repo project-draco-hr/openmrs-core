@@ -1,8 +1,0 @@
-{
-  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
-  PatientState patientSate=program.getStates().iterator().next();
-  Assert.assertNotNull(patientSate);
-  patientSate.setStartDate(null);
-  Assert.assertNull(patientSate.getEndDate());
-  ValidateUtil.validate(program);
-}

@@ -1,0 +1,14 @@
+{
+  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
+  Assert.assertEquals(1,program.getStates().size());
+  PatientState patientState1=program.getStates().iterator().next();
+  PatientState patientState2=new PatientState();
+  patientState2.setStartDate(new Date());
+  patientState2.setState(Context.getProgramWorkflowService().getWorkflowByUuid("84f0effa-dd73-46cb-b931-7cd6be6c5f81").getState(1));
+  Thread.sleep(10);
+  patientState1.setEndDate(new Date());
+  program.getStates().add(patientState2);
+  BindException errors=new BindException(program,"");
+  new PatientProgramValidator().validate(program,errors);
+  Assert.assertEquals(true,errors.hasErrors());
+}

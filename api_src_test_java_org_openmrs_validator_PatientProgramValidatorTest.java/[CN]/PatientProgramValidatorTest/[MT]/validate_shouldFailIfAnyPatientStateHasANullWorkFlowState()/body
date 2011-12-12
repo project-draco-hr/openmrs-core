@@ -1,10 +1,7 @@
 {
   PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
-  Set<PatientState> states=program.getStates();
-  Assert.assertNotNull(states);
-  PatientState patientState=states.iterator().next();
-  PatientState duplicate=patientState.copy();
-  states.add(duplicate);
+  PatientState patientState=program.getStates().iterator().next();
+  patientState.setState(null);
   BindException errors=new BindException(program,"");
   new PatientProgramValidator().validate(program,errors);
   Assert.assertTrue(errors.hasErrors());
