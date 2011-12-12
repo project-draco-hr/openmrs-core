@@ -9,6 +9,7 @@
   ConceptSource conceptSource2=Context.getConceptService().getConceptSource(2);
   term.setConceptSource(conceptSource2);
   ConceptReferenceTerm editedTerm=Context.getConceptService().saveConceptReferenceTerm(term);
+  Context.flushSession();
   Assert.assertEquals("new name",editedTerm.getName());
   Assert.assertEquals("new code",editedTerm.getCode());
   Assert.assertEquals("new descr",editedTerm.getDescription());
