@@ -3,7 +3,7 @@
   if (concept != null) {
     if (log.isDebugEnabled()) {
       Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptWord.class);
-      crit.add(Expression.eq("concept",concept));
+      crit.add(Restrictions.eq("concept",concept));
       List<ConceptWord> words=crit.list();
       Integer authUserId=null;
       if (Context.isAuthenticated())       authUserId=Context.getAuthenticatedUser().getUserId();

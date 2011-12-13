@@ -1,0 +1,6 @@
+{
+  if (longValue < Integer.MIN_VALUE || longValue > Integer.MAX_VALUE) {
+    throw new IllegalArgumentException(longValue + " cannot be cast to Integer without changing its value.");
+  }
+  return longValue.intValue();
+}

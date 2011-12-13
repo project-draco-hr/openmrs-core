@@ -4,9 +4,9 @@
   List<PatientIdentifierType> emptyList=new Vector<PatientIdentifierType>();
   if (query.matches(".*\\d+.*")) {
     log.debug("[Identifier search] Query: " + query);
-    return dao.getCountOfPatients(null,query,emptyList,false);
+    return OpenmrsUtil.convertToInteger(dao.getCountOfPatients(null,query,emptyList,false));
   }
  else {
-    return dao.getCountOfPatients(query,null,emptyList,false);
+    return OpenmrsUtil.convertToInteger(dao.getCountOfPatients(query,null,emptyList,false));
   }
 }

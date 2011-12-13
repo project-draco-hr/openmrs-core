@@ -1,21 +1,20 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Concept.class);
-  criteria.add(Expression.eq("retired",false));
+  criteria.add(Restrictions.eq("retired",false));
   if (!StringUtils.isBlank(name)) {
     if (loc == null)     loc=Context.getLocale();
     criteria.createAlias("names","names");
     MatchMode matchmode=MatchMode.EXACT;
     if (searchOnPhrase)     matchmode=MatchMode.ANYWHERE;
-    criteria.add(Expression.ilike("names.name",name,matchmode));
+    criteria.add(Restrictions.ilike("names.name",name,matchmode));
     String language=loc.getLanguage();
     if (language.length() > 2) {
-      criteria.add(Expression.or(Expression.eq("names.locale",loc.getLanguage()),Expression.eq("names.locale",loc.getLanguage().substring(0,2))));
+      criteria.add(Restrictions.or(Restrictions.eq("names.locale",loc),Restrictions.eq("names.locale",new Locale(loc.getLanguage().substring(0,2)))));
     }
  else {
-      criteria.add(Expression.like("names.locale",loc.getLanguage(),MatchMode.START));
     }
   }
-  if (classes.size() > 0)   criteria.add(Expression.in("conceptClass",classes));
-  if (datatypes.size() > 0)   criteria.add(Expression.in("datatype",datatypes));
+  if (classes.size() > 0)   criteria.add(Restrictions.in("conceptClass",classes));
+  if (datatypes.size() > 0)   criteria.add(Restrictions.in("datatype",datatypes));
   return criteria.list();
 }
