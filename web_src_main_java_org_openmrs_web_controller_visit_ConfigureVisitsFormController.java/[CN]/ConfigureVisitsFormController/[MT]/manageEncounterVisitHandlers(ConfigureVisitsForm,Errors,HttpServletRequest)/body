@@ -1,5 +1,6 @@
 {
   Context.requirePrivilege(PrivilegeConstants.CONFIGURE_VISITS);
+  new ConfigureVisitsFormValidator().validate(form,errors);
   if (errors.hasErrors()) {
     return;
   }

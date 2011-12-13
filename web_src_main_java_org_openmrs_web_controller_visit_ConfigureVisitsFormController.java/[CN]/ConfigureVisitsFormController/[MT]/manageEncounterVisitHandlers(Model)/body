@@ -3,7 +3,7 @@
   String visitEncounterHandler=administrationService.getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER);
   String enableVisits=administrationService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENABLE_VISITS,Boolean.FALSE.toString());
   TaskDefinition closeVisitsTask=Context.getSchedulerService().getTaskByName(OpenmrsConstants.AUTO_CLOSE_VISITS_TASK_NAME);
-  VisitEncounterHandlerForm form=new VisitEncounterHandlerForm();
+  ConfigureVisitsForm form=new ConfigureVisitsForm();
   form.setEnableVisits(Boolean.valueOf(enableVisits));
   if (closeVisitsTask != null)   form.setCloseVisitsTaskStarted(closeVisitsTask.getStarted());
   for (  EncounterVisitHandler visitHandler : getEncounterVisitHandlers()) {
