@@ -15,7 +15,7 @@
       pStmt.setBoolean(4,conceptName.isVoided());
       pStmt.setDate(5,conceptName.isVoided() ? new Date(System.currentTimeMillis()) : null);
       pStmt.setString(6,conceptName.getVoidReason());
-      pStmt.setInt(7,(conceptName.isVoided() && userId != null) ? userId : null);
+      pStmt.setObject(7,(conceptName.isVoided() && userId != null) ? userId : null,Types.INTEGER);
       pStmt.setInt(8,conceptName.getConceptNameId());
       pStmt.addBatch();
     }
