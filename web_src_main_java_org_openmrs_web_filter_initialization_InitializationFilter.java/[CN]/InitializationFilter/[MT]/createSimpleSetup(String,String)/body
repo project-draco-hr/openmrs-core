@@ -1,0 +1,17 @@
+{
+  wizardModel.databaseConnection=Context.getRuntimeProperties().getProperty("connection.url",wizardModel.databaseConnection);
+  wizardModel.createDatabaseUsername=Context.getRuntimeProperties().getProperty("connection.username",wizardModel.createDatabaseUsername);
+  wizardModel.createUserUsername=wizardModel.createDatabaseUsername;
+  wizardModel.databaseRootPassword=databaseRootPassword;
+  checkForEmptyValue(wizardModel.databaseRootPassword,errors,ErrorMessageConstants.ERROR_DB_PSDW_REQ);
+  wizardModel.hasCurrentOpenmrsDatabase=false;
+  wizardModel.createTables=true;
+  wizardModel.createDatabasePassword=wizardModel.databaseRootPassword;
+  wizardModel.addDemoData="yes".equals(addDemoData);
+  wizardModel.hasCurrentDatabaseUser=false;
+  wizardModel.createDatabaseUser=true;
+  wizardModel.createUserPassword=wizardModel.databaseRootPassword;
+  wizardModel.moduleWebAdmin=true;
+  wizardModel.autoUpdateDatabase=false;
+  wizardModel.adminUserPassword=InitializationWizardModel.ADMIN_DEFAULT_PASSWORD;
+}

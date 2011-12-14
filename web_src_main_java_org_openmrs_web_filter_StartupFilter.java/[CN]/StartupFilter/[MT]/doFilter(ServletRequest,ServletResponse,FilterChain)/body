@@ -22,7 +22,7 @@
  else     if (servletPath.startsWith("/scripts")) {
       log.error("Calling /scripts during the initializationfilter pages will cause the openmrs_static_context-servlet.xml to initialize too early and cause errors after startup.  Use '/initfilter" + servletPath + "' instead.");
     }
- else     if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL)) {
+ else     if (!httpRequest.getServletPath().equals("/" + WebConstants.SETUP_PAGE_URL) && !httpRequest.getServletPath().equals("/" + "AUTO_RUN_OPENMRS")) {
       httpResponse.sendRedirect("/" + WebConstants.WEBAPP_NAME + "/"+ WebConstants.SETUP_PAGE_URL);
     }
  else {
