@@ -1,0 +1,10 @@
+{
+  executeDataSet(OTHERS_PROVIDERS_XML);
+  Provider duplicateProvider=providerService.getProvider(1);
+  Assert.assertFalse(duplicateProvider.isRetired());
+  Provider providerToValidate=providerService.getProvider(201);
+  Assert.assertTrue(providerToValidate.isRetired());
+  providerToValidate.setIdentifier(duplicateProvider.getIdentifier());
+  providerValidator.validate(providerToValidate,errors);
+  Assert.assertTrue(errors.hasErrors());
+}
