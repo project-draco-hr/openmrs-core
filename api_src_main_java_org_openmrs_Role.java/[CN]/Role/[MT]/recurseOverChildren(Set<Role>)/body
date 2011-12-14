@@ -1,0 +1,21 @@
+{
+  if (!this.hasChildRoles()) {
+    return total;
+  }
+  Set<Role> allRoles=new HashSet<Role>();
+  Set<Role> myRoles=new HashSet<Role>();
+  allRoles.addAll(total);
+  myRoles.addAll(this.getChildRoles());
+  myRoles.removeAll(total);
+  myRoles.remove(this);
+  allRoles.addAll(myRoles);
+  for (  Role r : myRoles) {
+    if (r.hasChildRoles()) {
+      allRoles.addAll(r.recurseOverChildren(allRoles));
+    }
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Total roles: " + allRoles);
+  }
+  return allRoles;
+}
