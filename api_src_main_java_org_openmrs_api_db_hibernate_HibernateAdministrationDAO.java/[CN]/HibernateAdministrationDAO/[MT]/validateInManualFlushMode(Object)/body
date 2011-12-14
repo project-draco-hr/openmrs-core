@@ -1,0 +1,10 @@
+{
+  FlushMode previousFlushMode=sessionFactory.getCurrentSession().getFlushMode();
+  sessionFactory.getCurrentSession().setFlushMode(FlushMode.MANUAL);
+  try {
+    ValidateUtil.validate(object);
+  }
+  finally {
+    sessionFactory.getCurrentSession().setFlushMode(previousFlushMode);
+  }
+}

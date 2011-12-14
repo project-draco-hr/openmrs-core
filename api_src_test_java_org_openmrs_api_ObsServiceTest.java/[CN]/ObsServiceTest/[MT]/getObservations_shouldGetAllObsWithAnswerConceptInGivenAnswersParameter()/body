@@ -2,6 +2,11 @@
   executeDataSet(INITIAL_OBS_XML);
   ObsService obsService=Context.getObsService();
   List<Obs> obss=obsService.getObservations(null,null,null,Collections.singletonList(new Concept(7)),null,null,null,null,null,null,null,false);
-  Assert.assertEquals(1,obss.size());
-  Assert.assertEquals(11,obss.get(0).getObsId().intValue());
+  Assert.assertEquals(2,obss.size());
+  Set<Integer> ids=new HashSet<Integer>();
+  for (  Obs o : obss) {
+    ids.add(o.getObsId());
+  }
+  Assert.assertTrue(ids.contains(11));
+  Assert.assertTrue(ids.contains(13));
 }

@@ -1,3 +1,4 @@
 {
-  return persistedValue;
+  if (valueReference == null)   throw new NotYetPersistedException();
+ else   return valueReference;
 }

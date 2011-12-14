@@ -2,12 +2,15 @@
   LocationService ls=Context.getLocationService();
   Location location=new Location();
   location.setName("parent");
+  location.setDescription("is the parent");
   ls.saveLocation(location);
   Location childA=new Location();
   childA.setName("level A child");
+  childA.setDescription("is a child");
   location.addChildLocation(childA);
   Location childB=new Location();
   childB.setName("level B child");
+  childB.setDescription("is a child");
   childA.addChildLocation(childB);
   ls.saveLocation(location);
   Location newSavedLocation=ls.getLocation(location.getLocationId());

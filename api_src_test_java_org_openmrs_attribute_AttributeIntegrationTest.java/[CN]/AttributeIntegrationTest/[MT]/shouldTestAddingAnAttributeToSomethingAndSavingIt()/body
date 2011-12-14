@@ -1,0 +1,20 @@
+{
+  Visit visit=service.getVisit(1);
+  VisitAttributeType auditDate=service.getVisitAttributeType(1);
+  VisitAttribute legalDate=new VisitAttribute();
+  legalDate.setAttributeType(auditDate);
+  legalDate.setValue(new java.sql.Date(new SimpleDateFormat("yyyy-MM-dd").parse("2011-04-15").getTime()));
+  visit.addAttribute(legalDate);
+  service.saveVisit(visit);
+  Assert.assertNotNull(legalDate.getValueReference());
+  Assert.assertEquals("2011-04-15",legalDate.getValueReference());
+  VisitAttribute badDate=new VisitAttribute();
+  badDate.setAttributeType(auditDate);
+  visit.addAttribute(badDate);
+  try {
+    service.saveVisit(visit);
+    Assert.fail("Should have failed because of bad date attribute");
+  }
+ catch (  APIException ex) {
+  }
+}

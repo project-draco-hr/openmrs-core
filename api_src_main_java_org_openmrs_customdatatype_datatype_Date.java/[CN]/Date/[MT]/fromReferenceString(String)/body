@@ -1,9 +1,0 @@
-{
-  if (StringUtils.isBlank(persistedValue))   return null;
-  try {
-    return new SimpleDateFormat(dateFormat).parse(persistedValue);
-  }
- catch (  Exception ex) {
-    throw new InvalidCustomValueException("Invalid date: " + persistedValue);
-  }
-}

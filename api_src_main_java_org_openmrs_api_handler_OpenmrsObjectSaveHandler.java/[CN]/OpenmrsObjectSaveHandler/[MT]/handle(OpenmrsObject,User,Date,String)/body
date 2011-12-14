@@ -5,7 +5,7 @@
     if (property.getPropertyType() == null) {
       continue;
     }
-    if (property.getWriteMethod() == null) {
+    if (property.getWriteMethod() == null || property.getReadMethod() == null) {
       continue;
     }
     if (!property.getPropertyType().equals(String.class)) {
