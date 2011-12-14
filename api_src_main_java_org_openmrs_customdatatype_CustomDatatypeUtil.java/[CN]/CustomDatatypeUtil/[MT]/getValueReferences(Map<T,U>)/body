@@ -4,7 +4,15 @@
     serializedAttributeValues=new HashMap<T,String>();
     for (    Map.Entry<T,U> e : datatypeValues.entrySet()) {
       T vat=e.getKey();
-      serializedAttributeValues.put(vat,((CustomDatatype<U>)getDatatype(vat)).toReferenceString(e.getValue()));
+      CustomDatatype<U> customDatatype=(CustomDatatype<U>)getDatatype(vat);
+      String valueReference;
+      try {
+        valueReference=customDatatype.getReferenceStringForValue(e.getValue());
+      }
+ catch (      UnsupportedOperationException ex) {
+        throw new APIException("Cannot search for attributes with custom datatype: " + customDatatype.getClass());
+      }
+      serializedAttributeValues.put(vat,valueReference);
     }
   }
   return serializedAttributeValues;

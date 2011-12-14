@@ -1,0 +1,14 @@
+{
+  if (value.isDirty()) {
+    CustomDatatype datatype=CustomDatatypeUtil.getDatatype(value.getDescriptor());
+    if (value.getValue() == null)     throw new InvalidCustomValueException(value.getClass() + " with type=" + value.getDescriptor()+ " cannot be null");
+    String existingValueReference=null;
+    try {
+      existingValueReference=value.getValueReference();
+    }
+ catch (    NotYetPersistedException ex) {
+    }
+    String newValueReference=datatype.save(value.getValue(),existingValueReference);
+    value.setValueReferenceInternal(newValueReference);
+  }
+}

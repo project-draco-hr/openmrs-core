@@ -11,53 +11,58 @@
     if (obs.getValueBoolean() != null)     errors.rejectValue("valueBoolean","error.not.null");
     if (obs.getValueComplex() != null)     errors.rejectValue("valueComplex","error.not.null");
   }
- else   if (obs.getValueBoolean() == null && obs.getValueCoded() == null && obs.getValueCodedName() == null && obs.getValueComplex() == null && obs.getValueDatetime() == null && obs.getValueDrug() == null && obs.getValueModifier() == null && obs.getValueNumeric() == null && obs.getValueText() == null) {
+ else   if (obs.getValueBoolean() == null && obs.getValueCoded() == null && obs.getValueCodedName() == null && obs.getValueComplex() == null && obs.getValueDatetime() == null && obs.getValueDrug() == null && obs.getValueModifier() == null && obs.getValueNumeric() == null && obs.getValueText() == null && obs.getComplexData() == null) {
     errors.reject("error.noValue");
   }
   Concept c=obs.getConcept();
   if (c == null) {
     errors.rejectValue("concept","error.null");
   }
- else {
+ else   if (!obs.hasGroupMembers()) {
     ConceptDatatype dt=c.getDatatype();
-    if (dt.isBoolean() && obs.getValueBoolean() == null) {
-      if (atRootNode)       errors.rejectValue("valueBoolean","error.null");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
-    }
- else     if (dt.isCoded() && obs.getValueCoded() == null) {
-      if (atRootNode)       errors.rejectValue("valueCoded","error.null");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
-    }
- else     if ((dt.isDateTime() || dt.isDate() || dt.isTime()) && obs.getValueDatetime() == null) {
-      if (atRootNode)       errors.rejectValue("valueDatetime","error.null");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
-    }
- else     if (dt.isNumeric() && obs.getValueNumeric() == null) {
-      if (atRootNode)       errors.rejectValue("valueNumeric","error.null");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
-    }
- else     if (dt.isNumeric()) {
-      ConceptNumeric cn=Context.getConceptService().getConceptNumeric(c.getConceptId());
-      if (!cn.isPrecise() && Math.ceil(obs.getValueNumeric()) != obs.getValueNumeric()) {
-        if (atRootNode)         errors.rejectValue("valueNumeric","error.precision");
+    if (dt != null) {
+      if (dt.isBoolean() && obs.getValueBoolean() == null) {
+        if (atRootNode)         errors.rejectValue("valueBoolean","error.null");
  else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
       }
-      if (cn.getHiAbsolute() != null && cn.getHiAbsolute() < obs.getValueNumeric()) {
-        if (atRootNode)         errors.rejectValue("valueNumeric","error.outOfRange.high");
+ else       if (dt.isCoded() && obs.getValueCoded() == null) {
+        if (atRootNode)         errors.rejectValue("valueCoded","error.null");
  else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
       }
-      if (cn.getLowAbsolute() != null && cn.getLowAbsolute() > obs.getValueNumeric()) {
-        if (atRootNode)         errors.rejectValue("valueNumeric","error.outOfRange.low");
+ else       if ((dt.isDateTime() || dt.isDate() || dt.isTime()) && obs.getValueDatetime() == null) {
+        if (atRootNode)         errors.rejectValue("valueDatetime","error.null");
+ else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+      }
+ else       if (dt.isNumeric() && obs.getValueNumeric() == null) {
+        if (atRootNode)         errors.rejectValue("valueNumeric","error.null");
+ else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+      }
+ else       if (dt.isNumeric()) {
+        ConceptNumeric cn=Context.getConceptService().getConceptNumeric(c.getConceptId());
+        if (!cn.isPrecise() && Math.ceil(obs.getValueNumeric()) != obs.getValueNumeric()) {
+          if (atRootNode)           errors.rejectValue("valueNumeric","error.precision");
+ else           errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+        }
+        if (cn.getHiAbsolute() != null && cn.getHiAbsolute() < obs.getValueNumeric()) {
+          if (atRootNode)           errors.rejectValue("valueNumeric","error.outOfRange.high");
+ else           errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+        }
+        if (cn.getLowAbsolute() != null && cn.getLowAbsolute() > obs.getValueNumeric()) {
+          if (atRootNode)           errors.rejectValue("valueNumeric","error.outOfRange.low");
+ else           errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+        }
+      }
+ else       if (dt.isText() && obs.getValueText() == null) {
+        if (atRootNode)         errors.rejectValue("valueText","error.null");
+ else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+      }
+      if (dt.isText() && obs.getValueText() != null && obs.getValueText().length() > VALUE_TEXT_MAX_LENGTH) {
+        if (atRootNode)         errors.rejectValue("valueText","error.exceededMaxLengthOfField");
  else         errors.rejectValue("groupMembers","Obs.error.inGroupMember");
       }
     }
- else     if (dt.isText() && obs.getValueText() == null) {
-      if (atRootNode)       errors.rejectValue("valueText","error.null");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
-    }
-    if (dt.isText() && obs.getValueText() != null && obs.getValueText().length() > VALUE_TEXT_MAX_LENGTH) {
-      if (atRootNode)       errors.rejectValue("valueText","error.exceededMaxLengthOfField");
- else       errors.rejectValue("groupMembers","Obs.error.inGroupMember");
+ else {
+      errors.rejectValue("concept","must have a datatype");
     }
   }
   if (errors.hasErrors())   return;

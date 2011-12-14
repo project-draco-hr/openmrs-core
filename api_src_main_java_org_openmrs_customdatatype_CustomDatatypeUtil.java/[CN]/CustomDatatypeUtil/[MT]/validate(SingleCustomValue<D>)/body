@@ -1,0 +1,10 @@
+{
+  try {
+    CustomDatatype<T> datatype=(CustomDatatype<T>)getDatatype(value.getDescriptor());
+    datatype.validate((T)value.getValue());
+    return true;
+  }
+ catch (  Exception ex) {
+    return false;
+  }
+}

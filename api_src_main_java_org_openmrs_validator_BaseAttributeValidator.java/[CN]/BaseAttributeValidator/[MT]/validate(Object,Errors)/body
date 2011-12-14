@@ -1,0 +1,12 @@
+{
+  Attribute<?,?> attribute=(Attribute<?,?>)target;
+  ValidationUtils.rejectIfEmpty(errors,"attributeType","error.null");
+  ValidationUtils.rejectIfEmpty(errors,"owner","error.null");
+  Object value=attribute.getValue();
+  if (value == null) {
+    errors.rejectValue("value","error.null");
+  }
+ else   if (!CustomDatatypeUtil.validate(attribute)) {
+    errors.rejectValue("value","error.invalid");
+  }
+}

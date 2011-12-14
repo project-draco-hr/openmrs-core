@@ -2,11 +2,13 @@
   executeDataSet(INITIAL_OBS_XML);
   ObsService obsService=Context.getObsService();
   Obs parentObs=obsService.getObs(2);
+  parentObs.setValueNumeric(null);
   Obs groupMember=new Obs();
-  groupMember.setConcept(new Concept(3));
+  groupMember.setConcept(Context.getConceptService().getConcept(3));
   groupMember.setObsDatetime(new Date());
   groupMember.setPerson(new Patient(2));
   groupMember.setLocation(new Location(2));
+  groupMember.setValueNumeric(50d);
   parentObs.addGroupMember(groupMember);
   assertNotNull(groupMember.getObsGroup());
   obsService.saveObs(parentObs,"Updating obs group");

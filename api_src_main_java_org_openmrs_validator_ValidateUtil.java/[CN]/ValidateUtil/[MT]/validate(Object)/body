@@ -8,6 +8,9 @@
     for (    Object objerr : errors.getAllErrors()) {
       ObjectError error=(ObjectError)objerr;
       String message=Context.getMessageSourceService().getMessage(error.getCode());
+      if (error instanceof FieldError) {
+        message=((FieldError)error).getField() + ": " + message;
+      }
       uniqueErrorMessages.add(message);
     }
     String exceptionMessage="'" + obj + "' failed to validate with reason: ";

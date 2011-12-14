@@ -1,0 +1,8 @@
+{
+  GlobalProperty gp=new GlobalProperty();
+  gp.setProperty("What time is it?");
+  gp.setDatatypeClassname(DateDatatype.class.getName());
+  gp.setValue(new Date());
+  adminService.saveGlobalProperty(gp);
+  Assert.assertNotNull(gp.getValueReference());
+}

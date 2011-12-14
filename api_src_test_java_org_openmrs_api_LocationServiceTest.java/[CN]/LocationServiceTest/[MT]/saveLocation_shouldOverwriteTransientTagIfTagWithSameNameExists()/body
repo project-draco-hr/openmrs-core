@@ -2,6 +2,7 @@
   LocationService ls=Context.getLocationService();
   Location location=new Location();
   location.setName("name");
+  location.setDescription("is a location");
   location.addTag(new LocationTag("General Hospital",null));
   ls.saveLocation(location);
   Location newSavedLocation=ls.getLocation(location.getLocationId());
