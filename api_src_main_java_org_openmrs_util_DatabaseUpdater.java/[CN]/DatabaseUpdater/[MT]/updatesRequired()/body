@@ -1,11 +1,18 @@
 {
   log.debug("checking for updates");
+  List<OpenMRSChangeSet> changesets=getUnrunDatabaseChanges();
   Database database=null;
   try {
     Liquibase liquibase=getLiquibase(null,null);
     database=liquibase.getDatabase();
     if (isLocked()) {
-      return true;
+      if (changesets.size() == 0) {
+        DatabaseUpdater.releaseDatabaseLock();
+        return false;
+      }
+ else {
+        return true;
+      }
     }
   }
  catch (  Exception e) {
@@ -17,6 +24,5 @@
  catch (    Throwable t) {
     }
   }
-  List<OpenMRSChangeSet> changesets=getUnrunDatabaseChanges();
   return changesets.size() > 0;
 }
