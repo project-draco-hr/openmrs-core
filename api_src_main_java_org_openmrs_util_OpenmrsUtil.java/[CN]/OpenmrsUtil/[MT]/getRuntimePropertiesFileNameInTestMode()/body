@@ -1,8 +1,8 @@
 {
   String filename=null;
-  if ("true".equalsIgnoreCase(System.getProperty("FUNCTIONAL_TEST_MODE"))) {
+  if (isTestMode()) {
     log.info("In functional testing mode. Ignoring the existing runtime properties file");
-    filename=System.getProperty("OPENMRS_VERSION","openmrs") + "-test-runtime.properties";
+    filename=getOpenMRSVersionInTestMode() + "-test-runtime.properties";
   }
   return filename;
 }

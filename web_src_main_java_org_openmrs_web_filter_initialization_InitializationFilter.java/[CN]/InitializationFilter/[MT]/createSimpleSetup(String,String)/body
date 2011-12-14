@@ -1,4 +1,5 @@
 {
+  setDatabaseNameIfInTestMode();
   wizardModel.databaseConnection=Context.getRuntimeProperties().getProperty("connection.url",wizardModel.databaseConnection);
   wizardModel.createDatabaseUsername=Context.getRuntimeProperties().getProperty("connection.username",wizardModel.createDatabaseUsername);
   wizardModel.createUserUsername=wizardModel.createDatabaseUsername;

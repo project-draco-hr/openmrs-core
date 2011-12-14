@@ -1,9 +1,9 @@
 {
   File runtimeProperties=getRuntimePropertiesFile();
   wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
-  wizardModel.createDatabaseUsername="root";
+  if (httpRequest.getParameter("database_user_name") != null)   wizardModel.createDatabaseUsername=httpRequest.getParameter("databaseUsername");
   checkLocaleAttributes(httpRequest);
-  createSimpleSetup("password","yes");
+  createSimpleSetup(httpRequest.getParameter("database_root_password"),"yes");
   try {
     loadedDriverString=DatabaseUtil.loadDatabaseDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
   }
