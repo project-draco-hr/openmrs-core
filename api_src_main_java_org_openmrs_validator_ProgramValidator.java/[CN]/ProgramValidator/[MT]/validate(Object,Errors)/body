@@ -12,6 +12,9 @@
         errors.rejectValue("name","general.error.nameAlreadyInUse");
         break;
       }
+ else {
+        Context.evictFromSession(program);
+      }
     }
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"concept","error.concept");
   }
