@@ -1,7 +1,6 @@
 {
   TaskDefinition taskDefinition=null;
   try {
-    Context.addProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
     if (task.getTaskDefinition() != null) {
       SchedulerService schedulerService=Context.getSchedulerService();
       taskDefinition=task.getTaskDefinition();
@@ -14,8 +13,5 @@
   }
  catch (  Exception e) {
     log.warn("Unable to save the last execution time for task ",e);
-  }
- finally {
-    Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_SCHEDULER);
   }
 }
