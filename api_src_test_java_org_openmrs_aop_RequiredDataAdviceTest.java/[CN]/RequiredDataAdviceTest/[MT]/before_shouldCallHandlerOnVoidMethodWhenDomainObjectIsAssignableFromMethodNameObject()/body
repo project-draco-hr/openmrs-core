@@ -1,0 +1,6 @@
+{
+  Method m=WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsData",SomeOpenmrsData.class);
+  SomeOpenmrsData openmrsObjectSubClass=new SomeOpenmrsDataSubClass();
+  requiredDataAdvice.before(m,new Object[]{openmrsObjectSubClass,"void reason"},new WithAppropriatelyNamedMethod());
+  verify(voidHandler,times(1)).handle(eq(openmrsObjectSubClass),Matchers.<User>anyObject(),Matchers.<Date>anyObject(),anyString());
+}

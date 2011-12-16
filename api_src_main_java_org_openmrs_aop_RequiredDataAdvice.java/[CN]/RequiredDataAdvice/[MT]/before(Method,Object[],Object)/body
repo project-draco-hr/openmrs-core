@@ -6,6 +6,7 @@
   if (methodName.startsWith("save") || methodName.startsWith("create")) {
     Reflect reflect=new Reflect(OpenmrsObject.class);
     if (reflect.isSuperClass(mainArgument)) {
+      if (!methodNameEndsWithClassName(method,mainArgument.getClass()))       return;
       String other=null;
       if (args.length > 1 && args[1] instanceof String)       other=(String)args[1];
       Context.getAdministrationService().validateInManualFlushMode(mainArgument);
