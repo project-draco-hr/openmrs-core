@@ -3,14 +3,16 @@
   try {
     Liquibase liquibase=getLiquibase(null,null);
     database=liquibase.getDatabase();
-    Boolean locked=LockService.getInstance(database).listLocks().length > 0;
-    if (locked && DatabaseUpdater.getUnrunDatabaseChanges().size() == 0) {
-      DatabaseUpdater.releaseDatabaseLock();
-      locked=Boolean.FALSE;
-    }
-    return locked;
+    return LockService.getInstance(database).listLocks().length > 0;
   }
  catch (  Exception e) {
     return false;
+  }
+ finally {
+    try {
+      database.getConnection().close();
+    }
+ catch (    Throwable t) {
+    }
   }
 }
