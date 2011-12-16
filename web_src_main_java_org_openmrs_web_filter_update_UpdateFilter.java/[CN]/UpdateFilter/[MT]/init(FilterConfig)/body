@@ -4,9 +4,10 @@
   if (!InitializationFilter.initializationRequired()) {
     model=new UpdateFilterModel();
     try {
-      if (model.changes == null)       updatesRequired=false;
+      if (model.updateRequired)       updatesRequired=true;
+ else       if (model.changes == null)       updatesRequired=false;
  else {
-        log.debug("Setting updates required to " + (model.changes.size() > 0) + " because of the size of unrun changes");
+        if (log.isDebugEnabled())         log.debug("Setting updates required to " + (model.changes.size() > 0) + " because of the size of unrun changes");
         updatesRequired=model.changes.size() > 0;
       }
     }

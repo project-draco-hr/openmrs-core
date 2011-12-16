@@ -16,10 +16,12 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
   log.debug("Setting up liquibase object to run changelog: " + changeLogFile);
   Liquibase liquibase=getLiquibase(changeLogFile,cl);
   int numChangeSetsToRun=liquibase.listUnrunChangeSets(contexts).size();
-  Database database=liquibase.getDatabase();
-  LockService lockHandler=LockService.getInstance(database);
-  lockHandler.waitForLock();
+  Database database=null;
+  LockService lockHandler=null;
   try {
+    database=liquibase.getDatabase();
+    lockHandler=LockService.getInstance(database);
+    lockHandler.waitForLock();
     ResourceAccessor openmrsFO=new ClassLoaderFileOpener(cl);
     ResourceAccessor fsFO=new FileSystemResourceAccessor();
     DatabaseChangeLog changeLog=new XMLChangeLogSAXParser().parse(changeLogFile,new ChangeLogParameters(),new CompositeResourceAccessor(openmrsFO,fsFO));
@@ -35,8 +37,8 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
     try {
       lockHandler.releaseLock();
     }
- catch (    LockException e) {
-      log.error("Could not release lock",e);
+ catch (    Throwable t) {
+      log.error("Could not release lock",t);
     }
     try {
       database.getConnection().close();

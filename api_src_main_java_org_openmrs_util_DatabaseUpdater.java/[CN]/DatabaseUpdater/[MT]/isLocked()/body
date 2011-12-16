@@ -1,0 +1,18 @@
+{
+  Database database=null;
+  try {
+    Liquibase liquibase=getLiquibase(null,null);
+    database=liquibase.getDatabase();
+    return LockService.getInstance(database).listLocks().length > 0;
+  }
+ catch (  Exception e) {
+    return false;
+  }
+ finally {
+    try {
+      database.getConnection().close();
+    }
+ catch (    Throwable t) {
+    }
+  }
+}
