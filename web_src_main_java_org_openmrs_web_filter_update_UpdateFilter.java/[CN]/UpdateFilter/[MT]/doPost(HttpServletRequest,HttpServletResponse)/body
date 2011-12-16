@@ -10,6 +10,21 @@
       log.debug("Authentication successful.  Redirecting to 'reviewupdates' page.");
       authenticatedSuccessfully=true;
       referenceMap.put("isDatabaseUpdateInProgress",isDatabaseUpdateInProgress);
+      if (isDatabaseUpdateInProgress) {
+        referenceMap.put("updateJobStarted",true);
+        httpResponse.setContentType("text/html");
+        renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
+        return;
+      }
+      if (!isLockReleased() && DatabaseUpdater.isLocked()) {
+        try {
+          DatabaseUpdater.releaseDatabaseLock();
+          setLockReleased(true);
+        }
+ catch (        LockException e) {
+        }
+        model.updateChanges();
+      }
       String localeParameter=FilterUtil.restoreLocale(username);
       httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
       referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
@@ -41,7 +56,7 @@
     }
  else {
       referenceMap.put("isDatabaseUpdateInProgress",true);
-      referenceMap.put("updateJobStarted",false);
+      referenceMap.put("updateJobStarted",true);
     }
     renderTemplate(REVIEW_CHANGES,referenceMap,httpResponse);
   }
