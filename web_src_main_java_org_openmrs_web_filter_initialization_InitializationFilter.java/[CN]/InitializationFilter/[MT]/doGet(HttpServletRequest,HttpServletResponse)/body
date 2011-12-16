@@ -1,6 +1,10 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
+  if (httpRequest.getServletPath().equals("/" + AUTO_RUN_OPENMRS)) {
+    autoRunOpenMRS(httpRequest);
+    return;
+  }
   if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
     referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
   }

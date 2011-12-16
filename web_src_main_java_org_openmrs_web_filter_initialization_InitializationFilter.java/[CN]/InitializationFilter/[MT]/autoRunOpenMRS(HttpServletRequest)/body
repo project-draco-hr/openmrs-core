@@ -1,0 +1,20 @@
+{
+  File runtimeProperties=getRuntimePropertiesFile();
+  wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
+  if (httpRequest.getParameter("database_user_name") != null)   wizardModel.createDatabaseUsername=httpRequest.getParameter("database_user_name");
+  checkLocaleAttributes(httpRequest);
+  createSimpleSetup(httpRequest.getParameter("database_root_password"),"yes");
+  try {
+    loadedDriverString=DatabaseUtil.loadDatabaseDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
+  }
+ catch (  ClassNotFoundException e) {
+    errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
+    return;
+  }
+  wizardModel.tasksToExecute=new ArrayList<WizardTask>();
+  createDatabaseTask();
+  createTablesTask();
+  createDemoDataTask();
+  wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
+  startInstallation();
+}
