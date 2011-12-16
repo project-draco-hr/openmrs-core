@@ -1,0 +1,7 @@
+{
+  Program program=Context.getProgramWorkflowService().getProgramByUuid("eae98b4c-e195-403b-b34a-82d94103b2c0");
+  program.setDescription("new description");
+  Context.evictFromSession(program);
+  program=Context.getProgramWorkflowService().saveProgram(program);
+  Assert.assertEquals("new description",program.getDescription());
+}
