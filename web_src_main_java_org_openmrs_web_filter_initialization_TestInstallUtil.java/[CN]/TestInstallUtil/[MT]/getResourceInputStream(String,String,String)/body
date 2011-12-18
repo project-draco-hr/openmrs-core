@@ -11,6 +11,7 @@
   out.close();
   if (log.isInfoEnabled())   log.info("Http response message:" + urlConnection.getResponseMessage() + ", Code:"+ urlConnection.getResponseCode());
   if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_UNAUTHORIZED)   throw new APIAuthenticationException("Invalid username or password");
+ else   if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_FORBIDDEN)   throw new ContextAuthenticationException("user locked out");
  else   if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_INTERNAL_ERROR)   throw new APIException("An error occurred on the remote server");
   return urlConnection.getInputStream();
 }
