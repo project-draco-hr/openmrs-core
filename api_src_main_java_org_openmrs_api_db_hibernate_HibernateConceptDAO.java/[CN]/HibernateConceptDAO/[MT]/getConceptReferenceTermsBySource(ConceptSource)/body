@@ -1,5 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTerm.class);
-  criteria.add(Expression.eq("conceptSource",conceptSource));
+  criteria.add(Restrictions.eq("conceptSource",conceptSource));
   return (List<ConceptReferenceTerm>)criteria.list();
 }

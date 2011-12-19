@@ -3,5 +3,5 @@
   if (!includeRetired)   criteria.add(Expression.eq("retired",false));
   if (StringUtils.isNotBlank(nameFragment))   criteria.add(Expression.ilike("name",nameFragment,MatchMode.START));
   criteria.setProjection(Projections.rowCount());
-  return (Integer)criteria.uniqueResult();
+  return (Long)criteria.uniqueResult();
 }

@@ -1,5 +1,5 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(clazz);
-  criteria.add(Expression.eq("activeListId",activeListItemId));
+  criteria.add(Restrictions.eq("activeListId",activeListItemId));
   return (T)criteria.uniqueResult();
 }

@@ -3,5 +3,5 @@
   criteria.add(Restrictions.eq("identifier",provider.getIdentifier()));
   if (provider.getProviderId() != null)   criteria.add(Restrictions.not(Restrictions.eq("providerId",provider.getProviderId())));
   criteria.setProjection(Projections.countDistinct("providerId"));
-  return (Integer)criteria.uniqueResult() == 0;
+  return (Long)criteria.uniqueResult() == 0L;
 }
