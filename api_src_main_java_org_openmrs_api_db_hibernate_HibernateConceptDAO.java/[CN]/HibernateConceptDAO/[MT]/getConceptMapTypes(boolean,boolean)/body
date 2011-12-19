@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMapType.class);
-  if (!includeRetired)   criteria.add(Expression.eq("retired",false));
-  if (!includeHidden)   criteria.add(Expression.eq("isHidden",false));
+  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
+  if (!includeHidden)   criteria.add(Restrictions.eq("isHidden",false));
   return criteria.list();
 }

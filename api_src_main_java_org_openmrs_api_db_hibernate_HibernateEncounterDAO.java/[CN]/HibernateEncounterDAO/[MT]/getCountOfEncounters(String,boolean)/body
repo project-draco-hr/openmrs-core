@@ -1,5 +1,5 @@
 {
   Criteria criteria=createEncounterByQueryCriteria(query,includeVoided,false);
   criteria.setProjection(Projections.countDistinct("enc.encounterId"));
-  return (Integer)criteria.uniqueResult();
+  return (Long)criteria.uniqueResult();
 }
