@@ -14,9 +14,11 @@
     if (rememberLocale) {
       httpRequest.getSession().setAttribute(FilterUtil.LOCALE_ATTRIBUTE,localeParameter);
       httpRequest.getSession().setAttribute(FilterUtil.REMEMBER_ATTRIBUTE,true);
+      wizardModel.localeToSave=localeParameter;
     }
  else {
       httpRequest.getSession().setAttribute(FilterUtil.REMEMBER_ATTRIBUTE,null);
+      wizardModel.localeToSave=null;
     }
   }
 }
