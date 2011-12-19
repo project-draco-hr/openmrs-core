@@ -9,11 +9,6 @@
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
     return;
   }
-  if (isInstallationStarted()) {
-    httpResponse.setContentType("text/html");
-    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
-    return;
-  }
   if (DEFAULT_PAGE.equals(page)) {
     File runtimeProperties=getRuntimePropertiesFile();
     if (!runtimeProperties.exists()) {
@@ -31,6 +26,9 @@
     }
  else {
       wizardModel.canWrite=runtimeProperties.canWrite();
+      wizardModel.databaseConnection=Context.getRuntimeProperties().getProperty("connection.url",wizardModel.databaseConnection);
+      wizardModel.currentDatabaseUsername=Context.getRuntimeProperties().getProperty("connection.username",wizardModel.currentDatabaseUsername);
+      wizardModel.currentDatabasePassword=Context.getRuntimeProperties().getProperty("connection.password",wizardModel.currentDatabasePassword);
     }
     wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
     checkLocaleAttributes(httpRequest);
@@ -40,7 +38,7 @@
     renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
   }
  else   if (INSTALL_METHOD.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       referenceMap.put(FilterUtil.REMEMBER_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null);
       referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
       renderTemplate(CHOOSE_LANG,referenceMap,httpResponse);
@@ -51,15 +49,19 @@
       page=SIMPLE_SETUP;
     }
  else     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-      page=TESTING_SETUP;
+      page=TESTING_REMOTE_DETAILS_SETUP;
+      wizardModel.currentStepNumber=1;
+      wizardModel.numberOfSteps=skipDatabaseSetupPage() ? 1 : 3;
     }
  else {
       page=DATABASE_SETUP;
+      wizardModel.currentStepNumber=1;
+      wizardModel.numberOfSteps=5;
     }
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (SIMPLE_SETUP.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
       return;
     }
@@ -93,8 +95,14 @@
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (DATABASE_SETUP.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
-      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+    if (goBack(httpRequest)) {
+      wizardModel.currentStepNumber-=1;
+      if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+        renderTemplate(TESTING_REMOTE_DETAILS_SETUP,referenceMap,httpResponse);
+      }
+ else {
+        renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
+      }
       return;
     }
     wizardModel.databaseConnection=httpRequest.getParameter("database_connection");
@@ -124,11 +132,18 @@
     }
     if (errors.isEmpty()) {
       page=DATABASE_TABLES_AND_USER;
+      if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
+        wizardModel.currentStepNumber=3;
+      }
+ else {
+        wizardModel.currentStepNumber=2;
+      }
     }
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (DATABASE_TABLES_AND_USER.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
+      wizardModel.currentStepNumber-=1;
       renderTemplate(DATABASE_SETUP,referenceMap,httpResponse);
       return;
     }
@@ -153,12 +168,12 @@
       checkForEmptyValue(wizardModel.createUserPassword,errors,ErrorMessageConstants.ERROR_DB_USER_PSWD_REQ);
     }
     if (errors.isEmpty()) {
-      page=OTHER_RUNTIME_PROPS;
+      page=InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod) ? WIZARD_COMPLETE : OTHER_RUNTIME_PROPS;
     }
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (OTHER_RUNTIME_PROPS.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       renderTemplate(DATABASE_TABLES_AND_USER,referenceMap,httpResponse);
       return;
     }
@@ -173,7 +188,7 @@
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (ADMIN_USER_SETUP.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
       return;
     }
@@ -203,7 +218,7 @@
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (IMPLEMENTATION_ID_SETUP.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       if (wizardModel.createTables)       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
  else       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
       return;
@@ -223,12 +238,17 @@
     renderTemplate(page,referenceMap,httpResponse);
   }
  else   if (WIZARD_COMPLETE.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+    if (goBack(httpRequest)) {
       if (InitializationWizardModel.INSTALL_METHOD_SIMPLE.equals(wizardModel.installMethod)) {
         page=SIMPLE_SETUP;
       }
  else       if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-        page=TESTING_SETUP;
+        if (skipDatabaseSetupPage()) {
+          page=TESTING_REMOTE_DETAILS_SETUP;
+        }
+ else {
+          page=DATABASE_TABLES_AND_USER;
+        }
       }
  else {
         page=IMPLEMENTATION_ID_SETUP;
@@ -237,77 +257,90 @@
       return;
     }
     wizardModel.tasksToExecute=new ArrayList<WizardTask>();
+    createDatabaseTask();
     if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-      loadedDriverString=loadDriver(testDatabaseConnection,null);
-      if (!StringUtils.hasText(loadedDriverString)) {
-        errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
-        renderTemplate(TESTING_SETUP,referenceMap,httpResponse);
-        return;
+      wizardModel.importTestData=true;
+      wizardModel.createTables=false;
+      wizardModel.addDemoData=false;
+      if (skipDatabaseSetupPage()) {
+        wizardModel.hasCurrentOpenmrsDatabase=false;
+        wizardModel.hasCurrentDatabaseUser=true;
+        wizardModel.createDatabaseUser=false;
+        Properties props=OpenmrsUtil.getRuntimeProperties(WebConstants.WEBAPP_NAME);
+        wizardModel.currentDatabaseUsername=props.getProperty("connection.username");
+        wizardModel.currentDatabasePassword=props.getProperty("connection.password");
+        wizardModel.createDatabaseUsername=wizardModel.currentDatabaseUsername;
+        wizardModel.createDatabasePassword=wizardModel.currentDatabasePassword;
       }
-      wizardModel.tasksToExecute.add(WizardTask.CREATE_TEST_INSTALLATION);
+      wizardModel.tasksToExecute.add(WizardTask.IMPORT_TEST_DATA);
+      wizardModel.tasksToExecute.add(WizardTask.ADD_MODULES);
     }
  else {
-      createDatabaseTask();
       createTablesTask();
       createDemoDataTask();
     }
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
-    if (httpRequest.getSession().getAttribute(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
-      wizardModel.localeToSave=String.valueOf(httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
-    }
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     startInstallation();
     referenceMap.put("isInstallationStarted",isInstallationStarted());
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
- else   if (TESTING_SETUP.equals(page)) {
-    if ("Back".equals(httpRequest.getParameter("back"))) {
+ else   if (TESTING_REMOTE_DETAILS_SETUP.equals(page)) {
+    if (goBack(httpRequest)) {
+      wizardModel.currentStepNumber-=1;
       renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
       return;
     }
-    wizardModel.currentDatabaseHost=httpRequest.getParameter("currentDatabaseIpAddress");
-    checkForEmptyValue(wizardModel.currentDatabaseHost,errors,"Current database Host Name/IP Address");
-    wizardModel.currentDatabasePort=httpRequest.getParameter("currentDatabasePort");
-    checkForEmptyValue(wizardModel.currentDatabasePort,errors,"Current database connection Port");
-    wizardModel.currentDatabaseName=httpRequest.getParameter("currentDatabaseName");
-    checkForEmptyValue(wizardModel.currentDatabaseName,errors,"Current database name");
-    wizardModel.currentDatabaseUsername=httpRequest.getParameter("currentDatabaseUsername");
-    checkForEmptyValue(wizardModel.currentDatabaseUsername,errors,"A database user with ALL privileges");
-    wizardModel.currentDatabasePassword=httpRequest.getParameter("currentDatabasePassword");
-    checkForEmptyValue(wizardModel.currentDatabasePassword,errors,"Password for database user with ALL privileges");
-    wizardModel.testDatabaseHost=httpRequest.getParameter("test_database_host");
-    checkForEmptyValue(wizardModel.testDatabaseHost,errors,"Test Connection Host Name/IP Address");
-    wizardModel.testDatabasePort=httpRequest.getParameter("test_database_port");
-    checkForEmptyValue(wizardModel.testDatabasePort,errors,"Test Connection Port");
-    wizardModel.testDatabaseUsername=httpRequest.getParameter("test_database_username");
-    checkForEmptyValue(wizardModel.testDatabaseUsername,errors,"Test Database Username");
-    wizardModel.testDatabasePassword=httpRequest.getParameter("test_database_password");
-    checkForEmptyValue(wizardModel.testDatabasePassword,errors,"Test Database Password");
-    if (!errors.isEmpty()) {
-      renderTemplate(page,referenceMap,httpResponse);
-      return;
-    }
-    String addModules=httpRequest.getParameter("addModules");
-    if (OpenmrsUtil.nullSafeEquals(addModules,"true"))     wizardModel.addModules=true;
+    wizardModel.remoteUrl=httpRequest.getParameter("remoteUrl");
+    checkForEmptyValue(wizardModel.remoteUrl,errors,"install.testing.remote.url.required");
+    if (errors.isEmpty()) {
+      if (TestInstallUtil.testConnection(wizardModel.remoteUrl)) {
+        if (TestInstallUtil.testConnection(wizardModel.remoteUrl.concat(RELEASE_TESTING_MODULE_PATH + "settings.htm"))) {
+          wizardModel.remoteUsername=httpRequest.getParameter("username");
+          wizardModel.remotePassword=httpRequest.getParameter("password");
+          checkForEmptyValue(wizardModel.remoteUsername,errors,"install.testing.username.required");
+          checkForEmptyValue(wizardModel.remotePassword,errors,"install.testing.password.required");
+          if (errors.isEmpty()) {
+            try {
+              TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "verifycredentials.htm",wizardModel.remoteUsername,wizardModel.remotePassword);
+            }
+ catch (            APIAuthenticationException e) {
+              log.warn("Error generated: ",e);
+              errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,null);
+            }
+            if (skipDatabaseSetupPage()) {
+              Properties props=OpenmrsUtil.getRuntimeProperties(WebConstants.WEBAPP_NAME);
+              wizardModel.databaseConnection=props.getProperty("connection.url");
+              loadedDriverString=loadDriver(wizardModel.databaseConnection,wizardModel.databaseDriver);
+              if (!StringUtils.hasText(loadedDriverString)) {
+                page=TESTING_REMOTE_DETAILS_SETUP;
+                errors.put(ErrorMessageConstants.ERROR_DB_DRIVER_CLASS_REQ,null);
+                renderTemplate(page,referenceMap,httpResponse);
+                return;
+              }
+              wizardModel.databaseName=InitializationWizardModel.DEFAULT_DATABASE_NAME;
+              page=WIZARD_COMPLETE;
+            }
  else {
-      wizardModel.addModules=false;
-      testModulesZipFile=null;
+              page=DATABASE_SETUP;
+              wizardModel.currentStepNumber=2;
+            }
+            msgs.put("install.testing.testingModuleFound",null);
+          }
+ else {
+            renderTemplate(page,referenceMap,httpResponse);
+            return;
+          }
+        }
+ else {
+          errors.put("install.testing.noTestingModule",null);
+        }
+      }
+ else {
+        errors.put("install.testing.invalidProductionUrl",new Object[]{wizardModel.remoteUrl});
+      }
     }
-    page=WIZARD_COMPLETE;
     renderTemplate(page,referenceMap,httpResponse);
-    return;
-  }
- else   if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-    httpResponse.setContentType("text/html");
-    httpResponse.setHeader("Cache-Control","no-cache");
-    PrintWriter pw=httpResponse.getWriter();
-    String errorMsg=uploadFile(httpRequest);
-    wizardModel.addModules=true;
-    pw.write("<html><body>");
-    pw.write("<script type=\"text/javascript\">window.parent.document.getElementById(\"spinner\").style.visibility=\"hidden\";</script>");
-    if (errorMsg != null)     pw.write("<div align=\"center\"><font color=\"#FF0000\">" + errorMsg + "</font></div>");
- else     pw.write("<div align=\"center\"><font color=\"#0BA603\">File uploaded successfully!</font></div>");
-    pw.write("</body></html>");
     return;
   }
 }

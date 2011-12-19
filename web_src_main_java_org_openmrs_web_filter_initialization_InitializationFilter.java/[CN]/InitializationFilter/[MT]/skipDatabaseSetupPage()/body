@@ -1,0 +1,4 @@
+{
+  Properties props=OpenmrsUtil.getRuntimeProperties(WebConstants.WEBAPP_NAME);
+  return (props != null && StringUtils.hasText(props.getProperty("connection.url")) && StringUtils.hasText(props.getProperty("connection.username")) && StringUtils.hasText(props.getProperty("connection.password")));
+}

@@ -59,17 +59,10 @@
           connectionPassword=wizardModel.currentDatabasePassword;
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-        if (!InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-          if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
-            setMessage("Verify that the database connection works");
-            reportError("Unable to connect to database",DEFAULT_PAGE);
-            return;
-          }
-        }
- else {
-          finalDatabaseConnectionString=testDatabaseConnection.replace("@HOST@",wizardModel.testDatabaseHost).replace("@PORT@",wizardModel.testDatabasePort).replace("@DBNAME@",InitializationWizardModel.TEST_DATABASE_NAME);
-          connectionUsername=wizardModel.testDatabaseUsername;
-          connectionPassword=wizardModel.testDatabasePassword;
+        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+          setMessage("Verify that the database connection works");
+          reportError("Unable to connect to database",DEFAULT_PAGE);
+          return;
         }
         Properties runtimeProperties=new Properties();
         runtimeProperties.put("connection.url",finalDatabaseConnectionString);
@@ -118,6 +111,60 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             log.warn("Error while trying to create tables and demo data",e);
           }
         }
+        if (wizardModel.importTestData) {
+          try {
+            setMessage("Importing test data");
+            setExecutingTask(WizardTask.IMPORT_TEST_DATA);
+            setCompletedPercentage(0);
+            try {
+              InputStream inData=TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "generateTestDataSet.form",wizardModel.remoteUsername,wizardModel.remotePassword);
+              if (inData == null) {
+                reportError(ErrorMessageConstants.ERROR_DB_IMPORT_TEST_DATA,DEFAULT_PAGE,"");
+                return;
+              }
+              setCompletedPercentage(40);
+              setMessage("Loading imported test data...");
+              importTestDataSet(inData,finalDatabaseConnectionString,connectionUsername,connectionPassword);
+              wizardModel.workLog.add("Imported test data");
+              addExecutedTask(WizardTask.IMPORT_TEST_DATA);
+              setCompletedPercentage(0);
+              setMessage("Importing modules from remote server...");
+              setExecutingTask(WizardTask.ADD_MODULES);
+              InputStream inModules=TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "getModules.htm",wizardModel.remoteUsername,wizardModel.remotePassword);
+              if (inModules == null) {
+                reportError(ErrorMessageConstants.ERROR_DB_UNABLE_TO_FETCH_MODULES,DEFAULT_PAGE,"");
+                return;
+              }
+              setCompletedPercentage(90);
+              setMessage("Adding imported modules...");
+              File moduleRepository=OpenmrsUtil.getDirectoryInApplicationDataDirectory(ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+              String appDataDirectory=Context.getRuntimeProperties().getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY);
+              if (StringUtils.hasText(appDataDirectory)) {
+                moduleRepository=new File(appDataDirectory,ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+                if (!moduleRepository.isDirectory())                 moduleRepository.mkdirs();
+              }
+              FileUtils.cleanDirectory(moduleRepository);
+              if (!TestInstallUtil.addZippedTestModules(inModules,moduleRepository)) {
+                reportError(ErrorMessageConstants.ERROR_DB_UNABLE_TO_ADD_MODULES,DEFAULT_PAGE,"");
+                return;
+              }
+ else {
+                wizardModel.workLog.add("Added Modules");
+                addExecutedTask(WizardTask.ADD_MODULES);
+              }
+            }
+ catch (            APIAuthenticationException e) {
+              log.warn("Unable to authenticate as a User with the System Developer role");
+              reportError(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,TESTING_REMOTE_DETAILS_SETUP,"");
+              return;
+            }
+          }
+ catch (          Exception e) {
+            reportError(ErrorMessageConstants.ERROR_DB_IMPORT_TEST_DATA,DEFAULT_PAGE,e.getMessage());
+            log.warn("Error while trying to import test data",e);
+            return;
+          }
+        }
         if (wizardModel.createTables && wizardModel.addDemoData) {
           try {
             setMessage("Adding demo data");
@@ -131,19 +178,6 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_TABLES_OR_ADD_DEMO_DATA,DEFAULT_PAGE,e.getMessage());
             log.warn("Error while trying to add demo data",e);
           }
-        }
-        if (InitializationWizardModel.INSTALL_METHOD_TESTING.equals(wizardModel.installMethod)) {
-          setMessage("Creating testing installation");
-          setCompletedPercentage(0);
-          setExecutingTask(WizardTask.CREATE_TEST_INSTALLATION);
-          createTestInstallation();
-          if (!errors.isEmpty()) {
-            reportError("Error while trying to Creating installation: " + StringUtils.collectionToCommaDelimitedString(errors.values()),null);
-            log.warn(StringUtils.collectionToCommaDelimitedString(errors.values()));
-            return;
-          }
-          wizardModel.workLog.add("Created test installation");
-          addExecutedTask(WizardTask.CREATE_TEST_INSTALLATION);
         }
         try {
           setMessage("Updating the database to the latest version");

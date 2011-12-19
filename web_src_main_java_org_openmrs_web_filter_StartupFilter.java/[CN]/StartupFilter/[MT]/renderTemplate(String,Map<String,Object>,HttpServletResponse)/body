@@ -1,5 +1,6 @@
 {
-  ToolContext toolContext=getToolContext(referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE).toString());
+  Object locale=referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE);
+  ToolContext toolContext=getToolContext(locale != null ? locale.toString() : Context.getLocale().toString());
   VelocityContext velocityContext=new VelocityContext(toolContext);
   if (referenceMap != null) {
     for (    Map.Entry<String,Object> entry : referenceMap.entrySet()) {
@@ -24,6 +25,7 @@ catch (    IllegalAccessException e) {
     throw new IOException("Unable to find " + fullTemplatePath);
   }
   velocityContext.put("errors",errors);
+  velocityContext.put("msgs",msgs);
   httpResponse.setContentType("text/html");
   try {
     velocityEngine.evaluate(velocityContext,httpResponse.getWriter(),this.getClass().getName(),new InputStreamReader(templateInputStream));
