@@ -300,14 +300,14 @@
           wizardModel.remotePassword=httpRequest.getParameter("password");
           checkForEmptyValue(wizardModel.remoteUsername,errors,"install.testing.username.required");
           checkForEmptyValue(wizardModel.remotePassword,errors,"install.testing.password.required");
-          try {
-            TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "verifycredentials.htm",wizardModel.remoteUsername,wizardModel.remotePassword);
-          }
- catch (          APIAuthenticationException e) {
-            log.warn("Error generated: ",e);
-            errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,null);
-          }
           if (errors.isEmpty()) {
+            try {
+              TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "verifycredentials.htm",wizardModel.remoteUsername,wizardModel.remotePassword);
+            }
+ catch (            APIAuthenticationException e) {
+              log.warn("Error generated: ",e);
+              errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,null);
+            }
             if (skipDatabaseSetupPage()) {
               Properties props=OpenmrsUtil.getRuntimeProperties(WebConstants.WEBAPP_NAME);
               wizardModel.databaseConnection=props.getProperty("connection.url");
