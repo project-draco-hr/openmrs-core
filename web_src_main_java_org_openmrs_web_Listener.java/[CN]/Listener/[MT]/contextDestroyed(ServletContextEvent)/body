@@ -5,7 +5,7 @@
     WebModuleUtil.shutdownModules(event.getServletContext());
   }
  catch (  Throwable t) {
-    if (!t.getMessage().equals("contextDAO is null")) {
+    if (!"contextDAO is null".equals(t.getMessage())) {
       System.out.println("Listener.contextDestroyed: Error while shutting down openmrs: ");
       t.printStackTrace();
     }
