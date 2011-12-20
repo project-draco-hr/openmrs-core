@@ -1,0 +1,6 @@
+{
+  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
+  PatientState patientState=program.getStates().iterator().next();
+  patientState.getPatientProgram().transitionToState(patientState.getState().getProgramWorkflow().getState(4),new Date());
+  ValidateUtil.validate(program);
+}
