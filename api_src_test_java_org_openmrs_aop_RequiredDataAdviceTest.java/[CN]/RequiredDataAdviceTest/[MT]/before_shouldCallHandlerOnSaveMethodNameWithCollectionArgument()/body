@@ -1,0 +1,6 @@
+{
+  Method m=WithAppropriatelyNamedMethod.class.getMethod("saveSomeOpenmrsDatas",List.class);
+  List<SomeOpenmrsData> openmrsObjects=Arrays.asList(new SomeOpenmrsData(),new SomeOpenmrsData());
+  requiredDataAdvice.before(m,new Object[]{openmrsObjects},new WithAppropriatelyNamedMethod());
+  verify(saveHandler,times(2)).handle(Matchers.<SomeOpenmrsData>anyObject(),Matchers.<User>anyObject(),Matchers.<Date>anyObject(),anyString());
+}

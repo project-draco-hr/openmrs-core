@@ -1,8 +1,3 @@
 {
-  if (task.getId() != null) {
-    getSchedulerDAO().updateTask(task);
-  }
- else {
-    getSchedulerDAO().createTask(task);
-  }
+  Context.getSchedulerService().saveTaskDefinition(task);
 }

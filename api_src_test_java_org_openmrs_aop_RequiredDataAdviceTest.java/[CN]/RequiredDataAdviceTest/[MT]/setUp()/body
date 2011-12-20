@@ -1,0 +1,10 @@
+{
+  this.requiredDataAdvice=new RequiredDataAdvice();
+  PowerMockito.mockStatic(Context.class);
+  saveHandler=mock(OpenmrsObjectSaveHandler.class);
+  voidHandler=mock(BaseVoidHandler.class);
+  when(Context.getRegisteredComponents(SaveHandler.class)).thenReturn(Arrays.asList(saveHandler));
+  when(Context.getRegisteredComponents(VoidHandler.class)).thenReturn(Arrays.asList(voidHandler));
+  AdministrationService administrationService=mock(AdministrationService.class);
+  when(Context.getAdministrationService()).thenReturn(administrationService);
+}

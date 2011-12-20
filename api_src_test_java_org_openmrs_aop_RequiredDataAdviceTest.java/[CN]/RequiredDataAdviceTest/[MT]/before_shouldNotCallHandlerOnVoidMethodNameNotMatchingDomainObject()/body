@@ -1,0 +1,6 @@
+{
+  Method m=WithAppropriatelyNamedMethod.class.getMethod("voidSomeOpenmrsDataButNotReally",SomeOpenmrsData.class);
+  SomeOpenmrsData openmrsObject=new SomeOpenmrsData();
+  requiredDataAdvice.before(m,new Object[]{openmrsObject},new WithAppropriatelyNamedMethod());
+  verify(voidHandler,never()).handle(eq(openmrsObject),Matchers.<User>anyObject(),Matchers.<Date>anyObject(),anyString());
+}
