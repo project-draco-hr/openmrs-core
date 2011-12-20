@@ -20,9 +20,9 @@
       while (currentConcept != null && shouldExecute) {
         if (log.isDebugEnabled())         log.debug("updateConceptWords() : current concept: " + currentConcept);
         cs.updateConceptIndex(currentConcept);
-        gp.setPropertyValue(currentConcept.getConceptId().toString());
-        as.saveGlobalProperty(gp);
-        if (counter++ > 200) {
+        if (counter++ > 25) {
+          gp.setPropertyValue(currentConcept.getConceptId().toString());
+          as.saveGlobalProperty(gp);
           Context.flushSession();
           Context.clearSession();
           counter=0;
