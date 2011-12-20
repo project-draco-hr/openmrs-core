@@ -1,8 +1,9 @@
 {
   PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
   PatientState patientState=program.getStates().iterator().next();
-  patientState.setStartDate(null);
+  ProgramWorkflowState nextState=patientState.getState().getProgramWorkflow().getState(4);
+  patientState.getPatientProgram().transitionToState(nextState,patientState.getStartDate());
   BindException errors=new BindException(program,"");
   new PatientProgramValidator().validate(program,errors);
-  Assert.assertEquals(true,errors.hasErrors());
+  Assert.assertEquals(false,errors.hasFieldErrors("states"));
 }
