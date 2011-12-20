@@ -1,11 +1,11 @@
 {
   double bonusWeight=0.0;
   ConceptName conceptName=word.getConceptName();
-  if (conceptName.isIndexTerm() || (word.getConceptName().isPreferred() && word.getConceptName().isFullySpecifiedName()))   bonusWeight+=weightCoefficient * 0.25;
+  if (conceptName.isIndexTerm() || (conceptName.isPreferred() && conceptName.isFullySpecifiedName()))   bonusWeight+=weightCoefficient * 0.25;
  else   if (conceptName.isPreferred())   bonusWeight+=weightCoefficient * 0.24;
  else   if (conceptName.isFullySpecifiedName())   bonusWeight+=weightCoefficient * 0.23;
  else   if (conceptName.isSynonym())   bonusWeight+=weightCoefficient * 0.22;
  else   if (conceptName.isShort())   bonusWeight+=weightCoefficient * 0.21;
-  bonusWeight+=weightCoefficient / new Double(word.getConceptName().getName().length());
+  bonusWeight+=weightCoefficient / new Double(conceptName.getName().length());
   return bonusWeight;
 }
