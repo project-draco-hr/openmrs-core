@@ -154,14 +154,14 @@
         mod.setStartupErrorMessage(msg,e);
         if (log.isWarnEnabled())         log.warn(msg + " for module: " + mod.getModuleId(),e);
         try {
-          ModuleFactory.stopModule(mod,true,true);
           stopModule(mod,servletContext,true);
+          ModuleFactory.stopModule(mod,true,true);
         }
  catch (        Exception e2) {
           if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
         }
-        notifySuperUsersAboutModuleFailure(mod);
         refreshWAC(servletContext,false,mod);
+        notifySuperUsersAboutModuleFailure(mod);
       }
     }
     if (!delayContextRefresh) {
