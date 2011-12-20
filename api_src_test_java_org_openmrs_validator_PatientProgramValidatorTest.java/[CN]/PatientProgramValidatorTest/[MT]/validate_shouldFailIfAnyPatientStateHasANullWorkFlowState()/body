@@ -4,5 +4,5 @@
   patientState.setState(null);
   BindException errors=new BindException(program,"");
   new PatientProgramValidator().validate(program,errors);
-  Assert.assertTrue(errors.hasErrors());
+  Assert.assertTrue(errors.hasFieldErrors("states"));
 }

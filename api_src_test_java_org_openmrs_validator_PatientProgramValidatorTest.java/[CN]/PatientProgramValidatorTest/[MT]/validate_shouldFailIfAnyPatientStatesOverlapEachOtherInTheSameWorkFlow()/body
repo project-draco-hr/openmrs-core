@@ -10,5 +10,5 @@
   program.getStates().add(patientState2);
   BindException errors=new BindException(program,"");
   new PatientProgramValidator().validate(program,errors);
-  Assert.assertEquals(true,errors.hasErrors());
+  Assert.assertEquals(true,errors.hasFieldErrors("states"));
 }
