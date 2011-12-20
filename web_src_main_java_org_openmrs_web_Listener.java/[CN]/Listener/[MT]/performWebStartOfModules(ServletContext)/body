@@ -24,7 +24,14 @@ catch (    Throwable t) {
       try {
         WebModuleUtil.shutdownModules(servletContext);
         for (        Module mod : ModuleFactory.getLoadedModules()) {
-          if (!mod.isCoreModule() && !mod.isMandatory())           ModuleFactory.stopModule(mod,true,true);
+          if (!mod.isCoreModule() && !mod.isMandatory()) {
+            try {
+              ModuleFactory.stopModule(mod,true,true);
+            }
+ catch (            Throwable t3) {
+              log.trace("Unable to shutdown module:" + mod,t3);
+            }
+          }
         }
         WebModuleUtil.refreshWAC(servletContext,true,null);
       }
