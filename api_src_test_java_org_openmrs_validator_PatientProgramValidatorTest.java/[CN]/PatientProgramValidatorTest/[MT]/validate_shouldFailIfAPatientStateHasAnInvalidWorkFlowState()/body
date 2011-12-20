@@ -1,0 +1,9 @@
+{
+  executeDataSet("org/openmrs/api/include/ProgramWorkflowServiceTest-otherProgramWorkflows.xml");
+  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
+  PatientState patientState=program.getStates().iterator().next();
+  patientState.setState(Context.getProgramWorkflowService().getStateByUuid("31c82d66-245c-11e1-9cf0-00248140a5eb"));
+  BindException errors=new BindException(program,"");
+  new PatientProgramValidator().validate(program,errors);
+  Assert.assertTrue(errors.hasErrors());
+}
