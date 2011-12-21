@@ -1,5 +1,5 @@
 {
-  String database=System.getProperty(databaseNameProp,"openmrs-test");
+  String database=System.getProperty(databaseNameProp,System.getProperty("OPENMRS_VERSION","openmrs-test"));
   String user=System.getProperty(userProp,"root");
   String password=System.getProperty(passwordProp,"password");
   String port=System.getProperty(portProp,"3306");
