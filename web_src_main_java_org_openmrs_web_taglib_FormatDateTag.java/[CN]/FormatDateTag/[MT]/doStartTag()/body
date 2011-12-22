@@ -53,8 +53,13 @@
   }
   if (dateFormat == null)   dateFormat=new SimpleDateFormat("MM-dd-yyyy");
   String datestr="";
+  String datePrefix="";
   try {
     if (date != null) {
+      if (prependTodayOrYesterday) {
+        if (DateUtils.isSameDay(Calendar.getInstance().getTime(),date))         datePrefix=Context.getMessageSourceService().getMessage("general.today") + " ";
+ else         if (OpenmrsUtil.isYesterday(date))         datePrefix=Context.getMessageSourceService().getMessage("general.yesterday") + " ";
+      }
       if (type.equals("milliseconds")) {
         datestr="" + date.getTime();
       }
@@ -70,7 +75,7 @@
     datestr=date.toString();
   }
   try {
-    pageContext.getOut().write(datestr);
+    pageContext.getOut().write(datePrefix + datestr);
   }
  catch (  IOException e) {
     log.error(e);
