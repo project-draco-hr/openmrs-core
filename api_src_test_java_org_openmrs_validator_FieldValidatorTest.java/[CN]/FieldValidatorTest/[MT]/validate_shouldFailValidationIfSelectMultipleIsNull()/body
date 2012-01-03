@@ -1,0 +1,15 @@
+{
+  Field ff=new Field();
+  ff.setName("good");
+  FieldType ft=new FieldType();
+  ft.setFieldTypeId(0xdeadcafe);
+  Boolean retired=new Boolean(false);
+  ff.setFieldType(ft);
+  ff.setName("valid");
+  ff.setRetired(retired);
+  Boolean multiple=null;
+  ff.setSelectMultiple(multiple);
+  Errors errors=new BindException(ff,"selectMultiple");
+  new FieldValidator().validate(ff,errors);
+  Assert.assertTrue(errors.hasFieldErrors("selectMultiple"));
+}
