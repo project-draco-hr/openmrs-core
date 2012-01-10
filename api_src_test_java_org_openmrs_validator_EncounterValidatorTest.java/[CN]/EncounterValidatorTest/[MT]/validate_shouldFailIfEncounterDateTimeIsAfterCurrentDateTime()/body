@@ -1,0 +1,10 @@
+{
+  Encounter encounter=Context.getEncounterService().getEncounter(3);
+  Calendar calendar=new GregorianCalendar();
+  calendar.add(Calendar.DAY_OF_YEAR,1);
+  Date tomorrowDate=calendar.getTime();
+  encounter.setEncounterDatetime(tomorrowDate);
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("encounterDatetime"));
+}

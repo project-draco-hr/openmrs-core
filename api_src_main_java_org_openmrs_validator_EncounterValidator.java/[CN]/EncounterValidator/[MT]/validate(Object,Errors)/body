@@ -7,8 +7,11 @@
     if (encounter.getVisit() != null && !encounter.getVisit().getPatient().equals(encounter.getPatient())) {
       errors.rejectValue("visit","Encounter.visit.patients.dontMatch","The patient for the encounter and visit should be the same");
     }
-    Visit visit=encounter.getVisit();
     Date encounterDateTime=encounter.getEncounterDatetime();
+    if (encounterDateTime != null && encounterDateTime.after(new Date())) {
+      errors.rejectValue("encounterDatetime","Encounter.datetimeShouldBeBeforeCurrent","The encounter datetime should be before the current date.");
+    }
+    Visit visit=encounter.getVisit();
     if (visit != null && encounterDateTime != null) {
       if (visit.getStartDatetime() != null && encounterDateTime.before(visit.getStartDatetime())) {
         errors.rejectValue("encounterDatetime","Encounter.datetimeShouldBeInVisitDatesRange","The encounter datetime should be between the visit start and stop dates.");
