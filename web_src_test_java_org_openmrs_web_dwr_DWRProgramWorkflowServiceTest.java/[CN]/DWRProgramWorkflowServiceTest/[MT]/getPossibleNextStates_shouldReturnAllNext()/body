@@ -1,0 +1,9 @@
+{
+  executeDataSet(PROGRAM_NEXT_STATES_XML);
+  Integer patient=11;
+  Integer workflow=501;
+  Vector<ListItem> possibleNextStates;
+  possibleNextStates=dwrProgramWorkflowService.getPossibleNextStates(patient,workflow);
+  assertFalse(possibleNextStates.isEmpty());
+  assertEquals(3,possibleNextStates.size());
+}

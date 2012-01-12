@@ -7,7 +7,9 @@
     ListItem li=new ListItem();
     li.setId(state.getProgramWorkflowStateId());
     li.setName(state.getConcept().getName(Context.getLocale(),false).getName());
-    ret.add(li);
+    if (!state.isRetired() && !state.getConcept().isRetired()) {
+      ret.add(li);
+    }
   }
   return ret;
 }
