@@ -1,0 +1,3 @@
+{
+  return (List<PersonMergeLog>)sessionFactory.getCurrentSession().createQuery("from PersonMergeLog p where p.winner.id = :winnerId").setInteger("winnerId",person.getId()).list();
+}

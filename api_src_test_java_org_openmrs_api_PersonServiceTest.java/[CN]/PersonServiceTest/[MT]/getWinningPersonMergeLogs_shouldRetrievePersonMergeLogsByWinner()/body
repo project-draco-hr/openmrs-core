@@ -1,0 +1,21 @@
+{
+  PersonMergeLog personMergeLog12=getTestPersonMergeLog();
+  personMergeLog12.setLoser(new Person(1));
+  personMergeLog12.setWinner(new Person(2));
+  Context.getPersonService().savePersonMergeLog(personMergeLog12);
+  PersonMergeLog personMergeLog16=getTestPersonMergeLog();
+  personMergeLog16.setLoser(new Person(1));
+  personMergeLog16.setWinner(new Person(6));
+  Context.getPersonService().savePersonMergeLog(personMergeLog16);
+  PersonMergeLog personMergeLog26=getTestPersonMergeLog();
+  personMergeLog26.setLoser(new Person(2));
+  personMergeLog26.setWinner(new Person(6));
+  Context.getPersonService().savePersonMergeLog(personMergeLog26);
+  List<PersonMergeLog> lst=Context.getPersonService().getWinningPersonMergeLogs(new Person(6),true);
+  Assert.assertEquals("Incorrect number of PersonMergeLog objects found by winner",2,lst.size());
+  for (  PersonMergeLog l : lst) {
+    if (!l.getUuid().equals(personMergeLog16.getUuid()) && !l.getUuid().equals(personMergeLog26.getUuid())) {
+      fail("Unexpected PersonMergeLog found by winner");
+    }
+  }
+}
