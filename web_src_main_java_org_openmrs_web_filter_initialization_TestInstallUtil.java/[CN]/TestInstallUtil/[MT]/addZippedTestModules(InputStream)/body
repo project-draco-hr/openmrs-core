@@ -19,6 +19,12 @@
       if (fileName.endsWith(".omod")) {
         if (fileName.contains(System.getProperty("file.separator")))         fileName=new File(entry.getName()).getName();
         if (log.isDebugEnabled())         log.debug("Extracting module file: " + fileName);
+        String moduleRepositoryFolder=FilterUtil.getGlobalPropertyValue(ModuleConstants.REPOSITORY_FOLDER_PROPERTY);
+        if (StringUtils.isBlank(moduleRepositoryFolder))         moduleRepositoryFolder=ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT;
+        String appDataDirectory=Context.getRuntimeProperties().getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY);
+        if (StringUtils.isNotBlank(appDataDirectory))         OpenmrsConstants.APPLICATION_DATA_DIRECTORY=appDataDirectory;
+        File moduleRepository=OpenmrsUtil.getDirectoryInApplicationDataDirectory(moduleRepositoryFolder);
+        FileUtils.cleanDirectory(moduleRepository);
         OpenmrsUtil.copyFile(zipFile.getInputStream(entry),new BufferedOutputStream(new FileOutputStream(new File(moduleRepository,fileName))));
       }
  else {

@@ -7,10 +7,10 @@
     return true;
   }
  catch (  UnknownHostException e) {
-    log.error("Error generated:",e);
+    if (log.isDebugEnabled())     log.debug("Error generated:",e);
   }
 catch (  IOException e) {
-    log.error("Error generated:",e);
+    if (log.isDebugEnabled())     log.debug("Error generated:",e);
   }
   return false;
 }
