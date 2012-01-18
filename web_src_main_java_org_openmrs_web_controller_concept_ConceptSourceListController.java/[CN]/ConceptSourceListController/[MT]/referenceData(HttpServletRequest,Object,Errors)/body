@@ -4,7 +4,7 @@
   ImplementationId implId=Context.getAdministrationService().getImplementationId();
   if (implId != null) {
     for (    ConceptSource conceptSource : conceptSources) {
-      if (conceptSource.getHl7Code().equals(implId.getImplementationId()))       map.put("implIdSource",conceptSource);
+      if (conceptSource.getHl7Code() != null && conceptSource.getHl7Code().equals(implId.getImplementationId()))       map.put("implIdSource",conceptSource);
     }
   }
   return map;
