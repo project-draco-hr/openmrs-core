@@ -1,5 +1,5 @@
 {
   Criteria crit=getFormCriteria(partialName,published,encounterTypes,retired,containingAnyFormField,containingAllFormFields,fields);
   crit.setProjection(Projections.count("formId"));
-  return (Integer)crit.uniqueResult();
+  return OpenmrsUtil.convertToInteger((Long)crit.uniqueResult());
 }
