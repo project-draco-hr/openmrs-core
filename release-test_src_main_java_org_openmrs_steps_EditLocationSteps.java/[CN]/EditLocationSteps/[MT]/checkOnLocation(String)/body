@@ -1,0 +1,16 @@
+{
+  WebElement locationTable=driver.findElement(By.id("locationTable"));
+  List<WebElement> trList=locationTable.findElements(By.tagName("tr"));
+  boolean isFoundTR=false;
+  for (int i=0; i < trList.size(); i++) {
+    List<WebElement> tdList=trList.get(i).findElements(By.tagName("td"));
+    List<WebElement> selectedTD=select(tdList,having(on(WebElement.class).getText(),equalTo(locationName)));
+    if (selectedTD.size() > 0) {
+      isFoundTR=true;
+    }
+    if (isFoundTR) {
+      trList.get(i).findElement(By.name("locationId")).click();
+      break;
+    }
+  }
+}

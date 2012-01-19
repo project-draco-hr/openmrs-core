@@ -1,3 +1,13 @@
 {
-  clickOn(finderByXpath("//table[@id='openmrsSearchTable']/tbody/tr/td[2]=" + providerIdentifier));
+  Thread.sleep(1000);
+  WebElement openmrsSearchTable=driver.findElement(By.id("openmrsSearchTable"));
+  List<WebElement> trList=openmrsSearchTable.findElements(By.tagName("tr"));
+  for (  WebElement tr : trList) {
+    List<WebElement> tdList=tr.findElements(By.tagName("td"));
+    List<WebElement> selectedTD=select(tdList,having(on(WebElement.class).getText(),equalTo(providerIdentifier)));
+    if (selectedTD.size() > 0) {
+      tr.click();
+      break;
+    }
+  }
 }
