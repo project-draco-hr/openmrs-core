@@ -4,7 +4,9 @@
   Person existingPerson=Context.getPersonService().getPerson(501);
   Context.clearSession();
   Patient patient=new Patient(existingPerson);
-  patient.addIdentifier(new PatientIdentifier("some identifier",new PatientIdentifierType(2),new Location(1)));
+  PatientIdentifier patientIdentifier=new PatientIdentifier("some identifier",new PatientIdentifierType(2),new Location(1));
+  patientIdentifier.setPreferred(true);
+  patient.addIdentifier(patientIdentifier);
   patientService.savePatient(patient);
   Assert.assertEquals(501,patient.getPatientId().intValue());
   Assert.assertNotNull(patientService.getPatient(501));

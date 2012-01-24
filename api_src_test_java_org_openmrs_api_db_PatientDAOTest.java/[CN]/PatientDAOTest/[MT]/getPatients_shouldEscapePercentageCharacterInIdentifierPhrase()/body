@@ -5,6 +5,7 @@
   pService.savePatient(patient2);
   Patient patient6=pService.getPatient(6);
   PatientIdentifier patientIdentifier6=new PatientIdentifier("4567",pService.getPatientIdentifierType(2),Context.getLocationService().getLocation(1));
+  patientIdentifier6.setPreferred(true);
   patient6.addIdentifier(patientIdentifier6);
   pService.savePatient(patient6);
   List<PatientIdentifierType> identifierTypes=Collections.emptyList();

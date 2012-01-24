@@ -7,6 +7,8 @@
   t1.setTaskClass(ExecutePrintingTask.class.getName());
   t1.setProperty("id","TASK-1");
   t1.setProperty("delay","400");
+  t1.setName("name");
+  t1.setRepeatInterval(5000l);
   TaskDefinition t2=new TaskDefinition();
   t2.setId(2);
   t2.setStartOnStartup(false);
@@ -14,6 +16,8 @@
   t2.setTaskClass(ExecutePrintingTask.class.getName());
   t2.setProperty("id","TASK-2");
   t2.setProperty("delay","100");
+  t2.setName("name");
+  t2.setRepeatInterval(5000l);
   schedulerService.scheduleTask(t1);
   Thread.sleep(50);
   schedulerService.scheduleTask(t2);

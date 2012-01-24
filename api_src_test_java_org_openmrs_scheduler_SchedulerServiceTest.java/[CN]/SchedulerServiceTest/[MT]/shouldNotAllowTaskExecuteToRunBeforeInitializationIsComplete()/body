@@ -5,6 +5,8 @@
   t5.setStartOnStartup(false);
   t5.setStartTime(null);
   t5.setTaskClass(SampleTask5.class.getName());
+  t5.setName("name");
+  t5.setRepeatInterval(5000l);
   schedulerService.scheduleTask(t5);
   Thread.sleep(2500);
   assertEquals(Arrays.asList("INIT-START-5","INIT-END-5","IN EXECUTE"),outputForInitExecSync);
