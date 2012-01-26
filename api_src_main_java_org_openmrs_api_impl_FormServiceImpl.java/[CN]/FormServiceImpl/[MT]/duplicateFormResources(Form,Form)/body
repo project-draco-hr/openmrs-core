@@ -1,0 +1,8 @@
+{
+  FormService service=Context.getFormService();
+  for (  FormResource resource : service.getFormResourcesForForm(source)) {
+    FormResource newResource=new FormResource(resource);
+    newResource.setForm(destination);
+    service.saveFormResource(newResource);
+  }
+}

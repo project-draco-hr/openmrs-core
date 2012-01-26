@@ -1,4 +1,5 @@
 {
+  Integer originalFormId=form.getFormId();
   for (  FormField formField : form.getFormFields()) {
     formField.setUuid(null);
     formField.setFormFieldId(null);
@@ -13,5 +14,6 @@
   Context.clearSession();
   RequiredDataAdvice.recursivelyHandle(SaveHandler.class,form,null);
   Form newForm=dao.duplicateForm(form);
+  duplicateFormResources(Context.getFormService().getForm(originalFormId),newForm);
   return newForm;
 }

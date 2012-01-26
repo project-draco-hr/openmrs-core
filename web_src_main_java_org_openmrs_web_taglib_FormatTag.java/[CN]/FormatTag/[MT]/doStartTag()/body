@@ -57,6 +57,12 @@
   if (encounterProviders != null) {
     printEncounterProviders(sb,encounterProviders);
   }
+  if (form != null) {
+    printForm(sb,form);
+  }
+  if (singleCustomValue != null) {
+    printSingleCustomValue(sb,singleCustomValue,view);
+  }
   if (StringUtils.hasText(var)) {
     if (javaScriptEscape)     pageContext.setAttribute(var,JavaScriptUtils.javaScriptEscape(sb.toString()));
  else     pageContext.setAttribute(var,sb.toString());
