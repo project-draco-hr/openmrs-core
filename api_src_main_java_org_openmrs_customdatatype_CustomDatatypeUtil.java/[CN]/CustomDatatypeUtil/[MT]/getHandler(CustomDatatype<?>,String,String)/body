@@ -1,0 +1,14 @@
+{
+  if (preferredHandlerClassname != null) {
+    try {
+      Class<? extends CustomDatatypeHandler> clazz=(Class<? extends CustomDatatypeHandler>)Context.loadClass(preferredHandlerClassname);
+      CustomDatatypeHandler handler=clazz.newInstance();
+      if (handlerConfig != null)       handler.setHandlerConfiguration(handlerConfig);
+      return handler;
+    }
+ catch (    Exception ex) {
+      log.warn("Failed to instantiate and configure preferred handler with class " + preferredHandlerClassname + " and config "+ handlerConfig,ex);
+    }
+  }
+  return Context.getDatatypeService().getHandler(dt,handlerConfig);
+}
