@@ -73,7 +73,7 @@
   for (  PatientIdentifier pi : notPreferred.getActiveIdentifiers()) {
     PatientIdentifier tmpIdentifier=new PatientIdentifier();
     tmpIdentifier.setIdentifier(pi.getIdentifier());
-    tmpIdentifier.setIdentifierType(null);
+    tmpIdentifier.setIdentifierType(pi.getIdentifierType());
     tmpIdentifier.setLocation(pi.getLocation());
     tmpIdentifier.setPatient(preferred);
     boolean found=false;
@@ -152,14 +152,14 @@
   if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());
   mergedData.setPriorDateOfBirth(preferred.getBirthdate());
   mergedData.setPriorDateOfBirthEstimated(preferred.isBirthdateEstimated());
-  if (preferred.getBirthdate() == null || preferred.getBirthdate().equals("") || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
+  if (preferred.getBirthdate() == null || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
     preferred.setBirthdate(notPreferred.getBirthdate());
     preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
   }
   mergedData.setPriorDateOfDeath(preferred.getDeathDate());
-  if (preferred.getDeathDate() == null || preferred.getDeathDate().equals(""))   preferred.setDeathDate(notPreferred.getDeathDate());
+  if (preferred.getDeathDate() == null)   preferred.setDeathDate(notPreferred.getDeathDate());
   if (preferred.getCauseOfDeath() != null)   mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());
-  if (preferred.getCauseOfDeath() == null || preferred.getCauseOfDeath().equals(""))   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
+  if (preferred.getCauseOfDeath() == null)   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
   Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
   personService.voidPerson(notPreferred,"The patient corresponding to this person has been voided and Merged with patient #" + preferred.getPatientId());
   changeUserAssociations(preferred,notPreferred,mergedData);
