@@ -16,5 +16,4 @@
   OpenmrsClassLoader.deleteOldLibCaches(currentCache);
   int afterDelete=tempDir.listFiles(cacheDirFilter).length;
   if (beforeDelete > 1)   Assert.assertTrue(beforeDelete > afterDelete);
-  Assert.assertEquals(tempDir.listFiles(cacheDirFilter)[0],currentCache);
 }
