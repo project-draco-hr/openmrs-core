@@ -10,7 +10,7 @@
   encounterRole.setDescription(description);
   BindException errors=new BindException(encounterRole,"encounterRole");
   controller.save(session,encounterRole,errors);
-  assertNotNull(encounterRole.getId());
-  assertEquals(roleName,encounterRole.getName());
-  assertEquals(description,encounterRole.getDescription());
+  Assert.assertNotNull(encounterRole.getId());
+  Assert.assertEquals(roleName,encounterRole.getName());
+  Assert.assertEquals(description,encounterRole.getDescription());
 }

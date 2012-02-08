@@ -7,7 +7,7 @@
   encounterRole.setRetireReason("this role is no more existing");
   BindException errors=new BindException(encounterRole,"encounterRole");
   controller.retire(session,encounterRole,errors);
-  assertNotNull(encounterRole.getId());
-  assertTrue(encounterRole.isRetired());
-  assertEquals("EncounterRole.retiredSuccessfully",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+  Assert.assertNotNull(encounterRole.getId());
+  Assert.assertTrue(encounterRole.isRetired());
+  Assert.assertEquals("EncounterRole.retiredSuccessfully",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
 }

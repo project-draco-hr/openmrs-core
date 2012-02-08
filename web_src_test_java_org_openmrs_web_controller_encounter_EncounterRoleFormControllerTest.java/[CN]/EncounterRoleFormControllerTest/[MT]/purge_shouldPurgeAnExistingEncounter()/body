@@ -6,5 +6,5 @@
   EncounterRole encounterRole=Context.getEncounterService().getEncounterRole(1);
   BindException errors=new BindException(encounterRole,"encounterRole");
   controller.purge(session,encounterRole,errors);
-  assertEquals("EncounterRole.purgedSuccessfully",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+  Assert.assertEquals("EncounterRole.purgedSuccessfully",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
 }

@@ -6,6 +6,6 @@
   encounterRole.setDescription("person in charge");
   BindException errors=new BindException(encounterRole,"encounterRole");
   controller.save(session,encounterRole,errors);
-  assertNull(encounterRole.getId());
-  assertEquals(1,errors.getErrorCount());
+  Assert.assertNull(encounterRole.getId());
+  Assert.assertEquals(1,errors.getErrorCount());
 }
