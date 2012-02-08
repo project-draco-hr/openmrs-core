@@ -6,6 +6,6 @@
   EncounterRole encounterRole=Context.getEncounterService().getEncounterRole(2);
   BindException errors=new BindException(encounterRole,"encounterRole");
   controller.unretire(session,encounterRole,errors);
-  assertFalse(encounterRole.isRetired());
-  assertEquals("EncounterRole.unretired",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
+  Assert.assertFalse(encounterRole.isRetired());
+  Assert.assertEquals("EncounterRole.unretired",session.getAttribute(WebConstants.OPENMRS_MSG_ATTR));
 }

@@ -1,6 +1,6 @@
 {
   Map<String,Object> providerMap=new HashMap<String,Object>();
-  Vector<Object> objectList=findProvider(name,includeVoided,start,length);
+  Vector<Object> objectList=findProvider(name,includeRetired,start,length);
   try {
     providerMap.put("count",Context.getProviderService().getCountOfProviders(name));
     providerMap.put("objectList",objectList);
