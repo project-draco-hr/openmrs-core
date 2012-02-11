@@ -1,4 +1,7 @@
 {
+  for (  EncounterProvider ep : encounterProviders) {
+    if (ep.getEncounterRole().equals(role) && ep.getProvider().equals(provider))     return;
+  }
   EncounterProvider encounterProvider=new EncounterProvider();
   encounterProvider.setEncounter(this);
   encounterProvider.setEncounterRole(role);
