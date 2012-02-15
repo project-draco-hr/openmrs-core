@@ -1,0 +1,8 @@
+{
+  try {
+    return getDatatype(descriptor);
+  }
+ catch (  CustomDatatypeException ex) {
+    return getDatatype("org.openmrs.customdatatype.datatype.FreeTextDatatype",descriptor.getDatatypeConfig());
+  }
+}
