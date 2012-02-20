@@ -33,6 +33,7 @@
  else {
     boolean nonVoidedIdentifierFound=false;
     for (    PatientIdentifier pId : shortPatientModel.getIdentifiers()) {
+      if (pId.getPatientIdentifierId() == null && pId.isVoided())       continue;
       if (!pId.isVoided())       nonVoidedIdentifierFound=true;
       new PatientIdentifierValidator().validate(pId,errors);
     }
