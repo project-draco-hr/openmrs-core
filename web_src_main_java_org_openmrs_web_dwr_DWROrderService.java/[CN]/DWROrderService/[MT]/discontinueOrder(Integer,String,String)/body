@@ -1,11 +1,8 @@
 {
   Date dDiscDate=null;
-  Date currentDate=null;
   if (discontinueDate != null) {
     SimpleDateFormat sdf=Context.getDateFormat();
     try {
-      String str=sdf.format(Calendar.getInstance().getTime());
-      currentDate=sdf.parse(str);
       dDiscDate=sdf.parse(discontinueDate);
     }
  catch (    ParseException e) {
@@ -14,12 +11,7 @@
   }
   Order o=Context.getOrderService().getOrder(orderId);
   try {
-    if (dDiscDate.after(currentDate)) {
-      Context.getOrderService().discontinueFutureOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
-    }
- else {
-      Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
-    }
+    Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),dDiscDate);
   }
  catch (  APIException e) {
     throw new DWRException(e.getMessage());
