@@ -3,6 +3,6 @@
     return getDatatype(descriptor);
   }
  catch (  CustomDatatypeException ex) {
-    return getDatatype("org.openmrs.customdatatype.datatype.FreeTextDatatype",descriptor.getDatatypeConfig());
+    return getDatatype(OpenmrsConstants.DEFAULT_CUSTOM_DATATYPE,null);
   }
 }
