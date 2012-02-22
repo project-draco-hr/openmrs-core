@@ -1,0 +1,18 @@
+{
+  CustomDatatype datatype=CustomDatatypeUtil.getDatatype(datatypeClassname,null);
+  CustomDatatypeHandler<?,?> handler=CustomDatatypeUtil.getHandler(datatype,handlerClassname,null);
+  if (!(handler instanceof DownloadableDatatypeHandler)) {
+    throw new IllegalArgumentException(handler.getClass().getName() + " does not support downloading");
+  }
+  if (datatype == null || StringUtils.isBlank(valueReference)) {
+    throw new IOException("datatype and value are required parameters");
+  }
+  DownloadableDatatypeHandler<?> downloadHandler=(DownloadableDatatypeHandler<?>)handler;
+  response.setHeader("Content-Type",downloadHandler.getContentType(datatype,valueReference));
+  String filename=downloadHandler.getFilename(datatype,valueReference);
+  if (filename == null)   filename="openmrs-custom-value_" + valueReference + ".txt";
+  response.setHeader("Content-Disposition","attachment; filename=" + filename);
+  OutputStream out=response.getOutputStream();
+  downloadHandler.writeToStream(datatype,valueReference,out);
+  out.flush();
+}

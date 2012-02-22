@@ -1,3 +1,5 @@
 {
-  return datatype.getTextSummary(valueReference);
+  CustomDatatype.Summary summary=datatype.getTextSummary(valueReference);
+  summary.setSummary(WebUtil.escapeHTML(summary.getSummary()));
+  return summary;
 }
