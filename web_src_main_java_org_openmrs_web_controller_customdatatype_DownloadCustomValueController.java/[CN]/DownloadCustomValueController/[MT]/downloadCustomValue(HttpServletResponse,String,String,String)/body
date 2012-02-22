@@ -1,10 +1,10 @@
 {
   Class handlerClass=null;
-  CustomDatatypeHandler handler=null;
+  HtmlDisplayableDatatypeHandler handler=null;
   if (StringUtils.isNotBlank(handlerClassname)) {
     try {
       handlerClass=Context.loadClass(handlerClassname);
-      handler=(CustomDatatypeHandler)handlerClass.newInstance();
+      handler=(HtmlDisplayableDatatypeHandler)handlerClass.newInstance();
     }
  catch (    ClassNotFoundException ex) {
       log.warn("could not find handler class " + handlerClassname,ex);
@@ -36,7 +36,7 @@ catch (  IllegalAccessException ex) {
   }
   String data=null;
   if (handler != null) {
-    data=handler.render(datatype,valueReference,null);
+    data=handler.toHtml(datatype,valueReference);
   }
  else {
     data=datatype.fromReferenceString(valueReference).toString();

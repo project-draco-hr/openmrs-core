@@ -2,8 +2,8 @@
   CustomValueDescriptor descriptor=val.getDescriptor();
   CustomDatatype<?> datatype=CustomDatatypeUtil.getDatatype(descriptor);
   CustomDatatypeHandler handler=CustomDatatypeUtil.getHandler(descriptor);
-  if (handler != null) {
-    sb.append(handler.render(datatype,val.getValueReference(),null));
+  if (handler != null && handler instanceof HtmlDisplayableDatatypeHandler) {
+    sb.append(((HtmlDisplayableDatatypeHandler)handler).toHtmlSummary(datatype,val.getValueReference()));
   }
  else   if (datatype != null) {
     sb.append(datatype.getTextSummary(val.getValueReference()));
