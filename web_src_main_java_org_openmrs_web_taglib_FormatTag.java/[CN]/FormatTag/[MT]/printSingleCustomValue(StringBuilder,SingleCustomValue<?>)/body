@@ -2,12 +2,11 @@
   CustomValueDescriptor descriptor=val.getDescriptor();
   CustomDatatype<?> datatype=CustomDatatypeUtil.getDatatype(descriptor);
   CustomDatatypeHandler handler=CustomDatatypeUtil.getHandler(descriptor);
-  if (view == null)   view=CustomDatatype.VIEW_DEFAULT;
   if (handler != null) {
-    sb.append(handler.render(datatype,val.getValueReference(),view));
+    sb.append(handler.render(datatype,val.getValueReference(),null));
   }
  else   if (datatype != null) {
-    sb.append(datatype.render(val.getValueReference(),view));
+    sb.append(datatype.getTextSummary(val.getValueReference()));
   }
  else {
     sb.append(val.getValueReference());
