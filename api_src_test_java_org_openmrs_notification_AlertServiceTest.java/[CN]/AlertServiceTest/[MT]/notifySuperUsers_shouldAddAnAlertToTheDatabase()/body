@@ -3,6 +3,6 @@
   AlertServiceImpl alert=new AlertServiceImpl();
   alert.notifySuperUsers("Module.startupError.notification.message",null,"test");
   Assert.assertEquals(1,Context.getAlertService().getAlertsByUser(null).size());
-  Alert alertOne=Context.getAlertService().getAlert(1);
+  Alert alertOne=Context.getAlertService().getAlertsByUser(null).iterator().next();
   Assert.assertTrue(alertOne.getText().equals("Module.startupError.notification.message"));
 }
