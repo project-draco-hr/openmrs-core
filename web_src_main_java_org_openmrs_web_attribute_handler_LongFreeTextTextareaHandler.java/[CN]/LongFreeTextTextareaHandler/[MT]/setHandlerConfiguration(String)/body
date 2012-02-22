@@ -1,0 +1,7 @@
+{
+  if (handlerConfig != null) {
+    Map<String,String> map=CustomDatatypeUtil.deserializeSimpleConfiguration(handlerConfig);
+    if (map.containsKey("rows"))     rows=Integer.valueOf(map.get("rows"));
+    if (map.containsKey("cols"))     cols=Integer.valueOf(map.get("cols"));
+  }
+}

@@ -1,0 +1,4 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormResource.class).add(Restrictions.and(Restrictions.eq("form",form),Restrictions.eq("name",name)));
+  return (FormResource)crit.uniqueResult();
+}

@@ -1,0 +1,16 @@
+{
+  try {
+    Object value=WebAttributeUtil.getValue(request,resource,"resourceValue");
+    resource.setValue(value);
+  }
+ catch (  Exception ex) {
+    errors.rejectValue("value","error.general");
+  }
+  if (errors.hasErrors()) {
+    throw new RuntimeException("Error handling not yet implemented");
+  }
+ else {
+    Context.getFormService().saveFormResource(resource);
+    return "redirect:formResources.form?formId=" + resource.getForm().getId();
+  }
+}

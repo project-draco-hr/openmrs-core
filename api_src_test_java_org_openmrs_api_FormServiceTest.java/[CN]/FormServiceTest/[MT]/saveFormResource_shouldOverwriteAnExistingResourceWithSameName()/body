@@ -1,0 +1,23 @@
+{
+  String name="Start Date";
+  Form form=Context.getFormService().getForm(1);
+  FormResource resource=new FormResource();
+  resource.setForm(form);
+  resource.setName(name);
+  resource.setDatatypeClassname("org.openmrs.customdatatype.datatype.DateDatatype");
+  Date previous=new SimpleDateFormat("yyyy-MM-dd").parse("2011-10-16");
+  resource.setValue(previous);
+  Context.getFormService().saveFormResource(resource);
+  Context.flushSession();
+  form=Context.getFormService().getForm(1);
+  resource=new FormResource();
+  resource.setForm(form);
+  resource.setName(name);
+  resource.setDatatypeClassname("org.openmrs.customdatatype.datatype.DateDatatype");
+  Date expected=new SimpleDateFormat("yyyy-MM-dd").parse("2010-10-16");
+  resource.setValue(expected);
+  Context.getFormService().saveFormResource(resource);
+  FormResource actual=Context.getFormService().getFormResource(form,name);
+  Assert.assertFalse(previous.equals(actual.getValue()));
+  Assert.assertEquals(expected,actual.getValue());
+}
