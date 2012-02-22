@@ -1,4 +1,5 @@
 {
   if (cascade == true)   throw new APIException("Not Yet Implemented");
+  for (  FormResource resource : Context.getFormService().getFormResourcesForForm(form))   Context.getFormService().purgeFormResource(resource);
   dao.deleteForm(form);
 }

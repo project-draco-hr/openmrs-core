@@ -1,0 +1,17 @@
+{
+  model.addAttribute("form",form);
+  model.addAttribute("datatype",datatype);
+  model.addAttribute("handler",handler);
+  model.addAttribute("handlers",CustomDatatypeUtil.getHandlerClassnames());
+  if (StringUtils.isNotEmpty(handler)) {
+    FormResource resource=new FormResource();
+    resource.setForm(form);
+    resource.setDatatypeClassname(datatype);
+    if (!"DEFAULT".equals(handler)) {
+      resource.setPreferredHandlerClassname(handler);
+    }
+    model.addAttribute("resource",resource);
+    model.addAttribute("customDatatype",CustomDatatypeUtil.getDatatype(resource));
+    model.addAttribute("customDatatypeHandler",CustomDatatypeUtil.getHandler(resource));
+  }
+}

@@ -1,0 +1,16 @@
+{
+  Form form=Context.getFormService().getForm(1);
+  String name="Start Date";
+  FormResource resource=new FormResource();
+  resource.setForm(form);
+  resource.setName(name);
+  resource.setDatatypeClassname("org.openmrs.customdatatype.datatype.DateDatatype");
+  Date expected=new SimpleDateFormat("yyyy-MM-dd").parse("2011-10-16");
+  resource.setValue(expected);
+  resource=Context.getFormService().saveFormResource(resource);
+  Integer resourceId=resource.getFormResourceId();
+  Form newForm=Context.getFormService().duplicateForm(form);
+  FormResource actual=Context.getFormService().getFormResource(newForm,name);
+  Assert.assertNotNull(actual);
+  Assert.assertEquals(expected,actual.getValue());
+}

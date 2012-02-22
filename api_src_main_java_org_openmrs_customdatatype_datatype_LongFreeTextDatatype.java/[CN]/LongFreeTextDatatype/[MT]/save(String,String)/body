@@ -1,0 +1,6 @@
+{
+  ClobDatatypeStorage storage=existingValueReference != null ? Context.getDatatypeService().getClobDatatypeStorageByUuid(existingValueReference) : new ClobDatatypeStorage();
+  storage.setValue(typedValue);
+  storage=Context.getDatatypeService().saveClobDatatypeStorage(storage);
+  return storage.getUuid();
+}

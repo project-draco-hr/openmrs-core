@@ -1,0 +1,7 @@
+{
+  if (formResource == null)   return null;
+  FormResource original=Context.getFormService().getFormResource(formResource.getForm(),formResource.getName());
+  if (original != null)   Context.getFormService().purgeFormResource(original);
+  CustomDatatypeUtil.saveIfDirty(formResource);
+  return dao.saveFormResource(formResource);
+}

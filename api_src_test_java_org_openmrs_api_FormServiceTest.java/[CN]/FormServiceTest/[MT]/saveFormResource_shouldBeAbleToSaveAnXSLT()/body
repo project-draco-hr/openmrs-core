@@ -1,0 +1,19 @@
+{
+  Form form=new Form();
+  form.setName("form resource test form");
+  form.setVersion("42");
+  form.setDescription("bleh");
+  form=Context.getFormService().saveForm(form);
+  String name="org.openmrs.module.formentry.xslt";
+  String expected=getResourceAsString(FORM_SAMPLE_RESOURCE);
+  FormResource resource=new FormResource();
+  resource.setForm(form);
+  resource.setName(name);
+  resource.setDatatypeClassname("org.openmrs.customdatatype.datatype.LongFreeTextDatatype");
+  resource.setValue(expected);
+  Context.getFormService().saveFormResource(resource);
+  Collection<FormResource> formResourcesForForm=Context.getFormService().getFormResourcesForForm(form);
+  Assert.assertEquals(1,formResourcesForForm.size());
+  FormResource actual=formResourcesForForm.iterator().next();
+  Assert.assertEquals(expected,actual.getValue());
+}
