@@ -36,10 +36,10 @@ catch (  IllegalAccessException ex) {
   }
   String data=null;
   if (handler != null) {
-    data=handler.render(datatype,valueReference,CustomDatatype.VIEW_DOWNLOAD);
+    data=handler.render(datatype,valueReference,null);
   }
  else {
-    data=datatype.render(valueReference,CustomDatatype.VIEW_DOWNLOAD);
+    data=datatype.fromReferenceString(valueReference).toString();
   }
   if (data == null) {
     log.error("The custom value with the reference " + valueReference + " cannot be found.");
