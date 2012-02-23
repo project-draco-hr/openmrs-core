@@ -1,6 +1,6 @@
 {
   LocationService ls=Context.getLocationService();
-  Location locationToDelete=ls.getLocation(1);
+  Location locationToDelete=ls.getLocation(4);
   ls.purgeLocation(locationToDelete);
   Location l=ls.getLocation(locationToDelete.getLocationId());
   assertNull("We shouldn't find the location after deletion",l);

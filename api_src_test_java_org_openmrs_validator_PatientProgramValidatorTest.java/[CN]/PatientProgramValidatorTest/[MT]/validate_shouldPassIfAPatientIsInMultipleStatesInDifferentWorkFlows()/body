@@ -4,5 +4,5 @@
   patientState2.setStartDate(new Date());
   patientState2.setState(Context.getProgramWorkflowService().getWorkflowByUuid("c66c8713-7df4-40de-96f6-dc4cce3432da").getState(5));
   program.getStates().add(patientState2);
-  ValidateUtil.invokeValidatorInManualFlushMode(program);
+  ValidateUtil.validate(program);
 }

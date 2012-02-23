@@ -2,7 +2,7 @@
   log.debug("saving a list of global properties");
   for (  GlobalProperty prop : props) {
     if (prop.getProperty() != null && prop.getProperty().length() > 0) {
-      saveGlobalProperty(prop);
+      Context.getAdministrationService().saveGlobalProperty(prop);
     }
   }
   return props;
