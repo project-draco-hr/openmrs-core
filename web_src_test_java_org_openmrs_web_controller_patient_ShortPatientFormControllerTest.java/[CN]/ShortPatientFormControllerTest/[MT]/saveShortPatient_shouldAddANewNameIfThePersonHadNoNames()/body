@@ -1,8 +1,5 @@
 {
   Patient p=Context.getPatientService().getPatient(7);
-  p.getPersonName().setVoided(true);
-  Context.getPatientService().savePatient(p);
-  Assert.assertNull(p.getPersonName());
   PersonName newName=new PersonName("new",null,"name");
   newName.setDateCreated(new Date());
   ShortPatientModel patientModel=new ShortPatientModel(p);
