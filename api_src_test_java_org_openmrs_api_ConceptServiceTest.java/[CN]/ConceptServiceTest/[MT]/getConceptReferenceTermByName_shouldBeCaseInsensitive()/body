@@ -1,0 +1,7 @@
+{
+  String name="WEIGHT term";
+  ConceptReferenceTerm term=Context.getConceptService().getConceptReferenceTermByName(name,new ConceptSource(1));
+  Assert.assertNotNull(term);
+  Assert.assertNotSame(name,term.getName());
+  Assert.assertEquals(1,term.getId().intValue());
+}
