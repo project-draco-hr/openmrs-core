@@ -9,6 +9,7 @@
   preferredIdentifier.setIdentifierType(patientIdentifierTypes.get(0));
   preferredIdentifier.setLocation(locations.get(0));
   preferred.addIdentifier(preferredIdentifier);
+  preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
   PatientIdentifier nonPreferredIdentifier=new PatientIdentifier();

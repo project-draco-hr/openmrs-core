@@ -1,15 +1,4 @@
 {
-  boolean atLeastOneNonVoidPersonNameLeft=false;
-  for (  PersonName pn : personName.getPerson().getNames()) {
-    if (!pn.equals(personName) && !pn.isVoided()) {
-      atLeastOneNonVoidPersonNameLeft=true;
-      break;
-    }
-  }
-  if (atLeastOneNonVoidPersonNameLeft) {
-    return dao.savePersonName(personName);
-  }
- else {
-    throw new APIException(Context.getMessageSourceService().getMessage("PersonName.save.failReason",null,"At least one non-voided PersonName should be left on Person",Context.getLocale()));
-  }
+  ValidateUtil.validate(personName.getPerson());
+  return dao.savePersonName(personName);
 }
