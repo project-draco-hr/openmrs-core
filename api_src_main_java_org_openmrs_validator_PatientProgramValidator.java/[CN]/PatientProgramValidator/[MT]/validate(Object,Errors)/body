@@ -13,11 +13,17 @@
       Set<String> statesAndStartDates=new HashSet<String>();
       PatientState latestState=null;
       boolean foundCurrentPatientState=false;
+      boolean foundStateWithNullStartDate=false;
       for (      PatientState patientState : patientStates) {
         if (patientState.isVoided())         continue;
         String missingRequiredFieldCode=null;
-        if (patientState.getStartDate() == null && !patientState.getState().getInitial())         missingRequiredFieldCode="general.dateStart";
- else         if (patientState.getState() == null)         missingRequiredFieldCode="State.state";
+        if (patientState.getStartDate() == null) {
+          if (foundStateWithNullStartDate)           missingRequiredFieldCode="general.dateStart";
+ else           foundStateWithNullStartDate=true;
+        }
+ else         if (patientState.getState() == null) {
+          missingRequiredFieldCode="State.state";
+        }
         if (missingRequiredFieldCode != null) {
           errors.rejectValue("states","PatientState.error.requiredField",new Object[]{mss.getMessage(missingRequiredFieldCode)},null);
           return;
