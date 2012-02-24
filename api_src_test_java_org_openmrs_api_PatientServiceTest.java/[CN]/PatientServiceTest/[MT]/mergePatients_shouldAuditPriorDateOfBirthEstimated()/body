@@ -4,6 +4,7 @@
   Patient preferred=patientService.getPatient(999);
   preferred.setBirthdate(cDate.getTime());
   preferred.setBirthdateEstimated(true);
+  preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
