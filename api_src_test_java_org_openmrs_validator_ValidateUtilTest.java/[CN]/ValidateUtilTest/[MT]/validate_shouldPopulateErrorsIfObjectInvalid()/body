@@ -1,6 +1,4 @@
 {
-  ValidateUtil util=new ValidateUtil();
-  util.setValidators(Collections.singletonList((Validator)new LocationValidator()));
   Location loc=new Location();
   Errors errors=new BindException(loc,"");
   ValidateUtil.validate(loc,errors);
