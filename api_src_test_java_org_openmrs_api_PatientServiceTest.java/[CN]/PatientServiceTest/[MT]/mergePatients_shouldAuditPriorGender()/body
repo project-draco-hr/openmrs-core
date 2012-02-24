@@ -4,5 +4,5 @@
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
-  Assert.assertEquals("prior cause of death was not audited","M",audit.getPersonMergeLogData().getPriorGender());
+  Assert.assertEquals("prior gender was not audited","M",audit.getPersonMergeLogData().getPriorGender());
 }
