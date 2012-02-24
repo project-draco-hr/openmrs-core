@@ -42,6 +42,9 @@
     }
   }
   if (!goodIdentifiers.isEmpty()) {
+    if (goodIdentifiers.size() == 1) {
+      goodIdentifiers.get(0).setPreferred(true);
+    }
     person=new Patient(person);
     ((Patient)person).addIdentifiers(goodIdentifiers);
   }
