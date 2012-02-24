@@ -8,26 +8,40 @@
   PatientIdentifier ident3=new PatientIdentifier("123-0",pit,locationService.getLocation(1));
   PatientIdentifier ident4=new PatientIdentifier("123-A",pit,locationService.getLocation(1));
   try {
+    ident1.setPreferred(true);
     patient.addIdentifier(ident1);
     patientService.savePatient(patient);
     fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
   }
  catch (  InvalidCheckDigitException ex) {
   }
+catch (  APIException e) {
+    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: PatientIdentifier.error.checkDigitWithParameter"))) {
+      fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
+    }
+  }
   patient.removeIdentifier(ident1);
   try {
+    ident2.setPreferred(true);
     patient.addIdentifier(ident2);
     patientService.savePatient(patient);
     fail("Patient creation should have failed with identifier " + ident2.getIdentifier());
   }
  catch (  InvalidCheckDigitException ex) {
   }
+catch (  APIException e) {
+    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: PatientIdentifier.error.unallowedIdentifier"))) {
+      fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
+    }
+  }
   patient.removeIdentifier(ident2);
   try {
+    ident3.setPreferred(true);
     patient.addIdentifier(ident3);
     patientService.savePatient(patient);
     patientService.purgePatient(patient);
     patient.removeIdentifier(ident3);
+    ident4.setPreferred(true);
     patient2.addIdentifier(ident4);
     patientService.savePatient(patient2);
   }

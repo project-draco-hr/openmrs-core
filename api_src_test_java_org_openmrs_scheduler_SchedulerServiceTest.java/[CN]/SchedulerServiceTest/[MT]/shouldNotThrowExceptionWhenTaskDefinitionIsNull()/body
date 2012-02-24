@@ -6,6 +6,8 @@
   td.setStartOnStartup(false);
   td.setTaskClass(BareTask.class.getName());
   td.setStartTime(null);
+  td.setName("name");
+  td.setRepeatInterval(5000l);
   schedulerService.scheduleTask(td);
   Thread.sleep(500);
   assertTrue(BareTask.outputList.contains("TEST"));
