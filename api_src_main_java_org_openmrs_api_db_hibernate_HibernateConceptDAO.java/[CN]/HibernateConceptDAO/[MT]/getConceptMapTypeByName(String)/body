@@ -1,3 +1,5 @@
 {
-  return (ConceptMapType)sessionFactory.getCurrentSession().createQuery("from ConceptMapType cmt where cmt.name = :name").setString("name",name).uniqueResult();
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMapType.class);
+  criteria.add(Restrictions.ilike("name",name,MatchMode.EXACT));
+  return (ConceptMapType)criteria.uniqueResult();
 }
