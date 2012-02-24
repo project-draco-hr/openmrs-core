@@ -1,0 +1,8 @@
+{
+  FormatTag format=new FormatTag();
+  format.setWithConceptNameType(withType);
+  format.setWithConceptNameTag(withTag);
+  StringBuilder sb=new StringBuilder();
+  format.printConcept(sb,concept);
+  Assert.assertEquals(expected,sb.toString());
+}
