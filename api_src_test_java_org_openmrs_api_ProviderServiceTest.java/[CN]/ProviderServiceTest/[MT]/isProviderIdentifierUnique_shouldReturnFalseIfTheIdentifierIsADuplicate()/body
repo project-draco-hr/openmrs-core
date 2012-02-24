@@ -4,5 +4,5 @@
   Provider existingProviderToEdit=service.getProvider(1);
   existingProviderToEdit.setName("name");
   existingProviderToEdit.setIdentifier(duplicateProvider.getIdentifier());
-  Context.getProviderService().saveProvider(existingProviderToEdit);
+  Assert.assertFalse(service.isProviderIdentifierUnique(existingProviderToEdit));
 }
