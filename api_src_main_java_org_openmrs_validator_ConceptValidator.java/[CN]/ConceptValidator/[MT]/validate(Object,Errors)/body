@@ -94,16 +94,13 @@
         return;
       }
  else       if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
-        errors.rejectValue("conceptMappings[" + index + "].conceptReferenceTerm","ConceptReferenceTerm.term.notInDatabase","Only existing concept reference terms can be mapped");
-        return;
-      }
- else       if (map.getConceptMapType() == null) {
-        errors.rejectValue("conceptMappings[" + index + "].conceptMapType","Concept.map.typeRequired","The concept map type is required for a concept map");
-        return;
-      }
- else       if (map.getConceptMapType().getConceptMapTypeId() == null) {
-        errors.rejectValue("conceptMappings[" + index + "].conceptMapType","ConceptReferenceTerm.mapType.notInDatabase","Only existing concept map types can be used");
-        return;
+        try {
+          errors.pushNestedPath("conceptMappings[" + index + "].conceptReferenceTerm");
+          ValidationUtils.invokeValidator(new ConceptReferenceTermValidator(),map.getConceptReferenceTerm(),errors);
+        }
+  finally {
+          errors.popNestedPath();
+        }
       }
       if (errors.hasErrors())       return;
       if (mappedTermIds == null)       mappedTermIds=new HashSet<Integer>();

@@ -1,0 +1,12 @@
+{
+  int initialTermCount=conceptService.getAllConceptReferenceTerms().size();
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("test name",Context.getLocale()));
+  ConceptMap map=new ConceptMap();
+  map.setSourceCode("unique code");
+  map.setSource(conceptService.getConceptSource(1));
+  concept.addConceptMapping(map);
+  conceptService.saveConcept(concept);
+  Assert.assertNotNull(concept.getId());
+  Assert.assertEquals(initialTermCount + 1,conceptService.getAllConceptReferenceTerms().size());
+}

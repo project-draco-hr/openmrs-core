@@ -1,0 +1,8 @@
+{
+  String defaultConceptMapType=Context.getAdministrationService().getGlobalProperty("concept.defaultConceptMapType","same-as");
+  ConceptMapType conceptMapType=dao.getConceptMapTypeByName(defaultConceptMapType);
+  if (conceptMapType == null) {
+    throw new APIException("The default concept map type (name: " + defaultConceptMapType + ") does not exist! You need to set the 'concept.defaultConceptMapType' global property.");
+  }
+  return conceptMapType;
+}
