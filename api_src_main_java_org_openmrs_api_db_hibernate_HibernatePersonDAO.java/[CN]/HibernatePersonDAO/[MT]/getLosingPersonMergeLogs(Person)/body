@@ -1,0 +1,3 @@
+{
+  return (PersonMergeLog)sessionFactory.getCurrentSession().createQuery("from PersonMergeLog p where p.loser.id = :loserId").setInteger("loserId",person.getId()).uniqueResult();
+}
