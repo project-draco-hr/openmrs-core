@@ -10,6 +10,6 @@
     return dao.savePersonName(personName);
   }
  else {
-    throw new APIException("At least one non-voided PersonName should be left on Person");
+    throw new APIException(Context.getMessageSourceService().getMessage("PersonName.save.failReason",null,"At least one non-voided PersonName should be left on Person",Context.getLocale()));
   }
 }
