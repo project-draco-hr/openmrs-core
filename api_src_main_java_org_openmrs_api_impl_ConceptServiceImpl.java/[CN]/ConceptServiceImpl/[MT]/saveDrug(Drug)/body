@@ -1,5 +1,5 @@
 {
   checkIfLocked();
-  ValidateUtil.validate(drug);
+  ValidateUtil.invokeValidatorInManualFlushMode(drug);
   return dao.saveDrug(drug);
 }
