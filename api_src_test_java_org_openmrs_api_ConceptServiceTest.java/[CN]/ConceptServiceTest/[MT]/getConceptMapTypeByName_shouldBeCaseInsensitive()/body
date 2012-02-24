@@ -1,0 +1,7 @@
+{
+  String name="SAME-as";
+  ConceptMapType mt=Context.getConceptService().getConceptMapTypeByName(name);
+  Assert.assertNotNull(mt);
+  Assert.assertNotSame(name,mt.getName());
+  Assert.assertEquals(2,mt.getId().intValue());
+}
