@@ -1,4 +1,13 @@
 {
+  ConceptMapType defaultConceptMapType=null;
+  for (  ConceptMap map : concept.getConceptMappings()) {
+    if (map.getConceptMapType() == null) {
+      if (defaultConceptMapType == null) {
+        defaultConceptMapType=getDefaultConceptMapType();
+      }
+      map.setConceptMapType(defaultConceptMapType);
+    }
+  }
   checkIfLocked();
   checkIfDatatypeCanBeChanged(concept);
   List<ConceptName> changedConceptNames=null;
