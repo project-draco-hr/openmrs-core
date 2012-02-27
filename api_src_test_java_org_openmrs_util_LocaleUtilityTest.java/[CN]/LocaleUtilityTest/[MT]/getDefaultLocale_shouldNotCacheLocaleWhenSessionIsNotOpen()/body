@@ -5,6 +5,6 @@
   Context.openSession();
   authenticate();
   Assert.assertEquals(Locale.JAPANESE,LocaleUtility.getDefaultLocale());
-  gp.setProperty("");
+  gp.setPropertyValue("");
   Context.getAdministrationService().saveGlobalProperty(gp);
 }
