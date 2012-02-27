@@ -11,7 +11,7 @@
   PatientProgram p=Context.getProgramWorkflowService().getPatientProgram(Integer.valueOf(patientProgramIdStr));
   p.setDateCompleted(dateCompleted);
   try {
-    ValidateUtil.invokeValidatorInManualFlushMode(p);
+    ValidateUtil.validate(p);
     Context.getProgramWorkflowService().savePatientProgram(p);
   }
  catch (  APIException e) {

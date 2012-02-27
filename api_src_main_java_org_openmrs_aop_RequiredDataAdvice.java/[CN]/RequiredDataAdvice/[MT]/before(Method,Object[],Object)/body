@@ -9,7 +9,7 @@
       if (!methodNameEndsWithClassName(method,mainArgument.getClass()))       return;
       String other=null;
       if (args.length > 1 && args[1] instanceof String)       other=(String)args[1];
-      Context.getAdministrationService().validateInManualFlushMode(mainArgument);
+      ValidateUtil.validate(mainArgument);
       recursivelyHandle(SaveHandler.class,(OpenmrsObject)mainArgument,other);
     }
  else     if (Reflect.isCollection(mainArgument) && isOpenmrsObjectCollection(mainArgument)) {
@@ -17,7 +17,7 @@
       if (args.length > 1)       other=(String)args[1];
       Collection<OpenmrsObject> openmrsObjects=(Collection<OpenmrsObject>)mainArgument;
       for (      OpenmrsObject object : openmrsObjects) {
-        Context.getAdministrationService().validateInManualFlushMode(mainArgument);
+        ValidateUtil.validate(mainArgument);
         recursivelyHandle(SaveHandler.class,object,other);
       }
     }
