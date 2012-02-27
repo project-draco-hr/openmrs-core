@@ -46,7 +46,7 @@
         }
       }
       try {
-        ValidateUtil.invokeValidatorInManualFlushMode(pp);
+        ValidateUtil.validate(pp);
         Context.getProgramWorkflowService().savePatientProgram(pp);
       }
  catch (      APIException e) {

@@ -1,4 +1,5 @@
 {
-  ConceptReferenceTerm term=Context.getConceptService().retireConceptReferenceTerm(new ConceptReferenceTerm(1),null);
+  ConceptReferenceTerm term=Context.getConceptService().getConceptReferenceTerm(1);
+  term=Context.getConceptService().retireConceptReferenceTerm(term,null);
   Assert.assertNotNull(term.getRetireReason());
 }
