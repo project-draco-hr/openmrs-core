@@ -3,5 +3,7 @@
   if (baseName == null || locale == null) {
     return null;
   }
-  return CustomResourceLoader.getInstance(null).getResourceBundle(locale);
+  ResourceBundle rb=CustomResourceLoader.getInstance(null).getResourceBundle(locale);
+  if (rb == null)   rb=getDefaultResourceBundle();
+  return rb;
 }
