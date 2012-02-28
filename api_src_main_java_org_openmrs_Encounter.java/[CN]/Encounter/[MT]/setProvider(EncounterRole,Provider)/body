@@ -4,7 +4,9 @@
     EncounterProvider encounterProvider=it.next();
     if (encounterProvider.getEncounterRole().equals(role)) {
       if (!encounterProvider.getProvider().equals(provider)) {
-        it.remove();
+        encounterProvider.setVoided(true);
+        encounterProvider.setDateVoided(new Date());
+        encounterProvider.setVoidedBy(Context.getAuthenticatedUser());
       }
  else {
         hasProvider=true;
