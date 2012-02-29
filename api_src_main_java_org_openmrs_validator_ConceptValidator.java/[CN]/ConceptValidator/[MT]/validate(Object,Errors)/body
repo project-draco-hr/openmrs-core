@@ -59,7 +59,8 @@
       }
       if (!conceptToValidate.isRetired()) {
         if (nameInLocale.isLocalePreferred() || nameInLocale.isFullySpecifiedName()) {
-          List<Concept> conceptsWithPossibleDuplicateNames=Context.getConceptService().getConceptsByName(nameInLocale.getName(),nameInLocale.getLocale());
+          Locale languageLocale=new Locale(nameInLocale.getLocale().getLanguage());
+          List<Concept> conceptsWithPossibleDuplicateNames=Context.getConceptService().getConceptsByName(nameInLocale.getName(),languageLocale);
           if (conceptsWithPossibleDuplicateNames.size() > 0) {
             for (            Concept concept : conceptsWithPossibleDuplicateNames) {
               if (concept.isRetired())               continue;
