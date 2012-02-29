@@ -1,0 +1,7 @@
+{
+  DWRPatientService dwrService=new DWRPatientService();
+  Map<String,Object> resultObjects=dwrService.findCountAndPatients("Joht",1,10,true);
+  Assert.assertEquals(0,resultObjects.get("count"));
+  Assert.assertNull(resultObjects.get("searchAgain"));
+  Assert.assertNull(resultObjects.get("notification"));
+}

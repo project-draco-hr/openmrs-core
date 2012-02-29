@@ -6,22 +6,20 @@
     int patientCount=0;
     if (getMatchCount) {
       patientCount+=ps.getCountOfPatients(searchValue);
-      if ((length == null || length > 2) && patientCount < 3 && !searchValue.matches(".*\\d+.*")) {
+      if (patientCount == 0 && start == 0 && !searchValue.matches(".*\\d+.*")) {
         String[] names=searchValue.split(" ");
         String newSearch="";
         for (        String name : names) {
-          if (name.length() > 3)           name=name.substring(0,4);
+          if (name.length() > 3)           name=name.substring(0,3);
           newSearch+=" " + name;
         }
         newSearch=newSearch.trim();
         if (!newSearch.equals(searchValue)) {
-          Collection<Patient> patients=ps.getPatients(searchValue);
           newSearch=newSearch.trim();
-          Collection<Patient> newPatients=ps.getPatients(newSearch);
-          newPatients=CollectionUtils.union(newPatients,patients);
-          patientCount=newPatients.size();
-          if (newPatients.size() > 0) {
-            resultsMap.put("notification",Context.getMessageSourceService().getMessage("Patient.warning.minimalSearchResults",new Object[]{newSearch},Context.getLocale()));
+          int newPatientCount=ps.getCountOfPatients(newSearch);
+          if (newPatientCount > 0) {
+            resultsMap.put("searchAgain",newSearch);
+            resultsMap.put("notification",Context.getMessageSourceService().getMessage("searchWidget.noResultsFoundFor",new Object[]{searchValue,newSearch},Context.getLocale()));
           }
         }
       }
