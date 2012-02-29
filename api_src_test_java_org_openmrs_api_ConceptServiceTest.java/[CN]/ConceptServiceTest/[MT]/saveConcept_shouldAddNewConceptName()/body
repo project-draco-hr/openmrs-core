@@ -1,0 +1,7 @@
+{
+  Concept concept=conceptService.getConcept(3);
+  ConceptName name=new ConceptName("new name",Locale.US);
+  concept.addName(name);
+  conceptService.saveConcept(concept);
+  assertNotNull(name.getConceptNameId());
+}
