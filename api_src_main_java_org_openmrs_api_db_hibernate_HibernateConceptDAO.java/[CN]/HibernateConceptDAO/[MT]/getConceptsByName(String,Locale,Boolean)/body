@@ -5,8 +5,6 @@
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptName.class);
   criteria.add(Restrictions.ilike("name",name));
   criteria.add(Restrictions.eq("voided",false));
-  criteria.createAlias("concept","concept");
-  criteria.add(Restrictions.eq("concept.retired",false));
   if (locale != null) {
     if (exactLocale) {
       criteria.add(Restrictions.eq("locale",locale));
@@ -20,6 +18,12 @@
   criteria.addOrder(Order.asc("concept"));
   criteria.setProjection(Projections.distinct(Projections.property("concept")));
   @SuppressWarnings("unchecked") List<Concept> concepts=criteria.list();
+  for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
+    Concept concept=it.next();
+    if (concept.isRetired()) {
+      it.remove();
+    }
+  }
   if (locale != null && !exactLocale && StringUtils.isEmpty(locale.getCountry())) {
     for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
       Concept concept=it.next();
