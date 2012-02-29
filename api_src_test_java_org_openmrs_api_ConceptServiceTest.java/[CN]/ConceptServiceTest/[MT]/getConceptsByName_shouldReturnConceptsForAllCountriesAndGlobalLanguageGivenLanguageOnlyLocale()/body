@@ -9,7 +9,7 @@
   Concept concept3=new Concept();
   concept3.addName(new ConceptName(name,new Locale("en")));
   Context.getConceptService().saveConcept(concept3);
-  List<Concept> concepts=Context.getConceptService().getConceptsByName(name,new Locale("en"));
+  List<Concept> concepts=Context.getConceptService().getConceptsByName(name,new Locale("en"),false);
   Assert.assertEquals(3,concepts.size());
   Assert.assertTrue(concepts.containsAll(Arrays.asList(concept1,concept2,concept3)));
 }
