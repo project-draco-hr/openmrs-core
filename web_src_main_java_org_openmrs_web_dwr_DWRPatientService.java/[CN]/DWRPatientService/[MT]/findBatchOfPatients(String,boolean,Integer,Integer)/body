@@ -13,27 +13,7 @@
   }
   patientList=new Vector<Object>(patients.size());
   for (  Patient p : patients)   patientList.add(new PatientListItem(p,searchValue));
-  if ((length == null || length > 2) && patients.size() < 3 && !searchValue.matches(".*\\d+.*")) {
-    String[] names=searchValue.split(" ");
-    String newSearch="";
-    for (    String name : names) {
-      if (name.length() > 3)       name=name.substring(0,4);
-      newSearch+=" " + name;
-    }
-    newSearch=newSearch.trim();
-    if (!newSearch.equals(searchValue)) {
-      Collection<Patient> newPatients=ps.getPatients(newSearch,start,length);
-      patients=CollectionUtils.union(newPatients,patients);
-      if (newPatients.size() > 0) {
-        patientList=new Vector<Object>(patients.size());
-        for (        Patient p : newPatients) {
-          PatientListItem pi=new PatientListItem(p,newSearch);
-          patientList.add(pi);
-        }
-      }
-    }
-  }
- else   if (patients.size() == 0 && searchValue.matches(".*\\d+.*")) {
+  if (patients.size() == 0 && searchValue.matches(".*\\d+.*")) {
     Collection<IdentifierValidator> pivs=ps.getAllIdentifierValidators();
     boolean shouldWarnUser=true;
     boolean validCheckDigit=false;
