@@ -1,7 +1,0 @@
-{
-  super.doBegin(transaction,definition);
-  Session session=getSessionFactory().getCurrentSession();
-  if (!session.getFlushMode().lessThan(FlushMode.COMMIT)) {
-    session.setFlushMode(FlushMode.COMMIT);
-  }
-}
