@@ -1,0 +1,18 @@
+{
+  executeDataSet("org/openmrs/api/include/ProviderServiceTest-initial.xml");
+  int patientId=2;
+  Patient patient=new Patient(patientId);
+  List<Encounter> encForPatient1=Context.getEncounterService().getEncountersByPatient(patient);
+  ProviderService ps=Context.getProviderService();
+  Provider provider=ps.getProviderByIdentifier("8a760");
+  provider.setPerson(null);
+  ps.saveProvider(provider);
+  String hl7string="MSH|^~\\&|FORMENTRY|AMRS.ELD|HL7LISTENER|AMRS.ELD|20080226102656||ORU^R01|JqnfhKKtouEz8kzTk6Zo|P|2.5|1||||||||16^AMRS.ELD.FORMID\r" + "PID|||" + patientId + "^^^^||Hornblower^Horatio^Test||\r"+ "PV1||O|1^Unknown Location||||ba4781f4-6b94-11e0-93c3-18a905e044dc^name^^^^^^^"+ HL7Constants.PROVIDER_ASSIGNING_AUTH_PROV_UUID+ "^L|||||||||||||||||||||||||||||||||||||20080212|||||||V\r"+ "ORC|RE||||||||20080226102537|1^Super User\r"+ "OBR|1|||1238^MEDICAL RECORD OBSERVATIONS^99DCT";
+  Message hl7message=parser.parse(hl7string);
+  router.processMessage(hl7message);
+  List<Encounter> encForPatient2=Context.getEncounterService().getEncountersByPatient(patient);
+  encForPatient2.removeAll(encForPatient1);
+  Assert.assertTrue(encForPatient2.size() == 1);
+  Provider newProvider=encForPatient2.get(0).getProvidersByRole(Context.getEncounterService().getEncounterRoleByUuid(EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID)).iterator().next();
+  Assert.assertEquals(4,newProvider.getId().intValue());
+}
