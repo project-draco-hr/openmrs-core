@@ -1,0 +1,17 @@
+{
+  if (stopDate.length() == 0 || stopDate == null)   Context.getVisitService().endVisit(visit,null);
+ else {
+    try {
+      Context.getVisitService().endVisit(visit,Context.getDateTimeFormat().parse(stopDate));
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved");
+      return "redirect:" + "/patientDashboard.form?patientId=" + visit.getPatient().getPatientId();
+    }
+ catch (    ParseException pe) {
+      request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.date");
+    }
+catch (    APIException e) {
+      request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+    }
+  }
+  return VISIT_FORM;
+}
