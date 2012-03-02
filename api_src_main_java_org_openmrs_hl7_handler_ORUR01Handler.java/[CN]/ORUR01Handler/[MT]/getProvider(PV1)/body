@@ -2,10 +2,10 @@
   XCN hl7Provider=pv1.getAttendingDoctor(0);
   Provider provider=null;
   String id=hl7Provider.getIDNumber().getValue();
-  String assignAuth=((HD)hl7Provider.getComponent(8)).getNamespaceID().getValue();
-  String nameTypeCode=((ID)hl7Provider.getComponent(9)).getValue();
+  String assignAuth=hl7Provider.getAssigningAuthority().getUniversalID().getValue();
+  String type=hl7Provider.getAssigningAuthority().getUniversalIDType().getValue();
   if (StringUtils.hasText(id)) {
-    if (OpenmrsUtil.nullSafeEquals("L",nameTypeCode)) {
+    if (OpenmrsUtil.nullSafeEquals("L",type)) {
       if (HL7Constants.PROVIDER_ASSIGNING_AUTH_PROV_ID.equalsIgnoreCase(assignAuth)) {
         try {
           provider=Context.getProviderService().getProvider(Integer.valueOf(id));
