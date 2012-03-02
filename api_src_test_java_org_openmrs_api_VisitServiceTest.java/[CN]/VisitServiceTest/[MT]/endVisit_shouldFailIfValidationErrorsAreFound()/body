@@ -1,0 +1,8 @@
+{
+  VisitService vs=Context.getVisitService();
+  Visit visit=vs.getVisit(1);
+  Calendar cal=Calendar.getInstance();
+  cal.setTime(visit.getStartDatetime());
+  cal.add(Calendar.DAY_OF_MONTH,-1);
+  vs.endVisit(visit,cal.getTime());
+}
