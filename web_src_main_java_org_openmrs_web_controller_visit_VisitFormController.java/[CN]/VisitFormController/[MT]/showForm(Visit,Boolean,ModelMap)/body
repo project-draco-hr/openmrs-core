@@ -1,7 +1,6 @@
 {
   if (startNow != null && startNow && visit.getStartDatetime() == null)   visit.setStartDatetime(new Date());
   if (visit.getVisitId() != null)   model.addAttribute("canPurgeVisit",Context.getEncounterService().getEncountersByVisit(visit,true).size() == 0);
-  model.addAttribute("dateTimeFormat",Context.getDateTimeFormat().toPattern());
   addEncounterAndObservationCounts(visit,model);
   return VISIT_FORM;
 }
