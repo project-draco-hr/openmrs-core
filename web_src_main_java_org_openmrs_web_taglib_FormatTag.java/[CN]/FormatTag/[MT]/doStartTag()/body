@@ -1,5 +1,8 @@
 {
   StringBuilder sb=new StringBuilder();
+  if (object != null) {
+    printObject(sb,object);
+  }
   if (conceptId != null)   concept=Context.getConceptService().getConcept(conceptId);
   if (concept != null) {
     printConcept(sb,concept);
@@ -11,13 +14,7 @@
   if (person != null)   printPerson(sb,person);
   if (encounterId != null)   encounter=Context.getEncounterService().getEncounter(encounterId);
   if (encounter != null) {
-    printMetadata(sb,encounter.getEncounterType());
-    sb.append(" @");
-    printMetadata(sb,encounter.getLocation());
-    sb.append(" | ");
-    printDate(sb,encounter.getEncounterDatetime());
-    sb.append(" | ");
-    printPerson(sb,encounter.getProvider());
+    printEncounter(sb,encounter);
   }
   if (encounterTypeId != null)   encounterType=Context.getEncounterService().getEncounterType(encounterTypeId);
   if (encounterType != null) {
@@ -29,11 +26,7 @@
   }
   if (visitId != null)   visit=Context.getVisitService().getVisit(visitId);
   if (visit != null) {
-    printMetadata(sb,visit.getVisitType());
-    sb.append(" @");
-    printMetadata(sb,visit.getLocation());
-    sb.append(" | ");
-    printDate(sb,visit.getStartDatetime());
+    printVisit(sb,visit);
   }
   if (locationId != null)   location=Context.getLocationService().getLocation(locationId);
   if (location != null) {
@@ -45,12 +38,7 @@
   }
   if (programId != null)   program=Context.getProgramWorkflowService().getProgram(programId);
   if (program != null) {
-    if (StringUtils.hasText(program.getName())) {
-      printMetadata(sb,program);
-    }
- else     if (program.getConcept() != null) {
-      printConcept(sb,program.getConcept());
-    }
+    printProgram(sb,program);
   }
   if (providerId != null)   provider=Context.getProviderService().getProvider(providerId);
   if (provider != null)   printProvider(sb,provider);
