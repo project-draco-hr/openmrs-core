@@ -97,7 +97,7 @@
     }
     Module mod=ModuleFactory.getModuleById(moduleId);
     if (mod.getDownloadURL() != null) {
-      ModuleFactory.stopModule(mod);
+      ModuleFactory.stopModule(mod,false,true);
       WebModuleUtil.stopModule(mod,getServletContext());
       Module newModule=ModuleFactory.updateModule(mod);
       WebModuleUtil.startModule(newModule,getServletContext(),false);
