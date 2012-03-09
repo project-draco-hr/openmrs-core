@@ -16,6 +16,17 @@
   if (!hasPrivilege) {
     errorOccurred=true;
     if (userContext.isAuthenticated()) {
+      String referer=request.getHeader("Referer");
+      if (referer != null && referer.contains("login.")) {
+        try {
+          httpResponse.sendRedirect(request.getContextPath());
+          return SKIP_PAGE;
+        }
+ catch (        IOException e) {
+          log.error("Unable to redirect to the home page",e);
+          throw new APIException(e);
+        }
+      }
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"require.unauthorized");
       log.warn("The user: '" + Context.getAuthenticatedUser() + "' has attempted to access: "+ redirect+ " which requires privilege: "+ privilege+ " or one of: "+ allPrivileges+ " or any of "+ anyPrivilege);
     }
