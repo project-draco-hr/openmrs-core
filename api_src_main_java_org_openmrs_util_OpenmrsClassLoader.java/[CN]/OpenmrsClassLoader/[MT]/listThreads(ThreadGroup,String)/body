@@ -1,0 +1,19 @@
+{
+  List<Thread> threadToReturn=new ArrayList<Thread>();
+  log.error(indent + "Group[" + group.getName()+ ":"+ group.getClass()+ "]");
+  int nt=group.activeCount();
+  Thread[] threads=new Thread[nt * 2 + 10];
+  nt=group.enumerate(threads,false);
+  for (int i=0; i < nt; i++) {
+    Thread t=threads[i];
+    log.error(indent + "  Thread[" + t.getName()+ ":"+ t.getClass()+ "]");
+    threadToReturn.add(t);
+  }
+  int ng=group.activeGroupCount();
+  ThreadGroup[] groups=new ThreadGroup[ng * 2 + 10];
+  ng=group.enumerate(groups,false);
+  for (int i=0; i < ng; i++) {
+    threadToReturn.addAll(listThreads(groups[i],indent + "  "));
+  }
+  return threadToReturn;
+}

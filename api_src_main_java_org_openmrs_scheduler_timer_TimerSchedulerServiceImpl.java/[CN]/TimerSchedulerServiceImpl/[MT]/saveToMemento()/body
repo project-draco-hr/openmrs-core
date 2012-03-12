@@ -1,7 +1,7 @@
 {
-  Set<TaskDefinition> tasks=new HashSet<TaskDefinition>();
+  Set<Integer> tasks=new HashSet<Integer>();
   for (  TaskDefinition task : getScheduledTasks()) {
-    tasks.add(task);
+    tasks.add(task.getId());
     try {
       shutdownTask(task);
     }
