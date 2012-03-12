@@ -6,14 +6,14 @@
     conceptName=drugOrder.getConcept().getName().getName();
   }
   instructions=drugOrder.getInstructions();
-  SimpleDateFormat sdf=Context.getDateFormat();
-  if (drugOrder.getStartDate() != null)   startDate=sdf.format(drugOrder.getStartDate());
-  if (drugOrder.getAutoExpireDate() != null)   autoExpireDate=sdf.format(drugOrder.getAutoExpireDate());
+  DateFormat df=DateFormat.getDateInstance(DateFormat.MEDIUM,Context.getLocale());
+  if (drugOrder.getStartDate() != null)   startDate=df.format(drugOrder.getStartDate());
+  if (drugOrder.getAutoExpireDate() != null)   autoExpireDate=df.format(drugOrder.getAutoExpireDate());
   if (drugOrder.getEncounter() != null)   encounterId=drugOrder.getEncounter().getEncounterId();
   if (drugOrder.getOrderer() != null)   ordererId=drugOrder.getOrderer().getUserId();
   discontinued=drugOrder.getDiscontinued();
   if (drugOrder.getDiscontinuedBy() != null)   discontinuerId=drugOrder.getDiscontinuedBy().getUserId();
-  if (drugOrder.getDiscontinuedDate() != null)   discontinuedDate=sdf.format(drugOrder.getDiscontinuedDate());
+  if (drugOrder.getDiscontinuedDate() != null)   discontinuedDate=df.format(drugOrder.getDiscontinuedDate());
   if (drugOrder.getDiscontinuedReason() != null)   discontinueReason=drugOrder.getDiscontinuedReason().getConceptId();
   if (drugOrder.getDrug() != null)   drugId=drugOrder.getDrug().getDrugId();
   if (drugOrder.getDrug() != null)   drugName=drugOrder.getDrug().getName();
@@ -25,8 +25,8 @@
   quantity=drugOrder.getQuantity();
   voided=drugOrder.getVoided();
   if (drugOrder.getVoidedBy() != null)   voiderId=drugOrder.getVoidedBy().getUserId();
-  if (drugOrder.getDateVoided() != null)   voidedDate=sdf.format(drugOrder.getDateVoided());
+  if (drugOrder.getDateVoided() != null)   voidedDate=df.format(drugOrder.getDateVoided());
   voidReason=drugOrder.getVoidReason();
   if (drugOrder.getCreator() != null)   creatorId=drugOrder.getCreator().getUserId();
-  if (drugOrder.getDateCreated() != null)   createdDate=sdf.format(drugOrder.getDateCreated());
+  if (drugOrder.getDateCreated() != null)   createdDate=df.format(drugOrder.getDateCreated());
 }
