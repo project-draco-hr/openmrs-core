@@ -1,0 +1,5 @@
+{
+  Concept trueConceptLoadedManually=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_TRUE_CONCEPT));
+  Concept trueConceptLoadedByServiceMethod=Context.getConceptService().getTrueConcept();
+  Assert.assertTrue(trueConceptLoadedManually.equals(trueConceptLoadedByServiceMethod));
+}
