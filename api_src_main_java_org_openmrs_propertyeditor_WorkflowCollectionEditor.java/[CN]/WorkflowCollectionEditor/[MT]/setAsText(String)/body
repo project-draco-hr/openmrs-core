@@ -23,7 +23,7 @@
       if (!newConceptIds.contains(pw.getConcept().getConceptId())) {
         pw.setRetired(true);
       }
- else       if (pw.isRetired()) {
+ else       if (newConceptIds.contains(pw.getConcept().getConceptId()) && pw.isRetired()) {
         pw.setRetired(false);
       }
       alreadyDone.add(pw.getConcept().getConceptId());
