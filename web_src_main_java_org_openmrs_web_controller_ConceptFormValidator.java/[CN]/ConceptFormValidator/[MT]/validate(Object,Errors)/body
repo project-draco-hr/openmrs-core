@@ -7,8 +7,7 @@
  else {
     for (int x=0; x < backingObject.getConceptMappings().size(); x++) {
       ConceptMap map=backingObject.getConceptMappings().get(x);
-      if (map.getConceptReferenceTerm() == null)       continue;
-      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null)       errors.rejectValue("conceptMappings[" + x + "]","ConceptReferenceTerm.term.notInDatabase");
+      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null)       continue;
       if (map.getConceptMapType() == null)       errors.rejectValue("conceptMappings[" + x + "].conceptMapType","Concept.map.typeRequired");
     }
     boolean foundAtLeastOneFullySpecifiedName=false;
