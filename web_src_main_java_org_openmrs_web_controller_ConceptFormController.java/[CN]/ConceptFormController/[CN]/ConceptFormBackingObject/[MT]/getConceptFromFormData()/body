@@ -45,9 +45,12 @@
   Set<Integer> mappedTermIds=null;
   for (  ConceptMap map : conceptMappings) {
     if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
-    if (map.getConceptReferenceTerm() != null && !mappedTermIds.add(map.getConceptReferenceTerm().getConceptReferenceTermId()))     continue;
-    if (map.getConceptReferenceTerm() == null) {
+    if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
+      if (map.getConceptMapId() == null)       continue;
       concept.removeConceptMapping(map);
+    }
+ else     if (!mappedTermIds.add(map.getConceptReferenceTerm().getConceptReferenceTermId())) {
+      continue;
     }
  else     if (!concept.getConceptMappings().contains(map)) {
       concept.addConceptMapping(map);
