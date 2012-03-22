@@ -70,7 +70,7 @@
  catch (      Exception rbe) {
         log.warn("Error generated while rolling back batch insert",be);
       }
-      throw new CustomChangeException("Failed to insert one or more concept map types");
+      throw new CustomChangeException("Failed to insert one or more concept map types",be);
     }
   }
  catch (  DatabaseException e) {
