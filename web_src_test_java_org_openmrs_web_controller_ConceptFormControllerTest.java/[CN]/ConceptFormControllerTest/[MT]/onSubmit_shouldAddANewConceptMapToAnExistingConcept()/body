@@ -1,0 +1,19 @@
+{
+  ConceptService cs=Context.getConceptService();
+  int conceptId=3;
+  Concept concept=cs.getConcept(conceptId);
+  assertNotNull(concept);
+  int initialConceptMappingCount=concept.getConceptMappings().size();
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","");
+  mockRequest.setParameter("conceptId",concept.getConceptId().toString());
+  mockRequest.setParameter("conceptMappings[0].conceptReferenceTerm","1");
+  mockRequest.setParameter("conceptMappings[0].conceptMapType","3");
+  ModelAndView mav=conceptFormController.handleRequest(mockRequest,response);
+  assertNotNull(mav);
+  assertTrue(mav.getModel().isEmpty());
+  assertEquals(initialConceptMappingCount + 1,cs.getConcept(conceptId).getConceptMappings().size());
+}
