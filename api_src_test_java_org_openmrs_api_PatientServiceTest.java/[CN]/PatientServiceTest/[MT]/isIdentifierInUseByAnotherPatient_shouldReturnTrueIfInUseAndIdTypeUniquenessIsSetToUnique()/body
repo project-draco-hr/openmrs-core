@@ -1,0 +1,9 @@
+{
+  PatientIdentifier duplicateId=patientService.getPatientIdentifier(1);
+  Assert.assertNotNull(duplicateId.getLocation());
+  PatientIdentifierType idType=duplicateId.getIdentifierType();
+  idType.setUniquenessBehavior(UniquenessBehavior.UNIQUE);
+  patientService.savePatientIdentifierType(idType);
+  PatientIdentifier pi=new PatientIdentifier(duplicateId.getIdentifier(),idType,duplicateId.getLocation());
+  Assert.assertTrue(patientService.isIdentifierInUseByAnotherPatient(pi));
+}

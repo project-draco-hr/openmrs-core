@@ -1,0 +1,10 @@
+{
+  PatientService patientService=Context.getPatientService();
+  PatientIdentifier duplicateId=patientService.getPatientIdentifier(1);
+  Assert.assertNotNull(duplicateId.getLocation());
+  PatientIdentifierType idType=duplicateId.getIdentifierType();
+  idType.setUniquenessBehavior(UniquenessBehavior.NON_UNIQUE);
+  patientService.savePatientIdentifierType(idType);
+  PatientIdentifier pi=new PatientIdentifier(duplicateId.getIdentifier(),idType,duplicateId.getLocation());
+  PatientIdentifierValidator.validateIdentifier(pi);
+}
