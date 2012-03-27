@@ -33,9 +33,13 @@
           for (int x=0; x < 12; x++) {
             connectionPassword+=chars.charAt(r.nextInt(chars.length()));
           }
-          String sql="drop user '?'@'localhost'";
+          String host="'%'";
+          if (wizardModel.databaseConnection.contains("localhost")) {
+            host="'localhost'";
+          }
+          String sql="drop user '?'@" + host;
           executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
-          sql="create user '?'@'localhost' identified by '?'";
+          sql="create user '?'@" + host + " identified by '?'";
           if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
             wizardModel.workLog.add("Created user " + connectionUsername);
           }
@@ -43,7 +47,7 @@
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_DB_USER,DEFAULT_PAGE);
             return;
           }
-          sql="GRANT ALL ON `?`.* TO '?'@'localhost'";
+          sql="GRANT ALL ON `?`.* TO '?'@" + host;
           int result=executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,wizardModel.databaseName,connectionUsername);
           if (result < 0) {
             reportError(ErrorMessageConstants.ERROR_DB_GRANT_PRIV,DEFAULT_PAGE);
