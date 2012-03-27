@@ -1,0 +1,25 @@
+{
+  boolean localeInList=false;
+  String allowedLocales=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST);
+  String[] allowedLocalesList=allowedLocales.split(",");
+  GlobalProperty themeGP=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_THEME);
+  themeGP.setPropertyValue(theme);
+  Context.getAdministrationService().saveGlobalProperty(themeGP);
+  for (  String loc : allowedLocalesList) {
+    loc=loc.trim();
+    if (loc.equals(locale)) {
+      localeInList=true;
+      GlobalProperty localeGP=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE);
+      localeGP.setPropertyValue(locale);
+      Context.getAdministrationService().saveGlobalProperty(localeGP);
+      break;
+    }
+  }
+  if (localeInList || StringUtils.isBlank(locale)) {
+    request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("LocalesAndThemes.saved"),WebRequest.SCOPE_SESSION);
+  }
+ else {
+    request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("LocalesAndThemes.localeError"),WebRequest.SCOPE_SESSION);
+  }
+  return "redirect:/admin/maintenance/localesAndThemes.form";
+}

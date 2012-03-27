@@ -1,9 +1,0 @@
-{
-  GlobalProperty themeGP=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_THEME);
-  themeGP.setPropertyValue(theme);
-  Context.getAdministrationService().saveGlobalProperty(themeGP);
-  GlobalProperty localeGP=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE);
-  localeGP.setPropertyValue(locale);
-  Context.getAdministrationService().saveGlobalProperty(localeGP);
-  return "redirect:/admin/maintenance/localesAndThemes.form";
-}
