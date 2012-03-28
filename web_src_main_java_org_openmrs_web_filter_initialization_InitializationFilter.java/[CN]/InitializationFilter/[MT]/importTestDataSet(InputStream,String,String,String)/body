@@ -1,27 +1,12 @@
 {
-  final int BUFFER_SIZE=1024;
   File tempFile=null;
   FileOutputStream fileOut=null;
-  byte buffer[]=new byte[BUFFER_SIZE];
   try {
+    ZipInputStream zipIn=new ZipInputStream(in);
+    zipIn.getNextEntry();
     tempFile=File.createTempFile("testDataSet","dump");
     fileOut=new FileOutputStream(tempFile);
-    ZipInputStream zipIn=new ZipInputStream(in);
-    ZipEntry zipEntry=zipIn.getNextEntry();
-    while (zipEntry != null) {
-      int remainingBytes=(int)zipEntry.getSize();
-      int bytesRead;
-      while (remainingBytes > 0 && (bytesRead=zipIn.read(buffer,0,Math.min(BUFFER_SIZE,remainingBytes))) != -1) {
-        fileOut.write(buffer,0,bytesRead);
-        remainingBytes-=bytesRead;
-      }
-      try {
-        zipEntry=zipIn.getNextEntry();
-      }
- catch (      EOFException ex) {
-        zipEntry=null;
-      }
-    }
+    IOUtils.copy(zipIn,fileOut);
     fileOut.close();
     zipIn.close();
     if (connectionUrl.contains(":mxj:")) {
