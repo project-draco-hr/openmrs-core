@@ -1,0 +1,8 @@
+{
+  Concept concept=conceptService.getConcept(3);
+  Assert.assertNull(concept.getDateChanged());
+  Assert.assertNull(concept.getChangedBy());
+  conceptService.saveConcept(concept);
+  Assert.assertNull(concept.getDateChanged());
+  Assert.assertNull(concept.getChangedBy());
+}
