@@ -2,6 +2,12 @@
   Criteria criteria=prepareProviderCriteria(name);
   if (start != null)   criteria.setFirstResult(start);
   if (length != null)   criteria.setMaxResults(length);
+  if (!includeRetired) {
+    criteria.add(Expression.eq("retired",false));
+  }
+ else {
+    criteria.addOrder(Order.asc("retired"));
+  }
   List<Provider> providers=criteria.list();
   if (serializedAttributeValues != null) {
     CollectionUtils.filter(providers,new AttributeMatcherPredicate<Provider,ProviderAttributeType>(serializedAttributeValues));
