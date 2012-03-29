@@ -1,0 +1,9 @@
+{
+  Field persons=null;
+  for (  Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotation.class)) {
+    if (field.getName().equals("persons")) {
+      persons=field;
+    }
+  }
+  Assert.assertFalse(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class,persons));
+}
