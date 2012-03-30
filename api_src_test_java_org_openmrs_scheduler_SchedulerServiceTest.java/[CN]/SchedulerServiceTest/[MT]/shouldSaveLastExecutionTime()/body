@@ -6,6 +6,7 @@
   td.setStartOnStartup(false);
   td.setTaskClass(SessionTask.class.getName());
   td.setStartTime(null);
+  td.setRepeatInterval(new Long(0));
   service.saveTask(td);
   service.scheduleTask(td);
   td=service.getTaskByName(NAME);
