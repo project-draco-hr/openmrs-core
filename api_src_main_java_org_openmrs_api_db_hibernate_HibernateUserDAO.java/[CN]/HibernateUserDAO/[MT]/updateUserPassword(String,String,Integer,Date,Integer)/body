@@ -10,4 +10,7 @@
   credentials.setDateChanged(dateChanged);
   credentials.setUuid(changeForUser.getUuid());
   sessionFactory.getCurrentSession().merge(credentials);
+  changeForUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,"");
+  changeForUser.setUserProperty(OpenmrsConstants.USER_PROPERTY_LOGIN_ATTEMPTS,"0");
+  saveUser(changeForUser,null);
 }
