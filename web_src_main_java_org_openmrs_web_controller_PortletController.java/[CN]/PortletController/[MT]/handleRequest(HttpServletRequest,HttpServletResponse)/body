@@ -58,6 +58,7 @@
         if (Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS)) {
           Patient p=Context.getPatientService().getPatient(patientId);
           model.put("patient",p);
+          if (p.isDead())           patientVariation="Dead";
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS))           model.put("patientEncounters",Context.getEncounterService().getEncountersByPatient(p));
           if (Context.hasPrivilege(PrivilegeConstants.VIEW_VISITS)) {
             model.put("person",p);

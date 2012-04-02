@@ -11,6 +11,7 @@
     if (encs != null && encs.size() > 0)     encounters.addAll(encs);
   }
   String patientVariation="";
+  if (patient.isDead())   patientVariation="Dead";
   Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null && patient.getPatientId() != null) {
     List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);
