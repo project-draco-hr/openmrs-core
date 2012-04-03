@@ -6,7 +6,7 @@
   nt=group.enumerate(threads,false);
   for (int i=0; i < nt; i++) {
     Thread t=threads[i];
-    log.error(indent + "  Thread[" + t.getName()+ ":"+ t.getClass()+ "]");
+    log.error(indent + "  Thread[" + t.getName()+ ":"+ t.getClass()+ ":"+ (t.getContextClassLoader() == null ? "null cl" : t.getContextClassLoader().getClass().getName() + " " + t.getContextClassLoader().hashCode())+ "]");
     threadToReturn.add(t);
   }
   int ng=group.activeGroupCount();
