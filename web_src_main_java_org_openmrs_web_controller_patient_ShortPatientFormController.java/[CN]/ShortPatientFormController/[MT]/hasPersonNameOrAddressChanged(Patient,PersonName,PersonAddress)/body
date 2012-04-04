@@ -24,7 +24,7 @@
   PersonAddress personAddress=patient.getPersonAddress();
   if (personAddress != null) {
     if (personAddressCache.getId() != null) {
-      if (!personAddress.isBlank() && !personAddressCache.isBlank() && !personAddress.toString().equalsIgnoreCase(personAddressCache.toString())) {
+      if (!personAddress.isBlank() && !personAddressCache.isBlank() && !personAddress.equalsContent(personAddressCache)) {
         if (log.isDebugEnabled())         log.debug("Voiding person address with id: " + personAddress.getId() + " and replacing it with a new one: "+ personAddress.toString());
         foundChanges=true;
         PersonAddress newAddress=(PersonAddress)personAddress.clone();
