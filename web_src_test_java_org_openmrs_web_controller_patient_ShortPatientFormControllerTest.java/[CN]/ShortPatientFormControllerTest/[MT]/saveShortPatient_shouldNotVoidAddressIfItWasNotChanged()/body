@@ -2,6 +2,8 @@
   Patient patient=Context.getPatientService().getPatient(2);
   PersonAddress personAddress=patient.getPersonAddress();
   request.setParameter("patientId",patient.getPatientId().toString());
+  request.setParameter("personAddress.address1",personAddress.getAddress1());
+  request.setParameter("personAddress.countyDistrict","");
   request.setMethod("POST");
   request.setRequestURI("/admin/patients/shortPatientForm.form");
   Object handler=handlerMapping.getHandler(request).getHandler();
