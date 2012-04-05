@@ -1,0 +1,12 @@
+{
+  Patient patient=Context.getPatientService().getPatient(2);
+  PersonAddress personAddress=patient.getPersonAddress();
+  request.setParameter("patientId",patient.getPatientId().toString());
+  request.setParameter("personAddress.address1","new");
+  request.setMethod("POST");
+  request.setRequestURI("/admin/patients/shortPatientForm.form");
+  Object handler=handlerMapping.getHandler(request).getHandler();
+  handlerAdapter.handle(request,response,handler);
+  assertTrue(personAddress.isVoided());
+  assertEquals("new",patient.getPersonAddress().getAddress1());
+}
