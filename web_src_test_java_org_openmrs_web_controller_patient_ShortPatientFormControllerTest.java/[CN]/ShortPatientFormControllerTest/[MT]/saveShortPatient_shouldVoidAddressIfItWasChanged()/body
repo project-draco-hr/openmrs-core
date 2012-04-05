@@ -3,6 +3,7 @@
   PersonAddress personAddress=patient.getPersonAddress();
   request.setParameter("patientId",patient.getPatientId().toString());
   request.setParameter("personAddress.address1","new");
+  request.setParameter("personAddress.countyDistrict","");
   request.setMethod("POST");
   request.setRequestURI("/admin/patients/shortPatientForm.form");
   Object handler=handlerMapping.getHandler(request).getHandler();
