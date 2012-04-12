@@ -1,0 +1,9 @@
+{
+  Field persons=null;
+  for (  Field field : Reflect.getAllFields(MetadataClassWithDisableHandlersAnnotation.class)) {
+    if (field.getName().equals("concepts")) {
+      persons=field;
+    }
+  }
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnretireHandler.class,persons));
+}

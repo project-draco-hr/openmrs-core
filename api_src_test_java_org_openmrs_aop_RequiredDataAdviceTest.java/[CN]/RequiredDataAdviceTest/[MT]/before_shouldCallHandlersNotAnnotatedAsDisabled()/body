@@ -1,0 +1,10 @@
+{
+  Method m=WithAppropriatelyNamedMethod.class.getMethod("voidClassWithDisableHandlersAnnotation",ClassWithDisableHandlersAnnotation.class);
+  ClassWithDisableHandlersAnnotation openmrsObject=new ClassWithDisableHandlersAnnotation();
+  List<Person> persons=new ArrayList<Person>();
+  Person person=new Person();
+  persons.add(person);
+  openmrsObject.setNotAnnotatedPersons(persons);
+  requiredDataAdvice.before(m,new Object[]{openmrsObject,"void reason"},new WithAppropriatelyNamedMethod());
+  verify(voidHandler,times(1)).handle(eq(person),Matchers.<User>anyObject(),Matchers.<Date>anyObject(),anyString());
+}
