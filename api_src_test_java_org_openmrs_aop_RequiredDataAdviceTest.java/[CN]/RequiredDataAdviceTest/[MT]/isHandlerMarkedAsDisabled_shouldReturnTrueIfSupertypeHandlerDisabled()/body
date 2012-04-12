@@ -1,0 +1,13 @@
+{
+  Field persons=null;
+  for (  Field field : Reflect.getAllFields(ClassWithDisableHandlersAnnotationForSupertype.class)) {
+    if (field.getName().equals("persons")) {
+      persons=field;
+    }
+  }
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(SaveHandler.class,persons));
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(VoidHandler.class,persons));
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnvoidHandler.class,persons));
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(RetireHandler.class,persons));
+  Assert.assertTrue(RequiredDataAdvice.isHandlerMarkedAsDisabled(UnretireHandler.class,persons));
+}

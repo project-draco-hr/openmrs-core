@@ -12,7 +12,7 @@
   Reflect reflect=new Reflect(OpenmrsObject.class);
   List<Field> allInheritedFields=reflect.getInheritedFields(openmrsObjectClass);
   for (  Field field : allInheritedFields) {
-    if (reflect.isCollectionField(field)) {
+    if (reflect.isCollectionField(field) && !isHandlerMarkedAsDisabled(handlerType,field)) {
       Collection<OpenmrsObject> childCollection=getChildCollection(openmrsObject,field);
       if (childCollection != null) {
         for (        Object collectionElement : childCollection) {

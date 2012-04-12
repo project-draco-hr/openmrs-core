@@ -1,0 +1,13 @@
+{
+  if (!field.isAnnotationPresent(DisableHandlers.class)) {
+    return false;
+  }
+ else {
+    for (    Class<? extends RequiredDataHandler> h : field.getAnnotation(DisableHandlers.class).handlerTypes()) {
+      if (h.isAssignableFrom(handlerType)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
