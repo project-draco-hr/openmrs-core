@@ -1,6 +1,7 @@
 {
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_NAME_REGEX,null));
   PersonName personName=new PersonName();
-  personName.setFamilyName("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghi");
+  personName.setFamilyName("asd123");
   Errors errors=new BindException(personName,"familyName");
   new PersonNameValidator().validatePersonName(personName,errors,false,true);
   Assert.assertFalse(errors.hasFieldErrors("familyName"));

@@ -1,6 +1,6 @@
 {
   PersonName personName=new PersonName();
-  personName.setMiddleName("abcdefghij");
+  personName.setMiddleName("de");
   Errors errors=new BindException(personName,"middleName");
   new PersonNameValidator().validatePersonName(personName,errors,false,true);
   Assert.assertFalse(errors.hasFieldErrors("middleName"));

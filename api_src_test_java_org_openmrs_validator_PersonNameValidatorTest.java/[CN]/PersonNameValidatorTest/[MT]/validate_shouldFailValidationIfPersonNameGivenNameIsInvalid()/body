@@ -1,7 +1,7 @@
 {
   PersonName personName=new PersonName();
-  personName.setGivenName("abcdefghij");
+  personName.setGivenName("34dfgd");
   Errors errors=new BindException(personName,"givenName");
   new PersonNameValidator().validatePersonName(personName,errors,false,true);
-  Assert.assertFalse(errors.hasFieldErrors("givenName"));
+  Assert.assertTrue(errors.hasFieldErrors("givenName"));
 }
