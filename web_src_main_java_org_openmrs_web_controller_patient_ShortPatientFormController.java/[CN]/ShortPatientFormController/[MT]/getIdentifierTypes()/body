@@ -1,3 +1,5 @@
 {
-  return Context.getPatientService().getAllPatientIdentifierTypes();
+  final List<PatientIdentifierType> list=Context.getPatientService().getAllPatientIdentifierTypes();
+  Collections.sort(list);
+  return list;
 }
