@@ -1,6 +1,11 @@
 {
-  if (mod.getLog4j() != null) {
-    DOMConfigurator.configure(mod.getLog4j().getDocumentElement());
+  try {
+    if (mod.getLog4j() != null) {
+      DOMConfigurator.configure(mod.getLog4j().getDocumentElement());
+    }
+  }
+ catch (  Exception e) {
+    log.error("unable to load module loggers " + e.getMessage());
   }
   if (log.isDebugEnabled())   log.debug("trying to start module " + mod);
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
