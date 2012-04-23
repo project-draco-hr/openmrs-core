@@ -1,12 +1,24 @@
 {
-  Integer formId=null;
-  try {
-    formId=Integer.parseInt(msh.getMessageProfileIdentifier(0).getEntityIdentifier().getValue());
-  }
- catch (  Exception e) {
-    throw new HL7Exception("Error parsing form id from message",e);
+  String uuid=null;
+  String id=null;
+  for (  EI identifier : msh.getMessageProfileIdentifier()) {
+    if (identifier != null && identifier.getNamespaceID() != null) {
+      String identifierType=identifier.getNamespaceID().getValue();
+      if (OpenmrsUtil.nullSafeEquals(identifierType,HL7Constants.HL7_FORM_UUID))       uuid=identifier.getEntityIdentifier().getValue();
+ else       if (OpenmrsUtil.nullSafeEquals(identifierType,HL7Constants.HL7_FORM_ID))       id=identifier.getEntityIdentifier().getValue();
+ else       log.warn("Form identifier type of " + identifierType + " unknown to ORU R01 processor.");
+    }
   }
   Form form=null;
-  if (formId != null)   form=Context.getFormService().getForm(formId);
+  if (uuid != null)   form=Context.getFormService().getFormByUuid(uuid);
+  if (form == null) {
+    try {
+      Integer formId=Integer.parseInt(id);
+      form=Context.getFormService().getForm(formId);
+    }
+ catch (    NumberFormatException e) {
+      throw new HL7Exception("Error parsing form id from message",e);
+    }
+  }
   return form;
 }
