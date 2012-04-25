@@ -1,0 +1,16 @@
+{
+  Thread.sleep(1000);
+  MysqldResource mysqldResource=new MysqldResource(databaseDir);
+  Map database_options=new HashMap();
+  database_options.put(MysqldResourceI.PORT,Integer.toString(Integer.parseInt(port)));
+  database_options.put(MysqldResourceI.INITIALIZE_USER,"true");
+  database_options.put(MysqldResourceI.INITIALIZE_USER_NAME,userName);
+  database_options.put(MysqldResourceI.INITIALIZE_PASSWORD,password);
+  stopDatabaseServer(mysqldResource);
+  mysqldResource.start("openmrs-release-test",database_options);
+  if (!mysqldResource.isRunning()) {
+    throw new RuntimeException("MySQL did not start.");
+  }
+  System.out.println("MySQL is running.");
+  return mysqldResource;
+}

@@ -1,0 +1,8 @@
+{
+  String fileNameInTestMode=OpenmrsUtil.getApplicationDataDirectory() + OpenmrsUtil.getRuntimePropertiesFileNameInTestMode();
+  System.out.println("Deleting the file " + fileNameInTestMode);
+  if (fileNameInTestMode != null) {
+    File runtimePropertiesFile=new File(fileNameInTestMode);
+    runtimePropertiesFile.delete();
+  }
+}

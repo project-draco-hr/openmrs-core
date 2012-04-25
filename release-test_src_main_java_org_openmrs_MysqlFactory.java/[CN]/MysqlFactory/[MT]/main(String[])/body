@@ -1,0 +1,11 @@
+{
+  File databaseDir=new File(args[0]);
+  File dataDir=new File(args[1]);
+  String port=System.getProperty("mysql_port","3336");
+  String userName=System.getProperty("mysql_username","root");
+  String password=System.getProperty("mysql_password","password");
+  String databaseName=System.getProperty("database_name","openmrsReleaseTest");
+  deleteOldRunTimePropertiesFile();
+  startDatabaseServer(databaseDir,dataDir,port,userName,password);
+  dropDatabaseIfExists(port,userName,password,databaseName);
+}

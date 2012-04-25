@@ -1,8 +1,8 @@
 {
-  String database=System.getProperty(databaseNameProp,System.getProperty("OPENMRS_VERSION","openmrs-test"));
+  String database=System.getProperty(databaseNameProp,"openmrsReleaseTest");
   String user=System.getProperty(userProp,"root");
   String password=System.getProperty(passwordProp,"password");
-  String port=System.getProperty(portProp,"3306");
+  String port=System.getProperty(portProp,"3336");
   type("jdbc:mysql://localhost:" + port + "/@DBNAME@?"+ "autoReconnect=true&sessionVariables=storage_engine=InnoDB"+ "&useUnicode=true&characterEncoding=UTF-8&server.initialize-user=true"+ "&createDatabaseIfNotExist=true&server.basedir=target/database&server.datadir=target/database/data"+ "&server.collation-server=utf8_general_ci&server.character-set-server=utf8",into(textbox().with(attribute("name",equalTo("database_connection")))));
   clickOn(radioButton().with(attribute("name",equalTo("current_openmrs_database"))).with(attribute("value",equalTo("no"))));
   type(database,into(textbox().with(attribute("name",equalTo("openmrs_new_database_name")))));
