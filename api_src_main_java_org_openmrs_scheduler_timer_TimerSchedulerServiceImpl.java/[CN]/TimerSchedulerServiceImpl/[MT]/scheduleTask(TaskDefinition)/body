@@ -16,7 +16,12 @@
         if (taskDefinition.getStartTime() != null) {
           Date nextTime=SchedulerUtil.getNextExecution(taskDefinition);
           log.info("Starting task ... the task will execute for the first time at " + nextTime);
-          getTimer(taskDefinition).scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
+          if (repeatInterval > 0) {
+            getTimer(taskDefinition).scheduleAtFixedRate(schedulerTask,nextTime,repeatInterval);
+          }
+ else {
+            getTimer(taskDefinition).schedule(schedulerTask,nextTime);
+          }
         }
  else         if (repeatInterval > 0) {
           log.info("Delaying start time by " + SchedulerConstants.SCHEDULER_DEFAULT_DELAY + " seconds");
