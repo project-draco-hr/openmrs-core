@@ -1,0 +1,8 @@
+{
+  provider.setIdentifier("id");
+  provider.setPerson(new Person(1));
+  provider.setName("1");
+  providerValidator.validate(provider,errors);
+  Assert.assertFalse(errors.hasErrors());
+  Assert.assertFalse(errors.hasFieldErrors("name"));
+}
