@@ -3,7 +3,17 @@
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
   List<Object> items=new Vector<Object>();
-  List<Drug> drugs=cs.getDrugs(phrase);
+  Set<Drug> drugs=new HashSet<Drug>();
+  try {
+    Integer conceptId=Integer.parseInt(phrase);
+    Concept targetConcept=cs.getConcept(conceptId);
+    if (targetConcept != null) {
+      drugs.addAll(cs.getDrugsByConcept(targetConcept));
+    }
+  }
+ catch (  NumberFormatException e) {
+  }
+  drugs.addAll(cs.getDrugs(phrase));
   for (  Drug drug : drugs) {
     items.add(new ConceptDrugListItem(drug,locale));
   }

@@ -7,7 +7,7 @@
     ConceptDrugListItem thisConcept=new ConceptDrugListItem(null,conceptId,concept.getName(locale,false).getName());
     items.add(thisConcept);
   }
-  List<Drug> drugs=null;
+  List<Drug> drugs=cs.getDrugsByConcept(concept);
   if (drugs.size() > 0 && showConcept == true)   items.add("Or choose a form of " + concept.getName(locale,false).getName());
   for (  Drug drug : drugs) {
     items.add(new ConceptDrugListItem(drug,locale));
