@@ -1,0 +1,8 @@
+{
+  Criteria searchDrugCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
+  Criterion rhs=Restrictions.eq("drug.concept",ingredient);
+  searchDrugCriteria.createAlias("ingredients","ingredients");
+  Criterion lhs=Restrictions.eq("ingredients.ingredient",ingredient);
+  searchDrugCriteria.add(Restrictions.or(lhs,rhs));
+  return (List<Drug>)searchDrugCriteria.list();
+}
