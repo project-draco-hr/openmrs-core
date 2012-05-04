@@ -31,4 +31,7 @@
     ConceptComplex complex=(ConceptComplex)concept;
     this.handlerKey=complex.getHandler();
   }
+  if (concept.getConceptClass() != null && OpenmrsUtil.nullSafeEquals(concept.getConceptClass().getName(),"Drug")) {
+    this.conceptDrugList.addAll(Context.getConceptService().getDrugsByConcept(concept));
+  }
 }
