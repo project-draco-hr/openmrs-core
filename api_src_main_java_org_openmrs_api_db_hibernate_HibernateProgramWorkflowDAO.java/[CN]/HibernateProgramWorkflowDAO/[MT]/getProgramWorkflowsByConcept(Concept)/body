@@ -1,0 +1,6 @@
+{
+  String wq="select distinct w from ProgramWorkflow w where w.concept = :concept";
+  Query wquery=sessionFactory.getCurrentSession().createQuery(wq);
+  wquery.setEntity("concept",concept);
+  return wquery.list();
+}

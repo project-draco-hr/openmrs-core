@@ -1,0 +1,29 @@
+{
+  List<ConceptUsageExtension> togo=new ArrayList<ConceptUsageExtension>();
+  List<ConceptUsage> forms=new ArrayList<ConceptUsage>();
+  for (  Form form : Context.getFormService().getFormsContainingConcept(concept)) {
+    forms.add(new ConceptUsage(form.getName(),"/admin/forms/formSchemaDesign.form?formId=" + form.getFormId()));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.forms",forms,PrivilegeConstants.VIEW_FORMS));
+  List<ConceptUsage> drugs=new ArrayList<ConceptUsage>();
+  for (  Drug drug : Context.getConceptService().getDrugsByConcept(concept)) {
+    drugs.add(new ConceptUsage(drug.getName(),"/admin/concepts/conceptDrug.form?drugId=" + drug.getId()));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.drugs",drugs,PrivilegeConstants.VIEW_CONCEPTS));
+  List<ConceptUsage> programs=new ArrayList<ConceptUsage>();
+  for (  Program program : Context.getProgramWorkflowService().getProgramsByConcept(concept)) {
+    programs.add(new ConceptUsage(program.getName(),"/admin/programs/program.form?programId=" + program.getId()));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.programs",programs,PrivilegeConstants.VIEW_PROGRAMS));
+  List<ConceptUsage> programWorkflows=new ArrayList<ConceptUsage>();
+  for (  ProgramWorkflow programWorkflow : Context.getProgramWorkflowService().getProgramWorkflowsByConcept(concept)) {
+    programWorkflows.add(new ConceptUsage(programWorkflow.getProgram().getName(),"/admin/programs/workflow.form?programWorkflowId=" + programWorkflow.getId()));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.programworkflows",programWorkflows,PrivilegeConstants.VIEW_PROGRAMS));
+  List<ConceptUsage> programWorkflowStates=new ArrayList<ConceptUsage>();
+  for (  ProgramWorkflowState programWorkflowState : Context.getProgramWorkflowService().getProgramWorkflowStatesByConcept(concept)) {
+    programWorkflowStates.add(new ConceptUsage(programWorkflowState.getProgramWorkflow().getProgram().getName(),""));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.programworkflowstates",programWorkflowStates,PrivilegeConstants.VIEW_PROGRAMS));
+  return togo;
+}

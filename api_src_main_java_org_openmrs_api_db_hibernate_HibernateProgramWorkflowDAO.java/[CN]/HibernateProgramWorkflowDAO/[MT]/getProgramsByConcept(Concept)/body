@@ -1,0 +1,6 @@
+{
+  String pq="select distinct p from Program p where p.concept = :concept";
+  Query pquery=sessionFactory.getCurrentSession().createQuery(pq);
+  pquery.setEntity("concept",concept);
+  return pquery.list();
+}

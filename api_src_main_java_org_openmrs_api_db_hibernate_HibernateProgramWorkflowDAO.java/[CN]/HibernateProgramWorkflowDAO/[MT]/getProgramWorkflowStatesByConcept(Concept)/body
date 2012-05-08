@@ -1,0 +1,6 @@
+{
+  String sq="select distinct s from ProgramWorkflowState s where s.concept = :concept";
+  Query squery=sessionFactory.getCurrentSession().createQuery(sq);
+  squery.setEntity("concept",concept);
+  return squery.list();
+}
