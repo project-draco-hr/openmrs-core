@@ -5,7 +5,13 @@
   String userName=System.getProperty("mysql_username","root");
   String password=System.getProperty("mysql_password","password");
   String databaseName=System.getProperty("database_name","openmrsReleaseTest");
-  deleteOldRunTimePropertiesFile();
-  startDatabaseServer(databaseDir,dataDir,port,userName,password);
-  dropDatabaseIfExists(port,userName,password,databaseName);
+  if (System.getProperty("smoke-test") != null || System.getProperty("start-test-server") != null) {
+    System.out.println("Starting Database server ");
+    startDatabaseServer(databaseDir,dataDir,port,userName,password);
+  }
+ else {
+    deleteOldRunTimePropertiesFile();
+    startDatabaseServer(databaseDir,dataDir,port,userName,password);
+    dropDatabaseIfExists(port,userName,password,databaseName);
+  }
 }
