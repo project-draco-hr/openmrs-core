@@ -1,6 +1,7 @@
 {
   final JdbcConnection connection=(JdbcConnection)database.getConnection();
   Boolean prevAutoCommit=null;
+  PreparedStatement selectTypes=null;
   PreparedStatement batchUpdateMap=null;
   PreparedStatement selectMap=null;
   PreparedStatement updateMapTerm=null;
@@ -9,6 +10,14 @@
   try {
     prevAutoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
+    Map<String,Integer> typesToIds=new HashMap<String,Integer>();
+    selectTypes=connection.prepareStatement("select * from concept_map_type");
+    selectTypes.execute();
+    ResultSet selectTypeResult=selectTypes.getResultSet();
+    while (selectTypeResult.next()) {
+      typesToIds.put(selectTypeResult.getString("name").trim().toUpperCase(),selectTypeResult.getInt("concept_map_type_id"));
+    }
+    selectTypes.close();
     batchUpdateMap=connection.prepareStatement("update concept_reference_map set" + " concept_reference_term_id = concept_map_id," + " source_code = trim(source_code), comment = trim(comment)");
     batchUpdateMap.execute();
     batchUpdateMap.close();
@@ -30,8 +39,8 @@
       final int creator=selectMapResult.getInt("creator");
       final Date dateCreated=selectMapResult.getDate("date_created");
       final String uuid=selectMapResult.getString("uuid");
-      final int mapTypeId=determineMapTypeId(comment);
-      final int updatedMapTypeId=(mapTypeId < 0) ? 2 : mapTypeId;
+      final Integer mapTypeId=determineMapTypeId(comment,typesToIds);
+      final int updatedMapTypeId=(mapTypeId == null) ? typesToIds.get(DEFAULT_CONCEPT_MAP_TYPE) : mapTypeId;
       updateMapType.setInt(1,updatedMapTypeId);
       updateMapType.setInt(2,conceptMapId);
       updateMapType.execute();
@@ -39,7 +48,7 @@
         throw new CustomChangeException("Failed to set map type: " + mapTypeId + " for map: "+ conceptMapId+ ", updated rows: "+ updateMapType.getUpdateCount());
       }
       if (source == prevSource && (sourceCode == prevSourceCode || (sourceCode != null && sourceCode.equals(prevSourceCode)))) {
-        if (mapTypeId < 0 && comment != null && !comment.equals(prevComment)) {
+        if (mapTypeId == null && comment != null && !comment.equals(prevComment)) {
           log.warn("Lost comment '" + comment + "' for map "+ conceptMapId+ ". Preserved comment "+ prevComment);
         }
         updateMapTerm.setInt(1,prevInsertedTerm);
@@ -56,7 +65,7 @@
         insertTerm.setString(4,sourceCode);
         insertTerm.setInt(5,creator);
         insertTerm.setDate(6,dateCreated);
-        if (mapTypeId < 0) {
+        if (mapTypeId == null) {
           insertTerm.setString(7,comment);
         }
  else {
@@ -87,6 +96,7 @@
     throw new CustomChangeException(e);
   }
  finally {
+    closeStatementQuietly(selectTypes);
     closeStatementQuietly(batchUpdateMap);
     closeStatementQuietly(selectMap);
     closeStatementQuietly(updateMapTerm);
