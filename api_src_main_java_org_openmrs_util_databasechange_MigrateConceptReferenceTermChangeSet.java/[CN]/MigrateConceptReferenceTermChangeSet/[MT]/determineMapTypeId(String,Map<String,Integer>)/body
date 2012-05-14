@@ -1,0 +1,14 @@
+{
+  Integer mapTypeId=null;
+  if (!StringUtils.isBlank(comment)) {
+    comment=comment.toUpperCase();
+    if (comment.startsWith("MAP TYPE:")) {
+      comment=comment.substring(9).trim();
+      if (comment.equals("SAME-AS FROM RXNORM")) {
+        comment="SAME-AS";
+      }
+      mapTypeId=typesToIds.get(comment);
+    }
+  }
+  return mapTypeId;
+}
