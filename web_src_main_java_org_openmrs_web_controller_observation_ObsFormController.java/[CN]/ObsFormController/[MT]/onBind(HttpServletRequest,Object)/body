@@ -3,5 +3,9 @@
   if (obs.getValueCoded() == null && obs.getValueCodedName() != null) {
     obs.setValueCoded(obs.getValueCodedName().getConcept());
   }
+  if (obs.getConcept().isComplex()) {
+    InputStream complexDataInputStream=setComplexData(obs,request);
+    complexDataInputStream.close();
+  }
   super.onBind(request,command);
 }
