@@ -7,6 +7,7 @@
     MatchMode matchmode=MatchMode.EXACT;
     if (searchOnPhrase)     matchmode=MatchMode.ANYWHERE;
     criteria.add(Restrictions.ilike("names.name",name,matchmode));
+    criteria.add(Restrictions.eq("names.voided",false));
     String language=loc.getLanguage();
     if (language.length() > 2) {
       criteria.add(Restrictions.or(Restrictions.eq("names.locale",loc),Restrictions.eq("names.locale",new Locale(loc.getLanguage().substring(0,2)))));
