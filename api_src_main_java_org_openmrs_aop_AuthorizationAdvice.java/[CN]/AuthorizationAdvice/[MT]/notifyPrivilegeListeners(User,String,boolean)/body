@@ -1,5 +1,7 @@
 {
-  for (  PrivilegeListener privilegeListener : privilegeListeners) {
-    privilegeListener.privilegeChecked(user,privilege,hasPrivilege);
+  if (privilegeListeners != null) {
+    for (    PrivilegeListener privilegeListener : privilegeListeners) {
+      privilegeListener.privilegeChecked(user,privilege,hasPrivilege);
+    }
   }
 }
