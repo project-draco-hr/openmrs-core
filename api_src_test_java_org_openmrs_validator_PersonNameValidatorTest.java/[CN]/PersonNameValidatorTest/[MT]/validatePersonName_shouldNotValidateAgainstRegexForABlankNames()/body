@@ -1,0 +1,12 @@
+{
+  String regex=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_NAME_REGEX);
+  Assert.assertFalse(StringUtils.isBlank(regex));
+  PersonName personName=new PersonName();
+  personName.setGivenName("given");
+  personName.setFamilyName("family");
+  personName.setMiddleName("");
+  personName.setFamilyName2("");
+  Errors errors=new BindException(personName,"personName");
+  new PersonNameValidator().validatePersonName(personName,errors,false,true);
+  Assert.assertFalse(errors.hasErrors());
+}
