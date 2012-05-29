@@ -1,0 +1,15 @@
+{
+  if (encounters != null) {
+    if (user == null) {
+      user=Context.getAuthenticatedUser();
+    }
+    for (Iterator<Encounter> iterator=encounters.iterator(); iterator.hasNext(); ) {
+      Encounter encounter=iterator.next();
+      EncounterType et=encounter.getEncounterType();
+      if (et != null && !userHasEncounterPrivilege(et.getViewPrivilege(),user)) {
+        iterator.remove();
+      }
+    }
+  }
+  return encounters;
+}

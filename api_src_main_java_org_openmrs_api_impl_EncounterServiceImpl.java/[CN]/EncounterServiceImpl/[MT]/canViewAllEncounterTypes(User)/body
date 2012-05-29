@@ -1,0 +1,10 @@
+{
+  boolean canView=Boolean.TRUE;
+  for (  EncounterType et : Context.getEncounterService().getAllEncounterTypes()) {
+    if (!userHasEncounterPrivilege(et.getViewPrivilege(),subject)) {
+      canView=Boolean.FALSE;
+      break;
+    }
+  }
+  return canView;
+}

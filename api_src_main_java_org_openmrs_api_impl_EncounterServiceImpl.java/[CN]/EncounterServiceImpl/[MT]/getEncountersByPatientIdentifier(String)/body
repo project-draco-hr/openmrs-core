@@ -4,5 +4,5 @@
   for (  Patient p : Context.getPatientService().getPatients(null,identifier,null,false)) {
     encs.addAll(getEncountersByPatientId(p.getPatientId()));
   }
-  return encs;
+  return filterEncountersByViewPermissions(encs,null);
 }

@@ -1,0 +1,10 @@
+{
+  boolean canEdit=Boolean.TRUE;
+  for (  EncounterType et : Context.getEncounterService().getAllEncounterTypes()) {
+    if (!userHasEncounterPrivilege(et.getEditPrivilege(),subject)) {
+      canEdit=Boolean.FALSE;
+      break;
+    }
+  }
+  return canEdit;
+}
