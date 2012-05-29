@@ -1,0 +1,10 @@
+{
+  Person p=new Person();
+  PersonAddress pa1=new PersonAddress();
+  pa1.setAddress1("address1");
+  p.addAddress(pa1);
+  PersonAddress pa2=new PersonAddress();
+  pa2.setAddress1("");
+  p.addAddress(pa2);
+  Assert.assertEquals(1,p.getAddresses().size());
+}
