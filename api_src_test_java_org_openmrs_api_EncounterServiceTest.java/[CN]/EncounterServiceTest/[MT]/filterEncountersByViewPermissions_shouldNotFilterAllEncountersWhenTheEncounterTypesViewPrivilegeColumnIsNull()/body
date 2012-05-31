@@ -1,0 +1,22 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  int beforeSize=encounterService.getEncountersByPatientId(3).size();
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(Context.getPatientService().getPatient(3));
+  EncounterType encounterType=new EncounterType(1);
+  encounter.setEncounterType(encounterType);
+  EncounterRole role=new EncounterRole();
+  role.setName("role");
+  role=encounterService.saveEncounterRole(role);
+  Provider provider=new Provider();
+  provider.setName("provider");
+  provider.setIdentifier("id1");
+  provider=Context.getProviderService().saveProvider(provider);
+  encounter.addProvider(role,provider);
+  encounterService.saveEncounter(encounter);
+  List<Encounter> patientEncounters=encounterService.getEncountersByPatientId(3);
+  assertNotNull(patientEncounters);
+  assertEquals(beforeSize + 1,patientEncounters.size());
+}

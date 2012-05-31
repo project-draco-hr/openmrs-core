@@ -1,0 +1,10 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  for (  EncounterType encounterType : encounterService.getAllEncounterTypes()) {
+    encounterType.setEditPrivilege(null);
+    encounterService.saveEncounterType(encounterType);
+  }
+  User user=Context.getUserService().getUserByUsername("test_user");
+  assertNotNull(user);
+  assertTrue(encounterService.canEditAllEncounterTypes(user));
+}
