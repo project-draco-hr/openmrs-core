@@ -1,0 +1,33 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  int expectedSize=encounterService.getEncountersByPatientId(3).size();
+  Encounter encounter=new Encounter();
+  encounter.setLocation(new Location(1));
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(Context.getPatientService().getPatient(3));
+  EncounterType encounterType=new EncounterType(1);
+  encounterType.setViewPrivilege(Context.getUserService().getPrivilege("Some Privilege For View Encounter Types"));
+  encounter.setEncounterType(encounterType);
+  EncounterRole role=new EncounterRole();
+  role.setName("role");
+  role=encounterService.saveEncounterRole(role);
+  Provider provider=new Provider();
+  provider.setName("provider");
+  provider.setIdentifier("id1");
+  provider=Context.getProviderService().saveProvider(provider);
+  encounter.addProvider(role,provider);
+  encounterService.saveEncounter(encounter);
+  List<Encounter> patientEncounters=encounterService.getEncountersByPatientId(3);
+  assertEquals(expectedSize + 1,patientEncounters.size());
+  if (Context.isAuthenticated()) {
+    Context.logout();
+  }
+  Context.authenticate("test_user","test");
+  Context.addProxyPrivilege(PrivilegeConstants.GET_ENCOUNTERS);
+  patientEncounters=encounterService.getEncountersByPatientId(3);
+  int actualSize=patientEncounters.size();
+  Context.removeProxyPrivilege(PrivilegeConstants.GET_ENCOUNTERS);
+  Context.logout();
+  assertEquals(actualSize,expectedSize);
+  assertTrue(!patientEncounters.contains(encounter));
+}

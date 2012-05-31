@@ -28,4 +28,5 @@
   }
   model.put("formToEntryUrlMap",entryUrlMap);
   model.put("anyUpdatedFormEntryModules",handlers != null && handlers.size() > 0);
+  model.put("showDisclaimer",!Context.getEncounterService().canViewAllEncounterTypes(Context.getAuthenticatedUser()));
 }
