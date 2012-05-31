@@ -1,5 +1,8 @@
 {
-  if (privilege != null && !userContext.hasPrivilege(privilege.trim()))   return false;
+  if (privilege != null && !userContext.hasPrivilege(privilege.trim())) {
+    addMissingPrivilege(privilege);
+    return false;
+  }
   if (allPrivilegesArray.length > 0 && !hasAllPrivileges(userContext,allPrivilegesArray))   return false;
   if (anyPrivilegeArray.length > 0 && !hasAnyPrivilege(userContext,anyPrivilegeArray))   return false;
   return true;

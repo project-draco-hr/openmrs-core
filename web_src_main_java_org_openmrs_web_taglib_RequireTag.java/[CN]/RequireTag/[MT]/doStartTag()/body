@@ -27,7 +27,21 @@
           throw new APIException(e);
         }
       }
-      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"require.unauthorized");
+      String errorCodeOrMsg="";
+      if (missingPrivilegesBuffer != null) {
+        String requiredPrivileges=missingPrivilegesBuffer.toString();
+        MessageSourceService mss=Context.getMessageSourceService();
+        errorCodeOrMsg=mss.getMessage("general.authentication.unableToViewPage",new Object[]{requiredPrivileges},null);
+        errorCodeOrMsg+="<br />" + mss.getMessage("general.authentication.accountHasNoPrivilege");
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,errorCodeOrMsg);
+        httpSession.setAttribute(WebConstants.FOUND_MISSING_PRIVILEGES,true);
+        httpSession.setAttribute(WebConstants.REQUIRED_PRIVILEGES,requiredPrivileges);
+        if (StringUtils.hasText(referer))         httpSession.setAttribute(WebConstants.DENIED_PAGE,referer);
+      }
+ else {
+        errorCodeOrMsg="require.unauthorized";
+      }
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,errorCodeOrMsg);
       log.warn("The user: '" + Context.getAuthenticatedUser() + "' has attempted to access: "+ redirect+ " which requires privilege: "+ privilege+ " or one of: "+ allPrivileges+ " or any of "+ anyPrivilege);
     }
  else     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"require.login");

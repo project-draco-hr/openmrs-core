@@ -1,0 +1,9 @@
+{
+  if (!StringUtils.hasText(p))   return;
+  if (missingPrivilegesBuffer == null) {
+    missingPrivilegesBuffer=new StringBuffer();
+    missingPrivilegesBuffer.append(p.trim());
+    return;
+  }
+  missingPrivilegesBuffer.append("," + p.trim());
+}
