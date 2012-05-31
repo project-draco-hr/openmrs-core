@@ -39,9 +39,8 @@
         if (StringUtils.hasText(redirect)) {
           httpSession.setAttribute(WebConstants.DENIED_PAGE,redirect);
         }
- else         if (request.getAttribute("javax.servlet.error.request_uri") != null) {
-          Object requestedUrl=request.getAttribute("javax.servlet.error.request_uri");
-          if (StringUtils.hasText(requestedUrl.toString()))           httpSession.setAttribute(WebConstants.DENIED_PAGE,requestedUrl.toString());
+ else         if (StringUtils.hasText(referer)) {
+          httpSession.setAttribute(WebConstants.DENIED_PAGE,referer);
         }
       }
  else {

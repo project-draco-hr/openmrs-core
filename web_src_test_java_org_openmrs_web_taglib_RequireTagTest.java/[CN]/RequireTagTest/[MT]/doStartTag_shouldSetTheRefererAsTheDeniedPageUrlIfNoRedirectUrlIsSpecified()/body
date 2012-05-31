@@ -8,8 +8,7 @@
   ((MockHttpServletRequest)pageContext.getRequest()).addHeader("Referer",referer);
   tag.setPageContext(pageContext);
   tag.setAllPrivileges("Manage WhirleyGigs,Manage Thingamajigs");
-  String redirect="/myRedirect.html";
-  tag.setRedirect(redirect);
+  tag.setRedirect("");
   Assert.assertEquals(Tag.SKIP_PAGE,tag.doStartTag());
   Object missingPrivilegesObj=pageContext.getAttribute(WebConstants.FOUND_MISSING_PRIVILEGES,PageContext.SESSION_SCOPE);
   Assert.assertNotNull(missingPrivilegesObj);
@@ -18,6 +17,6 @@
   Assert.assertNotNull(errorMsg);
   Assert.assertTrue(errorMsg.toString().indexOf("general.authentication.unableToViewPage") > -1);
   Assert.assertTrue(errorMsg.toString().indexOf("general.authentication.accountHasNoPrivilege") > -1);
-  Assert.assertEquals(redirect,pageContext.getAttribute(WebConstants.DENIED_PAGE,PageContext.SESSION_SCOPE).toString());
+  Assert.assertEquals(referer,pageContext.getAttribute(WebConstants.DENIED_PAGE,PageContext.SESSION_SCOPE).toString());
   Context.logout();
 }
