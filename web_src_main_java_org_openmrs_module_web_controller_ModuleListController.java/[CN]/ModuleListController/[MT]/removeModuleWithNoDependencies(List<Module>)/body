@@ -1,0 +1,17 @@
+{
+  for (Iterator<Module> i=candidates.iterator(); i.hasNext(); ) {
+    Module candidate=i.next();
+    boolean suitable=true;
+    for (    Module other : candidates) {
+      if (candidate.getRequiredModules().contains(other.getPackageName())) {
+        suitable=false;
+        break;
+      }
+    }
+    if (suitable) {
+      i.remove();
+      return candidate;
+    }
+  }
+  return null;
+}

@@ -78,7 +78,7 @@
         if (module.isStarted()) {
           success=msa.getMessage("Module.loadedAndStarted",new String[]{module.getName()});
           if (updateModule && dependentModulesStopped != null) {
-            for (            Module depMod : dependentModulesStopped) {
+            for (            Module depMod : sortStartupOrder(dependentModulesStopped)) {
               ModuleFactory.startModule(depMod);
               WebModuleUtil.startModule(depMod,getServletContext(),false);
             }
