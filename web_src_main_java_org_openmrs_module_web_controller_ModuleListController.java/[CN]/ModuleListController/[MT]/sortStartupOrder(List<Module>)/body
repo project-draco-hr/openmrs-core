@@ -1,0 +1,13 @@
+{
+  List<Module> candidates=new LinkedList<Module>(modulesToStart);
+  List<Module> ret=new ArrayList<Module>();
+  while (candidates.size() > 0) {
+    Module mod=removeModuleWithNoDependencies(candidates);
+    if (mod == null) {
+      log.warn("Unable to determine suitable startup order for " + modulesToStart);
+      return modulesToStart;
+    }
+    ret.add(mod);
+  }
+  return ret;
+}
