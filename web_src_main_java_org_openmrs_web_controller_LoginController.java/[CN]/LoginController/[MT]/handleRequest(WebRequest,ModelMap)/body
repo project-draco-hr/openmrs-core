@@ -1,10 +1,19 @@
 {
-  if (Context.getAuthenticatedUser() != null) {
-    model.addAttribute("foundMissingPrivileges",webRequest.getAttribute(WebConstants.FOUND_MISSING_PRIVILEGES,WebRequest.SCOPE_SESSION));
-    webRequest.removeAttribute(WebConstants.FOUND_MISSING_PRIVILEGES,WebRequest.SCOPE_SESSION);
+  boolean failedPrivilegeCheck=false;
+  Object attributeValue=webRequest.getAttribute(WebConstants.INSUFFICIENT_PRIVILEGES,WebRequest.SCOPE_SESSION);
+  if (attributeValue != null) {
+    if (Boolean.valueOf(attributeValue.toString().trim())) {
+      failedPrivilegeCheck=true;
+    }
+    webRequest.removeAttribute(WebConstants.INSUFFICIENT_PRIVILEGES,WebRequest.SCOPE_SESSION);
+  }
+  if (Context.getAuthenticatedUser() != null && failedPrivilegeCheck) {
+    model.addAttribute("foundMissingPrivileges",true);
+    webRequest.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.insufficientPrivileges",WebRequest.SCOPE_SESSION);
     String deniedPage=null;
     String requiredPrivileges=null;
     String exceptionMsg=null;
+    String refererUrl=null;
     if (webRequest.getAttribute(WebConstants.DENIED_PAGE,WebRequest.SCOPE_SESSION) != null) {
       String deniedPageTemp=webRequest.getAttribute(WebConstants.DENIED_PAGE,WebRequest.SCOPE_SESSION).toString();
       webRequest.removeAttribute(WebConstants.DENIED_PAGE,WebRequest.SCOPE_SESSION);
@@ -20,11 +29,14 @@
       webRequest.removeAttribute(WebConstants.UNCAUGHT_EXCEPTION_MESSAGE,WebRequest.SCOPE_SESSION);
       if (StringUtils.isNotBlank(exceptionMsgTemp))       exceptionMsg=exceptionMsgTemp;
     }
+    if (webRequest.getAttribute(WebConstants.REFERER_URL,WebRequest.SCOPE_SESSION) != null) {
+      String refererUrlTemp=webRequest.getAttribute(WebConstants.REFERER_URL,WebRequest.SCOPE_SESSION).toString();
+      webRequest.removeAttribute(WebConstants.REFERER_URL,WebRequest.SCOPE_SESSION);
+      if (StringUtils.isNotBlank(refererUrlTemp) && !refererUrlTemp.contains("login."))       refererUrl=refererUrlTemp;
+    }
     String alertMessage=null;
-    String buttonLabelMsgCode="general.requestAccessToPage";
     if (requiredPrivileges != null && deniedPage != null) {
       alertMessage=Context.getMessageSourceService().getMessage("general.alert.requestPrivilegesForPage",new String[]{Context.getAuthenticatedUser().getUsername(),requiredPrivileges,deniedPage},null);
-      buttonLabelMsgCode="general.requestPrivileges";
     }
  else     if (exceptionMsg != null && deniedPage != null) {
       alertMessage=Context.getMessageSourceService().getMessage("general.alert.privilegesForPageOnException",new String[]{exceptionMsg,Context.getAuthenticatedUser().getUsername(),deniedPage},null);
@@ -34,13 +46,23 @@
     }
  else     if (requiredPrivileges != null) {
       alertMessage=Context.getMessageSourceService().getMessage("general.alert.requestPrivileges",new String[]{Context.getAuthenticatedUser().getUsername(),requiredPrivileges},null);
-      buttonLabelMsgCode="general.requestPrivileges";
     }
  else     if (exceptionMsg != null) {
       alertMessage=Context.getMessageSourceService().getMessage("general.alert.requestPrivileges",new String[]{Context.getAuthenticatedUser().getUsername(),exceptionMsg},null);
     }
+    String reason=null;
+    if (requiredPrivileges != null) {
+      reason=Context.getMessageSourceService().getMessage("error.privilegesRequired",new Object[]{requiredPrivileges},null);
+    }
+ else     if (exceptionMsg != null) {
+      reason=exceptionMsg;
+    }
+ else {
+      reason=Context.getMessageSourceService().getMessage("error.extraPrivilegesRequired");
+    }
     model.put("alertMessage",JavaScriptUtils.javaScriptEscape(alertMessage));
-    model.put("buttonLabel",HtmlUtils.htmlEscape(Context.getMessageSourceService().getMessage(buttonLabelMsgCode)));
+    model.put("reason",reason);
+    model.put("refererUrl",refererUrl);
   }
   return LOGIN_FORM;
 }
