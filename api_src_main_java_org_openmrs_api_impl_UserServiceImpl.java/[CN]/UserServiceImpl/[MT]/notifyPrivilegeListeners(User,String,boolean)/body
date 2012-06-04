@@ -1,0 +1,12 @@
+{
+  if (privilegeListeners != null) {
+    for (    PrivilegeListener privilegeListener : privilegeListeners) {
+      try {
+        privilegeListener.privilegeChecked(user,privilege,hasPrivilege);
+      }
+ catch (      Exception e) {
+        log.error("Privilege listener has failed",e);
+      }
+    }
+  }
+}

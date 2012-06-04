@@ -6,23 +6,25 @@
     if (user != null)     log.debug("has roles " + user.getAllRoles());
   }
   AuthorizedAnnotationAttributes attributes=new AuthorizedAnnotationAttributes();
-  Collection<String> attrs=attributes.getAttributes(method);
+  Collection<String> privileges=attributes.getAttributes(method);
   boolean requireAll=attributes.getRequireAll(method);
-  if (attrs.size() > 0) {
-    for (    String privilege : attrs) {
-      if (privilege == null || privilege.length() < 1)       return;
+  if (!privileges.isEmpty()) {
+    for (    String privilege : privileges) {
+      if (privilege == null || privilege.isEmpty())       return;
       if (log.isDebugEnabled())       log.debug("User has privilege " + privilege + "? "+ Context.hasPrivilege(privilege));
       if (Context.hasPrivilege(privilege)) {
-        if (requireAll == false) {
+        if (!requireAll) {
           return;
         }
       }
- else       if (requireAll == true) {
-        throwUnauthorized(user,method,privilege);
+ else {
+        if (requireAll) {
+          throwUnauthorized(user,method,privilege);
+        }
       }
     }
     if (requireAll == false) {
-      throwUnauthorized(user,method,attrs);
+      throwUnauthorized(user,method,privileges);
     }
   }
  else   if (attributes.hasAuthorizedAnnotation(method)) {
