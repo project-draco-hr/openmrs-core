@@ -1,0 +1,22 @@
+{
+  try {
+    this.requestContext=(RequestContext)this.pageContext.getAttribute(RequestContextAwareTag.REQUEST_CONTEXT_PAGE_ATTRIBUTE);
+    if (this.requestContext == null) {
+      this.requestContext=new JspAwareRequestContext(this.pageContext);
+      this.pageContext.setAttribute(RequestContextAwareTag.REQUEST_CONTEXT_PAGE_ATTRIBUTE,this.requestContext);
+    }
+    return doEndTagInternal();
+  }
+ catch (  JspException ex) {
+    logger.error(ex.getMessage(),ex);
+    throw ex;
+  }
+catch (  RuntimeException ex) {
+    logger.error(ex.getMessage(),ex);
+    throw ex;
+  }
+catch (  Exception ex) {
+    logger.error(ex.getMessage(),ex);
+    throw new JspTagException(ex.getMessage());
+  }
+}
