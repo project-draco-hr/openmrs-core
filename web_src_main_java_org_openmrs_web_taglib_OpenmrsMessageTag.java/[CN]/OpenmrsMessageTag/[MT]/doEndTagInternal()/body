@@ -1,0 +1,19 @@
+{
+  try {
+    String msg=resolveMessage();
+    msg=isHtmlEscape() ? HtmlUtils.htmlEscape(msg) : msg;
+    msg=this.javaScriptEscape ? JavaScriptUtils.javaScriptEscape(msg) : msg;
+    String resolvedVar=ExpressionEvaluationUtils.evaluateString("var",this.var,pageContext);
+    if (resolvedVar != null) {
+      String resolvedScope=ExpressionEvaluationUtils.evaluateString("scope",this.scope,pageContext);
+      pageContext.setAttribute(resolvedVar,msg,TagUtils.getScope(resolvedScope));
+    }
+ else {
+      writeMessage(msg);
+    }
+    return EVAL_PAGE;
+  }
+ catch (  NoSuchMessageException ex) {
+    throw new JspTagException(getNoSuchMessageExceptionDescription(ex));
+  }
+}
