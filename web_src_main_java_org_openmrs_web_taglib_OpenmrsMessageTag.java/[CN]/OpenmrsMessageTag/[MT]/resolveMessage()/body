@@ -1,0 +1,45 @@
+{
+  MessageSource messageSource=getMessageSource();
+  if (messageSource == null) {
+    throw new JspTagException("No corresponding MessageSource to resolve message with found");
+  }
+  MessageSourceResolvable resolvedMessage=null;
+  if (this.message instanceof MessageSourceResolvable) {
+    resolvedMessage=(MessageSourceResolvable)this.message;
+  }
+ else   if (this.message != null) {
+    String expr=this.message.toString();
+    resolvedMessage=(MessageSourceResolvable)ExpressionEvaluationUtils.evaluate("message",expr,MessageSourceResolvable.class,pageContext);
+  }
+  if (resolvedMessage != null) {
+    return messageSource.getMessage(resolvedMessage,getRequestContext().getLocale());
+  }
+  String resolvedCode=ExpressionEvaluationUtils.evaluateString("code",this.code,pageContext);
+  String bodyText=null;
+  String resolvedText=null;
+  if (OpenmrsUtil.nullSafeEquals(this.locale,Context.getLocale().getLanguage())) {
+    resolvedText=ExpressionEvaluationUtils.evaluateString("text",this.text,pageContext);
+    if (getBodyContent() != null) {
+      bodyText=getBodyContent().getString();
+    }
+  }
+  String message=resolvedCode;
+  Locale locale=LocaleUtility.fromSpecification(this.locale);
+  if (resolvedCode != null || resolvedText != null || bodyText != null) {
+    Object[] argumentsArray=resolveArguments(this.arguments);
+    if (bodyText != null) {
+      message=messageSource.getMessage(resolvedCode,argumentsArray,bodyText,locale);
+    }
+ else     if (resolvedText != null) {
+      message=messageSource.getMessage(resolvedCode,argumentsArray,resolvedText,locale);
+    }
+ else {
+      try {
+        message=messageSource.getMessage(resolvedCode,argumentsArray,locale);
+      }
+ catch (      NoSuchMessageException e) {
+      }
+    }
+  }
+  return message;
+}
