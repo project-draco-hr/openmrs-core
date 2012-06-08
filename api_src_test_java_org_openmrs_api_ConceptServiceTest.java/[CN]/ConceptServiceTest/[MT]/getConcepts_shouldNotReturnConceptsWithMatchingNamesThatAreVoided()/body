@@ -1,0 +1,5 @@
+{
+  Concept concept=conceptService.getConcept(7);
+  conceptService.updateConceptIndex(concept);
+  Assert.assertEquals(0,conceptService.getConcepts("VOIDED",Collections.singletonList(Locale.ENGLISH),false,null,null,null,null,null,null,null).size());
+}
