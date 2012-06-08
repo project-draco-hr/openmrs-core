@@ -2,8 +2,8 @@
   new Thread(){
     @Override public void run(){
       try {
-synchronized (refreshingContext) {
-          refreshingContext.wait();
+synchronized (refreshingContextCheck) {
+          refreshingContextCheck.wait();
         }
         Daemon.runStartupForService(openmrsService);
       }

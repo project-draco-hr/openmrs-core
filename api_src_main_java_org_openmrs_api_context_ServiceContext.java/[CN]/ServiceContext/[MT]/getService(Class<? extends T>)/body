@@ -1,9 +1,9 @@
 {
   if (log.isTraceEnabled())   log.trace("Getting service: " + cls);
-synchronized (refreshingContext) {
-    if (refreshingContext.booleanValue())     try {
+synchronized (refreshingContextCheck) {
+    if (refreshingContextCheck.intValue() == 1)     try {
       log.warn("Waiting to get service: " + cls + " while the context is being refreshed");
-      refreshingContext.wait();
+      refreshingContextCheck.wait();
       log.warn("Finished waiting to get service " + cls + " while the context was being refreshed");
     }
  catch (    InterruptedException e) {
