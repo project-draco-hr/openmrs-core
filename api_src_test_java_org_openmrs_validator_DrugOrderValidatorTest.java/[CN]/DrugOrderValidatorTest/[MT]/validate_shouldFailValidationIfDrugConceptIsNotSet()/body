@@ -1,0 +1,9 @@
+{
+  DrugOrder order=new DrugOrder();
+  Drug drug=Context.getConceptService().getDrug(3);
+  drug.setConcept(null);
+  order.setDrug(drug);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("drug.concept"));
+}
