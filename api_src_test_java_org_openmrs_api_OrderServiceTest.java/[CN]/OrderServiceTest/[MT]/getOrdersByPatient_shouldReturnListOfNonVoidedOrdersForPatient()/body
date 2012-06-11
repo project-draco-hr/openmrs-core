@@ -1,0 +1,6 @@
+{
+  executeDataSet(ORDERS_DATASET_XML);
+  Patient p=Context.getPatientService().getPatient(2);
+  List<Order> orders=Context.getOrderService().getOrdersByPatient(p);
+  Assert.assertEquals(4,orders.size());
+}
