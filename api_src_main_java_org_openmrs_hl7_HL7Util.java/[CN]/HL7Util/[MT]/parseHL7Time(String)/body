@@ -19,7 +19,7 @@
   timeString.append(timeZoneOffset);
   Date date;
   try {
-    date=(Date)TIME_FORMAT.parse(timeString.toString());
+    date=new SimpleDateFormat(TIME_FORMAT).parse(timeString.toString());
   }
  catch (  ParseException e) {
     throw new HL7Exception("Invalid time format: '" + s + "' ["+ timeString+ "]",e);

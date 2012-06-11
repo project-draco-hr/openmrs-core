@@ -34,7 +34,7 @@
   dateString.append(timeZoneOffset);
   Date date;
   try {
-    date=TIMESTAMP_FORMAT.parse(dateString.toString());
+    date=new SimpleDateFormat(TIMESTAMP_FORMAT).parse(dateString.toString());
   }
  catch (  ParseException e) {
     throw new HL7Exception("Error parsing date '" + s + "'");
