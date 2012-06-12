@@ -1,0 +1,7 @@
+{
+  OrderService orderService=Context.getOrderService();
+  Order order=orderService.getOrder(2);
+  Assert.assertNotNull(order);
+  String voidReason=null;
+  orderService.voidOrder(order,voidReason);
+}

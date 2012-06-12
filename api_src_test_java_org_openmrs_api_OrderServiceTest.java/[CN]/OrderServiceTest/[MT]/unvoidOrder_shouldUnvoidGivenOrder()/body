@@ -1,0 +1,9 @@
+{
+  executeDataSet(DRUG_ORDERS_DATASET_XML);
+  OrderService orderService=Context.getOrderService();
+  Order order=orderService.getOrder(8);
+  Assert.assertNotNull(order);
+  Assert.assertTrue(order.isVoided());
+  orderService.unvoidOrder(order);
+  Assert.assertFalse(order.isVoided());
+}
