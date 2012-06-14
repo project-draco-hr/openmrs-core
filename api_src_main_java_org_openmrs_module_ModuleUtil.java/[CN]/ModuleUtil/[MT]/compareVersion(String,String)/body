@@ -4,6 +4,7 @@
     List<String> versions=new Vector<String>();
     List<String> values=new Vector<String>();
     version=version.replace("-SNAPSHOT",".0");
+    value=value.replace("-SNAPSHOT",".0");
     Collections.addAll(versions,version.split("\\."));
     Collections.addAll(values,value.split("\\."));
     while (versions.size() < values.size()) {
