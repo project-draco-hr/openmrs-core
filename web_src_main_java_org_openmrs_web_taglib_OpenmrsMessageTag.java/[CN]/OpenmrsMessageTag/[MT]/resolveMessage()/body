@@ -24,18 +24,17 @@
     }
   }
   String message=resolvedCode;
-  Locale locale=LocaleUtility.fromSpecification(this.locale);
   if (resolvedCode != null || resolvedText != null || bodyText != null) {
     Object[] argumentsArray=resolveArguments(this.arguments);
     if (bodyText != null) {
-      message=messageSource.getMessage(resolvedCode,argumentsArray,bodyText,locale);
+      message=messageSource.getMessage(resolvedCode,argumentsArray,bodyText,getRequestContext().getLocale());
     }
  else     if (resolvedText != null) {
-      message=messageSource.getMessage(resolvedCode,argumentsArray,resolvedText,locale);
+      message=messageSource.getMessage(resolvedCode,argumentsArray,resolvedText,getRequestContext().getLocale());
     }
  else {
       try {
-        message=messageSource.getMessage(resolvedCode,argumentsArray,locale);
+        message=messageSource.getMessage(resolvedCode,argumentsArray,getRequestContext().getLocale());
       }
  catch (      NoSuchMessageException e) {
       }
