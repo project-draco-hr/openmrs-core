@@ -1,0 +1,4 @@
+{
+  String orderNumberInDatabase=dao.getOrderNumberInDatabase(order);
+  if (orderNumberInDatabase != null && !orderNumberInDatabase.equals(order.getOrderNumber()))   throw new APIException("Cannot modify the orderNumber of a saved order");
+}

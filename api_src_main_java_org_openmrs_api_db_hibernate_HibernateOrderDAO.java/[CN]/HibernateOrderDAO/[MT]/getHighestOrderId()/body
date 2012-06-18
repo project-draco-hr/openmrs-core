@@ -1,0 +1,4 @@
+{
+  Query query=sessionFactory.getCurrentSession().createSQLQuery("SELECT max(order_id) FROM orders");
+  return (Integer)query.uniqueResult();
+}

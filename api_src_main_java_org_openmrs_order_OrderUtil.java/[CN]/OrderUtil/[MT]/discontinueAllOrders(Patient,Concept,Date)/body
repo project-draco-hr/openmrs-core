@@ -1,11 +1,12 @@
 {
   if (log.isDebugEnabled())   log.debug("In discontinueAll with patient " + patient + " and concept "+ discontinueReason+ " and date "+ discontinueDate);
   OrderService orderService=Context.getOrderService();
-  List<DrugOrder> drugOrders=orderService.getDrugOrdersByPatient(patient,ORDER_STATUS.CURRENT);
+  List<DrugOrder> drugOrders=orderService.getDrugOrdersByPatient(patient);
   if (drugOrders != null) {
     for (    DrugOrder drugOrder : drugOrders) {
+      if (drugOrder.getDiscontinued())       continue;
       if (log.isDebugEnabled())       log.debug("discontinuing order: " + drugOrder);
-      orderService.discontinueOrder(drugOrder,discontinueReason,discontinueDate);
+      orderService.discontinueOrder(drugOrder,discontinueReason.getName().getName(),null,discontinueDate);
     }
   }
 }

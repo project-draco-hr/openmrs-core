@@ -1,0 +1,15 @@
+{
+  Order order=new Order();
+  order.setConcept(Context.getConceptService().getConcept(88));
+  order.setPatient(Context.getPatientService().getPatient(2));
+  order.setOrderNumber("orderNumber");
+  order.setDiscontinued(true);
+  order.setDiscontinuedReason(null);
+  Errors errors=new BindException(order,"order");
+  new OrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("discontinuedReason"));
+  order.setDiscontinuedReason(" ");
+  errors=new BindException(order,"order");
+  new OrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("discontinuedReason"));
+}

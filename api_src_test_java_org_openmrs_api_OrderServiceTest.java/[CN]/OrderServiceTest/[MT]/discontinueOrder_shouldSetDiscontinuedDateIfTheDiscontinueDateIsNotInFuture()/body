@@ -1,8 +1,0 @@
-{
-  String uuid="921de0a3-05c4-444a-be03-e01b4c4b9142";
-  Order order=Context.getOrderService().getOrderByUuid(uuid);
-  Concept discontinudReason=Context.getConceptService().getConcept(1107);
-  Date discontinueDate=new Date();
-  Order updatedOrder=Context.getOrderService().discontinueOrder(order,discontinudReason,discontinueDate);
-  Assert.assertEquals(discontinueDate,updatedOrder.getDiscontinuedDate());
-}

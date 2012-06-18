@@ -1,0 +1,5 @@
+{
+  Errors errors=new BindException(new Order(),"order");
+  new OrderValidator().validate(null,errors);
+  Assert.assertTrue(errors.hasErrors());
+}

@@ -1,7 +1,7 @@
 {
   Order order=(Order)obj;
   if (order == null) {
-    errors.rejectValue("order","error.general");
+    errors.reject("error.general");
   }
  else {
     if (order.getEncounter() != null && order.getPatient() != null) {
@@ -11,7 +11,7 @@
     ValidationUtils.rejectIfEmpty(errors,"voided","error.null");
     ValidationUtils.rejectIfEmpty(errors,"concept","Concept.noConceptSelected");
     ValidationUtils.rejectIfEmpty(errors,"patient","error.null");
-    ValidationUtils.rejectIfEmpty(errors,"orderType","error.null");
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"orderNumber","error.null");
     Date startDate=order.getStartDate();
     if (startDate != null) {
       Date discontinuedDate=order.getDiscontinuedDate();
@@ -24,6 +24,26 @@
         errors.rejectValue("startDate","Order.error.startDateAfterAutoExpireDate");
         errors.rejectValue("autoExpireDate","Order.error.startDateAfterAutoExpireDate");
       }
+    }
+    if (order.getDiscontinued() == null) {
+      errors.rejectValue("discontinued","error.null");
+    }
+ else     if (order.getDiscontinued()) {
+      ValidationUtils.rejectIfEmpty(errors,"discontinuedDate","Order.error.discontinueNeedsDateAndPerson");
+      ValidationUtils.rejectIfEmpty(errors,"discontinuedBy","Order.error.discontinueNeedsDateAndPerson");
+      ValidationUtils.rejectIfEmptyOrWhitespace(errors,"discontinuedReason","Order.error.discontinueNeedsReason");
+      if (order.getDiscontinuedDate() != null) {
+        if (OpenmrsUtil.compare(order.getDiscontinuedDate(),new Date()) > 0)         errors.rejectValue("discontinuedDate","Order.error.discontinuedDateInFuture");
+        if (order.getAutoExpireDate() != null && OpenmrsUtil.compare(order.getDiscontinuedDate(),order.getAutoExpireDate()) > 0) {
+          errors.rejectValue("autoExpireDate","Order.error.discontinuedAfterAutoExpireDate");
+          errors.rejectValue("discontinuedDate","Order.error.discontinuedAfterAutoExpireDate");
+        }
+      }
+    }
+ else     if (!order.getDiscontinued()) {
+      if (order.getDiscontinuedDate() != null)       errors.rejectValue("discontinuedDate","Order.error.notDiscontinuedShouldHaveNoDate");
+      if (order.getDiscontinuedBy() != null)       errors.rejectValue("discontinuedBy","Order.error.notDiscontinuedShouldHaveNoBy");
+      if (order.getDiscontinuedReason() != null)       errors.rejectValue("discontinuedReason","Order.error.notDiscontinuedShouldHaveNoReason");
     }
   }
 }

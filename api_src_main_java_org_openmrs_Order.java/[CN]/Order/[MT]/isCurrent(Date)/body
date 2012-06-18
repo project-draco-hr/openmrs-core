@@ -1,5 +1,7 @@
 {
-  if (isVoided())   return false;
+  if (isVoided()) {
+    return false;
+  }
   if (checkDate == null) {
     checkDate=new Date();
   }
@@ -7,11 +9,19 @@
     return false;
   }
   if (discontinued != null && discontinued) {
-    if (discontinuedDate == null)     return checkDate.equals(startDate);
- else     return checkDate.before(discontinuedDate);
+    if (discontinuedDate == null) {
+      return checkDate.equals(startDate);
+    }
+ else {
+      return checkDate.before(discontinuedDate);
+    }
   }
  else {
-    if (autoExpireDate == null)     return true;
- else     return checkDate.before(autoExpireDate);
+    if (autoExpireDate == null) {
+      return true;
+    }
+ else {
+      return checkDate.before(autoExpireDate);
+    }
   }
 }

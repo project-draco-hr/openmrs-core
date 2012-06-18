@@ -1,0 +1,8 @@
+{
+  Orderable orderable=Context.getOrderService().getOrderable("org.openmrs.GenericDrug:concept=3");
+  Assert.assertNotNull(orderable);
+  Assert.assertTrue(orderable.getClass().equals(GenericDrug.class));
+  orderable=Context.getOrderService().getOrderable("org.openmrs.Drug:2");
+  Assert.assertNotNull(orderable);
+  Assert.assertTrue(orderable.getClass().equals(Drug.class));
+}

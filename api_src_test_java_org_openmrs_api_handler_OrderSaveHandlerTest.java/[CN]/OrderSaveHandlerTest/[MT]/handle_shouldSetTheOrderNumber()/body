@@ -1,0 +1,5 @@
+{
+  Order order=new Order();
+  new OrderSaveHandler().handle(order,null,null,null);
+  Assert.assertNotNull(order.getOrderNumber());
+}

@@ -1,0 +1,15 @@
+{
+  if (patient == null)   throw new APIException("Unable to get drug orders if not given a patient");
+  List<Patient> patients=new Vector<Patient>();
+  patients.add(patient);
+  List<DrugOrder> drugOrders=getOrders(DrugOrder.class,patients,null,null,null,null,null,null);
+  if (drugOrders != null) {
+    if (includeVoided)     return drugOrders;
+    List<DrugOrder> ret=new ArrayList<DrugOrder>();
+    for (    DrugOrder drugOrder : drugOrders) {
+      if (!drugOrder.getVoided())       ret.add(drugOrder);
+    }
+    return ret;
+  }
+  return Collections.EMPTY_LIST;
+}

@@ -1,0 +1,4 @@
+{
+  if (orderClassType == null)   throw new APIException("orderClassType cannot be null.  An order type of Order.class or a subclass is required");
+  return dao.getOrders(orderClassType,patients,concepts,orderers,encounters,asOfDate,actionsToInclude,actionsToExclude,includeVoided);
+}

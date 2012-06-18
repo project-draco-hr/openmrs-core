@@ -1,5 +1,6 @@
 {
-  List<Encounter> encounters=new Vector<Encounter>();
+  if (encounter == null)   throw new APIException("Unable to get orders if I am not given an encounter");
+  List<Encounter> encounters=new ArrayList<Encounter>();
   encounters.add(encounter);
-  return getOrders(Order.class,null,null,null,null,encounters,null);
+  return getOrders(Order.class,null,null,null,encounters,null,null,null);
 }

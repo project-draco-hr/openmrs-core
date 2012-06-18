@@ -4,17 +4,13 @@
   DrugOrder drugOrder=new DrugOrder();
   Patient patient=Context.getPatientService().getPatient(patientId);
   Drug drug=Context.getConceptService().getDrugByNameOrId(drugId);
-  if (drug == null)   throw new DWRException("There is no drug with the name or drugId of: " + drugId);
-  OrderType orderType=Context.getOrderService().getOrderType(OpenmrsConstants.ORDERTYPE_DRUG);
-  if (orderType == null)   throw new DWRException("There is no 'Drug' Order Type in the system.  This must be an Order Type with orderTypeId = " + OpenmrsConstants.ORDERTYPE_DRUG);
+  if (drug == null)   throw new APIException("There is no drug with the name or drugId of: " + drugId);
   drugOrder.setDrug(drug);
   Concept concept=drug.getConcept();
   drugOrder.setConcept(concept);
-  drugOrder.setOrderType(orderType);
   drugOrder.setPatient(patient);
   drugOrder.setDose(dose);
-  drugOrder.setUnits(units);
-  drugOrder.setFrequency(frequency);
+  drugOrder.setDoseUnits(units);
   drugOrder.setInstructions(instructions);
   Date dStartDate=null;
   if (startDate != null) {
@@ -23,7 +19,7 @@
       dStartDate=sdf.parse(startDate);
     }
  catch (    ParseException e) {
-      throw new DWRException(e.getMessage());
+      throw new APIException(e.getMessage());
     }
   }
   drugOrder.setStartDate(dStartDate);
@@ -33,7 +29,7 @@
     Context.getOrderService().saveOrder(drugOrder);
   }
  catch (  APIException e) {
-    throw new DWRException(e.getMessage());
+    throw new APIException(e.getMessage());
   }
   log.debug("Finished creating new drug order");
   return ret;

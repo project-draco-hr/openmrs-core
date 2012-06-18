@@ -1,0 +1,6 @@
+{
+  Order order=service.getOrder(3);
+  Calendar cal=Calendar.getInstance();
+  cal.add(Calendar.MINUTE,1);
+  service.discontinueOrder(order,"Testing",null,cal.getTime());
+}
