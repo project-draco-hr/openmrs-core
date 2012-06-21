@@ -1,0 +1,29 @@
+{
+  Context.flushSession();
+  Context.clearSession();
+  final MockHttpServletResponse response=new MockHttpServletResponse();
+  ModelAndView modelAndView=null;
+  HandlerExecutionChain handlerChain=null;
+  for (  HandlerMapping handlerMapping : handlerMappings) {
+    if (handlerChain == null) {
+      handlerChain=handlerMapping.getHandler(request);
+    }
+ else {
+      Assert.fail("The requested URI has more than one mapping: " + request.getRequestURI());
+    }
+  }
+  Assert.assertNotNull("The requested URI has no mapping: " + request.getRequestURI(),handlerChain);
+  boolean supported=false;
+  for (  HandlerAdapter handlerAdapter : handlerAdapters) {
+    final Object handler=handlerChain.getHandler();
+    if (handlerAdapter.supports(handler)) {
+      Assert.assertFalse("The requested URI has more than one handler: " + request.getRequestURI(),supported);
+      modelAndView=handlerAdapter.handle(request,response,handler);
+      supported=true;
+    }
+  }
+  Assert.assertTrue("The requested URI has no handlers: " + request.getRequestURI(),supported);
+  Context.flushSession();
+  Context.clearSession();
+  return new Response(response,request.getSession(),modelAndView);
+}
