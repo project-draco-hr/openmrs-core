@@ -11,7 +11,16 @@
         if (!wizardModel.hasCurrentOpenmrsDatabase) {
           setMessage("Create database");
           setExecutingTask(WizardTask.CREATE_SCHEMA);
-          String sql="create database if not exists `?` default character set utf8";
+          String sql=null;
+          if (wizardModel.databaseConnection.contains("mysql")) {
+            sql="create database if not exists `?` default character set utf8";
+          }
+ else           if (wizardModel.databaseConnection.contains("postgresql")) {
+            sql="create database `?` encoding 'utf8'";
+          }
+ else {
+            sql="create database `?`";
+          }
           int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
           if (result < 0) {
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_NEW,DEFAULT_PAGE);
