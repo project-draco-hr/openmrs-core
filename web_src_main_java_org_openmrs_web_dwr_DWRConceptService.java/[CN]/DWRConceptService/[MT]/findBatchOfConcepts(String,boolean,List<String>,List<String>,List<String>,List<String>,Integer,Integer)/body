@@ -28,9 +28,19 @@
     if (phrase.matches("\\d+")) {
       Concept c=cs.getConcept(Integer.valueOf(phrase));
       if (c != null && (!c.isRetired() || includeRetired)) {
-        ConceptName cn=c.getName(defaultLocale);
-        ConceptSearchResult searchResult=new ConceptSearchResult(phrase,c,cn);
-        searchResults.add(searchResult);
+        String conceptClassName=null;
+        if (c.getConceptClass() != null) {
+          conceptClassName=c.getConceptClass().getName();
+        }
+        String conceptDatatypeName=null;
+        if (c.getDatatype() != null) {
+          conceptDatatypeName=c.getDatatype().getName();
+        }
+        if ((includeClassNames.isEmpty() || includeClassNames.contains(conceptClassName)) && (excludeClassNames.isEmpty() || !excludeClassNames.contains(conceptClassName)) && (includeDatatypeNames.isEmpty() || includeDatatypeNames.contains(conceptDatatypeName))&& (excludeDatatypeNames.isEmpty() || !excludeDatatypeNames.contains(conceptDatatypeName))) {
+          ConceptName cn=c.getName(defaultLocale);
+          ConceptSearchResult searchResult=new ConceptSearchResult(phrase,c,cn);
+          searchResults.add(searchResult);
+        }
       }
     }
     if (!StringUtils.isBlank(phrase)) {
