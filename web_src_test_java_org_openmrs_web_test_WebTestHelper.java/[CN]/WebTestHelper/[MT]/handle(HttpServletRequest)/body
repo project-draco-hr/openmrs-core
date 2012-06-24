@@ -1,4 +1,7 @@
 {
+  if (handlerMappings == null || handlerAdapters == null) {
+    throw new UnsupportedOperationException("The web context is not configured!");
+  }
   Context.flushSession();
   Context.clearSession();
   final MockHttpServletResponse response=new MockHttpServletResponse();
