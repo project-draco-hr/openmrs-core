@@ -1,0 +1,9 @@
+{
+  WebElement select=driver.findElement(By.id(id));
+  List<WebElement> options=select.findElements(By.tagName("option"));
+  for (  WebElement option : options) {
+    if (value.equalsIgnoreCase(option.getText())) {
+      option.click();
+    }
+  }
+}
