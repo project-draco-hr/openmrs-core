@@ -2,5 +2,5 @@
   String port=System.getProperty("jetty.port","8080");
   String url="http://localhost:" + port + "/openmrs/initialsetup";
   goTo(url);
-  if (!userAlreadyLoggedIn())   assertPresenceOf(button().with(attribute("value",equalTo("Log In"))));
+  if (!userAlreadyLoggedIn())   waitAndAssertFor(button().with(attribute("value",equalTo("Log In"))));
 }
