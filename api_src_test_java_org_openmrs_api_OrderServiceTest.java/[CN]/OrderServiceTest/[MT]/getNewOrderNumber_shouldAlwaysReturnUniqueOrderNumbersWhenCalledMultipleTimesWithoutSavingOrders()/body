@@ -26,5 +26,4 @@
   beginRequestingOrderNumbers.countDown();
   newOrderNumbersObtained.await();
   Assert.assertEquals("Should receive a unique order number for each concurrent request",numberOfConcurrentOrderNumberRequests,uniqueOrderNumbers.size());
-  Assert.assertEquals(numberOfConcurrentOrderNumberRequests,uniqueOrderNumbers.size());
 }
