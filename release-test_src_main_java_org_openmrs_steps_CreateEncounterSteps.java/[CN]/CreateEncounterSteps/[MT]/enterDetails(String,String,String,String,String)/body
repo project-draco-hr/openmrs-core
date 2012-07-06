@@ -9,4 +9,7 @@
   getWebDriver().findElement(By.id("addProviderButton")).click();
   selectFrom(providerRole,"roleIds[0]");
   type(provider,into(textbox().with(attribute("id",equalTo("providers[0]")))));
+  WebElement providerElement=driver.findElement(By.id("providers[0]"));
+  providerElement.sendKeys(Keys.TAB);
+  Thread.sleep(1000);
 }

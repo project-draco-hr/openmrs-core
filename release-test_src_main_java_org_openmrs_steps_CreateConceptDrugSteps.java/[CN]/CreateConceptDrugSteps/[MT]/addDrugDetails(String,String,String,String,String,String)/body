@@ -1,9 +1,9 @@
 {
   type(name,into(textbox().with(attribute("name",equalTo("name")))));
   type(concept,into(textbox().with(attribute("id",equalTo("concept_selection")))));
-  String conceptSearchXpath="//table[@id='table']/tbody/tr[2]/td/input[@id='concept_selection']";
-  waitFor(finderByXpath(conceptSearchXpath));
-  clickOn(finderByXpath(conceptSearchXpath));
+  Thread.sleep(1000);
+  WebElement conceptSelection=driver.findElement(By.id("concept_selection"));
+  conceptSelection.sendKeys(Keys.TAB);
   clickOn(checkbox().with(attribute("name",equalTo("combination"))));
   type(doseStrength,into(textbox().with(attribute("name",equalTo("doseStrength")))));
   type(units,into(textbox().with(attribute("name",equalTo("units")))));
