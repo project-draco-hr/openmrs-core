@@ -11,5 +11,16 @@
     runtimeProperties.setProperty(Environment.HBM2DDL_AUTO,"create-drop");
   }
   runtimeProperties.setProperty(ModuleConstants.IGNORE_CORE_MODULES_PROPERTY,"true");
+  try {
+    File tempappdir=File.createTempFile("appdir-for-unit-tests-","");
+    tempappdir.delete();
+    tempappdir.mkdir();
+    tempappdir.deleteOnExit();
+    runtimeProperties.setProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,tempappdir.getAbsolutePath());
+    OpenmrsConstants.APPLICATION_DATA_DIRECTORY=tempappdir.getAbsolutePath();
+  }
+ catch (  IOException e) {
+    log.error("Unable to create temp dir",e);
+  }
   return runtimeProperties;
 }
