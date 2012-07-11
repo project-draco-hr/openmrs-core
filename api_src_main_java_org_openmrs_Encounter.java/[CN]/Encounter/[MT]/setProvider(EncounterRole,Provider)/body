@@ -8,7 +8,7 @@
         encounterProvider.setDateVoided(new Date());
         encounterProvider.setVoidedBy(Context.getAuthenticatedUser());
       }
- else {
+ else       if (!encounterProvider.isVoided()) {
         hasProvider=true;
       }
     }

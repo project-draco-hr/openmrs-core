@@ -4,7 +4,7 @@
   }
  else {
     for (    EncounterProvider encounterProvider : encounterProviders) {
-      if (encounterProvider.getProvider().getPerson() != null) {
+      if (!encounterProvider.isVoided() && encounterProvider.getProvider().getPerson() != null) {
         return encounterProvider.getProvider().getPerson();
       }
     }
