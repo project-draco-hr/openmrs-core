@@ -1,0 +1,14 @@
+{
+  Encounter encounter=new Encounter();
+  EncounterRole role=new EncounterRole();
+  Provider provider=new Provider();
+  Provider anotherProvider=new Provider();
+  Person person=new Person();
+  Person anotherPerson=new Person();
+  provider.setPerson(person);
+  anotherProvider.setPerson(anotherPerson);
+  encounter.setProvider(role,provider);
+  encounter.setProvider(role,anotherProvider);
+  Person result=encounter.getProvider();
+  Assert.assertEquals(anotherPerson,result);
+}
