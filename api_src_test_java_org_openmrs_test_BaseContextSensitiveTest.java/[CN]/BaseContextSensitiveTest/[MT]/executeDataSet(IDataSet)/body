@@ -3,7 +3,7 @@
   IDatabaseConnection dbUnitConn=new DatabaseConnection(connection);
   if (useInMemoryDatabase()) {
     DatabaseConfig config=dbUnitConn.getConfig();
-    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new HsqldbDataTypeFactory());
+    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new H2DataTypeFactory());
     String sql="SET REFERENTIAL_INTEGRITY FALSE";
     PreparedStatement ps=connection.prepareStatement(sql);
     ps.execute();
