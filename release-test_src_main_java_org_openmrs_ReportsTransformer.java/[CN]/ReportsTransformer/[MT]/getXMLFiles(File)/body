@@ -1,0 +1,11 @@
+{
+  List<File> xmlFiles=new ArrayList<File>();
+  File[] files=folder.listFiles();
+  for (  File file : files) {
+    String fileName=file.getName();
+    if (file.isFile() && (fileName.endsWith(".xml") || fileName.endsWith(".XML"))) {
+      xmlFiles.add(file);
+    }
+  }
+  return xmlFiles;
+}
