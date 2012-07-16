@@ -1,5 +1,6 @@
 {
   System.out.println("TRANSFORMING JBEHAVE XML TO JUNIT COMPATIBLE XML.");
+  System.out.println("LOOKING FOR XML FILES AT " + cd.getPath() + "/target/jbehave");
   List<File> jbehaveReports=getXMLFiles(new File(cd,"/target/jbehave/"));
   for (  File report : jbehaveReports) {
     tranformReport(report);
