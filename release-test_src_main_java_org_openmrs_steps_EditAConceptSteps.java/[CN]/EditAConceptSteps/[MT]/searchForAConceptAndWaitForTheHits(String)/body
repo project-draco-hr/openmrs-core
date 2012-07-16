@@ -1,4 +1,6 @@
 {
-  type(phrase,into(textbox().with(attribute("id",equalTo("inputNode")))));
+  HtmlTagFinder conceptName=textbox().with(attribute("id",equalTo("inputNode")));
+  waitFor(conceptName);
+  type(phrase,into(conceptName));
   waitFor(Finders.table().with(attribute("id",equalTo("openmrsSearchTable"))));
 }
