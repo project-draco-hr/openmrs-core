@@ -1,4 +1,5 @@
 {
+  Thread.sleep(2000);
   type(name,into(textbox().with(attribute("id",equalTo("patientId_id_selection")))));
   String autoCompleteXPath="//ul[@class='ui-autocomplete ui-menu ui-widget ui-widget-content ui-corner-all']";
   waitFor(finderByXpath(autoCompleteXPath));
@@ -11,5 +12,4 @@
   type(provider,into(textbox().with(attribute("id",equalTo("providers[0]")))));
   WebElement providerElement=driver.findElement(By.id("providers[0]"));
   providerElement.sendKeys(Keys.TAB);
-  Thread.sleep(1000);
 }
