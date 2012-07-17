@@ -1,11 +1,13 @@
 {
   Source xml=new StreamSource(xmlPath);
   Source xslt=new StreamSource(new File(cd,"src/main/resources/reports/jbehave-3.x-to-junit-1.0.xsl"));
-  String resultOutputPath=cd + "/target/jbehave/TEST" + xmlPath.getName();
-  Result resultOutput=new StreamResult(new FileOutputStream(resultOutputPath));
-  DOMResult result=new DOMResult();
-  Transformer transformer=TransformerFactory.newInstance().newTransformer(xslt);
-  transformer.transform(xml,result);
-  transformer.transform(xml,resultOutput);
-  return (Document)result.getNode();
+  String xmlName=xmlPath.getName();
+  if (!xmlName.contains("AfterStories") || !xmlName.contains("BeforeStories")) {
+    String resultOutputPath=cd + "/target/jbehave/TEST" + xmlName;
+    Result resultOutput=new StreamResult(new FileOutputStream(resultOutputPath));
+    DOMResult result=new DOMResult();
+    Transformer transformer=TransformerFactory.newInstance().newTransformer(xslt);
+    transformer.transform(xml,result);
+    transformer.transform(xml,resultOutput);
+  }
 }
