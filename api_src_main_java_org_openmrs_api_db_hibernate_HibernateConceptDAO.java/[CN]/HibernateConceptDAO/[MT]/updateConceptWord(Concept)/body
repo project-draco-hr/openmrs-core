@@ -7,6 +7,9 @@
     for (    ConceptWord word : words) {
       word.setWeight(weighConceptWord(word));
       try {
+        if (word.getConceptName().getId() == null) {
+          sessionFactory.getCurrentSession().saveOrUpdate(word.getConceptName());
+        }
         sessionFactory.getCurrentSession().save(word);
       }
  catch (      NonUniqueObjectException e) {
