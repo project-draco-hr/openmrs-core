@@ -1,0 +1,10 @@
+{
+  if (concept.getConceptMappings() != null) {
+    int index=0;
+    for (    ConceptMap conceptMap : concept.getConceptMappings()) {
+      errors.pushNestedPath("conceptMappings[" + index + "].conceptReferenceTerm");
+      new ConceptReferenceTermWebValidator().validate(conceptMap.getConceptReferenceTerm(),errors);
+      errors.popNestedPath();
+    }
+  }
+}
