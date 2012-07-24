@@ -70,6 +70,7 @@ catch (      Exception e) {
       if (concept.getConceptId() != null)       concept.getCreator().getPersonName();
       try {
         new ConceptValidator().validate(concept,errors);
+        validateConceptUsesPersistedObjects(concept,errors);
         if (!errors.hasErrors()) {
           cs.saveConcept(concept);
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.saved");
