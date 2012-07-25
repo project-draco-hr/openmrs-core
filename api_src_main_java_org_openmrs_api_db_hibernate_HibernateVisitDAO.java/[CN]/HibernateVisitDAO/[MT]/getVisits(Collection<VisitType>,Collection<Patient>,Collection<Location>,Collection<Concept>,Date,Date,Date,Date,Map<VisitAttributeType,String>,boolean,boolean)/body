@@ -10,7 +10,9 @@
     criteria.add(Restrictions.or(Restrictions.isNull("stopDatetime"),Restrictions.gt("stopDatetime",new Date())));
   }
  else {
-    if (minEndDatetime != null)     criteria.add(Restrictions.ge("stopDatetime",minEndDatetime));
+    if (minEndDatetime != null) {
+      criteria.add(Restrictions.or(Restrictions.isNull("stopDatetime"),Restrictions.ge("stopDatetime",minEndDatetime)));
+    }
     if (maxEndDatetime != null)     criteria.add(Restrictions.le("stopDatetime",maxEndDatetime));
   }
   if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
