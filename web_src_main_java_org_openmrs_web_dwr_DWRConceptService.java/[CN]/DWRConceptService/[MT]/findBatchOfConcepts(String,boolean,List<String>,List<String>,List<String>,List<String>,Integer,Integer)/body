@@ -2,18 +2,10 @@
   Vector<Object> objectList=new Vector<Object>();
   User currentUser=Context.getAuthenticatedUser();
   Locale defaultLocale=Context.getLocale();
-  List<Locale> localesToSearchOn=null;
-  if (currentUser != null)   localesToSearchOn=currentUser.getProficientLocales();
-  if (localesToSearchOn == null)   localesToSearchOn=new Vector<Locale>();
-  if (localesToSearchOn.size() == 0) {
-    localesToSearchOn.add(defaultLocale);
-    if (!"".equals(defaultLocale.getCountry())) {
-      localesToSearchOn.add(new Locale(defaultLocale.getLanguage()));
-    }
-  }
+  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales(currentUser);
   if (log.isDebugEnabled()) {
     StringBuffer searchLocalesString=new StringBuffer();
-    for (    Locale loc : localesToSearchOn) {
+    for (    Locale loc : searchLocales) {
       searchLocalesString.append(loc.toString() + " ");
     }
     log.debug("searching locales: " + searchLocalesString);
@@ -52,10 +44,10 @@
       for (      String name : includeDatatypeNames)       if (!"".equals(name))       includeDatatypes.add(cs.getConceptDatatypeByName(name));
       List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
-      searchResults.addAll(cs.getConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,start,length));
+      searchResults.addAll(cs.getConcepts(phrase,searchLocales,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null,start,length));
     }
     if (searchResults.size() < 1) {
-      objectList.add(Context.getMessageSourceService().getMessage("general.noMatchesFoundInLocale",new Object[]{"<b>" + phrase + "</b>",OpenmrsUtil.join(localesToSearchOn,", ")},Context.getLocale()));
+      objectList.add(Context.getMessageSourceService().getMessage("general.noMatchesFoundInLocale",new Object[]{"<b>" + phrase + "</b>",OpenmrsUtil.join(searchLocales,", ")},Context.getLocale()));
     }
  else {
       for (      ConceptSearchResult searchResult : searchResults)       objectList.add(new ConceptListItem(searchResult));
