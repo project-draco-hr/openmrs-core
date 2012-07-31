@@ -1,3 +1,5 @@
 {
-  return Collections.unmodifiableSortedSet(new TreeSet<PatientState>(getStates()));
+  List<PatientState> sortedStates=new ArrayList<PatientState>(getStates());
+  Collections.sort(sortedStates);
+  return sortedStates;
 }
