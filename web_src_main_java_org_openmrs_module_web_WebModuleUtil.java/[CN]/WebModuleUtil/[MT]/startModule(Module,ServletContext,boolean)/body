@@ -5,7 +5,7 @@
     }
   }
  catch (  Exception e) {
-    log.error("unable to load module loggers " + e.getMessage());
+    log.warn("Unable to load module loggers",e);
   }
   if (log.isDebugEnabled())   log.debug("trying to start module " + mod);
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
