@@ -1,4 +1,7 @@
 {
+  if (!canEditEncounter(encounter,null)) {
+    throw new APIException(String.format("Privilege %s required to edit encounters of this type",encounter.getEncounterType().getEditPrivilege()));
+  }
   if (encounter.getEncounterId() == null) {
     EncounterVisitHandler encounterVisitHandler=Context.getEncounterService().getActiveEncounterVisitHandler();
     if (encounterVisitHandler != null) {

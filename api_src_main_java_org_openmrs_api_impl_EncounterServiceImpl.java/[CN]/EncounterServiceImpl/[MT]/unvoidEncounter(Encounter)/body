@@ -1,4 +1,7 @@
 {
+  if (!canEditEncounter(encounter,null)) {
+    throw new APIException(String.format("Privilege %s required to unvoid encounters of this type",encounter.getEncounterType().getEditPrivilege()));
+  }
   String voidReason=encounter.getVoidReason();
   if (voidReason == null)   voidReason="";
   ObsService os=Context.getObsService();

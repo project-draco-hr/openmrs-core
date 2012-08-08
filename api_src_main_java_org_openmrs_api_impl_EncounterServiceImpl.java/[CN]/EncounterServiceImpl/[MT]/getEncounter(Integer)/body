@@ -1,3 +1,12 @@
 {
-  return dao.getEncounter(encounterId);
+  Encounter encounter=dao.getEncounter(encounterId);
+  if (encounter == null) {
+    return null;
+  }
+ else   if (canViewEncounter(encounter,null)) {
+    return encounter;
+  }
+ else {
+    throw new APIException(String.format("Privilege %s required to view encounters of this type",encounter.getEncounterType().getViewPrivilege()));
+  }
 }

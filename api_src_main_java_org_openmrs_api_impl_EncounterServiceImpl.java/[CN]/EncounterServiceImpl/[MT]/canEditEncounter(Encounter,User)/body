@@ -1,0 +1,12 @@
+{
+  if (encounter == null) {
+    throw new IllegalArgumentException("The encounter argument can not be null");
+  }
+  if (encounter.getEncounterType() == null) {
+    return Boolean.TRUE;
+  }
+  if (user == null) {
+    user=Context.getAuthenticatedUser();
+  }
+  return userHasEncounterPrivilege(encounter.getEncounterType().getEditPrivilege(),user);
+}

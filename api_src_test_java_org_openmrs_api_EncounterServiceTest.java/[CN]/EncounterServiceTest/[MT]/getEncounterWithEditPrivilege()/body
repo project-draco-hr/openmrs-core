@@ -1,0 +1,12 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Encounter encounter=encounterService.getEncounter(1);
+  EncounterType encounterType=encounter.getEncounterType();
+  assertNotNull(encounterType);
+  Privilege editPrivilege=Context.getUserService().getPrivilege("Some Privilege For Edit Encounter Types");
+  encounterType.setEditPrivilege(editPrivilege);
+  encounter.setEncounterType(encounterType);
+  encounter=encounterService.saveEncounter(encounter);
+  assertNotNull(encounter);
+  return encounter;
+}

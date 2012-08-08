@@ -1,0 +1,8 @@
+{
+  Encounter encounter=getEncounterWithViewPrivilege();
+  User user=Context.getUserService().getUserByUsername("test_user");
+  assertNotNull(user);
+  Context.becomeUser(user.getSystemId());
+  Context.addProxyPrivilege(PrivilegeConstants.VIEW_ENCOUNTERS);
+  assertNull(Context.getEncounterService().getEncounter(encounter.getId()));
+}

@@ -1,0 +1,9 @@
+{
+  Encounter encounter=getEncounterWithViewPrivilege();
+  User user=Context.getUserService().getUserByUsername("test_user");
+  assertNotNull(user);
+  Role role=Context.getUserService().getRole("Provider");
+  role.addPrivilege(encounter.getEncounterType().getViewPrivilege());
+  user.addRole(role);
+  assertTrue(Context.getEncounterService().canViewEncounter(encounter,user));
+}
