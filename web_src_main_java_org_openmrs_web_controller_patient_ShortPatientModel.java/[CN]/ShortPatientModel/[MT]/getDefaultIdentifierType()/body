@@ -1,17 +1,9 @@
 {
-  PatientIdentifierType defit=null;
-  PatientIdentifierType firstit=null;
-  for (  PatientIdentifierType pit : Context.getPatientService().getAllPatientIdentifierTypes()) {
-    if (pit.getRequired()) {
-      defit=defit != null ? defit : pit;
-      if (defit.getName().compareToIgnoreCase(pit.getName()) > 0) {
-        defit=pit;
-      }
-    }
-    firstit=firstit != null ? firstit : pit;
-    if (firstit.getName().compareToIgnoreCase(pit.getName()) > 0) {
-      firstit=pit;
-    }
+  List<PatientIdentifierType> types=Context.getPatientService().getAllPatientIdentifierTypes();
+  if (types.isEmpty()) {
+    return null;
   }
-  return defit != null ? defit : firstit;
+ else {
+    return types.iterator().next();
+  }
 }

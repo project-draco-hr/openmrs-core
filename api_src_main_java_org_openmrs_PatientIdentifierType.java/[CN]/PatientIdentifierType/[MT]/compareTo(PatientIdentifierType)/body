@@ -1,9 +1,0 @@
-{
-  if (!this.getRetired() && o.getRetired())   return -1;
-  if (this.getRequired() && !o.getRequired())   return -1;
-  if (!this.getRequired() && o.getRequired())   return 1;
-  int result=this.getName().compareToIgnoreCase(o.getName());
-  if (result != 0)   return result;
-  result=this.getPatientIdentifierTypeId().compareTo(o.getPatientIdentifierTypeId());
-  return result;
-}

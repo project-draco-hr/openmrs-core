@@ -1,0 +1,6 @@
+{
+  List<PatientIdentifierType> list=patientService.getPatientIdentifierTypes(null,null,false,null);
+  List<PatientIdentifierType> sortedList=new ArrayList<PatientIdentifierType>(list);
+  Collections.sort(sortedList,new PatientIdentifierTypeDefaultComparator());
+  Assert.assertEquals(sortedList,list);
+}
