@@ -1,3 +1,23 @@
 {
-  return dao.getDrugs(phrase);
+  List<Drug> drugs=new ArrayList<Drug>();
+  try {
+    Integer drugId=Integer.parseInt(phrase);
+    Drug targetDrug=getDrug(drugId);
+    if (targetDrug != null) {
+      drugs.add(targetDrug);
+    }
+  }
+ catch (  NumberFormatException e) {
+  }
+  try {
+    Integer conceptId=Integer.parseInt(phrase);
+    Concept targetConcept=Context.getConceptService().getConcept(conceptId);
+    if (targetConcept != null) {
+      drugs.addAll(Context.getConceptService().getDrugsByConcept(targetConcept));
+    }
+  }
+ catch (  NumberFormatException e) {
+  }
+  drugs.addAll(dao.getDrugs(phrase));
+  return drugs;
 }
