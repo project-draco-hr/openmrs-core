@@ -1,0 +1,8 @@
+{
+  Integer conceptId=792;
+  Drug drug=Context.getConceptService().getDrug(2);
+  Assert.assertNotNull(drug.getConcept());
+  Assert.assertEquals(drug.getConcept().getConceptId(),conceptId);
+  List<Drug> drugs=Context.getConceptService().getDrugs(String.valueOf(conceptId));
+  Assert.assertTrue(drugs.contains(drug));
+}
