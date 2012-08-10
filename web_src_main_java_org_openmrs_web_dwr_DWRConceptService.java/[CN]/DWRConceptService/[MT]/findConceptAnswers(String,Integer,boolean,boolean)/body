@@ -8,7 +8,7 @@
   for (  Locale lc : locales) {
     List<ConceptSearchResult> results=cs.findConceptAnswers(text,lc,concept);
     if (results != null) {
-      results.addAll(searchResults);
+      searchResults.addAll(results);
     }
   }
   List<Drug> drugAnswers=new Vector<Drug>();
@@ -16,7 +16,11 @@
     if (conceptAnswer.getAnswerDrug() != null)     drugAnswers.add(conceptAnswer.getAnswerDrug());
   }
   List<Object> items=new Vector<Object>();
+  Set<Integer> uniqueItems=new HashSet<Integer>();
   for (  ConceptSearchResult searchResult : searchResults) {
+    if (!uniqueItems.add(searchResult.getConcept().getConceptId())) {
+      continue;
+    }
     items.add(new ConceptListItem(searchResult));
     if (includeDrugConcepts) {
       Integer classId=searchResult.getConcept().getConceptClass().getConceptClassId();

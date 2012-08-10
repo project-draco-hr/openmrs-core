@@ -6,6 +6,7 @@
   if (user != null) {
     List<Locale> proficientLocales=user.getProficientLocales();
     if (proficientLocales != null) {
+      locales.addAll(proficientLocales);
       List<Locale> allowedLocales=getAllowedLocales();
       if (allowedLocales != null) {
         Set<Locale> retainLocales=new HashSet<Locale>();
@@ -13,9 +14,8 @@
           retainLocales.add(allowedLocale);
           retainLocales.add(new Locale(allowedLocale.getLanguage()));
         }
-        proficientLocales.retainAll(retainLocales);
+        locales.retainAll(retainLocales);
       }
-      locales.addAll(proficientLocales);
     }
   }
   return new ArrayList<Locale>(locales);
