@@ -4,7 +4,7 @@
   Concept concept=cs.getConcept(conceptId);
   if (concept == null)   throw new Exception("Unable to find a concept with id: " + conceptId);
   List<ConceptSearchResult> searchResults=new ArrayList<ConceptSearchResult>();
-  List<Locale> locales=Context.getAdministrationService().getSearchLocales(Context.getAuthenticatedUser());
+  List<Locale> locales=Context.getAdministrationService().getSearchLocales();
   for (  Locale lc : locales) {
     List<ConceptSearchResult> results=cs.findConceptAnswers(text,lc,concept);
     if (results != null) {

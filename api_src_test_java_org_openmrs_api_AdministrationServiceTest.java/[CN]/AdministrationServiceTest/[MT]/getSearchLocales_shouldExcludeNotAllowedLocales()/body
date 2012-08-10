@@ -3,7 +3,7 @@
   User user=Context.getAuthenticatedUser();
   user.setUserProperty(OpenmrsConstants.USER_PROPERTY_PROFICIENT_LOCALES,"es_CL, en_US, pl");
   Context.getUserService().saveUser(user,null);
-  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales(Context.getAuthenticatedUser());
+  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   Assert.assertTrue("en_US",searchLocales.contains(new Locale("en","US")));
   Assert.assertTrue("pl",searchLocales.contains(new Locale("pl")));
   Assert.assertTrue("es",searchLocales.contains(new Locale("es")));

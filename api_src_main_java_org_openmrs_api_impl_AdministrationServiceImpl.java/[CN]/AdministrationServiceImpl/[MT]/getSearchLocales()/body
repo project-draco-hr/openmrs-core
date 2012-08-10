@@ -3,20 +3,21 @@
   Locale currentLocale=Context.getLocale();
   locales.add(currentLocale);
   locales.add(new Locale(currentLocale.getLanguage()));
+  User user=Context.getAuthenticatedUser();
   if (user != null) {
     List<Locale> proficientLocales=user.getProficientLocales();
     if (proficientLocales != null) {
       locales.addAll(proficientLocales);
-      List<Locale> allowedLocales=getAllowedLocales();
-      if (allowedLocales != null) {
-        Set<Locale> retainLocales=new HashSet<Locale>();
-        for (        Locale allowedLocale : allowedLocales) {
-          retainLocales.add(allowedLocale);
-          retainLocales.add(new Locale(allowedLocale.getLanguage()));
-        }
-        locales.retainAll(retainLocales);
-      }
     }
+  }
+  List<Locale> allowedLocales=getAllowedLocales();
+  if (allowedLocales != null) {
+    Set<Locale> retainLocales=new HashSet<Locale>();
+    for (    Locale allowedLocale : allowedLocales) {
+      retainLocales.add(allowedLocale);
+      retainLocales.add(new Locale(allowedLocale.getLanguage()));
+    }
+    locales.retainAll(retainLocales);
   }
   return new ArrayList<Locale>(locales);
 }

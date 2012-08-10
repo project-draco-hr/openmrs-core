@@ -1,8 +1,7 @@
 {
   Vector<Object> objectList=new Vector<Object>();
-  User currentUser=Context.getAuthenticatedUser();
   Locale defaultLocale=Context.getLocale();
-  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales(currentUser);
+  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   if (log.isDebugEnabled()) {
     StringBuffer searchLocalesString=new StringBuffer();
     for (    Locale loc : searchLocales) {
