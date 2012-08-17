@@ -1,19 +1,19 @@
 {
-  FilenameFilter cacheDirFilter=new FilenameFilter(){
-    @Override public boolean accept(    File dir,    String name){
-      return name.endsWith(LIBCACHESUFFIX);
+  if (libCacheFolder.exists()) {
+    FilenameFilter cacheDirFilter=new FilenameFilter(){
+      @Override public boolean accept(      File dir,      String name){
+        return name.endsWith(LIBCACHESUFFIX);
+      }
     }
-  }
 ;
-  FilenameFilter lockFilter=new FilenameFilter(){
-    @Override public boolean accept(    File dir,    String name){
-      return name.equals("lock");
+    FilenameFilter lockFilter=new FilenameFilter(){
+      @Override public boolean accept(      File dir,      String name){
+        return name.equals("lock");
+      }
     }
-  }
 ;
-  File tempLocation=libCacheFolder.getParentFile();
-  File[] listFiles=tempLocation.listFiles(cacheDirFilter);
-  if (listFiles != null) {
+    File tempLocation=libCacheFolder.getParentFile();
+    File[] listFiles=tempLocation.listFiles(cacheDirFilter);
     for (    File cacheDir : listFiles) {
       if (cacheDir.isDirectory() && !cacheDir.equals(libCacheFolder)) {
         if (cacheDir.list(lockFilter).length == 0) {
