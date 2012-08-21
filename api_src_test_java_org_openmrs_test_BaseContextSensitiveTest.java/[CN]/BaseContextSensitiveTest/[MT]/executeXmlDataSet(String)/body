@@ -3,18 +3,19 @@
   if (xmlDataSetToRun == null) {
     File file=new File(datasetFilename);
     InputStream fileInInputStreamFormat=null;
-    if (file.exists())     fileInInputStreamFormat=new FileInputStream(datasetFilename);
- else {
-      fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
-      if (fileInInputStreamFormat == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
-    }
-    XmlDataSet xmlDataSet=null;
     try {
+      if (file.exists())       fileInInputStreamFormat=new FileInputStream(datasetFilename);
+ else {
+        fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+        if (fileInInputStreamFormat == null)         throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
+      }
+      XmlDataSet xmlDataSet=null;
       xmlDataSet=new XmlDataSet(fileInInputStreamFormat);
       xmlDataSetToRun=xmlDataSet;
+      fileInInputStreamFormat.close();
     }
   finally {
-      fileInInputStreamFormat.close();
+      IOUtils.closeQuietly(fileInInputStreamFormat);
     }
     cachedDatasets.put(datasetFilename,xmlDataSetToRun);
   }

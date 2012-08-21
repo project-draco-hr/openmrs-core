@@ -1,7 +1,10 @@
 {
-  if (Context.isAuthenticated())   return;
+  if (Context.isAuthenticated() && Context.getAuthenticatedUser().equals(authenticatedUser)) {
+    return;
+  }
   try {
     Context.authenticate("admin","test");
+    authenticatedUser=Context.getAuthenticatedUser();
     return;
   }
  catch (  ContextAuthenticationException wrongCredentialsError) {
@@ -11,7 +14,7 @@
   }
   Integer attempts=0;
   String message=null;
-  while (Context.isAuthenticated() == false && attempts < 3) {
+  while (!Context.isAuthenticated() && attempts < 3) {
     String junitusername=null;
     String junitpassword=null;
     try {
@@ -29,6 +32,7 @@
  else     credentials=new String[]{junitusername,junitpassword};
     try {
       Context.authenticate(credentials[0],credentials[1]);
+      authenticatedUser=Context.getAuthenticatedUser();
     }
  catch (    ContextAuthenticationException e) {
       message="Invalid username/password.  Try again.";
