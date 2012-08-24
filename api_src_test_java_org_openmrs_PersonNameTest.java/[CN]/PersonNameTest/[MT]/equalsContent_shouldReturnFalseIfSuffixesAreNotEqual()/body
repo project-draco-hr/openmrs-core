@@ -1,0 +1,7 @@
+{
+  PersonName nameWithSenior=new PersonName(1);
+  PersonName nameWithJunior=new PersonName(2);
+  nameWithSenior.setFamilyNameSuffix("Sr.");
+  nameWithJunior.setFamilyNameSuffix("Jr.");
+  assertThat(nameWithSenior.equalsContent(nameWithJunior),is(false));
+}
