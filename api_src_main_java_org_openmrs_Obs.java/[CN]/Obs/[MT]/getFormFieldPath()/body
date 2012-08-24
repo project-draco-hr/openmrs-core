@@ -1,0 +1,9 @@
+{
+  if (StringUtils.isNotBlank(formNamespaceAndPath)) {
+    if (formNamespaceAndPath.endsWith(FORM_NAMESPACE_PATH_SEPARATOR)) {
+      return null;
+    }
+    return formNamespaceAndPath.substring(formNamespaceAndPath.indexOf(FORM_NAMESPACE_PATH_SEPARATOR) + 1);
+  }
+  return formNamespaceAndPath;
+}
