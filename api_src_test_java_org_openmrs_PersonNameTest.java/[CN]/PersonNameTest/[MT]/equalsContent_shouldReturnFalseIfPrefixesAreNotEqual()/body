@@ -1,0 +1,7 @@
+{
+  PersonName nameWithVanDer=new PersonName(1);
+  PersonName nameWithDe=new PersonName(2);
+  nameWithVanDer.setFamilyNamePrefix("van der");
+  nameWithDe.setFamilyNamePrefix("de");
+  assertThat(nameWithVanDer.equalsContent(nameWithDe),is(false));
+}

@@ -1,0 +1,8 @@
+{
+  mergedData.setPriorDateOfBirth(preferred.getBirthdate());
+  mergedData.setPriorDateOfBirthEstimated(preferred.isBirthdateEstimated());
+  if (preferred.getBirthdate() == null || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
+    preferred.setBirthdate(notPreferred.getBirthdate());
+    preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
+  }
+}

@@ -1,0 +1,7 @@
+{
+  PersonName nameWithDoctor=new PersonName(1);
+  PersonName nameWithProfessor=new PersonName(2);
+  nameWithDoctor.setDegree("Dr.");
+  nameWithProfessor.setFamilyNameSuffix("Prof.");
+  assertThat(nameWithDoctor.equalsContent(nameWithProfessor),is(false));
+}

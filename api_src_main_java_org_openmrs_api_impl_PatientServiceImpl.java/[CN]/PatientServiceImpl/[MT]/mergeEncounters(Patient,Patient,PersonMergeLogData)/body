@@ -1,0 +1,9 @@
+{
+  EncounterService es=Context.getEncounterService();
+  for (  Encounter e : es.getEncounters(notPreferred,null,null,null,null,null,null,null,null,true)) {
+    e.setPatient(preferred);
+    log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
+    Encounter persisted=es.saveEncounter(e);
+    mergedData.addMovedEncounter(persisted.getUuid());
+  }
+}

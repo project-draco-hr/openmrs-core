@@ -1,0 +1,7 @@
+{
+  executeDataSet(PATIENT_MERGE_XML);
+  Patient preferredPatient=patientService.getPatient(10001);
+  Patient nonPreferredPatient=patientService.getPatient(10000);
+  patientService.mergePatients(preferredPatient,nonPreferredPatient);
+  assertThat(preferredPatient.getAddresses().size(),equalTo(2));
+}
