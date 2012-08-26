@@ -1,20 +1,10 @@
 {
   Map<String,Object> resultsMap=new HashMap<String,Object>();
   Vector<Object> objectList=new Vector<Object>();
-  User currentUser=Context.getAuthenticatedUser();
-  Locale defaultLocale=Context.getLocale();
-  List<Locale> localesToSearchOn=null;
-  if (currentUser != null)   localesToSearchOn=currentUser.getProficientLocales();
-  if (localesToSearchOn == null)   localesToSearchOn=new Vector<Locale>();
-  if (localesToSearchOn.size() == 0) {
-    localesToSearchOn.add(defaultLocale);
-    if (!"".equals(defaultLocale.getCountry())) {
-      localesToSearchOn.add(new Locale(defaultLocale.getLanguage()));
-    }
-  }
+  List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   if (log.isDebugEnabled()) {
     StringBuffer searchLocalesString=new StringBuffer();
-    for (    Locale loc : localesToSearchOn) {
+    for (    Locale loc : searchLocales) {
       searchLocalesString.append(loc.toString() + " ");
     }
     log.debug("searching locales: " + searchLocalesString);
@@ -36,7 +26,7 @@
       for (      String name : excludeDatatypeNames)       if (!"".equals(name))       excludeDatatypes.add(cs.getConceptDatatypeByName(name));
       int matchCount=0;
       if (getMatchCount) {
-        matchCount+=cs.getCountOfConcepts(phrase,localesToSearchOn,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null);
+        matchCount+=cs.getCountOfConcepts(phrase,searchLocales,includeRetired,includeClasses,excludeClasses,includeDatatypes,excludeDatatypes,null);
         if (phrase.matches("\\d+")) {
           Concept c=cs.getConcept(Integer.valueOf(phrase));
           if (c != null && (!c.isRetired() || includeRetired))           matchCount++;

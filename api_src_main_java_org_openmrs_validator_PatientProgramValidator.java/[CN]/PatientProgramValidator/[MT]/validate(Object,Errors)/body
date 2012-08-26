@@ -29,7 +29,7 @@
           return;
         }
         boolean isValidPatientState=false;
-        for (        ProgramWorkflow wf : workFlows) {
+        for (        ProgramWorkflow wf : patientProgram.getProgram().getAllWorkflows()) {
           if (wf.getStates().contains(patientState.getState())) {
             isValidPatientState=true;
             break;

@@ -1,0 +1,12 @@
+{
+  Criteria criteria=getSession().createCriteria(Provider.class);
+  if (!includeRetired) {
+    criteria.add(Expression.eq("retired",true));
+  }
+ else {
+    criteria.addOrder(Order.asc("retired"));
+  }
+  criteria.add(Restrictions.eq("person",person));
+  criteria.addOrder(Order.asc("providerId"));
+  return criteria.list();
+}

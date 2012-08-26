@@ -36,6 +36,11 @@ catch (      APIException e) {
         return showForm(request,response,errors);
       }
     }
+ else     if (request.getParameter("unretire") != null) {
+      ps.unretirePatientIdentifierType(identifierType);
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"PatientIdentifierType.unretiredSuccessfully");
+      toReturn=new ModelAndView(new RedirectView(getSuccessView()));
+    }
   }
   return toReturn;
 }

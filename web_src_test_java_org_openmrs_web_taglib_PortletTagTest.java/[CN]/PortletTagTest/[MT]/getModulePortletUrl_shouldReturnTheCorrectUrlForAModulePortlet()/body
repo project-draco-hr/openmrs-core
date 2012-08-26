@@ -1,0 +1,9 @@
+{
+  String portletUrl="test.portlet";
+  String moduleId="moduleId";
+  mockStatic(ModuleFactory.class);
+  when(ModuleFactory.getModuleById(moduleId)).thenReturn(new Module(moduleId));
+  PortletTag portlet=new PortletTag();
+  String result=portlet.generatePortletUrl(portletUrl,moduleId);
+  assertEquals("/module/" + moduleId + "/portlets/"+ portletUrl,result);
+}
