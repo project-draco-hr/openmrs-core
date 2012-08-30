@@ -7,9 +7,15 @@
       int index=mapping.indexOf(':');
       if (index > 0) {
         String encounterTypeId=mapping.substring(0,index).trim();
-        if (targetEncounterTypeId.equals(encounterTypeId)) {
+        if (targetEncounterTypeId.equals(encounterTypeId) || encounter.getEncounterType().getUuid().equals(encounterTypeId)) {
           String visitTypeId=mapping.substring(index + 1).trim();
-          VisitType visitType=Context.getVisitService().getVisitType(Integer.parseInt(visitTypeId));
+          VisitType visitType=null;
+          try {
+            visitType=Context.getVisitService().getVisitType(Integer.parseInt(visitTypeId));
+          }
+ catch (          NumberFormatException e) {
+          }
+          if (visitType == null)           visitType=Context.getVisitService().getVisitTypeByUuid(visitTypeId);
           if (visitType != null) {
             return visitType;
           }
