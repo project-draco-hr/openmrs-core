@@ -3,9 +3,7 @@
   Integer originalSize=vs.getAllVisits().size();
   Visit visit=new Visit(new Patient(2),new VisitType(1),new Date());
   Encounter encounter=Context.getEncounterService().getEncounter(4);
-  HashSet<Encounter> encounters=new HashSet<Encounter>();
-  encounters.add(encounter);
-  visit.setEncounters(encounters);
+  visit.addEncounter(encounter);
   vs.saveVisit(visit);
   int visitId=visit.getVisitId();
   Context.flushSession();
@@ -16,5 +14,6 @@
   assertNotNull(visit.getCreator());
   assertNotNull(visit.getDateCreated());
   assertEquals(originalSize + 1,vs.getAllVisits().size());
-  assertTrue("Encounter size is not 1",visit.getEncounters().size() == 1);
+  assertEquals(1,visit.getEncounters().size());
+  assertEquals(new Integer(4),((Encounter)visit.getEncounters().toArray()[0]).getEncounterId());
 }
