@@ -3,5 +3,5 @@
   Integer originalSize=vs.getVisits(null,null,null,null,null,null,null,null,null,true,true).size();
   Visit visit=Context.getVisitService().getVisit(1);
   vs.purgeVisit(visit);
-  Assert.assertEquals(originalSize - 1,vs.getVisits(null,null,null,null,null,null,null,null,null,true,true).size());
+  assertEquals(originalSize - 1,vs.getVisits(null,null,null,null,null,null,null,null,null,true,true).size());
 }

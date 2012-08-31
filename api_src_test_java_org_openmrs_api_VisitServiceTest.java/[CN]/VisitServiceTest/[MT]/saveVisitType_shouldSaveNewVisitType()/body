@@ -1,9 +1,9 @@
 {
   List<VisitType> visitTypes=Context.getVisitService().getVisitTypes("Some Name");
-  Assert.assertEquals(0,visitTypes.size());
+  assertEquals(0,visitTypes.size());
   VisitType visitType=new VisitType("Some Name","Description");
   Context.getVisitService().saveVisitType(visitType);
   visitTypes=Context.getVisitService().getVisitTypes("Some Name");
-  Assert.assertEquals(1,visitTypes.size());
-  Assert.assertEquals(4,Context.getVisitService().getAllVisitTypes().size());
+  assertEquals(1,visitTypes.size());
+  assertEquals(4,Context.getVisitService().getAllVisitTypes().size());
 }
