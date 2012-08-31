@@ -3,10 +3,10 @@
   Visit visit=service.getVisit(1);
   VisitAttributeType attrType=service.getVisitAttributeType(1);
   List<VisitAttribute> attributes=visit.getActiveAttributes(attrType);
-  Assert.assertTrue(attributes.size() > 0);
+  assertTrue(attributes.size() > 0);
   VisitAttribute attribute=attributes.get(0);
   attribute.setVoided(true);
   service.saveVisit(visit);
-  Assert.assertNotNull(attribute.getVoidedBy());
-  Assert.assertNotNull(attribute.getDateVoided());
+  assertNotNull(attribute.getVoidedBy());
+  assertNotNull(attribute.getDateVoided());
 }

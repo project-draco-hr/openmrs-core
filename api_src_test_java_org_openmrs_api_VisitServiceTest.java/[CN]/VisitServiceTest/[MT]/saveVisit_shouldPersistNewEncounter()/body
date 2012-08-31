@@ -1,0 +1,15 @@
+{
+  VisitService vs=Context.getVisitService();
+  Visit visit=vs.getVisit(1);
+  Encounter encounter=new Encounter();
+  encounter.setEncounterDatetime(new Date());
+  encounter.setPatient(visit.getPatient());
+  encounter.setLocation(visit.getLocation());
+  visit.addEncounter(encounter);
+  vs.saveVisit(visit);
+  int visitId=visit.getVisitId();
+  Context.flushSession();
+  Context.clearSession();
+  visit=Context.getVisitService().getVisit(visitId);
+  assertEquals(1,visit.getEncounters().size());
+}
