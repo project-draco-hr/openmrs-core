@@ -1,10 +1,10 @@
 {
   Date minEndDatetime=new SimpleDateFormat("yyyy-MM-dd").parse("2061-01-01");
   List<Visit> visits=Context.getVisitService().getVisits(null,null,null,null,null,null,minEndDatetime,null,null,true,false);
-  Assert.assertEquals(5,visits.size());
-  Assert.assertTrue(TestUtil.containsId(visits,1));
-  Assert.assertTrue(TestUtil.containsId(visits,2));
-  Assert.assertTrue(TestUtil.containsId(visits,3));
-  Assert.assertTrue(TestUtil.containsId(visits,4));
-  Assert.assertTrue(TestUtil.containsId(visits,5));
+  assertEquals(5,visits.size());
+  assertTrue(TestUtil.containsId(visits,1));
+  assertTrue(TestUtil.containsId(visits,2));
+  assertTrue(TestUtil.containsId(visits,3));
+  assertTrue(TestUtil.containsId(visits,4));
+  assertTrue(TestUtil.containsId(visits,5));
 }
