@@ -7,9 +7,10 @@
   encounter.setLocation(visit.getLocation());
   visit.addEncounter(encounter);
   vs.saveVisit(visit);
-  int visitId=visit.getVisitId();
   Context.flushSession();
   Context.clearSession();
-  visit=Context.getVisitService().getVisit(visitId);
+  Integer encounterId=encounter.getEncounterId();
+  visit=Context.getVisitService().getVisit(1);
   assertEquals(1,visit.getEncounters().size());
+  assertEquals(encounterId,((Encounter)visit.getEncounters().toArray()[0]).getEncounterId());
 }
