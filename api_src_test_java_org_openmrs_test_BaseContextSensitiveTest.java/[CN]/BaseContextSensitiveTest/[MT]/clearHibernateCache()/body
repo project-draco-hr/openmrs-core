@@ -2,4 +2,7 @@
   SessionFactory sf=(SessionFactory)applicationContext.getBean("sessionFactory");
   sf.getCache().evictCollectionRegions();
   sf.getCache().evictEntityRegions();
+  if (sf.getCurrentSession() != null) {
+    sf.getCurrentSession().clear();
+  }
 }

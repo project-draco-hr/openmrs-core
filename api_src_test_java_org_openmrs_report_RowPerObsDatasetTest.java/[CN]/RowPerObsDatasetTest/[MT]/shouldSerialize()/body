@@ -1,7 +1,5 @@
 {
-  initializeInMemoryDatabase();
   executeDataSet("org/openmrs/report/include/RowPerObsDatasetTest.xml");
-  authenticate();
   EvaluationContext evalContext=new EvaluationContext();
   DataSetService service=Context.getDataSetService();
   PatientSearch kids=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
@@ -28,6 +26,6 @@
   ReportData data=Context.getReportService().evaluate(rs,kidsCohort,evalContext);
   StringWriter w=new StringWriter();
   new TsvReportRenderer().render(data,null,w);
-  expectedOutput="\"patientId\"	\"question\"	\"questionConceptId\"	\"answer\"	\"answerConceptId\"	\"obsDatetime\"	\"encounterId\"	\"obsGroupId\"	\n\"2\"	\"WEIGHT\"	\"5089\"	\"100.0\"	\"\"	\"2005-01-01 00:00:00.0\"	\"1\"	\"\"	\n";
+  expectedOutput="\"patientId\"	\"question\"	\"questionConceptId\"	\"answer\"	\"answerConceptId\"	\"obsDatetime\"	\"encounterId\"	\"obsGroupId\"	\n\"2\"	\"WEIGHT (KG)\"	\"5089\"	\"100.0\"	\"\"	\"2005-01-01 00:00:00.0\"	\"1\"	\"\"	\n";
   assertEquals(expectedOutput,w.toString());
 }
