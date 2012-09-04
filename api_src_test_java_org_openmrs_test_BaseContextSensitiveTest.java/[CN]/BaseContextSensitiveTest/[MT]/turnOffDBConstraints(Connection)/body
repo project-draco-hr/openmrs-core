@@ -1,0 +1,12 @@
+{
+  String constraintsOffSql;
+  if (useInMemoryDatabase()) {
+    constraintsOffSql="SET REFERENTIAL_INTEGRITY FALSE";
+  }
+ else {
+    constraintsOffSql="SET FOREIGN_KEY_CHECKS=0;";
+  }
+  PreparedStatement ps=connection.prepareStatement(constraintsOffSql);
+  ps.execute();
+  ps.close();
+}

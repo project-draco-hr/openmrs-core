@@ -1,7 +1,5 @@
 {
-  initializeInMemoryDatabase();
   executeDataSet("org/openmrs/report/include/RowPerProgramEnrollment.xml");
-  authenticate();
   EvaluationContext evalContext=new EvaluationContext();
   PatientSearch kids=PatientSearch.createFilterSearch(PatientCharacteristicFilter.class);
   kids.addArgument("maxAge","3",Integer.class);

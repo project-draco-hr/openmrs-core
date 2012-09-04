@@ -1,4 +1,4 @@
 {
-  if (useInMemoryDatabase() == false)   throw new Exception("You shouldn't be initializing a NON in-memory database. Consider unoverriding useInMemoryDatabase");
+  if (!useInMemoryDatabase())   throw new Exception("You shouldn't be initializing a NON in-memory database. Consider unoverriding useInMemoryDatabase");
   executeDataSet(INITIAL_XML_DATASET_PACKAGE_PATH);
 }
