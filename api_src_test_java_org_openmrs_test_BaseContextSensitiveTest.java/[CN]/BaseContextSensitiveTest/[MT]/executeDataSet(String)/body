@@ -3,21 +3,24 @@
   if (xmlDataSetToRun == null) {
     File file=new File(datasetFilename);
     InputStream fileInInputStreamFormat=null;
-    if (file.exists())     fileInInputStreamFormat=new FileInputStream(datasetFilename);
- else {
-      fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
-      if (fileInInputStreamFormat == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
-    }
     Reader reader=null;
     try {
+      if (file.exists()) {
+        fileInInputStreamFormat=new FileInputStream(datasetFilename);
+      }
+ else {
+        fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+        if (fileInInputStreamFormat == null)         throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
+      }
       reader=new InputStreamReader(fileInInputStreamFormat);
       ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(reader,false,true,false));
       replacementDataSet.addReplacementObject("[NULL]",null);
       xmlDataSetToRun=replacementDataSet;
+      reader.close();
     }
   finally {
-      fileInInputStreamFormat.close();
-      if (reader != null)       reader.close();
+      IOUtils.closeQuietly(fileInInputStreamFormat);
+      IOUtils.closeQuietly(reader);
     }
     cachedDatasets.put(datasetFilename,xmlDataSetToRun);
   }

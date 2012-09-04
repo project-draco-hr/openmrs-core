@@ -1,0 +1,8 @@
+{
+  IDatabaseConnection dbUnitConn=new DatabaseConnection(connection);
+  if (useInMemoryDatabase()) {
+    DatabaseConfig config=dbUnitConn.getConfig();
+    config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,new H2DataTypeFactory());
+  }
+  return dbUnitConn;
+}
