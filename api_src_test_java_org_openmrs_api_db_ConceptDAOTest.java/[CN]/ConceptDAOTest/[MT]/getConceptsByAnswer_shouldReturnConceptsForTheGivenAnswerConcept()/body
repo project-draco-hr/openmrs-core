@@ -1,0 +1,8 @@
+{
+  Concept concept=dao.getConcept(22);
+  List<Concept> conceptsByAnswer=dao.getConceptsByAnswer(concept);
+  Assert.assertNotNull(conceptsByAnswer);
+  Assert.assertEquals(1,conceptsByAnswer.size());
+  Concept conceptByAnswer=conceptsByAnswer.get(0);
+  Assert.assertEquals(21,conceptByAnswer.getConceptId().intValue());
+}
