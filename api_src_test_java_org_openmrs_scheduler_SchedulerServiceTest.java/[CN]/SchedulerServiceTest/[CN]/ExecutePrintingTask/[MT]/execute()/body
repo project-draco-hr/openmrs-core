@@ -1,14 +1,11 @@
 {
-synchronized (outputForConcurrentTasks) {
-    outputForConcurrentTasks.add(getTaskDefinition().getProperty("id"));
-  }
+  String outputKey=getTaskDefinition().getProperty("outputKey");
+  appendOutput(outputKey,getTaskDefinition().getProperty("id"));
   try {
     Thread.sleep(Integer.valueOf(getTaskDefinition().getProperty("delay")));
   }
  catch (  InterruptedException e) {
     log.error("Error generated",e);
   }
-synchronized (outputForConcurrentTasks) {
-    outputForConcurrentTasks.add(getTaskDefinition().getProperty("id"));
-  }
+  appendOutput(outputKey,getTaskDefinition().getProperty("id"));
 }

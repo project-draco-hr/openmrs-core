@@ -7,8 +7,10 @@
   td.setTaskClass(SessionTask.class.getName());
   td.setStartTime(null);
   td.setRepeatInterval(new Long(0));
-  service.saveTask(td);
-  service.scheduleTask(td);
+synchronized (SAVE_TASK_LOCK) {
+    service.saveTask(td);
+    service.scheduleTask(td);
+  }
   td=service.getTaskByName(NAME);
   for (int x=0; x < 30 && (actualExecutionTime == null || td.getLastExecutionTime() == null); x++)   Thread.sleep(200);
   Assert.assertNotNull("The actualExecutionTime variable is null, so either the SessionTask.execute method hasn't finished or didn't get run",actualExecutionTime);

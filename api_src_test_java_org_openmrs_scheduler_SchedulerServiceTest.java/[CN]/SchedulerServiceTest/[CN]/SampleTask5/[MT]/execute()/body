@@ -1,5 +1,4 @@
 {
-synchronized (outputForInitExecSync) {
-    outputForInitExecSync.add("IN EXECUTE");
-  }
+  String outputKey=getTaskDefinition().getProperty("outputKey");
+  appendOutput(outputKey,"IN EXECUTE");
 }
