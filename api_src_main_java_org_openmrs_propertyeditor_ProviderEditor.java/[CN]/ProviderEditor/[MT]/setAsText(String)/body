@@ -1,0 +1,19 @@
+{
+  ProviderService ps=Context.getProviderService();
+  if (StringUtils.hasText(text)) {
+    try {
+      setValue(ps.getProvider(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      Provider p=ps.getProviderByUuid(text);
+      setValue(p);
+      if (p == null) {
+        log.error("Error setting provider with id or uuid: " + text,ex);
+        throw new IllegalArgumentException("Provider not found: " + ex.getMessage());
+      }
+    }
+  }
+ else {
+    setValue(null);
+  }
+}
