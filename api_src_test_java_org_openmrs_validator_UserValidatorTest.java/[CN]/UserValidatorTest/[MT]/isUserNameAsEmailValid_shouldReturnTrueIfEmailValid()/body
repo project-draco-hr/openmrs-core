@@ -1,0 +1,7 @@
+{
+  UserValidator userValidator=new UserValidator();
+  String[] valids=new String[]{"mkyong@yahoo.com","mkyong-100@yahoo.com","mkyong.100@yahoo.com","mkyong111@mkyong.com","mkyong-100@mkyong.net","mkyong.100@mkyong.com.au","mkyong@1.com","mkyong@gmail.com.com"};
+  for (  String email : valids) {
+    Assert.assertTrue(userValidator.isUserNameAsEmailValid(email));
+  }
+}
