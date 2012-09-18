@@ -6,7 +6,7 @@
   visit.setLocation(Context.getLocationService().getLocation(1));
   visit=Context.getVisitService().saveVisit(visit);
   Context.flushSession();
-  Assert.assertNotNull(visit.getChangedBy());
-  Assert.assertNotNull(visit.getDateChanged());
-  Assert.assertEquals(Integer.valueOf(1),visit.getLocation().getLocationId());
+  assertNotNull(visit.getChangedBy());
+  assertNotNull(visit.getDateChanged());
+  assertEquals(Integer.valueOf(1),visit.getLocation().getLocationId());
 }

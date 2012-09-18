@@ -8,7 +8,9 @@
   td.setStartTime(null);
   td.setName("name");
   td.setRepeatInterval(5000l);
-  schedulerService.scheduleTask(td);
+synchronized (SAVE_TASK_LOCK) {
+    schedulerService.scheduleTask(td);
+  }
   Thread.sleep(500);
   assertTrue(BareTask.outputList.contains("TEST"));
 }

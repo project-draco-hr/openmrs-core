@@ -1,25 +1,17 @@
 {
   Connection connection=getConnection();
-  IDatabaseConnection dbUnitConn=new DatabaseConnection(connection);
-  if (useInMemoryDatabase()) {
-    String sql="SET REFERENTIAL_INTEGRITY FALSE";
-    PreparedStatement ps=connection.prepareStatement(sql);
-    ps.execute();
-    ps.close();
-  }
+  turnOffDBConstraints(connection);
+  IDatabaseConnection dbUnitConn=setupDatabaseConnection(connection);
   ResultSet resultSet=connection.getMetaData().getTables(null,"PUBLIC","%",null);
   DefaultDataSet dataset=new DefaultDataSet();
   while (resultSet.next()) {
     String tableName=resultSet.getString(3);
     dataset.addTable(new DefaultTable(tableName));
   }
-  if (useInMemoryDatabase())   DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
-  if (useInMemoryDatabase()) {
-    String sql="SET REFERENTIAL_INTEGRITY TRUE";
-    PreparedStatement ps=connection.prepareStatement(sql);
-    ps.execute();
-    ps.close();
-  }
+  DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
+  turnOnDBConstraints(connection);
   Context.clearSession();
   if (Context.isSessionOpen())   Context.logout();
+  connection.commit();
+  isBaseSetup=false;
 }

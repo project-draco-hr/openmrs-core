@@ -1,7 +1,6 @@
 {
-synchronized (outputForConcurrentInit) {
-    outputForConcurrentInit.add(config.getProperty("id"));
-  }
+  String outputKey=config.getProperty("outputKey");
+  appendOutput(outputKey,config.getProperty("id"));
   super.initialize(config);
   try {
     Thread.sleep(Integer.valueOf(config.getProperty("delay")));
@@ -9,7 +8,5 @@ synchronized (outputForConcurrentInit) {
  catch (  InterruptedException e) {
     log.error("Error generated",e);
   }
-synchronized (outputForConcurrentInit) {
-    outputForConcurrentInit.add(config.getProperty("id"));
-  }
+  appendOutput(outputKey,config.getProperty("id"));
 }
