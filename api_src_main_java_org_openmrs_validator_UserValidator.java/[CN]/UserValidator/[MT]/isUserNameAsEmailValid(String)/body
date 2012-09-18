@@ -1,0 +1,7 @@
+{
+  if (StringUtils.isBlank(username)) {
+    return false;
+  }
+  Matcher matcher=EMAIL_PATTERN.matcher(username);
+  return matcher.matches();
+}
