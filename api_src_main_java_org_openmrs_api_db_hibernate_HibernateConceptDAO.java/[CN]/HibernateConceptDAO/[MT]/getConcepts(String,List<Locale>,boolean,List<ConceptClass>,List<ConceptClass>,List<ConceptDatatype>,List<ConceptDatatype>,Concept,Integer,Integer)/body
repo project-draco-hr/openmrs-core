@@ -1,25 +1,56 @@
 {
-  if (StringUtils.isBlank(phrase)) {
-    phrase="%";
-  }
-  Criteria searchCriteria=createConceptWordSearchCriteria(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
-  List<ConceptSearchResult> results=new Vector<ConceptSearchResult>();
-  if (searchCriteria != null) {
-    ProjectionList pl=Projections.projectionList();
-    pl.add(Projections.distinct(Projections.groupProperty("cw1.concept")));
-    pl.add(Projections.groupProperty("cw1.word"));
-    pl.add(Projections.max("cw1.weight"),"maxWeight");
-    pl.add(Projections.min("cw1.conceptName"));
-    searchCriteria.setProjection(pl);
-    searchCriteria.addOrder(Order.desc("maxWeight"));
-    if (start != null)     searchCriteria.setFirstResult(start);
-    if (size != null && size > 0)     searchCriteria.setMaxResults(size);
-    searchCriteria.setResultTransformer(Transformers.TO_LIST);
-    List resultObjects=searchCriteria.list();
-    for (    Object obj : resultObjects) {
-      List list=(List)obj;
-      results.add(new ConceptSearchResult((String)list.get(1),(Concept)list.get(0),(ConceptName)list.get(3),(Double)list.get(2)));
+  ListPart<Concept> names=new LuceneQueryBuilder<Concept>(sessionFactory.getCurrentSession()){
+    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
+      StringBuilder query=new StringBuilder();
+      if (!StringUtils.isBlank(phrase)) {
+        List<Locale> searchLocales=locales;
+        if (searchLocales == null) {
+          searchLocales=Lists.newArrayList(Context.getLocale());
+        }
+        String searchPhrase=newRequirePartialWordsSearchPhrase(phrase);
+        for (        Locale locale : locales) {
+          query.append(newNamesQuery(locale,searchPhrase,true));
+        }
+      }
+      if (!includeRetired) {
+        query.append(" +retired:false");
+      }
+      if (requireClasses != null && !requireClasses.isEmpty()) {
+        String ids=transformToIds(requireClasses);
+        query.append(" +conceptClass.conceptClassId:(").append(ids).append(")");
+      }
+      if (excludeClasses != null && !excludeClasses.isEmpty()) {
+        String ids=transformToIds(excludeClasses);
+        query.append(" -conceptClass.conceptClassId:(").append(ids).append(")");
+      }
+      if (requireDatatypes != null && !requireDatatypes.isEmpty()) {
+        String ids=transformToIds(requireDatatypes);
+        query.append(" +datatype.conceptDatatypeId:(").append(ids).append(")");
+      }
+      if (excludeDatatypes != null && !excludeDatatypes.isEmpty()) {
+        String ids=transformToIds(excludeDatatypes);
+        query.append(" -datatype.conceptDatatypeId:(").append(ids).append(")");
+      }
+      if (answersToConcept != null) {
+        Collection<ConceptAnswer> answers=answersToConcept.getAnswers(false);
+        if (answers != null && !answers.isEmpty()) {
+          StringBuilder ids=new StringBuilder();
+          for (          ConceptAnswer conceptAnswer : answersToConcept.getAnswers(false)) {
+            ids.append(conceptAnswer.getAnswerConcept().getId()).append(" ");
+          }
+          query.append(" +conceptId:(").append(ids).append(")");
+        }
+      }
+      org.apache.lucene.search.Query parsedQuery=newQueryParser().parse(query.toString());
+      return parsedQuery;
     }
   }
+.listPart(start,size);
+  List<ConceptSearchResult> results=Lists.transform(names.getList(),new Function<Concept,ConceptSearchResult>(){
+    @Override public ConceptSearchResult apply(    Concept concept){
+      return new ConceptSearchResult(phrase,concept,concept.getName());
+    }
+  }
+);
   return results;
 }

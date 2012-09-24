@@ -1,32 +1,37 @@
 {
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Concept.class);
-  criteria.add(Restrictions.eq("retired",false));
-  if (!StringUtils.isBlank(name)) {
-    if (loc == null)     loc=Context.getLocale();
-    String caseSensitiveNamesInConceptNameTable=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_CASE_SENSITIVE_NAMES_IN_CONCEPT_NAME_TABLE,"true");
-    criteria.createAlias("names","names");
-    MatchMode matchmode=MatchMode.EXACT;
-    if (searchOnPhrase)     matchmode=MatchMode.ANYWHERE;
-    if (Boolean.valueOf(caseSensitiveNamesInConceptNameTable)) {
-      criteria.add(Restrictions.ilike("names.name",name,matchmode));
-    }
- else {
-      if (searchOnPhrase) {
-        criteria.add(Restrictions.like("names.name",name,matchmode));
+  final List<Concept> concepts=new LuceneQueryBuilder<Concept>(sessionFactory.getCurrentSession()){
+    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
+      StringBuilder query=new StringBuilder();
+      final Locale locale;
+      if (loc == null) {
+        locale=Context.getLocale();
       }
  else {
-        criteria.add(Restrictions.eq("names.name",name));
+        locale=loc;
       }
-    }
-    criteria.add(Restrictions.eq("names.voided",false));
-    String language=loc.getLanguage();
-    if (language.length() > 2) {
-      criteria.add(Restrictions.or(Restrictions.eq("names.locale",loc),Restrictions.eq("names.locale",new Locale(loc.getLanguage().substring(0,2)))));
-    }
+      if (!StringUtils.isBlank(name)) {
+        if (searchOnPhrase) {
+          String searchPhrase=newRequirePartialWordsSearchPhrase(name);
+          String search=newNamesQuery(locale,searchPhrase,true);
+          query.append(search);
+        }
  else {
+          String search=newNamesQuery(locale,QueryParser.escape(name),false);
+          query.append(search);
+        }
+      }
+      query.append(" +retired:false");
+      if (classes != null && !classes.isEmpty()) {
+        String ids=transformToIds(classes);
+        query.append(" +conceptClass.conceptClassId:(").append(ids).append(")");
+      }
+      if (datatypes != null && !datatypes.isEmpty()) {
+        String ids=transformToIds(datatypes);
+        query.append(" +datatype.conceptDatatypeId:(").append(ids).append(")");
+      }
+      return newQueryParser().parse(query.toString());
     }
   }
-  if (classes.size() > 0)   criteria.add(Restrictions.in("conceptClass",classes));
-  if (datatypes.size() > 0)   criteria.add(Restrictions.in("datatype",datatypes));
-  return criteria.list();
+.list();
+  return concepts;
 }

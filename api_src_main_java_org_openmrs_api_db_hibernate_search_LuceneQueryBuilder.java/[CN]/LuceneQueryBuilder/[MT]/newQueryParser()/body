@@ -1,0 +1,4 @@
+{
+  Analyzer analyzer=getFullTextSession().getSearchFactory().getAnalyzer(getType());
+  return new QueryParser(Version.LUCENE_31,null,analyzer);
+}

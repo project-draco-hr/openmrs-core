@@ -13,5 +13,6 @@
   Context.clearSession();
   if (Context.isSessionOpen())   Context.logout();
   connection.commit();
+  updateSearchIndex();
   isBaseSetup=false;
 }

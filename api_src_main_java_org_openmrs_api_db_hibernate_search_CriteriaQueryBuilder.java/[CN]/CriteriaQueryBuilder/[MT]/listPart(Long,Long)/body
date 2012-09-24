@@ -1,0 +1,12 @@
+{
+  criteria.setProjection(null);
+  criteria.setResultTransformer(Criteria.ROOT_ENTITY);
+  if (firstResult != null) {
+    criteria.setFirstResult(firstResult.intValue());
+  }
+  if (maxResults != null) {
+    criteria.setMaxResults(maxResults.intValue());
+  }
+  @SuppressWarnings("unchecked") List<T> list=criteria.list();
+  return ListPart.newListPart(list,firstResult,maxResults,null,null);
+}

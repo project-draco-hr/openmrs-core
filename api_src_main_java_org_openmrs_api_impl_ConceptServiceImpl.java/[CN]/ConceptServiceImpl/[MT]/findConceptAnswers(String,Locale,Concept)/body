@@ -1,4 +1,4 @@
 {
-  List<ConceptWord> conceptWords=getConceptAnswers(phrase,locale,concept);
-  return createSearchResultsList(conceptWords);
+  List<ConceptSearchResult> concepts=getConcepts(phrase,Lists.newArrayList(locale),false,null,null,null,null,concept,null,null);
+  return concepts;
 }

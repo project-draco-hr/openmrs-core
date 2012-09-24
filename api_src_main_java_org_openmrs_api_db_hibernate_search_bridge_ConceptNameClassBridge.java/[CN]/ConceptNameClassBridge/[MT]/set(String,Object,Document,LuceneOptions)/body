@@ -1,0 +1,13 @@
+{
+  ConceptName conceptName=(ConceptName)value;
+  if (conceptName.isVoided()) {
+    return;
+  }
+  String fieldValue=conceptName.getName();
+  if (conceptName.getLocale().getCountry() != null) {
+    String fieldName=name + "_" + conceptName.getLocale();
+    addField(fieldName,fieldValue,document,luceneOptions);
+  }
+  String fieldName=name + "_" + conceptName.getLocale().getLanguage();
+  addField(fieldName,fieldValue,document,luceneOptions);
+}

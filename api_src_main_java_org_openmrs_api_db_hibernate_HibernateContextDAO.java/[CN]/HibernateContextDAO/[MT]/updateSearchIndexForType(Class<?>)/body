@@ -1,0 +1,28 @@
+{
+  FullTextSession session=Search.getFullTextSession(sessionFactory.getCurrentSession());
+  session.purgeAll(type);
+  session.flush();
+  session.clear();
+  FlushMode flushMode=session.getFlushMode();
+  CacheMode cacheMode=session.getCacheMode();
+  try {
+    session.setFlushMode(FlushMode.MANUAL);
+    session.setCacheMode(CacheMode.IGNORE);
+    ScrollableResults results=session.createCriteria(type).setFetchSize(1000).scroll(ScrollMode.FORWARD_ONLY);
+    int index=0;
+    while (results.next()) {
+      index++;
+      session.index(results.get(0));
+      if (index % 1000 == 0) {
+        session.flushToIndexes();
+        session.clear();
+      }
+    }
+    session.flushToIndexes();
+    session.clear();
+  }
+  finally {
+    session.setFlushMode(flushMode);
+    session.setCacheMode(cacheMode);
+  }
+}

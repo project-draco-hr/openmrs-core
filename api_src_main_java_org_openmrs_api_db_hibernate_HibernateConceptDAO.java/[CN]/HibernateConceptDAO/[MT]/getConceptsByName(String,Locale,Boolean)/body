@@ -1,43 +1,28 @@
 {
-  if (exactLocale == null) {
-    exactLocale=true;
-  }
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptName.class);
-  criteria.add(Restrictions.ilike("name",name));
-  criteria.add(Restrictions.eq("voided",false));
-  if (locale != null) {
-    if (exactLocale) {
-      criteria.add(Restrictions.eq("locale",locale));
-    }
+  final List<Concept> concepts=new LuceneQueryBuilder<Concept>(sessionFactory.getCurrentSession()){
+    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
+      StringBuilder query=new StringBuilder();
+      if (!StringUtils.isBlank(name)) {
+        final String searchPhrase=QueryParser.escape(name);
+        final Locale searchLocale;
+        if (locale == null) {
+          searchLocale=Context.getLocale();
+        }
  else {
-      if (!StringUtils.isEmpty(locale.getCountry())) {
-        criteria.add(Restrictions.or(Restrictions.eq("locale",locale),Restrictions.eq("locale",new Locale(locale.getLanguage()))));
-      }
-    }
-  }
-  criteria.addOrder(Order.asc("concept"));
-  criteria.setProjection(Projections.distinct(Projections.property("concept")));
-  @SuppressWarnings("unchecked") List<Concept> concepts=criteria.list();
-  for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
-    Concept concept=it.next();
-    if (concept.isRetired()) {
-      it.remove();
-    }
-  }
-  if (locale != null && !exactLocale && StringUtils.isEmpty(locale.getCountry())) {
-    for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
-      Concept concept=it.next();
-      boolean found=false;
-      for (      ConceptName conceptName : concept.getNames()) {
-        if (conceptName.getLocale().getLanguage().equals(locale.getLanguage())) {
-          found=true;
-          break;
+          searchLocale=locale;
+        }
+        if (exactLocale == null || exactLocale) {
+          query.append(" +names.name_").append(searchLocale).append(":").append("\"").append(searchPhrase).append("\"");
+        }
+ else {
+          query.append(newNamesQuery(searchLocale,searchPhrase,false));
         }
       }
-      if (!found) {
-        it.remove();
-      }
+      query.append(" +retired:false");
+      org.apache.lucene.search.Query parsedQuery=newQueryParser().parse(query.toString());
+      return parsedQuery;
     }
   }
+.list();
   return concepts;
 }
