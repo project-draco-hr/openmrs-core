@@ -52,7 +52,7 @@
       row.put("encounterType",encounter.getEncounterType().getName());
       row.put("encounterProviders",getProviders(encounter));
       row.put("encounterLocation",(encounter.getLocation() != null) ? encounter.getLocation().getName() : "");
-      row.put("encounterEnterer",(encounter.getCreator() != null) ? encounter.getCreator().getPersonName().toString() : "");
+      row.put("encounterEnterer",(encounter.getCreator() != null) ? encounter.getCreator().getPersonName().getFullName() : "");
       row.put("formViewURL",getViewFormURL(request,formToViewUrlMap,formToEditUrlMap,encounter));
     }
     response.addRow(row);

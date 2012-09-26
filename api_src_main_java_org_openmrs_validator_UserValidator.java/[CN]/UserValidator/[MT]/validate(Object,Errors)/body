@@ -13,7 +13,7 @@
       if (person.getGender() == null)       errors.rejectValue("person.gender","error.null");
       if (person.getDead() == null)       errors.rejectValue("person.dead","error.null");
       if (person.getVoided() == null)       errors.rejectValue("person.voided","error.null");
-      if (person.getPersonName() == null || !StringUtils.hasText(person.getPersonName().toString()))       errors.rejectValue("person","Person.names.length");
+      if (person.getPersonName() == null || !StringUtils.hasText(person.getPersonName().getFullName()))       errors.rejectValue("person","Person.names.length");
     }
   }
   if (!isUserNameValid(user.getUsername()))   errors.rejectValue("username","error.username.pattern");

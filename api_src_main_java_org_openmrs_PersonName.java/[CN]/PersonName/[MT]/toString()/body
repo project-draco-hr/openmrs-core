@@ -1,3 +1,8 @@
 {
-  return getFullName();
+  StringBuilder sb=new StringBuilder();
+  sb.append("personNameId: " + personNameId);
+  if (!givenName.isEmpty())   sb.append(" givenName: " + givenName);
+  if (!middleName.isEmpty())   sb.append(" middleName: " + middleName);
+  if (!familyName.isEmpty())   sb.append(" familyName: " + familyName);
+  return "Person[ " + sb.toString() + " ]";
 }

@@ -5,7 +5,7 @@
   for (  PersonName possibleDuplicate : shortPatientModel.getPatient().getNames()) {
     if (OpenmrsUtil.nullSafeEquals(possibleDuplicate.getId(),personName.getId()))     continue;
     if (OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getGivenName(),personName.getGivenName()) && OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getMiddleName(),personName.getMiddleName()) && OpenmrsUtil.nullSafeEqualsIgnoreCase(possibleDuplicate.getFamilyName(),personName.getFamilyName())) {
-      errors.reject("Patient.duplicateName",new Object[]{personName.toString()},personName.toString() + " is a duplicate name for the same patient");
+      errors.reject("Patient.duplicateName",new Object[]{personName.getFullName()},personName.getFullName() + " is a duplicate name for the same patient");
     }
   }
   Errors nameErrors=new BindException(personName,"personName");

@@ -9,7 +9,7 @@
     minOccurs=ff.getMinOccurs();
     maxOccurs=ff.getMaxOccurs();
     required=ff.isRequired() == true ? "yes" : "no";
-    if (ff.getCreator() != null)     creator=ff.getCreator().getPersonName().toString();
-    if (ff.getChangedBy() != null)     changedBy=ff.getChangedBy().getPersonName().toString();
+    if (ff.getCreator() != null)     creator=ff.getCreator().getPersonName().getFullName();
+    if (ff.getChangedBy() != null)     changedBy=ff.getChangedBy().getPersonName().getFullName();
   }
 }

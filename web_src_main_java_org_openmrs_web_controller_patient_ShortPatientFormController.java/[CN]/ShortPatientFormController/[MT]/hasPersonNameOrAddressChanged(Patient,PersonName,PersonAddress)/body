@@ -3,7 +3,7 @@
   PersonName personName=patient.getPersonName();
   if (personNameCache.getId() != null) {
     if (!getPersonNameString(personName).equalsIgnoreCase(getPersonNameString(personNameCache))) {
-      if (log.isDebugEnabled())       log.debug("Voiding person name with id: " + personName.getId() + " and replacing it with a new one: "+ personName.toString());
+      if (log.isDebugEnabled())       log.debug("Voiding person name with id: " + personName.getId() + " and replacing it with a new one: "+ personName.getFullName());
       foundChanges=true;
       PersonName newName=PersonName.newInstance(personName);
       newName.setPersonNameId(null);
@@ -17,7 +17,7 @@
       personName.setFamilyName(personNameCache.getFamilyName());
       personName.setPreferred(false);
       personName.setVoided(true);
-      personName.setVoidReason(Context.getMessageSourceService().getMessage("general.voidReasonWithArgument",new Object[]{newName.toString()},"Voided because it was edited to: " + newName.toString(),Context.getLocale()));
+      personName.setVoidReason(Context.getMessageSourceService().getMessage("general.voidReasonWithArgument",new Object[]{newName.getFullName()},"Voided because it was edited to: " + newName.getFullName(),Context.getLocale()));
       patient.addName(newName);
     }
   }
