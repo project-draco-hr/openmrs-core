@@ -1,4 +1,6 @@
 {
-  if (getPerson() != null)   return getPerson().getPersonName().getFullName();
- else   return getName();
+  StringBuilder sb=new StringBuilder();
+  sb.append(providerId);
+  sb.append((person != null) ? person.getNames() : "");
+  return "[Provider: providerId: " + sb.toString() + " ]";
 }
