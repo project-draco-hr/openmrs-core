@@ -4,7 +4,7 @@
   Obs obs=Context.getObsService().getObs(7);
   obs.setEncounter(null);
   obs.setComment("this observation is for testing the merge");
-  Context.getObsService().saveObs(obs,"");
+  Context.getObsService().saveObs(obs,"Reason cannot be blank");
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
   String uuid=null;
   List<Obs> observations=Context.getObsService().getObservationsByPerson(preferred);
