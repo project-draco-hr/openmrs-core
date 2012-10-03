@@ -1,0 +1,19 @@
+{
+  executeDataSet(XML_FILENAME);
+  final UserService userService=Context.getUserService();
+  User user=userService.getUser(5511);
+  assertEquals(1,user.getUserProperties().size());
+  Context.authenticate(user.getUsername(),"testUser1234");
+  final String USER_PROPERTY_KEY_1="test-key1";
+  final String USER_PROPERTY_VALUE_1="test-value1";
+  final String USER_PROPERTY_KEY_2="test-key2";
+  final String USER_PROPERTY_VALUE_2="test-value2";
+  Map<String,String> propertiesMap=new HashMap<String,String>();
+  propertiesMap.put(USER_PROPERTY_KEY_1,USER_PROPERTY_VALUE_1);
+  propertiesMap.put(USER_PROPERTY_KEY_2,USER_PROPERTY_VALUE_2);
+  propertiesMap=Collections.unmodifiableMap(propertiesMap);
+  User updatedUser=userService.saveUserProperties(propertiesMap);
+  assertEquals(2,updatedUser.getUserProperties().size());
+  assertEquals(USER_PROPERTY_VALUE_1,updatedUser.getUserProperty(USER_PROPERTY_KEY_1));
+  assertEquals(USER_PROPERTY_VALUE_2,updatedUser.getUserProperty(USER_PROPERTY_KEY_2));
+}

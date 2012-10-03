@@ -1,0 +1,11 @@
+{
+  User user=Context.getAuthenticatedUser();
+  if (user == null) {
+    throw new APIException("No Authenticated user found");
+  }
+  user.getUserProperties().clear();
+  for (  String key : properties.keySet()) {
+    user.setUserProperty(key,properties.get(key));
+  }
+  return dao.saveUser(user,null);
+}
