@@ -1,0 +1,9 @@
+{
+  if (url == null) {
+    throw new MalformedURLException("Url cannot be null");
+  }
+ else   if (!url.startsWith("http://")) {
+    throw new MalformedURLException("Not a valid http url");
+  }
+  this.url=new URL(url);
+}
