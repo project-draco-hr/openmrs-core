@@ -1,3 +1,5 @@
 {
-  return refreshingContext.booleanValue();
+synchronized (contextRefreshedLock) {
+    return !contextRefreshedCheck;
+  }
 }
