@@ -6,7 +6,7 @@
   data.put("implementationId",implementationId);
   data.put("description",description);
   data.put("passphrase",passphrase);
-  String response=OpenmrsUtil.postToUrl(OpenmrsConstants.IMPLEMENTATION_ID_REMOTE_CONNECTION_URL,data);
+  String response=implementationIdHttpClient.post(data);
   response=response.trim();
   if ("".equals(response)) {
     String ms=Context.getMessageSourceService().getMessage("ImplementationId.connectionError",new String[]{implementationId},Context.getLocale());
