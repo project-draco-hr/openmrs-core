@@ -14,19 +14,19 @@
     for (    Locale locale : backingObject.getLocales()) {
       for (int x=0; x < backingObject.getSynonymsByLocale().get(locale).size(); x++) {
         ConceptName synonym=backingObject.getSynonymsByLocale().get(locale).get(x);
-        if (synonym.getName() != null && synonym.getName().length() == 0) {
+        if (!synonym.isVoided() && synonym.getName() != null && synonym.getName().length() == 0) {
           errors.rejectValue("synonymsByLocale[" + locale + "]["+ x+ "].name","Concept.synonyms.textRequired");
           localesWithErrors.add(locale.getDisplayName());
         }
       }
       for (int x=0; x < backingObject.getIndexTermsByLocale().get(locale).size(); x++) {
         ConceptName indexTerm=backingObject.getIndexTermsByLocale().get(locale).get(x);
-        if (indexTerm.getName() != null && indexTerm.getName().length() == 0) {
+        if (!indexTerm.isVoided() && indexTerm.getName() != null && indexTerm.getName().length() == 0) {
           errors.rejectValue("indexTermsByLocale[" + locale + "]["+ x+ "].name","Concept.indexTerms.textRequired");
           localesWithErrors.add(locale.getDisplayName());
         }
       }
-      if (StringUtils.hasText(backingObject.getNamesByLocale().get(locale).getName())) {
+      if (StringUtils.isNotEmpty(backingObject.getNamesByLocale().get(locale).getName())) {
         foundAtLeastOneFullySpecifiedName=true;
       }
  else       if (backingObject.getNamesByLocale().get(locale).getConceptNameId() != null) {
@@ -38,14 +38,7 @@
   }
   if (errors.hasErrors() && localesWithErrors.size() > 0) {
     StringBuilder sb=new StringBuilder(Context.getMessageSourceService().getMessage("Concept.localesWithErrors"));
-    boolean isFirst=true;
-    for (    String localeName : localesWithErrors) {
-      if (isFirst) {
-        sb.append(localeName);
-        isFirst=false;
-      }
- else       sb.append(", ").append(localeName);
-    }
+    sb.append(StringUtils.join(localesWithErrors,", "));
     errors.rejectValue("concept",sb.toString());
   }
 }
