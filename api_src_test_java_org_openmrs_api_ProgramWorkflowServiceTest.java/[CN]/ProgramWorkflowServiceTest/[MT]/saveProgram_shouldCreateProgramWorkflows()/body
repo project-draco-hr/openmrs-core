@@ -19,7 +19,7 @@
   workflow.addState(state2);
   Context.getProgramWorkflowService().saveProgram(program);
   assertEquals("Failed to create program",numBefore + 1,Context.getProgramWorkflowService().getAllPrograms().size());
-  Program p=Context.getProgramWorkflowService().getProgramByName("COUGH SYRUP");
+  Program p=Context.getProgramWorkflowService().getProgramByName("TEST PROGRAM");
   assertNotNull("Program is null",p);
   assertNotNull("Workflows is null",p.getWorkflows());
   assertEquals("Wrong number of workflows",1,p.getWorkflows().size());

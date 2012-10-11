@@ -1,0 +1,12 @@
+{
+  ProgramWorkflowDAO mockDao=Mockito.mock(ProgramWorkflowDAO.class);
+  List<Program> programsWithGivenName=new ArrayList<Program>();
+  Program program1=new Program("A name");
+  Program program2=new Program("A name");
+  programsWithGivenName.add(program1);
+  programsWithGivenName.add(program2);
+  Mockito.stub(mockDao.getProgramsByName("A name",false)).toReturn(programsWithGivenName);
+  Mockito.stub(mockDao.getProgramsByName("A name",true)).toReturn(programsWithGivenName);
+  pws.setProgramWorkflowDAO(mockDao);
+  pws.getProgramByName("A name");
+}
