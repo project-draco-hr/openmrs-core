@@ -2,7 +2,6 @@
   Encounter encounter=new Encounter();
   encounter.setPatient(new Patient(2));
   Visit visit=new Visit();
-  visit.setPatient(new Patient(3));
   encounter.setVisit(visit);
   Errors errors=new BindException(encounter,"encounter");
   new EncounterValidator().validate(encounter,errors);
