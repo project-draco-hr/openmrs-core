@@ -6,7 +6,7 @@
     uc.setUseCaches(false);
     uc.setRequestProperty("Cache-Control","max-age=0,no-cache");
     uc.setRequestProperty("Pragma","no-cache");
-    log.error("Logging an attempt to connect to: " + url);
+    log.debug("Logging an attempt to connect to: " + url);
     in=openConnectionCheckRedirects(uc);
   }
  catch (  IOException io) {
