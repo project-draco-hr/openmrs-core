@@ -5,6 +5,7 @@
     referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
   }
   if (isInstallationStarted()) {
+    referenceMap.put("isInstallationStarted",isInstallationStarted());
     httpResponse.setContentType("text/html");
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
     return;
@@ -282,7 +283,6 @@
     wizardModel.tasksToExecute.add(WizardTask.UPDATE_TO_LATEST);
     referenceMap.put("tasksToExecute",wizardModel.tasksToExecute);
     startInstallation();
-    referenceMap.put("isInstallationStarted",isInstallationStarted());
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
  else   if (TESTING_REMOTE_DETAILS_SETUP.equals(page)) {

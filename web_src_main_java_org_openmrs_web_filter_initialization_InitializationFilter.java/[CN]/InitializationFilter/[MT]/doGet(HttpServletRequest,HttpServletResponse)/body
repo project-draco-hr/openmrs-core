@@ -8,7 +8,12 @@
   if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
     referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
   }
-  if (page == null) {
+  if (isInstallationStarted() && !PROGRESS_VM_AJAXREQUEST.equals(page)) {
+    referenceMap.put("isInstallationStarted",isInstallationStarted());
+    httpResponse.setContentType("text/html");
+    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+  }
+ else   if (page == null) {
     checkLocaleAttributesForFirstTime(httpRequest);
     referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
     httpResponse.setContentType("text/html");
@@ -37,12 +42,7 @@
     }
     wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
     httpResponse.setContentType("text/html");
-    if (isInstallationStarted()) {
-      renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
-    }
- else {
-      renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
-    }
+    renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
   }
  else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
     httpResponse.setContentType("text/json");
