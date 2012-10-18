@@ -1,0 +1,24 @@
+{
+  ConceptService cs=Context.getConceptService();
+  ConceptClass cc=cs.getConceptClass(1);
+  Locale locale=Locale.ENGLISH;
+  ConceptDatatype dt=cs.getConceptDatatype(4);
+  Concept c1=new Concept();
+  ConceptName cn1a=new ConceptName("ONE TO ONE",locale);
+  ConceptName cn1b=new ConceptName("ONE TERM",locale);
+  c1.addName(cn1a);
+  c1.addName(cn1b);
+  c1.setConceptClass(cc);
+  c1.setDatatype(dt);
+  cs.saveConcept(c1);
+  Concept c2=new Concept();
+  ConceptName cn2a=new ConceptName("ONE TO MANY",locale);
+  c2.addName(cn2a);
+  c2.setConceptClass(cc);
+  c2.setDatatype(dt);
+  cs.saveConcept(c2);
+  List<ConceptSearchResult> searchResults1=dao.getConcepts("one",Collections.singletonList(locale),false,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,null,null,null);
+  Assert.assertEquals(2,searchResults1.size());
+  Assert.assertEquals(c1,searchResults1.get(0).getConcept());
+  Assert.assertEquals(cn1a,searchResults1.get(0).getConceptName());
+}
