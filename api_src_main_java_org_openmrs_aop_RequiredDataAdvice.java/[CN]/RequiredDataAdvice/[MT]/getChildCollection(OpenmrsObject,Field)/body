@@ -1,9 +1,8 @@
 {
   String fieldName=field.getName();
-  String classdotfieldname=field.getDeclaringClass().getSimpleName() + "." + fieldName;
   String getterName="get" + StringUtils.capitalize(fieldName);
   try {
-    if (fieldAccess.contains(classdotfieldname)) {
+    if (field.isAnnotationPresent(AllowDirectAccess.class)) {
       boolean previousFieldAccessibility=field.isAccessible();
       field.setAccessible(true);
       Collection<OpenmrsObject> childCollection=(Collection<OpenmrsObject>)field.get(openmrsObject);
@@ -17,7 +16,7 @@
     }
   }
  catch (  IllegalAccessException e) {
-    if (fieldAccess.contains(classdotfieldname))     throw new APIException("Unable to get field: " + fieldName + " on "+ openmrsObject.getClass());
+    if (field.isAnnotationPresent(AllowDirectAccess.class))     throw new APIException("Unable to get field: " + fieldName + " on "+ openmrsObject.getClass());
  else     throw new APIException("Unable to use getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
   }
 catch (  InvocationTargetException e) {
