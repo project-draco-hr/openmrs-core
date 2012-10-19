@@ -9,7 +9,7 @@
     referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
   }
   if (isInstallationStarted() && !PROGRESS_VM_AJAXREQUEST.equals(page)) {
-    referenceMap.put("isInstallationStarted",isInstallationStarted());
+    referenceMap.put("isInstallationStarted",true);
     httpResponse.setContentType("text/html");
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
