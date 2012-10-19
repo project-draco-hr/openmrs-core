@@ -1,11 +1,8 @@
 {
-  Criteria criteria=prepareProviderCriteria(name);
+  Criteria criteria=prepareProviderCriteria(name,includeRetired);
   if (start != null)   criteria.setFirstResult(start);
   if (length != null)   criteria.setMaxResults(length);
-  if (!includeRetired) {
-    criteria.add(Expression.eq("retired",false));
-  }
- else {
+  if (includeRetired) {
     criteria.addOrder(Order.asc("retired"));
   }
   List<Provider> providers=criteria.list();

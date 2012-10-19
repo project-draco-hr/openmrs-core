@@ -1,5 +1,5 @@
 {
-  Criteria criteria=prepareProviderCriteria(name);
+  Criteria criteria=prepareProviderCriteria(name,includeRetired);
   criteria.setProjection(Projections.countDistinct("providerId"));
   return (Long)criteria.uniqueResult();
 }
