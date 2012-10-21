@@ -1,0 +1,17 @@
+{
+  String result=source;
+  if ("global".equalsIgnoreCase(caseConversion)) {
+    AdministrationService adminService=Context.getAdministrationService();
+    caseConversion=adminService.getGlobalProperty(OpenmrsConstants.GP_DASHBOARD_METADATA_CASE_CONVERSION);
+  }
+  if ("lowercase".equalsIgnoreCase(caseConversion)) {
+    result=StringUtils.lowerCase(result);
+  }
+ else   if ("uppercase".equalsIgnoreCase(caseConversion)) {
+    result=StringUtils.upperCase(result);
+  }
+ else   if ("capitalize".equalsIgnoreCase(caseConversion)) {
+    result=WordUtils.capitalize(StringUtils.lowerCase(result));
+  }
+  return result;
+}
