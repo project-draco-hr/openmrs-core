@@ -1,7 +1,6 @@
 {
   if (obj == null || !(obj instanceof ConceptReferenceTerm))   throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + ConceptReferenceTerm.class);
   ConceptReferenceTerm conceptReferenceTerm=(ConceptReferenceTerm)obj;
-  String name=conceptReferenceTerm.getName();
   String code=conceptReferenceTerm.getCode();
   if (!StringUtils.hasText(code)) {
     errors.rejectValue("code","ConceptReferenceTerm.error.codeRequired","The code property is required for a concept reference term");
@@ -14,15 +13,6 @@
  else   if (conceptReferenceTerm.getConceptSource().getId() == null) {
     errors.rejectValue("conceptSource","ConceptReferenceTerm.source.notInDatabase","Only existing concept reference sources can be used");
     return;
-  }
-  if (StringUtils.hasText(name)) {
-    name=name.trim();
-    ConceptReferenceTerm termWithDuplicateName=Context.getConceptService().getConceptReferenceTermByName(name,conceptReferenceTerm.getConceptSource());
-    if (termWithDuplicateName != null) {
-      if (!OpenmrsUtil.nullSafeEquals(termWithDuplicateName.getId(),conceptReferenceTerm.getId())) {
-        errors.rejectValue("name","ConceptReferenceTerm.duplicate.name","Duplicate concept reference term name: " + name);
-      }
-    }
   }
   code=code.trim();
   ConceptReferenceTerm termWithDuplicateCode=Context.getConceptService().getConceptReferenceTermByCode(code,conceptReferenceTerm.getConceptSource());
