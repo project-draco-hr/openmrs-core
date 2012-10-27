@@ -1,28 +1,29 @@
 {
   String value=Context.getAdministrationService().getGlobalPropertyValue(OpenmrsConstants.GP_ENCOUNTER_TYPE_TO_VISIT_TYPE_MAPPING,"");
   if (!StringUtils.isBlank(value)) {
-    String targetEncounterTypeId=encounter.getEncounterType().getId().toString();
+    VisitService visitService=Context.getVisitService();
+    String targetEncounterTypeId=encounterType.getId().toString();
     String[] mappings=value.split(",");
     for (    String mapping : mappings) {
       int index=mapping.indexOf(':');
       if (index > 0) {
         String encounterTypeIdOrUuid=mapping.substring(0,index).trim();
-        if (targetEncounterTypeId.equals(encounterTypeIdOrUuid) || encounter.getEncounterType().getUuid().equals(encounterTypeIdOrUuid)) {
+        if (targetEncounterTypeId.equals(encounterTypeIdOrUuid) || encounterType.getUuid().equals(encounterTypeIdOrUuid)) {
           String visitTypeIdOrUuid=mapping.substring(index + 1).trim();
           VisitType visitType=null;
-          try {
-            visitType=Context.getVisitService().getVisitType(Integer.parseInt(visitTypeIdOrUuid));
+          if (StringUtils.isNumeric(visitTypeIdOrUuid)) {
+            visitType=visitService.getVisitType(Integer.parseInt(visitTypeIdOrUuid));
           }
- catch (          NumberFormatException e) {
+ else {
+            visitType=visitService.getVisitTypeByUuid(visitTypeIdOrUuid);
           }
-          if (visitType == null)           visitType=Context.getVisitService().getVisitTypeByUuid(visitTypeIdOrUuid);
           if (visitType != null) {
             return visitType;
           }
         }
       }
     }
-    throw new APIException("Global Property: visit.encounterTypeToVisitTypeMapping does not have a mapping for encounter type: " + encounter.getEncounterType().getName());
+    throw new APIException("Global Property: visit.encounterTypeToVisitTypeMapping does not have a mapping for encounter type: " + encounterType.getName());
   }
   return Context.getVisitService().getAllVisitTypes().get(0);
 }
