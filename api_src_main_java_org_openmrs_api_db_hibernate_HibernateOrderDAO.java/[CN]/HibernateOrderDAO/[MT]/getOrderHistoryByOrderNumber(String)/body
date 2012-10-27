@@ -1,0 +1,27 @@
+{
+  Order initial=getOrderByOrderNumber(orderNumber);
+  String workNumber=initial.getPreviousOrderNumber();
+  LinkedList<Order> previousOrders=new LinkedList<Order>();
+  while (workNumber != null) {
+    Order previous=getOrderByOrderNumber(workNumber);
+    previousOrders.addFirst(previous);
+    workNumber=previous.getPreviousOrderNumber();
+  }
+  Order nextOrder=null;
+  workNumber=orderNumber;
+  List<Order> nextOrders=new ArrayList<Order>();
+  do {
+    Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Order.class,"order");
+    searchCriteria.add(Restrictions.eq("order.previousOrderNumber",workNumber));
+    nextOrder=(Order)searchCriteria.uniqueResult();
+    if (nextOrder != null) {
+      nextOrders.add(nextOrder);
+      workNumber=nextOrder.getOrderNumber();
+    }
+  }
+ while (nextOrder != null);
+  List<Order> result=previousOrders;
+  result.add(initial);
+  result.addAll(nextOrders);
+  return result;
+}
