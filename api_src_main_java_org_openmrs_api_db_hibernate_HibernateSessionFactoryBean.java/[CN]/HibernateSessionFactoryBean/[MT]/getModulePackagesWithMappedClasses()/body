@@ -1,0 +1,9 @@
+{
+  Set<String> packages=new HashSet<String>();
+  for (  Module module : ModuleFactory.getStartedModules()) {
+    for (    String pack : module.getPackagesWithMappedClasses()) {
+      packages.add(pack);
+    }
+  }
+  return packages;
+}

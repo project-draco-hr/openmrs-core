@@ -1,4 +1,6 @@
 {
   super.setMappingResources(getModuleMappingResources().toArray(new String[]{}));
+  packagesToScan.addAll(getModulePackagesWithMappedClasses());
+  super.setPackagesToScan(packagesToScan.toArray(new String[0]));
   super.afterPropertiesSet();
 }
