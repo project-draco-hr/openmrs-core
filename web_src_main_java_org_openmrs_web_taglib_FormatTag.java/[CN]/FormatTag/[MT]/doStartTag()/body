@@ -51,7 +51,7 @@
   if (singleCustomValue != null) {
     printSingleCustomValue(sb,singleCustomValue);
   }
-  if (StringUtils.hasText(var)) {
+  if (StringUtils.isNotEmpty(var)) {
     if (javaScriptEscape)     pageContext.setAttribute(var,JavaScriptUtils.javaScriptEscape(sb.toString()));
  else     pageContext.setAttribute(var,sb.toString());
   }

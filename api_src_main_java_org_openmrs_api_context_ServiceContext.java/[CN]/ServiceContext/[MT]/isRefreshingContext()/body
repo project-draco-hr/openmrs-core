@@ -1,3 +1,5 @@
 {
-  return (refreshingContextCheck.intValue() == 1);
+synchronized (contextRefreshedLock) {
+    return !contextRefreshedCheck;
+  }
 }

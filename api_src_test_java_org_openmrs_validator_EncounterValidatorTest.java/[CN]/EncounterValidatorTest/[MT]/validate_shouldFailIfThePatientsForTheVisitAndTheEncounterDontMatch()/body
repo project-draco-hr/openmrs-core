@@ -6,5 +6,5 @@
   encounter.setVisit(visit);
   Errors errors=new BindException(encounter,"encounter");
   new EncounterValidator().validate(encounter,errors);
-  Assert.assertTrue(errors.hasFieldErrors("visit"));
+  Assert.assertEquals("Encounter.visit.patients.dontMatch",errors.getFieldError("visit").getCode());
 }

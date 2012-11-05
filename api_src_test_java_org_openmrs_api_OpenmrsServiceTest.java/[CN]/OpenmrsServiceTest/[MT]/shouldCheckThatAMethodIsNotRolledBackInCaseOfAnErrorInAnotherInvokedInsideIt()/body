@@ -1,0 +1,24 @@
+{
+  PatientService patientService=Context.getPatientService();
+  EncounterService encounterService=Context.getEncounterService();
+  ProgramWorkflowService programService=Context.getProgramWorkflowService();
+  Patient prefPatient=patientService.getPatient(6);
+  Patient notPrefPatient=patientService.getPatient(7);
+  Collection<Program> programs=programService.getAllPrograms(false);
+  int originalPrefEncounterCount=encounterService.getEncountersByPatient(prefPatient).size();
+  int originalNotPrefEncounterCount=encounterService.getEncountersByPatient(notPrefPatient).size();
+  Assert.assertTrue(originalNotPrefEncounterCount > 0);
+  Cohort notPreferredCohort=new Cohort(notPrefPatient.getPatientId().toString());
+  List<PatientProgram> notPrefPrograms=programService.getPatientPrograms(notPreferredCohort,programs);
+  Assert.assertTrue(notPrefPrograms.size() > 0);
+  notPrefPrograms.get(0).setProgram(null);
+  boolean failed=false;
+  try {
+    patientService.mergePatients(prefPatient,notPrefPatient);
+  }
+ catch (  APIException e) {
+    failed=true;
+  }
+  Assert.assertTrue(failed);
+  Assert.assertEquals(originalPrefEncounterCount,encounterService.getEncountersByPatient(prefPatient).size());
+}

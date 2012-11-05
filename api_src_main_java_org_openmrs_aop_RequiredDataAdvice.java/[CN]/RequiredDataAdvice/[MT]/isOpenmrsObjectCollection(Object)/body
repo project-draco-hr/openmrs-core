@@ -1,15 +1,7 @@
 {
-  try {
-    Collection<Object> objects=(Collection<Object>)arg;
-    if (!objects.isEmpty()) {
-      @SuppressWarnings("unused") OpenmrsObject openmrsObject=(OpenmrsObject)objects.iterator().next();
-    }
- else {
-      return false;
-    }
-    return true;
-  }
- catch (  ClassCastException ex) {
+  if (arg instanceof Collection) {
+    Collection<?> col=(Collection<?>)arg;
+    return !col.isEmpty() && col.iterator().next() instanceof OpenmrsObject;
   }
   return false;
 }

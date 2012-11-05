@@ -1,0 +1,9 @@
+{
+  User user=new User();
+  user.setUsername("test@example.com");
+  AdministrationService as=Context.getAdministrationService();
+  as.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME,"false"));
+  Errors errors=new BindException(user,"user");
+  new UserValidator().validate(user,errors);
+  Assert.assertTrue(errors.hasFieldErrors("username"));
+}

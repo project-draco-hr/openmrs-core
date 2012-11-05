@@ -1,3 +1,7 @@
 {
-  if (adminService == null)   adminService=Context.getAdministrationService();
+  if (adminService == null) {
+    adminService=Context.getAdministrationService();
+    implementationHttpClient=mock(HttpClient.class);
+    adminService.setImplementationIdHttpClient(implementationHttpClient);
+  }
 }

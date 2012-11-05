@@ -1,0 +1,6 @@
+{
+  HttpUrl url=mock(HttpUrl.class);
+  client=new HttpClient(url);
+  connection=mock(HttpURLConnection.class);
+  when(url.openConnection()).thenReturn(connection);
+}

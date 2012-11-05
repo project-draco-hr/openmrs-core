@@ -5,7 +5,22 @@
   visit.setStartDatetime(encounter.getEncounterDatetime());
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
-  visit.setVisitType(getVisitType(encounter));
+  try {
+    if (encounterVisitMapping == null) {
+      encounterVisitMapping=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
+        public VisitType load(        EncounterType key) throws APIException {
+          return loadVisitType(key);
+        }
+      }
+);
+      Context.getAdministrationService().addGlobalPropertyListener(this);
+    }
+    VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());
+    visit.setVisitType(visitType);
+  }
+ catch (  ExecutionException e) {
+    throw new APIException("Error getting mapping encounter type - visit type from cache",e);
+  }
   visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime()));
   encounter.setVisit(visit);
 }

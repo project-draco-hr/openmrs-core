@@ -49,6 +49,8 @@ catch (          InvocationTargetException e) {
       if (nameInDB.isLocalePreferred())       nameInDB.setLocalePreferred(false);
       ConceptName clone=uuidClonedConceptNameMap.get(nameInDB.getUuid());
       clone.setUuid(UUID.randomUUID().toString());
+      clone.setDateCreated(null);
+      clone.setCreator(null);
       concept.addName(clone);
     }
   }
@@ -65,6 +67,8 @@ catch (          InvocationTargetException e) {
     }
     checkedLocales.add(locale);
   }
+  concept.setDateChanged(new Date());
+  concept.setChangedBy(Context.getAuthenticatedUser());
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
   if (errors.hasErrors())   throw new APIException("Validation errors found: " + errors.getAllErrors());

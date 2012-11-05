@@ -27,10 +27,9 @@
     dao.saveObs(newObs);
     try {
       Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
-      String reason=changeMessage + "voidReason looks like" + " (new obsId: "+ newObs.getObsId()+ ")";
       Context.evictFromSession(obs);
       obs=getObs(obs.getObsId());
-      Context.getObsService().voidObs(obs,reason);
+      Context.getObsService().voidObs(obs,changeMessage);
     }
   finally {
       Context.removeProxyPrivilege(PrivilegeConstants.DELETE_OBS);

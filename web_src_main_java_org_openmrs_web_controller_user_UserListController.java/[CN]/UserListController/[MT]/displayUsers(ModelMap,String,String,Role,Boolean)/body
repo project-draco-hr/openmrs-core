@@ -1,6 +1,22 @@
 {
   if (Context.isAuthenticated()) {
     List<User> users=getUsers(action,name,role,includeDisabled);
+    Map<User,Set<Role>> userRolesMap=new HashMap<User,Set<Role>>(users.size());
+    for (    User user : users) {
+      Set<Role> roles=null;
+      if (role != null && !user.getRoles().contains(role)) {
+        roles=new LinkedHashSet<Role>();
+        roles.add(role);
+        roles.addAll(user.getAllRoles());
+      }
+ else {
+        roles=new HashSet<Role>(user.getAllRoles());
+        roles.remove(role);
+      }
+      userRolesMap.put(user,roles);
+    }
     model.put("users",users);
+    model.put("role",role);
+    model.put("userRolesMap",userRolesMap);
   }
 }

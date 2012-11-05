@@ -11,10 +11,11 @@
     EncounterService es=Context.getEncounterService();
     FormService fs=Context.getFormService();
     Form form=encounter.getForm();
-    map.put("encounterTypes",es.getAllEncounterTypes());
+    List<EncounterType> encTypes=es.getAllEncounterTypes();
+    Collections.sort(encTypes,new MetadataComparator(Context.getLocale()));
+    map.put("encounterTypes",encTypes);
     map.put("encounterRoles",es.getAllEncounterRoles(false));
     map.put("forms",Context.getFormService().getAllForms());
-    String reason="";
     for (    Obs o : encounter.getObsAtTopLevel(true)) {
       if (o.hasPreviousVersion())       editedObs.add(o.getObsId());
       FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);

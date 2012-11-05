@@ -1,0 +1,10 @@
+{
+  String changeMessage="Testing TRUNK-3701";
+  int obsId=7;
+  ObsService obsService=Context.getObsService();
+  Obs obs=obsService.getObs(obsId);
+  obs.setComment("Comment to make sure obs changes");
+  Obs obsCreated=obsService.saveObs(obs,changeMessage);
+  obs=obsService.getObs(obsId);
+  assertEquals(changeMessage,obs.getVoidReason());
+}
