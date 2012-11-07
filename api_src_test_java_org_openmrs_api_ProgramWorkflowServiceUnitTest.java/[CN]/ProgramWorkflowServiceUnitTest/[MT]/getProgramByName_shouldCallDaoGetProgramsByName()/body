@@ -1,7 +1,0 @@
-{
-  ProgramWorkflowDAO mockDao=Mockito.mock(ProgramWorkflowDAO.class);
-  pws.setProgramWorkflowDAO(mockDao);
-  pws.getProgramByName("A name");
-  Mockito.verify(mockDao).getProgramsByName("A name",false);
-  Mockito.verify(mockDao).getProgramsByName("A name",true);
-}

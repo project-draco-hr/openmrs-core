@@ -1,9 +1,0 @@
-{
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Program.class);
-  criteria.add(Restrictions.eq("name",programName));
-  if (!includeRetired) {
-    criteria.add(Restrictions.eq("retired",false));
-  }
-  @SuppressWarnings("unchecked") List<Program> list=criteria.list();
-  return list;
-}

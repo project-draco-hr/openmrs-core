@@ -1,10 +1,8 @@
 {
-  List<Program> programs=dao.getProgramsByName(name,false);
-  if (programs.isEmpty()) {
-    programs=dao.getProgramsByName(name,true);
+  for (  Program p : getAllPrograms()) {
+    if (p.getConcept().isNamed(name)) {
+      return p;
+    }
   }
-  if (programs.size() > 1) {
-    throw new ProgramNameDuplicatedException(name);
-  }
-  return programs.isEmpty() ? null : programs.get(0);
+  return null;
 }

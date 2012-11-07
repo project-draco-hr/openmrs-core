@@ -1,9 +1,0 @@
-{
-  Program program=createProgram();
-  program.setName("wrongProgramName");
-  dao.saveProgram(program);
-  clearHibernateCache();
-  List<Program> programs=dao.getProgramsByName("testProgramName",true);
-  Assert.assertNotNull(programs);
-  Assert.assertEquals(0,programs.size());
-}

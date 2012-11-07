@@ -1,8 +1,0 @@
-{
-  ProgramWorkflowDAO mockDao=Mockito.mock(ProgramWorkflowDAO.class);
-  List<Program> noProgramWithGivenName=new ArrayList<Program>();
-  Mockito.stub(mockDao.getProgramsByName("A name",false)).toReturn(noProgramWithGivenName);
-  Mockito.stub(mockDao.getProgramsByName("A name",true)).toReturn(noProgramWithGivenName);
-  pws.setProgramWorkflowDAO(mockDao);
-  Assert.assertNull(pws.getProgramByName("A name"));
-}
