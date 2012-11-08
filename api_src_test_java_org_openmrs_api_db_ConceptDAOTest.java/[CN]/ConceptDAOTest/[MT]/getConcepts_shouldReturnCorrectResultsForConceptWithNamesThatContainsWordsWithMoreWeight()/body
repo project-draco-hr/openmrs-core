@@ -1,0 +1,11 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-words.xml");
+  Concept conceptWithMultipleMatchingNames=dao.getConcept(3000);
+  ConceptService cs=Context.getConceptService();
+  cs.updateConceptIndex(conceptWithMultipleMatchingNames);
+  cs.updateConceptIndex(dao.getConcept(4000));
+  List<ConceptSearchResult> searchResults=dao.getConcepts("trust",Collections.singletonList(Locale.ENGLISH),false,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,null,null,null);
+  Assert.assertEquals(2,searchResults.size());
+  Assert.assertEquals(conceptWithMultipleMatchingNames,searchResults.get(0).getConcept());
+  Assert.assertEquals(9998,searchResults.get(0).getConceptName().getConceptNameId().intValue());
+}
