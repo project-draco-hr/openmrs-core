@@ -1,0 +1,16 @@
+{
+  PersonAttributeType type=new PersonAttributeType();
+  type.setName("name");
+  type.setDescription(null);
+  Errors errors=new BindException(type,"type");
+  new PersonAttributeTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasFieldErrors("description"));
+  type.setDescription("");
+  errors=new BindException(type,"type");
+  new PersonAttributeTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasFieldErrors("description"));
+  type.setDescription(" ");
+  errors=new BindException(type,"type");
+  new PersonAttributeTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasFieldErrors("description"));
+}

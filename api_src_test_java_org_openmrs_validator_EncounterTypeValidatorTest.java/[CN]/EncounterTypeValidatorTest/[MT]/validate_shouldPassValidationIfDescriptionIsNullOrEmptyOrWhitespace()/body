@@ -4,13 +4,13 @@
   type.setDescription(null);
   Errors errors=new BindException(type,"type");
   new EncounterTypeValidator().validate(type,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   type.setDescription("");
   errors=new BindException(type,"type");
   new EncounterTypeValidator().validate(type,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   type.setDescription(" ");
   errors=new BindException(type,"type");
   new EncounterTypeValidator().validate(type,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
 }
