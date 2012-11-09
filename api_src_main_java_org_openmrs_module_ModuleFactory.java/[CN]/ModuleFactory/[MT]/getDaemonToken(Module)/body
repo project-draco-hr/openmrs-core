@@ -1,0 +1,11 @@
+{
+synchronized (daemonTokens) {
+    DaemonToken token=daemonTokens.get(module.getModuleId());
+    if (token != null) {
+      return token;
+    }
+    token=new DaemonToken(module.getModuleId());
+    daemonTokens.put(module.getModuleId(),token);
+    return token;
+  }
+}
