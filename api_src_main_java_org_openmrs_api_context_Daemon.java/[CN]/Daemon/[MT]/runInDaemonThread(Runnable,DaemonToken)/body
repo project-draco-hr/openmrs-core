@@ -1,0 +1,20 @@
+{
+  if (!ModuleFactory.isTokenValid(token)) {
+    throw new ContextAuthenticationException("Invalid token " + token);
+  }
+  DaemonThread thread=new DaemonThread(){
+    @Override public void run(){
+      isDaemonThread.set(true);
+      try {
+        Context.openSession();
+        runnable.run();
+      }
+  finally {
+        Context.closeSession();
+      }
+    }
+  }
+;
+  thread.start();
+  return thread;
+}
