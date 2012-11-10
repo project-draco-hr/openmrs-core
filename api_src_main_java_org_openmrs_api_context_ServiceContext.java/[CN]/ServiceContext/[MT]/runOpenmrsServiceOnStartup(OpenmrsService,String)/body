@@ -2,11 +2,15 @@
   new Thread(){
     @Override public void run(){
       try {
-synchronized (contextRefreshedLock) {
-          while (!contextRefreshedCheck) {
-            log.warn("Waiting to get service: " + classString + " while the context is being refreshed");
-            contextRefreshedLock.wait();
-            log.warn("Finished waiting to get service " + classString + " while the context was being refreshed");
+synchronized (refreshingContextLock) {
+          while (refreshingContext) {
+            if (log.isDebugEnabled()) {
+              log.debug("Waiting to get service: " + classString + " while the context"+ " is being refreshed");
+            }
+            refreshingContextLock.wait();
+            if (log.isDebugEnabled()) {
+              log.debug("Finished waiting to get service " + classString + " while the context was being refreshed");
+            }
           }
         }
         Daemon.runStartupForService(openmrsService);
