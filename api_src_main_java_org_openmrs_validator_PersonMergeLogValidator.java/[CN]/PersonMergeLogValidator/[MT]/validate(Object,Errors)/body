@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   PersonMergeLog personMergeLog=(PersonMergeLog)obj;
   if (personMergeLog == null) {
     errors.rejectValue("persnMergeLog","error.general");

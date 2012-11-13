@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   PatientIdentifierType identifierType=(PatientIdentifierType)obj;
   if (identifierType == null) {
     errors.rejectValue("identifierType","error.general");

@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   PatientIdentifier pi=(PatientIdentifier)obj;
   try {
     validateIdentifier(pi);

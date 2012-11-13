@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   Role role=(Role)obj;
   if (role == null) {
     errors.rejectValue("role","error.general");

@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   PersonAttributeType patObj=(PersonAttributeType)obj;
   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","PersonAttributeType.error.nameEmpty");
   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description","error.description");
