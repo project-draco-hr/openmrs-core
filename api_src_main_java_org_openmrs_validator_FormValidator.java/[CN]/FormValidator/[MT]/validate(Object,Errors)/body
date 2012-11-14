@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   Form form=(Form)obj;
   if (form == null) {
     errors.rejectValue("form","error.general");

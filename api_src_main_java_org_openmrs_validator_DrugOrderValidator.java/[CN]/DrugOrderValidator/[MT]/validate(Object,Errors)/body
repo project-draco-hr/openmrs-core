@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   super.validate(obj,errors);
   DrugOrder order=(DrugOrder)obj;
   if (order == null) {

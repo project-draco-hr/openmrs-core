@@ -6,6 +6,7 @@
   if (gp == null)   gp=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_VIEWING_ATTRIBUTES);
   gp.setPropertyValue(pat.getName());
   as.saveGlobalProperty(gp);
+  Context.flushSession();
   Patient p=Context.getPatientService().getPatient(2);
   int originalAttributeCount=p.getAttributes().size();
   ShortPatientModel patientModel=new ShortPatientModel(p);

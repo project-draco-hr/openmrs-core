@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   if (obj == null || !(obj instanceof Concept))   throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + Concept.class);
   Concept conceptToValidate=(Concept)obj;
   if (conceptToValidate.getNames().size() == 0) {

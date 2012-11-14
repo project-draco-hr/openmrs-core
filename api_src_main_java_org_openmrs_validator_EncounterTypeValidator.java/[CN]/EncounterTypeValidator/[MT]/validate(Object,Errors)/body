@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   EncounterType encounterType=(EncounterType)obj;
   if (encounterType == null) {
     errors.rejectValue("encounterType","error.general");

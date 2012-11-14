@@ -1,4 +1,7 @@
 {
+  if (!ValidateUtil.isValidationOn()) {
+    return;
+  }
   if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
   if (obj == null)   throw new IllegalArgumentException("The parameter obj should not be null");
   MessageSourceService mss=Context.getMessageSourceService();
