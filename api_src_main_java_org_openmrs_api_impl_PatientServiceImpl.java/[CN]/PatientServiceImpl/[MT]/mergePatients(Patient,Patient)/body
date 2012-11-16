@@ -5,8 +5,17 @@
     throw new APIException("Merge operation cancelled: Cannot merge user " + preferred.getPatientId() + " to self");
   }
   PersonMergeLogData mergedData=new PersonMergeLogData();
+  VisitService vs=Context.getVisitService();
+  for (  Visit v : vs.getVisitsByPatient(notPreferred,true,true)) {
+    if (log.isDebugEnabled()) {
+      log.debug("Merging visit " + v.getVisitId() + " to "+ preferred.getPatientId());
+    }
+    v.setPatient(preferred);
+    Visit persisted=vs.saveVisit(v);
+    mergedData.addMovedVisit(persisted.getUuid());
+  }
   EncounterService es=Context.getEncounterService();
-  for (  Encounter e : es.getEncountersByPatient(notPreferred)) {
+  for (  Encounter e : es.getEncounters(notPreferred,null,null,null,null,null,null,null,null,true)) {
     e.setPatient(preferred);
     log.debug("Merging encounter " + e.getEncounterId() + " to "+ preferred.getPatientId());
     Encounter persisted=es.saveEncounter(e);
