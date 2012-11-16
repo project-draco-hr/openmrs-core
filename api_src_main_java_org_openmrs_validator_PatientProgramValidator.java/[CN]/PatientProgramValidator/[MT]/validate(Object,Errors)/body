@@ -1,7 +1,5 @@
 {
-  if (!ValidateUtil.isValidationOn()) {
-    return;
-  }
+  if ("true".equals(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_TURN_OFF_SAVE_HANDLER_VALIDATION,"false")))   return;
   if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
   if (obj == null)   throw new IllegalArgumentException("The parameter obj should not be null");
   MessageSourceService mss=Context.getMessageSourceService();
