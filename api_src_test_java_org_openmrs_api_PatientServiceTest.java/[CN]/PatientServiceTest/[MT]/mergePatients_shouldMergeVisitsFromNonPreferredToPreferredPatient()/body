@@ -1,0 +1,36 @@
+{
+  executeDataSet(ENCOUNTERS_FOR_VISITS_XML);
+  VisitService visitService=Context.getVisitService();
+  Patient notPreferred=patientService.getPatient(2);
+  Patient preferred=patientService.getPatient(6);
+  Visit visit1=visitService.getVisit(1);
+  Visit visit2=visitService.getVisit(2);
+  Visit visit3=visitService.getVisit(3);
+  Visit visit6=visitService.getVisit(6);
+  Visit visit4=visitService.getVisit(4);
+  Visit visit5=visitService.getVisit(5);
+  List<String> encounterUuidsThatShouldBeMoved=new ArrayList<String>();
+  for (  Visit v : Arrays.asList(visit1,visit2,visit3)) {
+    for (    Encounter e : v.getEncounters()) {
+      encounterUuidsThatShouldBeMoved.add(e.getUuid());
+    }
+  }
+  PersonMergeLog mergeLog=mergeAndRetrieveAudit(preferred,notPreferred);
+  Patient merged=patientService.getPatient(preferred.getId());
+  List<Visit> mergedVisits=visitService.getVisitsByPatient(merged,true,true);
+  assertThat(mergedVisits.size(),is(6));
+  assertThat(mergedVisits,containsInAnyOrder(matchingVisit(visit1),matchingVisit(visit2),matchingVisit(visit3),matchingVisit(visit4),matchingVisit(visit5),matchingVisit(visit6)));
+  for (  Visit v : mergedVisits) {
+    for (    Encounter e : v.getEncounters()) {
+      assertThat(e.getPatient(),is(v.getPatient()));
+      for (      Obs o : e.getAllObs(true)) {
+        assertThat(o.getPerson().getId(),is(v.getPatient().getId()));
+      }
+    }
+  }
+  PersonMergeLogData mergeLogData=mergeLog.getPersonMergeLogData();
+  assertThat(mergeLogData.getMovedVisits().size(),is(4));
+  assertThat(mergeLogData.getMovedVisits(),containsInAnyOrder(visit1.getUuid(),visit2.getUuid(),visit3.getUuid(),visit6.getUuid()));
+  assertThat(mergeLogData.getMovedEncounters().size(),is(encounterUuidsThatShouldBeMoved.size()));
+  assertThat(mergeLogData.getMovedEncounters(),containsInAnyOrder(encounterUuidsThatShouldBeMoved.toArray()));
+}
