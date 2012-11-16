@@ -1,0 +1,10 @@
+{
+  List<Concept> allConcepts=conceptService.getAllConcepts("name",true,false);
+  assertEquals(24,allConcepts.size());
+  assertEquals("ANTIRETROVIRAL TREATMENT GROUP",allConcepts.get(0).getName().getName());
+  assertEquals("YES",allConcepts.get(allConcepts.size() - 1).getName().getName());
+  allConcepts=conceptService.getAllConcepts("name",false,false);
+  assertEquals(24,allConcepts.size());
+  assertEquals("YES",allConcepts.get(0).getName().getName());
+  assertEquals("ANTIRETROVIRAL TREATMENT GROUP",allConcepts.get(allConcepts.size() - 1).getName().getName());
+}
