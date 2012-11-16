@@ -1,6 +1,4 @@
 {
   if (object == null)   throw new APIException(Context.getMessageSourceService().getMessage("error.null"));
-  if (ValidateUtil.isValidationOn()) {
-    dao.validate(object,errors);
-  }
+  dao.validate(object,errors);
 }

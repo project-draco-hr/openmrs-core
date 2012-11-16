@@ -1,12 +1,5 @@
 {
-  FlushMode previousFlushMode=dao.getFlushMode();
-  dao.setFlushMode(FlushMode.MANUAL);
-  try {
-    String s=getGlobalProperty(propertyName);
-    if (s == null)     return defaultValue;
-    return s;
-  }
-  finally {
-    dao.setFlushMode(previousFlushMode);
-  }
+  String s=getGlobalProperty(propertyName);
+  if (s == null)   return defaultValue;
+  return s;
 }
