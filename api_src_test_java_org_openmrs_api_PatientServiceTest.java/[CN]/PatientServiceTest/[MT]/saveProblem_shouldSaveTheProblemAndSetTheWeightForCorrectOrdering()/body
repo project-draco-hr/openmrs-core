@@ -14,5 +14,5 @@
   assertEqualsInt(88,problem.getProblem().getConceptId());
   Assert.assertNotNull(problem.getPerson());
   Assert.assertNotNull(problem.getStartDate());
-  Assert.assertEquals(2d,problem.getSortWeight());
+  assertThat(problem.getSortWeight(),is(2d));
 }
