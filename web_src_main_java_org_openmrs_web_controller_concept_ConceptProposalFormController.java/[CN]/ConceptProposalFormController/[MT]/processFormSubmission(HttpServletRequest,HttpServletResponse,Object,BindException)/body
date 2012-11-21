@@ -17,7 +17,7 @@
     if (cp.getMappedConcept() == null)     errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
  else {
       String proposalAction=request.getParameter("actionToTake");
-      if (proposalAction.equals("createObsAndIgnoreProposal")) {
+      if (proposalAction.equals("saveAsMapped")) {
         cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_CONCEPT);
       }
  else       if (proposalAction.equals("saveAsSynonym")) {

@@ -11,6 +11,7 @@
     Concept c=null;
     if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
     List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
+    allProposals.add(cp);
     Set<User> uniqueProposers=new HashSet<User>();
     Locale conceptNameLocale=new Locale(request.getParameter("conceptNamelocale"));
     for (    ConceptProposal conceptProposal : allProposals) {
