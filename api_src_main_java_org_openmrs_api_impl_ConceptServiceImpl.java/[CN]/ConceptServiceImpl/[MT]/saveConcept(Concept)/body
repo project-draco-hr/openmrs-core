@@ -49,6 +49,8 @@ catch (          InvocationTargetException e) {
       if (nameInDB.isLocalePreferred())       nameInDB.setLocalePreferred(false);
       ConceptName clone=uuidClonedConceptNameMap.get(nameInDB.getUuid());
       clone.setUuid(UUID.randomUUID().toString());
+      clone.setDateCreated(null);
+      clone.setCreator(null);
       concept.addName(clone);
     }
   }

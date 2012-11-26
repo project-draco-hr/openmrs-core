@@ -1,5 +1,5 @@
 {
-synchronized (contextRefreshedLock) {
-    return !contextRefreshedCheck;
+synchronized (refreshingContextLock) {
+    return refreshingContext;
   }
 }

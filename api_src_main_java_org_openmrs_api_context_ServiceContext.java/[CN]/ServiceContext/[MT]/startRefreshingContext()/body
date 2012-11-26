@@ -1,5 +1,6 @@
 {
-synchronized (contextRefreshedLock) {
-    contextRefreshedCheck=false;
+synchronized (refreshingContextLock) {
+    log.info("Refreshing Context");
+    refreshingContext=true;
   }
 }
