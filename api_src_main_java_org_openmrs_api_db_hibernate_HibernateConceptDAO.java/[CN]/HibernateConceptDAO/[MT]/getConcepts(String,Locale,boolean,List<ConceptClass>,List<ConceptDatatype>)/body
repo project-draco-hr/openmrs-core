@@ -11,12 +11,11 @@
       }
       if (!StringUtils.isBlank(name)) {
         if (searchOnPhrase) {
-          String searchPhrase=newRequirePartialWordsSearchPhrase(name);
-          String search=newNamesQuery(locale,searchPhrase,true);
+          String search=newNamesQuery(Sets.newHashSet(locale),name,true);
           query.append(search);
         }
  else {
-          String search=newNamesQuery(locale,QueryParser.escape(name),false);
+          String search=newNamesQuery(Sets.newHashSet(locale),name,false);
           query.append(search);
         }
       }

@@ -1,5 +1,5 @@
 {
-  executeDataSet("org/openmrs/api/include/ConceptServiceTest-words.xml");
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-names.xml");
   List<ConceptSearchResult> searchResults=conceptService.getConcepts("SALBUTAMOL INHALER",Collections.singletonList(new Locale("en","US")),false,null,null,null,null,null,null,null);
   Assert.assertEquals(1,searchResults.size());
   Assert.assertEquals("SALBUTAMOL INHALER",searchResults.get(0).getWord());

@@ -1,0 +1,19 @@
+{
+  final String phrase;
+  if (keywords) {
+    phrase="(" + newRequirePartialWordsSearchPhrase(name) + " \""+ QueryParser.escape(name)+ "\"^10)";
+  }
+ else {
+    phrase="\"" + QueryParser.escape(name) + "\"";
+  }
+  StringBuilder query=new StringBuilder();
+  query.append("+(");
+  for (  Locale locale : locales) {
+    query.append(" names.name_").append(locale.getLanguage()).append(":").append(phrase);
+    if (!StringUtils.isBlank(locale.getCountry())) {
+      query.append(" names.name_").append(locale).append(":").append(phrase).append("^2");
+    }
+  }
+  query.append(" )");
+  return query.toString();
+}

@@ -3,14 +3,14 @@
     @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
       StringBuilder query=new StringBuilder();
       if (!StringUtils.isBlank(phrase)) {
-        List<Locale> searchLocales=locales;
-        if (searchLocales == null) {
-          searchLocales=Lists.newArrayList(Context.getLocale());
+        final Set<Locale> searchLocales;
+        if (locales == null) {
+          searchLocales=Sets.newHashSet(Context.getLocale());
         }
-        String searchPhrase=newRequirePartialWordsSearchPhrase(phrase);
-        for (        Locale locale : locales) {
-          query.append(newNamesQuery(locale,searchPhrase,true));
+ else {
+          searchLocales=Sets.newHashSet(locales);
         }
+        query.append(newNamesQuery(searchLocales,phrase,true));
       }
       if (!includeRetired) {
         query.append(" +retired:false");

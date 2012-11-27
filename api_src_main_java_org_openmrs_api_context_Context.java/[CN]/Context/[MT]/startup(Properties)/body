@@ -4,5 +4,5 @@
   OpenmrsUtil.startup(props);
   ModuleUtil.startup(props);
   checkCoreDataset();
-  updateSearchIndexInBackground();
+  getContextDAO().setupSearchIndex();
 }

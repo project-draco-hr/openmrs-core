@@ -15,7 +15,7 @@
           query.append(" +names.name_").append(searchLocale).append(":").append("\"").append(searchPhrase).append("\"");
         }
  else {
-          query.append(newNamesQuery(searchLocale,searchPhrase,false));
+          query.append(newNamesQuery(Sets.newHashSet(searchLocale),searchPhrase,false));
         }
       }
       query.append(" +retired:false");

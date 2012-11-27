@@ -1,6 +1,6 @@
 {
   executeDataSet(simpleOrderEntryDatasetFilename);
-  Context.getConceptService().updateConceptIndexes();
+  updateSearchIndex();
   String query="Ampi";
   List<Orderable<?>> result=Context.getOrderService().getOrderables(query);
   Assert.assertNotNull(result);

@@ -4,7 +4,7 @@
     return;
   }
   String fieldValue=conceptName.getName();
-  if (conceptName.getLocale().getCountry() != null) {
+  if (!StringUtils.isBlank(conceptName.getLocale().getCountry())) {
     String fieldName=name + "_" + conceptName.getLocale();
     addField(fieldName,fieldValue,document,luceneOptions);
   }

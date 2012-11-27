@@ -3,5 +3,6 @@
   if (excludeClasses == null)   excludeClasses=new Vector<ConceptClass>();
   if (requireDatatypes == null)   requireDatatypes=new Vector<ConceptDatatype>();
   if (excludeDatatypes == null)   excludeDatatypes=new Vector<ConceptDatatype>();
-  return OpenmrsUtil.convertToInteger(dao.getCountOfConceptWords(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept,true));
+  List<ConceptSearchResult> concepts=dao.getConcepts(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept,null,null);
+  return concepts.size();
 }

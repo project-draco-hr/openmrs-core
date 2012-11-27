@@ -1,17 +1,11 @@
 {
-  List<String> words=ConceptWord.getUniqueWords(phrase);
-  List<Drug> conceptDrugs=new Vector<Drug>();
-  if (words.size() > 0) {
-    Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
-    Iterator<String> word=words.iterator();
-    searchCriteria.add(Restrictions.like("name",word.next(),MatchMode.ANYWHERE));
-    while (word.hasNext()) {
-      String w=word.next();
-      log.debug(w);
-      searchCriteria.add(Restrictions.like("name",w,MatchMode.ANYWHERE));
+  List<Drug> list=new LuceneQueryBuilder<Drug>(sessionFactory.getCurrentSession()){
+    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
+      String searchPhrase=newRequirePartialWordsSearchPhrase(phrase);
+      String query="+name:(" + searchPhrase + ")";
+      return newQueryParser().parse(query);
     }
-    searchCriteria.addOrder(Order.asc("drug.concept"));
-    conceptDrugs=searchCriteria.list();
   }
-  return conceptDrugs;
+.list();
+  return list;
 }
