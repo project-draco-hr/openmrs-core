@@ -10,25 +10,55 @@
     AlertService alertService=Context.getAlertService();
     Concept c=null;
     if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
-    List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
-    if (!allProposals.contains(cp))     allProposals.add(cp);
+    Collection<ConceptName> oldNames=c.getNames();
     Set<User> uniqueProposers=new HashSet<User>();
     Locale conceptNameLocale=new Locale(request.getParameter("conceptNamelocale"));
+    uniqueProposers.add(cp.getCreator());
+    cp.setFinalText(finalText);
+    cp.setState(cp.getState());
+    try {
+      cs.mapConceptProposalToConcept(cp,c,conceptNameLocale);
+    }
+ catch (    DuplicateConceptNameException e) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"ConceptProposal.save.fail");
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
+    Collection<ConceptName> newNames=c.getNames();
+    newNames.removeAll(oldNames);
+    ConceptName newConceptName=null;
+    if (newNames.size() == 1)     newConceptName=newNames.iterator().next();
+    List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
+    if (allProposals.contains(cp))     allProposals.remove(cp);
     for (    ConceptProposal conceptProposal : allProposals) {
+      if (conceptProposal.getObsConcept() != null && !conceptProposal.getObsConcept().equals(cp.getObsConcept())) {
+        continue;
+      }
       uniqueProposers.add(conceptProposal.getCreator());
-      conceptProposal.setFinalText(finalText);
+      conceptProposal.setFinalText(cp.getFinalText());
       conceptProposal.setState(cp.getState());
-      cs.mapConceptProposalToConcept(conceptProposal,c,conceptNameLocale);
+      conceptProposal.setMappedConcept(c);
+      if (conceptProposal.getObsConcept() != null) {
+        if (!OpenmrsUtil.nullSafeEquals(cp.getEncounter(),conceptProposal.getEncounter())) {
+          Obs ob=new Obs();
+          ob.setEncounter(conceptProposal.getEncounter());
+          ob.setConcept(conceptProposal.getObsConcept());
+          ob.setValueCoded(conceptProposal.getMappedConcept());
+          if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null)           ob.setValueCodedName(newConceptName);
+          ob.setCreator(Context.getAuthenticatedUser());
+          ob.setDateCreated(new Date());
+          ob.setObsDatetime(conceptProposal.getEncounter().getEncounterDatetime());
+          ob.setLocation(conceptProposal.getEncounter().getLocation());
+          ob.setPerson(conceptProposal.getEncounter().getPatient());
+          cp.setObs(ob);
+        }
+      }
+      cs.saveConceptProposal(conceptProposal);
     }
     String msg="";
     if (c != null) {
       String mappedName=c.getName(locale).getName();
       String[] args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
       msg=msa.getMessage("ConceptProposal.alert.mappedTo",args,locale);
-    }
- else {
-      String[] args=new String[]{cp.getOriginalText(),cp.getComments()};
-      msg=msa.getMessage("ConceptProposal.alert.ignored",args,locale);
     }
     try {
       Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
