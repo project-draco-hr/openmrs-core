@@ -1,5 +1,5 @@
 {
-  final List<Concept> concepts=new LuceneQueryBuilder<Concept>(sessionFactory.getCurrentSession()){
+  final List<ConceptName> names=new LuceneQueryBuilder<ConceptName>(sessionFactory.getCurrentSession()){
     @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
       StringBuilder query=new StringBuilder();
       final Locale locale;
@@ -19,18 +19,24 @@
           query.append(search);
         }
       }
-      query.append(" +retired:false");
+      query.append(" +concept.retired:false");
       if (classes != null && !classes.isEmpty()) {
         String ids=transformToIds(classes);
-        query.append(" +conceptClass.conceptClassId:(").append(ids).append(")");
+        query.append(" +concept.conceptClass.conceptClassId:(").append(ids).append(")");
       }
       if (datatypes != null && !datatypes.isEmpty()) {
         String ids=transformToIds(datatypes);
-        query.append(" +datatype.conceptDatatypeId:(").append(ids).append(")");
+        query.append(" +concept.datatype.conceptDatatypeId:(").append(ids).append(")");
       }
       return newQueryParser().parse(query.toString());
     }
   }
 .list();
+  final List<Concept> concepts=Lists.transform(names,new Function<ConceptName,Concept>(){
+    @Override public Concept apply(    ConceptName name){
+      return name.getConcept();
+    }
+  }
+);
   return concepts;
 }

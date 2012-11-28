@@ -1,19 +1,21 @@
 {
   final String phrase;
   if (keywords) {
-    phrase="(" + newRequirePartialWordsSearchPhrase(name) + " \""+ QueryParser.escape(name)+ "\"^10)";
+    phrase="(" + newRequirePartialWordsSearchPhrase(name) + "\""+ name+ "\"^10)";
   }
  else {
     phrase="\"" + QueryParser.escape(name) + "\"";
   }
   StringBuilder query=new StringBuilder();
-  query.append("+(");
+  query.append(" +name:").append(phrase);
+  query.append(" +locale:(");
   for (  Locale locale : locales) {
-    query.append(" names.name_").append(locale.getLanguage()).append(":").append(phrase);
+    query.append(locale.getLanguage()).append("* ");
     if (!StringUtils.isBlank(locale.getCountry())) {
-      query.append(" names.name_").append(locale).append(":").append(phrase).append("^2");
+      query.append(locale).append("^2");
     }
   }
-  query.append(" )");
+  query.append(")");
+  query.append(" +voided:false");
   return query.toString();
 }
