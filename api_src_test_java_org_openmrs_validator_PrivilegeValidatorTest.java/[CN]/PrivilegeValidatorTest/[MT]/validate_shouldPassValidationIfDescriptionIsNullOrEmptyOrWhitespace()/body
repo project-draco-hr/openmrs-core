@@ -4,13 +4,13 @@
   priv.setDescription(null);
   Errors errors=new BindException(priv,"priv");
   new PrivilegeValidator().validate(priv,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   priv.setDescription("");
   errors=new BindException(priv,"priv");
   new PrivilegeValidator().validate(priv,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   priv.setDescription(" ");
   errors=new BindException(priv,"priv");
   new PrivilegeValidator().validate(priv,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
 }

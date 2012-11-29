@@ -4,13 +4,13 @@
   cc.setDescription(null);
   Errors errors=new BindException(cc,"cc");
   new ConceptClassValidator().validate(cc,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   cc.setDescription("");
   errors=new BindException(cc,"cc");
   new ConceptClassValidator().validate(cc,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   cc.setDescription(" ");
   errors=new BindException(cc,"cc");
   new ConceptClassValidator().validate(cc,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
 }

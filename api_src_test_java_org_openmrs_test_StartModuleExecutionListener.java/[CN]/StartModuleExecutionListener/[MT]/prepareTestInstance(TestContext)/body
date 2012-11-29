@@ -18,8 +18,18 @@
       Assert.assertTrue("Some of the modules did not start successfully for " + testContext.getTestClass().getSimpleName() + ". Only "+ ModuleFactory.getStartedModules().size()+ " modules started instead of "+ startModuleAnnotation.value().length,startModuleAnnotation.value().length <= ModuleFactory.getStartedModules().size());
       GenericApplicationContext ctx=new GenericApplicationContext(testContext.getApplicationContext());
       XmlBeanDefinitionReader xmlReader=new XmlBeanDefinitionReader(ctx);
-      xmlReader.loadBeanDefinitions(new ClassPathResource("moduleApplicationContext.xml"));
-      ctx.refresh();
+      Enumeration<URL> list=OpenmrsClassLoader.getInstance().getResources("moduleApplicationContext.xml");
+      while (list.hasMoreElements()) {
+        xmlReader.loadBeanDefinitions(new UrlResource(list.nextElement()));
+      }
+      boolean useSystemClassLoader=Context.isUseSystemClassLoader();
+      Context.setUseSystemClassLoader(false);
+      try {
+        ctx.refresh();
+      }
+  finally {
+        Context.setUseSystemClassLoader(useSystemClassLoader);
+      }
     }
   }
 }

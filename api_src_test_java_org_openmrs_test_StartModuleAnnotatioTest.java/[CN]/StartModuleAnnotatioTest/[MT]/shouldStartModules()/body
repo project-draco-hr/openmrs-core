@@ -1,0 +1,8 @@
+{
+  Class<?> atdServiceClass=Context.loadClass("org.openmrs.module.atdproducer.service.ATDService");
+  Class<?> dssServiceClass=Context.loadClass("org.openmrs.module.dssmodule.DssService");
+  Assert.assertNotNull(atdServiceClass);
+  Assert.assertNotNull(dssServiceClass);
+  Assert.assertNotNull(Context.getService(atdServiceClass));
+  Assert.assertNotNull(Context.getService(dssServiceClass));
+}
