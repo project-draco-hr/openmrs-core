@@ -1,42 +1,26 @@
 {
-  final List<ConceptName> names=new LuceneQueryBuilder<ConceptName>(sessionFactory.getCurrentSession()){
-    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
-      StringBuilder query=new StringBuilder();
-      final Locale locale;
-      if (loc == null) {
-        locale=Context.getLocale();
-      }
+  StringBuilder query=new StringBuilder();
+  final Locale locale;
+  if (loc == null) {
+    locale=Context.getLocale();
+  }
  else {
-        locale=loc;
-      }
-      if (!StringUtils.isBlank(name)) {
-        if (searchOnPhrase) {
-          String search=newNamesQuery(Sets.newHashSet(locale),name,true);
-          query.append(search);
-        }
+    locale=loc;
+  }
+  if (!StringUtils.isBlank(name)) {
+    if (searchOnPhrase) {
+      String search=newNamesQuery(Sets.newHashSet(locale),name,true);
+      query.append(search);
+    }
  else {
-          String search=newNamesQuery(Sets.newHashSet(locale),name,false);
-          query.append(search);
-        }
-      }
-      query.append(" +concept.retired:false");
-      if (classes != null && !classes.isEmpty()) {
-        String ids=transformToIds(classes);
-        query.append(" +concept.conceptClass.conceptClassId:(").append(ids).append(")");
-      }
-      if (datatypes != null && !datatypes.isEmpty()) {
-        String ids=transformToIds(datatypes);
-        query.append(" +concept.datatype.conceptDatatypeId:(").append(ids).append(")");
-      }
-      return newQueryParser().parse(query.toString());
+      String search=newNamesQuery(Sets.newHashSet(locale),name,false);
+      query.append(search);
     }
   }
-.list();
-  final List<Concept> concepts=Lists.transform(names,new Function<ConceptName,Concept>(){
-    @Override public Concept apply(    ConceptName name){
-      return name.getConcept();
-    }
-  }
-);
+  query.append(" +concept.retired:false");
+  appendIdsQuery(query,"+concept.conceptClass.conceptClassId",classes);
+  appendIdsQuery(query,"+concept.datatype.conceptDatatypeId",datatypes);
+  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").list();
+  final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

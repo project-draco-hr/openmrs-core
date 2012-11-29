@@ -1,11 +1,6 @@
 {
-  List<Drug> list=new LuceneQueryBuilder<Drug>(sessionFactory.getCurrentSession()){
-    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
-      String searchPhrase=newRequirePartialWordsSearchPhrase(phrase);
-      String query="+name:(" + searchPhrase + ")";
-      return newQueryParser().parse(query);
-    }
-  }
-.list();
+  String searchPhrase=newRequirePartialWordsSearchPhrase(phrase);
+  String query="+name:(" + searchPhrase + ")";
+  List<Drug> list=LuceneQuery.newQuery(query,sessionFactory.getCurrentSession(),Drug.class).list();
   return list;
 }

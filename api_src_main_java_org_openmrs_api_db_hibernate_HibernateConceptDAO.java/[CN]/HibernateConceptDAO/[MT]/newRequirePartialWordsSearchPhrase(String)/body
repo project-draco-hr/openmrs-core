@@ -1,5 +1,5 @@
 {
-  String searchPhrase=QueryParser.escape(phrase).trim().replaceAll("\\s+","* +");
+  String searchPhrase=LuceneQuery.escapeQuery(phrase).trim().replaceAll("\\s+","* +");
   searchPhrase="+" + searchPhrase + "*";
   return searchPhrase;
 }

@@ -1,35 +1,24 @@
 {
-  final List<ConceptName> names=new LuceneQueryBuilder<ConceptName>(sessionFactory.getCurrentSession()){
-    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
-      StringBuilder query=new StringBuilder();
-      if (!StringUtils.isBlank(name)) {
-        final String searchPhrase=QueryParser.escape(name);
-        final Locale searchLocale;
-        if (locale == null) {
-          searchLocale=Context.getLocale();
-        }
+  StringBuilder query=new StringBuilder();
+  if (!StringUtils.isBlank(name)) {
+    final String searchPhrase=LuceneQuery.escapeQuery(name);
+    final Locale searchLocale;
+    if (locale == null) {
+      searchLocale=Context.getLocale();
+    }
  else {
-          searchLocale=locale;
-        }
-        if (exactLocale == null || exactLocale) {
-          query.append(" +name:").append("\"").append(searchPhrase).append("\"");
-          query.append(" +locale:").append(searchLocale);
-        }
+      searchLocale=locale;
+    }
+    if (exactLocale == null || exactLocale) {
+      query.append(" +name:").append("\"").append(searchPhrase).append("\"");
+      query.append(" +locale:").append(searchLocale);
+    }
  else {
-          query.append(newNamesQuery(Sets.newHashSet(searchLocale),searchPhrase,false));
-        }
-      }
-      query.append(" +concept.retired:false");
-      org.apache.lucene.search.Query parsedQuery=newQueryParser().parse(query.toString());
-      return parsedQuery;
+      query.append(newNamesQuery(Sets.newHashSet(searchLocale),searchPhrase,false));
     }
   }
-.list();
-  final List<Concept> concepts=Lists.transform(names,new Function<ConceptName,Concept>(){
-    @Override public Concept apply(    ConceptName name){
-      return name.getConcept();
-    }
-  }
-);
+  query.append(" +concept.retired:false");
+  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").list();
+  final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

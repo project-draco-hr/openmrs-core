@@ -13,22 +13,10 @@
   if (!includeRetired) {
     query.append(" +concept.retired:false");
   }
-  if (requireClasses != null && !requireClasses.isEmpty()) {
-    String ids=transformToIds(requireClasses);
-    query.append(" +concept.conceptClass.conceptClassId:(").append(ids).append(")");
-  }
-  if (excludeClasses != null && !excludeClasses.isEmpty()) {
-    String ids=transformToIds(excludeClasses);
-    query.append(" -concept.conceptClass.conceptClassId:(").append(ids).append(")");
-  }
-  if (requireDatatypes != null && !requireDatatypes.isEmpty()) {
-    String ids=transformToIds(requireDatatypes);
-    query.append(" +concept.datatype.conceptDatatypeId:(").append(ids).append(")");
-  }
-  if (excludeDatatypes != null && !excludeDatatypes.isEmpty()) {
-    String ids=transformToIds(excludeDatatypes);
-    query.append(" -concept.datatype.conceptDatatypeId:(").append(ids).append(")");
-  }
+  appendIdsQuery(query,"+concept.conceptClass.conceptClassId",requireClasses);
+  appendIdsQuery(query,"-concept.conceptClass.conceptClassId",excludeClasses);
+  appendIdsQuery(query,"+concept.datatype.conceptDatatypeId",requireDatatypes);
+  appendIdsQuery(query,"-concept.datatype.conceptDatatypeId",excludeDatatypes);
   if (answersToConcept != null) {
     Collection<ConceptAnswer> answers=answersToConcept.getAnswers(false);
     if (answers != null && !answers.isEmpty()) {
@@ -39,31 +27,7 @@
       query.append(" +concept.conceptId:(").append(ids).append(")");
     }
   }
-  List<Object> duplicatedNames=new LuceneQueryBuilder<ConceptName>(sessionFactory.getCurrentSession()){
-    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
-      org.apache.lucene.search.Query parsedQuery=newQueryParser().parse(query.toString());
-      return parsedQuery;
-    }
-  }
-.listProjection("conceptNameId","concept.conceptId");
-  Set<Integer> uniqueConceptIds=Sets.newHashSet();
-  Set<Integer> duplicateConceptNameIds=Sets.newHashSet();
-  for (  Object duplicatedName : duplicatedNames) {
-    Object[] name=(Object[])duplicatedName;
-    if (!uniqueConceptIds.add((Integer)name[1])) {
-      duplicateConceptNameIds.add((Integer)name[0]);
-    }
-  }
-  if (!duplicateConceptNameIds.isEmpty()) {
-    query.append(" -conceptNameId:(").append(Joiner.on(" ").join(duplicateConceptNameIds)).append(")");
-  }
-  ListPart<ConceptName> names=new LuceneQueryBuilder<ConceptName>(sessionFactory.getCurrentSession()){
-    @Override protected org.apache.lucene.search.Query prepareQuery() throws ParseException {
-      org.apache.lucene.search.Query parsedQuery=newQueryParser().parse(query.toString());
-      return parsedQuery;
-    }
-  }
-.listPart(start,size);
+  ListPart<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").listPart(start,size);
   List<ConceptSearchResult> results=Lists.transform(names.getList(),new Function<ConceptName,ConceptSearchResult>(){
     @Override public ConceptSearchResult apply(    ConceptName conceptName){
       return new ConceptSearchResult(phrase,conceptName.getConcept(),conceptName);

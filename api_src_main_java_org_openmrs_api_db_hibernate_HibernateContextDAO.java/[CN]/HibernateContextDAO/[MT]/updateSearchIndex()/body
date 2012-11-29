@@ -3,7 +3,7 @@
     log.info("Updating the search index... It may take a few minutes.");
     Search.getFullTextSession(sessionFactory.getCurrentSession()).createIndexer().startAndWait();
     GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GP_LAST_FULL_INDEX_DATE);
-    gp.setValue(new Date());
+    gp.setPropertyValue(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     Context.getAdministrationService().saveGlobalProperty(gp);
     log.info("Finished updating the search index");
   }

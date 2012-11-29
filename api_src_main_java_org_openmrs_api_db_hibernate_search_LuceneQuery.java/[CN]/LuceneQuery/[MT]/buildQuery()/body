@@ -1,0 +1,15 @@
+{
+  Query query;
+  try {
+    query=prepareQuery();
+    if (skipIds != null) {
+      QueryBuilder queryBuilder=newQueryBuilder();
+      query=queryBuilder.bool().must(query).must(queryBuilder.keyword().onField(skipIdField).matching(skipIds).createQuery()).not().createQuery();
+    }
+  }
+ catch (  ParseException e) {
+    throw new IllegalStateException("Invalid query",e);
+  }
+  fullTextQuery=getFullTextSession().createFullTextQuery(query,getType());
+  adjustFullTextQuery(fullTextQuery);
+}

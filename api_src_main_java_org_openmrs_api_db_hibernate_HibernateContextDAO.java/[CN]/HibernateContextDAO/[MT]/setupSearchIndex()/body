@@ -1,6 +1,6 @@
 {
-  GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GP_LAST_FULL_INDEX_DATE);
-  if (gp.getValue() == null) {
+  String gp=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_LAST_FULL_INDEX_DATE,"");
+  if (StringUtils.isBlank(gp)) {
     updateSearchIndex();
   }
 }

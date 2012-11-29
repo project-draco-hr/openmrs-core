@@ -1,0 +1,8 @@
+{
+  return new LuceneQuery<T>(session,type){
+    @Override protected Query prepareQuery() throws ParseException {
+      return newQueryParser().parse(query);
+    }
+  }
+;
+}
