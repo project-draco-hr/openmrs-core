@@ -38,19 +38,17 @@
       conceptProposal.setState(cp.getState());
       conceptProposal.setMappedConcept(c);
       if (conceptProposal.getObsConcept() != null) {
-        if (!OpenmrsUtil.nullSafeEquals(cp.getEncounter(),conceptProposal.getEncounter())) {
-          Obs ob=new Obs();
-          ob.setEncounter(conceptProposal.getEncounter());
-          ob.setConcept(conceptProposal.getObsConcept());
-          ob.setValueCoded(conceptProposal.getMappedConcept());
-          if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null)           ob.setValueCodedName(newConceptName);
-          ob.setCreator(Context.getAuthenticatedUser());
-          ob.setDateCreated(new Date());
-          ob.setObsDatetime(conceptProposal.getEncounter().getEncounterDatetime());
-          ob.setLocation(conceptProposal.getEncounter().getLocation());
-          ob.setPerson(conceptProposal.getEncounter().getPatient());
-          cp.setObs(ob);
-        }
+        Obs ob=new Obs();
+        ob.setEncounter(conceptProposal.getEncounter());
+        ob.setConcept(conceptProposal.getObsConcept());
+        ob.setValueCoded(conceptProposal.getMappedConcept());
+        if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null)         ob.setValueCodedName(newConceptName);
+        ob.setCreator(Context.getAuthenticatedUser());
+        ob.setDateCreated(new Date());
+        ob.setObsDatetime(conceptProposal.getEncounter().getEncounterDatetime());
+        ob.setLocation(conceptProposal.getEncounter().getLocation());
+        ob.setPerson(conceptProposal.getEncounter().getPatient());
+        cp.setObs(ob);
       }
       cs.saveConceptProposal(conceptProposal);
     }
