@@ -1,0 +1,6 @@
+{
+  String logPathGP=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_LOG_LOCATION,"");
+  File logPath=OpenmrsUtil.getDirectoryInApplicationDataDirectory(logPathGP);
+  File logFile=new File(logPath,"openmrs.log");
+  return logFile.getPath();
+}
