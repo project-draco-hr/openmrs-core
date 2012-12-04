@@ -1,0 +1,31 @@
+{
+  Logger rootLogger=Logger.getRootLogger();
+  FileAppender fileAppender=null;
+  @SuppressWarnings("rawtypes") Enumeration appenders=rootLogger.getAllAppenders();
+  while (appenders.hasMoreElements()) {
+    Appender appender=(Appender)appenders.nextElement();
+    if (OpenmrsConstants.LOG_OPENMRS_FILE_APPENDER.equals(appender.getName())) {
+      fileAppender=(FileAppender)appender;
+      break;
+    }
+  }
+  String logLayout=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_LOG_LAYOUT,"%p - %C{1}.%M(%L) |%d{ISO8601}| %m%n");
+  PatternLayout patternLayout=new PatternLayout(logLayout);
+  String logLocation=null;
+  try {
+    logLocation=OpenmrsUtil.getOpenmrsLogLocation();
+    if (fileAppender == null) {
+      fileAppender=new RollingFileAppender(patternLayout,logLocation);
+      fileAppender.setName(OpenmrsConstants.LOG_OPENMRS_FILE_APPENDER);
+      rootLogger.addAppender(fileAppender);
+    }
+ else {
+      fileAppender.setFile(logLocation);
+      fileAppender.setLayout(patternLayout);
+    }
+    fileAppender.activateOptions();
+  }
+ catch (  IOException e) {
+    log.error("Error while setting an OpenMRS log file to " + logLocation,e);
+  }
+}

@@ -1,0 +1,11 @@
+{
+  if (token == null) {
+    return false;
+  }
+ else {
+synchronized (daemonTokens) {
+      DaemonToken validToken=daemonTokens.get(token.getId());
+      return validToken == token;
+    }
+  }
+}
