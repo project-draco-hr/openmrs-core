@@ -165,6 +165,8 @@
     preferred.setBirthdate(notPreferred.getBirthdate());
     preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
   }
+  mergedData.setPriorDateOfDeathEstimated(preferred.getDeathdateEstimated());
+  if (preferred.getDeathdateEstimated() == null)   preferred.setDeathdateEstimated(notPreferred.getDeathdateEstimated());
   mergedData.setPriorDateOfDeath(preferred.getDeathDate());
   if (preferred.getDeathDate() == null)   preferred.setDeathDate(notPreferred.getDeathDate());
   if (preferred.getCauseOfDeath() != null)   mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());

@@ -24,6 +24,7 @@
     if (person.getDeathDate() != null) {
       this.deathDateString=Format.format(person.getDeathDate());
     }
+    deathdateEstimated=person.getDeathdateEstimated();
     for (    PersonAttribute attribute : person.getActiveAttributes()) {
       attributes.put(attribute.getAttributeType().getName(),attribute.toString());
     }
