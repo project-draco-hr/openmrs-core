@@ -33,6 +33,7 @@
   for (  Module module : ModuleFactory.getStartedModules()) {
     ModuleFactory.loadAdvice(module);
     try {
+      ModuleFactory.passDaemonToken(module);
       if (module.getModuleActivator() != null) {
         module.getModuleActivator().contextRefreshed();
         if (isOpenmrsStartup)         module.getModuleActivator().started();

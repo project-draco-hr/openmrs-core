@@ -22,6 +22,7 @@
     mappedConcept.addName(conceptName);
     mappedConcept.setChangedBy(Context.getAuthenticatedUser());
     mappedConcept.setDateChanged(new Date());
+    ValidateUtil.validate(mappedConcept);
     updateConceptWord(mappedConcept);
   }
   cp.setMappedConcept(mappedConcept);

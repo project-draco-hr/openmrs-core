@@ -10,24 +10,72 @@
     AlertService alertService=Context.getAlertService();
     Concept c=null;
     if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
-    List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
+    Collection<ConceptName> oldNames=null;
+    if (c != null)     oldNames=c.getNames();
     Set<User> uniqueProposers=new HashSet<User>();
     Locale conceptNameLocale=new Locale(request.getParameter("conceptNamelocale"));
+    uniqueProposers.add(cp.getCreator());
+    cp.setFinalText(finalText);
+    try {
+      cs.mapConceptProposalToConcept(cp,c,conceptNameLocale);
+    }
+ catch (    DuplicateConceptNameException e) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"ConceptProposal.save.fail");
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
+    ConceptName newConceptName=null;
+    if (c != null) {
+      Collection<ConceptName> newNames=c.getNames();
+      newNames.removeAll(oldNames);
+      if (newNames.size() == 1)       newConceptName=newNames.iterator().next();
+    }
+    List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
+    if (allProposals.contains(cp))     allProposals.remove(cp);
     for (    ConceptProposal conceptProposal : allProposals) {
-      uniqueProposers.add(conceptProposal.getCreator());
-      conceptProposal.setFinalText(finalText);
-      conceptProposal.setState(cp.getState());
-      cs.mapConceptProposalToConcept(conceptProposal,c,conceptNameLocale);
+      if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT)) {
+        conceptProposal.rejectConceptProposal();
+        conceptProposal.setComments(cp.getComments());
+      }
+ else {
+        if (conceptProposal.getObsConcept() != null && !conceptProposal.getObsConcept().equals(cp.getObsConcept())) {
+          continue;
+        }
+        uniqueProposers.add(conceptProposal.getCreator());
+        conceptProposal.setFinalText(cp.getFinalText());
+        conceptProposal.setState(cp.getState());
+        conceptProposal.setMappedConcept(c);
+        conceptProposal.setComments(cp.getComments());
+        if (conceptProposal.getObsConcept() != null) {
+          Obs ob=new Obs();
+          ob.setEncounter(conceptProposal.getEncounter());
+          ob.setConcept(conceptProposal.getObsConcept());
+          ob.setValueCoded(conceptProposal.getMappedConcept());
+          if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null)           ob.setValueCodedName(newConceptName);
+          ob.setCreator(Context.getAuthenticatedUser());
+          ob.setDateCreated(new Date());
+          ob.setObsDatetime(conceptProposal.getEncounter().getEncounterDatetime());
+          ob.setLocation(conceptProposal.getEncounter().getLocation());
+          ob.setPerson(conceptProposal.getEncounter().getPatient());
+          cp.setObs(ob);
+        }
+      }
+      cs.saveConceptProposal(conceptProposal);
     }
     String msg="";
     if (c != null) {
       String mappedName=c.getName(locale).getName();
-      String[] args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
-      msg=msa.getMessage("ConceptProposal.alert.mappedTo",args,locale);
-    }
+      String[] args=null;
+      if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM)) {
+        args=new String[]{cp.getFinalText(),mappedName,cp.getComments()};
+        msg=msa.getMessage("ConceptProposal.alert.synonymAdded",args,locale);
+      }
  else {
-      String[] args=new String[]{cp.getOriginalText(),cp.getComments()};
-      msg=msa.getMessage("ConceptProposal.alert.ignored",args,locale);
+        args=new String[]{cp.getOriginalText(),mappedName,cp.getComments()};
+        msg=msa.getMessage("ConceptProposal.alert.mappedTo",args,locale);
+      }
+    }
+ else     if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT)) {
+      msg=msa.getMessage("ConceptProposal.alert.ignored",new String[]{cp.getOriginalText(),cp.getComments()},locale);
     }
     try {
       Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);

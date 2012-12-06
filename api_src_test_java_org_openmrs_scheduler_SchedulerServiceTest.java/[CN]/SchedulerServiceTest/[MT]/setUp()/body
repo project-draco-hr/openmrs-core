@@ -1,0 +1,9 @@
+{
+  Context.flushSession();
+  Collection<TaskDefinition> tasks=Context.getSchedulerService().getRegisteredTasks();
+  for (  TaskDefinition task : tasks) {
+    Context.getSchedulerService().shutdownTask(task);
+    Context.getSchedulerService().deleteTask(task.getId());
+  }
+  Context.flushSession();
+}

@@ -1,0 +1,7 @@
+{
+  ModuleActivator moduleActivator=module.getModuleActivator();
+  if (moduleActivator instanceof DaemonTokenAware) {
+    DaemonToken daemonToken=getDaemonToken(module);
+    ((DaemonTokenAware)module.getModuleActivator()).setDaemonToken(daemonToken);
+  }
+}
