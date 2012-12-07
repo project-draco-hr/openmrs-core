@@ -89,6 +89,10 @@
         newPersonName.setPreferred(true);
         user.addName(newPersonName);
       }
+      ValidateUtil.validate(user,errors);
+      if (errors.hasErrors()) {
+        return super.processFormSubmission(request,response,opts,errors);
+      }
       try {
         Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);
         Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
