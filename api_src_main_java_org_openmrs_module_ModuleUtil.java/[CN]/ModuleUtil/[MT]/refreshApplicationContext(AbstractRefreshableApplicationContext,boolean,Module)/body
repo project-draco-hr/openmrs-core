@@ -30,19 +30,25 @@
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
   if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
-  for (  Module module : ModuleFactory.getStartedModules()) {
-    ModuleFactory.loadAdvice(module);
-    try {
-      ModuleFactory.passDaemonToken(module);
-      if (module.getModuleActivator() != null) {
-        module.getModuleActivator().contextRefreshed();
-        if (isOpenmrsStartup)         module.getModuleActivator().started();
- else         if (!isOpenmrsStartup && module.equals(startedModule))         module.getModuleActivator().started();
+  try {
+    Context.openSessionWithCurrentUser();
+    for (    Module module : ModuleFactory.getStartedModules()) {
+      ModuleFactory.loadAdvice(module);
+      try {
+        ModuleFactory.passDaemonToken(module);
+        if (module.getModuleActivator() != null) {
+          module.getModuleActivator().contextRefreshed();
+          if (isOpenmrsStartup)           module.getModuleActivator().started();
+ else           if (!isOpenmrsStartup && module.equals(startedModule))           module.getModuleActivator().started();
+        }
+      }
+ catch (      Throwable t) {
+        log.warn("Unable to invoke method on the module's activator ",t);
       }
     }
- catch (    Throwable t) {
-      log.warn("Unable to invoke method on the module's activator ",t);
-    }
+  }
+  finally {
+    Context.closeSessionWithCurrentUser();
   }
   return ctx;
 }
