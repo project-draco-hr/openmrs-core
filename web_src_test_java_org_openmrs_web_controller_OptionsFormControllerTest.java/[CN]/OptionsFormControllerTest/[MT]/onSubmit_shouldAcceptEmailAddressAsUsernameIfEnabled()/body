@@ -1,0 +1,7 @@
+{
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME,"true"));
+  MockHttpServletRequest post=testHelper.newPOST("/options.form");
+  post.addParameter("username","ab@gmail.com");
+  testHelper.handle(post);
+  Assert.assertThat("ab@gmail.com",is(Context.getAuthenticatedUser().getUsername()));
+}
