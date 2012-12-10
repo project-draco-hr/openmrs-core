@@ -3,7 +3,7 @@
   PersonName personName=(PersonName)object;
   try {
     if (personName == null)     errors.reject("error.name");
-    if (!errors.hasErrors())     validatePersonName(personName,errors,true,false);
+    if (!errors.hasErrors() && !personName.isVoided())     validatePersonName(personName,errors,true,false);
   }
  catch (  Exception e) {
     errors.reject(e.getMessage());

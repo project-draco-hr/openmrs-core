@@ -1,0 +1,8 @@
+{
+  PersonName personName=new PersonName();
+  personName.setVoided(true);
+  personName.setFamilyName2("34dfgd");
+  Errors errors=new BindException(personName,"familyName2");
+  new PersonNameValidator().validate(personName,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
