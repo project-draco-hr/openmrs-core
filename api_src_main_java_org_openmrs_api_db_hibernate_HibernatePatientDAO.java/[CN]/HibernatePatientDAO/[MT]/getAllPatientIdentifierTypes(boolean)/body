@@ -1,6 +1,14 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifierType.class);
   criteria.addOrder(Order.asc("name"));
-  if (includeRetired == false)   criteria.add(Expression.eq("retired",false));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
+ else {
+    criteria.addOrder(Order.asc("retired"));
+  }
+  criteria.addOrder(Order.desc("required"));
+  criteria.addOrder(Order.asc("name"));
+  criteria.addOrder(Order.asc("patientIdentifierTypeId"));
   return criteria.list();
 }

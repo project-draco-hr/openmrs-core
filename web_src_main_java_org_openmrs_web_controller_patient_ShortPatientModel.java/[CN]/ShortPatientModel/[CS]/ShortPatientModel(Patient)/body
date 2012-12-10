@@ -4,7 +4,10 @@
     this.personName=patient.getPersonName();
     this.personAddress=patient.getPersonAddress();
     List<PatientIdentifier> activeIdentifiers=patient.getActiveIdentifiers();
-    if (activeIdentifiers.isEmpty())     activeIdentifiers.add(new PatientIdentifier(null,null,(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation()));
+    if (activeIdentifiers.isEmpty()) {
+      final PatientIdentifierType defaultIdentifierType=getDefaultIdentifierType();
+      activeIdentifiers.add(new PatientIdentifier(null,defaultIdentifierType,(LocationUtility.getUserDefaultLocation() != null) ? LocationUtility.getUserDefaultLocation() : LocationUtility.getDefaultLocation()));
+    }
     identifiers=ListUtils.lazyList(new ArrayList<PatientIdentifier>(activeIdentifiers),FactoryUtils.instantiateFactory(PatientIdentifier.class));
     List<PersonAttributeType> viewableAttributeTypes=Context.getPersonService().getPersonAttributeTypes(PERSON_TYPE.PATIENT,ATTR_VIEW_TYPE.VIEWING);
     personAttributes=new ArrayList<PersonAttribute>();
