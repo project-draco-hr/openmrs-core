@@ -4,7 +4,6 @@
   runtimeProperties.setProperty(ModuleConstants.REPOSITORY_FOLDER_RUNTIME_PROPERTY,expectedModuleRepo.getAbsolutePath());
   try {
     File testFolder=ModuleUtil.getModuleRepository();
-    Thread.sleep(5000);
     Assert.assertNotNull(testFolder);
     Assert.assertEquals(expectedModuleRepo,testFolder);
   }
