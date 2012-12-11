@@ -1,6 +1,9 @@
 {
-  AdministrationService as=Context.getAdministrationService();
-  String folderName=as.getGlobalProperty(ModuleConstants.REPOSITORY_FOLDER_PROPERTY,ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+  String folderName=Context.getRuntimeProperties().getProperty(ModuleConstants.REPOSITORY_FOLDER_RUNTIME_PROPERTY);
+  if (StringUtils.isBlank(folderName)) {
+    AdministrationService as=Context.getAdministrationService();
+    folderName=as.getGlobalProperty(ModuleConstants.REPOSITORY_FOLDER_PROPERTY,ModuleConstants.REPOSITORY_FOLDER_PROPERTY_DEFAULT);
+  }
   File folder=new File(folderName);
   if (!folder.exists()) {
     folder=new File(OpenmrsUtil.getApplicationDataDirectory(),folderName);

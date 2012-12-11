@@ -1,0 +1,14 @@
+{
+  final String folderName="test_folder";
+  File testFolder=null;
+  runtimeProperties.setProperty(ModuleConstants.REPOSITORY_FOLDER_RUNTIME_PROPERTY,folderName);
+  try {
+    testFolder=ModuleUtil.getModuleRepository();
+    Assert.assertNotNull(testFolder);
+    Assert.assertEquals(new File(OpenmrsUtil.getApplicationDataDirectory(),folderName),ModuleUtil.getModuleRepository());
+  }
+  finally {
+    if (testFolder != null)     testFolder.deleteOnExit();
+    runtimeProperties.setProperty(ModuleConstants.REPOSITORY_FOLDER_RUNTIME_PROPERTY,"");
+  }
+}
