@@ -1,8 +1,3 @@
 {
-  if (getUuid() != null) {
-    return getClass().getName() + "[" + getUuid()+ "]";
-  }
- else {
-    return super.toString();
-  }
+  return Objects.toStringHelper(this).add("hashCode",Integer.toHexString(hashCode())).add("uuid",getUuid()).omitNullValues().toString();
 }
