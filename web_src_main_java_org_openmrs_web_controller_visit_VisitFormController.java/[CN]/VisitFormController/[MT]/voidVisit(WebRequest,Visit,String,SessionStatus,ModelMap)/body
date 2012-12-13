@@ -10,6 +10,6 @@
     log.warn("Error occurred while attempting to void visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.void.error"),WebRequest.SCOPE_SESSION);
   }
-  addEncounterAndObservationCounts(visit,model);
+  addEncounterAndObservationCounts(visit,null,model);
   return VISIT_FORM;
 }

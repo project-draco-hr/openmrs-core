@@ -13,7 +13,7 @@
         e.setVisit(null);
         validateEncounter(e,result);
         if (result.hasErrors()) {
-          addEncounterAndObservationCounts(visit,model);
+          addEncounterAndObservationCounts(visit,encounterIds,model);
           return VISIT_FORM;
         }
         encountersToSave.add(e);
@@ -28,7 +28,7 @@
         e.setVisit(visit);
         validateEncounter(e,result);
         if (result.hasErrors()) {
-          addEncounterAndObservationCounts(visit,model);
+          addEncounterAndObservationCounts(visit,encounterIds,model);
           return VISIT_FORM;
         }
         encountersToSave.add(e);
@@ -51,6 +51,6 @@
       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Visit.save.error");
     }
   }
-  addEncounterAndObservationCounts(visit,model);
+  addEncounterAndObservationCounts(visit,encounterIds,model);
   return VISIT_FORM;
 }
