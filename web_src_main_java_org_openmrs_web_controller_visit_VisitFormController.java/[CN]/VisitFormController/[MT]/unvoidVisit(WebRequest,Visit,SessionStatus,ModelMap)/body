@@ -9,6 +9,6 @@
     log.warn("Error occurred while attempting to unvoid visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.unvoid.error"),WebRequest.SCOPE_SESSION);
   }
-  addEncounterAndObservationCounts(visit,model);
+  addEncounterAndObservationCounts(visit,null,model);
   return VISIT_FORM;
 }
