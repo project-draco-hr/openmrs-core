@@ -3,6 +3,6 @@
   prog.setName("Hypochondriasis program");
   prog.setConcept(null);
   Errors errors=new BindException(prog,"prog");
-  new ProgramValidator().validate(prog,errors);
+  programValidator.validate(prog,errors);
   Assert.assertTrue(errors.hasFieldErrors("concept"));
 }
