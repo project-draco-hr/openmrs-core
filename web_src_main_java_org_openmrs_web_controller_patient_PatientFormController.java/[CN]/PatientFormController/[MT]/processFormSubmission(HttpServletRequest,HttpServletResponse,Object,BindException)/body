@@ -1,7 +1,4 @@
 {
-  if (errors.hasErrors()) {
-    return showForm(request,response,errors);
-  }
   Patient patient=(Patient)object;
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
@@ -10,6 +7,10 @@
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (action.equals(msa.getMessage("Patient.save"))) {
+      patientValidator.validate(patient,errors);
+      if (errors.hasErrors()) {
+        return showForm(request,response,errors);
+      }
       updatePersonNames(request,patient);
       updatePersonAddresses(request,patient);
       updatePersonAttributes(request,errors,patient);
