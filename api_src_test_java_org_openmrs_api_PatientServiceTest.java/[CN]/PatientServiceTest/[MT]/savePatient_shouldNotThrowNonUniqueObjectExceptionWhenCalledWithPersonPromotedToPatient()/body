@@ -1,0 +1,8 @@
+{
+  Person person=personService.getPerson(1);
+  Patient patient=patientService.getPatientOrPromotePerson(person.getPersonId());
+  PatientIdentifier patientIdentifier=new PatientIdentifier("some identifier",new PatientIdentifierType(2),new Location(1));
+  patientIdentifier.setPreferred(true);
+  patient.addIdentifier(patientIdentifier);
+  patientService.savePatient(patient);
+}
