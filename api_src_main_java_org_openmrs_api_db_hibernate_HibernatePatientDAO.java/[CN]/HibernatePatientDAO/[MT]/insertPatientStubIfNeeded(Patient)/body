@@ -49,5 +49,7 @@
         }
       }
     }
+    Person person=(Person)sessionFactory.getCurrentSession().get(Person.class,patient.getPersonId());
+    sessionFactory.getCurrentSession().evict(person);
   }
 }
