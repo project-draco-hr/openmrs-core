@@ -1,8 +1,7 @@
 {
   GlobalProperty gp=getGlobalPropertyObject(propertyName);
   if (gp == null) {
-    gp=new GlobalProperty();
-    gp.setProperty(propertyName);
+    throw new IllegalStateException("Global property with the given propertyName does not exist" + propertyName);
   }
   gp.setPropertyValue(propertyValue);
   dao.saveGlobalProperty(gp);

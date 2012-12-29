@@ -1,0 +1,12 @@
+{
+  Exception exception=null;
+  executeDataSet("org/openmrs/api/include/AdministrationServiceTest-globalproperties.xml");
+  try {
+    adminService.updateGlobalProperty("a_invalid_gp_key","asdfsadfsafd");
+  }
+ catch (  Exception e) {
+    exception=e;
+  }
+  Assert.assertNotNull(exception);
+  Assert.assertTrue(exception instanceof IllegalStateException);
+}
