@@ -2,7 +2,7 @@
   HashMap<Integer,List<Encounter>> encountersBypatient=new HashMap<Integer,List<Encounter>>();
   @SuppressWarnings("unchecked") List<Encounter> allEncounters=createEncounterCriteria(patients).list();
   for (  Encounter encounter : allEncounters) {
-    Integer patientId=encounter.getPatientId();
+    Integer patientId=encounter.getPatient().getPersonId();
     List<Encounter> encounters=encountersBypatient.get(patientId);
     if (encounters == null) {
       encounters=new ArrayList<Encounter>();
