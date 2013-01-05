@@ -1,0 +1,20 @@
+{
+  for (  Entry<String,Properties> localeEntry : mod.getMessages().entrySet()) {
+    if (log.isDebugEnabled())     log.debug("Copying message property file: " + localeEntry.getKey());
+    Properties props=localeEntry.getValue();
+    if (!"true".equalsIgnoreCase(props.getProperty("ALLOW_KEYS_OUTSIDE_OF_MODULE_NAMESPACE"))) {
+      List<Object> keys=new Vector<Object>();
+      keys.addAll(props.keySet());
+      for (      Object obj : keys) {
+        String key=(String)obj;
+        if (!key.startsWith(mod.getModuleId())) {
+          props.put(mod.getModuleId() + "." + key,props.get(key));
+          props.remove(key);
+        }
+      }
+    }
+    String lang="_" + localeEntry.getKey();
+    if (lang.equals("_en") || lang.equals("_"))     lang="";
+    insertIntoModuleMessagePropertiesFile(realPath,props,lang);
+  }
+}
