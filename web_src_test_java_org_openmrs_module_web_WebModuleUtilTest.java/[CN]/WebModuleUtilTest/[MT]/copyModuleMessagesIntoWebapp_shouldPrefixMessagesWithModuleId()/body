@@ -1,0 +1,8 @@
+{
+  Module mod=buildModuleForMessageTest();
+  partialMockWebModuleUtilForMessagesTests();
+  WebModuleUtil.copyModuleMessagesIntoWebapp(mod,"unused/real/path");
+  assertThat(propertiesWritten.getProperty("mymodule.title"),is("My Module"));
+  assertThat(propertiesWritten.getProperty("mymodule.withoutPrefix"),is("Without prefix"));
+  assertNull(propertiesWritten.getProperty("withoutPrefix"));
+}
