@@ -1,12 +1,4 @@
 {
-  try {
-    if (mod.getLog4j() != null) {
-      DOMConfigurator.configure(mod.getLog4j().getDocumentElement());
-    }
-  }
- catch (  Exception e) {
-    log.warn("Unable to load module loggers",e);
-  }
   if (log.isDebugEnabled())   log.debug("trying to start module " + mod);
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
     String realPath=servletContext.getRealPath("");
