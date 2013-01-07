@@ -1,0 +1,6 @@
+{
+  Location location=Context.getLocationService().getLocation(3);
+  List<PatientIdentifier> patientIdentifiers=dao.getPatientIdentifiers(null,new ArrayList<PatientIdentifierType>(),Collections.singletonList(location),new ArrayList<Patient>(),null);
+  Assert.assertEquals(1,patientIdentifiers.size());
+  Assert.assertEquals("12345K",patientIdentifiers.get(0).getIdentifier());
+}
