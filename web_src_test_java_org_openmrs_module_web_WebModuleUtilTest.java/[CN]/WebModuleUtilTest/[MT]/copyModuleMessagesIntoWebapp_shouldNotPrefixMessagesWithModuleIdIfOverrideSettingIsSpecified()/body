@@ -1,6 +1,6 @@
 {
   Module mod=buildModuleForMessageTest();
-  mod.getMessages().get("en").setProperty("ALLOW_KEYS_OUTSIDE_OF_MODULE_NAMESPACE","true");
+  mod.getMessages().get("en").setProperty(OpenmrsConstants.MESSAGE_PROPERTY_ALLOW_KEYS_OUTSIDE_OF_MODULE_NAMESPACE,"true");
   partialMockWebModuleUtilForMessagesTests();
   WebModuleUtil.copyModuleMessagesIntoWebapp(mod,"unused/real/path");
   assertThat(propertiesWritten.getProperty("mymodule.title"),is("My Module"));
