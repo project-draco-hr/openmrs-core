@@ -1,8 +1,6 @@
 {
   try {
     Class dwrClass=Class.forName(metadataReader.getClassMetadata().getClassName());
-    String canonicalName=dwrClass.getCanonicalName();
-    if (!canonicalName.contains("Service") || canonicalName.contains("Test"))     return false;
     if (dwrClass.isAnnotationPresent(Deprecated.class)) {
       return true;
     }
