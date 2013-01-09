@@ -1,0 +1,15 @@
+{
+  try {
+    Class dwrClass=Class.forName(metadataReader.getClassMetadata().getClassName());
+    if (dwrClass.isAnnotationPresent(Deprecated.class)) {
+      return true;
+    }
+    Method[] methods=dwrClass.getDeclaredMethods();
+    for (    Method method : methods) {
+      if (method.isAnnotationPresent(Deprecated.class))       return true;
+    }
+  }
+ catch (  Throwable e) {
+  }
+  return false;
+}
