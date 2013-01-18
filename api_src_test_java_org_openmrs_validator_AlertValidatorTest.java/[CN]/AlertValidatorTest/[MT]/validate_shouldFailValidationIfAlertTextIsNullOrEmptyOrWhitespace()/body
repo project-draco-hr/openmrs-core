@@ -1,0 +1,15 @@
+{
+  Alert alert=new Alert();
+  Assert.assertNull(alert.getText());
+  Errors errors=new BindException(alert,"alert");
+  new AlertValidator().validate(alert,errors);
+  Assert.assertTrue(errors.hasFieldErrors("text"));
+  alert.setText("");
+  errors=new BindException(alert,"alert");
+  new AlertValidator().validate(alert,errors);
+  Assert.assertTrue(errors.hasFieldErrors("text"));
+  alert.setText(" ");
+  errors=new BindException(alert,"alert");
+  new AlertValidator().validate(alert,errors);
+  Assert.assertTrue(errors.hasFieldErrors("text"));
+}

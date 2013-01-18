@@ -1,0 +1,7 @@
+{
+  Alert alert=new Alert();
+  alert.setText("Alert Text");
+  Errors errors=new BindException(alert,"alert");
+  new AlertValidator().validate(alert,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
