@@ -1,5 +1,6 @@
 {
   Alert alert=(Alert)obj;
+  new AlertValidator().validate(obj,errors);
   try {
     if (Context.hasPrivilege(PrivilegeConstants.MANAGE_ALERTS) == false)     throw new APIAuthenticationException("Must be logged in as user with alerts privileges");
     Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
@@ -36,7 +37,7 @@
       }
     }
     if ((alert.getRecipients() == null || alert.getRecipients().size() == 0)) {
-      errors.rejectValue("users","Alert.recipientRequired");
+      errors.rejectValue("recipients","Alert.recipientRequired");
     }
   }
  catch (  Exception e) {
