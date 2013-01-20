@@ -1,0 +1,5 @@
+{
+  Date time=taskHelper.getTime(Calendar.SECOND,1);
+  TaskDefinition task=taskHelper.getUnscheduledTaskDefinition(time);
+  Assert.assertFalse(task.getStarted());
+}
