@@ -1,0 +1,9 @@
+{
+  Concept concept=new Concept();
+  ConceptName cn=new ConceptName("some name",Context.getLocale());
+  ConceptName FullySpecName=new ConceptName("fully spec name",Context.getLocale());
+  concept.addName(FullySpecName);
+  concept.setShortName(cn);
+  concept.setShortName(new ConceptName(" ",Context.getLocale()));
+  assertThat(concept.getShortNameInLocale(Context.getLocale()),is(nullValue()));
+}
