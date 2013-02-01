@@ -1,7 +1,7 @@
 {
   Criteria criteria=getSession().createCriteria(Provider.class);
   if (!includeRetired) {
-    criteria.add(Expression.eq("retired",true));
+    criteria.add(Expression.eq("retired",false));
   }
  else {
     criteria.addOrder(Order.asc("retired"));
