@@ -4,6 +4,6 @@
   prog.setDescription("This is Hypochondriasis program");
   prog.setConcept(Context.getConceptService().getConcept(3));
   Errors errors=new BindException(prog,"prog");
-  new ProgramValidator().validate(prog,errors);
+  programValidator.validate(prog,errors);
   Assert.assertFalse(errors.hasErrors());
 }
