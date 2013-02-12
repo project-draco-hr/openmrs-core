@@ -1,0 +1,50 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Encounter.class,"enc");
+  if (!includeVoided)   criteria.add(Restrictions.eq("enc.voided",false));
+  if (patientId != null) {
+    criteria.add(Restrictions.eq("enc.patientId",patientId));
+    if (StringUtils.isNotBlank(query)) {
+      criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+      MatchMode mode=MatchMode.ANYWHERE;
+      criteria.createAlias("enc.location","loc");
+      criteria.createAlias("enc.encounterType","encType");
+      criteria.createAlias("enc.form","form");
+      criteria.createAlias("enc.encounterProviders","enc_prov");
+      criteria.createAlias("enc_prov.provider","prov");
+      criteria.createAlias("prov.person","person",Criteria.LEFT_JOIN);
+      criteria.createAlias("person.names","personName",Criteria.LEFT_JOIN);
+      Disjunction or=Restrictions.disjunction();
+      or.add(Restrictions.ilike("loc.name",query,mode));
+      or.add(Restrictions.ilike("encType.name",query,mode));
+      or.add(Restrictions.ilike("form.name",query,mode));
+      or.add(Restrictions.ilike("prov.name",query,mode));
+      or.add(Restrictions.ilike("prov.identifier",query,mode));
+      String[] splitNames=query.split(" ");
+      Disjunction nameOr=Restrictions.disjunction();
+      for (      String splitName : splitNames) {
+        nameOr.add(Restrictions.ilike("personName.givenName",splitName,mode));
+        nameOr.add(Restrictions.ilike("personName.middleName",splitName,mode));
+        nameOr.add(Restrictions.ilike("personName.familyName",splitName,mode));
+        nameOr.add(Restrictions.ilike("personName.familyName2",splitName,mode));
+      }
+      Conjunction personNameConjuction=Restrictions.conjunction();
+      personNameConjuction.add(Restrictions.eq("personName.voided",false));
+      personNameConjuction.add(nameOr);
+      or.add(personNameConjuction);
+      criteria.add(or);
+    }
+  }
+ else {
+    criteria=criteria.createCriteria("patient","pat");
+    String name=null;
+    String identifier=null;
+    if (query.matches(".*\\d+.*")) {
+      identifier=query;
+    }
+ else {
+      name=query;
+    }
+    criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false,orderByNames);
+  }
+  return criteria;
+}
