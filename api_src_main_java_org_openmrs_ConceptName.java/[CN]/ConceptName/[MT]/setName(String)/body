@@ -1,3 +1,8 @@
 {
-  this.name=name;
+  if (name != null && StringUtils.isBlank(name) && StringUtils.isNotBlank(this.name) && this.getConceptNameType().equals(ConceptNameType.SHORT)) {
+    this.setVoided(true);
+  }
+ else {
+    this.name=name;
+  }
 }
