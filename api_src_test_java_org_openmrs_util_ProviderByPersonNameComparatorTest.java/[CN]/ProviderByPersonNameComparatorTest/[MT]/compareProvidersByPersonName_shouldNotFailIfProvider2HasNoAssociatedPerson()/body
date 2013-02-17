@@ -1,0 +1,9 @@
+{
+  Person person1=new Person();
+  person1.addName(new PersonName("givenName","middleName","familyName"));
+  Provider provider1=new Provider();
+  provider1.setPerson(person1);
+  Provider provider2=new Provider();
+  int actualValue=new ProviderByPersonNameComparator().compare(provider1,provider2);
+  Assert.assertTrue("Expected a negative value but it was: " + actualValue,actualValue < 0);
+}
