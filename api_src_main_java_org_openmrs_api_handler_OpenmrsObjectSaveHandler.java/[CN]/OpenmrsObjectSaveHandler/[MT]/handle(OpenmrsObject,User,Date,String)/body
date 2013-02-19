@@ -8,6 +8,9 @@
     if (property.getWriteMethod() == null || property.getReadMethod() == null) {
       continue;
     }
+    if (property.getWriteMethod().getAnnotation(Deprecated.class) != null || property.getReadMethod().getAnnotation(Deprecated.class) != null) {
+      continue;
+    }
     if (!property.getPropertyType().equals(String.class)) {
       continue;
     }
