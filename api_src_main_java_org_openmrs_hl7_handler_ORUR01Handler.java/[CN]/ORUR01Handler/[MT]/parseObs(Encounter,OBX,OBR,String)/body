@@ -161,6 +161,19 @@
     }
     obs.setValueText(value.getValue());
   }
+ else   if ("ED".equals(hl7Datatype)) {
+    ED value=(ED)obx5;
+    if (value == null || value.getData() == null || !StringUtils.hasText(value.getData().getValue())) {
+      log.warn("Not creating null valued obs for concept " + concept);
+      return null;
+    }
+    Concept c=Context.getConceptService().getConcept(obs.getConcept().getConceptId());
+    obs.setConcept(c);
+    String title=null;
+    if (obs.getValueCodedName() != null)     title=obs.getValueCodedName().getName();
+    if (!StringUtils.hasText(title))     title=c.getName().getName();
+    obs.setComplexData(new ComplexData(title,value.getData().getValue()));
+  }
  else {
     throw new HL7Exception("Unsupported observation datatype '" + hl7Datatype + "'");
   }
