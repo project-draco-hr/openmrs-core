@@ -1,0 +1,8 @@
+{
+  return new FeatureMatcher<PatientIdentifier,String>(is(identifier),"identifier","identifier"){
+    @Override protected String featureValueOf(    PatientIdentifier actual){
+      return actual.getIdentifier();
+    }
+  }
+;
+}

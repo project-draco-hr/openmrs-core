@@ -1,0 +1,5 @@
+{
+  Patient patientWithId2=Context.getPatientService().getPatient(2);
+  List<PatientIdentifier> patientIdentifiers=dao.getPatientIdentifiers(null,new ArrayList<PatientIdentifierType>(),new ArrayList<Location>(),Collections.singletonList(patientWithId2),null);
+  assertThat(patientIdentifiers,containsInAnyOrder(hasIdentifier("101"),hasIdentifier("101-6")));
+}
