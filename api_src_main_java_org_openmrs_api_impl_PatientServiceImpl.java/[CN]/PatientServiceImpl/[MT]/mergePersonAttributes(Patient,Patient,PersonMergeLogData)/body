@@ -1,0 +1,11 @@
+{
+  for (  PersonAttribute attr : notPreferred.getAttributes()) {
+    if (!attr.isVoided()) {
+      PersonAttribute tmpAttr=attr.copy();
+      tmpAttr.setPerson(null);
+      tmpAttr.setUuid(UUID.randomUUID().toString());
+      preferred.addAttribute(tmpAttr);
+      mergedData.addCreatedAttribute(tmpAttr.getUuid());
+    }
+  }
+}

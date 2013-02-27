@@ -1,0 +1,12 @@
+{
+  ProgramWorkflowService programService=Context.getProgramWorkflowService();
+  for (  PatientProgram pp : programService.getPatientPrograms(notPreferred,null,null,null,null,null,false)) {
+    if (!pp.getVoided()) {
+      PatientProgram enroll=pp.copy();
+      enroll.setPatient(preferred);
+      log.debug("Copying patientProgram " + pp.getPatientProgramId() + " to "+ preferred.getPatientId());
+      PatientProgram persisted=programService.savePatientProgram(enroll);
+      mergedData.addCreatedProgram(persisted.getUuid());
+    }
+  }
+}
