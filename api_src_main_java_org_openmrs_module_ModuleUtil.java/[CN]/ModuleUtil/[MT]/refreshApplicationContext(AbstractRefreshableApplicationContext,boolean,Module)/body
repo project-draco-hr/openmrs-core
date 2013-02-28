@@ -38,8 +38,14 @@
         ModuleFactory.passDaemonToken(module);
         if (module.getModuleActivator() != null) {
           module.getModuleActivator().contextRefreshed();
-          if (isOpenmrsStartup)           module.getModuleActivator().started();
- else           if (!isOpenmrsStartup && module.equals(startedModule))           module.getModuleActivator().started();
+          try {
+            if (isOpenmrsStartup)             module.getModuleActivator().started();
+ else             if (!isOpenmrsStartup && module.equals(startedModule))             module.getModuleActivator().started();
+          }
+ catch (          Exception e) {
+            log.warn("Unable to invoke started() method on the module's activator",e);
+            ModuleFactory.stopModule(module);
+          }
         }
       }
  catch (      Throwable t) {
