@@ -1,0 +1,11 @@
+{
+  VisitService visitService=Context.getVisitService();
+  for (  Visit visit : visitService.getVisitsByPatient(notPreferred,true,true)) {
+    if (log.isDebugEnabled()) {
+      log.debug("Merging visit " + visit.getVisitId() + " to "+ preferred.getPatientId());
+    }
+    visit.setPatient(preferred);
+    Visit persisted=visitService.saveVisit(visit);
+    mergedData.addMovedVisit(persisted.getUuid());
+  }
+}

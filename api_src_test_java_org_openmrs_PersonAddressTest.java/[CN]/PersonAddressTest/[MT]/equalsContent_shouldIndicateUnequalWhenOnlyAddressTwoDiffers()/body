@@ -1,0 +1,7 @@
+{
+  PersonAddress rileyStreetAddress=new PersonAddress();
+  PersonAddress crownStreetAddress=new PersonAddress();
+  crownStreetAddress.setAddress2("crown street");
+  rileyStreetAddress.setAddress2("riley street");
+  assertThat(crownStreetAddress.equalsContent(rileyStreetAddress),is(false));
+}

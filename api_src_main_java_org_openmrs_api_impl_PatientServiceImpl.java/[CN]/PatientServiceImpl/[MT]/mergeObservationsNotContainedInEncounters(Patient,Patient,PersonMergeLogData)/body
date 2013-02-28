@@ -1,0 +1,10 @@
+{
+  ObsService obsService=Context.getObsService();
+  for (  Obs obs : obsService.getObservationsByPerson(notPreferred)) {
+    if (obs.getEncounter() == null && !obs.isVoided()) {
+      obs.setPerson(preferred);
+      Obs persisted=obsService.saveObs(obs,"Merged from patient #" + notPreferred.getPatientId());
+      mergedData.addMovedIndependentObservation(persisted.getUuid());
+    }
+  }
+}

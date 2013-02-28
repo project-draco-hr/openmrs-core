@@ -1,0 +1,52 @@
+{
+  for (  PersonAddress newAddress : notPreferred.getAddresses()) {
+    boolean containsAddress=false;
+    for (    PersonAddress currentAddress : preferred.getAddresses()) {
+      containsAddress=currentAddress.equalsContent(newAddress);
+      if (containsAddress) {
+        break;
+      }
+    }
+    if (!containsAddress) {
+      PersonAddress tmpAddress=(PersonAddress)newAddress.clone();
+      tmpAddress.setPersonAddressId(null);
+      tmpAddress.setVoided(false);
+      tmpAddress.setVoidedBy(null);
+      tmpAddress.setVoidReason(null);
+      tmpAddress.setUuid(UUID.randomUUID().toString());
+      preferred.addAddress(tmpAddress);
+      mergedData.addCreatedAddress(tmpAddress.getUuid());
+      log.debug("Merging address " + newAddress.getPersonAddressId() + " to "+ preferred.getPatientId());
+    }
+  }
+  for (  PersonAttribute attr : notPreferred.getAttributes()) {
+    if (!attr.isVoided()) {
+      PersonAttribute tmpAttr=attr.copy();
+      tmpAttr.setPerson(null);
+      tmpAttr.setUuid(UUID.randomUUID().toString());
+      preferred.addAttribute(tmpAttr);
+      mergedData.addCreatedAttribute(tmpAttr.getUuid());
+    }
+  }
+  mergedData.setPriorGender(preferred.getGender());
+  if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());
+  mergedData.setPriorDateOfBirth(preferred.getBirthdate());
+  mergedData.setPriorDateOfBirthEstimated(preferred.isBirthdateEstimated());
+  if (preferred.getBirthdate() == null || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
+    preferred.setBirthdate(notPreferred.getBirthdate());
+    preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
+  }
+  mergedData.setPriorDateOfDeath(preferred.getDeathDate());
+  if (preferred.getDeathDate() == null)   preferred.setDeathDate(notPreferred.getDeathDate());
+  if (preferred.getCauseOfDeath() != null)   mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());
+  if (preferred.getCauseOfDeath() == null)   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
+  Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
+  Context.getPersonService().voidPerson(notPreferred,"The patient corresponding to this person has been voided and Merged with patient #" + preferred.getPatientId());
+  changeUserAssociations(preferred,notPreferred,mergedData);
+  savePatient(preferred);
+  PersonMergeLog personMergeLog=new PersonMergeLog();
+  personMergeLog.setWinner(preferred);
+  personMergeLog.setLoser(notPreferred);
+  personMergeLog.setPersonMergeLogData(mergedData);
+  Context.getPersonService().savePersonMergeLog(personMergeLog);
+}

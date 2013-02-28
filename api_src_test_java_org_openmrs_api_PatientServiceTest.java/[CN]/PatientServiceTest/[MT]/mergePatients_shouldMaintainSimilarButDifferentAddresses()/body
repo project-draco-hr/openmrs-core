@@ -1,0 +1,9 @@
+{
+  executeDataSet(PATIENT_MERGE_XML);
+  Patient preferredPatient=patientService.getPatient(10000);
+  Patient nonPreferredPatient=patientService.getPatient(10001);
+  patientService.mergePatients(preferredPatient,nonPreferredPatient);
+  Set<PersonAddress> addresses=preferredPatient.getAddresses();
+  assertThat(addresses,containsAddress("a1:Apartment ABC, a2:123 fake st, cv:Faketown, sp:null, c:null, cd:null, nc:null, pc:1234, lat:null, long:null"));
+  assertThat(addresses,containsAddress("a1:Apartment ABC, a2:123 fake st, cv:Faketown, sp:Fakeland, c:null, cd:null, nc:null, pc:null, lat:null, long:null"));
+}
