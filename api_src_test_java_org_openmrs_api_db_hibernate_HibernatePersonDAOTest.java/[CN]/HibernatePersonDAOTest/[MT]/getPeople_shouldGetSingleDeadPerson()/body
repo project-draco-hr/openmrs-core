@@ -1,0 +1,6 @@
+{
+  List<Person> people=hibernatePersonDAO.getPeople("dead-charlie",true);
+  logPeople(people);
+  Assert.assertEquals(1,people.size());
+  Assert.assertEquals("dead-charlie",people.get(0).getGivenName());
+}

@@ -1,0 +1,6 @@
+{
+  List<Person> people=hibernatePersonDAO.getPeople("echo",false);
+  logPeople(people);
+  Assert.assertEquals(1,people.size());
+  Assert.assertEquals("echo",people.get(0).getMiddleName());
+}
