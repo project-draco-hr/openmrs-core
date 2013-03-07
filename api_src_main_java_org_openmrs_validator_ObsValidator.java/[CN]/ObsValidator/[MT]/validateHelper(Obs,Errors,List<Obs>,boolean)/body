@@ -74,4 +74,11 @@
     }
     ancestors.remove(ancestors.size() - 1);
   }
+  if (obs.getValueCoded() != null && obs.getValueDrug() != null && obs.getValueDrug().getConcept() != null) {
+    Concept trueConcept=Context.getConceptService().getTrueConcept();
+    Concept falseConcept=Context.getConceptService().getFalseConcept();
+    if (!obs.getValueCoded().equals(trueConcept) && !obs.getValueCoded().equals(falseConcept) && !obs.getValueDrug().getConcept().equals(obs.getValueCoded())) {
+      errors.rejectValue("valueDrug","Obs.error.invalidDrug");
+    }
+  }
 }
