@@ -1,0 +1,22 @@
+{
+  Person person=new Person();
+  person.setGender("M");
+  Assert.assertNull(person.getId());
+  PersonName name=new PersonName("givenName","middleName","familyName");
+  PersonName preferredName=new PersonName("givenName","middleName","familyName");
+  preferredName.setPreferred(true);
+  person.addName(name);
+  person.addName(preferredName);
+  PersonAddress address=new PersonAddress();
+  address.setAddress1("some address");
+  PersonAddress preferredAddress=new PersonAddress();
+  preferredAddress.setAddress1("another address");
+  preferredAddress.setPreferred(true);
+  person.addAddress(address);
+  person.addAddress(preferredAddress);
+  personService.savePerson(person);
+  Assert.assertTrue(preferredName.isPreferred());
+  Assert.assertTrue(preferredAddress.isPreferred());
+  Assert.assertFalse(name.isPreferred());
+  Assert.assertFalse(address.isPreferred());
+}
