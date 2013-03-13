@@ -1,0 +1,31 @@
+{
+  Patient patient=new Patient();
+  patient.setGender("M");
+  PatientIdentifier identifier=new PatientIdentifier("QWERTY",patientService.getPatientIdentifierType(2),locationService.getLocation(1));
+  PatientIdentifier preferredIdentifier=new PatientIdentifier("QWERTY2",patientService.getPatientIdentifierType(2),locationService.getLocation(1));
+  preferredIdentifier.setPreferred(true);
+  preferredIdentifier.setVoided(true);
+  patient.addIdentifier(identifier);
+  patient.addIdentifier(preferredIdentifier);
+  PersonName name=new PersonName("givenName","middleName","familyName");
+  PersonName preferredName=new PersonName("givenName","middleName","familyName");
+  preferredName.setPreferred(true);
+  preferredName.setVoided(true);
+  patient.addName(name);
+  patient.addName(preferredName);
+  PersonAddress address=new PersonAddress();
+  address.setAddress1("some address");
+  PersonAddress preferredAddress=new PersonAddress();
+  preferredAddress.setAddress1("another address");
+  preferredAddress.setPreferred(true);
+  preferredAddress.setVoided(true);
+  patient.addAddress(address);
+  patient.addAddress(preferredAddress);
+  patientService.savePatient(patient);
+  Assert.assertFalse(preferredIdentifier.isPreferred());
+  Assert.assertFalse(preferredName.isPreferred());
+  Assert.assertFalse(preferredAddress.isPreferred());
+  Assert.assertTrue(identifier.isPreferred());
+  Assert.assertTrue(name.isPreferred());
+  Assert.assertTrue(address.isPreferred());
+}
