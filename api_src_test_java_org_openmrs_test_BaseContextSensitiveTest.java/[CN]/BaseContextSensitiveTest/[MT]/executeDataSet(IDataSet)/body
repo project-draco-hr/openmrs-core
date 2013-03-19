@@ -1,6 +1,5 @@
 {
   Connection connection=getConnection();
   IDatabaseConnection dbUnitConn=setupDatabaseConnection(connection);
-  turnOffDBConstraints(connection);
   DatabaseOperation.REFRESH.execute(dbUnitConn,dataset);
 }
