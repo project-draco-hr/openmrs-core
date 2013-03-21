@@ -2,8 +2,7 @@
   if (codingSystem == null || HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
     try {
       Integer conceptId=new Integer(hl7ConceptId);
-      Concept concept=new Concept(conceptId);
-      return concept;
+      return Context.getConceptService().getConcept(conceptId);
     }
  catch (    NumberFormatException e) {
       throw new HL7Exception("Invalid concept ID '" + hl7ConceptId + "' in hl7 message with uid: "+ uid);
