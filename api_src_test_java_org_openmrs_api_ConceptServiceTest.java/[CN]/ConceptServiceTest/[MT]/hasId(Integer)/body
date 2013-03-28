@@ -1,0 +1,10 @@
+{
+  return new TypeSafeMatcher<OpenmrsObject>(){
+    @Override public void describeTo(    Description description){
+    }
+    @Override protected boolean matchesSafely(    OpenmrsObject item){
+      return id.equals(item.getId());
+    }
+  }
+;
+}

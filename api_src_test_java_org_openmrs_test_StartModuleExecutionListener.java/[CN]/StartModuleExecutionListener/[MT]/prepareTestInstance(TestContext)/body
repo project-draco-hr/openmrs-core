@@ -4,6 +4,7 @@
     if (!lastClassRun.equals(testContext.getTestClass().getSimpleName())) {
       lastClassRun=testContext.getTestClass().getSimpleName();
       if (!Context.isSessionOpen())       Context.openSession();
+      ModuleUtil.shutdown();
       String modulesToLoad=StringUtils.join(startModuleAnnotation.value()," ");
       Properties props=BaseContextSensitiveTest.runtimeProperties;
       props.setProperty(ModuleConstants.RUNTIMEPROPERTY_MODULE_LIST_TO_LOAD,modulesToLoad);
