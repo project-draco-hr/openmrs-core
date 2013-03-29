@@ -3,5 +3,22 @@
   if (field.getCreator() == null)   field.setCreator(Context.getAuthenticatedUser());
   if (field.getDateCreated() == null)   field.setDateCreated(new Date());
   if (field.getUuid() == null)   field.setUuid(UUID.randomUUID().toString());
-  return dao.saveFormField(formField);
+  formField=dao.saveFormField(formField);
+  Concept concept=formField.getField().getConcept();
+  if (concept != null && concept.isComplex()) {
+    ComplexObsHandler handler=Context.getObsService().getHandler(((ConceptComplex)concept).getHandler());
+    if (handler instanceof SerializableComplexObsHandler) {
+      SerializableComplexObsHandler sHandler=(SerializableComplexObsHandler)handler;
+      if (sHandler.getFormFields() != null) {
+        for (        FormField ff : sHandler.getFormFields()) {
+          ff.setParent(formField);
+          ff.setForm(formField.getForm());
+          ff.setCreator(formField.getCreator());
+          ff.setDateCreated(formField.getDateCreated());
+          dao.saveFormField(ff);
+        }
+      }
+    }
+  }
+  return formField;
 }
