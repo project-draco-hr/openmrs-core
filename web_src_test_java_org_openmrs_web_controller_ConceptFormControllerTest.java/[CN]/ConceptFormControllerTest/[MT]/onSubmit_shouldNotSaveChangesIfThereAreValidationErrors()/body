@@ -1,0 +1,13 @@
+{
+  Integer conceptId=792;
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","/dictionary/concept.form");
+  request.setParameter("conceptId",conceptId.toString());
+  request.setParameter("namesByLocale[en].name","should not change");
+  request.setParameter("preferredNamesByLocale[en]","should not change");
+  request.setParameter("synonymsByLocale[en][1].name","");
+  request.setParameter("synonymsByLocale[en][1].voided","false");
+  Response response=webTestHelper.handle(request);
+  assertThat(response.getErrors().hasFieldErrors("synonymsByLocale[en][1].name"),is(true));
+  Concept concept=conceptService.getConcept(conceptId);
+  assertThat(concept.getPreferredName(Locale.ENGLISH).getName(),is("STAVUDINE LAMIVUDINE AND NEVIRAPINE"));
+}

@@ -69,7 +69,7 @@ catch (      Exception e) {
       Concept concept=conceptBackingObject.getConceptFromFormData();
       if (concept.getConceptId() != null)       concept.getCreator().getPersonName();
       try {
-        new ConceptValidator().validate(concept,errors);
+        ValidateUtil.validate(concept,errors);
         if (!errors.hasErrors()) {
           cs.saveConcept(concept);
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Concept.saved");

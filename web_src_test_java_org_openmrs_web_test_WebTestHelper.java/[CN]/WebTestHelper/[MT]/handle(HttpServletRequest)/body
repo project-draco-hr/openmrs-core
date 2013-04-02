@@ -26,7 +26,6 @@
     }
   }
   Assert.assertTrue("The requested URI has no handlers: " + request.getRequestURI(),supported);
-  Context.flushSession();
   Context.clearSession();
   return new Response(response,request.getSession(),modelAndView);
 }
