@@ -35,6 +35,7 @@
     e.printStackTrace();
   }
   MemoryLeakUtil.shutdownMysqlCancellationTimer();
+  MemoryLeakUtil.shutdownKeepAliveTimer();
   OpenmrsClassLoader.onShutdown();
   LogManager.shutdown();
   System.gc();
