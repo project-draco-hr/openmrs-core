@@ -21,7 +21,7 @@
         cls=Class.forName(classString);
         if (log.isDebugEnabled()) {
           log.debug("cls2 classloader: " + cls.getClass().getClassLoader() + " uid: "+ cls.getClass().getClassLoader().hashCode());
-          log.debug("cls==cls2: " + String.valueOf(cls == cls));
+          log.debug("cls==cls2: " + String.valueOf(cls == OpenmrsClassLoader.getInstance().loadClass(classString)));
         }
       }
  catch (      Exception e) {
