@@ -34,6 +34,7 @@
     System.err.println("Listener.contextDestroyed: Failed to cleanup drivers in webapp");
     e.printStackTrace();
   }
+  MemoryLeakUtil.shutdownMysqlCancellationTimer();
   OpenmrsClassLoader.onShutdown();
   LogManager.shutdown();
   System.gc();
