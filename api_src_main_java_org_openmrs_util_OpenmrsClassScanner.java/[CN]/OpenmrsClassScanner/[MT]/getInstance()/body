@@ -1,3 +1,4 @@
 {
-  return instance;
+  if (OpenmrsClassScannerHolder.INSTANCE == null)   OpenmrsClassScannerHolder.INSTANCE=new OpenmrsClassScanner();
+  return OpenmrsClassScannerHolder.INSTANCE;
 }
