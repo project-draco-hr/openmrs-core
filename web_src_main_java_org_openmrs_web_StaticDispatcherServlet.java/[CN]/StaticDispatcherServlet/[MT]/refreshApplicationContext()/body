@@ -1,0 +1,6 @@
+{
+  log.info("Application context for the static content dispatcher servlet is being refreshed");
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  ((XmlWebApplicationContext)getWebApplicationContext()).setClassLoader(OpenmrsClassLoader.getInstance());
+  refresh();
+}
