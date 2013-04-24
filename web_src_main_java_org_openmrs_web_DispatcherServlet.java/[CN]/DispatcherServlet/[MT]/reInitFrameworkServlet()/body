@@ -1,7 +1,8 @@
 {
   log.debug("Framework being REinitialized");
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
-  init();
+  ((XmlWebApplicationContext)getWebApplicationContext()).setClassLoader(OpenmrsClassLoader.getInstance());
+  refresh();
   for (  Module module : ModuleFactory.getStartedModules()) {
     ModuleFactory.loadAdvice(module);
   }
