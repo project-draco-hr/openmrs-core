@@ -1,0 +1,6 @@
+{
+  Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
+  log.info("Framework being initialized for static content");
+  WebModuleUtil.setStaticDispatcherServlet(this);
+  super.initFrameworkServlet();
+}

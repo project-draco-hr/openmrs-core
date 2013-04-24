@@ -4,9 +4,15 @@
   if (dispatcherServlet != null) {
     dispatcherServlet.stopAndCloseApplicationContext();
   }
+  if (staticDispatcherServlet != null) {
+    staticDispatcherServlet.stopAndCloseApplicationContext();
+  }
   XmlWebApplicationContext newAppContext=(XmlWebApplicationContext)ModuleUtil.refreshApplicationContext(wac,isOpenmrsStartup,startedModule);
   try {
     if (dispatcherServlet != null)     dispatcherServlet.reInitFrameworkServlet();
+    if (staticDispatcherServlet != null) {
+      staticDispatcherServlet.refreshApplicationContext();
+    }
   }
  catch (  ServletException se) {
     log.warn("Caught a servlet exception while refreshing the dispatcher servlet",se);

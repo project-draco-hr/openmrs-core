@@ -1,0 +1,10 @@
+{
+  try {
+    XmlWebApplicationContext ctx=(XmlWebApplicationContext)getWebApplicationContext();
+    ctx.stop();
+    ctx.close();
+  }
+ catch (  Exception e) {
+    log.error("Exception while stopping and closing static content dispatcher servlet context: ",e);
+  }
+}
