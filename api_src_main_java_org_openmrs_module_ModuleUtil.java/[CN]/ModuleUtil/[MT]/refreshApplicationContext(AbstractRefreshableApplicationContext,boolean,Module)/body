@@ -29,6 +29,7 @@
   ctx.setClassLoader(OpenmrsClassLoader.getInstance());
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
+  OpenmrsClassLoader.setThreadsToNewClassLoader();
   if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
   try {
     Context.openSessionWithCurrentUser();

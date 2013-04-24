@@ -5,13 +5,6 @@
     rootGroup=parent;
   }
   log.error("this classloader hashcode: " + OpenmrsClassLoaderHolder.INSTANCE.hashCode());
-  Set<Thread> threadSet=Thread.getAllStackTraces().keySet();
-  Thread[] threadArray=threadSet.toArray(new Thread[threadSet.size()]);
-  for (  Thread thread : threadArray) {
-    if (thread.getContextClassLoader() == OpenmrsClassLoader.getInstance()) {
-      thread.setContextClassLoader(OpenmrsClassLoader.getInstance().getParent());
-    }
-  }
   OpenmrsClassScanner.destroyInstance();
   OpenmrsClassLoaderHolder.INSTANCE=null;
 }
