@@ -5,6 +5,19 @@
     rootGroup=parent;
   }
   log.error("this classloader hashcode: " + OpenmrsClassLoaderHolder.INSTANCE.hashCode());
+  List<CacheManager> knownCacheManagers=CacheManager.ALL_CACHE_MANAGERS;
+  while (!knownCacheManagers.isEmpty()) {
+    CacheManager cacheManager=CacheManager.ALL_CACHE_MANAGERS.get(0);
+    try {
+      cacheManager.shutdown();
+      Field field=cacheManager.getClass().getDeclaredField("cacheManagerTimer");
+      field.setAccessible(true);
+      field.set(cacheManager,null);
+    }
+ catch (    Throwable ex) {
+      log.error(ex.getMessage(),ex);
+    }
+  }
   OpenmrsClassScanner.destroyInstance();
   OpenmrsClassLoaderHolder.INSTANCE=null;
 }
