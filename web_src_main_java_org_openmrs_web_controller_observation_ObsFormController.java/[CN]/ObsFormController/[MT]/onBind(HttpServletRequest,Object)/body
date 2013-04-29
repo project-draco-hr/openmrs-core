@@ -3,7 +3,7 @@
   if (obs.getValueCoded() == null && obs.getValueCodedName() != null) {
     obs.setValueCoded(obs.getValueCodedName().getConcept());
   }
-  if (obs.getConcept().isComplex()) {
+  if (obs.getConcept() != null && obs.getConcept().isComplex()) {
     InputStream complexDataInputStream=setComplexData(obs,request);
     if (complexDataInputStream != null) {
       complexDataInputStream.close();
