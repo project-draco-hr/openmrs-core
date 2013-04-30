@@ -18,6 +18,7 @@
       log.error(ex.getMessage(),ex);
     }
   }
+  MemoryLeakUtil.clearHibernateSessionFactories();
   OpenmrsClassScanner.destroyInstance();
   OpenmrsClassLoaderHolder.INSTANCE=null;
 }
