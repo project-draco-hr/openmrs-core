@@ -11,6 +11,14 @@
         errors.rejectValue("retireReason","error.null");
       }
     }
+    Location root=location;
+    while (root.getParentLocation() != null) {
+      root=root.getParentLocation();
+      if (root.equals(location)) {
+        errors.rejectValue("parentLocation","Location.parentLocation.error");
+        break;
+      }
+    }
   }
   super.validateAttributes(location,errors,Context.getLocationService().getAllLocationAttributeTypes());
 }
