@@ -39,7 +39,18 @@
     return invocation.proceed();
   }
  catch (  Throwable t) {
-    if (logGetter || logSetter)     log.error("An error occurred while executing this method. Error message: " + t.getMessage(),t);
+    if (logGetter || logSetter) {
+      String username;
+      User user=Context.getAuthenticatedUser();
+      if (user == null) {
+        username="Guest (Not logged in)";
+      }
+ else {
+        username=user.getUsername();
+        if (username == null || username.length() == 0)         username=user.getSystemId();
+      }
+      log.error(String.format("An error occurred while executing this method.\nCurrent user: %s\nError message: %s",username,t.getMessage()),t);
+    }
     throw t;
   }
  finally {
