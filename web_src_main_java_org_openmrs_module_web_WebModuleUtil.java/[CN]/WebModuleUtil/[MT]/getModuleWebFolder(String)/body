@@ -1,0 +1,8 @@
+{
+  if (dispatcherServlet == null) {
+    return null;
+  }
+  String realPath=dispatcherServlet.getServletContext().getRealPath("");
+  String moduleWebFolder=(realPath + "WEB-INF/view/module/" + moduleId).replace("/",File.separator);
+  return moduleWebFolder;
+}

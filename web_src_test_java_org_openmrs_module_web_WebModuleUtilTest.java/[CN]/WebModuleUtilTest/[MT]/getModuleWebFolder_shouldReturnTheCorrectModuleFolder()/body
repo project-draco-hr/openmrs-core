@@ -1,0 +1,13 @@
+{
+  ServletConfig servletConfig=mock(ServletConfig.class);
+  ServletContext servletContext=mock(ServletContext.class);
+  when(servletContext.getRealPath("")).thenReturn(REAL_PATH);
+  DispatcherServlet dispatcherServlet=mock(DispatcherServlet.class);
+  when(dispatcherServlet.getServletConfig()).thenReturn(servletConfig);
+  when(dispatcherServlet.getServletContext()).thenReturn(servletContext);
+  WebModuleUtil.setDispatcherServlet(dispatcherServlet);
+  String moduleId="basicmodule";
+  String expectedPath=(REAL_PATH + "WEB-INF/view/module/" + moduleId).replace("/",File.separator);
+  String actualPath=WebModuleUtil.getModuleWebFolder(moduleId);
+  assertEquals(expectedPath,actualPath);
+}
