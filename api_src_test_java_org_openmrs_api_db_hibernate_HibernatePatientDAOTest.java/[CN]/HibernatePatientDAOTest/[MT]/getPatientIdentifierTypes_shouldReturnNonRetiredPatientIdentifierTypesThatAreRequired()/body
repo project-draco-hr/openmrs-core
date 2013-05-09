@@ -1,0 +1,8 @@
+{
+  PatientIdentifierType nonRetiredRequired=dao.getPatientIdentifierType(4);
+  nonRetiredRequired.setRetired(false);
+  nonRetiredRequired.setRequired(true);
+  List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,null,true,null);
+  Assert.assertEquals(patientIdentifierTypes.size(),1);
+  Assert.assertEquals(nonRetiredRequired,patientIdentifierTypes.get(0));
+}
