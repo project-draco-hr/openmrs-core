@@ -11,10 +11,21 @@
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
       Integer d=null;
       birthdate=birthdate.trim();
-      String birthyear="";
-      if (birthdate.length() > 6)       birthyear=birthdate.substring(6);
       age=age.trim();
-      if (birthyear.length() > 3)       d=Integer.valueOf(birthyear);
+      int birthyear=-1;
+      try {
+        if (birthdate.length() > 0) {
+          Date birthdateFormatted=(Date)Context.getDateFormat().parse(birthdate);
+          Calendar calender=Calendar.getInstance();
+          calender.setTime(birthdateFormatted);
+          birthyear=calender.get(Calendar.YEAR);
+        }
+      }
+ catch (      ParseException e) {
+        if (log.isDebugEnabled())         log.debug("Parse exception occurred : " + e);
+        invalidAgeFormat=true;
+      }
+      if (birthyear != -1)       d=Integer.valueOf(birthyear);
  else       if (age.length() > 0) {
         Calendar c=Calendar.getInstance();
         c.setTime(new Date());
