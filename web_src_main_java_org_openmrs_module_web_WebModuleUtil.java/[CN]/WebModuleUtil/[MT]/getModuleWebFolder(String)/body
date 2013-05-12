@@ -2,7 +2,12 @@
   if (dispatcherServlet == null) {
     throw new ModuleException("Dispatcher servlet must be present in the web environment");
   }
+  String moduleFolder="WEB-INF/view/module/";
   String realPath=dispatcherServlet.getServletContext().getRealPath("");
-  String moduleWebFolder=(realPath + "WEB-INF/view/module/" + moduleId).replace("/",File.separator);
+  String moduleWebFolder;
+  if (realPath.endsWith("/"))   moduleWebFolder=realPath + moduleFolder;
+ else   moduleWebFolder=realPath + "/" + moduleFolder;
+  moduleWebFolder+=moduleId;
+  moduleWebFolder.replace("/",File.separator);
   return moduleWebFolder;
 }
