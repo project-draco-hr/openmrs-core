@@ -1,6 +1,6 @@
 {
   if (dispatcherServlet == null) {
-    return null;
+    throw new ModuleException("Dispatcher servlet must be present in the web environment");
   }
   String realPath=dispatcherServlet.getServletContext().getRealPath("");
   String moduleWebFolder=(realPath + "WEB-INF/view/module/" + moduleId).replace("/",File.separator);
