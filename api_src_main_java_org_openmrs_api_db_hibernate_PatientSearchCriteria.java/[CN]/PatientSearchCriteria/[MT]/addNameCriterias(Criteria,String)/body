@@ -1,5 +1,4 @@
 {
-  Conjunction conjuction=Restrictions.conjunction();
   name=name.replaceAll("  "," ");
   name=name.replace(", "," ");
   String[] names=name.split(" ");
@@ -13,11 +12,10 @@
         if (i > 0) {
           nameSoFar+=" " + n;
           LogicalExpression fullNameSearch=getNameSearch(nameSoFar);
-          searchExpression=Restrictions.or(oneNameSearch,fullNameSearch);
+          searchExpression=Expression.or(oneNameSearch,fullNameSearch);
         }
-        conjuction.add(searchExpression);
+        criteria.add(searchExpression);
       }
     }
   }
-  return conjuction;
 }

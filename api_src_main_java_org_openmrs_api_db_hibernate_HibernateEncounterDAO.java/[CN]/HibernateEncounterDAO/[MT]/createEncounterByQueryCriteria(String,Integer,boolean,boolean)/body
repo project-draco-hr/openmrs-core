@@ -44,7 +44,7 @@
  else {
       name=query;
     }
-    criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false,orderByNames,false);
+    criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false,orderByNames);
   }
   return criteria;
 }

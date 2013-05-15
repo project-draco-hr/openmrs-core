@@ -1,10 +1,9 @@
 {
-  Conjunction conjuction=Restrictions.conjunction();
   criteria.createAlias("identifiers","ids");
-  conjuction.add(Restrictions.eq("ids.voided",false));
+  criteria.add(Expression.eq("ids.voided",false));
   if (identifier != null) {
     if (matchIdentifierExactly) {
-      conjuction.add(Restrictions.eq("ids.identifier",identifier).ignoreCase());
+      criteria.add(Expression.eq("ids.identifier",identifier));
     }
  else {
       AdministrationService adminService=Context.getAdministrationService();
@@ -14,19 +13,18 @@
         identifier=removePadding(identifier,regex);
       }
       if (StringUtils.hasLength(patternSearch)) {
-        conjuction.add(splitAndGetSearchPattern(identifier,patternSearch));
+        splitAndAddSearchPattern(criteria,identifier,patternSearch);
       }
  else       if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
-        conjuction.add(getCriterionForSimpleSearch(identifier,adminService));
+        addCriterionForSimpleSearch(criteria,identifier,adminService);
       }
  else {
         regex=replaceSearchString(regex,identifier);
-        conjuction.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+        criteria.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
       }
     }
   }
   if (identifierTypes.size() > 0) {
-    criteria.add(Restrictions.in("ids.identifierType",identifierTypes));
+    criteria.add(Expression.in("ids.identifierType",identifierTypes));
   }
-  return conjuction;
 }
