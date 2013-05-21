@@ -9,8 +9,13 @@
       conceptNameId=conceptName.getConceptNameId();
       if (conceptName.isIndexTerm() && concept.getName() == null)       name=WebUtil.escapeHTML(conceptName.getName()) + Context.getMessageSourceService().getMessage("Concept.no.fullySpecifiedName.found");
  else       name=WebUtil.escapeHTML(conceptName.getName());
-      if (!conceptName.isPreferred() && !conceptName.isFullySpecifiedName()) {
-        ConceptName preferredNameObj=concept.getName(locale,false);
+      if (!conceptName.isPreferred()) {
+        ConceptName preferredNameObj=concept.getPreferredName(locale);
+        if (preferredNameObj == null) {
+          if (!StringUtils.isBlank(locale.getCountry()) || !StringUtils.isBlank(locale.getVariant())) {
+            preferredNameObj=concept.getPreferredName(new Locale(locale.getLanguage()));
+          }
+        }
         if (preferredNameObj != null)         preferredName=preferredNameObj.getName();
       }
     }

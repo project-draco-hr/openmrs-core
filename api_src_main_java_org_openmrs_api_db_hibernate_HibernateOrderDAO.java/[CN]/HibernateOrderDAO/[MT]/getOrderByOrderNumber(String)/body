@@ -1,5 +1,5 @@
 {
   Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Order.class,"order");
-  searchCriteria.add(Expression.eq("order.orderNumber",orderNumber));
+  searchCriteria.add(Restrictions.eq("order.orderNumber",orderNumber));
   return (Order)searchCriteria.uniqueResult();
 }

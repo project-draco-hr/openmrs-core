@@ -1,0 +1,23 @@
+{
+  Conjunction conjuction=Restrictions.conjunction();
+  name=name.replaceAll("  "," ");
+  name=name.replace(", "," ");
+  String[] names=name.split(" ");
+  if (names.length > 0) {
+    String nameSoFar=names[0];
+    for (int i=0; i < names.length; i++) {
+      String n=names[i];
+      if (n != null && n.length() > 0) {
+        LogicalExpression oneNameSearch=getNameSearch(n);
+        LogicalExpression searchExpression=oneNameSearch;
+        if (i > 0) {
+          nameSoFar+=" " + n;
+          LogicalExpression fullNameSearch=getNameSearch(nameSoFar);
+          searchExpression=Restrictions.or(oneNameSearch,fullNameSearch);
+        }
+        conjuction.add(searchExpression);
+      }
+    }
+  }
+  return conjuction;
+}

@@ -15,7 +15,9 @@
           if (request instanceof MultipartHttpServletRequest) {
             InputStream complexDataInputStream=setComplexData(obs,request);
             newlySavedObs=os.saveObs(obs,reason);
-            complexDataInputStream.close();
+            if (complexDataInputStream != null) {
+              complexDataInputStream.close();
+            }
           }
         }
  else {
@@ -37,7 +39,11 @@
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.unvoidedSuccessfully");
       }
     }
- catch (    APIException e) {
+ catch (    IllegalArgumentException e) {
+      errors.reject("invalidImage","Obs.invalidImage");
+      return showForm(request,response,errors);
+    }
+catch (    APIException e) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
       return showForm(request,response,errors);
     }
