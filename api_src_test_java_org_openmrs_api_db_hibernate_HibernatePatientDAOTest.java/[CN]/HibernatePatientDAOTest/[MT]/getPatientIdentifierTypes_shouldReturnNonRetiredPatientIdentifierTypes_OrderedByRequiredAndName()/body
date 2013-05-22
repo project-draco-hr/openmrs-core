@@ -2,10 +2,12 @@
   PatientIdentifierType openMRSIdNumber=dao.getPatientIdentifierType(1);
   PatientIdentifierType oldIdNumber=dao.getPatientIdentifierType(2);
   oldIdNumber.setRequired(true);
+  dao.savePatientIdentifierType(oldIdNumber);
   PatientIdentifierType socialSecNumber=dao.getPatientIdentifierType(4);
   socialSecNumber.setName("ASecurityNumber");
   socialSecNumber.setRequired(true);
   socialSecNumber.setRetired(false);
+  dao.savePatientIdentifierType(socialSecNumber);
   List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,null,null,null);
   Assert.assertArrayEquals(new Object[]{socialSecNumber,oldIdNumber,openMRSIdNumber},patientIdentifierTypes.toArray());
 }
