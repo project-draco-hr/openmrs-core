@@ -1,0 +1,8 @@
+{
+  PatientIdentifierType formatOneNonRetired=dao.getPatientIdentifierType(1);
+  formatOneNonRetired.setFormat("1");
+  dao.savePatientIdentifierType(formatOneNonRetired);
+  List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,"1",null,null);
+  Assert.assertEquals(patientIdentifierTypes.size(),1);
+  Assert.assertEquals(formatOneNonRetired,patientIdentifierTypes.get(0));
+}
