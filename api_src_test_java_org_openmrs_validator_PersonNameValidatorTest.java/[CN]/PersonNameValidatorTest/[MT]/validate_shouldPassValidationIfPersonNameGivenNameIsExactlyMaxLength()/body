@@ -1,6 +1,6 @@
 {
   PersonName personName=new PersonName();
-  personName.setGivenName("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghi");
+  personName.setGivenName("abcdefghijabcdefghijabcdefghijabcdefghijabcdefghij");
   Errors errors=new BindException(personName,"givenName");
   new PersonNameValidator().validatePersonName(personName,errors,false,true);
   Assert.assertFalse(errors.hasFieldErrors("givenName"));
