@@ -1,0 +1,15 @@
+{
+  Concept concept=new Concept();
+  concept.setDatatype(new ConceptDatatype());
+  concept.setConceptClass(new ConceptClass());
+  Locale locale=Locale.US;
+  ConceptName hit=new ConceptName("name1",locale);
+  final String expectedPrefName="name2";
+  ConceptName name2=new ConceptName(expectedPrefName,Locale.ENGLISH);
+  ConceptName name3=new ConceptName("name3",locale);
+  concept.addName(name2);
+  concept.addName(hit);
+  concept.addName(name3);
+  concept.setPreferredName(name2);
+  assertEquals(expectedPrefName,new ConceptListItem(concept,hit,locale).getPreferredName());
+}
