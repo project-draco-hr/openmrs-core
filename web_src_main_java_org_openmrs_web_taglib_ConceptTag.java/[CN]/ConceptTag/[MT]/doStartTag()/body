@@ -28,6 +28,9 @@
     pageContext.setAttribute(nameVar,cName);
     log.debug("Retrieved name " + cName.getName() + ", set to variable: "+ nameVar);
   }
+  if (shortestNameVar != null) {
+    pageContext.setAttribute(shortestNameVar,c.getShortestName(loc,false));
+  }
   if (numericVar != null) {
     pageContext.setAttribute(numericVar,cs.getConceptNumeric(conceptId));
   }
