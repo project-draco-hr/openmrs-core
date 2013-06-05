@@ -1,6 +1,6 @@
 {
   ConceptStopWord conceptStopWord=new ConceptStopWord("The");
   conceptService.saveConceptStopWord(conceptStopWord);
-  List<String> conceptStopWords=conceptService.getConceptStopWords(Locale.US);
-  assertEquals(1,conceptStopWords.size());
+  List<String> conceptStopWords=conceptService.getConceptStopWords(Context.getLocale());
+  assertThat(conceptStopWords,hasItem("THE"));
 }
