@@ -1,5 +1,6 @@
 {
-  executeDataSet("org/openmrs/module/include/mandatoryModulesGlobalProperties.xml");
-  Assert.assertEquals(1,ModuleUtil.getMandatoryModules().size());
-  Assert.assertEquals("firstmodule",ModuleUtil.getMandatoryModules().get(0));
+  GlobalProperty gp1=new GlobalProperty("firstmodule.mandatory","true");
+  GlobalProperty gp2=new GlobalProperty("secondmodule.mandatory","false");
+  when(administrationService.getGlobalPropertiesBySuffix(".mandatory")).thenReturn(Arrays.asList(gp1,gp2));
+  assertThat(ModuleUtil.getMandatoryModules(),contains("firstmodule"));
 }
