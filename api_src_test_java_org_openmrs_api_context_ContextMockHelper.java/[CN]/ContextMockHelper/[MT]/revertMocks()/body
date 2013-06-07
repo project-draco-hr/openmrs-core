@@ -1,0 +1,6 @@
+{
+  for (  Map.Entry<Class<?>,Object> realService : realServices.entrySet()) {
+    Context.getServiceContext().setService(realService.getKey(),realService.getValue());
+  }
+  realServices.clear();
+}

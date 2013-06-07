@@ -1,5 +1,5 @@
 {
-  assertThat(ModuleFactory.getStartedModulesMap().entrySet(),empty());
+  assertThat(ModuleFactory.getStartedModules(),empty());
   GlobalProperty gp1=new GlobalProperty("module1.mandatory","true");
   when(administrationService.getGlobalPropertiesBySuffix(".mandatory")).thenReturn(Arrays.asList(gp1));
   ModuleUtil.checkMandatoryModulesStarted();
