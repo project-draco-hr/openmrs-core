@@ -64,6 +64,16 @@
  else     if (!opts.getSecretAnswerNew().equals("")) {
       errors.rejectValue("secretQuestionPassword","error.password.incorrect");
     }
+    String notifyType=opts.getNotification();
+    if (notifyType != null) {
+      if (notifyType.equals("internal") || notifyType.equals("internalProtected") || notifyType.equals("email")) {
+        if (StringUtils.isNotEmpty(opts.getNotificationAddress())) {
+          if (!EmailValidator.getInstance().isValid(opts.getNotificationAddress())) {
+            errors.reject("error.options.notificationAddress.invalid");
+          }
+        }
+      }
+    }
     if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
       try {
         Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);

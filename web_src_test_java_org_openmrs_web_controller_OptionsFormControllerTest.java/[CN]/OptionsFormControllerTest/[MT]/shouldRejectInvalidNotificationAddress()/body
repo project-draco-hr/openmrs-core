@@ -1,0 +1,12 @@
+{
+  final String incorrectAddress="gayan@gmail";
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  request.setParameter("notification","email");
+  request.setParameter("notificationAddress",incorrectAddress);
+  HttpServletResponse response=new MockHttpServletResponse();
+  ModelAndView modelAndView=controller.handleRequest(request,response);
+  OptionsForm optionsForm=(OptionsForm)controller.formBackingObject(request);
+  assertEquals(incorrectAddress,optionsForm.getNotificationAddress());
+  BeanPropertyBindingResult bindingResult=(BeanPropertyBindingResult)modelAndView.getModel().get("org.springframework.validation.BindingResult.opts");
+  Assert.assertTrue(bindingResult.hasErrors());
+}
