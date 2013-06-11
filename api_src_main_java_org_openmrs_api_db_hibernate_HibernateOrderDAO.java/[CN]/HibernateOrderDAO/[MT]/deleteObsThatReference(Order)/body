@@ -1,0 +1,5 @@
+{
+  if (order != null) {
+    sessionFactory.getCurrentSession().createQuery("delete Obs where order = :order").setParameter("order",order).executeUpdate();
+  }
+}

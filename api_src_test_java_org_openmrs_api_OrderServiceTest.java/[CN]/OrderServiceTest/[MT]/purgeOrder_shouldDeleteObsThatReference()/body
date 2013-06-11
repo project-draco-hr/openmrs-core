@@ -1,0 +1,17 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-deleteObsThatReference.xml");
+  final String ordUuid="0c96f25c-4949-4f72-9931-d808fbcdb612";
+  final String obsUuid="be3a4d7a-f9ab-47bb-aaad-bc0b452fcda4";
+  ObsService os=Context.getObsService();
+  OrderService service=Context.getOrderService();
+  Obs obs=os.getObsByUuid(obsUuid);
+  Assert.assertNotNull(obs);
+  Order order=service.getOrderByUuid(ordUuid);
+  Assert.assertNotNull(order);
+  Assert.assertEquals(order,obs.getOrder());
+  service.purgeOrder(order,false);
+  Assert.assertNotNull(os.getObsByUuid(obsUuid));
+  service.purgeOrder(order,true);
+  Assert.assertNull(service.getOrderByUuid(ordUuid));
+  Assert.assertNull(os.getObsByUuid(obsUuid));
+}
