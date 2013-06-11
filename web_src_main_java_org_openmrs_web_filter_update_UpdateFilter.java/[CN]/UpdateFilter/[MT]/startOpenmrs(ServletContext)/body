@@ -4,8 +4,8 @@
   try {
     WebDaemon.startOpenmrs(servletContext);
   }
- catch (  ServletException servletException) {
+ catch (  Exception exception) {
     contextLoader.closeWebApplicationContext(servletContext);
-    throw servletException;
+    throw exception;
   }
 }
