@@ -1,0 +1,12 @@
+{
+  if (!userContextMocked) {
+    try {
+      realUserContext=Context.getUserContext();
+    }
+ catch (    Exception e) {
+    }
+    userContextMocked=true;
+  }
+  Context.setUserContext(userContext);
+  this.userContext=userContext;
+}

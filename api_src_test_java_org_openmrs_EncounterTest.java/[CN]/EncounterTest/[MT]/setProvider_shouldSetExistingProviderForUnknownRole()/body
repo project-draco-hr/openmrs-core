@@ -6,12 +6,8 @@
   provider.setPerson(person);
   List<Provider> providers=new ArrayList<Provider>();
   providers.add(provider);
-  EncounterService encounterService=mock(EncounterService.class);
   when(encounterService.getEncounterRoleByUuid(EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID)).thenReturn(unknownRole);
-  ProviderService providerService=mock(ProviderService.class);
   when(providerService.getProvidersByPerson(person)).thenReturn(providers);
-  when(Context.getEncounterService()).thenReturn(encounterService);
-  when(Context.getProviderService()).thenReturn(providerService);
   encounter.setProvider(person);
   assertEquals(1,encounter.getProvidersByRoles().size());
   assertEquals(1,encounter.getProvidersByRole(unknownRole).size());

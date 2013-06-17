@@ -1,0 +1,5 @@
+{
+  executeDataSet("org/openmrs/module/include/mandatoryModulesGlobalProperties.xml");
+  Assert.assertEquals(1,ModuleUtil.getMandatoryModules().size());
+  Assert.assertEquals("firstmodule",ModuleUtil.getMandatoryModules().get(0));
+}
