@@ -3,4 +3,9 @@
     Context.getServiceContext().setService(realService.getKey(),realService.getValue());
   }
   realServices.clear();
+  if (userContextMocked) {
+    Context.setUserContext(realUserContext);
+    realUserContext=null;
+    userContextMocked=false;
+  }
 }
