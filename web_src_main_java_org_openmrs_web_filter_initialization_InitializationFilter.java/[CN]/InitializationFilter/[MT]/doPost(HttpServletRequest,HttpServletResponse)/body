@@ -12,6 +12,17 @@
   }
   if (DEFAULT_PAGE.equals(page)) {
     File runtimeProperties=getRuntimePropertiesFile();
+    if (getInstallationProperties().isEmpty() == false) {
+      Properties h2Properties=getInstallationProperties();
+      wizardModel.databaseConnection=h2Properties.getProperty("connection.url",wizardModel.databaseConnection);
+      wizardModel.databaseDriver=h2Properties.getProperty("connection.driver_class",wizardModel.databaseDriver);
+      wizardModel.currentDatabaseUsername=h2Properties.getProperty("connection.db.username",wizardModel.currentDatabaseUsername);
+      wizardModel.currentDatabasePassword=h2Properties.getProperty("connection.db.password",wizardModel.currentDatabasePassword);
+      wizardModel.createDatabaseUsername=h2Properties.getProperty("create.db.username",wizardModel.createDatabaseUsername);
+      wizardModel.createDatabasePassword=h2Properties.getProperty("create.db.password",wizardModel.createDatabasePassword);
+      wizardModel.createTables=true;
+      wizardModel.createDatabaseUser=false;
+    }
     if (!runtimeProperties.exists()) {
       try {
         runtimeProperties.createNewFile();
