@@ -1,0 +1,18 @@
+{
+  Location rootLocation=new Location();
+  Location nonRetiredLocation=new Location();
+  Location retiredLocation=new Location();
+  retiredLocation.setRetired(true);
+  Location firstChildOfNonRetiredLocation=new Location();
+  Location secondChildOfNonRetiredLocation=new Location();
+  Location firstChildOfRetiredLocation=new Location();
+  rootLocation.setChildLocations(Sets.newHashSet(nonRetiredLocation,retiredLocation));
+  nonRetiredLocation.setChildLocations(Sets.newHashSet(firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation));
+  retiredLocation.setChildLocations(Sets.newHashSet(firstChildOfRetiredLocation));
+  firstChildOfNonRetiredLocation.setChildLocations(new HashSet<Location>());
+  secondChildOfNonRetiredLocation.setChildLocations(new HashSet<Location>());
+  firstChildOfRetiredLocation.setChildLocations(new HashSet<Location>());
+  Set<Location> descendantLocations=rootLocation.getDescendantLocations(false);
+  Set<Location> expectedLocations=Sets.newHashSet(nonRetiredLocation,firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation);
+  Assert.assertThat(descendantLocations,equalTo(expectedLocations));
+}
