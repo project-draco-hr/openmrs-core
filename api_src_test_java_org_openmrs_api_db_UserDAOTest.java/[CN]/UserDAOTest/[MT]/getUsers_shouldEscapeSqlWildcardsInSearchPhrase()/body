@@ -10,8 +10,8 @@
     u.setUsername(wildcard + "test" + wildcard);
     Context.getUserService().saveUser(u,"Openmr5xy");
     int size=dao.getUsers(wildcard + "ca",null,false,null,null).size();
-    Assert.assertEquals(1,size);
+    assertEquals(1,size);
     String userName=(dao.getUsers(wildcard + "ca",null,false,null,null).get(0).getUsername());
-    Assert.assertEquals("Test failed since no user containing the character " + wildcard + " was found, ",wildcard + "test" + wildcard,userName);
+    assertEquals("Test failed since no user containing the character " + wildcard + " was found, ",wildcard + "test" + wildcard,userName);
   }
 }
