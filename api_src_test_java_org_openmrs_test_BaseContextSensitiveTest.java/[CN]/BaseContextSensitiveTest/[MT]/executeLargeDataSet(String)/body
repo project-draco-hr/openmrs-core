@@ -1,0 +1,22 @@
+{
+  InputStream inputStream=null;
+  try {
+    final File file=new File(datasetFilename);
+    if (file.exists()) {
+      inputStream=new FileInputStream(datasetFilename);
+    }
+ else {
+      inputStream=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+      if (inputStream == null)       throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
+    }
+    final FlatXmlProducer flatXmlProducer=new FlatXmlProducer(new InputSource(inputStream));
+    final StreamingDataSet streamingDataSet=new StreamingDataSet(flatXmlProducer);
+    final ReplacementDataSet replacementDataSet=new ReplacementDataSet(streamingDataSet);
+    replacementDataSet.addReplacementObject("[NULL]",null);
+    executeDataSet(replacementDataSet);
+    inputStream.close();
+  }
+  finally {
+    IOUtils.closeQuietly(inputStream);
+  }
+}
