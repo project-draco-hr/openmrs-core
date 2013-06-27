@@ -2,8 +2,11 @@
   Map<String,String> map=new HashMap<String,String>();
   TaskDefinition task=(TaskDefinition)command;
   Long interval=task.getRepeatInterval();
+  if (interval == null) {
+    interval=(long)60;
+  }
   Long repeatInterval;
-  if (interval == null || interval < 60) {
+  if (interval < 60) {
     map.put("units","seconds");
     repeatInterval=interval;
   }
