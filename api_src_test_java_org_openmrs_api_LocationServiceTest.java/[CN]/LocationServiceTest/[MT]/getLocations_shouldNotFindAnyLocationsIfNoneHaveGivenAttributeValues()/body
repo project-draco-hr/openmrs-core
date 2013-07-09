@@ -1,0 +1,11 @@
+{
+  LocationAttributeType phoneAttrType=new LocationAttributeType();
+  phoneAttrType.setName("Facility Phone");
+  phoneAttrType.setMinOccurs(0);
+  phoneAttrType.setMaxOccurs(1);
+  phoneAttrType.setDatatypeClassname("org.openmrs.customdatatype.datatype.FreeTextDatatype");
+  Context.getLocationService().saveLocationAttributeType(phoneAttrType);
+  Map<LocationAttributeType,Object> attrValues=new HashMap<LocationAttributeType,Object>();
+  attrValues.put(phoneAttrType,"xxxxxx");
+  Assert.assertEquals(0,Context.getLocationService().getLocations(null,null,attrValues,true,null,null).size());
+}
