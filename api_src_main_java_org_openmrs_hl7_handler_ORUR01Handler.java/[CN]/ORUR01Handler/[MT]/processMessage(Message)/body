@@ -7,12 +7,12 @@
     response=processORU_R01(oru);
   }
  catch (  ClassCastException e) {
-    log.error("Error casting " + message.getClass().getName() + " to ORU_R01",e);
-    throw new ApplicationException("Invalid message type for handler");
+    log.warn("Error casting " + message.getClass().getName() + " to ORU_R01",e);
+    throw new ApplicationException("Invalid message type for handler. Error casting " + message.getClass().getName() + " to ORU_R01",e);
   }
 catch (  HL7Exception e) {
-    log.error("Error while processing ORU_R01 message",e);
-    throw new ApplicationException(e);
+    log.warn("Error while processing ORU_R01 message",e);
+    throw new ApplicationException("Error while processing ORU_R01 message",e);
   }
   log.debug("Finished processing ORU_R01 message");
   return response;
