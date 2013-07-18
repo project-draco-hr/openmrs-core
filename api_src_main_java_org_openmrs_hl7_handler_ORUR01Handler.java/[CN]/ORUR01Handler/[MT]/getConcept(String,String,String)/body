@@ -9,8 +9,6 @@
     }
   }
  else {
-    Concept concept=Context.getConceptService().getConceptByMapping(hl7ConceptId,codingSystem);
-    if (concept == null)     log.error("Unable to find concept with code: " + hl7ConceptId + " and mapping: "+ codingSystem+ " in hl7 message with uid: "+ uid);
-    return concept;
+    return Context.getConceptService().getConceptByMapping(hl7ConceptId,codingSystem);
   }
 }
