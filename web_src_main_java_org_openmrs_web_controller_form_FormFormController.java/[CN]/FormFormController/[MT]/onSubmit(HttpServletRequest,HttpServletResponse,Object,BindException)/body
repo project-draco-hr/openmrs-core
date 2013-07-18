@@ -26,7 +26,11 @@
           Context.getFormService().purgeForm(form);
           httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Form.deleted");
         }
- catch (        Exception e) {
+ catch (        DataIntegrityViolationException e) {
+          httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Form.cannot.delete");
+          return new ModelAndView(new RedirectView("formEdit.form?formId=" + form.getFormId()));
+        }
+catch (        Exception e) {
           log.error("Error while deleting form " + form.getFormId(),e);
           errors.reject(e.getMessage());
           httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Form.cannot.delete");
