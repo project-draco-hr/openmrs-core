@@ -1,7 +1,10 @@
 {
   executeDataSet("org/openmrs/api/include/PersonServiceTest-createPersonPurgeVoidTest.xml");
   Person person=Context.getPersonService().getPerson(1001);
-  Person voidedPerson=Context.getPersonService().voidPerson(person,"Test Voiding Person");
+  Context.getPersonService().voidPerson(person,"Test Voiding Person");
+  Context.flushSession();
+  Context.clearSession();
+  Person voidedPerson=Context.getPersonService().getPerson(1001);
   Assert.assertTrue(voidedPerson.isVoided());
   Assert.assertNotNull(voidedPerson.getVoidedBy());
   Assert.assertNotNull(voidedPerson.getPersonVoidReason());
