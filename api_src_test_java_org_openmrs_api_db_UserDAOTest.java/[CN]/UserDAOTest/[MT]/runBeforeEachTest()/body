@@ -1,3 +1,15 @@
 {
+  PersonName name=new PersonName("Joe","J","Doe");
+  name.setDateCreated(new Date());
+  Person person=new Person();
+  person.setDateCreated(new Date());
+  person.setPersonDateCreated(person.getDateCreated());
+  person.setGender("M");
+  userJoe=new User();
+  userJoe.setSystemId("100-30");
+  userJoe.setPerson(person);
+  userJoe.addName(name);
+  userJoe.setUsername("juser");
+  userJoe.setDateCreated(new Date());
   if (dao == null)   dao=(UserDAO)applicationContext.getBean("userDAO");
 }
