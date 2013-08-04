@@ -19,12 +19,18 @@
             sql="create database `?` encoding 'utf8'";
           }
  else           if (wizardModel.databaseConnection.contains("h2")) {
-            sql="";
+            sql=null;
           }
  else {
             sql="create database `?`";
           }
-          int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+          int result;
+          if (sql != null) {
+            result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+          }
+ else {
+            result=1;
+          }
           if (result < 0) {
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_NEW,DEFAULT_PAGE);
             return;
@@ -75,7 +81,7 @@
           connectionPassword=wizardModel.currentDatabasePassword;
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-        finalDatabaseConnectionString=finalDatabaseConnectionString.replace("@APPLICATIONDATADIR@",OpenmrsUtil.getApplicationDataDirectory());
+        finalDatabaseConnectionString=finalDatabaseConnectionString.replace("@APPLICATIONDATADIR@",OpenmrsUtil.getApplicationDataDirectory().replace("\\","/"));
         if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
           setMessage("Verify that the database connection works");
           reportError("Unable to connect to database",DEFAULT_PAGE);
