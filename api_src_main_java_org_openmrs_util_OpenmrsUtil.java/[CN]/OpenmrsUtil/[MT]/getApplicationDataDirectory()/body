@@ -1,12 +1,17 @@
 {
   String filepath=null;
-  if (OpenmrsConstants.APPLICATION_DATA_DIRECTORY != null) {
-    filepath=OpenmrsConstants.APPLICATION_DATA_DIRECTORY;
+  if (System.getProperty("OPENMRS_APPLICATION_DATA_DIRECTORY") != null) {
+    filepath=System.getProperty("OPENMRS_APPLICATION_DATA_DIRECTORY");
   }
  else {
-    if (OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM)     filepath=System.getProperty("user.home") + File.separator + ".OpenMRS";
- else     filepath=System.getProperty("user.home") + File.separator + "Application Data"+ File.separator+ "OpenMRS";
-    filepath=filepath + File.separator;
+    if (OpenmrsConstants.APPLICATION_DATA_DIRECTORY != null) {
+      filepath=OpenmrsConstants.APPLICATION_DATA_DIRECTORY;
+    }
+ else {
+      if (OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM)       filepath=System.getProperty("user.home") + File.separator + ".OpenMRS";
+ else       filepath=System.getProperty("user.home") + File.separator + "Application Data"+ File.separator+ "OpenMRS";
+      filepath=filepath + File.separator;
+    }
   }
   File folder=new File(filepath);
   if (!folder.exists())   folder.mkdirs();
