@@ -1,0 +1,7 @@
+{
+  EncounterRole encounterRole=Context.getEncounterService().getEncounterRoleByName("Unknown");
+  Assert.assertNotNull(encounterRole);
+  Errors errors=new BindException(encounterRole,"encounterRole");
+  new EncounterRoleValidator().validate(encounterRole,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
