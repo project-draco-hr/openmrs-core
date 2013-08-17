@@ -1,5 +1,6 @@
 {
   if (reason == null)   throw new IllegalArgumentException("The 'reason' for retiring is required");
+  checkIfEncounterTypesAreLocked();
   encounterType.setRetired(true);
   encounterType.setRetireReason(reason);
   return saveEncounterType(encounterType);

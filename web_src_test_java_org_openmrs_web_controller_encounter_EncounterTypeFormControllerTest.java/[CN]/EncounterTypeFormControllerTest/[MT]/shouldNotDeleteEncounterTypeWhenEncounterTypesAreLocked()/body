@@ -1,0 +1,18 @@
+{
+  executeDataSet("org/openmrs/web/encounter/include/EncounterTypeFormControllerTest.xml");
+  EncounterService es=Context.getEncounterService();
+  EncounterTypeFormController controller=(EncounterTypeFormController)applicationContext.getBean("encounterTypeForm");
+  controller.setApplicationContext(applicationContext);
+  controller.setSuccessView("index.htm");
+  controller.setFormView("EncounterType.form");
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","/admin/encounters/encounterType.form?encounterTypeId=1");
+  request.setSession(new MockHttpSession(null));
+  HttpServletResponse response=new MockHttpServletResponse();
+  controller.handleRequest(request,response);
+  request.setMethod("POST");
+  request.addParameter("action","Delete EncounterType");
+  ModelAndView mav=controller.handleRequest(request,response);
+  Assert.assertEquals("The purge attempt should have failed!","EncounterType.form",mav.getViewName());
+  Assert.assertSame(controller.getFormView(),mav.getViewName());
+  Assert.assertNotNull(es.getEncounterType(1));
+}
