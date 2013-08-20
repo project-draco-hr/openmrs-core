@@ -1,5 +1,6 @@
 {
-  for (  Module module : ModuleFactory.getStartedModules()) {
+  Set<Module> startedModules=new HashSet<Module>(ModuleFactory.getStartedModules());
+  for (  Module module : startedModules) {
     try {
       if (module.getModuleActivator() != null)       module.getModuleActivator().willRefreshContext();
     }
@@ -30,10 +31,13 @@
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
   OpenmrsClassLoader.setThreadsToNewClassLoader();
-  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
+  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + startedModules.size());
   try {
     Context.openSessionWithCurrentUser();
-    for (    Module module : ModuleFactory.getStartedModules()) {
+    for (    Module module : startedModules) {
+      if (!module.isStarted()) {
+        continue;
+      }
       ModuleFactory.loadAdvice(module);
       try {
         ModuleFactory.passDaemonToken(module);
@@ -45,7 +49,7 @@
           }
  catch (          Exception e) {
             log.warn("Unable to invoke started() method on the module's activator",e);
-            ModuleFactory.stopModule(module);
+            ModuleFactory.stopModule(module,true,true);
           }
         }
       }
