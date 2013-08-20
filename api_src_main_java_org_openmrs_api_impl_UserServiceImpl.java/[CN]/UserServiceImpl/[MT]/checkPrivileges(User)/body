@@ -3,7 +3,7 @@
   User authUser=Context.getAuthenticatedUser();
   List<String> requiredPrivs=new Vector<String>();
   for (  Role r : roles) {
-    if (r.getRole().equals(RoleConstants.SUPERUSER) && !authUser.hasRole(RoleConstants.SUPERUSER))     throw new APIException("You must have the role '" + RoleConstants.SUPERUSER + "' in order to assign it.");
+    if (r.getRole().equals(RoleConstants.SUPERUSER) && !Context.hasPrivilege(PrivilegeConstants.ASSIGN_SYSTEM_DEVELOPER_ROLE))     throw new APIException("You must have the role '" + RoleConstants.SUPERUSER + "' in order to assign it.");
     if (r.getPrivileges() != null) {
       for (      Privilege p : r.getPrivileges())       if (!authUser.hasPrivilege(p.getPrivilege()))       requiredPrivs.add(p.getPrivilege());
     }
