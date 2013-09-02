@@ -1,5 +1,13 @@
 {
   Class<?> result=null;
+  Collection<ModuleClassLoader> classLoaders=ModuleFactory.getModuleClassLoaders();
+  for (  ModuleClassLoader classLoader : classLoaders) {
+    if (classLoader == this)     continue;
+    result=classLoader.getClassIfLoaded(name);
+    if (result != null) {
+      return result;
+    }
+  }
   if (probeParentLoaderLast) {
     try {
       result=loadClass(name,resolve,this,null);
@@ -22,6 +30,11 @@ catch (    NullPointerException e) {
       result=loadClass(name,resolve,this,null);
     }
   }
-  if (result != null)   return result;
+  if (result != null) {
+    if (result.getClassLoader() == this) {
+      loadedClasses.put(name,result);
+    }
+    return result;
+  }
   throw new ClassNotFoundException(name);
 }
