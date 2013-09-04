@@ -1,0 +1,7 @@
+{
+  String result=request.getParameter(formFieldValue);
+  if (StringUtils.isBlank(result)) {
+    return null;
+  }
+  return datatype.deserialize(formFieldValue);
+}
