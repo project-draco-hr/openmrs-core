@@ -23,11 +23,14 @@
       if (lang.length() > 0 && file.length() > 0) {
         InputStream inStream=null;
         try {
-          ZipEntry entry=jarfile.getEntry(file);
-          if (entry == null) {
-            throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noMessagePropsFile",new Object[]{file,lang},Context.getLocale()));
+          inStream=ModuleUtil.getResourceFromApi(jarfile,moduleId,version,file);
+          if (inStream == null) {
+            ZipEntry entry=jarfile.getEntry(file);
+            if (entry == null) {
+              throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noMessagePropsFile",new Object[]{file,lang},Context.getLocale()));
+            }
+            inStream=jarfile.getInputStream(entry);
           }
-          inStream=jarfile.getInputStream(entry);
           Properties props=new Properties();
           OpenmrsUtil.loadProperties(props,inStream);
           messages.put(lang,props);
@@ -36,14 +39,7 @@
           log.warn("Unable to load properties: " + file);
         }
  finally {
-          if (inStream != null) {
-            try {
-              inStream.close();
-            }
- catch (            IOException io) {
-              log.error("Error while closing property input stream for module: " + moduleFile.getAbsolutePath(),io);
-            }
-          }
+          IOUtils.closeQuietly(inStream);
         }
       }
  else {

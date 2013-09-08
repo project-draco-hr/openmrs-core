@@ -4,10 +4,10 @@
   String docBase=tmpModuleDir.getAbsolutePath();
   try {
     jarFile=new JarFile(fileToExpand);
-    Enumeration jarEntries=jarFile.entries();
+    Enumeration<JarEntry> jarEntries=jarFile.entries();
     boolean foundName=(name == null);
     while (jarEntries.hasMoreElements()) {
-      JarEntry jarEntry=(JarEntry)jarEntries.nextElement();
+      JarEntry jarEntry=jarEntries.nextElement();
       if (name == null || jarEntry.getName().startsWith(name)) {
         String entryName=jarEntry.getName();
         if (keepFullPath == false && name != null) {

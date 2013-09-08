@@ -1,0 +1,38 @@
+{
+  File tempFile=null;
+  FileOutputStream tempOut=null;
+  JarFile innerJarFile=null;
+  InputStream innerInputStream=null;
+  try {
+    tempFile=File.createTempFile("tempFile","jar");
+    tempOut=new FileOutputStream(tempFile);
+    ZipEntry innerJarFileEntry=outerJarFile.getEntry(innerJarFileLocation);
+    if (innerJarFileEntry != null) {
+      IOUtils.copy(outerJarFile.getInputStream(innerJarFileEntry),tempOut);
+      innerJarFile=new JarFile(tempFile);
+      ZipEntry targetEntry=innerJarFile.getEntry(resource);
+      if (targetEntry != null) {
+        innerInputStream=innerJarFile.getInputStream(targetEntry);
+        byte[] byteArray=IOUtils.toByteArray(innerInputStream);
+        return new ByteArrayInputStream(byteArray);
+      }
+    }
+  }
+ catch (  IOException e) {
+    log.error("Unable to get '" + resource + "' from '"+ innerJarFileLocation+ "' of '"+ outerJarFile.getName()+ "'",e);
+  }
+ finally {
+    IOUtils.closeQuietly(tempOut);
+    IOUtils.closeQuietly(innerInputStream);
+    if (tempFile != null && !tempFile.delete()) {
+      log.warn("Could not delete temporary jarfile: " + tempFile);
+    }
+    try {
+      if (innerJarFile != null)       innerJarFile.close();
+    }
+ catch (    IOException e) {
+      log.warn("Unable to close inner jarfile: " + innerJarFile,e);
+    }
+  }
+  return null;
+}
