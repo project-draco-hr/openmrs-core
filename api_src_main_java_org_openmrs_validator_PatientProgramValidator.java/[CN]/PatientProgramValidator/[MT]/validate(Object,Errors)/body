@@ -44,7 +44,7 @@
           errors.rejectValue("states","PatientState.error.endDateCannotBeBeforeStartDate");
           return;
         }
- else         if (statesAndStartDates.contains(patientState.getState().getId() + "" + patientState.getStartDate())) {
+ else         if (statesAndStartDates.contains(patientState.getState().getUuid() + "" + patientState.getStartDate())) {
           errors.rejectValue("states","PatientState.error.duplicatePatientStates");
           return;
         }
@@ -77,7 +77,7 @@
             }
           }
         }
-        statesAndStartDates.add(patientState.getState().getId() + "" + patientState.getStartDate());
+        statesAndStartDates.add(patientState.getState().getUuid() + "" + patientState.getStartDate());
       }
     }
   }
