@@ -1,0 +1,6 @@
+{
+  PatientIdentifier patientIdentifier=patientService.getPatientIdentifier(7);
+  patientIdentifier.setLocation(null);
+  patientIdentifier.getIdentifierType().setLocationBehavior(PatientIdentifierType.LocationBehavior.REQUIRED);
+  patientService.savePatientIdentifier(patientIdentifier);
+}
