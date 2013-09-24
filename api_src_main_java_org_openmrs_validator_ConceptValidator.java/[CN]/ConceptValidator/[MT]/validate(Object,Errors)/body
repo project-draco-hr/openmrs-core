@@ -64,7 +64,7 @@
           if (conceptsWithPossibleDuplicateNames.size() > 0) {
             for (            Concept concept : conceptsWithPossibleDuplicateNames) {
               if (concept.isRetired())               continue;
-              if (conceptToValidate.getUuid() != null && conceptToValidate.getUuid().equals(concept.getUuid()))               continue;
+              if (conceptToValidate.getConceptId() != null && conceptToValidate.getUuid().equals(concept.getUuid()))               continue;
               if ((concept.getFullySpecifiedName(conceptNameLocale) != null && concept.getFullySpecifiedName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName())) || (concept.getPreferredName(conceptNameLocale) != null && concept.getPreferredName(conceptNameLocale).getName().equalsIgnoreCase(nameInLocale.getName()))) {
                 throw new DuplicateConceptNameException("'" + nameInLocale.getName() + "' is a duplicate name in locale '"+ conceptNameLocale.toString()+ "'");
               }
