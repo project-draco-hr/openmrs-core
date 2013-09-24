@@ -5,6 +5,7 @@
   if (Context.isAuthenticated()) {
     fieldTypes=Context.getFormService().getAllFieldTypes();
     encTypes=Context.getEncounterService().getAllEncounterTypes();
+    Collections.sort(encTypes,new MetadataComparator(Context.getLocale()));
   }
   map.put("fieldTypes",fieldTypes);
   map.put("encounterTypes",encTypes);
