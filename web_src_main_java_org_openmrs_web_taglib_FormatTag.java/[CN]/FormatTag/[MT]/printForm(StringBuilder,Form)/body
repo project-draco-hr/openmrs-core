@@ -1,3 +1,4 @@
 {
-  sb.append(form.getName() + " (v" + form.getVersion()+ ")");
+  String name=StringEscapeUtils.escapeHtml(form.getName());
+  sb.append(name + " (v" + form.getVersion()+ ")");
 }
