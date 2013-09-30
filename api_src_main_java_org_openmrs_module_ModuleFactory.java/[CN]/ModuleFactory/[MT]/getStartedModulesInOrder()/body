@@ -1,0 +1,12 @@
+{
+  List<Module> modules=new ArrayList<Module>();
+  if (actualStartupOrder != null) {
+    for (    String moduleId : actualStartupOrder) {
+      modules.add(getStartedModulesMap().get(moduleId));
+    }
+  }
+ else {
+    modules.addAll(getStartedModules());
+  }
+  return modules;
+}

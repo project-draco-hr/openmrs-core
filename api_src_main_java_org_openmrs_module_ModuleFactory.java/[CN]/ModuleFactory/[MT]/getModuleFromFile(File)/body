@@ -4,7 +4,7 @@
     module=new ModuleFileParser(moduleFile).parse();
   }
  catch (  ModuleException e) {
-    log.error("Error getting module object from file",e);
+    log.error("Error getting module object from file " + moduleFile.getName(),e);
     throw e;
   }
   return module;
