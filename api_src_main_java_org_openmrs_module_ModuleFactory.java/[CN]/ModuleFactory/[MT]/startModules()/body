@@ -1,4 +1,5 @@
 {
+  List<String> currentStartupOrder=new ArrayList<String>();
   if (getLoadedModules().size() > 0) {
     List<Module> leftoverModules=new Vector<Module>();
     try {
@@ -14,6 +15,7 @@
           if (requiredModulesStarted(mod))           try {
             if (log.isDebugEnabled())             log.debug("starting module: " + mod.getModuleId());
             startModule(mod);
+            currentStartupOrder.add(mod.getModuleId());
           }
  catch (          Exception e) {
             log.error("Error while starting module: " + mod.getName(),e);
@@ -40,6 +42,7 @@
           if (log.isDebugEnabled())           log.debug("starting leftover module: " + leftoverModule.getModuleId());
           try {
             startModule(leftoverModule);
+            currentStartupOrder.add(leftoverModule.getModuleId());
             atLeastOneModuleLoaded=true;
             modulesStartedInThisLoop.add(leftoverModule);
           }
@@ -60,4 +63,5 @@
       notifySuperUsersAboutModuleFailure(leftoverModule);
     }
   }
+  actualStartupOrder=currentStartupOrder;
 }

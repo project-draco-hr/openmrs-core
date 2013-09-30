@@ -1,5 +1,5 @@
 {
-  Set<Module> startedModules=new HashSet<Module>(ModuleFactory.getStartedModules());
+  Set<Module> startedModules=new LinkedHashSet<Module>(ModuleFactory.getStartedModulesInOrder());
   for (  Module module : startedModules) {
     try {
       if (module.getModuleActivator() != null)       module.getModuleActivator().willRefreshContext();
