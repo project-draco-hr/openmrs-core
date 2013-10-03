@@ -8,6 +8,12 @@
       inputSource.setSystemId("./");
       DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
       DocumentBuilder db=dbf.newDocumentBuilder();
+      db.setEntityResolver(new EntityResolver(){
+        public InputSource resolveEntity(        String publicId,        String systemId){
+          return new InputSource(new StringReader(""));
+        }
+      }
+);
       updateDoc=db.parse(inputSource);
     }
  catch (    Exception e) {
