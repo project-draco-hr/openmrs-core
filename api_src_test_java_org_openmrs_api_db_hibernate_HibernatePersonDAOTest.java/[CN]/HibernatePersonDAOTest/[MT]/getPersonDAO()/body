@@ -1,0 +1,6 @@
+{
+  executeDataSet(PEOPLE_FROM_THE_SHIRE_XML);
+  hibernatePersonDAO=(HibernatePersonDAO)applicationContext.getBean("personDAO");
+  sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
+  helper=new HibernatePersonAttributeHelper(sessionFactory);
+}

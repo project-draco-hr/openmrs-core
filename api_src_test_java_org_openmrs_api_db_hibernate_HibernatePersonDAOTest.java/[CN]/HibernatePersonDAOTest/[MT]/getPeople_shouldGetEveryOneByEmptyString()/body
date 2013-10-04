@@ -1,0 +1,12 @@
+{
+  List<Person> people=hibernatePersonDAO.getPeople("",false);
+  logPeople(people);
+  Assert.assertTrue(people.size() >= 7);
+  assertPeopleContainPersonID(people,42);
+  assertPeopleContainPersonID(people,43);
+  assertPeopleContainPersonID(people,44);
+  assertPeopleContainPersonID(people,45);
+  assertPeopleContainPersonID(people,46);
+  assertPeopleContainPersonID(people,47);
+  assertPeopleContainPersonID(people,48);
+}

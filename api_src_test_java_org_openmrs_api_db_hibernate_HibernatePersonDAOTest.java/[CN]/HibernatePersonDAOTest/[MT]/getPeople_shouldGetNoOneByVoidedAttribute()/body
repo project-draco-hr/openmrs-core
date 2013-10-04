@@ -1,0 +1,6 @@
+{
+  Assert.assertTrue(helper.voidedPersonAttributeExists("Master thief"));
+  List<Person> people=hibernatePersonDAO.getPeople("Master thief",false);
+  logPeople(people);
+  Assert.assertEquals(0,people.size());
+}
