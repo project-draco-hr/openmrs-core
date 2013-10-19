@@ -1,14 +1,14 @@
 {
   try {
     Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
-    Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.addProxyPrivilege(PrivilegeConstants.GET_USERS);
     Context.getAlertService().notifySuperUsers("Module.startupError.notification.message",null,mod.getName());
   }
  catch (  Exception e) {
     log.error("Unable to send an alert to the super users",e);
   }
  finally {
-    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);
+    Context.removeProxyPrivilege(PrivilegeConstants.GET_USERS);
     Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
   }
 }
