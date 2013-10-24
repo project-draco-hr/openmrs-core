@@ -1,5 +1,5 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Field.class);
-  if (includeRetired == false)   crit.add(Expression.eq("retired",false));
+  if (!includeRetired)   crit.add(Restrictions.eq("retired",false));
   return crit.list();
 }

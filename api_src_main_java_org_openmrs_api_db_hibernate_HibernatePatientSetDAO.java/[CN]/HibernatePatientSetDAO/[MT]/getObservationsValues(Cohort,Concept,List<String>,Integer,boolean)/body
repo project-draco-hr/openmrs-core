@@ -55,8 +55,8 @@
   }
   criteria.setProjection(projections);
   if (patients != null)   criteria.add(Restrictions.in("obs.personId",patients.getMemberIds()));
-  criteria.add(Expression.eq("obs.concept",c));
-  criteria.add(Expression.eq("obs.voided",false));
+  criteria.add(Restrictions.eq("obs.concept",c));
+  criteria.add(Restrictions.eq("obs.voided",false));
   if (showMostRecentFirst)   criteria.addOrder(org.hibernate.criterion.Order.desc("obs.obsDatetime"));
  else   criteria.addOrder(org.hibernate.criterion.Order.asc("obs.obsDatetime"));
   long start=System.currentTimeMillis();

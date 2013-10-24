@@ -16,7 +16,7 @@
       }
     }
   }
-  if (includeRetired == false)   criteria.add("user.retired = false");
+  if (!includeRetired)   criteria.add("user.retired = false");
   String hql=hqlSelectStart;
   boolean searchOnRoles=false;
   if (CollectionUtils.isNotEmpty(roles)) {

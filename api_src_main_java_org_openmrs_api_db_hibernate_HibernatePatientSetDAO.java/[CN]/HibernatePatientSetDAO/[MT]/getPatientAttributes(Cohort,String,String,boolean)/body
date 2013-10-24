@@ -11,14 +11,14 @@
     projectionList.add(Projections.property("person.personId"));
     projectionList.add(Projections.property(property));
     if (patients != null)     criteria.add(Restrictions.in("person.personId",patients.getMemberIds()));
-    if (className.equals("org.openmrs.Person"))     criteria.add(Expression.eq("personVoided",false));
- else     criteria.add(Expression.eq("voided",false));
+    if (className.equals("org.openmrs.Person"))     criteria.add(Restrictions.eq("personVoided",false));
+ else     criteria.add(Restrictions.eq("voided",false));
   }
  else {
     projectionList.add(Projections.property("patient.personId"));
     projectionList.add(Projections.property(property));
     if (patients != null)     criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
-    criteria.add(Expression.eq("voided",false));
+    criteria.add(Restrictions.eq("voided",false));
   }
   criteria.setProjection(projectionList);
   try {

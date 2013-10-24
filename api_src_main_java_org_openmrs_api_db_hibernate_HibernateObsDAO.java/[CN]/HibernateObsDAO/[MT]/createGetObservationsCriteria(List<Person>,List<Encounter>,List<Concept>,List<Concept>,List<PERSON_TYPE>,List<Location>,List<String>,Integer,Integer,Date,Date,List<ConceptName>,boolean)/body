@@ -19,6 +19,6 @@
   if (fromDate != null)   criteria.add(Restrictions.ge("obsDatetime",fromDate));
   if (toDate != null)   criteria.add(Restrictions.le("obsDatetime",toDate));
   if (CollectionUtils.isNotEmpty(valueCodedNameAnswers))   criteria.add(Restrictions.in("valueCodedName",valueCodedNameAnswers));
-  if (includeVoidedObs == false)   criteria.add(Restrictions.eq("voided",false));
+  if (!includeVoidedObs)   criteria.add(Restrictions.eq("voided",false));
   return criteria;
 }

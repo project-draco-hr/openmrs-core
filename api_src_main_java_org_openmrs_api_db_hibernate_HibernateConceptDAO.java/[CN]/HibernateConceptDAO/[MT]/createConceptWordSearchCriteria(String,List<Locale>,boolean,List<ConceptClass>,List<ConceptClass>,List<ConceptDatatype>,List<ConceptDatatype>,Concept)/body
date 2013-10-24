@@ -21,7 +21,7 @@
   if (words.size() > 0 || !answers.isEmpty()) {
     Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(ConceptWord.class,"cw1");
     searchCriteria.add(Restrictions.in("locale",locales));
-    if (includeRetired == false) {
+    if (!includeRetired) {
       searchCriteria.createAlias("concept","concept");
       searchCriteria.add(Restrictions.eq("concept.retired",false));
     }

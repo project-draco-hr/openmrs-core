@@ -1,8 +1,8 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PersonAttributeType.class,"r");
-  if (exactName != null)   criteria.add(Expression.eq("name",exactName));
-  if (format != null)   criteria.add(Expression.eq("format",format));
-  if (foreignKey != null)   criteria.add(Expression.eq("foreignKey",foreignKey));
-  if (searchable != null)   criteria.add(Expression.eq("searchable",searchable));
+  if (exactName != null)   criteria.add(Restrictions.eq("name",exactName));
+  if (format != null)   criteria.add(Restrictions.eq("format",format));
+  if (foreignKey != null)   criteria.add(Restrictions.eq("foreignKey",foreignKey));
+  if (searchable != null)   criteria.add(Restrictions.eq("searchable",searchable));
   return criteria.list();
 }

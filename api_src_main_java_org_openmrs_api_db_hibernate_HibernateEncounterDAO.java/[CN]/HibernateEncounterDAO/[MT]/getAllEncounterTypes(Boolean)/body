@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(EncounterType.class);
   criteria.addOrder(Order.asc("name"));
-  if (includeRetired == false)   criteria.add(Expression.eq("retired",false));
+  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
   return criteria.list();
 }

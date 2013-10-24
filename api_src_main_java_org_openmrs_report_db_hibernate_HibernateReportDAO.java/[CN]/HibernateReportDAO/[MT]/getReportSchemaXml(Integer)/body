@@ -1,4 +1,4 @@
 {
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ReportSchemaXml.class,"rsx").add(Expression.eq("rsx.reportSchemaId",reportSchemaXmlId));
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ReportSchemaXml.class,"rsx").add(Restrictions.eq("rsx.reportSchemaId",reportSchemaXmlId));
   return (ReportSchemaXml)criteria.uniqueResult();
 }
