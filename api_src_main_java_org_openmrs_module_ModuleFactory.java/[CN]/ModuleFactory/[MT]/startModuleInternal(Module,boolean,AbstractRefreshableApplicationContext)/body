@@ -5,7 +5,9 @@
       String requireVersion=module.getRequireOpenmrsVersion();
       ModuleUtil.checkRequiredVersion(OpenmrsConstants.OPENMRS_VERSION_SHORT,requireVersion);
       if (!requiredModulesStarted(module)) {
-        throw new ModuleException("Module " + module.getName() + " cannot be added because it requires the following module(s): "+ OpenmrsUtil.join(getMissingRequiredModules(module),", ")+ ". Please add and start these modules first.");
+        String[] params={module.getName(),OpenmrsUtil.join(getMissingRequiredModules(module),", ")};
+        String message=Context.getMessageSourceService().getMessage("Module.error.moduleCannotBeAdded",params,Context.getLocale());
+        throw new ModuleException(message);
       }
       ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
       getModuleClassLoaderMap().put(module,moduleClassLoader);
