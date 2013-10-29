@@ -5,9 +5,7 @@
       String requireVersion=module.getRequireOpenmrsVersion();
       ModuleUtil.checkRequiredVersion(OpenmrsConstants.OPENMRS_VERSION_SHORT,requireVersion);
       if (!requiredModulesStarted(module)) {
-        String[] params={module.getName(),OpenmrsUtil.join(getMissingRequiredModules(module),", ")};
-        String message=Context.getMessageSourceService().getMessage("Module.error.moduleCannotBeInstalled",params,Context.getLocale());
-        throw new ModuleException(message);
+        throw new ModuleException(getFailedToStartModuleMessage(module));
       }
       ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
       getModuleClassLoaderMap().put(module,moduleClassLoader);

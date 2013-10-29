@@ -57,7 +57,7 @@
       leftoverModules.removeAll(modulesStartedInThisLoop);
     }
     if (leftoverModules.size() > 0)     for (    Module leftoverModule : leftoverModules) {
-      String message="Unable to start module '" + leftoverModule.getName() + "'.  All required modules are not available: "+ OpenmrsUtil.join(getMissingRequiredModules(leftoverModule),", ");
+      String message=getFailedToStartModuleMessage(leftoverModule);
       log.error(message);
       leftoverModule.setStartupErrorMessage(message);
       notifySuperUsersAboutModuleFailure(leftoverModule);
