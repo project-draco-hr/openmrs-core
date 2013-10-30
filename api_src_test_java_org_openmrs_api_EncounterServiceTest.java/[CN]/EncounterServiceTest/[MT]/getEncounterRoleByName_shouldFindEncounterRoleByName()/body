@@ -1,0 +1,11 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterRole encounterRole=new EncounterRole();
+  String name="surgeon role";
+  encounterRole.setDescription("The surgeon");
+  encounterRole.setName(name);
+  encounterRole=encounterService.saveEncounterRole(encounterRole);
+  EncounterRole retrievedEncounterRole=encounterService.getEncounterRoleByName(name);
+  assertNotNull("valid EncounterRole object should be returned",retrievedEncounterRole);
+  assertEquals(encounterRole.getUuid(),retrievedEncounterRole.getUuid());
+}
