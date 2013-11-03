@@ -1,0 +1,23 @@
+{
+  List<PatientIdentifierType> identifierTypes=Collections.emptyList();
+  List<Patient> patients=dao.getPatients("Oloo",null,identifierTypes,false,0,11,false);
+  Assert.assertEquals(1,patients.size());
+  Patient patient=patients.get(0);
+  patient.getNames().clear();
+  patient.getNames().addAll(new HashSet<PersonName>(){
+{
+      add(new PersonName(){
+{
+          setGivenName(null);
+          setFamilyName(null);
+          setMiddleName(null);
+        }
+      }
+);
+    }
+  }
+);
+  dao.savePatient(patient);
+  patients=dao.getPatients("Oloo",null,identifierTypes,false,0,11,false);
+  Assert.assertEquals(0,patients.size());
+}
