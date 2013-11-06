@@ -1,0 +1,8 @@
+{
+  Assert.assertNotNull(Context.getEncounterService().getEncounterType("Scheduled"));
+  EncounterType newEncounterType=new EncounterType();
+  newEncounterType.setName("Scheduled");
+  Errors errors=new BindException(newEncounterType,"encounterType");
+  new EncounterTypeValidator().validate(newEncounterType,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}
