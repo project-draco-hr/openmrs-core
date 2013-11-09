@@ -21,7 +21,7 @@
       }
  else {
         regex=replaceSearchString(regex,identifier);
-        conjuction.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+        conjuction.add(Restrictions.sqlRestriction("identifier regexp ?",regex,StandardBasicTypes.STRING));
       }
     }
   }
