@@ -39,8 +39,8 @@ catch (    Exception e) {
         throw new ContextAuthenticationException("Invalid number of connection attempts. Please try again later.");
       }
     }
-    String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
-    String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",Hibernate.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+    String passwordOnRecord=(String)session.createSQLQuery("select password from users where user_id = ?").addScalar("password",StandardBasicTypes.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
+    String saltOnRecord=(String)session.createSQLQuery("select salt from users where user_id = ?").addScalar("salt",StandardBasicTypes.STRING).setInteger(0,candidateUser.getUserId()).uniqueResult();
     if (passwordOnRecord != null && Security.hashMatches(passwordOnRecord,password + saltOnRecord)) {
       candidateUser.getAllRoles().size();
       candidateUser.getUserProperties().size();
