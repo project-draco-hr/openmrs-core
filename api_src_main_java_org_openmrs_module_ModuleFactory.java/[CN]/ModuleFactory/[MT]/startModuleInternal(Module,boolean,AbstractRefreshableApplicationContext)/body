@@ -51,6 +51,10 @@
       }
       runLiquibase(module);
       getStartedModulesMap().put(moduleId,module);
+      if (actualStartupOrder == null) {
+        actualStartupOrder=new LinkedHashSet<String>();
+      }
+      actualStartupOrder.add(moduleId);
       try {
         saveGlobalProperty(moduleId + ".started","true",getGlobalPropertyStartedDescription(moduleId));
         saveGlobalProperty(moduleId + ".mandatory",String.valueOf(module.isMandatory()),getGlobalPropertyMandatoryModuleDescription(moduleId));
