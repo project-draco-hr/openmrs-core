@@ -1,7 +1,12 @@
 {
   Module module=ModuleFactory.getModuleById(MODULE3_ID);
   ModuleFactory.stopModule(module);
+  WebModuleUtil.stopModule(module,((XmlWebApplicationContext)applicationContext).getServletContext());
+  ModuleFactory.unloadModule(module);
   init();
+  URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test3-1.0-SNAPSHOT.omod");
+  File file=new File(url.getFile());
+  module=ModuleFactory.loadModule(file);
   ModuleFactory.startModule(module);
   WebModuleUtil.startModule(module,((XmlWebApplicationContext)applicationContext).getServletContext(),false);
   assertTrue(module.isStarted());
