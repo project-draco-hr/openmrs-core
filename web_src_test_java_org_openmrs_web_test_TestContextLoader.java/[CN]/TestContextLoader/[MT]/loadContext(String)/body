@@ -1,3 +1,9 @@
 {
-  return new ClassPathXmlApplicationContext(locations);
+  XmlWebApplicationContext context=new XmlWebApplicationContext();
+  context.setConfigLocations(locations);
+  MockServletContext sc=new MockServletContext();
+  sc.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,context);
+  context.setServletContext(sc);
+  context.refresh();
+  return context;
 }
