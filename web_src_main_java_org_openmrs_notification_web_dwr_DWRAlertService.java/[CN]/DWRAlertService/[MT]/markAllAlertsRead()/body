@@ -1,0 +1,7 @@
+{
+  AlertService as=Context.getAlertService();
+  List<Alert> alerts=as.getAllAlerts();
+  for (  Alert alert : alerts) {
+    markAlertRead(alert.getId());
+  }
+}
