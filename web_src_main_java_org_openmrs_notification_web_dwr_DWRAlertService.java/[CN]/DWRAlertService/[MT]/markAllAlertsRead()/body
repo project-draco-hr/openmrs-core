@@ -3,6 +3,5 @@
   List<Alert> alerts=as.getAlertsByUser(Context.getAuthenticatedUser());
   for (  Alert alert : alerts) {
     markAlertRead(alert.getId());
-    Context.refreshAuthenticatedUser();
   }
 }
