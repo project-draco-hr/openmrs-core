@@ -1,0 +1,6 @@
+{
+  PatientIdentifier pi=new PatientIdentifier("1TU-8",new PatientIdentifierType(1),null);
+  PatientIdentifierType idType=pi.getIdentifierType();
+  idType.setLocationBehavior(PatientIdentifierType.LocationBehavior.NOT_USED);
+  PatientIdentifierValidator.validateIdentifier(pi);
+}
