@@ -1,0 +1,16 @@
+{
+  Module module=ModuleFactory.getModuleById(MODULE3_ID);
+  assertTrue(module.getVersion().equals("1.0-SNAPSHOT"));
+  URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test3-2.0-SNAPSHOT.omod");
+  module.setDownloadURL("file:" + url.getFile());
+  init();
+  createWebInfFolderIfNotExist();
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  HttpServletResponse response=new MockHttpServletResponse();
+  request.setParameter("action","Module.installUpdate");
+  request.setParameter("moduleId",MODULE3_ID);
+  ModuleListController controller=(ModuleListController)applicationContext.getBean("moduleListController");
+  controller.handleRequest(request,response);
+  assertTrue(request.getSession().getAttribute(WebConstants.OPENMRS_MSG_ATTR) == null);
+  assertTrue(request.getSession().getAttribute(WebConstants.OPENMRS_ERROR_ATTR) == null);
+}
