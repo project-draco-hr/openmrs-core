@@ -4,6 +4,7 @@
   WebModuleUtil.stopModule(module,((XmlWebApplicationContext)applicationContext).getServletContext());
   ModuleFactory.unloadModule(module);
   init();
+  createWebInfFolderIfNotExist();
   URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test3-1.0-SNAPSHOT.omod");
   File file=new File(url.getFile());
   module=ModuleFactory.loadModule(file);

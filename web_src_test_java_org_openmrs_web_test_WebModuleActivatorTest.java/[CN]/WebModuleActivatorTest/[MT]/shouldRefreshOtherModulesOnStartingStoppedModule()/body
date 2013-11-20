@@ -2,6 +2,7 @@
   Module module=ModuleFactory.getModuleById(MODULE3_ID);
   ModuleFactory.stopModule(module);
   init();
+  createWebInfFolderIfNotExist();
   ModuleFactory.startModule(module);
   WebModuleUtil.startModule(module,((XmlWebApplicationContext)applicationContext).getServletContext(),false);
   assertTrue(module.isStarted());
