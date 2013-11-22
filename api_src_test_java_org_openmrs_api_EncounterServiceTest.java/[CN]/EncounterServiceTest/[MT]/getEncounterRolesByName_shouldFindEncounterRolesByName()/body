@@ -1,0 +1,8 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  String name="surgeon";
+  List<EncounterRole> encounterRoles=encounterService.getEncounterRolesByName(name);
+  assertNotNull("valid EncounterROle object should be returned",encounterRoles);
+  assertEquals(encounterRoles.size(),1);
+  assertEquals(encounterRoles.get(0).getName(),name);
+}
