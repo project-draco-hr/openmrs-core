@@ -5,8 +5,8 @@
     errors.rejectValue("order","error.general");
   }
  else {
-    ValidationUtils.rejectIfEmpty(errors,"prn","error.null");
-    ValidationUtils.rejectIfEmpty(errors,"complex","error.null");
+    ValidationUtils.rejectIfEmpty(errors,"asNeeded","error.null");
+    ValidationUtils.rejectIfEmpty(errors,"dosingType","error.null");
     if (order.getDrug() != null)     ValidationUtils.rejectIfEmpty(errors,"drug.concept","error.null");
     if (!(order.getConcept() == null)) {
       if (!(order.getDrug() == null) && !(order.getDrug().getConcept().equals(order.getConcept()))) {

@@ -1,8 +1,8 @@
 {
   DrugOrder order=new DrugOrder();
-  order.setComplex(null);
+  order.setDosingType(null);
   order.setDrug(Context.getConceptService().getDrug(3));
   Errors errors=new BindException(order,"order");
   new DrugOrderValidator().validate(order,errors);
-  Assert.assertTrue(errors.hasFieldErrors("complex"));
+  Assert.assertTrue(errors.hasFieldErrors("dosingType"));
 }
