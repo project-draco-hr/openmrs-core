@@ -1,0 +1,15 @@
+{
+  init();
+  createWebInfFolderIfNotExist();
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  HttpServletResponse response=new MockHttpServletResponse();
+  URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test3-1.0-SNAPSHOT.omod");
+  request.setParameter("action","upload");
+  request.setParameter("download","true");
+  request.setParameter("downloadURL","file:" + url.getFile());
+  request.setParameter("moduleId",MODULE3_ID);
+  ModuleListController controller=(ModuleListController)applicationContext.getBean("moduleListController");
+  controller.handleRequest(request,response);
+  assertTrue("Module.loadedAndStarted".equals(request.getSession().getAttribute(WebConstants.OPENMRS_MSG_ATTR)));
+  assertTrue(request.getSession().getAttribute(WebConstants.OPENMRS_ERROR_ATTR) == null);
+}
