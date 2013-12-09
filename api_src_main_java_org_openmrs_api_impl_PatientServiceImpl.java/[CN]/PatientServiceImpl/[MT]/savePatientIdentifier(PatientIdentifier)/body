@@ -1,7 +1,7 @@
 {
   PatientIdentifierType.LocationBehavior locationBehavior=null;
   if (patientIdentifier != null) {
-    patientIdentifier.getIdentifierType().getLocationBehavior();
+    locationBehavior=patientIdentifier.getIdentifierType().getLocationBehavior();
   }
   if (patientIdentifier == null || patientIdentifier.getPatient() == null || patientIdentifier.getIdentifierType() == null || StringUtils.isBlank(patientIdentifier.getIdentifier()) || (locationBehavior == PatientIdentifierType.LocationBehavior.REQUIRED && patientIdentifier.getLocation() == null))   throw new APIException("PatientIdentifier argument or one of its required fields is null or invalid");
   if (patientIdentifier.getPatientIdentifierId() == null) {
