@@ -1,0 +1,8 @@
+{
+  if (orderNumberCounter < 0) {
+    Integer temp=dao.getHighestOrderId();
+    orderNumberCounter=temp == null ? 0 : temp;
+  }
+  orderNumberCounter+=1;
+  return "ORD-" + orderNumberCounter;
+}
