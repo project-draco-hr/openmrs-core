@@ -1,8 +1,12 @@
 {
-  if (orderNumberCounter < 0) {
-    Integer temp=dao.getHighestOrderId();
-    orderNumberCounter=temp == null ? 0 : temp;
+  GlobalProperty globalProperty=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER);
+  if (globalProperty == null) {
+    globalProperty=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER,"1","The next order number available for assignment");
   }
-  orderNumberCounter+=1;
-  return "ORD-" + orderNumberCounter;
+  String orderNumber="ORD-" + globalProperty.getValue();
+  globalProperty.setPropertyValue(String.valueOf(Long.parseLong(globalProperty.getPropertyValue()) + 1));
+  Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+  Context.getAdministrationService().saveGlobalProperty(globalProperty);
+  Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
+  return orderNumber;
 }
