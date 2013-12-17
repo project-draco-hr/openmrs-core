@@ -10,13 +10,4 @@
     }
   }
   OrderService os=Context.getOrderService();
-  List<Order> orders=os.getOrdersByPatient(patient);
-  if (CollectionUtils.isNotEmpty(orders)) {
-    for (    Order order : orders) {
-      if (!order.isVoided()) {
-        order.setDateVoided(patient.getDateVoided());
-        os.voidOrder(order,voidReason);
-      }
-    }
-  }
 }

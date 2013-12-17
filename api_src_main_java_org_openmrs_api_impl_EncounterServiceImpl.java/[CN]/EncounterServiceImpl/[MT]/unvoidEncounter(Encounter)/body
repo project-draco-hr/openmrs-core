@@ -7,7 +7,6 @@
   }
   OrderService orderService=Context.getOrderService();
   for (  Order o : encounter.getOrders()) {
-    if (voidReason.equals(o.getVoidReason()))     orderService.unvoidOrder(o);
   }
   encounter.setVoided(false);
   encounter.setVoidedBy(null);
