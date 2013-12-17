@@ -1,0 +1,6 @@
+{
+  adminService.saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GP_ORDER_ENTRY_UNITS_TO_CONCEPTS_MAPPINGS,"mg:5401,drug_order_quantity_units:5403,ounces:5402"));
+  Context.flushSession();
+  Integer conceptId=DatabaseUtil.getConceptIdForUnits(getConnection(),"drug_order_quantity_units");
+  Assert.assertThat(conceptId,Is.is(5403));
+}
