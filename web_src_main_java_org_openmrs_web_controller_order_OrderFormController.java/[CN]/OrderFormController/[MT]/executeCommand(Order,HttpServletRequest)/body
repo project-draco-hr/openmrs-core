@@ -1,0 +1,33 @@
+{
+  if (!Context.isAuthenticated()) {
+    return false;
+  }
+  OrderService orderService=Context.getOrderService();
+  try {
+    if (request.getParameter("saveOrder") != null) {
+      orderService.saveOrder(order);
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.saved");
+    }
+ else     if (request.getParameter("voidOrder") != null) {
+      orderService.voidOrder(order,order.getVoidReason());
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.voidedSuccessfully");
+    }
+ else     if (request.getParameter("unvoidOrder") != null) {
+      orderService.unvoidOrder(order);
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.unvoidedSuccessfully");
+    }
+ else     if (request.getParameter("discontinueOrder") != null) {
+      orderService.discontinueOrder(order,order.getDiscontinuedReason(),order.getDiscontinuedDate());
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.discontinuedSuccessfully");
+    }
+ else     if (request.getParameter("undiscontinueOrder") != null) {
+      orderService.undiscontinueOrder(order);
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.undiscontinuedSuccessfully");
+    }
+  }
+ catch (  APIException ex) {
+    request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,ex.getMessage());
+    return false;
+  }
+  return true;
+}

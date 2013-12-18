@@ -1,0 +1,10 @@
+{
+  String uuid="921de0a3-05c4-444a-be03-e01b4c4b9142";
+  Order order=Context.getOrderService().getOrderByUuid(uuid);
+  String discontinuedReasonNonCoded="Non coded discontinued reason";
+  order.setDiscontinuedReasonNonCoded(discontinuedReasonNonCoded);
+  OrderService orderService=Context.getOrderService();
+  orderService.saveOrder(order);
+  order=Context.getOrderService().getOrderByUuid(uuid);
+  Assert.assertEquals(discontinuedReasonNonCoded,order.getDiscontinuedReasonNonCoded());
+}

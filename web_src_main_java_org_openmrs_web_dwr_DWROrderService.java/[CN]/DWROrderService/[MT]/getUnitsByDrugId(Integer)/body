@@ -1,0 +1,9 @@
+{
+  String ret="";
+  Drug drug=Context.getConceptService().getDrug(drugId);
+  if (drug != null) {
+    String drugUnits=drug.getUnits();
+    if (drugUnits != null)     ret=drugUnits;
+  }
+  return ret;
+}

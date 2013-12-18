@@ -1,0 +1,12 @@
+{
+  String view;
+  Order order=(Order)obj;
+  boolean ok=executeCommand(order,request);
+  if (ok) {
+    view=getSuccessView();
+  }
+ else {
+    return showForm(request,response,errors);
+  }
+  return new ModelAndView(new RedirectView(view));
+}

@@ -1,0 +1,25 @@
+{
+  log.debug("beginning method");
+  boolean ret=true;
+  Date discDate=null;
+  if (discontinueDate != null) {
+    SimpleDateFormat sdf=Context.getDateFormat();
+    try {
+      discDate=sdf.parse(discontinueDate);
+    }
+ catch (    ParseException e) {
+      throw new DWRException(e.getMessage());
+    }
+  }
+  Patient p=Context.getPatientService().getPatient(patientId);
+  List<DrugOrder> currentOrders=Context.getOrderService().getDrugOrdersByPatient(p,OrderService.SHOW_CURRENT_AND_FUTURE);
+  for (  DrugOrder o : currentOrders) {
+    try {
+      Context.getOrderService().discontinueOrder(o,Context.getConceptService().getConcept(discontinueReason),discDate);
+    }
+ catch (    APIException e) {
+      throw new DWRException(e.getMessage());
+    }
+  }
+  return ret;
+}
