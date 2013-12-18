@@ -1,0 +1,6 @@
+{
+  if (order.getOrderId() == null && !StringUtils.hasText(order.getOrderNumber())) {
+    order.setOrderNumber(getNewOrderNumber());
+  }
+  return dao.saveOrder(order);
+}

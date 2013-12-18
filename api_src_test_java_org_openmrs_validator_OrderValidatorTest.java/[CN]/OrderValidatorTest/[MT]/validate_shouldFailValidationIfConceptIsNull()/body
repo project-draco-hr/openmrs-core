@@ -1,6 +1,7 @@
 {
   Order order=new Order();
   order.setPatient(Context.getPatientService().getPatient(2));
+  order.setOrderType(Context.getOrderService().getOrderType(1));
   Errors errors=new BindException(order,"order");
   new OrderValidator().validate(order,errors);
   Assert.assertFalse(errors.hasFieldErrors("discontinued"));

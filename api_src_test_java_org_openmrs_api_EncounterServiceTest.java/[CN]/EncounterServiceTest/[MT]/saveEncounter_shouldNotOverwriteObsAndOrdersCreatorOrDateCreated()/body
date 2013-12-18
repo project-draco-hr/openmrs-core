@@ -21,4 +21,7 @@
   Obs createdObs=Context.getObsService().getObs(obs.getObsId());
   assertEquals(date,createdObs.getDateCreated());
   assertEquals(creator,createdObs.getCreator());
+  Order createdOrder=Context.getOrderService().getOrder(order.getOrderId());
+  assertEquals(date,createdOrder.getDateCreated());
+  assertEquals(creator,createdOrder.getCreator());
 }

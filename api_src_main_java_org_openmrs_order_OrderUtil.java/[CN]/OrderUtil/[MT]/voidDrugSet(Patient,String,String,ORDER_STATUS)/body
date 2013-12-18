@@ -1,0 +1,17 @@
+{
+  if (log.isDebugEnabled())   log.debug("Voiding drug sets for patient: " + patient + " drugSetId: "+ drugSetId+ " reason: "+ voidReason+ " status: "+ status);
+  if (Context.isAuthenticated() == false)   throw new ContextAuthenticationException("Unable to void drugs when no one is logged in");
+  if (patient == null)   throw new APIException("Unable to void drugs without a patient being given");
+  if (drugSetId == null)   throw new APIException("Unable to void drugs without a drugSetId being given");
+  OrderService orderService=Context.getOrderService();
+  List<DrugOrder> currentOrders=orderService.getDrugOrdersByPatient(patient,status);
+  Map<String,List<DrugOrder>> ordersBySetId=getDrugSetsByDrugSetIdList(currentOrders,drugSetId,",");
+  if (ordersBySetId != null) {
+    List<DrugOrder> ordersToVoid=ordersBySetId.get(drugSetId);
+    if (ordersToVoid != null) {
+      for (      DrugOrder order : ordersToVoid) {
+        orderService.voidOrder(order,voidReason);
+      }
+    }
+  }
+}
