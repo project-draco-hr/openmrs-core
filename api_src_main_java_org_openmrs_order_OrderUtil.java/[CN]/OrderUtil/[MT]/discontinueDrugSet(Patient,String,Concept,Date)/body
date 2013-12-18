@@ -6,7 +6,7 @@
   if (patient == null)   throw new APIException("Unable to discontinue drugs without a patient being given");
   if (drugSetId == null)   throw new APIException("Unable to discontinue drugs without a drugSetId being given");
   OrderService orderService=Context.getOrderService();
-  List<DrugOrder> currentOrders=orderService.getDrugOrdersByPatient(patient,ORDER_STATUS.CURRENT);
+  List<DrugOrder> currentOrders=orderService.getDrugOrdersByPatient(patient);
   Map<String,List<DrugOrder>> ordersBySetId=getDrugSetsByDrugSetIdList(currentOrders,drugSetId,",");
   if (ordersBySetId != null) {
     List<DrugOrder> ordersToDiscontinue=ordersBySetId.get(drugSetId);
