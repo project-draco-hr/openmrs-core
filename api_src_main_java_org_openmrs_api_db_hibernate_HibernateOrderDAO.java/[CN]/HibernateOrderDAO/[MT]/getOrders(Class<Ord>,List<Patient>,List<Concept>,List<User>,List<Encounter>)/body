@@ -1,8 +1,8 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(orderClassType);
-  if (patients.size() > 0)   crit.add(Expression.in("patient",patients));
-  if (concepts.size() > 0)   crit.add(Expression.in("concept",concepts));
-  if (orderers.size() > 0)   crit.add(Expression.in("orderer",orderers));
-  if (encounters.size() > 0)   crit.add(Expression.in("encounter",encounters));
+  if (patients.size() > 0)   crit.add(Restrictions.in("patient",patients));
+  if (concepts.size() > 0)   crit.add(Restrictions.in("concept",concepts));
+  if (orderers.size() > 0)   crit.add(Restrictions.in("orderer",orderers));
+  if (encounters.size() > 0)   crit.add(Restrictions.in("encounter",encounters));
   return crit.list();
 }
