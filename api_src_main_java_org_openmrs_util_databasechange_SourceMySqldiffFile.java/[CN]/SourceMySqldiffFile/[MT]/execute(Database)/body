@@ -1,6 +1,16 @@
 {
   Properties runtimeProperties=Context.getRuntimeProperties();
-  if (runtimeProperties.size() == 0)   return;
+  String username=runtimeProperties.getProperty(CONNECTION_USERNAME);
+  String password=runtimeProperties.getProperty(CONNECTION_PASSWORD);
+  if (username == null) {
+    username=System.getProperty(CONNECTION_USERNAME);
+  }
+  if (password == null) {
+    password=System.getProperty(CONNECTION_PASSWORD);
+  }
+  if (username == null || password == null) {
+    return;
+  }
   DatabaseConnection connection=database.getConnection();
   File tmpOutputFile=null;
   try {
@@ -13,8 +23,6 @@
     throw new CustomChangeException("Unable to copy " + sqlFile + " to file: "+ tmpOutputFile.getAbsolutePath(),e);
   }
   List<String> commands=new ArrayList<String>();
-  String username=runtimeProperties.getProperty("connection.username");
-  String password=runtimeProperties.getProperty("connection.password");
   String databaseName;
   try {
     commands.add("mysql");
@@ -31,7 +39,7 @@
  catch (  DatabaseException e) {
     throw new CustomChangeException("Unable to generate command string for file: " + sqlFile,e);
   }
-  String errorCommand="\"mysql -u" + runtimeProperties.getProperty("connection.username") + " -p -e\"source "+ tmpOutputFile.getAbsolutePath()+ "\""+ databaseName;
+  String errorCommand="\"mysql -u" + username + " -p -e\"source "+ tmpOutputFile.getAbsolutePath()+ "\""+ databaseName;
   StringBuffer output=new StringBuffer();
   Integer exitValue=-1;
   try {
