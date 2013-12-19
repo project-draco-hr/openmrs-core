@@ -5,15 +5,14 @@
   }
   String gpTextValue=globalProperty.getPropertyValue();
   if (!StringUtils.hasText(gpTextValue)) {
-    gpTextValue=ORDER_NUMBER_START_VALUE;
+    throw new APIException("Invalid value for global property named: " + OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER);
   }
   Long gpNumericValue=null;
   try {
     gpNumericValue=Long.parseLong(gpTextValue);
   }
  catch (  NumberFormatException ex) {
-    gpNumericValue=1l;
-    gpTextValue=ORDER_NUMBER_START_VALUE;
+    throw new APIException("Invalid value for global property named: " + OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER);
   }
   String orderNumber=ORDER_NUMBER_PREFIX + gpTextValue;
   globalProperty.setPropertyValue(String.valueOf(gpNumericValue + 1));
