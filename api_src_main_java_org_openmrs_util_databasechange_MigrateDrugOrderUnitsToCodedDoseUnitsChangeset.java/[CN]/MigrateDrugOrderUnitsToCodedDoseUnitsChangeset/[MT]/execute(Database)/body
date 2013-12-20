@@ -1,0 +1,13 @@
+{
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
+  try {
+    List<String> uniqueUnits=getUniqueUnits(connection);
+    migrateUnitsToCodedValue(connection,uniqueUnits);
+  }
+ catch (  SQLException e) {
+    throw new CustomChangeException(e);
+  }
+catch (  DatabaseException e) {
+    throw new CustomChangeException(e);
+  }
+}
