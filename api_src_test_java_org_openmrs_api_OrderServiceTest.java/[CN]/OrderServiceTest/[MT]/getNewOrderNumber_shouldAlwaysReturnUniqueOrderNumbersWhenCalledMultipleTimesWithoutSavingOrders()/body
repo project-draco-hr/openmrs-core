@@ -7,9 +7,11 @@
       @Override public void run(){
         try {
           Context.openSession();
+          Context.addProxyPrivilege(PrivilegeConstants.ADD_ORDERS);
           uniqueOrderNumbers.add(((OrderNumberGenerator)Context.getOrderService()).getNewOrderNumber());
         }
   finally {
+          Context.removeProxyPrivilege(PrivilegeConstants.ADD_ORDERS);
           Context.closeSession();
         }
       }
