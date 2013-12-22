@@ -6,10 +6,13 @@
   MatchMode matchMode=MatchMode.START;
   if (searchOnPhrase)   matchMode=MatchMode.ANYWHERE;
   if (!StringUtils.isBlank(drugName)) {
-    searchCriteria.add(Restrictions.ilike("drug.name",drugName,matchMode));
     if (searchDrugConceptNames) {
       searchCriteria.createCriteria("concept","concept").createAlias("concept.names","names");
-      searchCriteria.add(Restrictions.ilike("names.name",drugName,matchMode));
+      searchCriteria.add(Restrictions.or(Restrictions.ilike("drug.name",drugName,matchMode),Restrictions.ilike("names.name",drugName,matchMode)));
+      searchCriteria.setProjection(Projections.distinct(Projections.property("drugId")));
+    }
+ else {
+      searchCriteria.add(Restrictions.ilike("drug.name",drugName,matchMode));
     }
   }
   if (start != null)   searchCriteria.setFirstResult(start);
