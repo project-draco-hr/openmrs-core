@@ -1,0 +1,56 @@
+{
+  List<ModuleConditionalResource> conditionalResources=new ArrayList<ModuleConditionalResource>();
+  NodeList parentConditionalResources=rootNode.getElementsByTagName("conditionalResources");
+  if (parentConditionalResources.getLength() == 0) {
+    return new ArrayList<ModuleConditionalResource>();
+  }
+ else   if (parentConditionalResources.getLength() > 1) {
+    throw new IllegalArgumentException("Found multiple conditionalResources tags. There can be only one.");
+  }
+  NodeList conditionalResourcesNode=parentConditionalResources.item(0).getChildNodes();
+  for (int i=0; i < conditionalResourcesNode.getLength(); i++) {
+    Node conditionalResourceNode=conditionalResourcesNode.item(i);
+    if ("#text".equals(conditionalResourceNode.getNodeName())) {
+      continue;
+    }
+    if (!"conditionalResource".equals(conditionalResourceNode.getNodeName())) {
+      throw new IllegalArgumentException("Found the " + conditionalResourceNode.getNodeName() + " node under conditionalResources. Only conditionalResource is allowed.");
+    }
+    NodeList resourceElements=conditionalResourceNode.getChildNodes();
+    ModuleConditionalResource resource=new ModuleConditionalResource();
+    conditionalResources.add(resource);
+    for (int j=0; j < resourceElements.getLength(); j++) {
+      Node resourceElement=resourceElements.item(j);
+      if ("path".equals(resourceElement.getNodeName())) {
+        if (StringUtils.isBlank(resourceElement.getTextContent())) {
+          throw new IllegalArgumentException("The path of a conditional resource must not be blank");
+        }
+        resource.setPath(resourceElement.getTextContent());
+      }
+ else       if ("openmrsVersion".equals(resourceElement.getNodeName())) {
+        resource.setOpenmrsVersion(resourceElement.getTextContent());
+      }
+ else       if ("modules".equals(resourceElement.getNodeName())) {
+        NodeList modulesNode=resourceElement.getChildNodes();
+        for (int k=0; k < modulesNode.getLength(); k++) {
+          Node moduleNode=modulesNode.item(k);
+          if ("module".equals(moduleNode.getNodeName())) {
+            NodeList moduleElements=moduleNode.getChildNodes();
+            ModuleConditionalResource.ModuleAndVersion module=new ModuleConditionalResource.ModuleAndVersion();
+            resource.getModules().add(module);
+            for (int m=0; m < moduleElements.getLength(); m++) {
+              Node moduleElement=moduleElements.item(m);
+              if ("moduleId".equals(moduleElement.getNodeName())) {
+                module.setModuleId(moduleElement.getTextContent());
+              }
+ else               if ("version".equals(moduleElement.getNodeName())) {
+                module.setVersion(moduleElement.getTextContent());
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return conditionalResources;
+}

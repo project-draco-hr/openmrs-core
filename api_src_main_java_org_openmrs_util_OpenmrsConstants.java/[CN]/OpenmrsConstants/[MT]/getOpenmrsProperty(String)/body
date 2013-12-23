@@ -1,0 +1,20 @@
+{
+  InputStream file=OpenmrsConstants.class.getClassLoader().getResourceAsStream("org/openmrs/api/openmrs.properties");
+  if (file == null) {
+    log.error("Unable to find the openmrs.properties file");
+    return null;
+  }
+  try {
+    Properties props=new Properties();
+    props.load(file);
+    file.close();
+    return props.getProperty(property);
+  }
+ catch (  IOException e) {
+    log.error("Unable to parse the openmrs.properties file",e);
+  }
+ finally {
+    IOUtils.closeQuietly(file);
+  }
+  return null;
+}
