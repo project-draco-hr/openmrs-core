@@ -4,7 +4,7 @@
   searchCriteria.setLockMode(LockMode.PESSIMISTIC_WRITE);
   GlobalProperty globalProperty=(GlobalProperty)searchCriteria.uniqueResult();
   if (globalProperty == null) {
-    globalProperty=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER_SEED,ORDER_NUMBER_START_VALUE,"The next order number available for assignment");
+    throw new APIException("Missing global property named: " + OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER_SEED);
   }
   String gpTextValue=globalProperty.getPropertyValue();
   if (StringUtils.isBlank(gpTextValue)) {
