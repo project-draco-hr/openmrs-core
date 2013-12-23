@@ -1,7 +1,0 @@
-{
-  Session session=sessionFactory.getCurrentSession();
-  session.beginTransaction();
-  Concept concept=(Concept)session.get(Concept.class,3);
-  List<Drug> drugList=dao.getDrugs("COUGH",concept,true,true,false,0,10);
-  Assert.assertEquals(2,drugList.size());
-}
