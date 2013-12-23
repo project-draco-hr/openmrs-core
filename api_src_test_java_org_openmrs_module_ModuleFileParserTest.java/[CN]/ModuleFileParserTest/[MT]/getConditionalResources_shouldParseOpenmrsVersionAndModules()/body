@@ -1,0 +1,20 @@
+{
+  String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><module configVersion=\"1.2\">" + "<conditionalResources><conditionalResource>" + "<path>/lib/htmlformentry-api-1.10*</path><openmrsVersion>1.10</openmrsVersion>"+ "</conditionalResource><conditionalResource>"+ "<path>/lib/metadatasharing-api-1.9*</path><openmrsVersion>1.9</openmrsVersion>"+ "<modules><module><moduleId>metadatamapping</moduleId><version>1.0</version></module>"+ "<module><moduleId>reporting</moduleId><version>2.0</version></module>"+ "</modules></conditionalResource></conditionalResources></module>";
+  Element documentElement=getRootElement(xml);
+  ModuleFileParser moduleFileParser=new ModuleFileParser();
+  List<ModuleConditionalResource> conditionalResources=moduleFileParser.getConditionalResources(documentElement);
+  ModuleConditionalResource htmlformentry=new ModuleConditionalResource();
+  htmlformentry.setPath("/lib/htmlformentry-api-1.10*");
+  htmlformentry.setOpenmrsVersion("1.10");
+  ModuleConditionalResource metadatasharing=new ModuleConditionalResource();
+  metadatasharing.setPath("/lib/metadatasharing-api-1.9*");
+  metadatasharing.setOpenmrsVersion("1.9");
+  ModuleConditionalResource.ModuleAndVersion metadatamapping=new ModuleConditionalResource.ModuleAndVersion();
+  metadatamapping.setModuleId("metadatamapping");
+  metadatamapping.setVersion("1.0");
+  ModuleConditionalResource.ModuleAndVersion reporting=new ModuleConditionalResource.ModuleAndVersion();
+  reporting.setModuleId("reporting");
+  reporting.setVersion("2.0");
+  metadatasharing.setModules(Arrays.asList(metadatamapping,reporting));
+  assertThat(conditionalResources,contains(htmlformentry,metadatasharing));
+}

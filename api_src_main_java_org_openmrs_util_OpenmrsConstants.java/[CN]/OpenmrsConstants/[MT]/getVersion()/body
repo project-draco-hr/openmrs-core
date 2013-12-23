@@ -1,13 +1,13 @@
 {
   Properties props=new Properties();
-  java.net.URL url=OpenmrsConstants.class.getClassLoader().getResource("META-INF/maven/org.openmrs.api/openmrs-api/pom.properties");
+  java.net.URL url=OpenmrsConstants.class.getClassLoader().getResource("openmrs.properties");
   if (url == null) {
-    log.error("Unable to find pom.properties file built by maven");
+    log.error("Unable to find openmrs.properties file built by maven");
     return null;
   }
   try {
     props.load(url.openStream());
-    return props.getProperty("version");
+    return props.getProperty("openmrs.version.short");
   }
  catch (  IOException e) {
     log.error("Unable to get pom.properties file into Properties object");
