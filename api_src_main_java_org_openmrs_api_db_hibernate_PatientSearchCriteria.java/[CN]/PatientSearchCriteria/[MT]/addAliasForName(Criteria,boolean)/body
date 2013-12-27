@@ -1,0 +1,8 @@
+{
+  criteria.createAlias("names","name");
+  if (orderByNames) {
+    criteria.addOrder(Order.asc("name.givenName"));
+    criteria.addOrder(Order.asc("name.middleName"));
+    criteria.addOrder(Order.asc("name.familyName"));
+  }
+}

@@ -1,4 +1,6 @@
 {
+  Assert.assertTrue(personAttributeHelper.personAttributeExists("Senior ring bearer"));
+  Assert.assertTrue(personAttributeHelper.personAttributeExists("Story teller"));
   List<Person> people=hibernatePersonDAO.getPeople("Story Bearer",false);
   logPeople(people);
   Assert.assertEquals(2,people.size());

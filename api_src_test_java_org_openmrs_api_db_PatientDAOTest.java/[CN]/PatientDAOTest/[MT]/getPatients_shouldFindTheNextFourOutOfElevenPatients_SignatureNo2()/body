@@ -1,0 +1,9 @@
+{
+  List<Patient> firstFourPatients=dao.getPatients("Saruman",0,4);
+  Assert.assertEquals(4,firstFourPatients.size());
+  List<Patient> nextFourPatients=dao.getPatients("Saruman",4,4);
+  Assert.assertEquals(4,nextFourPatients.size());
+  for (  Patient patient : nextFourPatients) {
+    Assert.assertFalse(firstFourPatients.contains(patient));
+  }
+}

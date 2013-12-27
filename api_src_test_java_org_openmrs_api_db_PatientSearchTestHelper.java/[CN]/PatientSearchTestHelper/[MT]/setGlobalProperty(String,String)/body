@@ -1,0 +1,6 @@
+{
+  String oldPropertyValue=administrationService.getGlobalProperty(propertyName);
+  administrationService.setGlobalProperty(propertyName,propertyValue);
+  Assert.assertEquals(propertyValue,administrationService.getGlobalProperty(propertyName));
+  return oldPropertyValue;
+}

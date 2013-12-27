@@ -2,5 +2,5 @@
   int count=0;
   if (StringUtils.isBlank(query))   return count;
   List<PatientIdentifierType> emptyList=new Vector<PatientIdentifierType>();
-  return OpenmrsUtil.convertToInteger(dao.getCountOfPatients(null,query,emptyList,false,true));
+  return OpenmrsUtil.convertToInteger(dao.getCountOfPatients(query));
 }

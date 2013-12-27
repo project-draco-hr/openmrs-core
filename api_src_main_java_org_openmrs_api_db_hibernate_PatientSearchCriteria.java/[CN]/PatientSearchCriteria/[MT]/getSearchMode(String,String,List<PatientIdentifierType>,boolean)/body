@@ -1,0 +1,12 @@
+{
+  if (searchOnNamesOrIdentifiers) {
+    return PatientSearchMode.PATIENT_SEARCH_BY_NAME_OR_IDENTIFIER;
+  }
+  if (!StringUtils.isBlank(name) && StringUtils.isBlank(identifier) && CollectionUtils.isEmpty(identifierTypes)) {
+    return PatientSearchMode.PATIENT_SEARCH_BY_NAME;
+  }
+  if (StringUtils.isBlank(name) && !(StringUtils.isBlank(identifier) && CollectionUtils.isEmpty(identifierTypes))) {
+    return PatientSearchMode.PATIENT_SEARCH_BY_IDENTIFIER;
+  }
+  return PatientSearchMode.PATIENT_SEARCH_BY_NAME_AND_IDENTIFIER;
+}

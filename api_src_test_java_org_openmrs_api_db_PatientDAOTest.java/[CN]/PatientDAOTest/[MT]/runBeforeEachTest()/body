@@ -1,4 +1,9 @@
 {
+  executeDataSet(PEOPLE_FROM_THE_SHIRE_XML);
+  executeDataSet(PATIENTS_FROM_THE_SHIRE_XML);
   if (dao == null)   dao=(PatientDAO)applicationContext.getBean("patientDAO");
   if (pService == null)   pService=Context.getPatientService();
+  SessionFactory sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
+  personAttributeHelper=new PersonAttributeHelper(sessionFactory);
+  patientSearchTestHelper=new PatientSearchTestHelper(Context.getAdministrationService());
 }

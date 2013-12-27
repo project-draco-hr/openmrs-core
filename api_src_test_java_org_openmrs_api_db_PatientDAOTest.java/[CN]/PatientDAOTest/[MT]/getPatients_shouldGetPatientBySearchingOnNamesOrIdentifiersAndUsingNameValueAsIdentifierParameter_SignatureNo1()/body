@@ -1,0 +1,5 @@
+{
+  List<Patient> patients=dao.getPatients(null,"Bilbo Odilon",null,false,0,11,true);
+  Assert.assertEquals(1,patients.size());
+  Assert.assertEquals("Bilbo Odilon",patients.get(0).getGivenName());
+}

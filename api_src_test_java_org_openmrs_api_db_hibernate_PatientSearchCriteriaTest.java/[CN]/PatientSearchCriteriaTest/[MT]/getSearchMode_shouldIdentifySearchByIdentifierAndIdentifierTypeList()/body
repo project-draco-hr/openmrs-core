@@ -1,0 +1,7 @@
+{
+  List<PatientIdentifierType> patientIdentifierTypeList=new ArrayList<PatientIdentifierType>();
+  patientIdentifierTypeList.add(new PatientIdentifierType());
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_IDENTIFIER,patientSearchCriteria.getSearchMode(null,"identifier",patientIdentifierTypeList,false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_IDENTIFIER,patientSearchCriteria.getSearchMode("","identifier",patientIdentifierTypeList,false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_IDENTIFIER,patientSearchCriteria.getSearchMode("  \n\t","identifier",patientIdentifierTypeList,false));
+}
