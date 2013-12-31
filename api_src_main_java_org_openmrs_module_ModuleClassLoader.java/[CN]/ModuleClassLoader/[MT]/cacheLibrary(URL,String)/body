@@ -1,7 +1,14 @@
 {
   File cacheFolder=OpenmrsClassLoader.getLibCacheFolder();
-  if (libraryCache.containsKey(libUrl)) {
-    return libraryCache.get(libUrl);
+  URI libUri;
+  try {
+    libUri=libUrl.toURI();
+  }
+ catch (  URISyntaxException e) {
+    throw new IllegalArgumentException(libUrl.getPath() + " is not a valid URI",e);
+  }
+  if (libraryCache.containsKey(libUri)) {
+    return libraryCache.get(libUri);
   }
   File result=null;
   try {
@@ -40,14 +47,14 @@
  catch (      Exception e) {
       }
     }
-    libraryCache.put(libUrl,result);
+    libraryCache.put(libUri,result);
     if (log.isDebugEnabled()) {
       log.debug("library " + libname + " successfully cached from URL "+ libUrl+ " and saved to local file "+ result);
     }
   }
  catch (  IOException ioe) {
     log.error("can't cache library " + libname + " from URL "+ libUrl,ioe);
-    libraryCache.put(libUrl,null);
+    libraryCache.put(libUri,null);
     result=null;
   }
   return result;
