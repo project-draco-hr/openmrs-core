@@ -4,11 +4,10 @@
   Program program=Context.getProgramWorkflowService().getProgramByUuid(uuid);
   Program retireProgram=pws.retireProgram(program,reason);
   assertTrue(retireProgram.getRetired());
+  assertEquals(reason,retireProgram.getRetireReason());
   for (  ProgramWorkflow programWorkflow : program.getAllWorkflows()) {
-    System.out.println("pwf " + programWorkflow.getName());
     assertTrue(programWorkflow.getRetired());
     for (    ProgramWorkflowState programWorkflowState : programWorkflow.getStates()) {
-      System.out.println("pwfs " + programWorkflowState.getName());
       assertTrue(programWorkflowState.getRetired());
     }
   }

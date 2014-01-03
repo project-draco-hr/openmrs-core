@@ -1,3 +1,10 @@
 {
-  return retireProgram(program,null);
+  program.setRetired(true);
+  for (  ProgramWorkflow workflow : program.getWorkflows()) {
+    workflow.setRetired(true);
+    for (    ProgramWorkflowState state : workflow.getStates()) {
+      state.setRetired(true);
+    }
+  }
+  return saveProgram(program);
 }
