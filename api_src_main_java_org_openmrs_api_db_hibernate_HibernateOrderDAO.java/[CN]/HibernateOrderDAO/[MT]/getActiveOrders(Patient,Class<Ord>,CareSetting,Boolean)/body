@@ -1,0 +1,10 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(orderClass);
+  crit.add(Restrictions.eq("patient",patient));
+  crit.add(Restrictions.eq("careSetting",careSetting));
+  crit.add(Restrictions.ne("action",Action.DISCONTINUE));
+  crit.add(Restrictions.isNull("dateStopped"));
+  crit.add(Restrictions.isNull("autoExpireDate"));
+  if (!includeVoided)   crit.add(Restrictions.eq("voided",includeVoided));
+  return crit.list();
+}
