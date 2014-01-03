@@ -17,7 +17,7 @@
   field.set(order,"ORD-1");
   order.setDateCreated(date);
   order.setCreator(creator);
-  order.setCareSetting(CareSetting.OUTPATIENT);
+  order.setCareSetting(Context.getOrderService().getCareSetting(1));
   encounter.addOrder(order);
   assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
   encounterService.saveEncounter(encounter);
