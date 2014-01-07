@@ -1,0 +1,45 @@
+{
+  PreparedStatement insertOrderFrequencyStatement=null;
+  Boolean autoCommit=null;
+  try {
+    autoCommit=connection.getAutoCommit();
+    connection.setAutoCommit(false);
+    insertOrderFrequencyStatement=connection.prepareStatement("insert into order_frequency " + "(concept_id, creator, date_created, retired, uuid) values (?, ?, ?, ?, ?)");
+    Date date=new Date(new java.util.Date().getTime());
+    for (    String frequency : uniqueFrequencies) {
+      Integer conceptIdForFrequency=DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),frequency);
+      if (conceptIdForFrequency == null) {
+        throw new CustomChangeException("No concept mapping found for frequency: " + frequency);
+      }
+      Integer orderFrequencyId=DatabaseUtil.getOrderFrequencyIdForConceptId(connection.getUnderlyingConnection(),conceptIdForFrequency);
+      if (orderFrequencyId != null) {
+        continue;
+      }
+      String uuid=DatabaseUtil.getConceptUuid(connection.getUnderlyingConnection(),conceptIdForFrequency);
+      uuid+="-6925ebb0-7c69-11e3-baa7-0800200c9a66";
+      uuid=UUID.nameUUIDFromBytes(uuid.getBytes()).toString();
+      insertOrderFrequencyStatement.setInt(1,conceptIdForFrequency);
+      insertOrderFrequencyStatement.setInt(2,1);
+      insertOrderFrequencyStatement.setDate(3,date);
+      insertOrderFrequencyStatement.setBoolean(4,false);
+      insertOrderFrequencyStatement.setString(5,uuid);
+      insertOrderFrequencyStatement.executeUpdate();
+      insertOrderFrequencyStatement.clearParameters();
+    }
+    connection.commit();
+  }
+ catch (  DatabaseException e) {
+    handleError(connection,e);
+  }
+catch (  SQLException e) {
+    handleError(connection,e);
+  }
+ finally {
+    if (autoCommit != null) {
+      connection.setAutoCommit(autoCommit);
+    }
+    if (insertOrderFrequencyStatement != null) {
+      insertOrderFrequencyStatement.close();
+    }
+  }
+}

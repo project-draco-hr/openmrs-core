@@ -1,10 +1,10 @@
 {
   List<Concept> allConcepts=conceptService.getAllConcepts("dateCreated",true,true);
-  assertEquals(28,allConcepts.size());
+  assertEquals(29,allConcepts.size());
   assertEquals(88,allConcepts.get(0).getConceptId().intValue());
   assertEquals(23,allConcepts.get(allConcepts.size() - 1).getConceptId().intValue());
   allConcepts=conceptService.getAllConcepts("dateCreated",false,true);
-  assertEquals(28,allConcepts.size());
+  assertEquals(29,allConcepts.size());
   assertEquals(23,allConcepts.get(0).getConceptId().intValue());
   assertEquals(88,allConcepts.get(allConcepts.size() - 1).getConceptId().intValue());
 }

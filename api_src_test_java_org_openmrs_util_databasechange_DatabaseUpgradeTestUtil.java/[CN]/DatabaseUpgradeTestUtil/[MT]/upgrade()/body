@@ -1,0 +1,10 @@
+{
+  try {
+    Liquibase liquibase=new Liquibase("liquibase-update-to-latest.xml",new ClassLoaderResourceAccessor(getClass().getClassLoader()),liqubaseConnection);
+    liquibase.update(null);
+    connection.commit();
+  }
+ catch (  LiquibaseException e) {
+    throw new IOException(e);
+  }
+}

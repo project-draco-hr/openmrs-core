@@ -1,0 +1,22 @@
+{
+  InputStream inputStream=getClass().getResourceAsStream(path);
+  ReplacementDataSet replacementDataSet=null;
+  try {
+    replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(new InputStreamReader(inputStream),false,true,false));
+    inputStream.close();
+  }
+ catch (  DataSetException e) {
+    throw new IOException(e);
+  }
+ finally {
+    IOUtils.closeQuietly(inputStream);
+  }
+  replacementDataSet.addReplacementObject("[NULL]",null);
+  try {
+    DatabaseOperation.REFRESH.execute(dbUnitConnection,replacementDataSet);
+    connection.commit();
+  }
+ catch (  DatabaseUnitException e) {
+    throw new IOException(e);
+  }
+}

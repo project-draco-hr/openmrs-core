@@ -1,0 +1,38 @@
+{
+  PreparedStatement updateDrugOrderStatement=null;
+  Boolean autoCommit=null;
+  try {
+    autoCommit=connection.getAutoCommit();
+    connection.setAutoCommit(false);
+    updateDrugOrderStatement=connection.prepareStatement("update drug_order set frequency = ? where frequency_text = ?");
+    for (    String frequency : uniqueFrequencies) {
+      Integer conceptIdForFrequency=DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),frequency);
+      if (conceptIdForFrequency == null) {
+        throw new CustomChangeException("No concept mapping found for frequency: " + frequency);
+      }
+      Integer orderFrequencyId=DatabaseUtil.getOrderFrequencyIdForConceptId(connection.getUnderlyingConnection(),conceptIdForFrequency);
+      if (orderFrequencyId == null) {
+        throw new CustomChangeException("No order frequency found for concept " + conceptIdForFrequency);
+      }
+      updateDrugOrderStatement.setInt(1,orderFrequencyId);
+      updateDrugOrderStatement.setString(2,frequency);
+      updateDrugOrderStatement.executeUpdate();
+      updateDrugOrderStatement.clearParameters();
+    }
+    connection.commit();
+  }
+ catch (  DatabaseException e) {
+    handleError(connection,e);
+  }
+catch (  SQLException e) {
+    handleError(connection,e);
+  }
+ finally {
+    if (autoCommit != null) {
+      connection.setAutoCommit(autoCommit);
+    }
+    if (updateDrugOrderStatement != null) {
+      updateDrugOrderStatement.close();
+    }
+  }
+}
