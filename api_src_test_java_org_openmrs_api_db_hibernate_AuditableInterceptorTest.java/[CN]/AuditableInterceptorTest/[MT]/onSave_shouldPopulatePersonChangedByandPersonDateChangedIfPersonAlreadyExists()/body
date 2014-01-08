@@ -1,0 +1,10 @@
+{
+  Person person=Context.getPersonService().getPerson(1);
+  Assert.assertNull(person.getPersonChangedBy());
+  Assert.assertNull(person.getPersonDateChanged());
+  person.setGender("F");
+  Context.flushSession();
+  Context.getPersonService().savePerson(person);
+  Assert.assertNotNull(person.getPersonChangedBy());
+  Assert.assertNotNull(person.getPersonDateChanged());
+}

@@ -1,0 +1,6 @@
+{
+  Person person=createPersonWithNameAndAddress();
+  Context.getPersonService().savePerson(person);
+  Assert.assertNotNull(person.getDateCreated());
+  Assert.assertNotNull(person.getPersonDateCreated());
+}

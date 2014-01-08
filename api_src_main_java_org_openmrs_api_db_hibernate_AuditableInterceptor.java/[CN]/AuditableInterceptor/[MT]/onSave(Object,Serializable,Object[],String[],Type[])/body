@@ -1,3 +1,9 @@
 {
-  return setCreatorAndDateCreatedIfNull(entity,currentState,propertyNames);
+  boolean objectWasChanged;
+  boolean personObjectWasChanged=false;
+  if (entity instanceof Person) {
+    personObjectWasChanged=setPersonCreatorAndDateCreatedIfNull(entity,entityCurrentState,propertyNames);
+  }
+  objectWasChanged=setCreatorAndDateCreatedIfNull(entity,entityCurrentState,propertyNames);
+  return objectWasChanged || personObjectWasChanged;
 }
