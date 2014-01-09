@@ -1,0 +1,13 @@
+{
+  LocationService ls=Context.getLocationService();
+  Location location=ls.getLocation(1);
+  Assert.assertNotNull(location);
+  Assert.assertNull(location.getDateChanged());
+  Assert.assertNull(location.getChangedBy());
+  location.setName("edited name");
+  ls.saveLocation(location);
+  Location editedLocation=Context.getLocationService().saveLocation(location);
+  Context.flushSession();
+  Assert.assertNotNull(editedLocation.getDateChanged());
+  Assert.assertNotNull(editedLocation.getChangedBy());
+}
