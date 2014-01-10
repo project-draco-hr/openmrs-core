@@ -1,0 +1,7 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinuedOrder.xml");
+  OrderService orderService=Context.getOrderService();
+  Order discontinueOrder=orderService.getOrder(26);
+  orderService.discontinueOrder(discontinueOrder,"Test if I can discontinue this",null);
+}

@@ -1,0 +1,6 @@
+{
+  discontinue(orderToDiscontinue,discontinueDate);
+  Order newOrder=orderToDiscontinue.cloneForDiscontinuing();
+  newOrder.setDiscontinuedReasonNonCoded(reasonNonCoded);
+  return saveOrder(newOrder);
+}

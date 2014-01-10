@@ -1,5 +1,6 @@
 {
   if (order.getOrderId() == null) {
+    discontinueExistingOrdersIfRequired(order);
     try {
       Field field=Order.class.getDeclaredField("orderNumber");
       field.setAccessible(true);

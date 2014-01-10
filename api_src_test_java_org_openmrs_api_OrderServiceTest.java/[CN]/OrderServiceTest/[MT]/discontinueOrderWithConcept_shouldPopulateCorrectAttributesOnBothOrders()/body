@@ -1,0 +1,15 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueReason.xml");
+  OrderService orderService=Context.getOrderService();
+  Order order=orderService.getOrderByOrderNumber("111");
+  Date discontinueDate=new Date();
+  Concept concept=Context.getConceptService().getConcept(1);
+  Order discontinueOrder=orderService.discontinueOrder(order,concept,discontinueDate);
+  Assert.assertEquals(order.getDateStopped(),discontinueDate);
+  Assert.assertNotNull(discontinueOrder);
+  Assert.assertNotNull(discontinueOrder.getId());
+  Assert.assertEquals(discontinueOrder.getAction(),Action.DISCONTINUE);
+  Assert.assertEquals(discontinueOrder.getDiscontinuedReason(),concept);
+  Assert.assertEquals(discontinueOrder.getPreviousOrder(),order);
+}
