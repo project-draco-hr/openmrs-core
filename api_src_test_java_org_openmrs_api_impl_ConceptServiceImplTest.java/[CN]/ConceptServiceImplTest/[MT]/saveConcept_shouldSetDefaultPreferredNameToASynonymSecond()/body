@@ -10,20 +10,15 @@
   ConceptName indexTerm=new ConceptName("indexTerm",loc);
   indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
   Concept c=new Concept();
-  java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
+  HashSet<ConceptName> allNames=new HashSet<ConceptName>(4);
   allNames.add(indexTerm);
   allNames.add(fullySpecifiedName);
   allNames.add(synonym);
   c.setNames(allNames);
-  Assert.assertNull("check test assumption - the API hasn't promoted a name to a fully specified name",c.getFullySpecifiedName(loc));
-  try {
-    Context.getConceptService().saveConcept(c);
-  }
- catch (  org.openmrs.api.APIException e) {
-    ;
-  }
-  Assert.assertNotNull("there's a preferred name",c.getPreferredName(loc));
-  Assert.assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
-  Assert.assertEquals("name matches",c.getPreferredName(loc).getName(),synonym.getName());
-  Assert.assertEquals("fully specified name unchanged",c.getPreferredName(otherLocale).getName(),fullySpecifiedName.getName());
+  assertNull("check test assumption - the API hasn't promoted a name to a fully specified name",c.getFullySpecifiedName(loc));
+  Context.getConceptService().saveConcept(c);
+  assertNotNull("there's a preferred name",c.getPreferredName(loc));
+  assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
+  assertEquals("name matches",c.getPreferredName(loc).getName(),synonym.getName());
+  assertEquals("fully specified name unchanged",c.getPreferredName(otherLocale).getName(),fullySpecifiedName.getName());
 }

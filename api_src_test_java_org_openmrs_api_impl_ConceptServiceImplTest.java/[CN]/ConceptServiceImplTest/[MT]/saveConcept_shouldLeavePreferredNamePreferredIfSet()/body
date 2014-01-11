@@ -10,19 +10,16 @@
   indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
   indexTerm.setLocalePreferred(true);
   Concept c=new Concept();
-  java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
-  allNames.add(fullySpecifiedName);
-  allNames.add(synonym);
-  allNames.add(indexTerm);
-  allNames.add(shortName);
-  c.setNames(allNames);
+  c.addName(fullySpecifiedName);
+  c.addName(synonym);
+  c.addName(indexTerm);
+  c.addName(shortName);
   try {
     Context.getConceptService().saveConcept(c);
   }
  catch (  org.openmrs.api.APIException e) {
-    ;
   }
-  Assert.assertNotNull("there's a preferred name",c.getPreferredName(loc));
-  Assert.assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
-  Assert.assertEquals("name matches",c.getPreferredName(loc).getName(),indexTerm.getName());
+  assertNotNull("there's a preferred name",c.getPreferredName(loc));
+  assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
+  assertEquals("name matches",c.getPreferredName(loc).getName(),indexTerm.getName());
 }

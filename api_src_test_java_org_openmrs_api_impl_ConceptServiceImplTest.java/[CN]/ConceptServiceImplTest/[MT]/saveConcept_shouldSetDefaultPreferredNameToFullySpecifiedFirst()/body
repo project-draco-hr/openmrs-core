@@ -9,16 +9,14 @@
   ConceptName indexTerm=new ConceptName("indexTerm",loc);
   indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
   Concept c=new Concept();
-  java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
-  allNames.add(fullySpecifiedName);
-  allNames.add(synonym);
-  allNames.add(indexTerm);
-  allNames.add(shortName);
-  c.setNames(allNames);
+  c.addName(fullySpecifiedName);
+  c.addName(synonym);
+  c.addName(indexTerm);
+  c.addName(shortName);
   Assert.assertFalse("check test assumption - the API didn't automatically set preferred vlag",c.getFullySpecifiedName(loc).isPreferred());
-  Assert.assertNotNull("Concept is legit, save succeeds",Context.getConceptService().saveConcept(c));
+  assertNotNull("Concept is legit, save succeeds",Context.getConceptService().saveConcept(c));
   Context.getConceptService().saveConcept(c);
-  Assert.assertNotNull("there's a preferred name",c.getPreferredName(loc));
-  Assert.assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
-  Assert.assertEquals("name matches",c.getPreferredName(loc).getName(),fullySpecifiedName.getName());
+  assertNotNull("there's a preferred name",c.getPreferredName(loc));
+  assertTrue("name was explicitly marked preferred",c.getPreferredName(loc).isPreferred());
+  assertEquals("name matches",c.getPreferredName(loc).getName(),fullySpecifiedName.getName());
 }

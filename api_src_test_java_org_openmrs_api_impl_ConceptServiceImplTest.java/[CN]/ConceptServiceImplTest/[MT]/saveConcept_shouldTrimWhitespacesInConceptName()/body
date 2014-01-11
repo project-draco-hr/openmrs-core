@@ -1,0 +1,8 @@
+{
+  Concept concept=new Concept();
+  String nameWithSpaces="  jwm  ";
+  concept.addName(new ConceptName(nameWithSpaces,new Locale("en","US")));
+  Context.getConceptService().saveConcept(concept);
+  Assert.assertNotEquals(concept.getName().getName(),nameWithSpaces);
+  assertEquals(concept.getName().getName(),"jwm");
+}

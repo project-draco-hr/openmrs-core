@@ -3,8 +3,8 @@
   ConceptName fullySpecifiedName=new ConceptName("requires one name min",new Locale("fr","CA"));
   c.addName(fullySpecifiedName);
   Concept savedC=Context.getConceptService().saveConcept(c);
-  Assert.assertNotNull(savedC);
+  assertNotNull(savedC);
   Concept updatedC=Context.getConceptService().saveConcept(c);
-  Assert.assertNotNull(updatedC);
-  Assert.assertEquals(updatedC.getConceptId(),savedC.getConceptId());
+  assertNotNull(updatedC);
+  assertEquals(updatedC.getConceptId(),savedC.getConceptId());
 }

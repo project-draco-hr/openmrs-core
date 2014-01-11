@@ -5,7 +5,7 @@
   ConceptName indexTerm=new ConceptName("indexTerm",loc);
   indexTerm.setConceptNameType(ConceptNameType.INDEX_TERM);
   Concept c=new Concept();
-  java.util.HashSet<ConceptName> allNames=new java.util.HashSet<ConceptName>(4);
+  HashSet<ConceptName> allNames=new HashSet<ConceptName>(4);
   allNames.add(indexTerm);
   allNames.add(shortName);
   c.setNames(allNames);
@@ -13,9 +13,8 @@
     Context.getConceptService().saveConcept(c);
   }
  catch (  org.openmrs.api.APIException e) {
-    ;
   }
-  Assert.assertNull("there's a preferred name",c.getPreferredName(loc));
-  Assert.assertFalse("name was explicitly marked preferred",shortName.isPreferred());
-  Assert.assertFalse("name was explicitly marked preferred",indexTerm.isPreferred());
+  assertNull("there's a preferred name",c.getPreferredName(loc));
+  assertFalse("name was explicitly marked preferred",shortName.isPreferred());
+  assertFalse("name was explicitly marked preferred",indexTerm.isPreferred());
 }
