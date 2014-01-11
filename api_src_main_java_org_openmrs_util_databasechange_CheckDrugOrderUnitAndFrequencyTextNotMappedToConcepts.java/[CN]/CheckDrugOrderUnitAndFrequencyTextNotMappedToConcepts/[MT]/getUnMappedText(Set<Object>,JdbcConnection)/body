@@ -1,0 +1,14 @@
+{
+  Set<String> unmappedText=new HashSet<String>(textList.size());
+  for (  Object text : textList) {
+    try {
+      if (DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),text.toString()) != null) {
+        continue;
+      }
+    }
+ catch (    Exception e) {
+    }
+    unmappedText.add(text.toString());
+  }
+  return unmappedText;
+}

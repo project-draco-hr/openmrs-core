@@ -1,0 +1,26 @@
+{
+  Set<Object> uniqueValues=new HashSet<Object>();
+  PreparedStatement pstmt=null;
+  final String alias="unique_values";
+  try {
+    pstmt=connection.prepareStatement("SELECT DISTINCT " + columnName + " AS "+ alias+ " FROM "+ tableName+ " WHERE "+ columnName+ " IS NOT NULL");
+    ResultSet resultSet=pstmt.executeQuery();
+    while (resultSet.next()) {
+      Object value=resultSet.getObject(alias);
+      if (value != null) {
+        uniqueValues.add(value);
+      }
+    }
+  }
+  finally {
+    if (pstmt != null) {
+      try {
+        pstmt.close();
+      }
+ catch (      SQLException e) {
+        log.warn("Failed to close the PreparedStatement object");
+      }
+    }
+  }
+  return uniqueValues;
+}
