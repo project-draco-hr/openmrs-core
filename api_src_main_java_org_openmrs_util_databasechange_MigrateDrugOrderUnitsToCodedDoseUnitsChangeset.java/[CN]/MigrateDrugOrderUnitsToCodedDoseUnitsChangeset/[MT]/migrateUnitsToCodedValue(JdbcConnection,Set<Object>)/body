@@ -5,7 +5,8 @@
     autoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
     updateDrugOrderStatement=connection.prepareStatement("update drug_order set dose_units = ? where units = ?");
-    for (    String unit : uniqueUnits) {
+    for (    Object unitObj : uniqueUnits) {
+      String unit=unitObj.toString();
       Integer conceptIdForUnit=DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),unit);
       if (conceptIdForUnit == null) {
         throw new CustomChangeException("No concept mapping found for unit: " + unit);

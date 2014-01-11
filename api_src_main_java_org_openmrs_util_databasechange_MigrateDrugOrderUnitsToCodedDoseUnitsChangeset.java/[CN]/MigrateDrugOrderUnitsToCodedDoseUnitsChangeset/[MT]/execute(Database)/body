@@ -1,7 +1,7 @@
 {
   JdbcConnection connection=(JdbcConnection)database.getConnection();
   try {
-    List<String> uniqueUnits=getUniqueUnits(connection);
+    Set<Object> uniqueUnits=DatabaseUtil.getUniqueNonNullColumnValues("units","drug_order",connection);
     migrateUnitsToCodedValue(connection,uniqueUnits);
   }
  catch (  SQLException e) {
