@@ -6,7 +6,7 @@
   if (published != null)   crit.add(Restrictions.eq("published",published));
   if (!encounterTypes.isEmpty())   crit.add(Restrictions.in("encounterType",encounterTypes));
   if (retired != null)   crit.add(Restrictions.eq("retired",retired));
-  if (!containingAnyFormField.isEmpty())   crit.add(Restrictions.in("formField",containingAnyFormField));
+  if (!containingAnyFormField.isEmpty())   crit.add(Restrictions.in("formFields",containingAnyFormField));
   if (!containingAllFormFields.isEmpty()) {
     Set<Integer> allFormFieldIds=new HashSet<Integer>();
     for (    FormField ff : containingAllFormFields) {
