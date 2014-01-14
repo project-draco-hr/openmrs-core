@@ -4,5 +4,5 @@
   patientIdentifierType.setRetiredBy(Context.getAuthenticatedUser());
   patientIdentifierType.setDateRetired(new Date());
   patientIdentifierType.setRetireReason(reason);
-  return savePatientIdentifierType(patientIdentifierType);
+  return Context.getPatientService().savePatientIdentifierType(patientIdentifierType);
 }

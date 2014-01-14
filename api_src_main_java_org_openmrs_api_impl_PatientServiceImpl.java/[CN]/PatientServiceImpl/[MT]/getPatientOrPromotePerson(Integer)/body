@@ -1,7 +1,7 @@
 {
   Patient patient=null;
   try {
-    patient=getPatient(patientOrPersonId);
+    patient=Context.getPatientService().getPatient(patientOrPersonId);
   }
  catch (  ClassCastException ex) {
   }
