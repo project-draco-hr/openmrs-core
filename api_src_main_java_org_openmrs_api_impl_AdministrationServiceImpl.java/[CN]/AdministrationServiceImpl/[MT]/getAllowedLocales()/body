@@ -1,7 +1,7 @@
 {
   if (globalLocaleList == null) {
     globalLocaleList=new GlobalLocaleList();
-    addGlobalPropertyListener(globalLocaleList);
+    Context.getAdministrationService().addGlobalPropertyListener(globalLocaleList);
   }
   Set<Locale> allowedLocales=globalLocaleList.getAllowedLocales();
   if (allowedLocales == null) {
