@@ -8,6 +8,6 @@
     tag.setRetireReason(reason);
     tag.setRetiredBy(Context.getAuthenticatedUser());
     tag.setDateRetired(new Date());
-    return saveLocationTag(tag);
+    return Context.getLocationService().saveLocationTag(tag);
   }
 }

@@ -1,4 +1,4 @@
 {
-  if (search == null || search.equals(""))   return getAllLocationTags(true);
+  if (search == null || search.equals(""))   return Context.getLocationService().getAllLocationTags(true);
   return dao.getLocationTags(search);
 }
