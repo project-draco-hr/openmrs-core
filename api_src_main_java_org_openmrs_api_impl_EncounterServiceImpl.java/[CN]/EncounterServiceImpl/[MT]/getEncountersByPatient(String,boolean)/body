@@ -1,4 +1,4 @@
 {
   if (query == null)   throw new IllegalArgumentException("The 'query' parameter is required and cannot be null");
-  return filterEncountersByViewPermissions(dao.getEncounters(query,null,null,null,includeVoided),null);
+  return Context.getEncounterService().filterEncountersByViewPermissions(dao.getEncounters(query,null,null,null,includeVoided),null);
 }

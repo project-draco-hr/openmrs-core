@@ -19,6 +19,6 @@
   encounter.setVoidedBy(Context.getAuthenticatedUser());
   if (encounter.getDateVoided() == null)   encounter.setDateVoided(new Date());
   encounter.setVoidReason(reason);
-  saveEncounter(encounter);
+  Context.getEncounterService().saveEncounter(encounter);
   return encounter;
 }
