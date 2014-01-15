@@ -8,10 +8,10 @@
     conceptId=null;
   }
   if (conceptId != null) {
-    c=getConcept(conceptId);
+    c=Context.getConceptService().getConcept(conceptId);
   }
  else {
-    c=getConceptByName(conceptIdOrName);
+    c=Context.getConceptService().getConceptByName(conceptIdOrName);
   }
   return c;
 }
