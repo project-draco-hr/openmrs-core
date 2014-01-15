@@ -3,5 +3,5 @@
   if (date == null)   date=new Date();
   List<Patient> patients=new Vector<Patient>();
   patients.add(p);
-  return getOrders(Order.class,patients,null,null,null,date,null,Arrays.asList(OrderAction.DISCONTINUE));
+  return Context.getOrderService().getOrders(Order.class,patients,null,null,null,date,null,Arrays.asList(OrderAction.DISCONTINUE));
 }
