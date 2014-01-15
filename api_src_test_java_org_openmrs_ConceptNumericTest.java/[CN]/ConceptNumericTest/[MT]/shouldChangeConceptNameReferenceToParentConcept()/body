@@ -1,0 +1,9 @@
+{
+  Concept c=new Concept(123);
+  c.addName(new ConceptName(1));
+  c.addName(new ConceptName(2));
+  ConceptNumeric cn=new ConceptNumeric(c);
+  for (  ConceptName cName : cn.getNames()) {
+    Assert.assertSame(cn,cName.getConcept());
+  }
+}
