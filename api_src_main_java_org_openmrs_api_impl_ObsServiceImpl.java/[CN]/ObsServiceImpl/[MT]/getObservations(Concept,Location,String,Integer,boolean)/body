@@ -4,5 +4,5 @@
   List<Location> locations=new Vector<Location>();
   locations.add(loc);
   List<String> sortList=makeSortList(sort);
-  return getObservations(null,null,questions,null,getPersonTypeEnumerations(personType),locations,sortList,null,null,null,null,includeVoided);
+  return Context.getObsService().getObservations(null,null,questions,null,getPersonTypeEnumerations(personType),locations,sortList,null,null,null,null,includeVoided);
 }
