@@ -1,5 +1,8 @@
 {
-  getParametersFromRequest(request);
+  HashMap<String,String> person=getParametersFromRequest(request);
+  String personId=person.get("personId");
+  String viewType=person.get("viewType");
+  String personType=person.get("personType");
   if ("".equals(personId)) {
     if ("view".equals(viewType) || "shortEdit".equals(viewType))     viewType="shortEdit";
  else     viewType="edit";

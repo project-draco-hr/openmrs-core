@@ -5,7 +5,11 @@
     PersonService ps=Context.getPersonService();
     Integer userId=Context.getAuthenticatedUser().getUserId();
     invalidAgeFormat=false;
-    getParametersFromRequest(request);
+    HashMap<String,String> person=getParametersFromRequest(request);
+    String gender=person.get("gender");
+    String name=person.get("name");
+    String birthdate=person.get("birthdate");
+    String age=person.get("age");
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
@@ -37,7 +41,7 @@
           invalidAgeFormat=true;
         }
       }
-      if (gender.length() < 1)       gender=null;
+      if (gender.length() < 1)       person.put("gender",null);
       personList=new Vector<PersonListItem>();
       for (      Person p : ps.getSimilarPeople(name,d,gender)) {
         personList.add(PersonListItem.createBestMatch(p));
