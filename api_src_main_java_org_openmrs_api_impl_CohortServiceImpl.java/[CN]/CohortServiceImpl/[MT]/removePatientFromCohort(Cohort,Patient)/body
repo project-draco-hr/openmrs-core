@@ -1,7 +1,7 @@
 {
   if (cohort.contains(patient)) {
     cohort.getMemberIds().remove(patient.getPatientId());
-    saveCohort(cohort);
+    Context.getCohortService().saveCohort(cohort);
   }
   return cohort;
 }

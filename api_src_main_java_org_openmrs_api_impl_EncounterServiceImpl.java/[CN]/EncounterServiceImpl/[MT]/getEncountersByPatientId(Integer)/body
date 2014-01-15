@@ -1,4 +1,4 @@
 {
   if (patientId == null)   throw new IllegalArgumentException("The 'patientId' parameter is requred and cannot be null");
-  return filterEncountersByViewPermissions(dao.getEncountersByPatientId(patientId),null);
+  return Context.getEncounterService().filterEncountersByViewPermissions(dao.getEncountersByPatientId(patientId),null);
 }

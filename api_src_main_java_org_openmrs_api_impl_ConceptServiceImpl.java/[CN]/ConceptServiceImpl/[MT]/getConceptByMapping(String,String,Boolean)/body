@@ -1,5 +1,5 @@
 {
-  List<Concept> concepts=getConceptsByMapping(code,sourceName,includeRetired);
+  List<Concept> concepts=Context.getConceptService().getConceptsByMapping(code,sourceName,includeRetired);
   if (concepts.size() == 0) {
     return null;
   }

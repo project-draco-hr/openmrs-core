@@ -10,5 +10,5 @@
  else   if ("header".equals(displayTypeStr))   attrDisplayType=ATTR_VIEW_TYPE.HEADER;
  else   if ("all".equals(displayTypeStr))   attrDisplayType=null;
  else   throw new APIException(displayTypeStr + " is an invalid value for 'displayType' attribute");
-  return getPersonAttributeTypes(personType,attrDisplayType);
+  return Context.getPersonService().getPersonAttributeTypes(personType,attrDisplayType);
 }

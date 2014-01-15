@@ -1,7 +1,7 @@
 {
   if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT)) {
     cp.rejectConceptProposal();
-    saveConceptProposal(cp);
+    Context.getConceptService().saveConceptProposal(cp);
     return null;
   }
   if (mappedConcept == null)   throw new APIException("Illegal Mapped Concept");

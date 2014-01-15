@@ -3,5 +3,5 @@
   if (who != null && who.getPersonId() != null)   whom.add(who);
   List<Concept> questions=new Vector<Concept>();
   questions.add(question);
-  return getObservations(whom,null,questions,null,null,null,null,null,null,null,null,false);
+  return Context.getObsService().getObservations(whom,null,questions,null,null,null,null,null,null,null,null,false);
 }

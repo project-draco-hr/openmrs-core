@@ -3,5 +3,5 @@
   for (  String role : roles) {
     rolesToSearch.add(new Role(role));
   }
-  return getUsers(name,rolesToSearch,includeVoided);
+  return Context.getUserService().getUsers(name,rolesToSearch,includeVoided);
 }
