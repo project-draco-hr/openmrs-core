@@ -6,5 +6,5 @@
   type.setRetiredBy(Context.getAuthenticatedUser());
   type.setDateRetired(new Date());
   type.setRetireReason(retiredReason);
-  return saveRelationshipType(type);
+  return Context.getPersonService().saveRelationshipType(type);
 }

@@ -1,5 +1,5 @@
 {
-  List<Relationship> relationships=getRelationships(null,null,relType);
+  List<Relationship> relationships=Context.getPersonService().getRelationships(null,null,relType);
   Map<Person,List<Person>> ret=new HashMap<Person,List<Person>>();
   if (relationships != null) {
     for (    Relationship rel : relationships) {
