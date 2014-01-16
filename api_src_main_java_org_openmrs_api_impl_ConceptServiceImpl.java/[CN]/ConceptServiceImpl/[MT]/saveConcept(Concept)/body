@@ -3,7 +3,7 @@
   for (  ConceptMap map : concept.getConceptMappings()) {
     if (map.getConceptMapType() == null) {
       if (defaultConceptMapType == null) {
-        defaultConceptMapType=getDefaultConceptMapType();
+        defaultConceptMapType=Context.getConceptService().getDefaultConceptMapType();
       }
       map.setConceptMapType(defaultConceptMapType);
     }

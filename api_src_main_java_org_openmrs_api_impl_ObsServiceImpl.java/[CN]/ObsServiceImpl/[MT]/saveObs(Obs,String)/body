@@ -28,7 +28,7 @@
     try {
       Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
       Context.evictFromSession(obs);
-      obs=getObs(obs.getObsId());
+      obs=Context.getObsService().getObs(obs.getObsId());
       Context.getObsService().voidObs(obs,changeMessage);
     }
   finally {
