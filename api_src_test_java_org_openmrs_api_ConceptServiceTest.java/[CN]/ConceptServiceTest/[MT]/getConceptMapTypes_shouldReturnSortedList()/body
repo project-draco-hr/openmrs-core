@@ -1,0 +1,10 @@
+{
+  List<ConceptMapType> conceptMapTypes=Context.getConceptService().getConceptMapTypes(true,true);
+  for (int i=0; i < conceptMapTypes.size() - 1; i++) {
+    ConceptMapType current=conceptMapTypes.get(i);
+    ConceptMapType next=conceptMapTypes.get(i + 1);
+    int currentWeight=ConceptMapTypeComparator.getConceptMapTypeSortWeight(current);
+    int nextWeight=ConceptMapTypeComparator.getConceptMapTypeSortWeight(next);
+    assertTrue(currentWeight <= nextWeight);
+  }
+}
