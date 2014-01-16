@@ -5,7 +5,7 @@
   }
   Set<Locale> allowedLocales=globalLocaleList.getAllowedLocales();
   if (allowedLocales == null) {
-    String currentPropertyValue=getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,LocaleUtility.getDefaultLocale().toString());
+    String currentPropertyValue=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,LocaleUtility.getDefaultLocale().toString());
     GlobalProperty allowedLocalesProperty=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,currentPropertyValue);
     globalLocaleList.globalPropertyChanged(allowedLocalesProperty);
     allowedLocales=globalLocaleList.getAllowedLocales();

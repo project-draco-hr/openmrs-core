@@ -1,5 +1,5 @@
 {
-  for (  Program p : getAllPrograms()) {
+  for (  Program p : Context.getProgramWorkflowService().getAllPrograms()) {
     for (    ProgramWorkflow w : p.getAllWorkflows()) {
       if (w.getProgramWorkflowId().equals(id)) {
         return w;
