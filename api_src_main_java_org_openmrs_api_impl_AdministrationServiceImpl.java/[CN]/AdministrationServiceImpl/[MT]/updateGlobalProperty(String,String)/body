@@ -1,5 +1,5 @@
 {
-  GlobalProperty gp=getGlobalPropertyObject(propertyName);
+  GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(propertyName);
   if (gp == null) {
     throw new IllegalStateException("Global property with the given propertyName does not exist" + propertyName);
   }

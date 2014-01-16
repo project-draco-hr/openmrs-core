@@ -10,7 +10,7 @@
       locales.addAll(proficientLocales);
     }
   }
-  List<Locale> allowedLocales=getAllowedLocales();
+  List<Locale> allowedLocales=Context.getAdministrationService().getAllowedLocales();
   if (allowedLocales != null) {
     Set<Locale> retainLocales=new HashSet<Locale>();
     for (    Locale allowedLocale : allowedLocales) {
