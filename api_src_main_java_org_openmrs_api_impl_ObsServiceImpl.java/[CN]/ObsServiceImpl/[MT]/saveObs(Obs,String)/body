@@ -15,6 +15,10 @@
  else {
     Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
     if (changeMessage == null)     throw new APIException("ChangeMessage is required when updating an obs in the database");
+    Encounter encounter=obs.getEncounter();
+    if (encounter != null) {
+      obs.setPerson(encounter.getPatient());
+    }
     Obs newObs=Obs.newInstance(obs);
     newObs.setVoided(false);
     newObs.setVoidReason(null);
