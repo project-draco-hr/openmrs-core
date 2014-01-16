@@ -4,5 +4,5 @@
     String address=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS);
     if (address != null)     message.addRecipient(address);
   }
-  sendMessage(message);
+  Context.getMessageService().sendMessage(message);
 }
