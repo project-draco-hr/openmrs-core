@@ -14,8 +14,8 @@
       if (results.next())       systemDefaultLocale=results.getString(1);
     }
   }
- catch (  Throwable t) {
-    log.error("Error while retrieving system default locale",t);
+ catch (  Exception e) {
+    log.error("Error while retrieving system default locale",e);
   }
  finally {
     if (needToCloseConection) {

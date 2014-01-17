@@ -6,8 +6,8 @@
         Context.openSession();
         service.onStartup();
       }
- catch (      Throwable t) {
-        exceptionThrown=t;
+ catch (      Exception e) {
+        exceptionThrown=e;
       }
  finally {
         Context.closeSession();

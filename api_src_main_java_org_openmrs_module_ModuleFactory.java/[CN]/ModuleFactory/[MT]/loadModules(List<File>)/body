@@ -5,8 +5,8 @@
         Module mod=loadModule(f,true);
         log.debug("Loaded module: " + mod + " successfully");
       }
- catch (      Throwable t) {
-        log.debug("Unable to load file in module directory: " + f + ". Skipping file.",t);
+ catch (      Exception e) {
+        log.debug("Unable to load file in module directory: " + f + ". Skipping file.",e);
       }
     }
   }

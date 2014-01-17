@@ -7,7 +7,7 @@
       Class cls=Class.forName(className);
       reportObj=ReportObjectFactory.getInstance(cls,initialValues);
     }
- catch (    Throwable t) {
+ catch (    Exception e) {
       log.error("Could not create class: " + className + " when trying to get report object from the factory");
     }
   }

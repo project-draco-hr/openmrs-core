@@ -20,8 +20,8 @@
       WebDaemon.startOpenmrs(event.getServletContext());
     }
   }
- catch (  Throwable t) {
-    errorAtStartup=t;
-    log.fatal("Got exception while starting up: ",t);
+ catch (  Exception e) {
+    errorAtStartup=e;
+    log.fatal("Got exception while starting up: ",e);
   }
 }

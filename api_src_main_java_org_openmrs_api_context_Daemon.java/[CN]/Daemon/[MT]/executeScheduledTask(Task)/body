@@ -8,8 +8,8 @@
         Context.openSession();
         TimerSchedulerTask.execute(task);
       }
- catch (      Throwable t) {
-        exceptionThrown=t;
+ catch (      Exception e) {
+        exceptionThrown=e;
       }
  finally {
         Context.closeSession();

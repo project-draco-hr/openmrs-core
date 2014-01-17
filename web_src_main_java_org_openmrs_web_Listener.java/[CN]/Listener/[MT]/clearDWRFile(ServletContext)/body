@@ -17,8 +17,8 @@
     elem.setTextContent("");
     OpenmrsUtil.saveDocument(doc,dwrFile);
   }
- catch (  Throwable t) {
-    log.debug("Error clearing dwr-modules.xml",t);
+ catch (  Exception e) {
+    log.debug("Error clearing dwr-modules.xml",e);
     dwrFile.delete();
     try {
       FileWriter writer=new FileWriter(dwrFile);

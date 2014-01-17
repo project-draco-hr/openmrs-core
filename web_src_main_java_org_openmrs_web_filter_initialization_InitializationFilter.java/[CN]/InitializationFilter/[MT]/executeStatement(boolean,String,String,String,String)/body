@@ -44,8 +44,8 @@ catch (  ClassNotFoundException e) {
         connection.close();
       }
     }
- catch (    Throwable t) {
-      log.warn("Error while closing connection",t);
+ catch (    Exception e) {
+      log.warn("Error while closing connection",e);
     }
   }
   return -1;

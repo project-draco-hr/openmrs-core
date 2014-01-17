@@ -7,8 +7,8 @@
     try {
       if (mod.getModuleActivator() != null)       mod.getModuleActivator().willStop();
     }
- catch (    Throwable t) {
-      log.warn("Unable to call module's Activator.willStop() method",t);
+ catch (    Exception e) {
+      log.warn("Unable to call module's Activator.willStop() method",e);
     }
     String moduleId=mod.getModuleId();
     if (!isFailedStartup && mod.isMandatory()) {
@@ -53,13 +53,13 @@
               Context.removeAdvice(cls,(Advice)aopObject);
             }
           }
- catch (          Throwable t) {
-            log.warn("Could not remove advice point: " + advice.getPoint(),t);
+ catch (          Exception e) {
+            log.warn("Could not remove advice point: " + advice.getPoint(),e);
           }
         }
       }
- catch (      Throwable t) {
-        log.warn("Error while getting advicePoints from module: " + moduleId,t);
+ catch (      Exception e) {
+        log.warn("Error while getting advicePoints from module: " + moduleId,e);
       }
       try {
         for (        Extension ext : mod.getExtensions()) {
@@ -75,8 +75,8 @@
           }
         }
       }
- catch (      Throwable t) {
-        log.warn("Error while getting extensions from module: " + moduleId,t);
+ catch (      Exception e) {
+        log.warn("Error while getting extensions from module: " + moduleId,e);
       }
     }
     List<OpenmrsService> services=Context.getModuleOpenmrsServices(modulePackage);
@@ -89,8 +89,8 @@
       if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
  else       mod.getActivator().shutdown();
     }
- catch (    Throwable t) {
-      log.warn("Unable to call module's Activator.shutdown() method",t);
+ catch (    Exception e) {
+      log.warn("Unable to call module's Activator.shutdown() method",e);
     }
     mod.getExtensions().clear();
     mod.setActivator(null);
