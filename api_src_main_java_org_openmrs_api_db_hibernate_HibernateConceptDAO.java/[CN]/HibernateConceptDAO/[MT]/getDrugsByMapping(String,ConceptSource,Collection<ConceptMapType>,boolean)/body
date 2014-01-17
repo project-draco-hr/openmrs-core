@@ -1,0 +1,7 @@
+{
+  Criteria criteria=createSearchDrugByMappingCriteria(code,conceptSource,includeRetired);
+  if (withAnyOfTheseTypes != null) {
+    criteria.add(Restrictions.in("map.conceptMapType",withAnyOfTheseTypes));
+  }
+  return (List<Drug>)criteria.list();
+}
