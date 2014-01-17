@@ -2,5 +2,7 @@
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptMapType.class);
   if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
   if (!includeHidden)   criteria.add(Restrictions.eq("isHidden",false));
-  return criteria.list();
+  List<ConceptMapType> conceptMapTypes=criteria.list();
+  Collections.sort(conceptMapTypes,new ConceptMapTypeComparator());
+  return conceptMapTypes;
 }
