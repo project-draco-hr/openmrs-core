@@ -1,6 +1,6 @@
 {
   if (pn == null)   throw new IllegalArgumentException();
-  PersonName newName=new PersonName(new Integer(pn.getPersonNameId()));
+  PersonName newName=new PersonName(Integer.valueOf(pn.getPersonNameId()));
   if (pn.getGivenName() != null)   newName.setGivenName(new String(pn.getGivenName()));
   if (pn.getMiddleName() != null)   newName.setMiddleName(new String(pn.getMiddleName()));
   if (pn.getFamilyName() != null)   newName.setFamilyName(new String(pn.getFamilyName()));

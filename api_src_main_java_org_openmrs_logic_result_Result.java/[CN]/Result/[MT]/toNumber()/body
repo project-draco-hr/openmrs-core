@@ -9,7 +9,7 @@ case BOOLEAN:
 case CODED:
     return 0D;
 case DATETIME:
-  return (valueDatetime == null ? 0 : new Long(valueDatetime.getTime()).doubleValue());
+  return (valueDatetime == null ? 0 : Long.valueOf(valueDatetime.getTime()).doubleValue());
 case NUMERIC:
 return (valueNumeric == null ? 0D : valueNumeric);
 case TEXT:
