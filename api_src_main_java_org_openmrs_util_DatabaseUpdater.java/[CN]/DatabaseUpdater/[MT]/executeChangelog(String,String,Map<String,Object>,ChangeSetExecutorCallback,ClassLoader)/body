@@ -38,13 +38,13 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
     try {
       lockHandler.releaseLock();
     }
- catch (    Throwable t) {
-      log.error("Could not release lock",t);
+ catch (    Exception e) {
+      log.error("Could not release lock",e);
     }
     try {
       database.getConnection().close();
     }
- catch (    Throwable t) {
+ catch (    Exception e) {
     }
   }
   return updateWarnings;

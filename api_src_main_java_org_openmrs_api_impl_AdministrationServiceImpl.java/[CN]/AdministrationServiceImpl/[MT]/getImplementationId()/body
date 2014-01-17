@@ -5,8 +5,8 @@
     ImplementationId implId=OpenmrsUtil.getSerializer().read(ImplementationId.class,property);
     return implId;
   }
- catch (  Throwable t) {
-    log.debug("Error while getting implementation id",t);
+ catch (  Exception e) {
+    log.debug("Error while getting implementation id",e);
   }
   return null;
 }

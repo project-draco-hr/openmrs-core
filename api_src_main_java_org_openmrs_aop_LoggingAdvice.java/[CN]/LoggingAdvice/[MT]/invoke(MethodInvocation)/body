@@ -38,7 +38,7 @@
   try {
     return invocation.proceed();
   }
- catch (  Throwable t) {
+ catch (  Exception e) {
     if (logGetter || logSetter) {
       String username;
       User user=Context.getAuthenticatedUser();
@@ -49,9 +49,9 @@
         username=user.getUsername();
         if (username == null || username.length() == 0)         username=user.getSystemId();
       }
-      log.error(String.format("An error occurred while executing this method.\nCurrent user: %s\nError message: %s",username,t.getMessage()),t);
+      log.error(String.format("An error occurred while executing this method.\nCurrent user: %s\nError message: %s",username,e.getMessage()),e);
     }
-    throw t;
+    throw e;
   }
  finally {
     if (logGetter || logSetter) {

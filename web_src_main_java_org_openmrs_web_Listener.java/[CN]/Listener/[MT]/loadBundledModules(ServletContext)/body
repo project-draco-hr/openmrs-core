@@ -17,8 +17,8 @@
         Module mod=ModuleFactory.loadModule(f);
         log.debug("Loaded bundled module: " + mod + " successfully");
       }
- catch (      Throwable t) {
-        log.warn("Error while trying to load bundled module " + f.getName() + "",t);
+ catch (      Exception e) {
+        log.warn("Error while trying to load bundled module " + f.getName() + "",e);
       }
     }
   }

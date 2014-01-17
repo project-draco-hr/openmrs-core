@@ -22,8 +22,8 @@
         log.warn("Unable to set system default locale property.");
       }
     }
- catch (    Throwable t) {
-      log.warn("Locale " + locale + " could not be set for user with id "+ userId+ " .",t);
+ catch (    Exception e) {
+      log.warn("Locale " + locale + " could not be set for user with id "+ userId+ " .",e);
       return false;
     }
  finally {

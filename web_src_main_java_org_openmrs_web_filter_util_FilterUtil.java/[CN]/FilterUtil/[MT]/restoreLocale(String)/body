@@ -19,8 +19,8 @@
         currentLocale=readSystemDefaultLocale(connection);
       }
     }
- catch (    Throwable t) {
-      log.error("Error while retriving locale property",t);
+ catch (    Exception e) {
+      log.error("Error while retriving locale property",e);
     }
  finally {
       if (connection != null) {

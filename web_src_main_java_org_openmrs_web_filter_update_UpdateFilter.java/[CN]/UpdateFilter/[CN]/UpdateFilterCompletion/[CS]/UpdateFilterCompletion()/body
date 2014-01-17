@@ -52,9 +52,9 @@ catch (        DatabaseUpdateException e) {
         try {
           startOpenmrs(filterConfig.getServletContext());
         }
- catch (        Throwable t) {
-          log.error("Unable to complete the startup.",t);
-          reportError(ErrorMessageConstants.UPDATE_ERROR_COMPLETE_STARTUP,t.getMessage());
+ catch (        Exception e) {
+          log.error("Unable to complete the startup.",e);
+          reportError(ErrorMessageConstants.UPDATE_ERROR_COMPLETE_STARTUP,e.getMessage());
           return;
         }
         setUpdatesRequired(false);

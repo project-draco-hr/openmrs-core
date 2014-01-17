@@ -22,8 +22,8 @@
     }
     if (!skipError)     setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
   }
-catch (  Throwable t) {
-    setFatalError(hl7InQueue,"Exception while attempting to process HL7 In Queue (" + hl7InQueue.getHL7SourceKey() + ")",t);
+catch (  Exception e) {
+    setFatalError(hl7InQueue,"Exception while attempting to process HL7 In Queue (" + hl7InQueue.getHL7SourceKey() + ")",e);
   }
   return hl7InQueue;
 }

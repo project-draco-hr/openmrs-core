@@ -6,7 +6,7 @@
   try {
     return serializer.serialize(o);
   }
- catch (  Throwable t) {
-    throw new SerializationException("An error occurred during serialization of object <" + o + ">",t);
+ catch (  Exception e) {
+    throw new SerializationException("An error occurred during serialization of object <" + o + ">",e);
   }
 }
