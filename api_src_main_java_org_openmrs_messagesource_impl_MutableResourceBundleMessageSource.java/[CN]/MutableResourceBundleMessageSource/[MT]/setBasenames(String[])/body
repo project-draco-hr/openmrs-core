@@ -1,4 +1,9 @@
 {
   super.setBasenames(basenames);
-  this.basenames=basenames;
+  if (basenames == null) {
+    this.basenames=new String[0];
+  }
+ else {
+    this.basenames=Arrays.copyOf(basenames,basenames.length);
+  }
 }

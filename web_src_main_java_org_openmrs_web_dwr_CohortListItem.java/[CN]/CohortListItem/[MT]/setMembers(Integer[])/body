@@ -1,3 +1,8 @@
 {
-  this.members=members;
+  if (members == null) {
+    this.members=new Integer[0];
+  }
+ else {
+    this.members=Arrays.copyOf(members,members.length);
+  }
 }
