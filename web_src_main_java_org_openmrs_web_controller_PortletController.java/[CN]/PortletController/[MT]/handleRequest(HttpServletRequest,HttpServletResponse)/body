@@ -162,10 +162,8 @@
             model.put("patientCurrentPrograms",Context.getProgramWorkflowService().getPatientPrograms(p,null,null,new Date(),new Date(),null,false));
           }
           model.put("patientId",patientId);
-          if (p != null) {
-            personId=p.getPatientId();
-            model.put("personId",personId);
-          }
+          personId=p.getPatientId();
+          model.put("personId",personId);
           model.put("patientVariation",patientVariation);
         }
       }

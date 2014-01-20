@@ -1,6 +1,10 @@
 {
-  newConceptMap.setConcept(this);
-  if (getConceptMappings() == null)   conceptMappings=new HashSet<ConceptMap>();
+  if (getConceptMappings() == null) {
+    conceptMappings=new HashSet<ConceptMap>();
+  }
+  if (newConceptMap != null) {
+    newConceptMap.setConcept(this);
+  }
   if (newConceptMap != null && !conceptMappings.contains(newConceptMap)) {
     if (newConceptMap.getConceptMapType() == null) {
       newConceptMap.setConceptMapType(Context.getConceptService().getDefaultConceptMapType());

@@ -1,7 +1,13 @@
 {
   Cohort ret=new Cohort();
-  ret.setName("(" + a.getName() + " + "+ b.getName()+ ")");
-  if (a != null)   ret.getMemberIds().addAll(a.getMemberIds());
-  if (b != null)   ret.getMemberIds().addAll(b.getMemberIds());
+  if (a != null) {
+    ret.getMemberIds().addAll(a.getMemberIds());
+  }
+  if (b != null) {
+    ret.getMemberIds().addAll(b.getMemberIds());
+  }
+  if (a != null && b != null) {
+    ret.setName("(" + a.getName() + " + "+ b.getName()+ ")");
+  }
   return ret;
 }

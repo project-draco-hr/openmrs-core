@@ -27,45 +27,44 @@ case CALL:
           break;
         }
 default :
-      if (_t == null)       _t=ASTNULL;
-    if ((_tokenSet_0.member(_t.getType()))) {
-      System.err.println("-----------Starting Read -------");
-      obj.InitEvaluateList("data",null);
-      s=readAST(_t,obj,s);
-      _t=_retTree;
-      obj.AddToEvaluateList("data",s);
-      System.err.println("\n");
-      System.err.println("-----------End Read -------");
-    }
- else     if ((_t.getType() == EVENT || _t.getType() == ID)) {
-      System.err.println("----------------Starting Event-------");
-      eventAST(_t);
-      _t=_retTree;
-      System.err.println("\n");
-      System.err.println("-----------End Event -------");
-    }
- else     if ((_t.getType() == ENDIF)) {
-      AST __t341=_t;
-      AST tmp1_AST_in=(AST)_t;
-      match(_t,ENDIF);
-      _t=_t.getFirstChild();
-      System.err.println("ENDIF FOUND");
-      a="ENDIF";
-      obj.AddToEvaluateList("data",a);
-      _t=__t341;
-      _t=_t.getNextSibling();
-    }
- else     if (((_t.getType() >= ELSE && _t.getType() <= ENDIF))) {
-      System.err.println("----------------Starting Data Else If-------");
-      data_elseifAST(_t,obj);
-      _t=_retTree;
-      System.err.println("\n");
-      System.err.println("-----------End Data Else If -------");
-    }
+      if ((_tokenSet_0.member(_t.getType()))) {
+        System.err.println("-----------Starting Read -------");
+        obj.InitEvaluateList("data",null);
+        s=readAST(_t,obj,s);
+        _t=_retTree;
+        obj.AddToEvaluateList("data",s);
+        System.err.println("\n");
+        System.err.println("-----------End Read -------");
+      }
+ else       if ((_t.getType() == EVENT || _t.getType() == ID)) {
+        System.err.println("----------------Starting Event-------");
+        eventAST(_t);
+        _t=_retTree;
+        System.err.println("\n");
+        System.err.println("-----------End Event -------");
+      }
+ else       if ((_t.getType() == ENDIF)) {
+        AST __t341=_t;
+        AST tmp1_AST_in=(AST)_t;
+        match(_t,ENDIF);
+        _t=_t.getFirstChild();
+        System.err.println("ENDIF FOUND");
+        a="ENDIF";
+        obj.AddToEvaluateList("data",a);
+        _t=__t341;
+        _t=_t.getNextSibling();
+      }
+ else       if (((_t.getType() >= ELSE && _t.getType() <= ENDIF))) {
+        System.err.println("----------------Starting Data Else If-------");
+        data_elseifAST(_t,obj);
+        _t=_retTree;
+        System.err.println("\n");
+        System.err.println("-----------End Data Else If -------");
+      }
  else {
-      break _loop342;
-    }
-}
+        break _loop342;
+      }
+  }
 }
  while (true);
 }
