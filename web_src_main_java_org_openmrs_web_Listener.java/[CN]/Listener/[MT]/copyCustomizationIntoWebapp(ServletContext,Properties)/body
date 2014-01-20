@@ -12,8 +12,9 @@
   custom.put("custom.messages_fr","/WEB-INF/custom_messages_fr.properties");
   custom.put("custom.messages_es","/WEB-INF/custom_messages_es.properties");
   custom.put("custom.messages_de","/WEB-INF/custom_messages_de.properties");
-  for (  String prop : custom.keySet()) {
-    String webappPath=custom.get(prop);
+  for (  Map.Entry<String,String> entry : custom.entrySet()) {
+    String prop=entry.getKey();
+    String webappPath=entry.getValue();
     String userOverridePath=props.getProperty(prop);
     if (userOverridePath != null) {
       String absolutePath=realPath + webappPath;
