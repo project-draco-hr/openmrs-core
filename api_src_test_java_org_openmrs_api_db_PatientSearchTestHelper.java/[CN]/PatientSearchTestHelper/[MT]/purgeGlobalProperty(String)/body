@@ -1,0 +1,7 @@
+{
+  GlobalProperty globalProperty=administrationService.getGlobalPropertyObject(propertyName);
+  if (globalProperty != null) {
+    administrationService.purgeGlobalProperty(globalProperty);
+  }
+  Assert.assertNull(administrationService.getGlobalProperty(propertyName));
+}

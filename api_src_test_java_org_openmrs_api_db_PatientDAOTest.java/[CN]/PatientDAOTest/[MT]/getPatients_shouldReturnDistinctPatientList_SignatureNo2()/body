@@ -1,0 +1,7 @@
+{
+  Assert.assertTrue(personAttributeHelper.searchablePersonAttributeExists("Cook"));
+  List<Patient> patientsByName=dao.getPatients("Adalgrim Took Cook",0,11);
+  Assert.assertEquals(1,patientsByName.size());
+  List<Patient> patientsByNameOrAttribute=dao.getPatients("Cook",0,11);
+  Assert.assertEquals(1,patientsByNameOrAttribute.size());
+}
