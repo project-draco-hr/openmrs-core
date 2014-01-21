@@ -7,8 +7,8 @@
   if (compKeyIdUsed == true) {
     lastComparison=compBySection.get(key + "__" + compKeyId);
     lastComparison.setAnswer(answer);
-    compKeyIdUsed=false;
-    compKeyId++;
+    setCompKeyIdUsed(false);
+    setCompKeyId(compKeyId + 1);
   }
  else {
     lastComparison=compBySection.get(key);

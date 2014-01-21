@@ -14,8 +14,8 @@
         thisComparison.setKey(key,key + "__" + keyId);
         compBySection.put(key + "__" + keyId,thisComparison);
         compBySection.remove("__Temp__" + keyId);
-        if (keyId > 100)         keyId=1;
- else         keyId++;
+        if (keyId > 100)         setKeyId(1);
+ else         setKeyId(keyId + 1);
       }
     }
  else     if (thisComparison != null) {
@@ -23,8 +23,8 @@
       compBySection.put(key,thisComparison);
       compBySection.remove("__Temp__" + keyId);
       retVal=false;
-      if (keyId > 100)       keyId=1;
- else       keyId++;
+      if (keyId > 100)       setKeyId(1);
+ else       setKeyId(keyId + 1);
     }
   }
   return retVal;

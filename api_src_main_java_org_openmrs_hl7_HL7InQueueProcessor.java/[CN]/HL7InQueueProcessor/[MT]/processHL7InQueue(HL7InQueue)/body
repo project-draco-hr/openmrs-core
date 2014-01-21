@@ -6,7 +6,8 @@
  catch (  HL7Exception e) {
     log.error("Unable to process hl7 in queue",e);
   }
-  if (++count > 25) {
+  setCount(count + 1);
+  if (count > 25) {
     try {
       Context.getHL7Service().garbageCollect();
     }
