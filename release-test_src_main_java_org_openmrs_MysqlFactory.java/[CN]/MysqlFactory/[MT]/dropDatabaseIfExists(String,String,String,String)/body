@@ -4,20 +4,15 @@
   try {
     String jdbcUrl=prepareJdbcConnectionUrl(port,databaseName);
     connection=DriverManager.getConnection(jdbcUrl,userName,password);
-    if (connection == null) {
-      return;
-    }
- else {
-      String sql="DROP DATABASE IF EXISTS " + databaseName + "";
-      int status=new QueryUtil(connection).executeUpdate(sql);
-      System.out.println("------------------------");
-      System.out.println(sql);
-      System.out.println("------------------------");
-      System.out.println("status of drop database " + status);
-      System.out.println("------------------------");
-      System.out.flush();
-      Thread.sleep(100);
-    }
+    String sql="DROP DATABASE IF EXISTS " + databaseName + "";
+    int status=new QueryUtil(connection).executeUpdate(sql);
+    System.out.println("------------------------");
+    System.out.println(sql);
+    System.out.println("------------------------");
+    System.out.println("status of drop database " + status);
+    System.out.println("------------------------");
+    System.out.flush();
+    Thread.sleep(100);
   }
   finally {
     try {
