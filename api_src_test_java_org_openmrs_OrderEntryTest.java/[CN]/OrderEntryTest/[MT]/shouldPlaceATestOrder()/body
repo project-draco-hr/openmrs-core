@@ -2,7 +2,7 @@
   executeDataSet(ORDER_ENTRY_DATASET_XML);
   Patient patient=patientService.getPatient(2);
   CareSetting careSetting=orderService.getCareSetting(1);
-  assertEquals(0,orderService.getActiveOrders(patient,TestOrder.class,careSetting,false).size());
+  assertEquals(0,orderService.getActiveOrders(patient,TestOrder.class,careSetting).size());
   TestOrder order=new TestOrder();
   order.setPatient(patient);
   order.setConcept(conceptService.getConcept(5497));
@@ -13,5 +13,5 @@
   order.setSpecimenSource(conceptService.getConcept(1000));
   order.setNumberOfRepeats(3);
   orderService.saveOrder(order);
-  assertEquals(1,orderService.getActiveOrders(patient,TestOrder.class,careSetting,false).size());
+  assertEquals(1,orderService.getActiveOrders(patient,TestOrder.class,careSetting).size());
 }

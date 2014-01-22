@@ -5,6 +5,5 @@
   crit.add(Restrictions.ne("action",Action.DISCONTINUE));
   crit.add(Restrictions.isNull("dateStopped"));
   crit.add(Restrictions.isNull("autoExpireDate"));
-  if (!includeVoided)   crit.add(Restrictions.eq("voided",includeVoided));
   return crit.list();
 }
