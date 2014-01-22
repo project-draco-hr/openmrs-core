@@ -1,10 +1,9 @@
 {
   String s="";
-  AST where_it_occurredAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   AST m=null;
   AST n=null;
   AST i=null;
-  String a, b, ret_val="";
+  String a, b;
   try {
     if (_t == null)     _t=ASTNULL;
 switch (_t.getType()) {
@@ -41,12 +40,10 @@ case TERM_LITERAL:
 switch (_t.getType()) {
 case WITHIN:
 {
-              AST tmp29_AST_in=(AST)_t;
               match(_t,WITHIN);
               _t=_t.getNextSibling();
               obj.setWhere("withinPreceding",key);
 {
-                AST tmp30_AST_in=(AST)_t;
                 match(_t,PAST);
                 _t=_t.getNextSibling();
               }
@@ -91,7 +88,6 @@ case TERM_LITERAL:
 {
             a=exprAST(_t,"data",obj);
             _t=_retTree;
-            AST tmp31_AST_in=(AST)_t;
             match(_t,TO);
             _t=_t.getNextSibling();
             b=exprAST(_t,"data",obj);
@@ -109,7 +105,6 @@ default :
 case AFTER:
 {
 {
-  AST tmp32_AST_in=(AST)_t;
   match(_t,AFTER);
   _t=_t.getNextSibling();
 }

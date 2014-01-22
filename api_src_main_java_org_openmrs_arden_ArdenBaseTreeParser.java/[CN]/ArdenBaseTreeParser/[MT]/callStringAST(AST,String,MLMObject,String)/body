@@ -1,6 +1,5 @@
 {
   String s="";
-  AST callStringAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   AST ift=null;
   AST val=null;
   AST val2=null;
@@ -36,7 +35,6 @@ switch (_t.getType()) {
 case TRUE:
 {
               AST __t480=_t;
-              AST tmp77_AST_in=(AST)_t;
               match(_t,TRUE);
               _t=_t.getFirstChild();
               _t=__t480;
@@ -46,7 +44,6 @@ case TRUE:
 case FALSE:
 {
             AST __t481=_t;
-            AST tmp78_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getFirstChild();
             _t=__t481;
@@ -75,7 +72,6 @@ case INTLIT:
 switch (_t.getType()) {
 case DOT:
 {
-          AST tmp79_AST_in=(AST)_t;
           match(_t,DOT);
           _t=_t.getNextSibling();
           val2=(AST)_t;
@@ -144,14 +140,12 @@ break;
 case ACTION_OP:
 {
 AST __t488=_t;
-AST tmp80_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getFirstChild();
 id=(AST)_t;
 match(_t,ID);
 _t=_t.getNextSibling();
 a=id.getText();
-AST tmp81_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getNextSibling();
 str=(AST)_t;

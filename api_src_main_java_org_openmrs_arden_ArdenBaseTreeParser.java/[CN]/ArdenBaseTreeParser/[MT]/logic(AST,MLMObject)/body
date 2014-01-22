@@ -1,6 +1,5 @@
 {
   String s="";
-  AST logic_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
   Integer i=1;
   try {
@@ -200,7 +199,6 @@ break;
 case ENDIF:
 {
 AST __t433=_t;
-AST tmp67_AST_in=(AST)_t;
 match(_t,ENDIF);
 _t=_t.getFirstChild();
 System.err.println("ENDIF FOUND");
@@ -242,7 +240,6 @@ break _loop434;
  while (true);
 }
 {
-AST tmp68_AST_in=(AST)_t;
 match(_t,ENDBLOCK);
 _t=_t.getNextSibling();
 }

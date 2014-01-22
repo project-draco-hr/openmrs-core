@@ -1,14 +1,11 @@
 {
   String s="";
-  AST binary_comp_opAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
-  String a, b;
   try {
     if (_t == null)     _t=ASTNULL;
 switch (_t.getType()) {
 case EQUALS:
 {
         AST __t510=_t;
-        AST tmp94_AST_in=(AST)_t;
         match(_t,EQUALS);
         _t=_t.getFirstChild();
         System.err.println("Found = ");
@@ -20,10 +17,8 @@ case EQUALS:
 case GREATER:
 {
       AST __t511=_t;
-      AST tmp95_AST_in=(AST)_t;
       match(_t,GREATER);
       _t=_t.getFirstChild();
-      AST tmp96_AST_in=(AST)_t;
       match(_t,THAN);
       _t=_t.getNextSibling();
       System.err.println("Found > ");
@@ -33,10 +28,8 @@ case GREATER:
 switch (_t.getType()) {
 case OR:
 {
-            AST tmp97_AST_in=(AST)_t;
             match(_t,OR);
             _t=_t.getNextSibling();
-            AST tmp98_AST_in=(AST)_t;
             match(_t,EQUAL);
             _t=_t.getNextSibling();
             break;
@@ -60,7 +53,6 @@ break;
 case IN:
 {
 AST __t515=_t;
-AST tmp99_AST_in=(AST)_t;
 match(_t,IN);
 _t=_t.getFirstChild();
 System.err.println("Found IN ");
@@ -73,10 +65,8 @@ default :
 if (_t == null) _t=ASTNULL;
 if ((_t.getType() == LESS)) {
 AST __t513=_t;
-AST tmp100_AST_in=(AST)_t;
 match(_t,LESS);
 _t=_t.getFirstChild();
-AST tmp101_AST_in=(AST)_t;
 match(_t,THAN);
 _t=_t.getNextSibling();
 System.err.println("Found < ");
@@ -86,16 +76,12 @@ _t=_t.getNextSibling();
 }
  else if ((_t.getType() == LESS)) {
 AST __t514=_t;
-AST tmp102_AST_in=(AST)_t;
 match(_t,LESS);
 _t=_t.getFirstChild();
-AST tmp103_AST_in=(AST)_t;
 match(_t,THAN);
 _t=_t.getNextSibling();
-AST tmp104_AST_in=(AST)_t;
 match(_t,OR);
 _t=_t.getNextSibling();
-AST tmp105_AST_in=(AST)_t;
 match(_t,EQUAL);
 _t=_t.getNextSibling();
 System.err.println("Found <= ");

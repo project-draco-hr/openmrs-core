@@ -156,7 +156,6 @@
     w.write("\t/*** @see org.openmrs.arden.MlmRule#getType()*/\n" + "\tpublic String getType(){\n" + "\t\treturn " + str + ";\n"+ "\t}\n\n");
     t=(BaseAST)t.getNextSibling();
     log.debug(t.toStringTree());
-    @SuppressWarnings("unused") String knowledge_text=treeParser.knowledge_text(t,ardObj);
     Integer p=ardObj.getPriority();
     w.write("\t/*** @see org.openmrs.arden.MlmRule#getPriority()*/\n" + "\tpublic Integer getPriority(){\n" + "\t\treturn " + p + ";\n"+ "\t}\n\n");
     str=ardObj.getData();
@@ -251,7 +250,6 @@
     t=(BaseAST)parser.getAST();
     t=(BaseAST)t.getNextSibling().getNextSibling();
     log.debug(t.toStringTree());
-    @SuppressWarnings("unused") String knowledge=treeParser.knowledge(t,ardObj);
     ardObj.PrintEvaluateList("data");
     retVal=ardObj.WriteEvaluate(w,classname);
     if (retVal) {
