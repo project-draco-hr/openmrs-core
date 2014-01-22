@@ -4,8 +4,10 @@
   for (int x=0; x < conceptReferenceTermModel.getTermMaps().size(); x++) {
     if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
     ConceptReferenceTermMap map=conceptReferenceTermModel.getTermMaps().get(x);
-    if (map.getTermB() != null && !mappedTermIds.add(map.getTermB().getConceptReferenceTermId()))     continue;
     if (map != null && map.getTermB() != null) {
+      if (!mappedTermIds.add(map.getTermB().getConceptReferenceTermId())) {
+        continue;
+      }
       if (request.getParameter("_termMaps[" + x + "].exists") == null) {
         conceptReferenceTerm.removeConceptReferenceTermMap(map);
       }
