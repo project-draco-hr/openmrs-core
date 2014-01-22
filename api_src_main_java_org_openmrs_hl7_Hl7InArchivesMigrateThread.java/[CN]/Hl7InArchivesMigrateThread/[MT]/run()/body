@@ -1,11 +1,11 @@
 {
   Context.openSession();
   Context.setUserContext(userContext);
-  transferStatus=Status.RUNNING;
+  setTransferStatus(Status.RUNNING);
   while (isActive() && transferStatus == Status.RUNNING) {
     try {
       if (isActive())       Context.getHL7Service().migrateHl7InArchivesToFileSystem(progressStatusMap);
-      if (transferStatus != Status.STOPPED)       transferStatus=Status.COMPLETED;
+      if (transferStatus != Status.STOPPED)       setTransferStatus(Status.COMPLETED);
     }
  catch (    APIException api) {
       log.debug("Unable to migrate HL7 archive",api);
@@ -17,7 +17,7 @@
       }
     }
 catch (    Exception e) {
-      transferStatus=Status.ERROR;
+      setTransferStatus(Status.ERROR);
       log.warn("Some error occurred while migrating hl7 archives",e);
     }
   }

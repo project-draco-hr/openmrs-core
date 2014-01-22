@@ -7,12 +7,13 @@
   visit.setPatient(encounter.getPatient());
   try {
     if (encounterVisitMapping == null) {
-      encounterVisitMapping=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
+      LoadingCache<EncounterType,VisitType> temp=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
         public VisitType load(        EncounterType key) throws APIException {
           return loadVisitType(key);
         }
       }
 );
+      setEncounterVisitMapping(temp);
       Context.getAdministrationService().addGlobalPropertyListener(this);
     }
     VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());

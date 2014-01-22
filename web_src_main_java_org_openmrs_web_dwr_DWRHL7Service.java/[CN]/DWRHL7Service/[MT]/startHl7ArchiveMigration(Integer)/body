@@ -3,7 +3,7 @@
   try {
     Hl7InArchivesMigrateThread.setDaysKept(daysToKeep);
     Hl7InArchivesMigrateThread.setActive(true);
-    hl7MigrationThread=new Hl7InArchivesMigrateThread();
+    setHl7MigrationThread(new Hl7InArchivesMigrateThread());
     hl7MigrationThread.setName("HL7 Archive Migration Thread");
     hl7MigrationThread.start();
     return new Object[]{true};

@@ -1,7 +1,7 @@
 {
 synchronized (refreshingContextLock) {
     log.info("Done refreshing Context");
-    refreshingContext=false;
+    setRefreshingContext(false);
     refreshingContextLock.notifyAll();
   }
 }
