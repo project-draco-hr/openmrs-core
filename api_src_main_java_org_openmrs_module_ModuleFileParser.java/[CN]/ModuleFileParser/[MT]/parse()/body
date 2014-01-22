@@ -101,6 +101,7 @@
     module.setLog4j(log4jDoc);
     module.setMandatory(getMandatory(rootNode,configVersion,jarfile));
     module.setFile(moduleFile);
+    module.setConditionalResources(getConditionalResources(rootNode));
   }
   finally {
     try {

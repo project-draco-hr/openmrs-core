@@ -1,0 +1,10 @@
+{
+  String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?><module configVersion=\"1.2\">" + "<conditionalResources>     	<conditionalResource>     	" + "<path>/lib/htmlformentry-api-1.10*</path><openmrsVersion>1.10</openmrsVersion>"+ "</conditionalResource></conditionalResources></module>";
+  Element documentElement=getRootElement(xml);
+  ModuleFileParser moduleFileParser=new ModuleFileParser();
+  List<ModuleConditionalResource> conditionalResources=moduleFileParser.getConditionalResources(documentElement);
+  ModuleConditionalResource htmlformentry=new ModuleConditionalResource();
+  htmlformentry.setPath("/lib/htmlformentry-api-1.10*");
+  htmlformentry.setOpenmrsVersion("1.10");
+  assertThat(conditionalResources,contains(htmlformentry));
+}
