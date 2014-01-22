@@ -1,5 +1,4 @@
 {
-  if (getIdentifiers() == null)   identifiers=new LinkedHashSet<PatientIdentifier>();
   if (patientIdentifier != null) {
     patientIdentifier.setPatient(this);
     for (    PatientIdentifier currentId : getActiveIdentifiers()) {
@@ -7,6 +6,9 @@
         return;
       }
     }
+  }
+  if (identifiers == null) {
+    identifiers=new HashSet<PatientIdentifier>();
   }
   identifiers.add(patientIdentifier);
 }

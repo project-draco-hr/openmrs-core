@@ -40,10 +40,5 @@
   for (  Obs o : allObs) {
     if (o.getVoided() == true)     obs.add(o);
   }
-  if (obs != null) {
-    velocityContext.put("observations",obs);
-  }
- else {
-    report.append("No Observations found");
-  }
+  velocityContext.put("observations",obs);
 }
