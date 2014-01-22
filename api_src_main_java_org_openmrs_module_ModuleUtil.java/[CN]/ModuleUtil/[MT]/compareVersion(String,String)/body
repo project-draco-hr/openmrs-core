@@ -1,10 +1,20 @@
 {
+  String qualifierVersion="";
+  String qualifierValue="";
   try {
     if (version == null || value == null)     return 0;
     List<String> versions=new Vector<String>();
     List<String> values=new Vector<String>();
-    version=version.replace("-SNAPSHOT",".0");
-    value=value.replace("-SNAPSHOT",".0");
+    String separator="-";
+    String snapshotValue=".0";
+    if (isVersionWithQualifier(version)) {
+      qualifierVersion=version.substring(version.indexOf(separator));
+      version=version.replace(qualifierVersion,snapshotValue);
+    }
+    if (isVersionWithQualifier(value)) {
+      qualifierValue=value.substring(value.indexOf(separator));
+      value=value.replace(qualifierValue,snapshotValue);
+    }
     Collections.addAll(versions,version.split("\\."));
     Collections.addAll(values,value.split("\\."));
     while (versions.size() < values.size()) {
