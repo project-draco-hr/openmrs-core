@@ -1,11 +1,9 @@
 {
   String s="";
-  AST maintenance_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a="", b="";
   try {
 {
       AST __t564=_t;
-      AST tmp146_AST_in=(AST)_t;
       match(_t,MAINTENANCE);
       _t=_t.getFirstChild();
 {
@@ -14,10 +12,8 @@
 {
               if ((_t.getType() == FILENAME)) {
                 AST __t567=_t;
-                AST tmp147_AST_in=(AST)_t;
                 match(_t,FILENAME);
                 _t=_t.getFirstChild();
-                AST tmp148_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Filename: ";
@@ -31,10 +27,8 @@
               }
  else               if ((_t.getType() == MLMNAME)) {
                 AST __t568=_t;
-                AST tmp149_AST_in=(AST)_t;
                 match(_t,MLMNAME);
                 _t=_t.getFirstChild();
-                AST tmp150_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Filename: ";
@@ -48,10 +42,8 @@
               }
  else               if ((_t.getType() == VERSION)) {
                 AST __t569=_t;
-                AST tmp151_AST_in=(AST)_t;
                 match(_t,VERSION);
                 _t=_t.getFirstChild();
-                AST tmp152_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Version: ";
@@ -65,10 +57,8 @@
               }
  else               if ((_t.getType() == TITLE)) {
                 AST __t570=_t;
-                AST tmp153_AST_in=(AST)_t;
                 match(_t,TITLE);
                 _t=_t.getFirstChild();
-                AST tmp154_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Title: ";
@@ -82,10 +72,8 @@
               }
  else               if ((_t.getType() == AUTHOR)) {
                 AST __t571=_t;
-                AST tmp155_AST_in=(AST)_t;
                 match(_t,AUTHOR);
                 _t=_t.getFirstChild();
-                AST tmp156_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Author: ";
@@ -99,10 +87,8 @@
               }
  else               if ((_t.getType() == SPECIALIST)) {
                 AST __t572=_t;
-                AST tmp157_AST_in=(AST)_t;
                 match(_t,SPECIALIST);
                 _t=_t.getFirstChild();
-                AST tmp158_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Specialist: ";
@@ -116,10 +102,8 @@
               }
  else               if ((_t.getType() == DATE)) {
                 AST __t573=_t;
-                AST tmp159_AST_in=(AST)_t;
                 match(_t,DATE);
                 _t=_t.getFirstChild();
-                AST tmp160_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Date: ";
@@ -133,10 +117,8 @@
               }
  else               if ((_t.getType() == INSTITUTION)) {
                 AST __t574=_t;
-                AST tmp161_AST_in=(AST)_t;
                 match(_t,INSTITUTION);
                 _t=_t.getFirstChild();
-                AST tmp162_AST_in=(AST)_t;
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 s+=" Institution: ";
@@ -152,7 +134,6 @@
                 a=textAST(_t,obj);
                 _t=_retTree;
                 s+=a;
-                AST tmp163_AST_in=(AST)_t;
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
                 s+="\n";

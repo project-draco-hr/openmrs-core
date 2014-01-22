@@ -1,7 +1,6 @@
 {
   String s="";
-  AST data_AST_in=(_t == ASTNULL) ? null : (AST)_t;
-  String a, b;
+  String a;
   try {
 {
       _loop342:       do {
@@ -45,7 +44,6 @@ default :
       }
  else       if ((_t.getType() == ENDIF)) {
         AST __t341=_t;
-        AST tmp1_AST_in=(AST)_t;
         match(_t,ENDIF);
         _t=_t.getFirstChild();
         System.err.println("ENDIF FOUND");
@@ -69,7 +67,6 @@ default :
  while (true);
 }
 {
-AST tmp2_AST_in=(AST)_t;
 match(_t,ENDBLOCK);
 _t=_t.getNextSibling();
 }

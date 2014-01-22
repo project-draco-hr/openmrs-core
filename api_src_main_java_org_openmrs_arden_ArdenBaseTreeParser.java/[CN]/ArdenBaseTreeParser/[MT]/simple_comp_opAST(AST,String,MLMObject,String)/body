@@ -1,14 +1,11 @@
 {
   String s="";
-  AST simple_comp_opAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
-  String a, b;
   try {
     if (_t == null)     _t=ASTNULL;
 switch (_t.getType()) {
 case EQUALS:
 {
         AST __t503=_t;
-        AST tmp88_AST_in=(AST)_t;
         match(_t,EQUALS);
         _t=_t.getFirstChild();
         System.err.println("Found = ");
@@ -20,7 +17,6 @@ case EQUALS:
 case GTE:
 {
       AST __t504=_t;
-      AST tmp89_AST_in=(AST)_t;
       match(_t,GTE);
       _t=_t.getFirstChild();
       System.err.println("Found >= ");
@@ -32,7 +28,6 @@ case GTE:
 case GT:
 {
     AST __t505=_t;
-    AST tmp90_AST_in=(AST)_t;
     match(_t,GT);
     _t=_t.getFirstChild();
     System.err.println("Found > ");
@@ -44,7 +39,6 @@ case GT:
 case LT:
 {
   AST __t506=_t;
-  AST tmp91_AST_in=(AST)_t;
   match(_t,LT);
   _t=_t.getFirstChild();
   System.err.println("Found < ");
@@ -56,7 +50,6 @@ case LT:
 case LTE:
 {
 AST __t507=_t;
-AST tmp92_AST_in=(AST)_t;
 match(_t,LTE);
 _t=_t.getFirstChild();
 System.err.println("Found <= ");
@@ -68,7 +61,6 @@ break;
 case NE:
 {
 AST __t508=_t;
-AST tmp93_AST_in=(AST)_t;
 match(_t,NE);
 _t=_t.getFirstChild();
 System.err.println("Found <> ");
