@@ -1,0 +1,9 @@
+{
+  if (patient == null) {
+    throw new IllegalArgumentException("Patient is required when fetch active orders");
+  }
+  if (asOfDate == null) {
+    asOfDate=new Date();
+  }
+  return dao.getActiveOrders(patient,orderClass,careSetting,asOfDate);
+}

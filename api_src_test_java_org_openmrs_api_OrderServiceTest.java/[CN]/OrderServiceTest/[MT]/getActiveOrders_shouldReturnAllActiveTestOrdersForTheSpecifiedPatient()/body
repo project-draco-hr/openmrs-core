@@ -1,0 +1,6 @@
+{
+  Patient patient=patientService.getPatient(2);
+  List<TestOrder> orders=orderService.getActiveOrders(patient,TestOrder.class,null,null);
+  assertEquals(1,orders.size());
+  assertEquals(orders.get(0),orderService.getOrder(7));
+}

@@ -4,6 +4,6 @@
   if (concepts.size() > 0)   crit.add(Restrictions.in("concept",concepts));
   if (orderers.size() > 0)   crit.add(Restrictions.in("orderer",orderers));
   if (encounters.size() > 0)   crit.add(Restrictions.in("encounter",encounters));
-  crit.addOrder(org.hibernate.criterion.Order.desc("dateCreated"));
+  crit.addOrder(org.hibernate.criterion.Order.desc("startDate"));
   return crit.list();
 }
