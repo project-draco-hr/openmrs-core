@@ -1,7 +1,7 @@
 {
+  String separator="-";
   if (value != null && !value.equals("")) {
-    String separator="-";
-    if (value.indexOf("*") > 0 || value.indexOf(separator) > 0) {
+    if ((value.indexOf("*") > 0 || value.indexOf(separator) > 0) && (!isVersionWithQualifier(value))) {
       String lowerBound=value;
       String upperBound=value;
       int indexOfSeparator=value.indexOf(separator);
