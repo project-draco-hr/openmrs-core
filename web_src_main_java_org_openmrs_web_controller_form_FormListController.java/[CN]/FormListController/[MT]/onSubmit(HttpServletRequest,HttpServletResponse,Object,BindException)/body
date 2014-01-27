@@ -4,8 +4,8 @@
   if (Context.isAuthenticated()) {
     String[] formList=request.getParameterValues("formId");
     FormService fs=Context.getFormService();
-    String success="";
-    String error="";
+    StringBuilder success=new StringBuilder("");
+    StringBuilder error=new StringBuilder("");
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String deleted=msa.getMessage("general.deleted");
     String notDeleted=msa.getMessage("general.cannot.delete");
@@ -15,22 +15,22 @@
       for (      String p : formList) {
         try {
           fs.purgeForm(fs.getForm(Integer.valueOf(p)));
-          if (!success.equals(""))           success+="<br/>";
-          success+=textForm + " " + p+ " "+ deleted;
+          if (!success.equals(""))           success.append("<br/>");
+          success.append(textForm).append(" ").append(p).append(" ").append(deleted);
         }
  catch (        APIException e) {
           log.warn("Error deleting form",e);
-          if (!error.equals(""))           error+="<br/>";
-          error+=textForm + " " + p+ " "+ notDeleted;
+          if (!error.equals(""))           error.append("<br/>");
+          error.append(textForm).append(" ").append(p).append(" ").append(notDeleted);
         }
       }
     }
  else {
-      success+=noneDeleted;
+      success.append(noneDeleted);
     }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
   }
   return new ModelAndView(new RedirectView(view));
 }

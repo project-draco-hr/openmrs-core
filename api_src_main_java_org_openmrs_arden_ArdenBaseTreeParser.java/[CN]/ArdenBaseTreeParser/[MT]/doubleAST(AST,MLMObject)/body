@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   AST str=null;
   String a="", b="";
   try {
@@ -15,7 +15,7 @@
                 _t=_t.getNextSibling();
               }
               a=str.getText();
-              s+=a;
+              s.append(a);
             }
  else {
               break _loop587;
@@ -33,5 +33,5 @@
     }
   }
   _retTree=_t;
-  return s;
+  return s.toString();
 }

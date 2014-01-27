@@ -1,7 +1,7 @@
 {
   OutputStreamWriter wr=null;
   BufferedReader rd=null;
-  String response="";
+  StringBuilder response=new StringBuilder("");
   StringBuffer data=null;
   try {
     for (    Map.Entry<String,String> entry : dataToPost.entrySet()) {
@@ -26,7 +26,7 @@
     rd=new BufferedReader(new InputStreamReader(conn.getInputStream()));
     String line;
     while ((line=rd.readLine()) != null) {
-      response=response + line + "\n";
+      response.append(line).append("\n");
     }
   }
  catch (  Exception e) {
@@ -45,5 +45,5 @@
  catch (    Exception e) {
     }
   }
-  return response;
+  return response.toString();
 }

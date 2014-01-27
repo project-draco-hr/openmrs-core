@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   AST ift=null;
   AST val=null;
   AST val2=null;
@@ -21,7 +21,8 @@ case ID:
           _t=_t.getFirstChild();
           a=ift.getText();
           System.err.println("text = " + a);
-          s=a;
+          s.delete(0,s.length());
+          s.append(a);
           _t=__t478;
           _t=_t.getNextSibling();
           break;
@@ -169,5 +170,5 @@ _t=_t.getNextSibling();
 }
 }
 _retTree=_t;
-return s;
+return s.toString();
 }

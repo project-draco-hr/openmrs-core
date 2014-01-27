@@ -1,27 +1,17 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   if (extras == null)   extras=new String[]{};
   if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier) || DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
     Integer num=modifierNum == null ? 1 : modifierNum;
-    s+="#set($arr = [";
+    s.append("#set($arr = [");
     for (Integer x=0; x < extras.length; x++) {
-      s+="'" + extras[x] + "'";
-      if (!x.equals(extras.length - 1))       s+=",";
+      s.append("'" + extras[x] + "'");
+      if (!x.equals(extras.length - 1))       s.append(",");
     }
-    s+="])";
-    if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier))     s+="#set($obsValues = $fn.getLastNObsWithValues(" + num + ", '"+ conceptId+ "', $arr))";
- else     if (DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier))     s+="#set($obsValues = $fn.getFirstNObsWithValues(" + num + ", '"+ conceptId+ "', $arr))";
-    s+="#foreach($vals in $obsValues)";
-    s+="#if($velocityCount > 1)";
-    s+="$!{fn.getSeparator()}";
-    s+="#end";
-    s+="#foreach($val in $vals)";
-    s+="#if($velocityCount > 1)";
-    s+="$!{fn.getSeparator()}";
-    s+="#end";
-    s+="$!{fn.getValueAsString($val)}";
-    s+="#end";
-    s+="#end\n";
+    s.append("])");
+    if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier))     s.append("#set($obsValues = $fn.getLastNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
+ else     if (DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier))     s.append("#set($obsValues = $fn.getFirstNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
+    s.append("#foreach($vals in $obsValues)").append("#if($velocityCount > 1)").append("$!{fn.getSeparator()}").append("#end").append("#foreach($val in $vals)").append("#if($velocityCount > 1)").append("$!{fn.getSeparator()}").append("#end").append("$!{fn.getValueAsString($val)}").append("#end").append("#end\n");
   }
  else {
     String function=" ";
@@ -32,24 +22,18 @@
     if (extras.length < 1) {
       function="$!{fn.getValueAsString(" + function;
       function+="('" + conceptId + "'))}";
-      s+=function;
+      s.append(function);
     }
  else {
-      s+="#set($arr = [";
+      s.append("#set($arr = [");
       for (Integer x=0; x < extras.length; x++) {
-        s+="'" + extras[x] + "'";
-        if (!x.equals(extras.length - 1))         s+=",";
+        s.append("'").append(extras[x]).append("'");
+        if (!x.equals(extras.length - 1))         s.append(",");
       }
-      s+="])";
+      s.append("])");
       function+="WithValues('" + conceptId + "', $arr)";
-      s+="#set($obsRow =" + function + ")";
-      s+="#foreach($val in $obsRow)";
-      s+="#if($velocityCount > 1)";
-      s+="$!{fn.getSeparator()}";
-      s+="#end";
-      s+="$!{fn.getValueAsString($val)}";
-      s+="#end\n";
+      s.append("#set($obsRow =" + function + ")").append("#foreach($val in $obsRow)").append("#if($velocityCount > 1)").append("$!{fn.getSeparator()}").append("#end").append("$!{fn.getValueAsString($val)}").append("#end\n");
     }
   }
-  return s;
+  return s.toString();
 }

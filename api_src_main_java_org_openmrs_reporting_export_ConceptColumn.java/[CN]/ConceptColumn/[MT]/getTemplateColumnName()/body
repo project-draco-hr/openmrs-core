@@ -1,23 +1,22 @@
 {
   Concept concept=Context.getConceptService().getConcept(conceptId);
-  String toReturn;
+  StringBuilder toReturn;
   if (!concept.isSet()) {
-    toReturn=getTemplateSingleConceptColumnName(columnName);
+    toReturn=new StringBuilder(getTemplateSingleConceptColumnName(columnName));
   }
  else {
     List<Concept> setMembers=Context.getConceptService().getConceptsByConceptSet(concept);
-    toReturn="";
+    toReturn=new StringBuilder("");
     boolean firstMember=true;
     for (    Concept setMember : setMembers) {
       if (firstMember) {
-        toReturn+=getTemplateSingleConceptColumnName(setMember.getName().getName());
+        toReturn.append(getTemplateSingleConceptColumnName(setMember.getName().getName()));
         firstMember=false;
       }
  else {
-        toReturn+="$!{fn.getSeparator()}";
-        toReturn+=getTemplateSingleConceptColumnName(setMember.getName().getName());
+        toReturn.append("$!{fn.getSeparator()}").append(getTemplateSingleConceptColumnName(setMember.getName().getName()));
       }
     }
   }
-  return toReturn;
+  return toReturn.toString();
 }

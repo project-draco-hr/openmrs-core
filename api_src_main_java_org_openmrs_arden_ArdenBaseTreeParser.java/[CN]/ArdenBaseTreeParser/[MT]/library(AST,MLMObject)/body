@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   String a="", b="";
   try {
 {
@@ -17,12 +17,12 @@ case PURPOSE:
               _t=_t.getFirstChild();
               match(_t,COLON);
               _t=_t.getNextSibling();
-              s+=" Purpose: ";
+              s.append(" Purpose: ");
               b=textAST(_t,obj);
               _t=_retTree;
               obj.setPurpose(b);
-              s+=b;
-              s+="\n";
+              s.append(b);
+              s.append("\n");
               _t=__t592;
               _t=_t.getNextSibling();
               break;
@@ -34,12 +34,12 @@ case EXPLANATION:
             _t=_t.getFirstChild();
             match(_t,COLON);
             _t=_t.getNextSibling();
-            s+=" Explanation: ";
+            s.append(" Explanation: ");
             b=textAST(_t,obj);
             _t=_retTree;
             obj.setExplanation(b);
-            s+=b;
-            s+="\n";
+            s.append(b);
+            s.append("\n");
             _t=__t593;
             _t=_t.getNextSibling();
             break;
@@ -51,12 +51,12 @@ case KEYWORDS:
           _t=_t.getFirstChild();
           match(_t,COLON);
           _t=_t.getNextSibling();
-          s+=" Keywords: ";
+          s.append(" Keywords: ");
           b=textAST(_t,obj);
           _t=_retTree;
           obj.setKeywords(b);
-          s+=b;
-          s+="\n";
+          s.append(b);
+          s.append("\n");
           _t=__t594;
           _t=_t.getNextSibling();
           break;
@@ -68,12 +68,12 @@ case CITATIONS:
         _t=_t.getFirstChild();
         match(_t,COLON);
         _t=_t.getNextSibling();
-        s+=" Citations: ";
+        s.append(" Citations: ");
         b=textAST(_t,obj);
         _t=_retTree;
         obj.setCitations(b);
-        s+=b;
-        s+="\n";
+        s.append(b);
+        s.append("\n");
         _t=__t595;
         _t=_t.getNextSibling();
         break;
@@ -85,22 +85,22 @@ case LINKS:
       _t=_t.getFirstChild();
       match(_t,COLON);
       _t=_t.getNextSibling();
-      s+=" Links: ";
+      s.append(" Links: ");
 {
         if (_t == null)         _t=ASTNULL;
         if ((_t.getType() == HTTP)) {
           AST __t598=_t;
           match(_t,HTTP);
           _t=_t.getFirstChild();
-          s+="http://";
+          s.append("http://");
           _t=__t598;
           _t=_t.getNextSibling();
         }
  else         if ((_tokenSet_11.member(_t.getType()))) {
           a=textAST(_t,obj);
           _t=_retTree;
-          s+=a;
-          s+="\n";
+          s.append(a);
+          s.append("\n");
         }
  else         if ((_tokenSet_11.member(_t.getType()))) {
         }
@@ -111,8 +111,8 @@ case LINKS:
       b=textAST(_t,obj);
       _t=_retTree;
       obj.setLinks(b);
-      s+=b;
-      s+="\n";
+      s.append(b);
+      s.append("\n");
       _t=__t596;
       _t=_t.getNextSibling();
       break;
@@ -136,5 +136,5 @@ _t=_t.getNextSibling();
 }
 }
 _retTree=_t;
-return s;
+return s.toString();
 }

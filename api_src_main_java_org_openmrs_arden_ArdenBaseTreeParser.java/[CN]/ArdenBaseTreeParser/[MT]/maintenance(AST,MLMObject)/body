@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   String a="", b="";
   try {
 {
@@ -16,12 +16,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Filename: ";
+                s.append(" Filename: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setClassName(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t567;
                 _t=_t.getNextSibling();
               }
@@ -31,12 +31,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Filename: ";
+                s.append(" Filename: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setClassName(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t568;
                 _t=_t.getNextSibling();
               }
@@ -46,12 +46,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Version: ";
+                s.append(" Version: ");
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setVersion(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t569;
                 _t=_t.getNextSibling();
               }
@@ -61,12 +61,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Title: ";
+                s.append(" Title: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setTitle(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t570;
                 _t=_t.getNextSibling();
               }
@@ -76,12 +76,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Author: ";
+                s.append(" Author: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setAuthor(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t571;
                 _t=_t.getNextSibling();
               }
@@ -91,12 +91,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Specialist: ";
+                s.append(" Specialist: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setSpecialist(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t572;
                 _t=_t.getNextSibling();
               }
@@ -106,12 +106,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Date: ";
+                s.append(" Date: ");
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setDate(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t573;
                 _t=_t.getNextSibling();
               }
@@ -121,22 +121,22 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Institution: ";
+                s.append(" Institution: ");
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setInstitution(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t574;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
-                s+=a;
+                s.append(a);
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
-                s+="\n";
+                s.append("\n");
               }
  else {
                 throw new NoViableAltException(_t);
@@ -160,5 +160,5 @@
     }
   }
   _retTree=_t;
-  return s;
+  return s.toString();
 }
