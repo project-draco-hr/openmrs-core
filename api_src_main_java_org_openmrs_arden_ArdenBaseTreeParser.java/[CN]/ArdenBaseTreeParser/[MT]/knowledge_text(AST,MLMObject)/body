@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   String a="", b="";
   try {
 {
@@ -20,8 +20,8 @@
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setData(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t555;
                 _t=_t.getNextSibling();
               }
@@ -34,8 +34,8 @@
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setPriority(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t556;
                 _t=_t.getNextSibling();
               }
@@ -48,8 +48,8 @@
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setLogic(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t557;
                 _t=_t.getNextSibling();
               }
@@ -62,8 +62,8 @@
                 b=textAST(_t,obj);
                 _t=_retTree;
                 obj.setAction(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t558;
                 _t=_t.getNextSibling();
               }
@@ -76,8 +76,8 @@
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setAgeMin(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t559;
                 _t=_t.getNextSibling();
               }
@@ -90,18 +90,18 @@
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setAgeMax(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t560;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
-                s+=a;
+                s.append(a);
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
-                s+="\n";
+                s.append("\n");
               }
  else {
                 throw new NoViableAltException(_t);
@@ -125,5 +125,5 @@
     }
   }
   _retTree=_t;
-  return s;
+  return s.toString();
 }

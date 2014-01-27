@@ -1,6 +1,6 @@
 {
-  String s="";
-  String a, b;
+  StringBuilder s=new StringBuilder("");
+  String a="";
   try {
 {
 {
@@ -14,7 +14,8 @@ case ELSEIF:
             a="ELSEIF";
             System.err.println("ELSEIF");
             obj.AddToEvaluateList("logic",a);
-            s=exprAST(_t,"logic",obj);
+            s.delete(0,s.length());
+            s.append(exprAST(_t,"logic",obj));
             _t=_retTree;
             match(_t,THEN);
             _t=_t.getNextSibling();
@@ -29,9 +30,10 @@ case ELSE:
           match(_t,ELSE);
           _t=_t.getFirstChild();
           a="ELSE_";
-          s=a + Integer.toString(i);
+          s.delete(0,s.length());
+          s.append(a.toString() + Integer.toString(i));
           System.err.println("ELSE");
-          obj.AddToEvaluateList("logic",s);
+          obj.AddToEvaluateList("logic",s.toString());
           _t=__t524;
           _t=_t.getNextSibling();
           break;
@@ -51,5 +53,5 @@ _t=_t.getNextSibling();
 }
 }
 _retTree=_t;
-return s;
+return s.toString();
 }

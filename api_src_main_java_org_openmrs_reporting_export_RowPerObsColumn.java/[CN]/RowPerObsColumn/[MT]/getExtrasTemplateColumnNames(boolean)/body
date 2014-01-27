@@ -1,11 +1,10 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   if (extras != null) {
     for (    String ext : extras) {
-      s+="$!{fn.getSeparator()}";
-      s+=columnName + "_" + ext;
-      if (appendCount)       s+="_($velocityCount)";
+      s.append("$!{fn.getSeparator()}").append(columnName).append("_").append(ext);
+      if (appendCount)       s.append("_($velocityCount)");
     }
   }
-  return s;
+  return s.toString();
 }

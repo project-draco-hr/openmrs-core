@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   AST id=null;
   AST i=null;
   AST idat=null;
@@ -23,7 +23,7 @@ case ACTION_OP:
                 _t=_t.getNextSibling();
                 a=id.getText();
                 b="||" + a + "||";
-                s+=b;
+                s.append(b);
                 match(_t,ACTION_OP);
                 _t=_t.getNextSibling();
               }
@@ -35,7 +35,7 @@ case STRING_LITERAL:
               i=(AST)_t;
               match(_t,STRING_LITERAL);
               _t=_t.getNextSibling();
-              s+=i.getText();
+              s.append(i.getText());
             }
             break;
           }
@@ -47,7 +47,7 @@ default :
   }
  while (true);
 }
-obj.addAction(s);
+obj.addAction(s.toString());
 {
 switch (_t.getType()) {
 case AT:
@@ -81,5 +81,5 @@ _t=_t.getNextSibling();
 }
 }
 _retTree=_t;
-return s;
+return s.toString();
 }

@@ -1,5 +1,5 @@
 {
-  String s="";
+  StringBuilder s=new StringBuilder("");
   String a="", b="";
   try {
 {
@@ -18,7 +18,8 @@
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting Data -------");
-                s=data(_t,obj);
+                s.delete(0,s.length());
+                s.append(data(_t,obj));
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Data -------");
@@ -31,12 +32,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Priority: ";
+                s.append(" Priority: ");
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setPriority(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t544;
                 _t=_t.getNextSibling();
               }
@@ -47,7 +48,8 @@
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting Logic -------");
-                s=logic(_t,obj);
+                s.delete(0,s.length());
+                s.append(logic(_t,obj));
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Logic -------");
@@ -61,7 +63,8 @@
                 match(_t,COLON);
                 _t=_t.getNextSibling();
                 System.err.println("-----------Starting ACTION -------");
-                s=action(_t,obj);
+                s.delete(0,s.length());
+                s.append(action(_t,obj));
                 _t=_retTree;
                 System.err.println("\n");
                 System.err.println("-----------End Action -------");
@@ -74,12 +77,12 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Age_Min: ";
+                s.append(" Age_Min: ");
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setAgeMin(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t547;
                 _t=_t.getNextSibling();
               }
@@ -89,22 +92,22 @@
                 _t=_t.getFirstChild();
                 match(_t,COLON);
                 _t=_t.getNextSibling();
-                s+=" Age_Max: ";
+                s.append(" Age_Max: ");
                 b=doubleAST(_t,obj);
                 _t=_retTree;
                 obj.setAgeMax(b);
-                s+=b;
-                s+="\n";
+                s.append(b);
+                s.append("\n");
                 _t=__t548;
                 _t=_t.getNextSibling();
               }
  else               if (((_t.getType() >= AND && _t.getType() <= TERM_LITERAL))) {
                 a=textAST(_t,obj);
                 _t=_retTree;
-                s+=a;
+                s.append(a);
                 match(_t,ENDBLOCK);
                 _t=_t.getNextSibling();
-                s+="\n";
+                s.append("\n");
               }
  else {
                 throw new NoViableAltException(_t);
@@ -128,5 +131,5 @@
     }
   }
   _retTree=_t;
-  return s;
+  return s.toString();
 }
