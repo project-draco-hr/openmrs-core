@@ -1,21 +1,4 @@
 {
-  if (person.getPersonCreator() == null) {
-    person.setPersonCreator(creator);
-  }
-  if (person.getPersonDateCreated() == null) {
-    person.setPersonDateCreated(dateCreated);
-  }
-  boolean hasId;
-  try {
-    hasId=person.getId() != null;
-  }
- catch (  UnsupportedOperationException e) {
-    hasId=true;
-  }
-  if (hasId) {
-    person.setPersonChangedBy(creator);
-    person.setPersonDateChanged(dateCreated);
-  }
   if (person.getAddresses() != null && person.getAddresses().size() > 0) {
     for (    PersonAddress pAddress : person.getAddresses()) {
       pAddress.setPerson(person);
