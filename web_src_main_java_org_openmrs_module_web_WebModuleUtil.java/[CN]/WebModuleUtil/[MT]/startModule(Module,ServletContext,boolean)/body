@@ -6,6 +6,8 @@
     log.debug("Done copying messages");
     boolean moduleNeedsContextRefresh=false;
     JarFile jarFile=null;
+    OutputStream outStream=null;
+    InputStream inStream=null;
     try {
       File modFile=mod.getFile();
       jarFile=new JarFile(modFile);
@@ -37,11 +39,9 @@
             if (!parentDir.exists()) {
               parentDir.mkdirs();
             }
-            OutputStream outStream=new FileOutputStream(outFile,false);
-            InputStream inStream=jarFile.getInputStream(entry);
+            outStream=new FileOutputStream(outFile,false);
+            inStream=jarFile.getInputStream(entry);
             OpenmrsUtil.copyFile(inStream,outStream);
-            inStream.close();
-            outStream.close();
           }
         }
  else         if (name.equals("moduleApplicationContext.xml") || name.equals("webModuleApplicationContext.xml")) {
@@ -63,6 +63,22 @@
         }
  catch (        IOException io) {
           log.warn("Couldn't close jar file: " + jarFile.getName(),io);
+        }
+      }
+      if (inStream != null) {
+        try {
+          inStream.close();
+        }
+ catch (        IOException io) {
+          log.warn("Couldn't close InputStream: " + io);
+        }
+      }
+      if (outStream != null) {
+        try {
+          outStream.close();
+        }
+ catch (        IOException io) {
+          log.warn("Couldn't close OutputStream: " + io);
         }
       }
     }
