@@ -5,7 +5,9 @@
     Integer num=modifierNum == null ? 1 : modifierNum;
     s.append("#set($arr = [");
     for (Integer x=0; x < extras.length; x++) {
-      s.append("'" + extras[x] + "'");
+      s.append("'");
+      s.append(extras[x]);
+      s.append("'");
       if (!x.equals(extras.length - 1))       s.append(",");
     }
     s.append("])");
