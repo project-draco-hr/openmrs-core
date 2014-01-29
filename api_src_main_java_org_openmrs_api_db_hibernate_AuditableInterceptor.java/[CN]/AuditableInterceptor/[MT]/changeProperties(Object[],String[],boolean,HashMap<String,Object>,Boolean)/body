@@ -1,0 +1,8 @@
+{
+  for (  String property : propertyValues.keySet()) {
+    if (changePropertyValue(currentState,propertyNames,property,propertyValues.get(property),setNullOnly)) {
+      objectWasChanged=true;
+    }
+  }
+  return objectWasChanged;
+}
