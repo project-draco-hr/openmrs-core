@@ -7,7 +7,7 @@
     public void run(){
       try {
         String connectionUsername;
-        String connectionPassword;
+        StringBuilder connectionPassword=new StringBuilder();
         if (!wizardModel.hasCurrentOpenmrsDatabase) {
           setMessage("Create database");
           setExecutingTask(WizardTask.CREATE_SCHEMA);
@@ -45,14 +45,14 @@
           setExecutingTask(WizardTask.CREATE_DB_USER);
           connectionUsername=wizardModel.databaseName + "_user";
           if (connectionUsername.length() > 16)           connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
-          connectionPassword="";
+          connectionPassword.append("");
           String chars="acdeghijklmnopqrtvwxyzACDEGHIJKLMNOPQRTVWXYZ0123456789.|~@#^&";
           Random r=new Random();
           StringBuilder randomStr=new StringBuilder("");
           for (int x=0; x < 12; x++) {
             randomStr.append(chars.charAt(r.nextInt(chars.length())));
           }
-          connectionPassword+=randomStr;
+          connectionPassword.append(randomStr);
           String host="'%'";
           if (wizardModel.databaseConnection.contains("localhost")) {
             host="'localhost'";
@@ -60,7 +60,7 @@
           String sql="drop user '?'@" + host;
           executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
           sql="create user '?'@" + host + " identified by '?'";
-          if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
+          if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword.toString())) {
             wizardModel.workLog.add("Created user " + connectionUsername);
           }
  else {
@@ -80,11 +80,12 @@
         }
  else {
           connectionUsername=wizardModel.currentDatabaseUsername;
-          connectionPassword=wizardModel.currentDatabasePassword;
+          connectionPassword.setLength(0);
+          connectionPassword.append(wizardModel.currentDatabasePassword);
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
         finalDatabaseConnectionString=finalDatabaseConnectionString.replace("@APPLICATIONDATADIR@",OpenmrsUtil.getApplicationDataDirectory().replace("\\","/"));
-        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+        if (!verifyConnection(connectionUsername,connectionPassword.toString(),finalDatabaseConnectionString)) {
           setMessage("Verify that the database connection works");
           reportError("Unable to connect to database",DEFAULT_PAGE);
           return;
@@ -152,7 +153,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
               }
               setCompletedPercentage(40);
               setMessage("Loading imported test data...");
-              importTestDataSet(inData,finalDatabaseConnectionString,connectionUsername,connectionPassword);
+              importTestDataSet(inData,finalDatabaseConnectionString,connectionUsername,connectionPassword.toString());
               wizardModel.workLog.add("Imported test data");
               addExecutedTask(WizardTask.IMPORT_TEST_DATA);
               setCompletedPercentage(0);
