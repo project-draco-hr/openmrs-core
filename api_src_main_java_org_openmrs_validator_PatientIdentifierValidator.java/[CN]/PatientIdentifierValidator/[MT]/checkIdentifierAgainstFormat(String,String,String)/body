@@ -9,7 +9,7 @@
   }
   if (!identifier.matches(format)) {
     log.debug("The two DO NOT match");
-    throw new InvalidIdentifierFormatException(getMessage("PatientIdentifier.error.invalidFormat",identifier,format));
+    throw new InvalidIdentifierFormatException(getMessage("PatientIdentifier.error.invalidFormat",identifier,StringUtils.isNotBlank(formatDescription) ? formatDescription : format));
   }
   log.debug("The two match!!");
 }
