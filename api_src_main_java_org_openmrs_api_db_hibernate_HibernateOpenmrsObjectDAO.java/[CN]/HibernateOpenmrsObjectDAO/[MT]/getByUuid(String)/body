@@ -1,0 +1,4 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(mappedClass);
+  return (T)crit.add(Restrictions.eq("uuid",uuid)).uniqueResult();
+}
