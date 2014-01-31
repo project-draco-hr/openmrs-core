@@ -1,5 +1,7 @@
 {
-  if (patient == null)   throw new IllegalArgumentException("patient is required");
+  if (patient == null || concept == null) {
+    throw new IllegalArgumentException("patient and concept are required");
+  }
   List<Concept> concepts=new Vector<Concept>();
   concepts.add(concept);
   List<Patient> patients=new Vector<Patient>();
