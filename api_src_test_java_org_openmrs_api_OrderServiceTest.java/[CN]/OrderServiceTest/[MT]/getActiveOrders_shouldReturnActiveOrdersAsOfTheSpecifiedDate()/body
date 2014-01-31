@@ -41,9 +41,6 @@
   assertThat(orders,hasItems(expectedOrders4));
   asOfDate=Context.getDateFormat().parse("04/12/2008");
   orders=orderService.getActiveOrders(patient,Order.class,null,asOfDate);
-  for (  Order o : orders) {
-    System.out.println(o.getOrderId());
-  }
   assertEquals(5,orders.size());
   Order[] expectedOrders5={orderService.getOrder(222),orderService.getOrder(3),orderService.getOrder(444),orderService.getOrder(5),orderService.getOrder(7)};
   assertThat(orders,hasItems(expectedOrders5));
