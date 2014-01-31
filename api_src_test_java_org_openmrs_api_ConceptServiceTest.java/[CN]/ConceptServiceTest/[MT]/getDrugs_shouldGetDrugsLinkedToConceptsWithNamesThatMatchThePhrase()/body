@@ -1,0 +1,9 @@
+{
+  final Integer expectedDrugId=2;
+  List<Drug> drugs=conceptService.getDrugs("stav",null,false,false);
+  assertEquals(1,drugs.size());
+  assertEquals(expectedDrugId,drugs.get(0).getDrugId());
+  drugs=conceptService.getDrugs("amiv",null,false,false);
+  assertEquals(1,drugs.size());
+  assertEquals(expectedDrugId,drugs.get(0).getDrugId());
+}

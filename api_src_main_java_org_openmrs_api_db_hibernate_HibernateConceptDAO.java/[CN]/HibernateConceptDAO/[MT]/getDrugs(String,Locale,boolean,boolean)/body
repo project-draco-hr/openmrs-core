@@ -1,0 +1,27 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
+  criteria.setResultTransformer(DistinctRootEntityResultTransformer.INSTANCE);
+  Disjunction searchPhraseDisjunction=Restrictions.disjunction();
+  searchPhraseDisjunction.add(Restrictions.ilike("drug.name",searchPhrase,MatchMode.ANYWHERE));
+  criteria.createAlias("drug.concept","drugConcept",Criteria.LEFT_JOIN);
+  criteria.createAlias("drugConcept.names","conceptName",Criteria.LEFT_JOIN);
+  Conjunction conceptNameConjunction=Restrictions.conjunction();
+  conceptNameConjunction.add(Restrictions.ilike("conceptName.name",searchPhrase,MatchMode.ANYWHERE));
+  if (locale != null) {
+    List<Locale> locales=new ArrayList<Locale>(2);
+    locales.add(locale);
+    if (!exactLocale && StringUtils.isNotBlank(locale.getCountry())) {
+      locales.add(new Locale(locale.getLanguage()));
+    }
+    conceptNameConjunction.add(Restrictions.in("conceptName.locale",locales));
+  }
+  searchPhraseDisjunction.add(conceptNameConjunction);
+  criteria.createAlias("drug.drugReferenceMaps","map",Criteria.LEFT_JOIN);
+  criteria.createAlias("map.conceptReferenceTerm","term",Criteria.LEFT_JOIN);
+  searchPhraseDisjunction.add(Restrictions.ilike("term.code",searchPhrase,MatchMode.ANYWHERE));
+  criteria.add(searchPhraseDisjunction);
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("drug.retired",false));
+  }
+  return criteria.list();
+}

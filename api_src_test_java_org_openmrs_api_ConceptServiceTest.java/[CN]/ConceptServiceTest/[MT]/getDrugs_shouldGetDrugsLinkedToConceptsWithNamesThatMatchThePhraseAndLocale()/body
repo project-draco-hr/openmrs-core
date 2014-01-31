@@ -1,0 +1,9 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-drugSearch.xml");
+  final String searchPhrase="some";
+  List<Drug> drugs=conceptService.getDrugs(searchPhrase,Locale.FRENCH,true,false);
+  assertEquals(0,drugs.size());
+  drugs=conceptService.getDrugs(searchPhrase,Locale.CANADA_FRENCH,true,false);
+  assertEquals(1,drugs.size());
+  assertEquals(3,drugs.get(0).getDrugId().intValue());
+}
