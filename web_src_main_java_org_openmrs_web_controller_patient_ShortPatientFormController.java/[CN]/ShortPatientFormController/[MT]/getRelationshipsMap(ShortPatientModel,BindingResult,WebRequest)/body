@@ -1,6 +1,6 @@
 {
   String showRelationships=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEWPATIENTFORM_SHOW_RELATIONSHIPS,"false");
-  if ("false".equals(showRelationships)) {
+  if ("false".equals(showRelationships) || result.hasErrors()) {
     return new LinkedHashMap<String,Relationship>();
   }
   Person person=patientModel.getPatient();
