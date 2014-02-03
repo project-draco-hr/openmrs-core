@@ -1,7 +1,6 @@
 {
   executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
   executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueReason.xml");
-  OrderService orderService=Context.getOrderService();
   Order order=orderService.getOrderByOrderNumber("111");
   Date discontinueDate=new Date();
   Concept concept=Context.getConceptService().getConcept(1);
