@@ -1,0 +1,38 @@
+{
+  if (!Order.Action.DISCONTINUE.equals(order.getAction())) {
+    return;
+  }
+  Order previousOrder=order.getPreviousOrder();
+  if (previousOrder != null) {
+    if (!previousOrder.getConcept().equals(order.getConcept())) {
+      throw new APIException("Concept of previous order and this order should be the same");
+    }
+    if (isValidActiveOrder(previousOrder)) {
+      markAsDiscontinued(previousOrder,order.getStartDate());
+      saveOrderInternal(previousOrder);
+    }
+    return;
+  }
+  List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getClass(),order.getCareSetting(),null);
+  boolean isDrugOrderAndHasADrug=order.isDrugOrder() && ((DrugOrder)order).getDrug() != null;
+  for (  Order activeOrder : orders) {
+    if (isDrugOrderAndHasADrug) {
+      DrugOrder drugOrder1=(DrugOrder)order;
+      DrugOrder drugOrder2=(DrugOrder)activeOrder;
+      if (!OpenmrsUtil.nullSafeEquals(drugOrder1.getDrug(),drugOrder2.getDrug())) {
+        continue;
+      }
+    }
+    if (isDrugOrderAndHasADrug || activeOrder.getConcept().equals(order.getConcept())) {
+      order.setPreviousOrder(activeOrder);
+      markAsDiscontinued(activeOrder,order.getStartDate());
+      saveOrderInternal(activeOrder);
+      return;
+    }
+  }
+  String errorMessage="Could not find an active order with the concept \"" + order.getConcept().getDisplayString() + "\" to discontinue.";
+  if (isDrugOrderAndHasADrug) {
+    errorMessage="Could not find an active drug order with the drug \"" + ((DrugOrder)order).getDrug().getName() + "\" to discontinue.";
+  }
+  throw new APIException(errorMessage);
+}

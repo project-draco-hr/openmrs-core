@@ -1,14 +1,4 @@
 {
-  if (order.getOrderId() == null) {
-    discontinueExistingOrdersIfRequired(order);
-    try {
-      Field field=Order.class.getDeclaredField("orderNumber");
-      field.setAccessible(true);
-      field.set(order,getNewOrderNumber());
-    }
- catch (    Exception e) {
-      throw new APIException("Failed to assign order number",e);
-    }
-  }
-  return dao.saveOrder(order);
+  discontinueExistingOrdersIfNecessary(order);
+  return saveOrderInternal(order);
 }

@@ -1,0 +1,16 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
+  OrderService orderService=Context.getOrderService();
+  final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(5);
+  assertTrue(isOrderActive(orderToDiscontinue,null));
+  DrugOrder order=new DrugOrder();
+  order.setDrug(orderToDiscontinue.getDrug());
+  order.setAction(Order.Action.DISCONTINUE);
+  order.setDiscontinuedReasonNonCoded("Discontinue this");
+  order.setPatient(orderToDiscontinue.getPatient());
+  order.setConcept(orderToDiscontinue.getConcept());
+  order.setCareSetting(orderToDiscontinue.getCareSetting());
+  order.setStartDate(new Date());
+  orderService.saveOrder(order);
+  Assert.assertNotNull("previous order should be discontinued",orderToDiscontinue.getDateStopped());
+}
