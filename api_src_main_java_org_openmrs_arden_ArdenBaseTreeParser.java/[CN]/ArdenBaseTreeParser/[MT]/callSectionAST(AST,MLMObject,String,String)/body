@@ -11,7 +11,9 @@
         _t=_retTree;
       }
 {
-        if (_t == null)         _t=ASTNULL;
+        if (_t == null) {
+          _t=ASTNULL;
+        }
 switch (_t.getType()) {
 case TRUE:
 case FALSE:
@@ -44,7 +46,9 @@ if (b.equals("")) {
 obj.AddToEvaluateList(section,"call");
 obj.addCall(section,a,b);
 {
-  if (_t == null)   _t=ASTNULL;
+  if (_t == null) {
+    _t=ASTNULL;
+  }
 switch (_t.getType()) {
 case WITH:
 {
@@ -56,7 +60,9 @@ case WITH:
       }
 {
         _loop444:         do {
-          if (_t == null)           _t=ASTNULL;
+          if (_t == null) {
+            _t=ASTNULL;
+          }
           if ((_tokenSet_1.member(_t.getType()))) {
             a=callStringAST(_t,section,obj,a);
             _t=_retTree;

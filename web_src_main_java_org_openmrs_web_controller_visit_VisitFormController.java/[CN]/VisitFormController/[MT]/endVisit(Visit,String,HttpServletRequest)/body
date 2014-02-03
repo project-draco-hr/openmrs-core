@@ -1,5 +1,7 @@
 {
-  if (!StringUtils.hasLength(stopDate))   Context.getVisitService().endVisit(visit,null);
+  if (!StringUtils.hasLength(stopDate)) {
+    Context.getVisitService().endVisit(visit,null);
+  }
  else {
     try {
       Context.getVisitService().endVisit(visit,Context.getDateTimeFormat().parse(stopDate));

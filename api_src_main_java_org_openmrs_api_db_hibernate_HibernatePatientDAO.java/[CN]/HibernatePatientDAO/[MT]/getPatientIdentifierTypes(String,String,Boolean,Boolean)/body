@@ -1,9 +1,17 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientIdentifierType.class);
-  if (name != null)   criteria.add(Restrictions.eq("name",name));
-  if (format != null)   criteria.add(Restrictions.eq("format",format));
-  if (required != null)   criteria.add(Restrictions.eq("required",required));
-  if (hasCheckDigit != null)   criteria.add(Restrictions.eq("checkDigit",hasCheckDigit));
+  if (name != null) {
+    criteria.add(Restrictions.eq("name",name));
+  }
+  if (format != null) {
+    criteria.add(Restrictions.eq("format",format));
+  }
+  if (required != null) {
+    criteria.add(Restrictions.eq("required",required));
+  }
+  if (hasCheckDigit != null) {
+    criteria.add(Restrictions.eq("checkDigit",hasCheckDigit));
+  }
   criteria.add(Restrictions.eq("retired",false));
   criteria.addOrder(Order.desc("required"));
   criteria.addOrder(Order.asc("name"));

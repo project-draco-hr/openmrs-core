@@ -1,6 +1,8 @@
 {
   log.debug("Processing ADT_A28 message");
-  if (!(message instanceof ADT_A05))   throw new ApplicationException("Invalid message sent to ADT_A28 handler");
+  if (!(message instanceof ADT_A05)) {
+    throw new ApplicationException("Invalid message sent to ADT_A28 handler");
+  }
   Message response;
   try {
     ADT_A05 adt=(ADT_A05)message;

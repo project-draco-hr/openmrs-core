@@ -5,7 +5,9 @@
     _t=_retTree;
 {
       _loop465:       do {
-        if (_t == null)         _t=ASTNULL;
+        if (_t == null) {
+          _t=ASTNULL;
+        }
         if ((_t.getType() == AND)) {
           match(_t,AND);
           _t=_t.getNextSibling();

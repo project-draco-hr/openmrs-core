@@ -2,7 +2,9 @@
   try {
     ConceptReferenceTerm conceptReferenceTerm=conceptReferenceTermModel.getConceptReferenceTerm();
     Context.getConceptService().unretireConceptReferenceTerm(conceptReferenceTerm);
-    if (log.isDebugEnabled())     log.debug("Unretired concept reference term with id: " + conceptReferenceTerm.getId());
+    if (log.isDebugEnabled()) {
+      log.debug("Unretired concept reference term with id: " + conceptReferenceTerm.getId());
+    }
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptReferenceTerm.unretired"),WebRequest.SCOPE_SESSION);
     return "redirect:" + CONCEPT_REFERENCE_TERM_FORM_URL + ".form?conceptReferenceTermId="+ conceptReferenceTerm.getConceptReferenceTermId();
   }

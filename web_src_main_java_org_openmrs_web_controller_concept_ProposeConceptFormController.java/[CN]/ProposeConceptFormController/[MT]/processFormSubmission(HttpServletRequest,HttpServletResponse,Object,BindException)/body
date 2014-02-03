@@ -12,6 +12,8 @@
     e=Context.getEncounterService().getEncounter(Integer.valueOf(id));
     cp.setEncounter(e);
   }
-  if (cp.getOriginalText().equals(""))   errors.rejectValue("originalText","error.null");
+  if (cp.getOriginalText().equals("")) {
+    errors.rejectValue("originalText","error.null");
+  }
   return super.processFormSubmission(request,response,cp,errors);
 }

@@ -18,6 +18,10 @@ default :
 return valueBoolean;
 }
 }
-for (Result r : this) if (!r.toBoolean()) return false;
+for (Result r : this) {
+if (!r.toBoolean()) {
+return false;
+}
+}
 return true;
 }

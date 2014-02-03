@@ -7,8 +7,12 @@
     description="";
     if (conceptName != null) {
       conceptNameId=conceptName.getConceptNameId();
-      if (conceptName.isIndexTerm() && concept.getName() == null)       name=WebUtil.escapeHTML(conceptName.getName()) + Context.getMessageSourceService().getMessage("Concept.no.fullySpecifiedName.found");
- else       name=WebUtil.escapeHTML(conceptName.getName());
+      if (conceptName.isIndexTerm() && concept.getName() == null) {
+        name=WebUtil.escapeHTML(conceptName.getName()) + Context.getMessageSourceService().getMessage("Concept.no.fullySpecifiedName.found");
+      }
+ else {
+        name=WebUtil.escapeHTML(conceptName.getName());
+      }
       if (!conceptName.isPreferred()) {
         ConceptName preferredNameObj=concept.getPreferredName(locale);
         if (preferredNameObj == null) {
@@ -16,7 +20,9 @@
             preferredNameObj=concept.getPreferredName(new Locale(locale.getLanguage()));
           }
         }
-        if (preferredNameObj != null)         preferredName=preferredNameObj.getName();
+        if (preferredNameObj != null) {
+          preferredName=preferredNameObj.getName();
+        }
       }
     }
     if (conceptShortName != null) {

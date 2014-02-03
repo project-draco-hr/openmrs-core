@@ -1,5 +1,9 @@
 {
   List<Person> persons=new Vector<Person>();
-  if (patients != null)   for (  Integer memberId : patients.getMemberIds())   persons.add(new Person(memberId));
+  if (patients != null) {
+    for (    Integer memberId : patients.getMemberIds()) {
+      persons.add(new Person(memberId));
+    }
+  }
   return Context.getObsService().getObservations(persons,null,concepts,null,null,null,null,null,null,fromDate,toDate,false);
 }

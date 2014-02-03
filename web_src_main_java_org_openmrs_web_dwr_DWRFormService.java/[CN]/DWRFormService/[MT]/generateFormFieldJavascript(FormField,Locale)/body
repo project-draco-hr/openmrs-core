@@ -1,6 +1,8 @@
 {
   String parent="''";
-  if (ff.getParent() != null)   parent=ff.getParent().getFormFieldId().toString();
+  if (ff.getParent() != null) {
+    parent=ff.getParent().getFormFieldId().toString();
+  }
   Field field=ff.getField();
   Concept concept=new Concept();
   ConceptName conceptName=new ConceptName();
@@ -10,7 +12,9 @@
     conceptName=concept.getName(locale);
     isSet=concept.isSet();
   }
-  if (log.isDebugEnabled())   log.debug("ff.getFormFieldId: " + ff.getFormFieldId());
+  if (log.isDebugEnabled()) {
+    log.debug("ff.getFormFieldId: " + ff.getFormFieldId());
+  }
   List<Field> fields=new Vector<Field>();
   fields.add(field);
   int size=Context.getFormService().getFormCount(null,null,null,null,null,null,fields);

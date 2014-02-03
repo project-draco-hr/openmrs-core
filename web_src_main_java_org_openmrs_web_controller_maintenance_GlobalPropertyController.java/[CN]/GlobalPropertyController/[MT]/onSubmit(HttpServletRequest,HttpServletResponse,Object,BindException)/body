@@ -1,6 +1,8 @@
 {
   String action=request.getParameter("action");
-  if (action == null)   action="cancel";
+  if (action == null) {
+    action="cancel";
+  }
   if (action.equals(getMessageSourceAccessor().getMessage("general.save"))) {
     HttpSession httpSession=request.getSession();
     if (Context.isAuthenticated()) {

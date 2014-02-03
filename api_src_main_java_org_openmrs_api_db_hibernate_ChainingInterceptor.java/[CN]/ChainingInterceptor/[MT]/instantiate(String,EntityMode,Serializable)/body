@@ -1,7 +1,9 @@
 {
   for (  Interceptor i : interceptors) {
     Object o=i.instantiate(entityName,entityMode,id);
-    if (o != null)     return o;
+    if (o != null) {
+      return o;
+    }
   }
   return null;
 }

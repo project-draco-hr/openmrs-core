@@ -11,7 +11,9 @@
  else     if (o instanceof List) {
       ret.add(copyAndDetachHelper((List)o,history));
     }
- else     ret.add(o);
+ else {
+      ret.add(o);
+    }
   }
   return ret;
 }

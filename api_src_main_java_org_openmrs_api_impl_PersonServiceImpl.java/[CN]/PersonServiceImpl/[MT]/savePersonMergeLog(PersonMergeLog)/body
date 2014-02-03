@@ -1,5 +1,7 @@
 {
-  if (Context.getSerializationService().getDefaultSerializer() == null)   throw new APIException("A default serializer was not found. Cannot proceed without at least one installed serializer");
+  if (Context.getSerializationService().getDefaultSerializer() == null) {
+    throw new APIException("A default serializer was not found. Cannot proceed without at least one installed serializer");
+  }
   log.debug("Auditing merging of non-preferred person " + personMergeLog.getLoser().getUuid() + " with preferred person "+ personMergeLog.getWinner().getId());
   String serialized=Context.getSerializationService().getDefaultSerializer().serialize(personMergeLog.getPersonMergeLogData());
   personMergeLog.setSerializedMergedData(serialized);

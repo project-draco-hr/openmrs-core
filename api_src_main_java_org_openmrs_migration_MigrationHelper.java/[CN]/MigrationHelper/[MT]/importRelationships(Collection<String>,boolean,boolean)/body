@@ -5,9 +5,13 @@
   List<Relationship> relsToAdd=new ArrayList<Relationship>();
   Random rand=new Random();
   for (  String s : relationships) {
-    if (s.indexOf(":") >= 0)     s=s.substring(s.indexOf(":") + 1);
+    if (s.indexOf(":") >= 0) {
+      s=s.substring(s.indexOf(":") + 1);
+    }
     String[] ss=s.split(",");
-    if (ss.length < 5)     throw new IllegalArgumentException("The line '" + s + "' is in the wrong format");
+    if (ss.length < 5) {
+      throw new IllegalArgumentException("The line '" + s + "' is in the wrong format");
+    }
     String userLastName=ss[0];
     String userFirstName=ss[1];
     String username=(userFirstName + userLastName).replaceAll(" ","");
@@ -17,14 +21,18 @@
     User user=null;
 {
       List<User> users=us.getUsersByName(userFirstName,userLastName,false);
-      if (users.size() == 1)       user=users.get(0);
+      if (users.size() == 1) {
+        user=users.get(0);
+      }
  else       if (users.size() > 1) {
         throw new IllegalArgumentException("Found " + users.size() + " users named '"+ userLastName+ ", "+ userFirstName+ "'");
       }
     }
     if (user == null) {
       List<User> users=us.getUsersByName(userFirstName,userLastName,false);
-      if (users.size() == 1)       user=users.get(0);
+      if (users.size() == 1) {
+        user=users.get(0);
+      }
  else       if (users.size() > 1) {
         throw new IllegalArgumentException("Found " + users.size() + " voided users named '"+ userLastName+ ", "+ userFirstName+ "'");
       }
@@ -47,16 +55,22 @@
       }
       if (autoAddRole) {
         Role role=us.getRole(relationshipType);
-        if (role != null)         user.addRole(role);
+        if (role != null) {
+          user.addRole(role);
+        }
       }
       us.saveUser(user,pass);
     }
-    if (user == null)     throw new IllegalArgumentException("Can't find user '" + userLastName + ", "+ userFirstName+ "'");
+    if (user == null) {
+      throw new IllegalArgumentException("Can't find user '" + userLastName + ", "+ userFirstName+ "'");
+    }
     Person person=personService.getPerson(user.getUserId());
     RelationshipType relationship=personService.getRelationshipTypeByName(relationshipType);
     PatientIdentifierType pit=ps.getPatientIdentifierTypeByName(identifierType);
     List<PatientIdentifier> found=ps.getPatientIdentifiers(identifier,Collections.singletonList(pit),null,null,null);
-    if (found.size() != 1)     throw new IllegalArgumentException("Found " + found.size() + " patients with identifier '"+ identifier+ "' of type "+ identifierType);
+    if (found.size() != 1) {
+      throw new IllegalArgumentException("Found " + found.size() + " patients with identifier '"+ identifier+ "' of type "+ identifierType);
+    }
     Person relative=personService.getPerson(found.get(0).getPatient().getPatientId());
     Relationship rel=new Relationship();
     rel.setPersonA(person);

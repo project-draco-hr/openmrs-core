@@ -6,8 +6,12 @@
   }
   if (form.getFormFields() != null) {
     for (    FormField ff : form.getFormFields()) {
-      if (ff.getForm() == null)       ff.setForm(form);
- else       if (!ff.getForm().equals(form))       throw new APIException("Form contains FormField " + ff + " that already belongs to a different form");
+      if (ff.getForm() == null) {
+        ff.setForm(form);
+      }
+ else       if (!ff.getForm().equals(form)) {
+        throw new APIException("Form contains FormField " + ff + " that already belongs to a different form");
+      }
     }
   }
   return dao.saveForm(form);

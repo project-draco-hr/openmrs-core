@@ -5,24 +5,32 @@
       Context.addProxyPrivilege("");
       AdministrationService as=Context.getAdministrationService();
       for (      Module mod : getLoadedModulesCoreFirst()) {
-        if (mod.isStarted())         continue;
+        if (mod.isStarted()) {
+          continue;
+        }
         String key=mod.getModuleId() + ".started";
         String startedProp=as.getGlobalProperty(key,null);
         String mandatoryProp=as.getGlobalProperty(mod.getModuleId() + ".mandatory",null);
         boolean isCoreToOpenmrs=ModuleConstants.CORE_MODULES.containsKey(mod.getModuleId()) && !ModuleUtil.ignoreCoreModules();
         if (startedProp == null || startedProp.equals("true") || "true".equalsIgnoreCase(mandatoryProp) || mod.isMandatory() || isCoreToOpenmrs) {
-          if (requiredModulesStarted(mod))           try {
-            if (log.isDebugEnabled())             log.debug("starting module: " + mod.getModuleId());
-            startModule(mod);
-          }
- catch (          Exception e) {
-            log.error("Error while starting module: " + mod.getName(),e);
-            mod.setStartupErrorMessage("Error while starting module",e);
-            notifySuperUsersAboutModuleFailure(mod);
+          if (requiredModulesStarted(mod)) {
+            try {
+              if (log.isDebugEnabled()) {
+                log.debug("starting module: " + mod.getModuleId());
+              }
+              startModule(mod);
+            }
+ catch (            Exception e) {
+              log.error("Error while starting module: " + mod.getName(),e);
+              mod.setStartupErrorMessage("Error while starting module",e);
+              notifySuperUsersAboutModuleFailure(mod);
+            }
           }
  else {
             leftoverModules.add(mod);
-            if (log.isDebugEnabled())             log.debug("cannot start because required modules are not started: " + mod.getModuleId());
+            if (log.isDebugEnabled()) {
+              log.debug("cannot start because required modules are not started: " + mod.getModuleId());
+            }
           }
         }
       }
@@ -32,12 +40,16 @@
     }
     boolean atLeastOneModuleLoaded=true;
     while (leftoverModules.size() > 0 && atLeastOneModuleLoaded) {
-      if (log.isDebugEnabled())       log.debug("Trying to start leftover modules: " + leftoverModules);
+      if (log.isDebugEnabled()) {
+        log.debug("Trying to start leftover modules: " + leftoverModules);
+      }
       atLeastOneModuleLoaded=false;
       List<Module> modulesStartedInThisLoop=new Vector<Module>();
       for (      Module leftoverModule : leftoverModules) {
         if (requiredModulesStarted(leftoverModule)) {
-          if (log.isDebugEnabled())           log.debug("starting leftover module: " + leftoverModule.getModuleId());
+          if (log.isDebugEnabled()) {
+            log.debug("starting leftover module: " + leftoverModule.getModuleId());
+          }
           try {
             startModule(leftoverModule);
             atLeastOneModuleLoaded=true;
@@ -48,16 +60,20 @@
           }
         }
  else {
-          if (log.isDebugEnabled())           log.debug("cannot start leftover module because required modules are not started: " + leftoverModule.getModuleId());
+          if (log.isDebugEnabled()) {
+            log.debug("cannot start leftover module because required modules are not started: " + leftoverModule.getModuleId());
+          }
         }
       }
       leftoverModules.removeAll(modulesStartedInThisLoop);
     }
-    if (leftoverModules.size() > 0)     for (    Module leftoverModule : leftoverModules) {
-      String message=getFailedToStartModuleMessage(leftoverModule);
-      log.error(message);
-      leftoverModule.setStartupErrorMessage(message);
-      notifySuperUsersAboutModuleFailure(leftoverModule);
+    if (leftoverModules.size() > 0) {
+      for (      Module leftoverModule : leftoverModules) {
+        String message=getFailedToStartModuleMessage(leftoverModule);
+        log.error(message);
+        leftoverModule.setStartupErrorMessage(message);
+        notifySuperUsersAboutModuleFailure(leftoverModule);
+      }
     }
   }
 }

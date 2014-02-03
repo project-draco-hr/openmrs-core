@@ -15,7 +15,9 @@
       for (      PersonAttributeType personAttributeType : viewableAttributeTypes) {
         PersonAttribute persistedAttribute=patient.getAttribute(personAttributeType);
         PersonAttribute formAttribute=new PersonAttribute(personAttributeType,null);
-        if (persistedAttribute != null)         BeanUtils.copyProperties(persistedAttribute,formAttribute);
+        if (persistedAttribute != null) {
+          BeanUtils.copyProperties(persistedAttribute,formAttribute);
+        }
         personAttributes.add(formAttribute);
       }
     }

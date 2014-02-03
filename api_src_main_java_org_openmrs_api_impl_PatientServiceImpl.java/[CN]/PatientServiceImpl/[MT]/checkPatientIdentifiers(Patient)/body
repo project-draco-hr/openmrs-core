@@ -1,13 +1,19 @@
 {
-  if (!patient.isVoided() && patient.getActiveIdentifiers().size() < 1)   throw new InsufficientIdentifiersException("At least one nonvoided Patient Identifier is required");
+  if (!patient.isVoided() && patient.getActiveIdentifiers().size() < 1) {
+    throw new InsufficientIdentifiersException("At least one nonvoided Patient Identifier is required");
+  }
   List<PatientIdentifier> identifiers=new Vector<PatientIdentifier>();
   identifiers.addAll(patient.getIdentifiers());
   List<String> identifiersUsed=new Vector<String>();
   List<PatientIdentifierType> requiredTypes=Context.getPatientService().getPatientIdentifierTypes(null,null,true,null);
-  if (requiredTypes == null)   requiredTypes=new ArrayList<PatientIdentifierType>();
+  if (requiredTypes == null) {
+    requiredTypes=new ArrayList<PatientIdentifierType>();
+  }
   List<PatientIdentifierType> foundRequiredTypes=new ArrayList<PatientIdentifierType>();
   for (  PatientIdentifier pi : identifiers) {
-    if (pi.isVoided())     continue;
+    if (pi.isVoided()) {
+      continue;
+    }
     try {
       checkPatientIdentifier(pi);
     }

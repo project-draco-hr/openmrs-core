@@ -1,5 +1,7 @@
 {
-  if (answer == null || answer.equals(""))   return false;
+  if (answer == null || answer.equals("")) {
+    return false;
+  }
   String answerOnRecord=getLoginCredential(u).getSecretAnswer();
   return (answer.equals(answerOnRecord));
 }

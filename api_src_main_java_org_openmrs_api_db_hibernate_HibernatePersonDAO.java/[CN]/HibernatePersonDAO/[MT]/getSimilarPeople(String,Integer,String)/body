@@ -1,5 +1,7 @@
 {
-  if (birthyear == null)   birthyear=0;
+  if (birthyear == null) {
+    birthyear=0;
+  }
   Set<Person> people=new LinkedHashSet<Person>();
   name=name.replaceAll("  "," ");
   name=name.replace(", "," ");
@@ -50,7 +52,9 @@
   for (int nameIndex=0; nameIndex < names.length; nameIndex++) {
     query.setString("n" + (nameIndex + 1),names[nameIndex]);
   }
-  if (qStr.contains(":gender"))   query.setString("gender",gender);
+  if (qStr.contains(":gender")) {
+    query.setString("gender",gender);
+  }
   people.addAll(query.list());
   return people;
 }

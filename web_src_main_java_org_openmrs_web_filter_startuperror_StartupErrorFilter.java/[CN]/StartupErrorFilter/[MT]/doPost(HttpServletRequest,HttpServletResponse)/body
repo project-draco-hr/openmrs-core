@@ -1,7 +1,9 @@
 {
   if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
     RequestContext requestContext=new ServletRequestContext(httpRequest);
-    if (!ServletFileUpload.isMultipartContent(requestContext))     throw new ServletException("The request is not a valid multipart/form-data upload request");
+    if (!ServletFileUpload.isMultipartContent(requestContext)) {
+      throw new ServletException("The request is not a valid multipart/form-data upload request");
+    }
     FileItemFactory factory=new DiskFileItemFactory();
     ServletFileUpload upload=new ServletFileUpload(factory);
     try {

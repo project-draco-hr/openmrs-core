@@ -1,5 +1,7 @@
 {
-  if (!OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE.equals(newValue.getProperty()))   return;
+  if (!OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE.equals(newValue.getProperty())) {
+    return;
+  }
   try {
     setAddressTemplate(newValue.getPropertyValue());
   }

@@ -21,8 +21,12 @@
     }
 catch (    Exception e) {
       Throwable rootCause=getActualRootCause(e,true);
-      if (rootCause != null)       log.fatal("Unable to refresh the spring application context.  Root Cause was:",rootCause);
- else       log.fatal("Unable to refresh the spring application context. Unloading all modules,  Error was:",e);
+      if (rootCause != null) {
+        log.fatal("Unable to refresh the spring application context.  Root Cause was:",rootCause);
+      }
+ else {
+        log.fatal("Unable to refresh the spring application context. Unloading all modules,  Error was:",e);
+      }
       try {
         WebModuleUtil.shutdownModules(servletContext);
         for (        Module mod : ModuleFactory.getLoadedModules()) {

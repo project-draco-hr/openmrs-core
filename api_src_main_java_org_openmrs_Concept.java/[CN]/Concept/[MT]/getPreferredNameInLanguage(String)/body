@@ -1,7 +1,9 @@
 {
   if (!StringUtils.isBlank(language)) {
     for (    ConceptName conceptName : getNames()) {
-      if (conceptName.isPreferred() && conceptName.getLocale() != null && conceptName.getLocale().getLanguage().equals(language))       return conceptName;
+      if (conceptName.isPreferred() && conceptName.getLocale() != null && conceptName.getLocale().getLanguage().equals(language)) {
+        return conceptName;
+      }
     }
   }
   return null;

@@ -29,9 +29,13 @@
     int index=redirectURL.indexOf(request.getContextPath(),2);
     if (index != -1) {
       redirectURL=redirectURL.substring(index);
-      if (redirectURL.contains(getSuccessView()))       redirectURL="findDuplicatePatients.htm";
+      if (redirectURL.contains(getSuccessView())) {
+        redirectURL="findDuplicatePatients.htm";
+      }
     }
- else     redirectURL=view.toString();
+ else {
+      redirectURL=view.toString();
+    }
     return new ModelAndView(new RedirectView(redirectURL));
   }
   return new ModelAndView(new RedirectView(getFormView()));

@@ -14,7 +14,9 @@
   }
  else {
     Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
-    if (changeMessage == null)     throw new APIException("ChangeMessage is required when updating an obs in the database");
+    if (changeMessage == null) {
+      throw new APIException("ChangeMessage is required when updating an obs in the database");
+    }
     Encounter encounter=obs.getEncounter();
     if (encounter != null) {
       obs.setPerson(encounter.getPatient());

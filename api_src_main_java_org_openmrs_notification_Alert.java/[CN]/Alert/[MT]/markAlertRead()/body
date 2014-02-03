@@ -3,7 +3,9 @@
   if (authUser != null) {
     AlertRecipient ar=getRecipient(authUser);
     ar.setAlertRead(true);
-    if (isSatisfiedByAny())     setAlertRead(true);
+    if (isSatisfiedByAny()) {
+      setAlertRead(true);
+    }
   }
   return this;
 }

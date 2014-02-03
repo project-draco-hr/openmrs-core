@@ -11,8 +11,12 @@
       String lang="", file="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("lang".equals(childNode.getNodeName()))         lang=childNode.getTextContent().trim();
- else         if ("file".equals(childNode.getNodeName()))         file=childNode.getTextContent().trim();
+        if ("lang".equals(childNode.getNodeName())) {
+          lang=childNode.getTextContent().trim();
+        }
+ else         if ("file".equals(childNode.getNodeName())) {
+          file=childNode.getTextContent().trim();
+        }
         x++;
       }
       log.debug("lang: " + lang + " file: "+ file);
@@ -20,7 +24,9 @@
         InputStream inStream=null;
         try {
           ZipEntry entry=jarfile.getEntry(file);
-          if (entry == null)           throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noMessagePropsFile",new Object[]{file,lang},Context.getLocale()));
+          if (entry == null) {
+            throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noMessagePropsFile",new Object[]{file,lang},Context.getLocale()));
+          }
           inStream=jarfile.getInputStream(entry);
           Properties props=new Properties();
           OpenmrsUtil.loadProperties(props,inStream);
@@ -40,7 +46,9 @@
           }
         }
       }
- else       log.warn("'lang' and 'file' are required for extensions. Given '" + lang + "' and '"+ file+ "'");
+ else {
+        log.warn("'lang' and 'file' are required for extensions. Given '" + lang + "' and '"+ file+ "'");
+      }
       i++;
     }
   }

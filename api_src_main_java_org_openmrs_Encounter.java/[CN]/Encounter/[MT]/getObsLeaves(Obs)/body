@@ -3,8 +3,12 @@
   if (obsParent.hasGroupMembers()) {
     for (    Obs child : obsParent.getGroupMembers()) {
       if (child.isVoided() == false) {
-        if (child.isObsGrouping() == false)         leaves.add(child);
- else         leaves.addAll(getObsLeaves(child));
+        if (child.isObsGrouping() == false) {
+          leaves.add(child);
+        }
+ else {
+          leaves.addAll(getObsLeaves(child));
+        }
       }
     }
   }

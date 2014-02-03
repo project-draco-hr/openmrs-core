@@ -15,12 +15,16 @@
       for (      String fieldTypeId : fieldTypeList) {
         try {
           fs.purgeFieldType(fs.getFieldType(Integer.valueOf(fieldTypeId)));
-          if (!success.equals(""))           success+="<br/>";
+          if (!success.equals("")) {
+            success+="<br/>";
+          }
           success+=textFieldType + " " + fieldTypeId+ " "+ deleted;
         }
  catch (        APIException e) {
           log.warn("Error deleting field type",e);
-          if (!error.equals(""))           error+="<br/>";
+          if (!error.equals("")) {
+            error+="<br/>";
+          }
           error+=textFieldType + " " + fieldTypeId+ " "+ notDeleted;
         }
 catch (        DataIntegrityViolationException e) {
@@ -34,8 +38,12 @@ catch (        DataIntegrityViolationException e) {
       success+=noneDeleted;
     }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!success.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+    }
+    if (!error.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

@@ -1,15 +1,23 @@
 {
-  if (log.isDebugEnabled())   log.debug("Checking for discharge to location");
+  if (log.isDebugEnabled()) {
+    log.debug("Checking for discharge to location");
+  }
   DLD dld=pv1.getDischargedToLocation();
   log.debug("DLD = " + dld);
-  if (dld == null)   return;
+  if (dld == null) {
+    return;
+  }
   IS hl7DischargeToLocation=dld.getDischargeLocation();
   log.debug("is = " + hl7DischargeToLocation);
-  if (hl7DischargeToLocation == null)   return;
+  if (hl7DischargeToLocation == null) {
+    return;
+  }
   String dischargeToLocation=hl7DischargeToLocation.getValue();
   log.debug("dischargeToLocation = " + dischargeToLocation);
   if (dischargeToLocation != null && dischargeToLocation.length() > 0) {
-    if (log.isDebugEnabled())     log.debug("Patient discharged to " + dischargeToLocation);
+    if (log.isDebugEnabled()) {
+      log.debug("Patient discharged to " + dischargeToLocation);
+    }
     for (int i=0; i < dischargeToLocation.length(); i++) {
       char ch=dischargeToLocation.charAt(i);
       if (ch == '&' || ch == '^') {

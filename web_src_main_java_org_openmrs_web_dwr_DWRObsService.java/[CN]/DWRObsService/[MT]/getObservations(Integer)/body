@@ -5,8 +5,10 @@
   try {
     Encounter encounter=Context.getEncounterService().getEncounter(encounterId);
     Set<Obs> observations=encounter.getAllObs();
-    if (observations != null)     for (    Obs obs : observations) {
-      obsList.add(new ObsListItem(obs,request.getLocale()));
+    if (observations != null) {
+      for (      Obs obs : observations) {
+        obsList.add(new ObsListItem(obs,request.getLocale()));
+      }
     }
   }
  catch (  Exception e) {

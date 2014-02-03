@@ -13,6 +13,8 @@
     updatePersonNames(request,person);
     updatePersonAttributes(request,errors,person);
   }
-  if (errors.hasErrors())   return showForm(request,response,errors);
+  if (errors.hasErrors()) {
+    return showForm(request,response,errors);
+  }
   return super.processFormSubmission(request,response,person,errors);
 }

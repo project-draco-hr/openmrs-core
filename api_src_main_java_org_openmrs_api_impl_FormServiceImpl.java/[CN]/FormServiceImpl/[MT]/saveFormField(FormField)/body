@@ -1,8 +1,14 @@
 {
   Field field=formField.getField();
-  if (field.getCreator() == null)   field.setCreator(Context.getAuthenticatedUser());
-  if (field.getDateCreated() == null)   field.setDateCreated(new Date());
-  if (field.getUuid() == null)   field.setUuid(UUID.randomUUID().toString());
+  if (field.getCreator() == null) {
+    field.setCreator(Context.getAuthenticatedUser());
+  }
+  if (field.getDateCreated() == null) {
+    field.setDateCreated(new Date());
+  }
+  if (field.getUuid() == null) {
+    field.setUuid(UUID.randomUUID().toString());
+  }
   formField=dao.saveFormField(formField);
   Concept concept=formField.getField().getConcept();
   if (concept != null && concept.isComplex()) {

@@ -1,11 +1,15 @@
 {
-  if (stackTrace == null)   return null;
+  if (stackTrace == null) {
+    return null;
+  }
   List<String> results=new ArrayList<String>();
   final Pattern exclude=Pattern.compile("(org.springframework.|java.lang.reflect.Method.invoke|sun.reflect.)");
   boolean found=false;
   for (  String line : stackTrace.split("\n")) {
     Matcher m=exclude.matcher(line);
-    if (m.find())     found=true;
+    if (m.find()) {
+      found=true;
+    }
  else {
       if (found) {
         found=false;

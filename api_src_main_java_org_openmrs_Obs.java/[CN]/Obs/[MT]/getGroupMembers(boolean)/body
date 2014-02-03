@@ -1,11 +1,17 @@
 {
-  if (includeVoided)   return groupMembers;
-  if (groupMembers == null)   return null;
+  if (includeVoided) {
+    return groupMembers;
+  }
+  if (groupMembers == null) {
+    return null;
+  }
   Set<Obs> nonVoided=new LinkedHashSet<Obs>(groupMembers);
   Iterator<Obs> i=nonVoided.iterator();
   while (i.hasNext()) {
     Obs obs=i.next();
-    if (obs.isVoided())     i.remove();
+    if (obs.isVoided()) {
+      i.remove();
+    }
   }
   return nonVoided;
 }

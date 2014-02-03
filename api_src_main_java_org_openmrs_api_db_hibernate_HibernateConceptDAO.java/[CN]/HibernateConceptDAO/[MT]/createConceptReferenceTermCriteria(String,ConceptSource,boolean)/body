@@ -1,7 +1,13 @@
 {
   Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(ConceptReferenceTerm.class);
-  if (conceptSource != null)   searchCriteria.add(Restrictions.eq("conceptSource",conceptSource));
-  if (!includeRetired)   searchCriteria.add(Restrictions.eq("retired",false));
-  if (query != null)   searchCriteria.add(Restrictions.or(Restrictions.ilike("name",query,MatchMode.ANYWHERE),Restrictions.ilike("code",query,MatchMode.ANYWHERE)));
+  if (conceptSource != null) {
+    searchCriteria.add(Restrictions.eq("conceptSource",conceptSource));
+  }
+  if (!includeRetired) {
+    searchCriteria.add(Restrictions.eq("retired",false));
+  }
+  if (query != null) {
+    searchCriteria.add(Restrictions.or(Restrictions.ilike("name",query,MatchMode.ANYWHERE),Restrictions.ilike("code",query,MatchMode.ANYWHERE)));
+  }
   return searchCriteria;
 }

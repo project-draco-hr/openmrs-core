@@ -32,7 +32,9 @@
           propExists=true;
           break;
         }
- else         if (propertyDestination == null)         propertyDestination=possibleDestination;
+ else         if (propertyDestination == null) {
+          propertyDestination=possibleDestination;
+        }
       }
       if ((propExists && overwrite) || !propExists) {
         propertyDestination.put(message.getCode(),message.getMessage());

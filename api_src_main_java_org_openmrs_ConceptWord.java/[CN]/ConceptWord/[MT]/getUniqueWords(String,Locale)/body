@@ -6,7 +6,9 @@
     for (    String part : parts) {
       if (!StringUtils.isBlank(part)) {
         String upper=part.trim().toUpperCase();
-        if (!conceptStopWords.contains(upper) && !uniqueParts.contains(upper))         uniqueParts.add(upper);
+        if (!conceptStopWords.contains(upper) && !uniqueParts.contains(upper)) {
+          uniqueParts.add(upper);
+        }
       }
     }
   }

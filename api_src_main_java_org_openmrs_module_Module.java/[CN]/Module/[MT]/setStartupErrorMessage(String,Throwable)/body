@@ -1,5 +1,7 @@
 {
-  if (t == null)   throw new ModuleException("Startup error value cannot be null",this.getModuleId());
+  if (t == null) {
+    throw new ModuleException("Startup error value cannot be null",this.getModuleId());
+  }
   StringBuffer sb=new StringBuffer();
   if (exceptionMessage != null) {
     sb.append(exceptionMessage);

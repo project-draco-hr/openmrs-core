@@ -2,7 +2,9 @@
   String moduleId=mod.getModuleId();
   String modulePackage=mod.getPackageName();
   for (  Module dependentModule : ModuleFactory.getStartedModules()) {
-    if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage))     stopModule(dependentModule,servletContext,skipRefresh);
+    if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage)) {
+      stopModule(dependentModule,servletContext,skipRefresh);
+    }
   }
   String realPath=servletContext.getRealPath("");
   String absPath=realPath + "/WEB-INF/view/module/" + moduleId;
@@ -36,9 +38,13 @@
           if (attr != null && moduleId.equals(attr.getNodeValue())) {
             outputRoot.removeChild(current);
           }
- else           i++;
+ else {
+            i++;
+          }
         }
- else         i++;
+ else {
+          i++;
+        }
       }
       OpenmrsUtil.saveDocument(dwrmodulexml,f);
     }

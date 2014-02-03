@@ -1,5 +1,7 @@
 {
-  if (log.isDebugEnabled())   log.debug("Adding module " + module.getName() + " to the module queue");
+  if (log.isDebugEnabled()) {
+    log.debug("Adding module " + module.getName() + " to the module queue");
+  }
   Module oldModule=getLoadedModulesMap().get(module.getModuleId());
   if (oldModule != null) {
     int versionComparison=ModuleUtil.compareVersion(oldModule.getVersion(),module.getVersion());
@@ -10,7 +12,9 @@
       if (replaceIfExists) {
         unloadModule(oldModule);
       }
- else       throw new ModuleException("A module with the same id and version already exists",module.getModuleId());
+ else {
+        throw new ModuleException("A module with the same id and version already exists",module.getModuleId());
+      }
     }
  else {
       return oldModule;

@@ -5,7 +5,9 @@
     String prop=(String)key;
     String value=(String)runtimeProperties.get(key);
     log.trace("Setting property: " + prop + ":"+ value);
-    if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop))     runtimeProperties.setProperty("hibernate." + prop,value);
+    if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop)) {
+      runtimeProperties.setProperty("hibernate." + prop,value);
+    }
   }
   InputStream propertyStream=null;
   try {
@@ -13,7 +15,9 @@
     propertyStream=DatabaseUpdater.class.getClassLoader().getResourceAsStream("hibernate.default.properties");
     OpenmrsUtil.loadProperties(props,propertyStream);
     for (    Map.Entry<Object,Object> entry : props.entrySet()) {
-      if (!runtimeProperties.containsKey(entry.getKey()))       runtimeProperties.put(entry.getKey(),entry.getValue());
+      if (!runtimeProperties.containsKey(entry.getKey())) {
+        runtimeProperties.put(entry.getKey(),entry.getValue());
+      }
     }
   }
   finally {

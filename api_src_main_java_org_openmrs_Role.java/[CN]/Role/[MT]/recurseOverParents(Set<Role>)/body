@@ -1,5 +1,7 @@
 {
-  if (!this.inheritsRoles())   return total;
+  if (!this.inheritsRoles()) {
+    return total;
+  }
   Set<Role> allRoles=new HashSet<Role>();
   Set<Role> myRoles=new HashSet<Role>();
   allRoles.addAll(total);
@@ -8,8 +10,12 @@
   myRoles.remove(this);
   allRoles.addAll(myRoles);
   for (  Role r : myRoles) {
-    if (r.inheritsRoles())     allRoles.addAll(r.recurseOverParents(allRoles));
+    if (r.inheritsRoles()) {
+      allRoles.addAll(r.recurseOverParents(allRoles));
+    }
   }
-  if (log.isDebugEnabled())   log.debug("Total roles: " + allRoles);
+  if (log.isDebugEnabled()) {
+    log.debug("Total roles: " + allRoles);
+  }
   return allRoles;
 }

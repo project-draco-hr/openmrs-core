@@ -2,7 +2,9 @@
   HttpSession httpSession=request.getSession();
   String ipAddress=request.getRemoteAddr();
   Integer loginAttempts=loginAttemptsByIP.get(ipAddress);
-  if (loginAttempts == null)   loginAttempts=1;
+  if (loginAttempts == null) {
+    loginAttempts=1;
+  }
   loginAttempts++;
   boolean lockedOut=false;
   Integer allowedLockoutAttempts=100;
@@ -33,7 +35,9 @@
     try {
       String username=request.getParameter("uname");
       String password=request.getParameter("pw");
-      if (username == null || username.length() == 0)       throw new ContextAuthenticationException("Unable to authenticate with an empty username");
+      if (username == null || username.length() == 0) {
+        throw new ContextAuthenticationException("Unable to authenticate with an empty username");
+      }
       Context.authenticate(username,password);
       if (Context.isAuthenticated()) {
         httpSession.setAttribute("loginAttempts",0);

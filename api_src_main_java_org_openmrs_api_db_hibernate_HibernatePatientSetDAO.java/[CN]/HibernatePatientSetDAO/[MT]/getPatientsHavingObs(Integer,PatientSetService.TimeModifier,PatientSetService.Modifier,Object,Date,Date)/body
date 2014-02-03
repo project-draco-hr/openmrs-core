@@ -1,11 +1,17 @@
 {
-  if (conceptId == null && value == null)   throw new IllegalArgumentException("Can't have conceptId == null and value == null");
-  if (conceptId == null && (timeModifier != TimeModifier.ANY && timeModifier != TimeModifier.NO))   throw new IllegalArgumentException("If conceptId == null, timeModifier must be ANY or NO");
+  if (conceptId == null && value == null) {
+    throw new IllegalArgumentException("Can't have conceptId == null and value == null");
+  }
+  if (conceptId == null && (timeModifier != TimeModifier.ANY && timeModifier != TimeModifier.NO)) {
+    throw new IllegalArgumentException("If conceptId == null, timeModifier must be ANY or NO");
+  }
   if (conceptId == null && modifier != Modifier.EQUAL) {
     throw new IllegalArgumentException("If conceptId == null, modifier must be EQUAL");
   }
   Concept concept=null;
-  if (conceptId != null)   concept=Context.getConceptService().getConcept(conceptId);
+  if (conceptId != null) {
+    concept=Context.getConceptService().getConcept(conceptId);
+  }
   Number numericValue=null;
   String stringValue=null;
   Concept codedValue=null;
@@ -13,23 +19,37 @@
   String valueSql=null;
   if (value != null) {
     if (concept == null) {
-      if (value instanceof Concept)       codedValue=(Concept)value;
- else       codedValue=Context.getConceptService().getConceptByName(value.toString());
+      if (value instanceof Concept) {
+        codedValue=(Concept)value;
+      }
+ else {
+        codedValue=Context.getConceptService().getConceptByName(value.toString());
+      }
       valueSql="o.value_coded";
     }
  else     if (concept.getDatatype().isNumeric()) {
-      if (value instanceof Number)       numericValue=(Number)value;
- else       numericValue=new Double(value.toString());
+      if (value instanceof Number) {
+        numericValue=(Number)value;
+      }
+ else {
+        numericValue=new Double(value.toString());
+      }
       valueSql="o.value_numeric";
     }
  else     if (concept.getDatatype().isText()) {
       stringValue=value.toString();
       valueSql="o.value_text";
-      if (modifier == null)       modifier=Modifier.EQUAL;
+      if (modifier == null) {
+        modifier=Modifier.EQUAL;
+      }
     }
  else     if (concept.getDatatype().isCoded()) {
-      if (value instanceof Concept)       codedValue=(Concept)value;
- else       codedValue=Context.getConceptService().getConceptByName(value.toString());
+      if (value instanceof Concept) {
+        codedValue=(Concept)value;
+      }
+ else {
+        codedValue=Context.getConceptService().getConceptByName(value.toString());
+      }
       valueSql="o.value_coded";
     }
  else     if (concept.getDatatype().isDate()) {
@@ -52,8 +72,12 @@
       }
  else {
         boolean asBoolean=false;
-        if (value instanceof Boolean)         asBoolean=((Boolean)value).booleanValue();
- else         asBoolean=Boolean.valueOf(value.toString());
+        if (value instanceof Boolean) {
+          asBoolean=((Boolean)value).booleanValue();
+        }
+ else {
+          asBoolean=Boolean.valueOf(value.toString());
+        }
         codedValue=asBoolean ? Context.getConceptService().getTrueConcept() : Context.getConceptService().getFalseConcept();
       }
       valueSql="o.value_coded";
@@ -74,9 +98,13 @@
     dateSqlForSubquery+=" and obs_datetime <= :toDate ";
   }
   if (timeModifier == TimeModifier.ANY || timeModifier == TimeModifier.NO) {
-    if (timeModifier == TimeModifier.NO)     doInvert=true;
+    if (timeModifier == TimeModifier.NO) {
+      doInvert=true;
+    }
     sb.append("select o.person_id from obs o " + "inner join patient p on o.person_id = p.patient_id and p.voided = false " + "where o.voided = false ");
-    if (conceptId != null)     sb.append("and concept_id = :concept_id ");
+    if (conceptId != null) {
+      sb.append("and concept_id = :concept_id ");
+    }
     sb.append(dateSql);
   }
  else   if (timeModifier == TimeModifier.FIRST || timeModifier == TimeModifier.LAST) {
@@ -96,20 +124,38 @@
     sb.append(valueSql + " ");
     sb.append(modifier.getSqlRepresentation() + " :value");
   }
-  if (!doSqlAggregation)   sb.append(" group by o.person_id ");
+  if (!doSqlAggregation) {
+    sb.append(" group by o.person_id ");
+  }
   log.debug("query: " + sb);
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
   query.setCacheMode(CacheMode.IGNORE);
-  if (conceptId != null)   query.setInteger("concept_id",conceptId);
-  if (useValue) {
-    if (numericValue != null)     query.setDouble("value",numericValue.doubleValue());
- else     if (codedValue != null)     query.setInteger("value",codedValue.getConceptId());
- else     if (stringValue != null)     query.setString("value",stringValue);
- else     if (dateValue != null)     query.setDate("value",dateValue);
- else     throw new IllegalArgumentException("useValue is true, but numeric, coded, string, boolean, and date values are all null");
+  if (conceptId != null) {
+    query.setInteger("concept_id",conceptId);
   }
-  if (fromDate != null)   query.setDate("fromDate",fromDate);
-  if (toDate != null)   query.setDate("toDate",toDate);
+  if (useValue) {
+    if (numericValue != null) {
+      query.setDouble("value",numericValue.doubleValue());
+    }
+ else     if (codedValue != null) {
+      query.setInteger("value",codedValue.getConceptId());
+    }
+ else     if (stringValue != null) {
+      query.setString("value",stringValue);
+    }
+ else     if (dateValue != null) {
+      query.setDate("value",dateValue);
+    }
+ else {
+      throw new IllegalArgumentException("useValue is true, but numeric, coded, string, boolean, and date values are all null");
+    }
+  }
+  if (fromDate != null) {
+    query.setDate("fromDate",fromDate);
+  }
+  if (toDate != null) {
+    query.setDate("toDate",toDate);
+  }
   Cohort ret;
   if (doInvert) {
     ret=getAllPatients();

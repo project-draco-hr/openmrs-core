@@ -1,4 +1,6 @@
 {
-  if (object == null)   throw new APIException(Context.getMessageSourceService().getMessage("error.null"));
+  if (object == null) {
+    throw new APIException(Context.getMessageSourceService().getMessage("error.null"));
+  }
   dao.validate(object,errors);
 }

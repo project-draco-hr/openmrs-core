@@ -3,11 +3,15 @@
   Thread[] threadArray=threadSet.toArray(new Thread[threadSet.size()]);
   for (  Thread thread : threadArray) {
     ClassLoader classLoader=thread.getContextClassLoader();
-    if (classLoader == null)     continue;
+    if (classLoader == null) {
+      continue;
+    }
     if (classLoader instanceof OpenmrsClassLoader) {
       try {
         thread.setContextClassLoader(classLoader.getParent());
-        if (thread == Thread.currentThread())         continue;
+        if (thread == Thread.currentThread()) {
+          continue;
+        }
         log.info("onShutdown Stopping thread: " + thread.getName());
         thread.stop();
       }

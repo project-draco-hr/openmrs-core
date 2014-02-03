@@ -23,7 +23,11 @@
     e.printStackTrace();
   }
   if (onStartupThread.exceptionThrown != null) {
-    if (onStartupThread.exceptionThrown instanceof ModuleException)     throw (ModuleException)onStartupThread.exceptionThrown;
- else     throw new ModuleException("Unable to run onStartup() method as Daemon",onStartupThread.exceptionThrown);
+    if (onStartupThread.exceptionThrown instanceof ModuleException) {
+      throw (ModuleException)onStartupThread.exceptionThrown;
+    }
+ else {
+      throw new ModuleException("Unable to run onStartup() method as Daemon",onStartupThread.exceptionThrown);
+    }
   }
 }

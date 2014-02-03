@@ -4,7 +4,9 @@
   try {
 {
 {
-        if (_t == null)         _t=ASTNULL;
+        if (_t == null) {
+          _t=ASTNULL;
+        }
 switch (_t.getType()) {
 case ELSEIF:
 {
@@ -18,7 +20,9 @@ case ELSEIF:
             _t=_t.getNextSibling();
             obj.AddToEvaluateList("data","THEN");
 {
-              if (_t == null)               _t=ASTNULL;
+              if (_t == null) {
+                _t=ASTNULL;
+              }
               if ((_tokenSet_0.member(_t.getType()))) {
                 System.err.println("-----------Starting Read -------");
                 s=readAST(_t,obj,s);
@@ -57,7 +61,9 @@ case ELSE:
           _t=_t.getFirstChild();
           obj.AddToEvaluateList("data","ELSE");
 {
-            if (_t == null)             _t=ASTNULL;
+            if (_t == null) {
+              _t=ASTNULL;
+            }
             if ((_tokenSet_0.member(_t.getType()))) {
               System.err.println("-----------Starting Read -------");
               s=readAST(_t,obj,s);

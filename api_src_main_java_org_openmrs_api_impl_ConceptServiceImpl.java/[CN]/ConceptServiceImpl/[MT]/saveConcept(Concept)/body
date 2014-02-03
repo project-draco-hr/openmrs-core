@@ -20,7 +20,9 @@
         clone.setConceptNameId(null);
         uuidClonedConceptNameMap.put(conceptName.getUuid(),clone);
         if (hasNameChanged(conceptName)) {
-          if (changedConceptNames == null)           changedConceptNames=new ArrayList<ConceptName>();
+          if (changedConceptNames == null) {
+            changedConceptNames=new ArrayList<ConceptName>();
+          }
           changedConceptNames.add(conceptName);
         }
  else {
@@ -45,8 +47,12 @@ catch (          InvocationTargetException e) {
       nameInDB.setDateVoided(new Date());
       nameInDB.setVoidedBy(Context.getAuthenticatedUser());
       nameInDB.setVoidReason(Context.getMessageSourceService().getMessage("Concept.name.voidReason.nameChanged"));
-      if (!nameInDB.isSynonym())       nameInDB.setConceptNameType(null);
-      if (nameInDB.isLocalePreferred())       nameInDB.setLocalePreferred(false);
+      if (!nameInDB.isSynonym()) {
+        nameInDB.setConceptNameType(null);
+      }
+      if (nameInDB.isLocalePreferred()) {
+        nameInDB.setLocalePreferred(false);
+      }
       ConceptName clone=uuidClonedConceptNameMap.get(nameInDB.getUuid());
       clone.setUuid(UUID.randomUUID().toString());
       clone.setDateCreated(null);
@@ -57,11 +63,19 @@ catch (          InvocationTargetException e) {
   Set<Locale> checkedLocales=new HashSet<Locale>();
   for (  ConceptName n : concept.getNames()) {
     Locale locale=n.getLocale();
-    if (checkedLocales.contains(locale))     continue;
+    if (checkedLocales.contains(locale)) {
+      continue;
+    }
     ConceptName possiblePreferredName=concept.getPreferredName(locale);
-    if (possiblePreferredName != null)     ;
- else     if (concept.getFullySpecifiedName(locale) != null)     possiblePreferredName=concept.getFullySpecifiedName(locale);
- else     if (!CollectionUtils.isEmpty(concept.getSynonyms(locale)))     concept.getSynonyms(locale).iterator().next().setLocalePreferred(true);
+    if (possiblePreferredName != null) {
+      ;
+    }
+ else     if (concept.getFullySpecifiedName(locale) != null) {
+      possiblePreferredName=concept.getFullySpecifiedName(locale);
+    }
+ else     if (!CollectionUtils.isEmpty(concept.getSynonyms(locale))) {
+      concept.getSynonyms(locale).iterator().next().setLocalePreferred(true);
+    }
     if (possiblePreferredName != null) {
       possiblePreferredName.setLocalePreferred(true);
     }

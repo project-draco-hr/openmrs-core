@@ -1,7 +1,9 @@
 {
-  if (pat != null)   for (  PersonAttribute attribute : getAttributes()) {
-    if (pat.equals(attribute.getAttributeType()) && !attribute.isVoided()) {
-      return attribute;
+  if (pat != null) {
+    for (    PersonAttribute attribute : getAttributes()) {
+      if (pat.equals(attribute.getAttributeType()) && !attribute.isVoided()) {
+        return attribute;
+      }
     }
   }
   return null;

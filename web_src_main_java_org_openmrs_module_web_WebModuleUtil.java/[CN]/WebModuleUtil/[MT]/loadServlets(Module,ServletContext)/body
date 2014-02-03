@@ -8,10 +8,14 @@
     for (int j=0; j < childNodes.getLength(); j++) {
       Node childNode=childNodes.item(j);
       if ("servlet-name".equals(childNode.getNodeName())) {
-        if (childNode.getTextContent() != null)         name=childNode.getTextContent().trim();
+        if (childNode.getTextContent() != null) {
+          name=childNode.getTextContent().trim();
+        }
       }
  else       if ("servlet-class".equals(childNode.getNodeName())) {
-        if (childNode.getTextContent() != null)         className=childNode.getTextContent().trim();
+        if (childNode.getTextContent() != null) {
+          className=childNode.getTextContent().trim();
+        }
       }
     }
     if (name.length() == 0 || className.length() == 0) {

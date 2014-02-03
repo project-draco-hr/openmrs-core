@@ -1,6 +1,8 @@
 {
   if (logLevel != null) {
-    if (logClass == null || "".equals(logClass))     logClass=OpenmrsConstants.LOG_CLASS_DEFAULT;
+    if (logClass == null || "".equals(logClass)) {
+      logClass=OpenmrsConstants.LOG_CLASS_DEFAULT;
+    }
     Logger logger=Logger.getLogger(logClass);
     logLevel=logLevel.toLowerCase();
     if (OpenmrsConstants.LOG_LEVEL_TRACE.equals(logLevel)) {

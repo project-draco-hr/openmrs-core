@@ -4,6 +4,8 @@
     return;
   }
   log.debug("Adding " + interceptor + " to interceptor chain");
-  if (interceptors == null)   interceptors=new LinkedHashSet<Interceptor>();
+  if (interceptors == null) {
+    interceptors=new LinkedHashSet<Interceptor>();
+  }
   interceptors.add(interceptor);
 }

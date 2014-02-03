@@ -4,8 +4,12 @@
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
   criteria.setFetchMode("patient",FetchMode.JOIN);
   criteria.setCacheMode(CacheMode.IGNORE);
-  if (patients != null)   criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
-  if (drugConcepts != null)   criteria.add(Restrictions.in("concept",drugConcepts));
+  if (patients != null) {
+    criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
+  }
+  if (drugConcepts != null) {
+    criteria.add(Restrictions.in("concept",drugConcepts));
+  }
   criteria.add(Restrictions.eq("voided",false));
   criteria.add(Restrictions.le("startDate",now));
   criteria.add(Restrictions.or(Restrictions.and(Restrictions.eq("discontinued",false),Restrictions.or(Restrictions.isNull("autoExpireDate"),Restrictions.gt("autoExpireDate",now))),Restrictions.and(Restrictions.eq("discontinued",true),Restrictions.gt("discontinuedDate",now))));

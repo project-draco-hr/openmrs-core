@@ -4,16 +4,26 @@
     errors.reject("error.general");
   }
  else {
-    if (user.isRetired() && StringUtils.isBlank(user.getRetireReason()))     errors.rejectValue("retireReason","error.null");
+    if (user.isRetired() && StringUtils.isBlank(user.getRetireReason())) {
+      errors.rejectValue("retireReason","error.null");
+    }
     if (user.getPerson() == null) {
       errors.rejectValue("person","error.null");
     }
  else {
       Person person=user.getPerson();
-      if (person.getGender() == null)       errors.rejectValue("person.gender","error.null");
-      if (person.getDead() == null)       errors.rejectValue("person.dead","error.null");
-      if (person.getVoided() == null)       errors.rejectValue("person.voided","error.null");
-      if (person.getPersonName() == null || StringUtils.isEmpty(person.getPersonName().getFullName()))       errors.rejectValue("person","Person.names.length");
+      if (person.getGender() == null) {
+        errors.rejectValue("person.gender","error.null");
+      }
+      if (person.getDead() == null) {
+        errors.rejectValue("person.dead","error.null");
+      }
+      if (person.getVoided() == null) {
+        errors.rejectValue("person.voided","error.null");
+      }
+      if (person.getPersonName() == null || StringUtils.isEmpty(person.getPersonName().getFullName())) {
+        errors.rejectValue("person","Person.names.length");
+      }
     }
     AdministrationService as=Context.getAdministrationService();
     boolean emailAsUsername=false;

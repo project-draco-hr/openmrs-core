@@ -1,8 +1,12 @@
 {
   if (saveProviderButton != null) {
     if (provider.getProviderId() != null) {
-      if (linkToPerson)       provider.setName(null);
- else       provider.setPerson(null);
+      if (linkToPerson) {
+        provider.setName(null);
+      }
+ else {
+        provider.setPerson(null);
+      }
     }
   }
   List<ProviderAttributeType> attributeTypes=(List<ProviderAttributeType>)model.get("providerAttributeTypes");

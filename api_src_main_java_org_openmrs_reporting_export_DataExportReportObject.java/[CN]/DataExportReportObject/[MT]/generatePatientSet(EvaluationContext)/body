@@ -9,7 +9,9 @@
   }
   if (cohortId != null) {
     Cohort loadedCohort=Context.getCohortService().getCohort(cohortId);
-    if (loadedCohort != null)     cohort=intersectFast(cohort,loadedCohort);
+    if (loadedCohort != null) {
+      cohort=intersectFast(cohort,loadedCohort);
+    }
   }
   if (cohortDefinitionId != null) {
     PatientFilter cohortDefinition=(PatientFilter)Context.getReportObjectService().getReportObject(cohortDefinitionId);

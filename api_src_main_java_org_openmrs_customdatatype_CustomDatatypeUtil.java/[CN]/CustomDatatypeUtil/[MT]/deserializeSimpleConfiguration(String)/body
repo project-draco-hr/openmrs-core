@@ -1,5 +1,7 @@
 {
-  if (StringUtils.isBlank(serializedConfig))   return Collections.emptyMap();
+  if (StringUtils.isBlank(serializedConfig)) {
+    return Collections.emptyMap();
+  }
   try {
     return Context.getSerializationService().getDefaultSerializer().deserialize(serializedConfig,Map.class);
   }

@@ -5,7 +5,9 @@
     checkEmptyVal((Location)null);
     Location l=(Location)this.fieldGenTag.getVal();
     if (l != null) {
-      if (l.getLocationId() != null)       initialValue=l.getLocationId().toString();
+      if (l.getLocationId() != null) {
+        initialValue=l.getLocationId().toString();
+      }
     }
  else     if (fieldGenTag.getAllowUserDefault()) {
       String userDefaultLocation=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION);
@@ -15,7 +17,9 @@
     if (this.fieldGenTag.getParameterMap() != null) {
       optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
     }
-    if (optionHeader == null)     optionHeader="";
+    if (optionHeader == null) {
+      optionHeader="";
+    }
     setParameter("initialValue",initialValue);
     setParameter("optionHeader",optionHeader);
   }

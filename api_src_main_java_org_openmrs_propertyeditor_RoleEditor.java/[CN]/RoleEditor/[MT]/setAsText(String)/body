@@ -4,7 +4,9 @@
     try {
       Role r=es.getRole(text);
       setValue(r);
-      if (r == null)       throw new Exception();
+      if (r == null) {
+        throw new Exception();
+      }
     }
  catch (    Exception ex) {
       Role r=es.getRoleByUuid(text);

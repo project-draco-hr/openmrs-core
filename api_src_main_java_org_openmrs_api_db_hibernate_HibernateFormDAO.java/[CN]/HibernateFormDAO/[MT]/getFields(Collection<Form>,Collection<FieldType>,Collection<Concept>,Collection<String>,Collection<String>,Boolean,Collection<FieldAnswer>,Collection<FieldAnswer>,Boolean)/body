@@ -1,13 +1,31 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Field.class);
-  if (!forms.isEmpty())   crit.add(Restrictions.in("form",forms));
-  if (!fieldTypes.isEmpty())   crit.add(Restrictions.in("fieldType",fieldTypes));
-  if (!concepts.isEmpty())   crit.add(Restrictions.in("concept",concepts));
-  if (!tableNames.isEmpty())   crit.add(Restrictions.in("tableName",tableNames));
-  if (!attributeNames.isEmpty())   crit.add(Restrictions.in("attributeName",attributeNames));
-  if (selectMultiple != null)   crit.add(Restrictions.eq("selectMultiple",selectMultiple));
-  if (!containsAllAnswers.isEmpty())   throw new APIException("containsAllAnswers must be empty because this is not yet implemented");
-  if (!containsAnyAnswer.isEmpty())   throw new APIException("containsAnyAnswer must be empty because this is not yet implemented");
-  if (retired != null)   crit.add(Restrictions.eq("retired",retired));
+  if (!forms.isEmpty()) {
+    crit.add(Restrictions.in("form",forms));
+  }
+  if (!fieldTypes.isEmpty()) {
+    crit.add(Restrictions.in("fieldType",fieldTypes));
+  }
+  if (!concepts.isEmpty()) {
+    crit.add(Restrictions.in("concept",concepts));
+  }
+  if (!tableNames.isEmpty()) {
+    crit.add(Restrictions.in("tableName",tableNames));
+  }
+  if (!attributeNames.isEmpty()) {
+    crit.add(Restrictions.in("attributeName",attributeNames));
+  }
+  if (selectMultiple != null) {
+    crit.add(Restrictions.eq("selectMultiple",selectMultiple));
+  }
+  if (!containsAllAnswers.isEmpty()) {
+    throw new APIException("containsAllAnswers must be empty because this is not yet implemented");
+  }
+  if (!containsAnyAnswer.isEmpty()) {
+    throw new APIException("containsAnyAnswer must be empty because this is not yet implemented");
+  }
+  if (retired != null) {
+    crit.add(Restrictions.eq("retired",retired));
+  }
   return crit.list();
 }

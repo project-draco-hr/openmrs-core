@@ -6,7 +6,9 @@
     Integer userId=DatabaseUpdater.getAuthenticatedUserId();
     if (userId == null || userId < 1) {
       userId=getInt(connection,"SELECT min(user_id) FROM users");
-      if (userId < 1)       userId=null;
+      if (userId < 1) {
+        userId=null;
+      }
     }
     for (    ConceptName conceptName : updatedConceptNames) {
       pStmt.setString(1,conceptName.getLocale().toString());

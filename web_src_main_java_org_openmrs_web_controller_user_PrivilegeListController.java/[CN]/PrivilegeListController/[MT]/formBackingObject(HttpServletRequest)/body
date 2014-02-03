@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     UserService us=Context.getUserService();
     for (    Privilege p : us.getAllPrivileges()) {
-      if (OpenmrsUtil.getCorePrivileges().keySet().contains(p.getPrivilege()))       privilegeList.put(p,true);
- else       privilegeList.put(p,false);
+      if (OpenmrsUtil.getCorePrivileges().keySet().contains(p.getPrivilege())) {
+        privilegeList.put(p,true);
+      }
+ else {
+        privilegeList.put(p,false);
+      }
     }
   }
   return privilegeList;

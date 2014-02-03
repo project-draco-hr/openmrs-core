@@ -1,6 +1,8 @@
 {
   if (user != null) {
-    if (!Context.hasPrivilege(PrivilegeConstants.EDIT_USERS) && !user.equals(Context.getAuthenticatedUser()))     throw new APIException("You are not authorized to change " + user.getUserId() + "'s properties");
+    if (!Context.hasPrivilege(PrivilegeConstants.EDIT_USERS) && !user.equals(Context.getAuthenticatedUser())) {
+      throw new APIException("You are not authorized to change " + user.getUserId() + "'s properties");
+    }
     user.removeUserProperty(key);
     try {
       Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);

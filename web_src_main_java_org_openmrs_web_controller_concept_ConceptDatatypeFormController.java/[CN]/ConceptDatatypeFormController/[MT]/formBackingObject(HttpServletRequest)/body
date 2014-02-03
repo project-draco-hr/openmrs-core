@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     ConceptService ps=Context.getConceptService();
     String id=request.getParameter("conceptDatatypeId");
-    if (id != null)     cd=ps.getConceptDatatype(Integer.valueOf(id));
+    if (id != null) {
+      cd=ps.getConceptDatatype(Integer.valueOf(id));
+    }
   }
-  if (cd == null)   cd=new ConceptDatatype();
+  if (cd == null) {
+    cd=new ConceptDatatype();
+  }
   return cd;
 }

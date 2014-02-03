@@ -11,13 +11,21 @@
       String name="", description="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("name".equals(childNode.getNodeName()))         name=childNode.getTextContent().trim();
- else         if ("description".equals(childNode.getNodeName()))         description=childNode.getTextContent().trim();
+        if ("name".equals(childNode.getNodeName())) {
+          name=childNode.getTextContent().trim();
+        }
+ else         if ("description".equals(childNode.getNodeName())) {
+          description=childNode.getTextContent().trim();
+        }
         x++;
       }
       log.debug("name: " + name + " description: "+ description);
-      if (name.length() > 0 && description.length() > 0)       privileges.add(new Privilege(name,description));
- else       log.warn("'name' and 'description' are required for privileges. Given '" + name + "' and '"+ description+ "'");
+      if (name.length() > 0 && description.length() > 0) {
+        privileges.add(new Privilege(name,description));
+      }
+ else {
+        log.warn("'name' and 'description' are required for privileges. Given '" + name + "' and '"+ description+ "'");
+      }
       i++;
     }
   }

@@ -1,6 +1,8 @@
 {
   User u=getAuthenticatedUser();
-  if (u == null)   throw new APIAuthenticationException();
+  if (u == null) {
+    throw new APIAuthenticationException();
+  }
   Map<String,Object> myData=volatileUserData.get(u);
   if (myData == null) {
     myData=new HashMap<String,Object>();

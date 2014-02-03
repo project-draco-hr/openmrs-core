@@ -41,13 +41,17 @@
     log.warn("Unable to add files from module to URL list: " + module.getModuleId(),e);
   }
   try {
-    if (log.isDebugEnabled())     log.debug("Expanding /lib folder in module");
+    if (log.isDebugEnabled()) {
+      log.debug("Expanding /lib folder in module");
+    }
     ModuleUtil.expandJar(module.getFile(),tmpModuleDir,"lib",true);
     File libdir=new File(tmpModuleDir,"lib");
     if (libdir != null && libdir.exists()) {
       Collection<File> files=(Collection<File>)FileUtils.listFiles(libdir,new String[]{"jar"},true);
       for (      File file : files) {
-        if (log.isDebugEnabled())         log.debug("Adding file to results: " + file.getAbsolutePath());
+        if (log.isDebugEnabled()) {
+          log.debug("Adding file to results: " + file.getAbsolutePath());
+        }
         result.add(ModuleUtil.file2url(file));
       }
     }

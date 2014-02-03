@@ -9,9 +9,15 @@
   if (serializedAttributeValues != null) {
     HibernateUtil.addAttributeCriteria(criteria,serializedAttributeValues);
   }
-  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
   criteria.addOrder(Order.asc("name"));
-  if (start != null)   criteria.setFirstResult(start);
-  if (length != null && length > 0)   criteria.setMaxResults(length);
+  if (start != null) {
+    criteria.setFirstResult(start);
+  }
+  if (length != null && length > 0) {
+    criteria.setMaxResults(length);
+  }
   return criteria.list();
 }

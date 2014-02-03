@@ -4,26 +4,34 @@
     Date Today=new Date();
     String cfn;
     String packagePrefix=Context.getAdministrationService().getGlobalProperty("logic.default.packageName");
-    if (StringUtils.isEmpty(packagePrefix))     packagePrefix="org.openmrs.logic.rule";
+    if (StringUtils.isEmpty(packagePrefix)) {
+      packagePrefix="org.openmrs.logic.rule";
+    }
     MLMObject ardObj=new MLMObject(Context.getLocale(),null);
     ArdenBaseLexer lexer=new ArdenBaseLexer(s);
     ArdenBaseParser parser=new ArdenBaseParser(lexer);
     parser.startRule();
     BaseAST t=(BaseAST)parser.getAST();
-    if (log.isDebugEnabled())     log.debug(t.toStringTree());
+    if (log.isDebugEnabled()) {
+      log.debug(t.toStringTree());
+    }
     ArdenBaseTreeParser treeParser=new ArdenBaseTreeParser();
     String maintenance=treeParser.maintenance(t,ardObj);
     cfn=ardObj.getClassName();
     String packageFolderName=packagePrefix.replace('.',File.separatorChar);
     File packageFolder=new File(outFolder,packageFolderName);
-    if (!packageFolder.exists())     packageFolder.mkdirs();
+    if (!packageFolder.exists()) {
+      packageFolder.mkdirs();
+    }
     OutputStream os=new FileOutputStream(new File(packageFolder,cfn + ".java"));
     Writer w=new OutputStreamWriter(os);
     log.info("Writing to file - " + cfn + ".java");
     w.write("/********************************************************************" + "\n Translated from - " + fn + " on "+ Today.toString()+ "\n\n");
     w.write(maintenance);
     t=(BaseAST)t.getNextSibling();
-    if (log.isDebugEnabled())     log.debug(t.toStringTree());
+    if (log.isDebugEnabled()) {
+      log.debug(t.toStringTree());
+    }
     String library=treeParser.library(t,ardObj);
     w.write(library);
     w.write("\n********************************************************************/\n");

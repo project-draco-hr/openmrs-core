@@ -7,7 +7,11 @@
     return ret;
   }
  else {
-    if (publishedOnly)     return Context.getFormService().getPublishedForms();
- else     return Context.getFormService().getAllForms(includeRetired);
+    if (publishedOnly) {
+      return Context.getFormService().getPublishedForms();
+    }
+ else {
+      return Context.getFormService().getAllForms(includeRetired);
+    }
   }
 }

@@ -3,7 +3,9 @@
     Map<Integer,Result> results=Context.getLogicService().eval(input,criteria);
     Cohort matches=new Cohort();
     for (    Map.Entry<Integer,Result> e : results.entrySet()) {
-      if (e.getValue().latest().toBoolean())       matches.addMember(e.getKey());
+      if (e.getValue().latest().toBoolean()) {
+        matches.addMember(e.getKey());
+      }
     }
     return Cohort.subtract(input,matches);
   }

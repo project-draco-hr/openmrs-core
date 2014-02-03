@@ -1,7 +1,9 @@
 {
   super(new URL[0],parent);
   OpenmrsClassLoaderHolder.INSTANCE=this;
-  if (log.isDebugEnabled())   log.debug("Creating new OpenmrsClassLoader instance with parent: " + parent);
+  if (log.isDebugEnabled()) {
+    log.debug("Creating new OpenmrsClassLoader instance with parent: " + parent);
+  }
   URLConnection urlConnection=new OpenmrsURLConnection();
   urlConnection.setDefaultUseCaches(false);
 }

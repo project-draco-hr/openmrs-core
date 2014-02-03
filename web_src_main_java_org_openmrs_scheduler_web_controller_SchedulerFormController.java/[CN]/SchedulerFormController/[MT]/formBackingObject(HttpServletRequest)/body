@@ -4,6 +4,8 @@
   if (taskId != null) {
     task=Context.getSchedulerService().getTask(Integer.valueOf(taskId));
   }
-  if (task.getStartTimePattern() == null)   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
+  if (task.getStartTimePattern() == null) {
+    task.setStartTimePattern(DEFAULT_DATE_PATTERN);
+  }
   return task;
 }

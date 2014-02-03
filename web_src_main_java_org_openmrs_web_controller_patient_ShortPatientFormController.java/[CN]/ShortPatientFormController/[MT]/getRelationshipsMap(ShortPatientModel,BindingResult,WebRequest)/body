@@ -38,15 +38,23 @@
       if (relationshipFound == false) {
         Relationship relationshipStub=new Relationship();
         relationshipStub.setRelationshipType(relationshipType);
-        if (aIsToB)         relationshipStub.setPersonB(person);
- else         relationshipStub.setPersonA(person);
+        if (aIsToB) {
+          relationshipStub.setPersonB(person);
+        }
+ else {
+          relationshipStub.setPersonA(person);
+        }
         relationshipMap.put(showRelation,relationshipStub);
       }
       String submittedPersonId=request.getParameter(showRelation);
       if (submittedPersonId != null && submittedPersonId.length() > 0) {
         Person submittedPerson=Context.getPersonService().getPerson(Integer.valueOf(submittedPersonId));
-        if (aIsToB)         relationshipMap.get(showRelation).setPersonA(submittedPerson);
- else         relationshipMap.get(showRelation).setPersonB(submittedPerson);
+        if (aIsToB) {
+          relationshipMap.get(showRelation).setPersonA(submittedPerson);
+        }
+ else {
+          relationshipMap.get(showRelation).setPersonB(submittedPerson);
+        }
       }
     }
   }

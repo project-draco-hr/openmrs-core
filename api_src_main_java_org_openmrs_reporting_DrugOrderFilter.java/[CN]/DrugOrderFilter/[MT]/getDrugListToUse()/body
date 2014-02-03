@@ -1,9 +1,13 @@
 {
   List<Drug> drugList=getDrugList();
   List<Concept> drugSets=getDrugSets();
-  if (drugList == null && drugSets == null)   return null;
+  if (drugList == null && drugSets == null) {
+    return null;
+  }
   List<Drug> ret=new ArrayList<Drug>();
-  if (drugList != null)   ret.addAll(drugList);
+  if (drugList != null) {
+    ret.addAll(drugList);
+  }
   if (drugSets != null) {
     Set<Concept> generics=new HashSet<Concept>();
     for (    Concept drugSet : drugSets) {

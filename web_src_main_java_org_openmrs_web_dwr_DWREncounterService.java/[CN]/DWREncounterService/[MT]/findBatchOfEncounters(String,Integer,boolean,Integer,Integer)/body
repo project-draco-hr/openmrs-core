@@ -11,7 +11,9 @@
     if (phrase.matches("\\d+")) {
       Encounter e=es.getEncounter(Integer.valueOf(phrase));
       if (e != null && (patientId == null || patientId.equals(e.getPatient().getPatientId()))) {
-        if (!e.isVoided() || includeVoided == true)         encs.add(e);
+        if (!e.isVoided() || includeVoided == true) {
+          encs.add(e);
+        }
       }
     }
     if (phrase.equals("")) {

@@ -5,7 +5,9 @@
   if (sqlLower.startsWith("insert") || sqlLower.startsWith("update") || sqlLower.startsWith("delete")|| sqlLower.startsWith("alter")|| sqlLower.startsWith("drop")|| sqlLower.startsWith("create")|| sqlLower.startsWith("rename")) {
     dataManipulation=true;
   }
-  if (selectOnly && dataManipulation)   throw new IllegalArgumentException("Illegal command(s) found in query string");
+  if (selectOnly && dataManipulation) {
+    throw new IllegalArgumentException("Illegal command(s) found in query string");
+  }
   PreparedStatement ps=null;
   List<List<Object>> results=new Vector<List<Object>>();
   try {

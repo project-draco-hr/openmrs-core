@@ -16,8 +16,12 @@
     }
   }
  catch (  IllegalAccessException e) {
-    if (field.isAnnotationPresent(AllowDirectAccess.class))     throw new APIException("Unable to get field: " + fieldName + " on "+ openmrsObject.getClass());
- else     throw new APIException("Unable to use getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
+    if (field.isAnnotationPresent(AllowDirectAccess.class)) {
+      throw new APIException("Unable to get field: " + fieldName + " on "+ openmrsObject.getClass());
+    }
+ else {
+      throw new APIException("Unable to use getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());
+    }
   }
 catch (  InvocationTargetException e) {
     throw new APIException("Unable to run getter method: " + getterName + " for field: "+ fieldName+ " on "+ openmrsObject.getClass());

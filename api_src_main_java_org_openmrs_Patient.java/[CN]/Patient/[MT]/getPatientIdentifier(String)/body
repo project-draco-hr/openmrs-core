@@ -1,10 +1,14 @@
 {
   if (getIdentifiers() != null && getIdentifiers().size() > 0) {
     for (    PatientIdentifier id : getIdentifiers()) {
-      if (id.isPreferred() && !id.isVoided() && identifierTypeName.equals(id.getIdentifierType().getName()))       return id;
+      if (id.isPreferred() && !id.isVoided() && identifierTypeName.equals(id.getIdentifierType().getName())) {
+        return id;
+      }
     }
     for (    PatientIdentifier id : getIdentifiers()) {
-      if (!id.isVoided() && identifierTypeName.equals(id.getIdentifierType().getName()))       return id;
+      if (!id.isVoided() && identifierTypeName.equals(id.getIdentifierType().getName())) {
+        return id;
+      }
     }
     return null;
   }

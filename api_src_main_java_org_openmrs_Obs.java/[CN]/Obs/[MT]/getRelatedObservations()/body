@@ -5,14 +5,18 @@
     Obs parentObs=this;
     while (parentObs.getObsGroup() != null) {
       for (      Obs obsSibling : parentObs.getObsGroup().getGroupMembers()) {
-        if (!obsSibling.isObsGrouping())         ret.add(obsSibling);
+        if (!obsSibling.isObsGrouping()) {
+          ret.add(obsSibling);
+        }
       }
       parentObs=parentObs.getObsGroup();
     }
   }
  else   if (this.getObsGroup() != null) {
     for (    Obs obsSibling : this.getObsGroup().getGroupMembers()) {
-      if (!obsSibling.isObsGrouping())       ret.add(obsSibling);
+      if (!obsSibling.isObsGrouping()) {
+        ret.add(obsSibling);
+      }
     }
   }
   return ret;

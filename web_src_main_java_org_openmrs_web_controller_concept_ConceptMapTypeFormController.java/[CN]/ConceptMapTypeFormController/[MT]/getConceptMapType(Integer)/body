@@ -1,6 +1,10 @@
 {
   ConceptMapType conceptMapType=null;
-  if (conceptMapTypeId != null)   conceptMapType=Context.getConceptService().getConceptMapType(conceptMapTypeId);
-  if (conceptMapType == null)   conceptMapType=new ConceptMapType();
+  if (conceptMapTypeId != null) {
+    conceptMapType=Context.getConceptService().getConceptMapType(conceptMapTypeId);
+  }
+  if (conceptMapType == null) {
+    conceptMapType=new ConceptMapType();
+  }
   return conceptMapType;
 }

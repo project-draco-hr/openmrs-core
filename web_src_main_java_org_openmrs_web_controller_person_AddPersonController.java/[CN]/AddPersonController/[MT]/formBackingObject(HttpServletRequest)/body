@@ -26,10 +26,14 @@
         }
       }
  catch (      ParseException e) {
-        if (log.isDebugEnabled())         log.debug("Parse exception occurred : " + e);
+        if (log.isDebugEnabled()) {
+          log.debug("Parse exception occurred : " + e);
+        }
         invalidAgeFormat=true;
       }
-      if (birthyear != -1)       d=Integer.valueOf(birthyear);
+      if (birthyear != -1) {
+        d=Integer.valueOf(birthyear);
+      }
  else       if (age.length() > 0) {
         Calendar c=Calendar.getInstance();
         c.setTime(new Date());
@@ -41,7 +45,9 @@
           invalidAgeFormat=true;
         }
       }
-      if (gender.length() < 1)       person.put("gender",null);
+      if (gender.length() < 1) {
+        person.put("gender",null);
+      }
       personList=new Vector<PersonListItem>();
       for (      Person p : ps.getSimilarPeople(name,d,gender)) {
         personList.add(PersonListItem.createBestMatch(p));

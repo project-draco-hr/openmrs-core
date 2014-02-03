@@ -1,5 +1,7 @@
 {
-  if (prioritizedHandlerClasses == null)   prioritizeHandlers();
+  if (prioritizedHandlerClasses == null) {
+    prioritizeHandlers();
+  }
   Class<? extends CustomDatatypeHandler> clazz=prioritizedHandlerClasses.get(datatype.getClass());
   if (clazz == null) {
     return null;

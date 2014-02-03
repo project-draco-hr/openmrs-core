@@ -33,9 +33,13 @@
         }
       }
     }
-    if (StringUtils.isNotBlank(errorMsg))     log.error(errorMsg);
+    if (StringUtils.isNotBlank(errorMsg)) {
+      log.error(errorMsg);
+    }
     if (proc.waitFor() == 0) {
-      if (log.isDebugEnabled())       log.debug("Added test data successfully");
+      if (log.isDebugEnabled()) {
+        log.debug("Added test data successfully");
+      }
       return true;
     }
     log.error("The process terminated abnormally while adding test data. Please look under the Configuration section at: https://wiki.openmrs.org/display/docs/Release+Testing+Helper+Module");

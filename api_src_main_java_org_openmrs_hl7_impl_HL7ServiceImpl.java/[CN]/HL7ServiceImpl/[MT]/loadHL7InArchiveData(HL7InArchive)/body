@@ -1,6 +1,10 @@
 {
-  if (archive == null)   return;
-  if (!OpenmrsUtil.nullSafeEquals(archive.getMessageState(),HL7Constants.HL7_STATUS_MIGRATED) || archive.isLoaded())   return;
+  if (archive == null) {
+    return;
+  }
+  if (!OpenmrsUtil.nullSafeEquals(archive.getMessageState(),HL7Constants.HL7_STATUS_MIGRATED) || archive.isLoaded()) {
+    return;
+  }
   try {
     archive.setHL7Data(OpenmrsUtil.getFileAsString(new File(new URI(archive.getHL7Data()))));
     archive.setLoaded(true);

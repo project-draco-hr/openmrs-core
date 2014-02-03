@@ -1,6 +1,8 @@
 {
   Locale result=null;
-  if (filename.startsWith(basename))   filename=filename.substring(basename.length());
+  if (filename.startsWith(basename)) {
+    filename=filename.substring(basename.length());
+  }
   String localespec=filename.substring(0,filename.indexOf('.'));
   if (localespec.equals("")) {
     result=Locale.ENGLISH;

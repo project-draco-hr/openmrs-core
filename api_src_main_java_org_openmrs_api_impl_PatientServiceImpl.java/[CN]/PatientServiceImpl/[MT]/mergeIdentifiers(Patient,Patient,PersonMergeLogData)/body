@@ -7,7 +7,9 @@
     tmpIdentifier.setPatient(preferred);
     boolean found=false;
     for (    PatientIdentifier preferredIdentifier : preferred.getIdentifiers()) {
-      if (preferredIdentifier.getIdentifier() != null && preferredIdentifier.getIdentifier().equals(tmpIdentifier.getIdentifier()) && preferredIdentifier.getIdentifierType() != null && preferredIdentifier.getIdentifierType().equals(tmpIdentifier.getIdentifierType()))       found=true;
+      if (preferredIdentifier.getIdentifier() != null && preferredIdentifier.getIdentifier().equals(tmpIdentifier.getIdentifier()) && preferredIdentifier.getIdentifierType() != null && preferredIdentifier.getIdentifierType().equals(tmpIdentifier.getIdentifierType())) {
+        found=true;
+      }
     }
     if (!found) {
       tmpIdentifier.setIdentifierType(pi.getIdentifierType());

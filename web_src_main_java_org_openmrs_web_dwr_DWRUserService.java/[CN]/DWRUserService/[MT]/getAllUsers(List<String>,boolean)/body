@@ -9,12 +9,16 @@
     try {
       UserService us=Context.getUserService();
       Set<User> users=new TreeSet<User>(new UserComparator());
-      if (roleStrings == null)       roleStrings=new Vector<String>();
+      if (roleStrings == null) {
+        roleStrings=new Vector<String>();
+      }
       List<Role> roles=new Vector<Role>();
       for (      String r : roleStrings) {
         if (!"".equals(r)) {
           Role role=us.getRole(r);
-          if (role != null)           roles.add(role);
+          if (role != null) {
+            roles.add(role);
+          }
         }
       }
       users.addAll(us.getUsers(null,roles,includeVoided));

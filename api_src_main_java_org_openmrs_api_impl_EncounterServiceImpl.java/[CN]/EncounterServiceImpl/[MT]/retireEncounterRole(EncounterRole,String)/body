@@ -1,4 +1,6 @@
 {
-  if (reason == null)   throw new IllegalArgumentException("The 'reason' for retiring is required");
+  if (reason == null) {
+    throw new IllegalArgumentException("The 'reason' for retiring is required");
+  }
   return Context.getEncounterService().saveEncounterRole(encounterRole);
 }

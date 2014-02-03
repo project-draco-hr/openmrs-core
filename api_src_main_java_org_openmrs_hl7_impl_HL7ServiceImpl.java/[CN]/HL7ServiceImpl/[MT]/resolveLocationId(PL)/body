@@ -4,7 +4,9 @@
   try {
     Integer locationId=new Integer(pointOfCare);
     Location l=Context.getLocationService().getLocation(locationId);
-    if (l != null)     return l.getLocationId();
+    if (l != null) {
+      return l.getLocationId();
+    }
   }
  catch (  Exception ex) {
     if (facility == null) {

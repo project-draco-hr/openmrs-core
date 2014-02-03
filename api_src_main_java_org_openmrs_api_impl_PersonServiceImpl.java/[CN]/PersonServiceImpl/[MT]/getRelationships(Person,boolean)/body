@@ -1,4 +1,6 @@
 {
-  if (showVoided)   throw new APIException("Voided relationships should be considered gone and unusable.  Don't search for or show them");
+  if (showVoided) {
+    throw new APIException("Voided relationships should be considered gone and unusable.  Don't search for or show them");
+  }
   return Context.getPersonService().getRelationshipsByPerson(p);
 }

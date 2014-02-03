@@ -7,16 +7,24 @@
     AdministrationService as=Context.getAdministrationService();
     map.put("languages",as.getPresentationLocales());
     String resetPassword=(String)httpSession.getAttribute("resetPassword");
-    if (resetPassword == null)     resetPassword="";
- else     httpSession.removeAttribute("resetPassword");
+    if (resetPassword == null) {
+      resetPassword="";
+    }
+ else {
+      httpSession.removeAttribute("resetPassword");
+    }
     map.put("resetPassword",resetPassword);
     ArrayList<String> hints=new ArrayList<String>(5);
     int minChar=1;
     MessageSourceService mss=Context.getMessageSourceService();
     try {
       String minCharStr=as.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_MINIMUM_LENGTH);
-      if (StringUtils.isNotBlank(minCharStr))       minChar=Integer.valueOf(minCharStr);
-      if (minChar < 1)       minChar=1;
+      if (StringUtils.isNotBlank(minCharStr)) {
+        minChar=Integer.valueOf(minCharStr);
+      }
+      if (minChar < 1) {
+        minChar=1;
+      }
     }
  catch (    NumberFormatException e) {
     }

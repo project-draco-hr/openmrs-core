@@ -7,7 +7,9 @@
     Set<Privilege> inheritedPrivileges=new HashSet<Privilege>();
     allRoles.remove(role);
     for (    Role r : allRoles) {
-      if (r.getInheritedRoles().contains(role))       inheritingRoles.add(r);
+      if (r.getInheritedRoles().contains(role)) {
+        inheritingRoles.add(r);
+      }
     }
     addInheritedPrivileges(role,inheritedPrivileges);
     for (    String s : OpenmrsConstants.AUTO_ROLES()) {

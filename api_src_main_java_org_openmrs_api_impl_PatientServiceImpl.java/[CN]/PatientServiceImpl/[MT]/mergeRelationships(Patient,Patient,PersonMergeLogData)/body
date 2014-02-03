@@ -19,8 +19,12 @@
       }
  else {
         Relationship tmpRel=rel.copy();
-        if (personAisNotPreferred)         tmpRel.setPersonA(preferred);
-        if (personBisNotPreferred)         tmpRel.setPersonB(preferred);
+        if (personAisNotPreferred) {
+          tmpRel.setPersonA(preferred);
+        }
+        if (personBisNotPreferred) {
+          tmpRel.setPersonB(preferred);
+        }
         log.debug("Copying relationship " + rel.getRelationshipId() + " to "+ preferred.getPatientId());
         Relationship persisted=personService.saveRelationship(tmpRel);
         mergedData.addCreatedRelationship(persisted.getUuid());

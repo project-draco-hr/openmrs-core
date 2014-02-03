@@ -20,7 +20,9 @@ return valueText;
 }
 StringBuffer s=new StringBuffer();
 for (Result r : this) {
-if (s.length() > 0) s.append(",");
+if (s.length() > 0) {
+s.append(",");
+}
 s.append(r.toString());
 }
 return s.toString();

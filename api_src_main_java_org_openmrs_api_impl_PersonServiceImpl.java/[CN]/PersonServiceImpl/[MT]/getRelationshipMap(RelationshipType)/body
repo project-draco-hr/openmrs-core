@@ -6,7 +6,9 @@
       Person from=rel.getPersonA();
       Person to=rel.getPersonB();
       List<Person> relList=ret.get(from);
-      if (relList == null)       relList=new ArrayList<Person>();
+      if (relList == null) {
+        relList=new ArrayList<Person>();
+      }
       relList.add(to);
       ret.put(from,relList);
     }

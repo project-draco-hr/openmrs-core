@@ -5,7 +5,9 @@
   if (path != null) {
     path=path.substring(1);
     Integer nextSlash=path.indexOf("/");
-    if (nextSlash != -1)     path=path.substring(0,nextSlash);
+    if (nextSlash != -1) {
+      path=path.substring(0,nextSlash);
+    }
     log.debug("new concept id: " + path);
     try {
       Integer i=new Integer(path);

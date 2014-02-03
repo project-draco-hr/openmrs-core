@@ -7,8 +7,12 @@
       ps=connection.prepareStatement("SELECT * FROM patient WHERE patient_id = ?");
       ps.setInt(1,patient.getPatientId());
       ps.execute();
-      if (ps.getResultSet().next())       stubInsertNeeded=false;
- else       stubInsertNeeded=true;
+      if (ps.getResultSet().next()) {
+        stubInsertNeeded=false;
+      }
+ else {
+        stubInsertNeeded=true;
+      }
     }
  catch (    SQLException e) {
       log.error("Error while trying to see if this person is a patient already",e);

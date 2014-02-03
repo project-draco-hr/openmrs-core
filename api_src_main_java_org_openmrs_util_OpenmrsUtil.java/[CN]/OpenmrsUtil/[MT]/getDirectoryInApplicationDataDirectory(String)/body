@@ -7,6 +7,8 @@
     log.warn("'" + folder.getAbsolutePath() + "' doesn't exist.  Creating directories now.");
     folder.mkdirs();
   }
-  if (!folder.isDirectory())   throw new APIException("'" + folder.getAbsolutePath() + "' should be a directory but it is not");
+  if (!folder.isDirectory()) {
+    throw new APIException("'" + folder.getAbsolutePath() + "' should be a directory but it is not");
+  }
   return folder;
 }

@@ -1,5 +1,7 @@
 {
-  if (log.isInfoEnabled())   log.info("systemId: " + systemId);
+  if (log.isInfoEnabled()) {
+    log.info("systemId: " + systemId);
+  }
   User user=getUserContext().becomeUser(systemId);
   Locale locale=null;
   if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {

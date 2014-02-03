@@ -1,4 +1,6 @@
 {
-  if (!runtimePropertiesFound)   return true;
+  if (!runtimePropertiesFound) {
+    return true;
+  }
   return DatabaseUpdater.updatesRequired() && !DatabaseUpdater.allowAutoUpdate();
 }

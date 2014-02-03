@@ -1,5 +1,7 @@
 {
-  if (identifiers.length < 1)   throw new HL7Exception("Missing patient identifier in PID segment");
+  if (identifiers.length < 1) {
+    throw new HL7Exception("Missing patient identifier in PID segment");
+  }
   for (  CX identifier : identifiers) {
     String hl7PersonId=identifier.getIDNumber().getValue();
     String assigningAuthority=identifier.getAssigningAuthority().getNamespaceID().getValue();
@@ -9,7 +11,9 @@
         if (pit == null) {
           if (assigningAuthority.equals(HL7Constants.HL7_AUTHORITY_UUID)) {
             Person p=Context.getPersonService().getPersonByUuid(hl7PersonId);
-            if (p != null)             return p;
+            if (p != null) {
+              return p;
+            }
             log.warn("Can't find person for UUID '" + hl7PersonId + "'");
             continue;
           }
@@ -19,12 +23,16 @@
               if (idType.equals(HL7Constants.HL7_ID_PERSON)) {
                 Integer pid=Integer.parseInt(hl7PersonId);
                 Person p=Context.getPersonService().getPerson(pid);
-                if (p != null)                 return p;
+                if (p != null) {
+                  return p;
+                }
               }
  else               if (idType.equals(HL7Constants.HL7_ID_PATIENT)) {
                 Integer pid=Integer.parseInt(hl7PersonId);
                 Patient p=Context.getPatientService().getPatient(pid);
-                if (p != null)                 return p;
+                if (p != null) {
+                  return p;
+                }
               }
             }
  catch (            NumberFormatException e) {

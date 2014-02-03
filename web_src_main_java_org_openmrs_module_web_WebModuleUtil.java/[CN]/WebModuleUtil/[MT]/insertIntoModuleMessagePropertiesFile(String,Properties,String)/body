@@ -4,7 +4,9 @@
   String absolutePath=realPath + currentPath;
   File file=new File(absolutePath);
   try {
-    if (!file.exists())     file.createNewFile();
+    if (!file.exists()) {
+      file.createNewFile();
+    }
   }
  catch (  IOException ioe) {
     log.error("Unable to create new file " + file.getAbsolutePath() + " "+ ioe);

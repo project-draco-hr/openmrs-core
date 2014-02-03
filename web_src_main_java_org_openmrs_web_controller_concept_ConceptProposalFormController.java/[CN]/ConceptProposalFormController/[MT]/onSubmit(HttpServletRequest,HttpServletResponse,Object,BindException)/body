@@ -9,9 +9,13 @@
     ConceptService cs=Context.getConceptService();
     AlertService alertService=Context.getAlertService();
     Concept c=null;
-    if (StringUtils.hasText(request.getParameter("conceptId")))     c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
+    if (StringUtils.hasText(request.getParameter("conceptId"))) {
+      c=cs.getConcept(Integer.valueOf(request.getParameter("conceptId")));
+    }
     Collection<ConceptName> oldNames=null;
-    if (c != null)     oldNames=c.getNames();
+    if (c != null) {
+      oldNames=c.getNames();
+    }
     Set<User> uniqueProposers=new HashSet<User>();
     Locale conceptNameLocale=new Locale(request.getParameter("conceptNamelocale"));
     uniqueProposers.add(cp.getCreator());
@@ -27,10 +31,14 @@
     if (c != null) {
       Collection<ConceptName> newNames=c.getNames();
       newNames.removeAll(oldNames);
-      if (newNames.size() == 1)       newConceptName=newNames.iterator().next();
+      if (newNames.size() == 1) {
+        newConceptName=newNames.iterator().next();
+      }
     }
     List<ConceptProposal> allProposals=cs.getConceptProposals(cp.getOriginalText());
-    if (allProposals.contains(cp))     allProposals.remove(cp);
+    if (allProposals.contains(cp)) {
+      allProposals.remove(cp);
+    }
     for (    ConceptProposal conceptProposal : allProposals) {
       if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT)) {
         conceptProposal.rejectConceptProposal();
@@ -50,7 +58,9 @@
           ob.setEncounter(conceptProposal.getEncounter());
           ob.setConcept(conceptProposal.getObsConcept());
           ob.setValueCoded(conceptProposal.getMappedConcept());
-          if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null)           ob.setValueCodedName(newConceptName);
+          if (conceptProposal.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM) && newConceptName != null) {
+            ob.setValueCodedName(newConceptName);
+          }
           ob.setCreator(Context.getAuthenticatedUser());
           ob.setDateCreated(new Date());
           ob.setObsDatetime(conceptProposal.getEncounter().getEncounterDatetime());

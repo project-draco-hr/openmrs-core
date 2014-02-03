@@ -4,12 +4,18 @@
     if (Context.isAuthenticated()) {
       Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       Context.addProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
-      if (StringUtils.hasText(request.getParameter("patientId")))       encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
-      if (encounter.isVoided())       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+      if (StringUtils.hasText(request.getParameter("patientId"))) {
+        encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
+      }
+      if (encounter.isVoided()) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+      }
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"patient","error.null");
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"encounterDatetime","error.null");
       String[] providerIdsArray=ServletRequestUtils.getStringParameters(request,"providerIds");
-      if (ArrayUtils.isEmpty(providerIdsArray))       errors.reject("Encounter.provider.atleastOneProviderRequired");
+      if (ArrayUtils.isEmpty(providerIdsArray)) {
+        errors.reject("Encounter.provider.atleastOneProviderRequired");
+      }
       String[] roleIdsArray=ServletRequestUtils.getStringParameters(request,"encounterRoleIds");
       ProviderService ps=Context.getProviderService();
       EncounterService es=Context.getEncounterService();
@@ -20,13 +26,17 @@
             unremovedRoleAndProviders.add(roleIdsArray[i] + "-" + providerIdsArray[i]);
             Provider provider=ps.getProvider(Integer.valueOf(providerIdsArray[i]));
             EncounterRole encounterRole=es.getEncounterRole(Integer.valueOf(roleIdsArray[i]));
-            if (encounter.getProvidersByRole(encounterRole).contains(provider))             continue;
+            if (encounter.getProvidersByRole(encounterRole).contains(provider)) {
+              continue;
+            }
             encounter.addProvider(encounterRole,provider);
           }
         }
         for (        Map.Entry<EncounterRole,Set<Provider>> entry : encounter.getProvidersByRoles().entrySet()) {
           for (          Provider p : entry.getValue()) {
-            if (!unremovedRoleAndProviders.contains(entry.getKey().getEncounterRoleId() + "-" + p.getProviderId()))             encounter.removeProvider(entry.getKey(),p);
+            if (!unremovedRoleAndProviders.contains(entry.getKey().getEncounterRoleId() + "-" + p.getProviderId())) {
+              encounter.removeProvider(entry.getKey(),p);
+            }
           }
         }
       }

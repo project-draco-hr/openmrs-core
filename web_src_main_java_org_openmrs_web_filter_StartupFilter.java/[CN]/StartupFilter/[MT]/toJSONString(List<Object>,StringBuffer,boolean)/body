@@ -2,8 +2,12 @@
   boolean first=true;
   sb.append('[');
   for (  Object listItem : list) {
-    if (first)     first=false;
- else     sb.append(',');
+    if (first) {
+      first=false;
+    }
+ else {
+      sb.append(',');
+    }
     sb.append(toJSONString(listItem,escapeJavascript));
   }
   sb.append(']');

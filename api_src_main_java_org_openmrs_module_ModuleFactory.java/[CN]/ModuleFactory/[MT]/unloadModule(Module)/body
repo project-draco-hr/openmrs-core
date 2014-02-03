@@ -1,5 +1,7 @@
 {
-  if (isModuleStarted(mod))   stopModule(mod,true);
+  if (isModuleStarted(mod)) {
+    stopModule(mod,true);
+  }
   getLoadedModules().remove(mod);
   if (mod != null) {
     File file=mod.getFile();

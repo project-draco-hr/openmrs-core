@@ -3,7 +3,9 @@
     try {
       Class<? extends CustomDatatypeHandler> clazz=(Class<? extends CustomDatatypeHandler>)Context.loadClass(preferredHandlerClassname);
       CustomDatatypeHandler handler=clazz.newInstance();
-      if (handlerConfig != null)       handler.setHandlerConfiguration(handlerConfig);
+      if (handlerConfig != null) {
+        handler.setHandlerConfiguration(handlerConfig);
+      }
       return handler;
     }
  catch (    Exception ex) {

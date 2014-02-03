@@ -7,13 +7,17 @@
           this.locationId=Context.getLocationService().getLocation(Integer.valueOf(locationId)).getLocationId();
         }
  catch (        NumberFormatException e) {
-          if (this.locationId != null)           this.locationId=null;
+          if (this.locationId != null) {
+            this.locationId=null;
+          }
           log.warn("The value of the default Location property of the user with id:" + this.user.getUserId() + " should be an integer",e);
         }
       }
     }
  else {
-      if (this.locationId != null)       this.locationId=null;
+      if (this.locationId != null) {
+        this.locationId=null;
+      }
     }
   }
 }

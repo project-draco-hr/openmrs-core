@@ -12,7 +12,9 @@
   if (concept != null) {
     for (    Field field : Context.getFormService().getFieldsByConcept(concept)) {
       FieldListItem fli=new FieldListItem(field,locale);
-      if (!objects.contains(fli))       objects.add(fli);
+      if (!objects.contains(fli)) {
+        objects.add(fli);
+      }
       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
     if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {
@@ -26,7 +28,9 @@
     if (!objects.contains(fi)) {
       objects.add(fi);
       concept=field.getConcept();
-      if (concept != null)       fieldForConceptAdded.put(concept.getConceptId(),true);
+      if (concept != null) {
+        fieldForConceptAdded.put(concept.getConceptId(),true);
+      }
     }
   }
   List<ConceptSearchResult> searchResults=Context.getConceptService().getConcepts(txt,locale,false);
@@ -34,7 +38,9 @@
     concept=searchResult.getConcept();
     for (    Field field : Context.getFormService().getFieldsByConcept(concept)) {
       FieldListItem fli=new FieldListItem(field,locale);
-      if (!objects.contains(fli))       objects.add(fli);
+      if (!objects.contains(fli)) {
+        objects.add(fli);
+      }
       fieldForConceptAdded.put(concept.getConceptId(),true);
     }
     if (!fieldForConceptAdded.containsKey((concept.getConceptId()))) {

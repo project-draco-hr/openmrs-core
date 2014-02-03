@@ -1,7 +1,9 @@
 {
   if (obj instanceof PersonListItem) {
     PersonListItem pi=(PersonListItem)obj;
-    if (pi.getPersonId() == null || personId == null)     return false;
+    if (pi.getPersonId() == null || personId == null) {
+      return false;
+    }
     return pi.getPersonId().equals(personId);
   }
   return false;

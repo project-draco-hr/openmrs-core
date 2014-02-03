@@ -3,7 +3,9 @@
   IdentifierValidator piv=ps.getDefaultIdentifierValidator();
   String withCheckDigit=piv.getValidIdentifier(idWithoutCheckdigit);
   char checkDigitChar=withCheckDigit.charAt(withCheckDigit.length() - 1);
-  if (Character.isDigit(checkDigitChar))   return Integer.parseInt("" + checkDigitChar);
+  if (Character.isDigit(checkDigitChar)) {
+    return Integer.parseInt("" + checkDigitChar);
+  }
  else {
 switch (checkDigitChar) {
 case 'A':

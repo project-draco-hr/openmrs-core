@@ -6,7 +6,9 @@
     s=s.toUpperCase();
     for (    String p : searchedWords) {
       p=p.toUpperCase();
-      if (p.startsWith(s))       matches+=1.0;
+      if (p.startsWith(s)) {
+        matches+=1.0;
+      }
     }
   }
   return matches == 0 ? 0 : (matches / size);

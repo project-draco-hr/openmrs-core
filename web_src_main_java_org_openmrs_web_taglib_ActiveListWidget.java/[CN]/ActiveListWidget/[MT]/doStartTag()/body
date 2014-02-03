@@ -6,18 +6,26 @@
   Set<Concept> removeConceptList=OpenmrsUtil.conceptSetHelper(removeConcept);
   List<Concept> otherConceptList=OpenmrsUtil.conceptListHelper(otherGroupedConcepts);
   boolean doObsGroups=otherConceptList.size() > 0;
-  if (onDate == null)   onDate=new Date();
+  if (onDate == null) {
+    onDate=new Date();
+  }
   Map<Concept,Obs> activeList=new HashMap<Concept,Obs>();
   for (  Obs o : observations) {
-    if (OpenmrsUtil.compare(o.getObsDatetime(),onDate) > 0)     continue;
+    if (OpenmrsUtil.compare(o.getObsDatetime(),onDate) > 0) {
+      continue;
+    }
     Concept c=o.getConcept();
     Concept toDo=o.getValueCoded();
-    if (toDo == null)     toDo=c;
+    if (toDo == null) {
+      toDo=c;
+    }
     if (addConceptList.contains(o.getConcept())) {
       Date newActiveDate=o.getObsDatetime();
       Obs tmp=activeList.get(c);
       Date currentActiveDate=tmp == null ? null : tmp.getObsDatetime();
-      if (currentActiveDate == null || newActiveDate.compareTo(currentActiveDate) < 0)       activeList.put(toDo,o);
+      if (currentActiveDate == null || newActiveDate.compareTo(currentActiveDate) < 0) {
+        activeList.put(toDo,o);
+      }
     }
  else     if (removeConceptList.contains(o.getConcept())) {
       activeList.remove(toDo);
@@ -33,7 +41,11 @@
   Map<Obs,Collection<Obs>> obsGroups=new HashMap<Obs,Collection<Obs>>();
   if (doObsGroups) {
     ObsService os=Context.getObsService();
-    for (    Obs o : activeList.values())     if (o.isObsGrouping())     obsGroups.put(o,o.getGroupMembers());
+    for (    Obs o : activeList.values()) {
+      if (o.isObsGrouping()) {
+        obsGroups.put(o,o.getGroupMembers());
+      }
+    }
   }
   StringBuilder sb=new StringBuilder();
   String before="";
@@ -79,7 +91,9 @@
     for (    Map.Entry<Concept,Obs> e : ordered) {
       sb.append(beforeItem);
       sb.append(e.getKey().getName(loc,false).getName());
-      if (showDate)       sb.append(" ").append(df.format(e.getValue().getObsDatetime()));
+      if (showDate) {
+        sb.append(" ").append(df.format(e.getValue().getObsDatetime()));
+      }
       if (doObsGroups) {
         Collection<Obs> obsGroup=obsGroups.get(e.getValue());
         for (        Concept c : otherConceptList) {

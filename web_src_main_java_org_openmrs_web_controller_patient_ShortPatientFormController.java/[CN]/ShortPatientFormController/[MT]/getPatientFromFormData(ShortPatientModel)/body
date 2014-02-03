@@ -17,13 +17,17 @@
   }
   if (patientModel.getIdentifiers() != null) {
     for (    PatientIdentifier id : patientModel.getIdentifiers()) {
-      if (id.getPatientIdentifierId() == null && id.isVoided())       continue;
+      if (id.getPatientIdentifierId() == null && id.isVoided()) {
+        continue;
+      }
       patient.addIdentifier(id);
     }
   }
   if (patientModel.getPersonAttributes() != null) {
     for (    PersonAttribute formAttribute : patientModel.getPersonAttributes()) {
-      if (formAttribute.getPersonAttributeId() == null && StringUtils.isBlank(formAttribute.getValue()))       continue;
+      if (formAttribute.getPersonAttributeId() == null && StringUtils.isBlank(formAttribute.getValue())) {
+        continue;
+      }
       if (formAttribute.getPersonAttributeId() != null && !OpenmrsUtil.nullSafeEquals(formAttribute.getValue(),patient.getAttribute(formAttribute.getAttributeType()).getValue())) {
         formAttribute=new PersonAttribute(formAttribute.getAttributeType(),formAttribute.getValue());
         formAttribute.setDateCreated(new Date());

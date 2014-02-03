@@ -1,6 +1,10 @@
 {
-  if (patient.getPatientId() == null)   Context.requirePrivilege(PrivilegeConstants.ADD_PATIENTS);
- else   Context.requirePrivilege(PrivilegeConstants.EDIT_PATIENTS);
+  if (patient.getPatientId() == null) {
+    Context.requirePrivilege(PrivilegeConstants.ADD_PATIENTS);
+  }
+ else {
+    Context.requirePrivilege(PrivilegeConstants.EDIT_PATIENTS);
+  }
   if (patient.isVoided()) {
     Context.requirePrivilege(PrivilegeConstants.DELETE_PATIENTS);
   }
@@ -21,7 +25,9 @@
       preferredIdentifier=id;
       continue;
     }
-    if (!id.equals(preferredIdentifier))     id.setPreferred(false);
+    if (!id.equals(preferredIdentifier)) {
+      id.setPreferred(false);
+    }
   }
   PersonName preferredName=null;
   PersonName possiblePreferredName=patient.getPersonName();
@@ -34,7 +40,9 @@
       preferredName=name;
       continue;
     }
-    if (!name.equals(preferredName))     name.setPreferred(false);
+    if (!name.equals(preferredName)) {
+      name.setPreferred(false);
+    }
   }
   PersonAddress preferredAddress=null;
   PersonAddress possiblePreferredAddress=patient.getPersonAddress();
@@ -47,7 +55,9 @@
       preferredAddress=address;
       continue;
     }
-    if (!address.equals(preferredAddress))     address.setPreferred(false);
+    if (!address.equals(preferredAddress)) {
+      address.setPreferred(false);
+    }
   }
   return dao.savePatient(patient);
 }

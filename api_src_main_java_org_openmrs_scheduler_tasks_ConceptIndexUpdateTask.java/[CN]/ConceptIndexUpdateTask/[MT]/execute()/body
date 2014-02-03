@@ -5,8 +5,12 @@
     AdministrationService as=Context.getAdministrationService();
     ConceptService cs=Context.getConceptService();
     GlobalProperty gp=as.getGlobalPropertyObject(OpenmrsConstants.GP_CONCEPT_INDEX_UPDATE_TASK_LAST_UPDATED_CONCEPT);
-    if (gp == null)     gp=new GlobalProperty(OpenmrsConstants.GP_CONCEPT_INDEX_UPDATE_TASK_LAST_UPDATED_CONCEPT);
-    if (log.isDebugEnabled())     log.debug("Updating concept words ... ");
+    if (gp == null) {
+      gp=new GlobalProperty(OpenmrsConstants.GP_CONCEPT_INDEX_UPDATE_TASK_LAST_UPDATED_CONCEPT);
+    }
+    if (log.isDebugEnabled()) {
+      log.debug("Updating concept words ... ");
+    }
     try {
       Concept currentConcept=null;
       try {
@@ -14,11 +18,15 @@
       }
  catch (      NumberFormatException e) {
       }
-      if (currentConcept == null)       currentConcept=new Concept(0);
+      if (currentConcept == null) {
+        currentConcept=new Concept(0);
+      }
       currentConcept=cs.getNextConcept(currentConcept);
       int counter=0;
       while (currentConcept != null && shouldExecute) {
-        if (log.isDebugEnabled())         log.debug("updateConceptWords() : current concept: " + currentConcept);
+        if (log.isDebugEnabled()) {
+          log.debug("updateConceptWords() : current concept: " + currentConcept);
+        }
         cs.updateConceptIndex(currentConcept);
         if (counter++ > 25) {
           gp.setPropertyValue(currentConcept.getConceptId().toString());
@@ -29,7 +37,9 @@
         }
         currentConcept=cs.getNextConcept(currentConcept);
       }
-      if (currentConcept == null)       as.purgeGlobalProperty(gp);
+      if (currentConcept == null) {
+        as.purgeGlobalProperty(gp);
+      }
     }
  catch (    APIException e) {
       log.error("ConceptWordUpdateTask failed, because:",e);
@@ -41,7 +51,9 @@
       SchedulerService ss=Context.getSchedulerService();
       TaskDefinition conceptWordUpdateTaskDef=ss.getTaskByName(ConceptServiceImpl.CONCEPT_WORD_UPDATE_TASK_NAME);
       conceptWordUpdateTaskDef.setStarted(false);
-      if (conceptWordUpdateTaskDef.getStartOnStartup())       conceptWordUpdateTaskDef.setStartOnStartup(false);
+      if (conceptWordUpdateTaskDef.getStartOnStartup()) {
+        conceptWordUpdateTaskDef.setStartOnStartup(false);
+      }
       ss.saveTask(conceptWordUpdateTaskDef);
       log.debug("Task set to stopped.");
     }

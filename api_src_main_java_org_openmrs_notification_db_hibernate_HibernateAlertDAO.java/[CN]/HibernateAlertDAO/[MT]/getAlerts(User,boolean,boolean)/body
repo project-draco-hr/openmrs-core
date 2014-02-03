@@ -8,7 +8,9 @@
  else {
     return Collections.emptyList();
   }
-  if (!includeExpired)   crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),Restrictions.gt("dateToExpire",new Date())));
+  if (!includeExpired) {
+    crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),Restrictions.gt("dateToExpire",new Date())));
+  }
   if (!includeRead && user.getUserId() != null) {
     crit.add(Restrictions.eq("alertRead",false));
     crit.add(Restrictions.eq("recipient.alertRead",false));

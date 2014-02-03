@@ -1,6 +1,8 @@
 {
   if (interpretJstl) {
-    if (log.isDebugEnabled())     log.debug("returning last modified date of : " + lastModified + " for : "+ request.getPathInfo());
+    if (log.isDebugEnabled()) {
+      log.debug("returning last modified date of : " + lastModified + " for : "+ request.getPathInfo());
+    }
     return lastModified;
   }
   return -1;

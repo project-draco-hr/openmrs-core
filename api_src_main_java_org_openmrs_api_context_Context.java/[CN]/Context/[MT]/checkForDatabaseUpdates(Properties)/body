@@ -7,7 +7,11 @@
     throw new DatabaseUpdateException("Unable to check if database updates are required",e);
   }
   if (updatesRequired) {
-    if (DatabaseUpdater.allowAutoUpdate())     DatabaseUpdater.executeChangelog();
- else     throw new DatabaseUpdateException("Database updates are required.  Call Context.updateDatabase() before .startup() to continue.");
+    if (DatabaseUpdater.allowAutoUpdate()) {
+      DatabaseUpdater.executeChangelog();
+    }
+ else {
+      throw new DatabaseUpdateException("Database updates are required.  Call Context.updateDatabase() before .startup() to continue.");
+    }
   }
 }

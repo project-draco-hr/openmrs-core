@@ -8,6 +8,10 @@
     }
   }
   String submittedValue=request.getParameter(paramName);
-  if (StringUtils.isNotEmpty(submittedValue))   return dt.fromReferenceString(submittedValue);
- else   return null;
+  if (StringUtils.isNotEmpty(submittedValue)) {
+    return dt.fromReferenceString(submittedValue);
+  }
+ else {
+    return null;
+  }
 }

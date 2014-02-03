@@ -1,5 +1,7 @@
 {
-  if (!Context.isAuthenticated())   return new CommandObject();
+  if (!Context.isAuthenticated()) {
+    return new CommandObject();
+  }
   Person person=Context.getPersonService().getPerson(Integer.valueOf(request.getParameter("personId")));
   List<Concept> concepts=null;
   Concept concept=null;
@@ -12,8 +14,12 @@
   Collections.sort(ret,new Comparator<Obs>(){
     public int compare(    Obs left,    Obs right){
       int temp=left.getConcept().getName().getName().compareTo(right.getConcept().getName().getName());
-      if (temp == 0)       temp=OpenmrsUtil.compareWithNullAsGreatest(left.getVoided(),right.getVoided());
-      if (temp == 0)       temp=OpenmrsUtil.compareWithNullAsLatest(left.getObsDatetime(),right.getObsDatetime());
+      if (temp == 0) {
+        temp=OpenmrsUtil.compareWithNullAsGreatest(left.getVoided(),right.getVoided());
+      }
+      if (temp == 0) {
+        temp=OpenmrsUtil.compareWithNullAsLatest(left.getObsDatetime(),right.getObsDatetime());
+      }
       return temp;
     }
   }

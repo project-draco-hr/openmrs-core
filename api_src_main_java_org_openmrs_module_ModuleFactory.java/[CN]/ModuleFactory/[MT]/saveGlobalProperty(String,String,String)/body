@@ -2,8 +2,12 @@
   try {
     AdministrationService as=Context.getAdministrationService();
     GlobalProperty gp=as.getGlobalPropertyObject(key);
-    if (gp == null)     gp=new GlobalProperty(key,value,desc);
- else     gp.setPropertyValue(value);
+    if (gp == null) {
+      gp=new GlobalProperty(key,value,desc);
+    }
+ else {
+      gp.setPropertyValue(value);
+    }
     as.saveGlobalProperty(gp);
   }
  catch (  Exception e) {

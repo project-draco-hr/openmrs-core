@@ -4,7 +4,9 @@
     File basefilename=new File(basename);
     basename=basefilename.getPath();
     int indexOfLastPart=basename.lastIndexOf(File.separatorChar) + 1;
-    if (indexOfLastPart > 0)     basename=basename.substring(indexOfLastPart);
+    if (indexOfLastPart > 0) {
+      basename=basename.substring(indexOfLastPart);
+    }
     if (filename.startsWith(basename)) {
       filename=filename.substring(basename.length());
     }

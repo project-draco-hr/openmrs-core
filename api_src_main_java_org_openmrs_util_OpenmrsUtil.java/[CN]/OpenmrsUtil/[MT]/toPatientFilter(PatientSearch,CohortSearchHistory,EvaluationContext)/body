@@ -8,16 +8,24 @@
   }
  else   if (search.isSavedCohortReference()) {
     Cohort c=Context.getCohortService().getCohort(search.getSavedCohortId());
-    if (c != null)     c.getMemberIds().size();
+    if (c != null) {
+      c.getMemberIds().size();
+    }
     return new CohortFilter(c);
   }
  else   if (search.isComposition()) {
-    if (history == null && search.requiresHistory())     throw new IllegalArgumentException("You can't evaluate this search without a history");
- else     return search.cloneCompositionAsFilter(history,evalContext);
+    if (history == null && search.requiresHistory()) {
+      throw new IllegalArgumentException("You can't evaluate this search without a history");
+    }
+ else {
+      return search.cloneCompositionAsFilter(history,evalContext);
+    }
   }
  else {
     Class clz=search.getFilterClass();
-    if (clz == null)     throw new IllegalArgumentException("search must be saved, composition, or must have a class specified");
+    if (clz == null) {
+      throw new IllegalArgumentException("search must be saved, composition, or must have a class specified");
+    }
     log.debug("About to instantiate " + clz);
     PatientFilter pf=null;
     try {
@@ -30,7 +38,9 @@
     Class[] stringSingleton={String.class};
     if (search.getArguments() != null) {
       for (      SearchArgument sa : search.getArguments()) {
-        if (log.isDebugEnabled())         log.debug("Looking at (" + sa.getPropertyClass() + ") "+ sa.getName()+ " -> "+ sa.getValue());
+        if (log.isDebugEnabled()) {
+          log.debug("Looking at (" + sa.getPropertyClass() + ") "+ sa.getName()+ " -> "+ sa.getValue());
+        }
         PropertyDescriptor pd=null;
         try {
           pd=new PropertyDescriptor(sa.getName(),clz);
@@ -47,8 +57,12 @@
           if (evalContext != null && EvaluationContext.isExpression(testForExpression)) {
             Object evaluated=evalContext.evaluateExpression(testForExpression);
             if (evaluated != null) {
-              if (evaluated instanceof Date)               valueAsString=Context.getDateFormat().format((Date)evaluated);
- else               valueAsString=evaluated.toString();
+              if (evaluated instanceof Date) {
+                valueAsString=Context.getDateFormat().format((Date)evaluated);
+              }
+ else {
+                valueAsString=evaluated.toString();
+              }
             }
             log.debug("Evaluated " + sa.getName() + " to: "+ valueAsString);
           }

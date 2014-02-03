@@ -3,7 +3,9 @@
   ConceptProposal cp=(ConceptProposal)obj;
   String action=request.getParameter("action");
   Concept c=null;
-  if (StringUtils.hasText(request.getParameter("conceptId")))   c=Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId")));
+  if (StringUtils.hasText(request.getParameter("conceptId"))) {
+    c=Context.getConceptService().getConcept(Integer.valueOf(request.getParameter("conceptId")));
+  }
   cp.setMappedConcept(c);
   MessageSourceAccessor msa=getMessageSourceAccessor();
   if (action.equals(msa.getMessage("general.cancel"))) {
@@ -14,15 +16,21 @@
     cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_REJECT);
   }
  else {
-    if (cp.getMappedConcept() == null)     errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
+    if (cp.getMappedConcept() == null) {
+      errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
+    }
  else {
       String proposalAction=request.getParameter("actionToTake");
       if (proposalAction.equals("saveAsMapped")) {
         cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_CONCEPT);
       }
  else       if (proposalAction.equals("saveAsSynonym")) {
-        if (cp.getMappedConcept() == null)         errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
-        if (!StringUtils.hasText(cp.getFinalText()))         errors.rejectValue("finalText","error.null");
+        if (cp.getMappedConcept() == null) {
+          errors.rejectValue("mappedConcept","ConceptProposal.mappedConcept.error");
+        }
+        if (!StringUtils.hasText(cp.getFinalText())) {
+          errors.rejectValue("finalText","error.null");
+        }
         cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM);
       }
     }

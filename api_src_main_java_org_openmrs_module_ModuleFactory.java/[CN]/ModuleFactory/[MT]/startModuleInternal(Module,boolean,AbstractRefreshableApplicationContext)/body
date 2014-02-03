@@ -44,7 +44,9 @@
         for (        Map.Entry<String,String> entry : diffs.entrySet()) {
           String version=entry.getKey();
           String sql=entry.getValue();
-          if (StringUtils.hasText(sql))           runDiff(module,version,sql);
+          if (StringUtils.hasText(sql)) {
+            runDiff(module,version,sql);
+          }
         }
       }
   finally {
@@ -68,8 +70,12 @@
         Context.checkCoreDataset();
       }
       try {
-        if (module.getModuleActivator() != null)         module.getModuleActivator().willStart();
- else         module.getActivator().startup();
+        if (module.getModuleActivator() != null) {
+          module.getModuleActivator().willStart();
+        }
+ else {
+          module.getActivator().startup();
+        }
       }
  catch (      ModuleException e) {
         throw e;
@@ -85,7 +91,9 @@ catch (      Exception e) {
       notifySuperUsersAboutModuleFailure(module);
       try {
         boolean skipOverStartedProperty=false;
-        if (e instanceof ModuleMustStartException)         skipOverStartedProperty=true;
+        if (e instanceof ModuleMustStartException) {
+          skipOverStartedProperty=true;
+        }
         stopModule(module,skipOverStartedProperty,true);
       }
  catch (      Exception e2) {
@@ -93,6 +101,8 @@ catch (      Exception e) {
       }
     }
   }
-  if (applicationContext != null)   ModuleUtil.refreshApplicationContext(applicationContext,isOpenmrsStartup,module);
+  if (applicationContext != null) {
+    ModuleUtil.refreshApplicationContext(applicationContext,isOpenmrsStartup,module);
+  }
   return module;
 }

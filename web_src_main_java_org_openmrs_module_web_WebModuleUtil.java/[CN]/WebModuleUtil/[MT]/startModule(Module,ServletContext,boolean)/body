@@ -1,5 +1,7 @@
 {
-  if (log.isDebugEnabled())   log.debug("trying to start module " + mod);
+  if (log.isDebugEnabled()) {
+    log.debug("trying to start module " + mod);
+  }
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
     String realPath=servletContext.getRealPath("");
     copyModuleMessagesIntoWebapp(mod,realPath);
@@ -27,7 +29,9 @@
             absPath.append("/view/module/");
           }
           absPath.append(mod.getModuleIdAsPath() + "/" + filepath);
-          if (log.isDebugEnabled())           log.debug("Moving file from: " + name + " to "+ absPath);
+          if (log.isDebugEnabled()) {
+            log.debug("Moving file from: " + name + " to "+ absPath);
+          }
           File outFile=new File(absPath.toString().replace("/",File.separator));
           if (entry.isDirectory()) {
             if (!outFile.exists()) {
@@ -126,7 +130,9 @@
       }
     }
     if (moduleNeedsContextRefresh && delayContextRefresh == false) {
-      if (log.isDebugEnabled())       log.debug("Refreshing context for module" + mod);
+      if (log.isDebugEnabled()) {
+        log.debug("Refreshing context for module" + mod);
+      }
       try {
         refreshWAC(servletContext,false,mod);
         log.debug("Done Refreshing WAC");
@@ -134,13 +140,17 @@
  catch (      Exception e) {
         String msg="Unable to refresh the WebApplicationContext";
         mod.setStartupErrorMessage(msg,e);
-        if (log.isWarnEnabled())         log.warn(msg + " for module: " + mod.getModuleId(),e);
+        if (log.isWarnEnabled()) {
+          log.warn(msg + " for module: " + mod.getModuleId(),e);
+        }
         try {
           stopModule(mod,servletContext,true);
           ModuleFactory.stopModule(mod,true,true);
         }
  catch (        Exception e2) {
-          if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
+          if (log.isWarnEnabled()) {
+            log.warn("Error while stopping a module that had an error on refreshWAC",e2);
+          }
         }
         refreshWAC(servletContext,false,mod);
         notifySuperUsersAboutModuleFailure(mod);

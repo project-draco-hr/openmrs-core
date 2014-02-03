@@ -4,6 +4,8 @@
   for (  User user : users) {
     user.setPerson(preferred);
     User persisted=userService.saveUser(user,null);
-    if (mergedData != null)     mergedData.addMovedUser(persisted.getUuid());
+    if (mergedData != null) {
+      mergedData.addMovedUser(persisted.getUuid());
+    }
   }
 }

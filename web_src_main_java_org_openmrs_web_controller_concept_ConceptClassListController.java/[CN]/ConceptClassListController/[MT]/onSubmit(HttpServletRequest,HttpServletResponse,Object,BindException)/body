@@ -13,7 +13,9 @@
       for (      String cc : conceptClassList) {
         try {
           cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
-          if (!success.equals(""))           success.append("<br/>");
+          if (!success.equals("")) {
+            success.append("<br/>");
+          }
           success.append(cc).append(" ").append(deleted);
         }
  catch (        DataIntegrityViolationException e) {
@@ -24,10 +26,16 @@ catch (        APIException e) {
         }
       }
     }
- else     error=msa.getMessage("ConceptClass.select");
+ else {
+      error=msa.getMessage("ConceptClass.select");
+    }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!success.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+    }
+    if (!error.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

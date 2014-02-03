@@ -220,8 +220,12 @@
   }
  else   if (IMPLEMENTATION_ID_SETUP.equals(page)) {
     if (goBack(httpRequest)) {
-      if (wizardModel.createTables)       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
- else       renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
+      if (wizardModel.createTables) {
+        renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
+      }
+ else {
+        renderTemplate(OTHER_RUNTIME_PROPS,referenceMap,httpResponse);
+      }
       return;
     }
     wizardModel.implementationIdName=httpRequest.getParameter("implementation_name");
@@ -305,7 +309,9 @@
               TestInstallUtil.getResourceInputStream(wizardModel.remoteUrl + RELEASE_TESTING_MODULE_PATH + "verifycredentials.htm",wizardModel.remoteUsername,wizardModel.remotePassword);
             }
  catch (            APIAuthenticationException e) {
-              if (log.isDebugEnabled())               log.debug("Error generated: ",e);
+              if (log.isDebugEnabled()) {
+                log.debug("Error generated: ",e);
+              }
               page=TESTING_REMOTE_DETAILS_SETUP;
               errors.put(ErrorMessageConstants.UPDATE_ERROR_UNABLE_AUTHENTICATE,null);
               renderTemplate(page,referenceMap,httpResponse);

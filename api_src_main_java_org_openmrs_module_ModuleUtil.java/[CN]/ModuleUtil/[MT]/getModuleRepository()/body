@@ -12,6 +12,8 @@
     log.warn("Module repository " + folder.getAbsolutePath() + " doesn't exist.  Creating directories now.");
     folder.mkdirs();
   }
-  if (!folder.isDirectory())   throw new ModuleException("Module repository is not a directory at: " + folder.getAbsolutePath());
+  if (!folder.isDirectory()) {
+    throw new ModuleException("Module repository is not a directory at: " + folder.getAbsolutePath());
+  }
   return folder;
 }

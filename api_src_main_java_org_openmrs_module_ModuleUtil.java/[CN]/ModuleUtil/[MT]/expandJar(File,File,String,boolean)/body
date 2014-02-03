@@ -10,7 +10,9 @@
       JarEntry jarEntry=(JarEntry)jarEntries.nextElement();
       if (name == null || jarEntry.getName().startsWith(name)) {
         String entryName=jarEntry.getName();
-        if (keepFullPath == false && name != null)         entryName=entryName.replaceFirst(name,"");
+        if (keepFullPath == false && name != null) {
+          entryName=entryName.replaceFirst(name,"");
+        }
         int last=entryName.lastIndexOf('/');
         if (last >= 0) {
           File parent=new File(docBase,entryName.substring(0,last));
@@ -27,7 +29,9 @@
         foundName=true;
       }
     }
-    if (!foundName)     log.debug("Unable to find: " + name + " in file "+ fileToExpand.getAbsolutePath());
+    if (!foundName) {
+      log.debug("Unable to find: " + name + " in file "+ fileToExpand.getAbsolutePath());
+    }
   }
  catch (  IOException e) {
     log.warn("Unable to delete tmpModuleFile on error",e);

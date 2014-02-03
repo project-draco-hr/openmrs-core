@@ -16,8 +16,12 @@
           }
         }
       }
-      if (field == null)       returnList.add(new ConceptListItem(set.getConcept(),cn,locale));
- else       returnList.add(new FieldListItem(field,locale));
+      if (field == null) {
+        returnList.add(new ConceptListItem(set.getConcept(),cn,locale));
+      }
+ else {
+        returnList.add(new FieldListItem(field,locale));
+      }
     }
   }
   return returnList;

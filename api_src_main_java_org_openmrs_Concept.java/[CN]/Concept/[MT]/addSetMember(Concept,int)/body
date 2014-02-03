@@ -2,9 +2,15 @@
   List<ConceptSet> sortedConceptSets=getSortedConceptSets();
   int setsSize=sortedConceptSets.size();
   double weight;
-  if (sortedConceptSets.isEmpty())   weight=1000.0;
- else   if (index == -1 || index >= setsSize)   weight=sortedConceptSets.get(setsSize - 1).getSortWeight() + 10.0;
- else   if (index == 0)   weight=sortedConceptSets.get(0).getSortWeight() - 10.0;
+  if (sortedConceptSets.isEmpty()) {
+    weight=1000.0;
+  }
+ else   if (index == -1 || index >= setsSize) {
+    weight=sortedConceptSets.get(setsSize - 1).getSortWeight() + 10.0;
+  }
+ else   if (index == 0) {
+    weight=sortedConceptSets.get(0).getSortWeight() - 10.0;
+  }
  else {
     double prevSortWeight=sortedConceptSets.get(index - 1).getSortWeight();
     double nextSortWeight=sortedConceptSets.get(index).getSortWeight();

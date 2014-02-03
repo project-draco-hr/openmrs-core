@@ -270,7 +270,9 @@ mINTLIT(true);
 theRetToken=_returnToken;
 }
 }
-if (_returnToken == null) continue tryAgain;
+if (_returnToken == null) {
+continue tryAgain;
+}
 _ttype=_returnToken.getType();
 _returnToken.setType(_ttype);
 return _returnToken;

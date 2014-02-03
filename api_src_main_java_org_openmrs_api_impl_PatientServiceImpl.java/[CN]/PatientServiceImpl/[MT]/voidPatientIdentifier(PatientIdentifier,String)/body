@@ -1,4 +1,6 @@
 {
-  if (patientIdentifier == null || StringUtils.isBlank(reason))   throw new APIException("patientIdentifier can't be null and the reason should not be an empty string");
+  if (patientIdentifier == null || StringUtils.isBlank(reason)) {
+    throw new APIException("patientIdentifier can't be null and the reason should not be an empty string");
+  }
   return Context.getPatientService().savePatientIdentifier(patientIdentifier);
 }

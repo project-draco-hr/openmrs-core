@@ -3,10 +3,14 @@
   List<String> strList=new ArrayList(strListArg);
   for (  String s : strList) {
     for (    String sInner : strList) {
-      if (sInner.indexOf(s) != -1 && s.length() < sInner.length() && !dup.contains(s))       dup.add(s);
+      if (sInner.indexOf(s) != -1 && s.length() < sInner.length() && !dup.contains(s)) {
+        dup.add(s);
+      }
     }
   }
-  if (dup.size() > 1)   dup=nonUniqueStringsGoLast(dup);
+  if (dup.size() > 1) {
+    dup=nonUniqueStringsGoLast(dup);
+  }
   strList.removeAll(dup);
   strList.addAll(dup);
   return strList;

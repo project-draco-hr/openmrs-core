@@ -1,5 +1,7 @@
 {
-  if (!Context.hasPrivilege(PrivilegeConstants.MANAGE_MODULES))   throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.MANAGE_MODULES);
+  if (!Context.hasPrivilege(PrivilegeConstants.MANAGE_MODULES)) {
+    throw new APIAuthenticationException("Privilege required: " + PrivilegeConstants.MANAGE_MODULES);
+  }
   HttpSession httpSession=request.getSession();
   String moduleId=ServletRequestUtils.getStringParameter(request,"moduleId","");
   String view=getFormView();
@@ -7,9 +9,15 @@
   String error="";
   MessageSourceAccessor msa=getMessageSourceAccessor();
   String action=ServletRequestUtils.getStringParameter(request,"action","");
-  if (ServletRequestUtils.getStringParameter(request,"start.x",null) != null)   action="start";
- else   if (ServletRequestUtils.getStringParameter(request,"stop.x",null) != null)   action="stop";
- else   if (ServletRequestUtils.getStringParameter(request,"unload.x",null) != null)   action="unload";
+  if (ServletRequestUtils.getStringParameter(request,"start.x",null) != null) {
+    action="start";
+  }
+ else   if (ServletRequestUtils.getStringParameter(request,"stop.x",null) != null) {
+    action="stop";
+  }
+ else   if (ServletRequestUtils.getStringParameter(request,"unload.x",null) != null) {
+    action="unload";
+  }
   if ("upload".equals(action)) {
     if (!ModuleUtil.allowAdmin()) {
       error=msa.getMessage("Module.disallowUploads",new String[]{ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN});
@@ -65,12 +73,16 @@
       }
  finally {
         try {
-          if (inputStream != null)           inputStream.close();
+          if (inputStream != null) {
+            inputStream.close();
+          }
         }
  catch (        IOException io) {
           log.warn("Unable to close temporary input stream",io);
         }
-        if (module == null && moduleFile != null)         moduleFile.delete();
+        if (module == null && moduleFile != null) {
+          moduleFile.delete();
+        }
       }
       if (module != null) {
         ModuleFactory.startModule(module);
@@ -84,7 +96,9 @@
             }
           }
         }
- else         success=msa.getMessage("Module.loaded",new String[]{module.getName()});
+ else {
+          success=msa.getMessage("Module.loaded",new String[]{module.getName()});
+        }
       }
     }
   }
@@ -111,7 +125,9 @@
       log.debug("Module id: " + moduleId);
       Module mod=ModuleFactory.getModuleById(moduleId);
       Object[] args=new Object[]{moduleId};
-      if (mod == null)       error=msa.getMessage("Module.invalid",args);
+      if (mod == null) {
+        error=msa.getMessage("Module.invalid",args);
+      }
  else {
         if ("stop".equals(action)) {
           mod.clearStartupError();
@@ -122,8 +138,12 @@
  else         if ("start".equals(action)) {
           ModuleFactory.startModule(mod);
           WebModuleUtil.startModule(mod,getServletContext(),false);
-          if (mod.isStarted())           success=msa.getMessage("Module.started",args);
- else           error=msa.getMessage("Module.not.started",args);
+          if (mod.isStarted()) {
+            success=msa.getMessage("Module.started",args);
+          }
+ else {
+            error=msa.getMessage("Module.not.started",args);
+          }
         }
  else         if ("unload".equals(action)) {
           if (ModuleFactory.isModuleStarted(mod)) {
@@ -137,7 +157,11 @@
     }
   }
   view=getSuccessView();
-  if (!success.equals(""))   httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
-  if (!error.equals(""))   httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  if (!success.equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
+  }
+  if (!error.equals("")) {
+    httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+  }
   return new ModelAndView(new RedirectView(view));
 }

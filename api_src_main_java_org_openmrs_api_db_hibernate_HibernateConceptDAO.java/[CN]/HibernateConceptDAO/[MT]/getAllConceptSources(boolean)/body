@@ -1,5 +1,7 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptSource.class);
-  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
   return criteria.list();
 }

@@ -6,11 +6,17 @@
     Calendar calendar=Calendar.getInstance(Context.getLocale());
     calendar.setTime(hl7InArchive.getDateCreated());
     File yearDir=new File(destinationDir,Integer.toString(calendar.get(Calendar.YEAR)));
-    if (!yearDir.isDirectory())     yearDir.mkdirs();
+    if (!yearDir.isDirectory()) {
+      yearDir.mkdirs();
+    }
     File monthDir=new File(yearDir,df.format(calendar.get(Calendar.MONTH) + 1));
-    if (!monthDir.isDirectory())     monthDir.mkdirs();
+    if (!monthDir.isDirectory()) {
+      monthDir.mkdirs();
+    }
     File dayDir=new File(monthDir,df.format(calendar.get(Calendar.DAY_OF_MONTH)));
-    if (!dayDir.isDirectory())     dayDir.mkdirs();
+    if (!dayDir.isDirectory()) {
+      dayDir.mkdirs();
+    }
     File fileToWriteTo=new File(dayDir,hl7InArchive.getUuid() + (StringUtils.isBlank(hl7InArchive.getHL7SourceKey()) ? "" : "_" + hl7InArchive.getHL7SourceKey()) + ".txt");
     writer=new PrintWriter(fileToWriteTo);
     writer.write(hl7InArchive.getHL7Data());
@@ -25,6 +31,8 @@
     throw new APIException("could not write HL7 archive to the filesystem",e);
   }
  finally {
-    if (writer != null)     writer.close();
+    if (writer != null) {
+      writer.close();
+    }
   }
 }

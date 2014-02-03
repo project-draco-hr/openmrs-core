@@ -1,8 +1,16 @@
 {
-  if (hl7InQueue == null)   throw new HL7Exception("hl7InQueue argument cannot be null");
-  if (OpenmrsUtil.nullSafeEquals(HL7Constants.HL7_STATUS_PROCESSING,hl7InQueue.getMessageState()))   throw new HL7Exception("The hl7InQueue message with id: " + hl7InQueue.getHL7InQueueId() + " is already processing. "+ ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
- else   hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_PROCESSING);
-  if (log.isDebugEnabled())   log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  if (hl7InQueue == null) {
+    throw new HL7Exception("hl7InQueue argument cannot be null");
+  }
+  if (OpenmrsUtil.nullSafeEquals(HL7Constants.HL7_STATUS_PROCESSING,hl7InQueue.getMessageState())) {
+    throw new HL7Exception("The hl7InQueue message with id: " + hl7InQueue.getHL7InQueueId() + " is already processing. "+ ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  }
+ else {
+    hl7InQueue.setMessageState(HL7Constants.HL7_STATUS_PROCESSING);
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  }
   String hl7Message=hl7InQueue.getHL7Data();
   try {
     Message parsedMessage=Context.getHL7Service().parseHL7String(hl7Message);
@@ -20,7 +28,9 @@
     if (e.getCause() != null && e.getCause().getMessage().equals("Could not resolve patient") && !hl7InQueue.getHL7Source().getName().equals("local") && Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false").equals("true")) {
       skipError=true;
     }
-    if (!skipError)     setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
+    if (!skipError) {
+      setFatalError(hl7InQueue,"Trouble parsing HL7 message (" + hl7InQueue.getHL7SourceKey() + ")",e);
+    }
   }
 catch (  Exception e) {
     setFatalError(hl7InQueue,"Exception while attempting to process HL7 In Queue (" + hl7InQueue.getHL7SourceKey() + ")",e);

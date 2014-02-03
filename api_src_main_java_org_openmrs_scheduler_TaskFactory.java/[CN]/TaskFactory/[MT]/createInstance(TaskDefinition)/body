@@ -10,7 +10,9 @@
   }
  catch (  ClassNotFoundException cnfe) {
     log.error("OpenmrsClassLoader could not load class: " + taskDefinition.getTaskClass() + ".  Probably due to a module not being loaded");
-    if (log.isDebugEnabled())     log.debug("Full error trace of ClassNotFoundException",cnfe);
+    if (log.isDebugEnabled()) {
+      log.debug("Full error trace of ClassNotFoundException",cnfe);
+    }
     throw new SchedulerException("could not load class",cnfe);
   }
 catch (  Exception e) {

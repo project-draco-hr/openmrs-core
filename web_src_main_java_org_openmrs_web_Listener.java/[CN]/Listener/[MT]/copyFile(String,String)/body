@@ -12,13 +12,17 @@
   }
  finally {
     try {
-      if (inputStream != null)       inputStream.close();
+      if (inputStream != null) {
+        inputStream.close();
+      }
     }
  catch (    IOException io) {
       log.warn("Unable to close input stream",io);
     }
     try {
-      if (outputStream != null)       outputStream.close();
+      if (outputStream != null) {
+        outputStream.close();
+      }
     }
  catch (    IOException io) {
       log.warn("Unable to close input stream",io);

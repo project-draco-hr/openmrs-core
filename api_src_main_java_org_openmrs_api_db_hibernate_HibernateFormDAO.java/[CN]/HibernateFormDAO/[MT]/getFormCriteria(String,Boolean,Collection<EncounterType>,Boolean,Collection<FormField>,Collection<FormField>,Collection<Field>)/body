@@ -3,9 +3,15 @@
   if (partialName != null && !"".equals(partialName)) {
     crit.add(Restrictions.or(Restrictions.like("name",partialName,MatchMode.START),Restrictions.like("name"," " + partialName,MatchMode.ANYWHERE)));
   }
-  if (published != null)   crit.add(Restrictions.eq("published",published));
-  if (!encounterTypes.isEmpty())   crit.add(Restrictions.in("encounterType",encounterTypes));
-  if (retired != null)   crit.add(Restrictions.eq("retired",retired));
+  if (published != null) {
+    crit.add(Restrictions.eq("published",published));
+  }
+  if (!encounterTypes.isEmpty()) {
+    crit.add(Restrictions.in("encounterType",encounterTypes));
+  }
+  if (retired != null) {
+    crit.add(Restrictions.eq("retired",retired));
+  }
   if (!containingAnyFormField.isEmpty()) {
     Set<Integer> anyFormFieldIds=new HashSet<Integer>();
     for (    FormField ff : containingAnyFormField) {

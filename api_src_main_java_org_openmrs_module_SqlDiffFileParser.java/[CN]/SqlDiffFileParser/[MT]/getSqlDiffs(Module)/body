@@ -1,5 +1,7 @@
 {
-  if (module == null)   throw new ModuleException("Module cannot be null");
+  if (module == null) {
+    throw new ModuleException("Module cannot be null");
+  }
   SortedMap<String,String> map=new TreeMap<String,String>(new VersionComparator());
   InputStream diffStream=null;
   JarFile jarfile=null;
@@ -41,7 +43,9 @@
       }
       Element rootNode=diffDoc.getDocumentElement();
       String diffVersion=rootNode.getAttribute("version");
-      if (!validConfigVersions().contains(diffVersion))       throw new ModuleException("Invalid config version: " + diffVersion,module.getModuleId());
+      if (!validConfigVersions().contains(diffVersion)) {
+        throw new ModuleException("Invalid config version: " + diffVersion,module.getModuleId());
+      }
       NodeList diffNodes=getDiffNodes(rootNode,diffVersion);
       if (diffNodes != null && diffNodes.getLength() > 0) {
         int i=0;
@@ -67,7 +71,9 @@
   }
   finally {
     try {
-      if (jarfile != null)       jarfile.close();
+      if (jarfile != null) {
+        jarfile.close();
+      }
     }
  catch (    IOException e) {
       log.warn("Unable to close jarfile: " + jarfile.getName());

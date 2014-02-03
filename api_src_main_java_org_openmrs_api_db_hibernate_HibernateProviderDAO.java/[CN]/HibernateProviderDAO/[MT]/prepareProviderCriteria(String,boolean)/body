@@ -3,7 +3,9 @@
     name="%";
   }
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Provider.class).createAlias("person","p",Criteria.LEFT_JOIN);
-  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
   criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
   criteria.createAlias("p.names","personName",Criteria.LEFT_JOIN);
   Disjunction or=Restrictions.disjunction();

@@ -6,12 +6,16 @@
     List<Integer> requestConceptIds=new Vector<Integer>();
     for (    String id : conceptIds) {
       id=id.trim();
-      if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id)))       requestConceptIds.add(Integer.valueOf(id));
+      if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id))) {
+        requestConceptIds.add(Integer.valueOf(id));
+      }
     }
     List<Integer> originalConceptSetIds=new ArrayList<Integer>(originalConceptSets.size());
     Collection<ConceptSet> copyOfOriginalConceptSets=new ArrayList<ConceptSet>(originalConceptSets);
     for (    ConceptSet origConceptSet : copyOfOriginalConceptSets) {
-      if (!requestConceptIds.contains(origConceptSet.getConcept().getConceptId()))       originalConceptSets.remove(origConceptSet);
+      if (!requestConceptIds.contains(origConceptSet.getConcept().getConceptId())) {
+        originalConceptSets.remove(origConceptSet);
+      }
       originalConceptSetIds.add(origConceptSet.getConcept().getConceptId());
     }
     for (int x=0; x < requestConceptIds.size(); x++) {

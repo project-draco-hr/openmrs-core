@@ -4,11 +4,17 @@
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(PatientProgram.class);
   criteria.setFetchMode("patient",FetchMode.JOIN);
   criteria.setCacheMode(CacheMode.IGNORE);
-  if (ps != null)   criteria.add(Restrictions.in("patient.personId",ps.getMemberIds()));
+  if (ps != null) {
+    criteria.add(Restrictions.in("patient.personId",ps.getMemberIds()));
+  }
   criteria.add(Restrictions.eq("program",program));
-  if (!includeVoided)   criteria.add(Restrictions.eq("voided",false));
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",false));
+  }
   criteria.add(Restrictions.or(Restrictions.isNull("dateEnrolled"),Restrictions.le("dateEnrolled",now)));
-  if (!includePast)   criteria.add(Restrictions.or(Restrictions.isNull("dateCompleted"),Restrictions.ge("dateCompleted",now)));
+  if (!includePast) {
+    criteria.add(Restrictions.or(Restrictions.isNull("dateCompleted"),Restrictions.ge("dateCompleted",now)));
+  }
   log.debug("criteria: " + criteria);
   List<PatientProgram> temp=criteria.list();
   for (  PatientProgram prog : temp) {

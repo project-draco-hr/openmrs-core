@@ -1,6 +1,8 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Location.class);
-  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
   criteria.add(Restrictions.isNull("parentLocation"));
   criteria.addOrder(Order.asc("name"));
   return criteria.list();

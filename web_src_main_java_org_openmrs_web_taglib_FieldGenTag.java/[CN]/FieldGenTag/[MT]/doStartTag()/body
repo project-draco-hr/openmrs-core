@@ -1,6 +1,10 @@
 {
-  if (type == null)   type="";
-  if (formFieldName == null)   formFieldName="";
+  if (type == null) {
+    type="";
+  }
+  if (formFieldName == null) {
+    formFieldName="";
+  }
   if (formFieldName.length() > 0) {
     FieldGenHandler handler=getHandlerByClassName(type);
     if (handler != null) {
@@ -14,7 +18,9 @@
         if (val != null) {
           startVal=val.toString();
         }
-        if (startVal.length() > 1)         startVal=startVal.substring(0,1);
+        if (startVal.length() > 1) {
+          startVal=startVal.substring(0,1);
+        }
         String fieldLength=this.parameterMap != null ? (String)this.parameterMap.get("fieldLength") : null;
         fieldLength=(fieldLength == null) ? DEFAULT_INPUT_CHAR_LENGTH : fieldLength;
         output.setLength(0);
@@ -50,25 +56,41 @@
           startVal=val.toString();
         }
         startVal=(startVal == null) ? "" : startVal.toLowerCase();
-        if ("false".equals(startVal) || "0".equals(startVal))         startVal="false";
-        if ("true".equals(startVal) || "1".equals(startVal))         startVal="true";
-        if ("unknown".equals(startVal) || "?".equals(startVal))         startVal="unknown";
+        if ("false".equals(startVal) || "0".equals(startVal)) {
+          startVal="false";
+        }
+        if ("true".equals(startVal) || "1".equals(startVal)) {
+          startVal="true";
+        }
+        if ("unknown".equals(startVal) || "?".equals(startVal)) {
+          startVal="unknown";
+        }
         String forceInputType=this.parameterMap != null ? (String)this.parameterMap.get("forceInputType") : null;
         String isNullable=this.parameterMap != null ? (String)this.parameterMap.get("isNullable") : null;
         String trueLabel=this.parameterMap != null ? (String)this.parameterMap.get("trueLabel") : null;
         String falseLabel=this.parameterMap != null ? (String)this.parameterMap.get("falseLabel") : null;
         String unknownLabel=this.parameterMap != null ? (String)this.parameterMap.get("unknownLabel") : null;
-        if (forceInputType == null)         forceInputType="";
+        if (forceInputType == null) {
+          forceInputType="";
+        }
         if ("checkbox".equals(forceInputType)) {
           output.setLength(0);
           output.append("<input type=\"checkbox\" name=\"").append(formFieldName).append("\" id=\"").append(formFieldName);
           output.append("\" value=\"true\"").append(("true".equals(startVal) ? " checked" : "")).append("/> ");
         }
  else {
-          if (isNullable == null)           isNullable="";
-          if (trueLabel == null)           trueLabel=Context.getMessageSourceService().getMessage("general.yes");
-          if (falseLabel == null)           falseLabel=Context.getMessageSourceService().getMessage("general.no");
-          if (unknownLabel == null)           unknownLabel=Context.getMessageSourceService().getMessage("general.unknown");
+          if (isNullable == null) {
+            isNullable="";
+          }
+          if (trueLabel == null) {
+            trueLabel=Context.getMessageSourceService().getMessage("general.yes");
+          }
+          if (falseLabel == null) {
+            falseLabel=Context.getMessageSourceService().getMessage("general.no");
+          }
+          if (unknownLabel == null) {
+            unknownLabel=Context.getMessageSourceService().getMessage("general.unknown");
+          }
           if ("false".equalsIgnoreCase(isNullable) || "f".equalsIgnoreCase(isNullable) || "0".equals(isNullable)) {
             output.setLength(0);
             output.append("<input type=\"radio\" name=\"").append(formFieldName).append("\" id=\"").append(formFieldName);
@@ -111,10 +133,14 @@
             if (enumConstants != null) {
               if (enumConstants.length > 0) {
                 String startVal="";
-                if (val != null)                 startVal=val.toString();
+                if (val != null) {
+                  startVal=val.toString();
+                }
                 log.debug("val is " + val);
                 log.debug("val.toString is " + startVal);
-                if (startVal == null)                 startVal="";
+                if (startVal == null) {
+                  startVal="";
+                }
                 output.setLength(0);
                 output.append("<select name=\"").append(formFieldName).append("\" id=\"").append(formFieldName).append("\">");
                 StringBuilder options=new StringBuilder();
@@ -136,15 +162,23 @@
       }
     }
   }
-  if (url == null)   url="default.field";
-  if (!url.endsWith("field"))   url+=".field";
+  if (url == null) {
+    url="default.field";
+  }
+  if (!url.endsWith("field")) {
+    url+=".field";
+  }
   url="/fieldGen/" + url;
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.type",type);
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.formFieldName",formFieldName);
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.parameters",OpenmrsUtil.parseParameterList(parameters));
   HashMap<String,Object> hmParamMap=(HashMap<String,Object>)pageContext.getRequest().getAttribute("org.openmrs.fieldGen.parameterMap");
-  if (hmParamMap == null)   hmParamMap=new HashMap<String,Object>();
-  if (this.parameterMap != null)   hmParamMap.putAll(this.parameterMap);
+  if (hmParamMap == null) {
+    hmParamMap=new HashMap<String,Object>();
+  }
+  if (this.parameterMap != null) {
+    hmParamMap.putAll(this.parameterMap);
+  }
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.parameterMap",hmParamMap);
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.object",val);
   pageContext.getRequest().setAttribute("org.openmrs.fieldGen.request",pageContext.getRequest());

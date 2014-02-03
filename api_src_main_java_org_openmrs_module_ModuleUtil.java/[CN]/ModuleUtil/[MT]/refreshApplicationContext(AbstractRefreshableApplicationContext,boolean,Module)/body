@@ -2,7 +2,9 @@
   Set<Module> startedModules=new LinkedHashSet<Module>(ModuleFactory.getStartedModulesInOrder());
   for (  Module module : startedModules) {
     try {
-      if (module.getModuleActivator() != null)       module.getModuleActivator().willRefreshContext();
+      if (module.getModuleActivator() != null) {
+        module.getModuleActivator().willRefreshContext();
+      }
     }
  catch (    Exception e) {
       log.warn("Unable to call willRefreshContext() method in the module's activator",e);
@@ -31,7 +33,9 @@
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
   OpenmrsClassLoader.setThreadsToNewClassLoader();
-  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + startedModules.size());
+  if (log.isDebugEnabled()) {
+    log.debug("Reloading advice for all started modules: " + startedModules.size());
+  }
   try {
     Context.openSessionWithCurrentUser();
     for (    Module module : startedModules) {
@@ -44,8 +48,12 @@
         if (module.getModuleActivator() != null) {
           module.getModuleActivator().contextRefreshed();
           try {
-            if (isOpenmrsStartup)             module.getModuleActivator().started();
- else             if (!isOpenmrsStartup && module.equals(startedModule))             module.getModuleActivator().started();
+            if (isOpenmrsStartup) {
+              module.getModuleActivator().started();
+            }
+ else             if (!isOpenmrsStartup && module.equals(startedModule)) {
+              module.getModuleActivator().started();
+            }
           }
  catch (          Exception e) {
             log.warn("Unable to invoke started() method on the module's activator",e);

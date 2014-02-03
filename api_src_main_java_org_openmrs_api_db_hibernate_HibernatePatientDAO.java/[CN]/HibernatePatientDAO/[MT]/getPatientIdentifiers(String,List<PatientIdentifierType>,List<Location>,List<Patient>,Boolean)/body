@@ -3,10 +3,20 @@
   criteria.createAlias("patient","patient");
   criteria.add(Restrictions.eq("patient.voided",false));
   criteria.add(Restrictions.eq("voided",false));
-  if (identifier != null)   criteria.add(Restrictions.eq("identifier",identifier));
-  if (patientIdentifierTypes.size() > 0)   criteria.add(Restrictions.in("identifierType",patientIdentifierTypes));
-  if (locations.size() > 0)   criteria.add(Restrictions.in("location",locations));
-  if (patients.size() > 0)   criteria.add(Restrictions.in("patient",patients));
-  if (isPreferred != null)   criteria.add(Restrictions.eq("preferred",isPreferred));
+  if (identifier != null) {
+    criteria.add(Restrictions.eq("identifier",identifier));
+  }
+  if (patientIdentifierTypes.size() > 0) {
+    criteria.add(Restrictions.in("identifierType",patientIdentifierTypes));
+  }
+  if (locations.size() > 0) {
+    criteria.add(Restrictions.in("location",locations));
+  }
+  if (patients.size() > 0) {
+    criteria.add(Restrictions.in("patient",patients));
+  }
+  if (isPreferred != null) {
+    criteria.add(Restrictions.eq("preferred",isPreferred));
+  }
   return criteria.list();
 }

@@ -1,5 +1,7 @@
 {
-  if (applicationName == null)   applicationName="openmrs";
+  if (applicationName == null) {
+    applicationName="openmrs";
+  }
   String pathName="";
   pathName=getRuntimePropertiesFilePathName(applicationName);
   FileInputStream propertyStream=null;
@@ -12,7 +14,9 @@
     log.warn("Unable to find a runtime properties file at " + new File(pathName).getAbsolutePath());
   }
   try {
-    if (propertyStream == null)     throw new IOException("Could not find a runtime properties file named " + pathName + " in the OpenMRS application data directory, or the current directory");
+    if (propertyStream == null) {
+      throw new IOException("Could not find a runtime properties file named " + pathName + " in the OpenMRS application data directory, or the current directory");
+    }
     Properties props=new Properties();
     OpenmrsUtil.loadProperties(props,propertyStream);
     propertyStream.close();

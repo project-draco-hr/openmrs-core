@@ -1,7 +1,13 @@
 {
-  if (!StringUtils.hasLength(implementationId))   throw new APIException("The implementationid cannot be empty");
-  if (!StringUtils.hasLength(description))   throw new APIException("The description cannot be empty");
-  if (!StringUtils.hasLength(passphrase))   throw new APIException("The passphrase cannot be empty");
+  if (!StringUtils.hasLength(implementationId)) {
+    throw new APIException("The implementationid cannot be empty");
+  }
+  if (!StringUtils.hasLength(description)) {
+    throw new APIException("The description cannot be empty");
+  }
+  if (!StringUtils.hasLength(passphrase)) {
+    throw new APIException("The passphrase cannot be empty");
+  }
   Map<String,String> data=new HashMap<String,String>();
   data.put("implementationId",implementationId);
   data.put("description",description);
@@ -12,7 +18,9 @@
     String ms=Context.getMessageSourceService().getMessage("ImplementationId.connectionError",new String[]{implementationId},Context.getLocale());
     throw new APIException(ms);
   }
-  if (log.isDebugEnabled())   log.debug("Response: " + response);
+  if (log.isDebugEnabled()) {
+    log.debug("Response: " + response);
+  }
   if (response.startsWith("Success")) {
     response=response.replace("Success","");
     return response.trim();

@@ -22,7 +22,9 @@
   }
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
   String editReason=request.getParameter("editReason");
-  if (editReason == null)   editReason="";
+  if (editReason == null) {
+    editReason="";
+  }
   map.put("editReason",editReason);
   return map;
 }

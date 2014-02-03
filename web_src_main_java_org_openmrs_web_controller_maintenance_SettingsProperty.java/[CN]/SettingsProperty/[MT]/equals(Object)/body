@@ -1,6 +1,10 @@
 {
-  if (this == obj)   return true;
-  if (!(obj instanceof SettingsProperty))   return false;
+  if (this == obj) {
+    return true;
+  }
+  if (!(obj instanceof SettingsProperty)) {
+    return false;
+  }
   SettingsProperty other=(SettingsProperty)obj;
   return compareTo(other) == 0;
 }

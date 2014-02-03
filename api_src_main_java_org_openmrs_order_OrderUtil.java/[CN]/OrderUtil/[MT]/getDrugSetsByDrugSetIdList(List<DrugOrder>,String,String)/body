@@ -2,7 +2,9 @@
   if (log.isDebugEnabled()) {
     log.debug("in getdrugsetsbydrugsetidlist. orderlist: " + orderList + " drugsetidlist: "+ drugSetIdList+ " delimiter: "+ delimiter);
   }
-  if (delimiter == null)   delimiter=",";
+  if (delimiter == null) {
+    delimiter=",";
+  }
   Map<String,List<DrugOrder>> ret=null;
   if (drugSetIdList != null && orderList != null) {
     List<Concept> drugSetConcepts=new ArrayList<Concept>();
@@ -24,7 +26,9 @@
       }
     }
     List<DrugOrder> otherOrders=null;
-    if (addOthers)     otherOrders=orderList;
+    if (addOthers) {
+      otherOrders=orderList;
+    }
     Map<Concept,List<DrugOrder>> ordersByConcepts=getDrugSetsByConcepts(orderList,drugSetConcepts);
     if (ordersByConcepts != null) {
       log.debug("obc is size " + ordersByConcepts.size());
@@ -35,13 +39,17 @@
         if (addOthers && otherOrders != null) {
           otherOrders.removeAll(orders);
         }
-        if (ret == null)         ret=new HashMap<String,List<DrugOrder>>();
+        if (ret == null) {
+          ret=new HashMap<String,List<DrugOrder>>();
+        }
         log.debug("putting list of size " + orders.size() + " in string "+ idToConceptMappings.get(c));
         ret.put(idToConceptMappings.get(c),orders);
       }
     }
     if (addOthers && otherOrders != null) {
-      if (ret == null)       ret=new HashMap<String,List<DrugOrder>>();
+      if (ret == null) {
+        ret=new HashMap<String,List<DrugOrder>>();
+      }
       ret.put("*",otherOrders);
     }
   }

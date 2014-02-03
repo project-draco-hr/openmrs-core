@@ -1,8 +1,12 @@
 {
   Location location=null;
   String locationGP=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME);
-  if (StringUtils.hasText(locationGP))   location=Context.getLocationService().getLocation(locationGP);
-  if (location == null && (!StringUtils.hasText(locationGP) || !locationGP.equalsIgnoreCase("Unknown Location")))   location=Context.getLocationService().getLocation("Unknown Location");
+  if (StringUtils.hasText(locationGP)) {
+    location=Context.getLocationService().getLocation(locationGP);
+  }
+  if (location == null && (!StringUtils.hasText(locationGP) || !locationGP.equalsIgnoreCase("Unknown Location"))) {
+    location=Context.getLocationService().getLocation("Unknown Location");
+  }
   if (location == null && (!StringUtils.hasText(locationGP) || !locationGP.equalsIgnoreCase("Unknown"))) {
     location=Context.getLocationService().getLocation("Unknown");
   }

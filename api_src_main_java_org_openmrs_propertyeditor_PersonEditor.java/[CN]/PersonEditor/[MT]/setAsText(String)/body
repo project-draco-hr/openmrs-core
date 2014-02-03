@@ -8,7 +8,9 @@
  catch (    NumberFormatException e) {
       Person person=ps.getPersonByUuid(text);
       setValue(person);
-      if (person == null)       log.trace("Unable to get Person by primary key or uuid using input: " + text);
+      if (person == null) {
+        log.trace("Unable to get Person by primary key or uuid using input: " + text);
+      }
     }
   }
  else {

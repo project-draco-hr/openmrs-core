@@ -1,7 +1,11 @@
 {
-  if (defaultValue == null)   throw new IllegalArgumentException("The defaultValue argument cannot be null");
+  if (defaultValue == null) {
+    throw new IllegalArgumentException("The defaultValue argument cannot be null");
+  }
   String propVal=Context.getAdministrationService().getGlobalProperty(propertyName);
-  if (!StringUtils.hasLength(propVal))   return defaultValue;
+  if (!StringUtils.hasLength(propVal)) {
+    return defaultValue;
+  }
   try {
     return (T)defaultValue.getClass().getDeclaredConstructor(String.class).newInstance(propVal);
   }

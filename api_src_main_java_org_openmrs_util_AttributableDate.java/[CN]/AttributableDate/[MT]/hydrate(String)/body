@@ -1,5 +1,7 @@
 {
-  if (s == null || s.equals(""))   return null;
+  if (s == null || s.equals("")) {
+    return null;
+  }
   try {
     return new AttributableDate(((Date)Context.getDateFormat().parseObject(s)).getTime());
   }

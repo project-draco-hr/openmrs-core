@@ -3,6 +3,8 @@
   ProgramWorkflowService s=Context.getProgramWorkflowService();
   PatientProgram p=s.getPatientProgram(patientProgramId);
   ProgramWorkflow wf=p.getProgram().getWorkflow(programWorkflowId);
-  for (  PatientState st : p.statesInWorkflow(wf,false))   ret.add(new PatientStateItem(st));
+  for (  PatientState st : p.statesInWorkflow(wf,false)) {
+    ret.add(new PatientStateItem(st));
+  }
   return ret;
 }

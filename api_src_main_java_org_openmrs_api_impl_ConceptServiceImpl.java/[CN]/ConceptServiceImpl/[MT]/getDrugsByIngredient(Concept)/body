@@ -1,4 +1,6 @@
 {
-  if (ingredient == null)   throw new IllegalArgumentException("ingredient is required");
+  if (ingredient == null) {
+    throw new IllegalArgumentException("ingredient is required");
+  }
   return dao.getDrugsByIngredient(ingredient);
 }

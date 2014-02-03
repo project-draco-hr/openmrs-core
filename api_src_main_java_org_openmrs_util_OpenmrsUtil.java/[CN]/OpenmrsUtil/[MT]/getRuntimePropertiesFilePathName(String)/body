@@ -1,5 +1,7 @@
 {
-  if (applicationName == null)   applicationName="openmrs";
+  if (applicationName == null) {
+    applicationName="openmrs";
+  }
   String defaultFileName=applicationName + "-runtime.properties";
   String fileNameInTestMode=getRuntimePropertiesFileNameInTestMode();
   String pathName=fileNameInTestMode != null ? fileNameInTestMode : defaultFileName;
@@ -23,7 +25,9 @@
   }
  else {
     log.info("Couldn't find an environment variable named " + envVarName);
-    if (log.isDebugEnabled())     log.debug("Available environment variables are named: " + System.getenv().keySet());
+    if (log.isDebugEnabled()) {
+      log.debug("Available environment variables are named: " + System.getenv().keySet());
+    }
   }
   pathName=OpenmrsUtil.getApplicationDataDirectory() + pathName;
   log.debug("Attempting to look for property file from: " + pathName);

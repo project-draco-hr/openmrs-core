@@ -36,10 +36,18 @@
       }
  else       if (st.ttype == StreamTokenizer.TT_WORD) {
         String str=st.sval.toLowerCase();
-        if (andWords.contains(str))         currentLine.add(PatientSetService.BooleanOperator.AND);
- else         if (orWords.contains(str))         currentLine.add(PatientSetService.BooleanOperator.OR);
- else         if (notWords.contains(str))         currentLine.add(PatientSetService.BooleanOperator.NOT);
- else         throw new IllegalArgumentException("Don't recognize " + st.sval);
+        if (andWords.contains(str)) {
+          currentLine.add(PatientSetService.BooleanOperator.AND);
+        }
+ else         if (orWords.contains(str)) {
+          currentLine.add(PatientSetService.BooleanOperator.OR);
+        }
+ else         if (notWords.contains(str)) {
+          currentLine.add(PatientSetService.BooleanOperator.NOT);
+        }
+ else {
+          throw new IllegalArgumentException("Don't recognize " + st.sval);
+        }
       }
     }
   }

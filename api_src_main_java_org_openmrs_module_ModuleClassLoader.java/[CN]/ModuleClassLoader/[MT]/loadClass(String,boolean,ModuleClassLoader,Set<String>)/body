@@ -3,7 +3,9 @@
     log.trace("loading " + name + " "+ getModule()+ " seenModules: "+ seenModules+ " requestor: "+ requestor+ " resolve? "+ resolve);
     StringBuilder output=new StringBuilder();
     for (    StackTraceElement element : Thread.currentThread().getStackTrace()) {
-      if (element.getClassName().contains("openmrs"))       output.append("+ ");
+      if (element.getClassName().contains("openmrs")) {
+        output.append("+ ");
+      }
       output.append(element);
       output.append("\n");
     }
@@ -38,11 +40,15 @@ catch (  ClassNotFoundException cnfe) {
     }
     return result;
   }
-  if (seenModules == null)   seenModules=new HashSet<String>();
+  if (seenModules == null) {
+    seenModules=new HashSet<String>();
+  }
   seenModules.add(getModule().getModuleId());
   if (requiredModules != null) {
     for (    Module publicImport : requiredModules) {
-      if (seenModules.contains(publicImport.getModuleId()))       continue;
+      if (seenModules.contains(publicImport.getModuleId())) {
+        continue;
+      }
       ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
       if (mcl != null) {
         result=mcl.loadClass(name,resolve,requestor,seenModules);
@@ -53,7 +59,9 @@ catch (  ClassNotFoundException cnfe) {
     }
   }
   for (  Module publicImport : awareOfModules) {
-    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    if (seenModules.contains(publicImport.getModuleId())) {
+      continue;
+    }
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
     if (mcl != null) {
       result=mcl.loadClass(name,resolve,requestor,seenModules);

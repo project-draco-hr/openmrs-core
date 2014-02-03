@@ -7,7 +7,9 @@
  catch (  ObjectRetrievalFailureException noPatientEx) {
     log.warn("There is no patient with id: '" + patientId + "'",noPatientEx);
   }
-  if (patient == null)   throw new ServletException("There is no patient with id: '" + patientId + "'");
+  if (patient == null) {
+    throw new ServletException("There is no patient with id: '" + patientId + "'");
+  }
   log.debug("patient: '" + patient + "'");
   map.put("patient",patient);
   String causeOfDeathOther="";
@@ -36,7 +38,9 @@
     }
   }
   String patientVariation="";
-  if (patient.isDead())   patientVariation="Dead";
+  if (patient.isDead()) {
+    patientVariation="Dead";
+  }
   Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null) {
     List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);

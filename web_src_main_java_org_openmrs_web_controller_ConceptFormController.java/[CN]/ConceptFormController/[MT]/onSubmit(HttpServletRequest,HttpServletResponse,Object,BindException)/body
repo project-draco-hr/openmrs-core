@@ -67,7 +67,9 @@ catch (      Exception e) {
     }
  else {
       Concept concept=conceptBackingObject.getConceptFromFormData();
-      if (concept.getConceptId() != null)       concept.getCreator().getPersonName();
+      if (concept.getConceptId() != null) {
+        concept.getCreator().getPersonName();
+      }
       try {
         ValidateUtil.validate(concept,errors);
         validateConceptUsesPersistedObjects(concept,errors);

@@ -5,7 +5,9 @@
     patient.setCreator(creator);
   }
   CX[] idList=pid.getPatientIdentifierList();
-  if (idList == null || idList.length < 1)   throw new HL7Exception("Missing patient identifier in PID segment");
+  if (idList == null || idList.length < 1) {
+    throw new HL7Exception("Missing patient identifier in PID segment");
+  }
   List<PatientIdentifier> goodIdentifiers=new ArrayList<PatientIdentifier>();
   for (  CX id : idList) {
     String assigningAuthority=id.getAssigningAuthority().getNamespaceID().getValue();
@@ -51,7 +53,9 @@
   }
   patient.addIdentifiers(goodIdentifiers);
   XPN patientNameX=pid.getPatientName(0);
-  if (patientNameX == null)   throw new HL7Exception("Missing patient name in the PID segment");
+  if (patientNameX == null) {
+    throw new HL7Exception("Missing patient name in the PID segment");
+  }
   PersonName name=new PersonName();
   name.setFamilyName(patientNameX.getFamilyName().getSurname().getValue());
   name.setGivenName(patientNameX.getGivenName().getValue());
@@ -61,18 +65,26 @@
   }
   patient.addName(name);
   String gender=pid.getAdministrativeSex().getValue();
-  if (gender == null)   throw new HL7Exception("Missing gender in the PID segment");
+  if (gender == null) {
+    throw new HL7Exception("Missing gender in the PID segment");
+  }
   gender=gender.toUpperCase();
-  if (!OpenmrsConstants.GENDER().containsKey(gender))   throw new HL7Exception("Unrecognized gender: " + gender);
+  if (!OpenmrsConstants.GENDER().containsKey(gender)) {
+    throw new HL7Exception("Unrecognized gender: " + gender);
+  }
   patient.setGender(gender);
   TS dateOfBirth=pid.getDateTimeOfBirth();
-  if (dateOfBirth == null || dateOfBirth.getTime() == null || dateOfBirth.getTime().getValue() == null)   throw new HL7Exception("Missing birth date in the PID segment");
+  if (dateOfBirth == null || dateOfBirth.getTime() == null || dateOfBirth.getTime().getValue() == null) {
+    throw new HL7Exception("Missing birth date in the PID segment");
+  }
   patient.setBirthdate(tsToDate(dateOfBirth));
   ID precisionTemp=dateOfBirth.getDegreeOfPrecision();
   if (precisionTemp != null && precisionTemp.getValue() != null) {
     String precision=precisionTemp.getValue().toUpperCase();
     log.debug("The birthdate is estimated: " + precision);
-    if (precision.equals("Y") || precision.equals("L"))     patient.setBirthdateEstimated(true);
+    if (precision.equals("Y") || precision.equals("L")) {
+      patient.setBirthdateEstimated(true);
+    }
   }
   return patient;
 }

@@ -1,5 +1,7 @@
 {
-  if (implementationId == null)   return;
+  if (implementationId == null) {
+    return;
+  }
   String description=implementationId.getDescription();
   try {
     description=checkImplementationIdValidity(implementationId.getImplementationId(),description,implementationId.getPassphrase());
@@ -18,7 +20,9 @@
       newConceptSource.setName(implementationId.getName());
       newConceptSource.setDescription(implementationId.getDescription());
       newConceptSource.setHl7Code(implementationId.getImplementationId());
-      if (Context.getAuthenticatedUser() == null)       newConceptSource.setCreator(new User(1));
+      if (Context.getAuthenticatedUser() == null) {
+        newConceptSource.setCreator(new User(1));
+      }
       Context.getConceptService().saveConceptSource(newConceptSource);
     }
     StringWriter stringWriter=new StringWriter();
