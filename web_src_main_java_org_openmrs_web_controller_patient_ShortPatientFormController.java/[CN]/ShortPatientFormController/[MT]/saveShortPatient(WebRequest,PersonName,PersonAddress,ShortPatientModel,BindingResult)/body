@@ -16,7 +16,7 @@
       request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Patient.saved"),WebRequest.SCOPE_SESSION);
       saveDeathInfo(patientModel,request);
       if (!patient.getVoided()) {
-        Map<String,Relationship> relationships=getRelationshipsMap(patientModel,request);
+        Map<String,Relationship> relationships=getRelationshipsMap(patientModel,result,request);
         for (        Relationship relationship : relationships.values()) {
           if (relationship.getPersonA() != null && relationship.getPersonB() != null)           Context.getPersonService().saveRelationship(relationship);
         }
