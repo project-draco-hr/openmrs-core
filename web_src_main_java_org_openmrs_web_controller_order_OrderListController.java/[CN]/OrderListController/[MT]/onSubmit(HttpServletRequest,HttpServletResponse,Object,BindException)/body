@@ -18,18 +18,26 @@
     for (    String p : orderList) {
       try {
         os.voidOrder(os.getOrder(Integer.valueOf(p)),voidReason);
-        if (!success.equals(""))         success.append("<br/>");
+        if (!success.equals("")) {
+          success.append("<br/>");
+        }
         success.append(ord).append(" ").append(p).append(" ").append(deleted);
       }
  catch (      APIException e) {
         log.warn("Error deleting order",e);
-        if (!error.equals(""))         error.append("<br/>");
+        if (!error.equals("")) {
+          error.append("<br/>");
+        }
         error.append(ord).append(" ").append(p).append(" ").append(notDeleted);
       }
     }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+    if (!success.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+    }
+    if (!error.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

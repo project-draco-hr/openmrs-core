@@ -3,9 +3,13 @@
   Session session=sessionFactory.getCurrentSession();
   User candidateUser=null;
   if (login != null) {
-    if (StringUtils.isEmpty(login) || StringUtils.isWhitespace(login))     throw new ContextAuthenticationException(errorMsg);
+    if (StringUtils.isEmpty(login) || StringUtils.isWhitespace(login)) {
+      throw new ContextAuthenticationException(errorMsg);
+    }
     String loginWithDash=login;
-    if (login.matches("\\d{2,}"))     loginWithDash=login.substring(0,login.length() - 1) + "-" + login.charAt(login.length() - 1);
+    if (login.matches("\\d{2,}")) {
+      loginWithDash=login.substring(0,login.length() - 1) + "-" + login.charAt(login.length() - 1);
+    }
     try {
       candidateUser=(User)session.createQuery("from User u where (u.username = ? or u.systemId = ? or u.systemId = ?) and u.retired = '0'").setString(0,login).setString(1,login).setString(2,loginWithDash).uniqueResult();
     }
@@ -17,7 +21,9 @@ catch (    Exception e) {
     }
   }
   if (candidateUser != null && password != null) {
-    if (log.isDebugEnabled())     log.debug("Candidate user id: " + candidateUser.getUserId());
+    if (log.isDebugEnabled()) {
+      log.debug("Candidate user id: " + candidateUser.getUserId());
+    }
     String lockoutTimeString=candidateUser.getUserProperty(OpenmrsConstants.USER_PROPERTY_LOCKOUT_TIMESTAMP,null);
     Long lockoutTime=null;
     if (lockoutTimeString != null && !lockoutTimeString.equals("0")) {

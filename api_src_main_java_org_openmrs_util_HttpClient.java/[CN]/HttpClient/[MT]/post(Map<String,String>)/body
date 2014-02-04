@@ -5,7 +5,9 @@
   StringBuffer data=new StringBuffer();
   try {
     for (    Map.Entry<String,String> entry : parameters.entrySet()) {
-      if (entry.getKey() == null || entry.getValue() == null)       continue;
+      if (entry.getKey() == null || entry.getValue() == null) {
+        continue;
+      }
       data.append("&");
       data.append(URLEncoder.encode(entry.getKey(),"UTF-8"));
       data.append("=");
@@ -32,15 +34,19 @@
     log.warn("Reponse from server was: " + response);
   }
  finally {
-    if (wr != null)     try {
-      wr.close();
+    if (wr != null) {
+      try {
+        wr.close();
+      }
+ catch (      Exception e) {
+      }
     }
- catch (    Exception e) {
-    }
-    if (rd != null)     try {
-      rd.close();
-    }
- catch (    Exception e) {
+    if (rd != null) {
+      try {
+        rd.close();
+      }
+ catch (      Exception e) {
+      }
     }
   }
   return response;

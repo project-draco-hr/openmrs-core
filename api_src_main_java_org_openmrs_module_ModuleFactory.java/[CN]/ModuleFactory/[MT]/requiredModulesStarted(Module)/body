@@ -4,11 +4,15 @@
     for (    Module mod : getStartedModules()) {
       if (mod.getPackageName().equals(reqModPackage)) {
         String reqVersion=module.getRequiredModuleVersion(reqModPackage);
-        if (reqVersion == null || ModuleUtil.compareVersion(mod.getVersion(),reqVersion) >= 0)         started=true;
+        if (reqVersion == null || ModuleUtil.compareVersion(mod.getVersion(),reqVersion) >= 0) {
+          started=true;
+        }
         break;
       }
     }
-    if (!started)     return false;
+    if (!started) {
+      return false;
+    }
   }
   return true;
 }

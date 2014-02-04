@@ -1,7 +1,9 @@
 {
   if (patient.getIdentifiers() != null) {
     for (    PatientIdentifier pIdentifier : patient.getIdentifiers()) {
-      if (pIdentifier.getPatient() == null)       pIdentifier.setPatient(patient);
+      if (pIdentifier.getPatient() == null) {
+        pIdentifier.setPatient(patient);
+      }
     }
   }
 }

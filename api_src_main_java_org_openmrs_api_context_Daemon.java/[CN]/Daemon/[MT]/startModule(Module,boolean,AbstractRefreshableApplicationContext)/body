@@ -22,8 +22,12 @@
  catch (  InterruptedException e) {
   }
   if (startModuleThread.exceptionThrown != null) {
-    if (startModuleThread.exceptionThrown instanceof ModuleException)     throw (ModuleException)startModuleThread.exceptionThrown;
- else     throw new ModuleException("Unable to start module as Daemon",startModuleThread.exceptionThrown);
+    if (startModuleThread.exceptionThrown instanceof ModuleException) {
+      throw (ModuleException)startModuleThread.exceptionThrown;
+    }
+ else {
+      throw new ModuleException("Unable to start module as Daemon",startModuleThread.exceptionThrown);
+    }
   }
   Module startedModule=(Module)startModuleThread.returnedObject;
   return startedModule;

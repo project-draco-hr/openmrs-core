@@ -3,7 +3,9 @@
   Order order=null;
   if (Context.isAuthenticated()) {
     Integer orderId=ServletRequestUtils.getIntParameter(request,"orderId");
-    if (orderId != null)     order=os.getOrder(orderId);
+    if (orderId != null) {
+      order=os.getOrder(orderId);
+    }
   }
   if (order == null) {
     order=new Order();

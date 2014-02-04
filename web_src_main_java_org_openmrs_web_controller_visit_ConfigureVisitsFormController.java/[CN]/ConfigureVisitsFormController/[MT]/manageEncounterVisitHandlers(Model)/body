@@ -5,7 +5,9 @@
   TaskDefinition closeVisitsTask=Context.getSchedulerService().getTaskByName(OpenmrsConstants.AUTO_CLOSE_VISITS_TASK_NAME);
   ConfigureVisitsForm form=new ConfigureVisitsForm();
   form.setEnableVisits(Boolean.valueOf(enableVisits));
-  if (closeVisitsTask != null)   form.setCloseVisitsTaskStarted(closeVisitsTask.getStarted());
+  if (closeVisitsTask != null) {
+    form.setCloseVisitsTaskStarted(closeVisitsTask.getStarted());
+  }
   for (  EncounterVisitHandler visitHandler : getEncounterVisitHandlers()) {
     if (visitHandler.getClass().getName().equals(visitEncounterHandler)) {
       form.setVisitEncounterHandler(visitHandler.getClass().getName());
@@ -22,7 +24,9 @@
     }
     List<VisitType> allVisitTypes=visitService.getAllVisitTypes();
     for (    VisitType visitType : allVisitTypes) {
-      if (ArrayUtils.contains(visitTypeNames,visitType.getName().toLowerCase()))       visitTypes.add(visitType);
+      if (ArrayUtils.contains(visitTypeNames,visitType.getName().toLowerCase())) {
+        visitTypes.add(visitType);
+      }
     }
     form.setVisitTypesToClose(visitTypes);
   }

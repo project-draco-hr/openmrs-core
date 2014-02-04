@@ -33,7 +33,9 @@
       if (appender instanceof MemoryAppender) {
         MemoryAppender memoryAppender=(MemoryAppender)appender;
         List<String> logLines=memoryAppender.getLogLines();
-        if (logLines.size() > 5)         logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        if (logLines.size() > 5) {
+          logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        }
         result.put("logLines",logLines);
       }
  else {

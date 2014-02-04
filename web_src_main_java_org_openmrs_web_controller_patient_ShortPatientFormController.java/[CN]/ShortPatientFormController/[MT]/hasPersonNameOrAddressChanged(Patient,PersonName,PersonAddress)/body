@@ -3,7 +3,9 @@
   PersonName personName=patient.getPersonName();
   if (personNameCache.getId() != null) {
     if (!getPersonNameString(personName).equalsIgnoreCase(getPersonNameString(personNameCache))) {
-      if (log.isDebugEnabled())       log.debug("Voiding person name with id: " + personName.getId() + " and replacing it with a new one: "+ personName.getFullName());
+      if (log.isDebugEnabled()) {
+        log.debug("Voiding person name with id: " + personName.getId() + " and replacing it with a new one: "+ personName.getFullName());
+      }
       foundChanges=true;
       PersonName newName=PersonName.newInstance(personName);
       newName.setPersonNameId(null);
@@ -25,7 +27,9 @@
   if (personAddress != null) {
     if (personAddressCache.getId() != null) {
       if (!personAddress.isBlank() && !personAddressCache.isBlank() && !personAddress.equalsContent(personAddressCache)) {
-        if (log.isDebugEnabled())         log.debug("Voiding person address with id: " + personAddress.getId() + " and replacing it with a new one: "+ personAddress.toString());
+        if (log.isDebugEnabled()) {
+          log.debug("Voiding person address with id: " + personAddress.getId() + " and replacing it with a new one: "+ personAddress.toString());
+        }
         foundChanges=true;
         PersonAddress newAddress=(PersonAddress)personAddress.clone();
         newAddress.setPersonAddressId(null);

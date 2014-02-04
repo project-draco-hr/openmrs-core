@@ -14,14 +14,22 @@
   seenModules.add(getModule().getModuleId());
   if (requiredModules != null) {
     for (    Module publicImport : requiredModules) {
-      if (seenModules.contains(publicImport.getModuleId()))       continue;
+      if (seenModules.contains(publicImport.getModuleId())) {
+        continue;
+      }
       ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-      if (mcl != null)       mcl.findResources(result,name,requestor,seenModules);
+      if (mcl != null) {
+        mcl.findResources(result,name,requestor,seenModules);
+      }
     }
   }
   for (  Module publicImport : awareOfModules) {
-    if (seenModules.contains(publicImport.getModuleId()))     continue;
+    if (seenModules.contains(publicImport.getModuleId())) {
+      continue;
+    }
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-    if (mcl != null)     mcl.findResources(result,name,requestor,seenModules);
+    if (mcl != null) {
+      mcl.findResources(result,name,requestor,seenModules);
+    }
   }
 }

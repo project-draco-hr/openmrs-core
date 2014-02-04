@@ -1,6 +1,8 @@
 {
   StringBuilder s=new StringBuilder("");
-  if (extras == null)   extras=new String[]{};
+  if (extras == null) {
+    extras=new String[]{};
+  }
   if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier) || DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
     Integer num=modifierNum == null ? 1 : modifierNum;
     s.append("#set($arr = [");
@@ -8,19 +10,33 @@
       s.append("'");
       s.append(extras[x]);
       s.append("'");
-      if (!x.equals(extras.length - 1))       s.append(",");
+      if (!x.equals(extras.length - 1)) {
+        s.append(",");
+      }
     }
     s.append("])");
-    if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier))     s.append("#set($obsValues = $fn.getLastNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
- else     if (DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier))     s.append("#set($obsValues = $fn.getFirstNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
+    if (DataExportReportObject.MODIFIER_LAST_NUM.equals(modifier)) {
+      s.append("#set($obsValues = $fn.getLastNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
+    }
+ else     if (DataExportReportObject.MODIFIER_FIRST_NUM.equals(modifier)) {
+      s.append("#set($obsValues = $fn.getFirstNObsWithValues(").append(num).append(", '").append(conceptId).append("', $arr))");
+    }
     s.append("#foreach($vals in $obsValues)").append("#if($velocityCount > 1)").append("$!{fn.getSeparator()}").append("#end").append("#foreach($val in $vals)").append("#if($velocityCount > 1)").append("$!{fn.getSeparator()}").append("#end").append("$!{fn.getValueAsString($val)}").append("#end").append("#end\n");
   }
  else {
     String function=" ";
-    if (DataExportReportObject.MODIFIER_ANY.equals(modifier))     function+="$fn.getLastObs";
- else     if (DataExportReportObject.MODIFIER_FIRST.equals(modifier))     function+="$fn.getFirstObs";
- else     if (DataExportReportObject.MODIFIER_LAST.equals(modifier))     function+="$fn.getLastObs";
- else     throw new APIException("Unknown modifier: " + modifier);
+    if (DataExportReportObject.MODIFIER_ANY.equals(modifier)) {
+      function+="$fn.getLastObs";
+    }
+ else     if (DataExportReportObject.MODIFIER_FIRST.equals(modifier)) {
+      function+="$fn.getFirstObs";
+    }
+ else     if (DataExportReportObject.MODIFIER_LAST.equals(modifier)) {
+      function+="$fn.getLastObs";
+    }
+ else {
+      throw new APIException("Unknown modifier: " + modifier);
+    }
     if (extras.length < 1) {
       function="$!{fn.getValueAsString(" + function;
       function+="('" + conceptId + "'))}";
@@ -30,7 +46,9 @@
       s.append("#set($arr = [");
       for (Integer x=0; x < extras.length; x++) {
         s.append("'").append(extras[x]).append("'");
-        if (!x.equals(extras.length - 1))         s.append(",");
+        if (!x.equals(extras.length - 1)) {
+          s.append(",");
+        }
       }
       s.append("])");
       function+="WithValues('" + conceptId + "', $arr)";

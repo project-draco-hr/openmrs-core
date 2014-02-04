@@ -5,9 +5,15 @@
   StringBuffer data=null;
   try {
     for (    Map.Entry<String,String> entry : dataToPost.entrySet()) {
-      if (entry.getKey() == null || entry.getValue() == null)       continue;
-      if (data == null)       data=new StringBuffer();
- else       data.append("&");
+      if (entry.getKey() == null || entry.getValue() == null) {
+        continue;
+      }
+      if (data == null) {
+        data=new StringBuffer();
+      }
+ else {
+        data.append("&");
+      }
       data.append(URLEncoder.encode(entry.getKey(),"UTF-8"));
       data.append("=");
       data.append(URLEncoder.encode(entry.getValue(),"UTF-8"));
@@ -34,15 +40,19 @@
     log.warn("Reponse from server was: " + response);
   }
  finally {
-    if (wr != null)     try {
-      wr.close();
+    if (wr != null) {
+      try {
+        wr.close();
+      }
+ catch (      Exception e) {
+      }
     }
- catch (    Exception e) {
-    }
-    if (rd != null)     try {
-      rd.close();
-    }
- catch (    Exception e) {
+    if (rd != null) {
+      try {
+        rd.close();
+      }
+ catch (      Exception e) {
+      }
     }
   }
   return response.toString();

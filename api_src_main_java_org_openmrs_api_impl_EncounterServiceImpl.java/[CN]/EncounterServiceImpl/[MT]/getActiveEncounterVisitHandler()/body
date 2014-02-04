@@ -1,6 +1,8 @@
 {
   String handlerGlobalValue=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,null);
-  if (StringUtils.isBlank(handlerGlobalValue))   return null;
+  if (StringUtils.isBlank(handlerGlobalValue)) {
+    return null;
+  }
   EncounterVisitHandler handler=null;
   String namePrefix=OpenmrsConstants.REGISTERED_COMPONENT_NAME_PREFIX;
   if (handlerGlobalValue.startsWith(namePrefix)) {

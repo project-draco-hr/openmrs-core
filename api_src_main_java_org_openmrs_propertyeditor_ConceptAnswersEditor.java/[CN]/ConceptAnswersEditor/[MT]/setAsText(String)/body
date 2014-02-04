@@ -5,7 +5,9 @@
     List<String> requestConceptIds=new Vector<String>();
     for (    String id : conceptIds) {
       id=id.trim();
-      if (!id.equals("") && !requestConceptIds.contains(id))       requestConceptIds.add(id);
+      if (!id.equals("") && !requestConceptIds.contains(id)) {
+        requestConceptIds.add(id);
+      }
     }
     Collection<ConceptAnswer> deletedConceptAnswers=new HashSet<ConceptAnswer>();
     for (    ConceptAnswer origConceptAnswer : originalConceptAnswers) {
@@ -15,11 +17,17 @@
         Integer drugId=getDrugId(conceptId);
         Drug answerDrug=origConceptAnswer.getAnswerDrug();
         if (id.equals(origConceptAnswer.getAnswerConcept().getConceptId())) {
-          if (drugId == null && answerDrug == null)           answerDeleted=false;
- else           if ((drugId != null && answerDrug != null) && drugId.equals(origConceptAnswer.getAnswerDrug().getDrugId()))           answerDeleted=false;
+          if (drugId == null && answerDrug == null) {
+            answerDeleted=false;
+          }
+ else           if ((drugId != null && answerDrug != null) && drugId.equals(origConceptAnswer.getAnswerDrug().getDrugId())) {
+            answerDeleted=false;
+          }
         }
       }
-      if (answerDeleted)       deletedConceptAnswers.add(origConceptAnswer);
+      if (answerDeleted) {
+        deletedConceptAnswers.add(origConceptAnswer);
+      }
     }
     for (    ConceptAnswer conceptAnswer : deletedConceptAnswers) {
       originalConceptAnswers.remove(conceptAnswer);
@@ -31,14 +39,20 @@
       for (      ConceptAnswer origConceptAnswer : originalConceptAnswers) {
         Drug answerDrug=origConceptAnswer.getAnswerDrug();
         if (id.equals(origConceptAnswer.getAnswerConcept().getConceptId())) {
-          if (drugId == null && answerDrug == null)           newAnswerConcept=false;
- else           if ((drugId != null && answerDrug != null) && drugId.equals(answerDrug.getDrugId()))           newAnswerConcept=false;
+          if (drugId == null && answerDrug == null) {
+            newAnswerConcept=false;
+          }
+ else           if ((drugId != null && answerDrug != null) && drugId.equals(answerDrug.getDrugId())) {
+            newAnswerConcept=false;
+          }
         }
       }
       if (newAnswerConcept) {
         Concept answer=cs.getConcept(id);
         Drug drug=null;
-        if (drugId != null)         drug=cs.getDrug(drugId);
+        if (drugId != null) {
+          drug=cs.getDrug(drugId);
+        }
         ConceptAnswer ac=new ConceptAnswer(answer,drug);
         originalConceptAnswers.add(ac);
       }
@@ -76,9 +90,13 @@
       }
     }
     log.debug("originalConceptAnswers.getConceptId(): ");
-    for (    ConceptAnswer a : originalConceptAnswers)     log.debug("id: " + a.getAnswerConcept().getConceptId());
+    for (    ConceptAnswer a : originalConceptAnswers) {
+      log.debug("id: " + a.getAnswerConcept().getConceptId());
+    }
     log.debug("requestConceptIds: ");
-    for (    String i : requestConceptIds)     log.debug("id: " + i);
+    for (    String i : requestConceptIds) {
+      log.debug("id: " + i);
+    }
   }
  else {
     originalConceptAnswers.clear();

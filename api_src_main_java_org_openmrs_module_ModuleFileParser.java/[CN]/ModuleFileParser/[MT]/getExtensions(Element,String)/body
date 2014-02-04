@@ -11,18 +11,26 @@
       String point="", extClass="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent().trim();
- else         if ("class".equals(childNode.getNodeName()))         extClass=childNode.getTextContent().trim();
+        if ("point".equals(childNode.getNodeName())) {
+          point=childNode.getTextContent().trim();
+        }
+ else         if ("class".equals(childNode.getNodeName())) {
+          extClass=childNode.getTextContent().trim();
+        }
         x++;
       }
       log.debug("point: " + point + " class: "+ extClass);
       if (point.length() > 0 && extClass.length() > 0) {
-        if (point.indexOf(Extension.extensionIdSeparator) != -1)         log.warn("Point id contains illegal character: '" + Extension.extensionIdSeparator + "'");
+        if (point.indexOf(Extension.extensionIdSeparator) != -1) {
+          log.warn("Point id contains illegal character: '" + Extension.extensionIdSeparator + "'");
+        }
  else {
           extensions.put(point,extClass);
         }
       }
- else       log.warn("'point' and 'class' are required for extensions. Given '" + point + "' and '"+ extClass+ "'");
+ else {
+        log.warn("'point' and 'class' are required for extensions. Given '" + point + "' and '"+ extClass+ "'");
+      }
       i++;
     }
   }

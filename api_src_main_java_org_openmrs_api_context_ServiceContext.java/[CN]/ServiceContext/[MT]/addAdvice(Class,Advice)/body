@@ -1,6 +1,10 @@
 {
   Advised advisedService=(Advised)services.get(cls);
-  if (advisedService.indexOf(advice) < 0)   advisedService.addAdvice(advice);
-  if (addedAdvice.get(cls) == null)   addedAdvice.put(cls,new HashSet<Advice>());
+  if (advisedService.indexOf(advice) < 0) {
+    advisedService.addAdvice(advice);
+  }
+  if (addedAdvice.get(cls) == null) {
+    addedAdvice.put(cls,new HashSet<Advice>());
+  }
   getAddedAdvice(cls).add(advice);
 }

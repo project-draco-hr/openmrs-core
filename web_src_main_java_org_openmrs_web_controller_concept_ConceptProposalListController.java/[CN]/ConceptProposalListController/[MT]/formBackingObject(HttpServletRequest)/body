@@ -10,16 +10,24 @@
   }
   for (  ConceptProposal cp : cpList) {
     List<ConceptProposal> matchingProposals=origText.get(cp.getOriginalText());
-    if (matchingProposals == null)     matchingProposals=new Vector<ConceptProposal>();
+    if (matchingProposals == null) {
+      matchingProposals=new Vector<ConceptProposal>();
+    }
     matchingProposals.add(cp);
     origText.put(cp.getOriginalText(),matchingProposals);
   }
   boolean asc=new Boolean("asc".equals(request.getParameter("sortOrder")));
   String sortOn=request.getParameter("sortOn");
-  if (sortOn == null)   sortOn="occurences";
+  if (sortOn == null) {
+    sortOn="occurences";
+  }
   TreeMap<List<ConceptProposal>,Integer> cpMap=new TreeMap<List<ConceptProposal>,Integer>();
-  if (sortOn.equals("occurences"))   cpMap=new TreeMap<List<ConceptProposal>,Integer>(new CompareListSize(asc));
- else   cpMap=new TreeMap<List<ConceptProposal>,Integer>(new CompareListText(asc));
+  if (sortOn.equals("occurences")) {
+    cpMap=new TreeMap<List<ConceptProposal>,Integer>(new CompareListSize(asc));
+  }
+ else {
+    cpMap=new TreeMap<List<ConceptProposal>,Integer>(new CompareListText(asc));
+  }
   for (  List<ConceptProposal> matchingProposals : origText.values()) {
     cpMap.put(matchingProposals,matchingProposals.size());
   }

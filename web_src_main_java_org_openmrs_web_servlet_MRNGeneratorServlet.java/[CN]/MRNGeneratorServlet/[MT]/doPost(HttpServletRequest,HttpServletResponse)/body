@@ -4,7 +4,9 @@
   String first=request.getParameter("mrn_first");
   String count=request.getParameter("mrn_count");
   HttpSession session=request.getSession();
-  if (prefix == null)   prefix="";
+  if (prefix == null) {
+    prefix="";
+  }
   if (site == null || first == null || count == null || site.length() == 0 || first.length() == 0 || count.length() == 0) {
     session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"MRNGenerator.all.required");
     response.sendRedirect("admin/maintenance/mrnGenerator.htm");

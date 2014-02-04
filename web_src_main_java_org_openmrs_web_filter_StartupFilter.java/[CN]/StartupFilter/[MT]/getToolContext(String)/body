@@ -1,6 +1,8 @@
 {
   Locale systemLocale=LocaleUtility.fromSpecification(locale);
-  if (systemLocale == null || !ArrayUtils.contains(Locale.getAvailableLocales(),systemLocale))   systemLocale=Locale.ENGLISH;
+  if (systemLocale == null || !ArrayUtils.contains(Locale.getAvailableLocales(),systemLocale)) {
+    systemLocale=Locale.ENGLISH;
+  }
   if (toolContext == null) {
     ToolManager velocityToolManager=new ToolManager();
     FactoryConfiguration factoryConfig=new FactoryConfiguration();

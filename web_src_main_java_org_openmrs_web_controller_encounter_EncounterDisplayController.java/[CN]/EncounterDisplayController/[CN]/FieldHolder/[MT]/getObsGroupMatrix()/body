@@ -5,7 +5,9 @@
     Map<Concept,List<Obs>> conceptToObsMap=new HashMap<Concept,List<Obs>>();
     for (    Obs groupedObs : obsGrouper.getGroupMembers()) {
       List<Obs> obsMatchingThisConcept=conceptToObsMap.get(groupedObs.getConcept());
-      if (obsMatchingThisConcept == null)       obsMatchingThisConcept=new LinkedList<Obs>();
+      if (obsMatchingThisConcept == null) {
+        obsMatchingThisConcept=new LinkedList<Obs>();
+      }
       obsMatchingThisConcept.add(groupedObs);
       conceptToObsMap.put(groupedObs.getConcept(),obsMatchingThisConcept);
     }

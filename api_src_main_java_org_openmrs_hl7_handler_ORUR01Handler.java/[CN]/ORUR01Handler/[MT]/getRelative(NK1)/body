@@ -1,4 +1,6 @@
 {
-  if (nk1.getNextOfKinAssociatedPartySIdentifiers().length < 1)   return null;
+  if (nk1.getNextOfKinAssociatedPartySIdentifiers().length < 1) {
+    return null;
+  }
   return Context.getHL7Service().resolvePersonFromIdentifiers(nk1.getNextOfKinAssociatedPartySIdentifiers());
 }

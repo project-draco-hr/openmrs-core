@@ -2,12 +2,16 @@
   Vector userList=new Vector();
   try {
     UserService userService=Context.getUserService();
-    if (rolesStrings == null)     rolesStrings=new Vector<String>();
+    if (rolesStrings == null) {
+      rolesStrings=new Vector<String>();
+    }
     List<Role> roles=new Vector<Role>();
     for (    String r : rolesStrings) {
       if (!"".equals(r)) {
         Role role=userService.getRole(r);
-        if (role != null)         roles.add(role);
+        if (role != null) {
+          roles.add(role);
+        }
       }
     }
     userList=new Vector();

@@ -6,7 +6,9 @@
       crit.add(Restrictions.eq("concept",concept));
       List<ConceptWord> words=crit.list();
       Integer authUserId=null;
-      if (Context.isAuthenticated())       authUserId=Context.getAuthenticatedUser().getUserId();
+      if (Context.isAuthenticated()) {
+        authUserId=Context.getAuthenticatedUser().getUserId();
+      }
       log.trace(authUserId + "|ConceptWord|" + words);
     }
     sessionFactory.getCurrentSession().createQuery("delete ConceptWord where concept = :c").setInteger("c",concept.getConceptId()).executeUpdate();

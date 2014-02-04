@@ -8,7 +8,9 @@
       log.debug("Creating new hmIncludeMap");
       hmIncludeMap=new HashMap<String,String>();
     }
- else     log.debug("Using hmIncludeMap from object");
+ else {
+      log.debug("Using hmIncludeMap from object");
+    }
     if (hmIncludeMap.containsKey(fileName)) {
       log.debug("HTMLINCLUDETAG HAS ALREADY INCLUDED FILE " + fileName);
       isUsed=true;

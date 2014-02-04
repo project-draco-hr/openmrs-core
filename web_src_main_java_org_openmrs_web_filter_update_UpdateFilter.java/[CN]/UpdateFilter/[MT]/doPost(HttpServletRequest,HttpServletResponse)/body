@@ -1,7 +1,9 @@
 {
   String page=httpRequest.getParameter("page");
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null)   referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
+    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  }
   if (DEFAULT_PAGE.equals(page)) {
     String username=httpRequest.getParameter("username");
     String password=httpRequest.getParameter("password");
@@ -72,7 +74,9 @@
       if (updateJob.hasWarnings() && updateJob.getExecutingChangesetId() == null) {
         result.put("hasWarnings",updateJob.hasWarnings());
         StringBuilder sb=new StringBuilder("<ul>");
-        for (        String warning : updateJob.getUpdateWarnings())         sb.append("<li>" + warning + "</li>");
+        for (        String warning : updateJob.getUpdateWarnings()) {
+          sb.append("<li>" + warning + "</li>");
+        }
         sb.append("</ul>");
         result.put("updateWarnings",sb.toString());
         result.put("updateLogFile",StringUtils.replace(OpenmrsUtil.getApplicationDataDirectory() + DatabaseUpdater.DATABASE_UPDATES_LOG_FILE,"\\","\\\\"));
@@ -87,7 +91,9 @@
       if (appender instanceof MemoryAppender) {
         MemoryAppender memoryAppender=(MemoryAppender)appender;
         List<String> logLines=memoryAppender.getLogLines();
-        if (logLines.size() > 5)         logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        if (logLines.size() > 5) {
+          logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        }
         result.put("logLines",logLines);
       }
  else {

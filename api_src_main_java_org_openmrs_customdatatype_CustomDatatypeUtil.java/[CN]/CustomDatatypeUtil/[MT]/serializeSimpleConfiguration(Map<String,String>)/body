@@ -1,5 +1,7 @@
 {
-  if (simpleConfig == null || simpleConfig.size() == 0)   return "";
+  if (simpleConfig == null || simpleConfig.size() == 0) {
+    return "";
+  }
   try {
     return Context.getSerializationService().getDefaultSerializer().serialize(simpleConfig);
   }

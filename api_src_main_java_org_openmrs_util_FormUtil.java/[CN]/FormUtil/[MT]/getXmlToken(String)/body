@@ -1,5 +1,7 @@
 {
-  if (s == null || s.length() < 1)   return "_blank";
+  if (s == null || s.length() < 1) {
+    return "_blank";
+  }
   String letters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_";
   String nameChars=letters + "0123456789.-";
   Hashtable<String,String> swapChars=new Hashtable<String,String>();
@@ -17,8 +19,12 @@
   s=s.replaceAll("^\\s+","").replaceAll("\\s+$","").replaceAll("\\s+","_").toLowerCase();
   Set<Entry<String,String>> swaps=swapChars.entrySet();
   for (  Entry<String,String> entry : swaps) {
-    if (entry.getValue() != null)     s=s.replaceAll(entry.getKey(),"_" + entry.getValue() + "_");
- else     s=s.replaceAll(String.valueOf(entry.getKey()),"");
+    if (entry.getValue() != null) {
+      s=s.replaceAll(entry.getKey(),"_" + entry.getValue() + "_");
+    }
+ else {
+      s=s.replaceAll(String.valueOf(entry.getKey()),"");
+    }
   }
   StringBuilder token=new StringBuilder("");
   boolean underscoreFlag=false;
@@ -33,6 +39,8 @@
   String tokenStr=token.toString();
   tokenStr=tokenStr.replaceAll("_+","_");
   tokenStr=tokenStr.replaceAll("_+$","");
-  if (letters.indexOf(tokenStr.charAt(0)) == -1 || tokenStr.startsWith("xml"))   tokenStr="_" + tokenStr;
+  if (letters.indexOf(tokenStr.charAt(0)) == -1 || tokenStr.startsWith("xml")) {
+    tokenStr="_" + tokenStr;
+  }
   return tokenStr;
 }

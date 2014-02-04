@@ -10,8 +10,12 @@
     log.error("Gender cannot be null.");
     return new String("Gender cannot be null.");
   }
- else   if (gender.toUpperCase().contains("M"))   p.setGender("M");
- else   if (gender.toUpperCase().contains("F"))   p.setGender("F");
+ else   if (gender.toUpperCase().contains("M")) {
+    p.setGender("M");
+  }
+ else   if (gender.toUpperCase().contains("F")) {
+    p.setGender("F");
+  }
  else {
     log.error("Gender must be 'M' or 'F'.");
     return new String("Gender must be 'M' or 'F'.");

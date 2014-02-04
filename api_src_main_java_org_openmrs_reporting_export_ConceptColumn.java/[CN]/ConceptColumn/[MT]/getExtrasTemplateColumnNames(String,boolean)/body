@@ -3,7 +3,9 @@
   if (extras != null) {
     for (    String ext : extras) {
       s.append("$!{fn.getSeparator()}").append("\"").append(columnName).append("_").append(ext);
-      if (appendCount)       s.append("_($velocityCount)");
+      if (appendCount) {
+        s.append("_($velocityCount)");
+      }
       s.append("\"");
     }
   }

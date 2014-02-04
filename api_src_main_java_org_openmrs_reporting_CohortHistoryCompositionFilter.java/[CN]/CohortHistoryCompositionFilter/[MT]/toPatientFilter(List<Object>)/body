@@ -3,9 +3,15 @@
   List<Object> use=new ArrayList<Object>();
   for (ListIterator<Object> i=phrase.listIterator(); i.hasNext(); ) {
     Object o=i.next();
-    if (o instanceof List)     use.add(toPatientFilter((List<Object>)o));
- else     if (o instanceof Integer)     use.add(getHistory().getSearchHistory().get((Integer)o - 1));
- else     use.add(o);
+    if (o instanceof List) {
+      use.add(toPatientFilter((List<Object>)o));
+    }
+ else     if (o instanceof Integer) {
+      use.add(getHistory().getSearchHistory().get((Integer)o - 1));
+    }
+ else {
+      use.add(o);
+    }
   }
   log.debug("Base case with " + use);
   boolean invertTheNext=false;
@@ -17,7 +23,9 @@
         invertTheNext=!invertTheNext;
       }
  else {
-        if (invertTheNext)         throw new RuntimeException("Can't have NOT AND. Test() should have failed");
+        if (invertTheNext) {
+          throw new RuntimeException("Can't have NOT AND. Test() should have failed");
+        }
       }
     }
  else {
@@ -33,7 +41,13 @@
   }
   BooleanOperator bo=BooleanOperator.AND;
   List<PatientFilter> args=new ArrayList<PatientFilter>();
-  for (  Object o : use)   if (o instanceof BooleanOperator)   bo=(BooleanOperator)o;
- else   args.add((PatientFilter)o);
+  for (  Object o : use) {
+    if (o instanceof BooleanOperator) {
+      bo=(BooleanOperator)o;
+    }
+ else {
+      args.add((PatientFilter)o);
+    }
+  }
   return new CompoundPatientFilter(bo,args);
 }

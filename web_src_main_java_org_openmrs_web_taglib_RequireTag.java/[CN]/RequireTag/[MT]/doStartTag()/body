@@ -17,7 +17,9 @@
     errorOccurred=true;
     if (userContext.isAuthenticated()) {
       httpSession.setAttribute(WebConstants.INSUFFICIENT_PRIVILEGES,true);
-      if (missingPrivilegesBuffer != null)       httpSession.setAttribute(WebConstants.REQUIRED_PRIVILEGES,missingPrivilegesBuffer.toString());
+      if (missingPrivilegesBuffer != null) {
+        httpSession.setAttribute(WebConstants.REQUIRED_PRIVILEGES,missingPrivilegesBuffer.toString());
+      }
       String referer=request.getHeader("Referer");
       httpSession.setAttribute(WebConstants.REFERER_URL,referer);
       if (StringUtils.hasText(redirect)) {
@@ -28,7 +30,9 @@
       }
       log.warn("The user: '" + Context.getAuthenticatedUser() + "' has attempted to access: "+ redirect+ " which requires privilege: "+ privilege+ " or one of: "+ allPrivileges+ " or any of "+ anyPrivilege);
     }
- else     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"require.login");
+ else {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"require.login");
+    }
   }
  else   if (hasPrivilege && userContext.isAuthenticated()) {
     User user=userContext.getAuthenticatedUser();
@@ -58,9 +62,15 @@
   log.debug("session ip addr: " + session_ip_addr);
   if (errorOccurred) {
     String url="";
-    if (redirect != null && !redirect.equals(""))     url=request.getContextPath() + redirect;
- else     url=request.getRequestURI();
-    if (request.getQueryString() != null)     url=url + "?" + request.getQueryString();
+    if (redirect != null && !redirect.equals("")) {
+      url=request.getContextPath() + redirect;
+    }
+ else {
+      url=request.getRequestURI();
+    }
+    if (request.getQueryString() != null) {
+      url=url + "?" + request.getQueryString();
+    }
     httpSession.setAttribute(WebConstants.OPENMRS_LOGIN_REDIRECT_HTTPSESSION_ATTR,url);
     try {
       httpResponse.sendRedirect(request.getContextPath() + otherwise);

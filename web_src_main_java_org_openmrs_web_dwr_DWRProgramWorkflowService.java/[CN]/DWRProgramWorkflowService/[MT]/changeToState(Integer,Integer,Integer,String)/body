@@ -3,7 +3,9 @@
   PatientProgram pp=s.getPatientProgram(patientProgramId);
   ProgramWorkflowState st=pp.getProgram().getWorkflow(programWorkflowId).getState(programWorkflowStateId);
   Date onDate=null;
-  if (onDateDMY != null && onDateDMY.length() > 0)   onDate=ymdDf.parse(onDateDMY);
+  if (onDateDMY != null && onDateDMY.length() > 0) {
+    onDate=ymdDf.parse(onDateDMY);
+  }
   pp.transitionToState(st,onDate);
   s.savePatientProgram(pp);
 }

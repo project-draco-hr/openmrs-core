@@ -8,10 +8,14 @@
  else {
     patientIdSet.addAll(patientIds);
   }
-  if (location != null && !location.equals(""))   patientIdSet.retainAll(pss.getPatientsHavingLocation(getLocation()).getMemberIds());
+  if (location != null && !location.equals("")) {
+    patientIdSet.retainAll(pss.getPatientsHavingLocation(getLocation()).getMemberIds());
+  }
   if (cohortId != null) {
     Cohort cohort=Context.getCohortService().getCohort(cohortId);
-    if (cohort != null)     patientIdSet.retainAll(cohort.getMemberIds());
+    if (cohort != null) {
+      patientIdSet.retainAll(cohort.getMemberIds());
+    }
   }
   if (cohortDefinitionId != null) {
     PatientFilter cohortDefinition=(PatientFilter)Context.getReportObjectService().getReportObject(cohortDefinitionId);

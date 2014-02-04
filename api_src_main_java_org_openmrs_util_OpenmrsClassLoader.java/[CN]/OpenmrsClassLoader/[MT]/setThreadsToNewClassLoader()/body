@@ -3,8 +3,12 @@
   Thread[] threadArray=threadSet.toArray(new Thread[threadSet.size()]);
   for (  Thread thread : threadArray) {
     ClassLoader classLoader=thread.getContextClassLoader();
-    if (classLoader == null)     continue;
-    if (classLoader == getInstance())     continue;
+    if (classLoader == null) {
+      continue;
+    }
+    if (classLoader == getInstance()) {
+      continue;
+    }
     if (classLoader instanceof OpenmrsClassLoader) {
       thread.setContextClassLoader(getInstance());
     }

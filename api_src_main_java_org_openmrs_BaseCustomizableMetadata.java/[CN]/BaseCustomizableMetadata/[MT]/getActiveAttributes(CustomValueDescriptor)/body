@@ -1,5 +1,11 @@
 {
   List<A> ret=new ArrayList<A>();
-  if (getAttributes() != null)   for (  A attr : getAttributes())   if (attr.getAttributeType().equals(ofType) && !attr.isVoided())   ret.add(attr);
+  if (getAttributes() != null) {
+    for (    A attr : getAttributes()) {
+      if (attr.getAttributeType().equals(ofType) && !attr.isVoided()) {
+        ret.add(attr);
+      }
+    }
+  }
   return ret;
 }

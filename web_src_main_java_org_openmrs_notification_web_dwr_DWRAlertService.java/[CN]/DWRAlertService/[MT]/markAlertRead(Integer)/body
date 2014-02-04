@@ -2,7 +2,9 @@
   try {
     AlertService as=Context.getAlertService();
     Alert alert=as.getAlert(alertId);
-    if (alert == null || alert.getRecipient(Context.getAuthenticatedUser()) == null)     return;
+    if (alert == null || alert.getRecipient(Context.getAuthenticatedUser()) == null) {
+      return;
+    }
     Context.addProxyPrivilege(PrivilegeConstants.MANAGE_ALERTS);
     as.saveAlert(alert.markAlertRead());
   }

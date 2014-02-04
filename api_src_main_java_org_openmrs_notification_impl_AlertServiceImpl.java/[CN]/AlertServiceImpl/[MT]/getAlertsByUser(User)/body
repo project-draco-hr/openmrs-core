@@ -1,8 +1,12 @@
 {
   log.debug("Getting unread alerts for user " + user);
   if (user == null) {
-    if (Context.isAuthenticated())     user=Context.getAuthenticatedUser();
- else     user=new User();
+    if (Context.isAuthenticated()) {
+      user=Context.getAuthenticatedUser();
+    }
+ else {
+      user=new User();
+    }
   }
   return Context.getAlertService().getAlerts(user,false,false);
 }

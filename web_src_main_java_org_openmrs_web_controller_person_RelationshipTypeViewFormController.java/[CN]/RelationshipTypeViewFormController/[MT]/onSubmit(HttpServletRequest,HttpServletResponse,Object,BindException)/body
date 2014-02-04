@@ -6,7 +6,9 @@
     String[] displayOrders=request.getParameterValues("displayOrders");
     List<String> preferredTypes=new ArrayList<String>();
     String[] preferredTypesArray=request.getParameterValues("preferredTypes");
-    if (preferredTypesArray != null)     Collections.addAll(preferredTypes,preferredTypesArray);
+    if (preferredTypesArray != null) {
+      Collections.addAll(preferredTypes,preferredTypesArray);
+    }
     PersonService ps=Context.getPersonService();
     for (int i=0; i < relationshipTypeIds.length; i++) {
       String id=relationshipTypeIds[i];

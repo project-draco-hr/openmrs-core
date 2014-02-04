@@ -1,5 +1,7 @@
 {
   File f=getFile(req);
-  if (f == null)   return super.getLastModified(req);
+  if (f == null) {
+    return super.getLastModified(req);
+  }
   return f.lastModified();
 }

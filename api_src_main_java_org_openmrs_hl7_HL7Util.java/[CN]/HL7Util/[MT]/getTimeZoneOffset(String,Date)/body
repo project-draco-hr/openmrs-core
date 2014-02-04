@@ -5,10 +5,16 @@
   boolean timeZoneFlag=(tzPlus > 0 || tzMinus > 0);
   if (timeZoneFlag) {
     int tzIndex;
-    if (tzPlus > 0)     tzIndex=tzPlus;
- else     tzIndex=tzMinus;
+    if (tzPlus > 0) {
+      tzIndex=tzPlus;
+    }
+ else {
+      tzIndex=tzMinus;
+    }
     timeZoneOffset=fullString.substring(tzIndex);
-    if (timeZoneOffset.length() != 5)     log.error("Invalid timestamp because its too short: " + timeZoneOffset);
+    if (timeZoneOffset.length() != 5) {
+      log.error("Invalid timestamp because its too short: " + timeZoneOffset);
+    }
   }
  else {
     Calendar cal=Calendar.getInstance();

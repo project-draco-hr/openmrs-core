@@ -1,5 +1,7 @@
 {
-  if (!(message instanceof ORU_R01))   throw new ApplicationException("Invalid message sent to ORU_R01 handler");
+  if (!(message instanceof ORU_R01)) {
+    throw new ApplicationException("Invalid message sent to ORU_R01 handler");
+  }
   log.debug("Processing ORU_R01 message");
   Message response;
   try {

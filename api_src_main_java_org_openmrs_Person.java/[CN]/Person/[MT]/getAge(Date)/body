@@ -1,7 +1,11 @@
 {
-  if (birthdate == null)   return null;
+  if (birthdate == null) {
+    return null;
+  }
   Calendar today=Calendar.getInstance();
-  if (onDate != null)   today.setTime(onDate);
+  if (onDate != null) {
+    today.setTime(onDate);
+  }
   if (getDeathDate() != null && today.getTime().after(getDeathDate())) {
     today.setTime(getDeathDate());
   }

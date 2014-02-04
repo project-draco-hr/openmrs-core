@@ -1,8 +1,12 @@
 {
   updateChanges();
   try {
-    if (changes != null && changes.size() > 0)     updateRequired=true;
- else     updateRequired=DatabaseUpdater.updatesRequired();
+    if (changes != null && changes.size() > 0) {
+      updateRequired=true;
+    }
+ else {
+      updateRequired=DatabaseUpdater.updatesRequired();
+    }
   }
  catch (  Exception e) {
   }

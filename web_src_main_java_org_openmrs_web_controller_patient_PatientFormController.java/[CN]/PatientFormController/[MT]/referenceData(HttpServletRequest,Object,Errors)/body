@@ -5,13 +5,19 @@
   List<Encounter> encounters=new Vector<Encounter>();
   if (Context.isAuthenticated() && patient.getPatientId() != null) {
     boolean onlyPublishedForms=true;
-    if (Context.hasPrivilege(PrivilegeConstants.VIEW_UNPUBLISHED_FORMS))     onlyPublishedForms=false;
+    if (Context.hasPrivilege(PrivilegeConstants.VIEW_UNPUBLISHED_FORMS)) {
+      onlyPublishedForms=false;
+    }
     forms.addAll(Context.getFormService().getForms(null,onlyPublishedForms,null,false,null,null,null));
     List<Encounter> encs=Context.getEncounterService().getEncountersByPatient(patient);
-    if (encs != null && encs.size() > 0)     encounters.addAll(encs);
+    if (encs != null && encs.size() > 0) {
+      encounters.addAll(encs);
+    }
   }
   String patientVariation="";
-  if (patient.isDead())   patientVariation="Dead";
+  if (patient.isDead()) {
+    patientVariation="Dead";
+  }
   Concept reasonForExitConcept=Context.getConceptService().getConcept(Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare"));
   if (reasonForExitConcept != null && patient.getPatientId() != null) {
     List<Obs> patientExitObs=Context.getObsService().getObservationsByPersonAndConcept(patient,reasonForExitConcept);

@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     ConceptService cs=Context.getConceptService();
     String conceptClassId=request.getParameter("conceptClassId");
-    if (conceptClassId != null)     conceptClass=cs.getConceptClass(Integer.valueOf(conceptClassId));
+    if (conceptClassId != null) {
+      conceptClass=cs.getConceptClass(Integer.valueOf(conceptClassId));
+    }
   }
-  if (conceptClass == null)   conceptClass=new ConceptClass();
+  if (conceptClass == null) {
+    conceptClass=new ConceptClass();
+  }
   return conceptClass;
 }

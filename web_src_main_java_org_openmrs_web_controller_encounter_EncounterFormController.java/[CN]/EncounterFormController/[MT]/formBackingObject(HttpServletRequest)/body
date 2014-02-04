@@ -7,6 +7,8 @@
       encounter=es.getEncounter(Integer.valueOf(encounterId));
     }
   }
-  if (encounter == null)   encounter=new Encounter();
+  if (encounter == null) {
+    encounter=new Encounter();
+  }
   return encounter;
 }

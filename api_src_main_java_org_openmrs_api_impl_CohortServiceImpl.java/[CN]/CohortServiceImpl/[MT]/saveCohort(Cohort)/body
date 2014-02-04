@@ -11,6 +11,8 @@
   if (cohort.getDescription() == null) {
     throw new APIException(Context.getMessageSourceService().getMessage("Cohort.save.descriptionRequired",null,"Cohort description is required",Context.getLocale()));
   }
-  if (log.isInfoEnabled())   log.info("Saving cohort " + cohort);
+  if (log.isInfoEnabled()) {
+    log.info("Saving cohort " + cohort);
+  }
   return dao.saveCohort(cohort);
 }

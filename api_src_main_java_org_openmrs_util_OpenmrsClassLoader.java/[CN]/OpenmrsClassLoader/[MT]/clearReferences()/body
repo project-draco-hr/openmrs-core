@@ -23,7 +23,9 @@
           }
           if (Modifier.isStatic(mods)) {
             try {
-              if (clazz.equals(OpenmrsClassLoader.class) && field.getName().equals("log"))               continue;
+              if (clazz.equals(OpenmrsClassLoader.class) && field.getName().equals("log")) {
+                continue;
+              }
               field.setAccessible(true);
               if (Modifier.isFinal(mods)) {
                 if (!(field.getType().getName().startsWith("javax."))) {

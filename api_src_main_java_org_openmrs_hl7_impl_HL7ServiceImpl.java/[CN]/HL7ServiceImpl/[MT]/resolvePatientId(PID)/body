@@ -1,5 +1,7 @@
 {
   Person p=resolvePersonFromIdentifiers(pid.getPatientIdentifierList());
-  if (p != null && p.isPatient())   return p.getPersonId();
+  if (p != null && p.isPatient()) {
+    return p.getPersonId();
+  }
   return null;
 }

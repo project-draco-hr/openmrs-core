@@ -1,5 +1,7 @@
 {
-  if (searchString == null)   return new ArrayList<Person>();
+  if (searchString == null) {
+    return new ArrayList<Person>();
+  }
   PersonSearchCriteria personSearchCriteria=new PersonSearchCriteria();
   searchString=searchString.replace(", "," ");
   String[] values=searchString.split(" ");
@@ -7,7 +9,9 @@
   personSearchCriteria.addAliasForName(criteria);
   personSearchCriteria.addAliasForAttribute(criteria);
   criteria.add(Restrictions.eq("personVoided",false));
-  if (dead != null)   criteria.add(Restrictions.eq("dead",dead));
+  if (dead != null) {
+    criteria.add(Restrictions.eq("dead",dead));
+  }
   Disjunction disjunction=Restrictions.disjunction();
   for (  String value : values) {
     if (value != null && value.length() > 0) {

@@ -7,6 +7,10 @@
   sb.append(getAtLeastCount()).append(".");
   sb.append(getAtMostCount()).append(".");
   sb.append(getLocation() == null ? null : getLocation().getLocationId()).append(".");
-  if (getEncounterTypeList() != null)   for (  EncounterType t : getEncounterTypeList())   sb.append(t.getEncounterTypeId()).append(",");
+  if (getEncounterTypeList() != null) {
+    for (    EncounterType t : getEncounterTypeList()) {
+      sb.append(t.getEncounterTypeId()).append(",");
+    }
+  }
   return sb.toString();
 }

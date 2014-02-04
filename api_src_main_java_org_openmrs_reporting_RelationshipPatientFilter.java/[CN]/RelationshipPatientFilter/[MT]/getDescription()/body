@@ -7,14 +7,22 @@
       sb.append("who are either " + relType.getaIsToB() + " or "+ relType.getbIsToA()+ " of ");
     }
  else {
-      if (includeAtoB)       sb.append("who are " + relType.getaIsToB() + " to "+ relType.getbIsToA()+ " ");
-      if (includeBtoA)       sb.append("who are " + relType.getbIsToA() + " to "+ relType.getaIsToB()+ " ");
+      if (includeAtoB) {
+        sb.append("who are " + relType.getaIsToB() + " to "+ relType.getbIsToA()+ " ");
+      }
+      if (includeBtoA) {
+        sb.append("who are " + relType.getbIsToA() + " to "+ relType.getaIsToB()+ " ");
+      }
     }
   }
  else {
     sb.append("with any relationship to ");
   }
-  if (getPerson() != null)   sb.append(getPerson().toString());
- else   sb.append("anyone");
+  if (getPerson() != null) {
+    sb.append(getPerson().toString());
+  }
+ else {
+    sb.append("anyone");
+  }
   return sb.toString();
 }

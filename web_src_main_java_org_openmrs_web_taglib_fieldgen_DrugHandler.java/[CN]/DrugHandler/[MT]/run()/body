@@ -4,16 +4,24 @@
     String initialValue="";
     checkEmptyVal((Drug)null);
     Drug d=(Drug)this.fieldGenTag.getVal();
-    if (d != null)     if (d.getDrugId() != null)     initialValue=d.getDrugId().toString();
+    if (d != null) {
+      if (d.getDrugId() != null) {
+        initialValue=d.getDrugId().toString();
+      }
+    }
     String optionHeader="";
     if (this.fieldGenTag.getParameterMap() != null) {
       optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
     }
-    if (optionHeader == null)     optionHeader="";
+    if (optionHeader == null) {
+      optionHeader="";
+    }
     ConceptService cs=Context.getConceptService();
     List<Drug> drugs=cs.getAllDrugs();
     Collections.sort(drugs,new DrugsByNameComparator());
-    if (drugs == null)     drugs=new ArrayList<Drug>();
+    if (drugs == null) {
+      drugs=new ArrayList<Drug>();
+    }
     setParameter("initialValue",initialValue);
     setParameter("optionHeader",optionHeader);
     setParameter("drugs",drugs);

@@ -4,7 +4,9 @@
   DrugOrder drugOrder=new DrugOrder();
   Patient patient=Context.getPatientService().getPatient(patientId);
   Drug drug=Context.getConceptService().getDrugByNameOrId(drugId);
-  if (drug == null)   throw new APIException("There is no drug with the name or drugId of: " + drugId);
+  if (drug == null) {
+    throw new APIException("There is no drug with the name or drugId of: " + drugId);
+  }
   drugOrder.setDrug(drug);
   Concept concept=drug.getConcept();
   drugOrder.setConcept(concept);

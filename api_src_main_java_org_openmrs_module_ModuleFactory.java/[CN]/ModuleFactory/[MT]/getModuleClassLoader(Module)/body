@@ -1,5 +1,7 @@
 {
   ModuleClassLoader mcl=getModuleClassLoaderMap().get(mod);
-  if (mcl == null)   log.debug("Module classloader not found for module with id: " + mod.getModuleId());
+  if (mcl == null) {
+    log.debug("Module classloader not found for module with id: " + mod.getModuleId());
+  }
   return mcl;
 }

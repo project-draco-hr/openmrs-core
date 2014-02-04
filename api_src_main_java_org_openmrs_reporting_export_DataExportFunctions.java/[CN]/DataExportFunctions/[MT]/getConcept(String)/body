@@ -1,6 +1,10 @@
 {
-  if (conceptName == null)   throw new Exception("conceptName cannot be null");
-  if (conceptNameMap.containsKey(conceptName))   return conceptNameMap.get(conceptName);
+  if (conceptName == null) {
+    throw new Exception("conceptName cannot be null");
+  }
+  if (conceptNameMap.containsKey(conceptName)) {
+    return conceptNameMap.get(conceptName);
+  }
   Concept c;
   try {
     Integer conceptId=Integer.valueOf(conceptName);
@@ -9,7 +13,9 @@
  catch (  NumberFormatException e) {
     c=conceptService.getConceptByName(conceptName);
   }
-  if (c == null)   throw new APIException("A Concept with name or id '" + conceptName + "' was not found");
+  if (c == null) {
+    throw new APIException("A Concept with name or id '" + conceptName + "' was not found");
+  }
   conceptNameMap.put(conceptName,c);
   return c;
 }

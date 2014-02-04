@@ -1,5 +1,7 @@
 {
   List<String> searchPatterns=new ArrayList<String>();
-  for (  String pattern : patternSearch.split(","))   searchPatterns.add(replaceSearchString(pattern,identifier));
+  for (  String pattern : patternSearch.split(",")) {
+    searchPatterns.add(replaceSearchString(pattern,identifier));
+  }
   return Restrictions.in("ids.identifier",searchPatterns);
 }

@@ -31,7 +31,9 @@
     request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.programRequired");
     return new ModelAndView(new RedirectView(returnPage));
   }
-  if (!pws.getPatientPrograms(patient,program,null,completionDate,enrollmentDate,null,false).isEmpty())   request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.already");
+  if (!pws.getPatientPrograms(patient,program,null,completionDate,enrollmentDate,null,false).isEmpty()) {
+    request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.already");
+  }
  else {
     if (enrollmentDate == null) {
       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Program.error.enrollmentDateRequired");

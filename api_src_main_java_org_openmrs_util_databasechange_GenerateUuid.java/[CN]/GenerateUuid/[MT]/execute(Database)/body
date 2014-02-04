@@ -1,6 +1,10 @@
 {
-  if (Context.getRuntimeProperties().size() == 0)   return;
-  if (tableNamesArray == null || tableNamesArray.length == 0)   throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
+  if (Context.getRuntimeProperties().size() == 0) {
+    return;
+  }
+  if (tableNamesArray == null || tableNamesArray.length == 0) {
+    throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
+  }
   JdbcConnection connection=(JdbcConnection)database.getConnection();
   for (  String tableName : tableNamesArray) {
     try {
@@ -23,8 +27,12 @@
         }
       }
   finally {
-        if (idStatement != null)         idStatement.close();
-        if (updateStatement != null)         updateStatement.close();
+        if (idStatement != null) {
+          idStatement.close();
+        }
+        if (updateStatement != null) {
+          updateStatement.close();
+        }
       }
     }
  catch (    DatabaseException e) {

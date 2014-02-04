@@ -4,6 +4,8 @@
     return null;
   }
   ResourceBundle rb=CustomResourceLoader.getInstance(null).getResourceBundle(locale);
-  if (rb == null)   rb=getDefaultResourceBundle();
+  if (rb == null) {
+    rb=getDefaultResourceBundle();
+  }
   return rb;
 }

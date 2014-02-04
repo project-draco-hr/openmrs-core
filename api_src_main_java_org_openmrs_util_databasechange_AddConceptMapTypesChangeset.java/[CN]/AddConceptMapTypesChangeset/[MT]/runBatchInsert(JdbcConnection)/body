@@ -6,7 +6,9 @@
     Integer userId=DatabaseUpdater.getAuthenticatedUserId();
     if (userId == null || userId < 1) {
       userId=getInt(connection,"SELECT min(user_id) FROM users");
-      if (userId < 1)       userId=null;
+      if (userId < 1) {
+        userId=null;
+      }
     }
     pStmt=connection.prepareStatement("INSERT INTO concept_map_type " + "(concept_map_type_id, name, is_hidden, retired, creator, date_created, uuid) VALUES(?,?,?,?," + userId + ",?,?)");
     int mapTypeId=1;

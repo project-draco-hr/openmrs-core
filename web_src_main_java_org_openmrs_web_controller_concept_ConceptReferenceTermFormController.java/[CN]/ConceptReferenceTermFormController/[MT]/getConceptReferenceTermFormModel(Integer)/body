@@ -1,6 +1,10 @@
 {
   ConceptReferenceTerm conceptReferenceTerm=null;
-  if (conceptReferenceTermId != null)   conceptReferenceTerm=Context.getConceptService().getConceptReferenceTerm(conceptReferenceTermId);
-  if (conceptReferenceTerm == null)   conceptReferenceTerm=new ConceptReferenceTerm();
+  if (conceptReferenceTermId != null) {
+    conceptReferenceTerm=Context.getConceptService().getConceptReferenceTerm(conceptReferenceTermId);
+  }
+  if (conceptReferenceTerm == null) {
+    conceptReferenceTerm=new ConceptReferenceTerm();
+  }
   return new ConceptReferenceTermModel(conceptReferenceTerm);
 }

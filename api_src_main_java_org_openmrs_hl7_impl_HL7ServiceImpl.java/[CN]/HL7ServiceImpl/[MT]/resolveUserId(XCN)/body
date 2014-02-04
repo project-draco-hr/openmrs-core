@@ -20,7 +20,9 @@
         username.append(familyName);
       }
       if (givenName != null) {
-        if (username.length() > 0)         username.append(" ");
+        if (username.length() > 0) {
+          username.append(" ");
+        }
         username.append(givenName);
       }
       User user=Context.getUserService().getUserByUsername(username.toString());

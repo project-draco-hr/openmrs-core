@@ -29,7 +29,9 @@
     }
   }
   mergedData.setPriorGender(preferred.getGender());
-  if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender()))   preferred.setGender(notPreferred.getGender());
+  if (!"M".equals(preferred.getGender()) && !"F".equals(preferred.getGender())) {
+    preferred.setGender(notPreferred.getGender());
+  }
   mergedData.setPriorDateOfBirth(preferred.getBirthdate());
   mergedData.setPriorDateOfBirthEstimated(preferred.isBirthdateEstimated());
   if (preferred.getBirthdate() == null || (preferred.getBirthdateEstimated() && !notPreferred.getBirthdateEstimated())) {
@@ -37,11 +39,19 @@
     preferred.setBirthdateEstimated(notPreferred.getBirthdateEstimated());
   }
   mergedData.setPriorDateOfDeathEstimated(preferred.getDeathdateEstimated());
-  if (preferred.getDeathdateEstimated() == null)   preferred.setDeathdateEstimated(notPreferred.getDeathdateEstimated());
+  if (preferred.getDeathdateEstimated() == null) {
+    preferred.setDeathdateEstimated(notPreferred.getDeathdateEstimated());
+  }
   mergedData.setPriorDateOfDeath(preferred.getDeathDate());
-  if (preferred.getDeathDate() == null)   preferred.setDeathDate(notPreferred.getDeathDate());
-  if (preferred.getCauseOfDeath() != null)   mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());
-  if (preferred.getCauseOfDeath() == null)   preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
+  if (preferred.getDeathDate() == null) {
+    preferred.setDeathDate(notPreferred.getDeathDate());
+  }
+  if (preferred.getCauseOfDeath() != null) {
+    mergedData.setPriorCauseOfDeath(preferred.getCauseOfDeath().getUuid());
+  }
+  if (preferred.getCauseOfDeath() == null) {
+    preferred.setCauseOfDeath(notPreferred.getCauseOfDeath());
+  }
   Context.getPatientService().voidPatient(notPreferred,"Merged with patient #" + preferred.getPatientId());
   Context.getPersonService().voidPerson(notPreferred,"The patient corresponding to this person has been voided and Merged with patient #" + preferred.getPatientId());
   changeUserAssociations(preferred,notPreferred,mergedData);

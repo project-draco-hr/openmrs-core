@@ -10,7 +10,9 @@
   DownloadableDatatypeHandler<?> downloadHandler=(DownloadableDatatypeHandler<?>)handler;
   response.setHeader("Content-Type",downloadHandler.getContentType(datatype,valueReference));
   String filename=downloadHandler.getFilename(datatype,valueReference);
-  if (filename == null)   filename="openmrs-custom-value_" + valueReference + ".txt";
+  if (filename == null) {
+    filename="openmrs-custom-value_" + valueReference + ".txt";
+  }
   response.setHeader("Content-Disposition","attachment; filename=" + filename);
   OutputStream out=response.getOutputStream();
   downloadHandler.writeToStream(datatype,valueReference,out);

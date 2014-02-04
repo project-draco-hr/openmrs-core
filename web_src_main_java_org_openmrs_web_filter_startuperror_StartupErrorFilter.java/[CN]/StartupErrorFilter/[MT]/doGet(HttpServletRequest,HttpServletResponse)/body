@@ -1,4 +1,8 @@
 {
-  if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException)   renderTemplate("coremoduleerror.vm",new HashMap<String,Object>(),httpResponse);
- else   renderTemplate(DEFAULT_PAGE,new HashMap<String,Object>(),httpResponse);
+  if (getModel().errorAtStartup instanceof OpenmrsCoreModuleException) {
+    renderTemplate("coremoduleerror.vm",new HashMap<String,Object>(),httpResponse);
+  }
+ else {
+    renderTemplate(DEFAULT_PAGE,new HashMap<String,Object>(),httpResponse);
+  }
 }

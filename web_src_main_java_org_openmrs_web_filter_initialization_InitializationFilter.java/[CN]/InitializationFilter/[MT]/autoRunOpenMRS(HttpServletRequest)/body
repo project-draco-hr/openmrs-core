@@ -2,7 +2,9 @@
   File runtimeProperties=getRuntimePropertiesFile();
   wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
   if (!InitializationWizardModel.INSTALL_METHOD_AUTO.equals(wizardModel.installMethod)) {
-    if (httpRequest.getParameter("database_user_name") != null)     wizardModel.createDatabaseUsername=httpRequest.getParameter("database_user_name");
+    if (httpRequest.getParameter("database_user_name") != null) {
+      wizardModel.createDatabaseUsername=httpRequest.getParameter("database_user_name");
+    }
     createSimpleSetup(httpRequest.getParameter("database_root_password"),"yes");
   }
   checkLocaleAttributes(httpRequest);

@@ -1,7 +1,13 @@
 {
-  if (username == null || username.length() == 0)   username="-";
-  if (systemId == null || systemId.length() == 0)   systemId="-";
-  if (userId == null)   userId=Integer.valueOf(-1);
+  if (username == null || username.length() == 0) {
+    username="-";
+  }
+  if (systemId == null || systemId.length() == 0) {
+    systemId="-";
+  }
+  if (userId == null) {
+    userId=Integer.valueOf(-1);
+  }
   String usernameWithCheckDigit=username;
   try {
     usernameWithCheckDigit=new LuhnIdentifierValidator().getValidIdentifier(username);

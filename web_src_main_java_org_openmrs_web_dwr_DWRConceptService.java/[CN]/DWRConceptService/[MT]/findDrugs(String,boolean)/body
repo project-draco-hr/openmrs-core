@@ -1,5 +1,7 @@
 {
-  if (includeRetired == true)   throw new APIException("You should not include voideds in the search.");
+  if (includeRetired == true) {
+    throw new APIException("You should not include voideds in the search.");
+  }
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
   List<Object> items=new Vector<Object>();

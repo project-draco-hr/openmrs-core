@@ -1,16 +1,30 @@
 {
   Object value;
-  if (StringUtils.hasText(listSeparator))   value=Collections.singletonList(defaultValue);
- else   value=defaultValue;
+  if (StringUtils.hasText(listSeparator)) {
+    value=Collections.singletonList(defaultValue);
+  }
+ else {
+    value=defaultValue;
+  }
   if (StringUtils.hasText(listSeparator)) {
     String stringVal=(String)Context.getAdministrationService().getGlobalProperty(key,defaultValue);
-    if (stringVal.trim().length() == 0)     value=Collections.emptyList();
- else     value=Arrays.asList(stringVal.split(listSeparator));
+    if (stringVal.trim().length() == 0) {
+      value=Collections.emptyList();
+    }
+ else {
+      value=Arrays.asList(stringVal.split(listSeparator));
+    }
   }
- else   value=(String)Context.getAdministrationService().getGlobalProperty(key,defaultValue);
+ else {
+    value=(String)Context.getAdministrationService().getGlobalProperty(key,defaultValue);
+  }
   try {
-    if (var != null)     pageContext.setAttribute(var,value);
- else     pageContext.getOut().write(value.toString());
+    if (var != null) {
+      pageContext.setAttribute(var,value);
+    }
+ else {
+      pageContext.getOut().write(value.toString());
+    }
   }
  catch (  Exception e) {
     log.error("error getting global property",e);

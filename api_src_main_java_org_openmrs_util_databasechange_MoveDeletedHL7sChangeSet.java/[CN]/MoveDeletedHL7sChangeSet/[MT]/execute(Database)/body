@@ -26,8 +26,12 @@
       deleteStatement.setInt(1,archives.getInt(6));
       deleteStatement.executeUpdate();
     }
-    if (insertStatement != null)     insertStatement.close();
-    if (deleteStatement != null)     deleteStatement.close();
+    if (insertStatement != null) {
+      insertStatement.close();
+    }
+    if (deleteStatement != null) {
+      deleteStatement.close();
+    }
   }
  catch (  SQLException e) {
     throw new CustomChangeException("Unable to move deleted HL7s from archive table to queue table",e);

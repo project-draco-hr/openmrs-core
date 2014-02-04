@@ -1,5 +1,7 @@
 {
   Module mod=getStartedModulesMap().get(moduleId);
-  if (mod == null)   log.debug("Module id not found in list of started modules: " + moduleId);
+  if (mod == null) {
+    log.debug("Module id not found in list of started modules: " + moduleId);
+  }
   return getModuleClassLoader(mod);
 }

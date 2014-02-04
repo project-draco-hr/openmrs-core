@@ -15,7 +15,9 @@
       }
       msg=msa.getMessage("Alert.expired",new Object[]{alertIds.length},locale);
     }
- else     msg=msa.getMessage("Alert.select");
+ else {
+      msg=msa.getMessage("Alert.select");
+    }
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,msg);
     return new ModelAndView(new RedirectView(getSuccessView()));
   }

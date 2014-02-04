@@ -8,11 +8,15 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
       this.numChangeSetsToRun=numChangeSetsToRun;
     }
     @Override public void visit(    ChangeSet changeSet,    DatabaseChangeLog databaseChangeLog,    Database database) throws LiquibaseException {
-      if (callback != null)       callback.executing(changeSet,numChangeSetsToRun);
+      if (callback != null) {
+        callback.executing(changeSet,numChangeSetsToRun);
+      }
       super.visit(changeSet,databaseChangeLog,database);
     }
   }
-  if (cl == null)   cl=OpenmrsClassLoader.getInstance();
+  if (cl == null) {
+    cl=OpenmrsClassLoader.getInstance();
+  }
   log.debug("Setting up liquibase object to run changelog: " + changeLogFile);
   Liquibase liquibase=getLiquibase(changeLogFile,cl);
   int numChangeSetsToRun=liquibase.listUnrunChangeSets(contexts).size();

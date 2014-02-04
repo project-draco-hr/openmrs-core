@@ -1,4 +1,6 @@
 {
-  if (Hl7InArchivesMigrateThread.isActive())   throw new APIException("cannot fetch archives during migration");
+  if (Hl7InArchivesMigrateThread.isActive()) {
+    throw new APIException("cannot fetch archives during migration");
+  }
   return dao.getHL7InArchiveByUuid(uuid);
 }

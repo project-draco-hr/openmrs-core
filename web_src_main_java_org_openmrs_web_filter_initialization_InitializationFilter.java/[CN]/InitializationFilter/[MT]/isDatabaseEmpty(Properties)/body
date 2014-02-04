@@ -1,11 +1,17 @@
 {
   if (props != null) {
     String databaseConnectionFinalUrl=props.getProperty("connection.url");
-    if (databaseConnectionFinalUrl == null)     return true;
+    if (databaseConnectionFinalUrl == null) {
+      return true;
+    }
     String connectionUsername=props.getProperty("connection.username");
-    if (connectionUsername == null)     return true;
+    if (connectionUsername == null) {
+      return true;
+    }
     String connectionPassword=props.getProperty("connection.password");
-    if (connectionPassword == null)     return true;
+    if (connectionPassword == null) {
+      return true;
+    }
     Connection connection=null;
     try {
       DatabaseUtil.loadDatabaseDriver(databaseConnectionFinalUrl);
@@ -15,7 +21,9 @@
       ResultSet tbls=dbMetaData.getTables(null,null,null,types);
       while (tbls.next()) {
         String tableName=tbls.getString("TABLE_NAME");
-        if (!("liquibasechangelog".equals(tableName)) && !("liquibasechangeloglock".equals(tableName)))         return false;
+        if (!("liquibasechangelog".equals(tableName)) && !("liquibasechangeloglock".equals(tableName))) {
+          return false;
+        }
       }
       return true;
     }
@@ -32,5 +40,7 @@
     }
     return true;
   }
- else   return true;
+ else {
+    return true;
+  }
 }

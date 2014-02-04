@@ -3,7 +3,9 @@
   String username=request.getParameter("uname");
   String ipAddress=request.getRemoteAddr();
   Integer forgotPasswordAttempts=loginAttemptsByIP.get(ipAddress);
-  if (forgotPasswordAttempts == null)   forgotPasswordAttempts=1;
+  if (forgotPasswordAttempts == null) {
+    forgotPasswordAttempts=1;
+  }
   boolean lockedOut=false;
   if (forgotPasswordAttempts > 5) {
     lockedOut=true;
@@ -27,7 +29,9 @@
       User user=null;
       try {
         Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
-        if (username != null && username.length() > 0)         user=Context.getUserService().getUserByUsername(username);
+        if (username != null && username.length() > 0) {
+          user=Context.getUserService().getUserByUsername(username);
+        }
       }
   finally {
         Context.removeProxyPrivilege(PrivilegeConstants.VIEW_USERS);

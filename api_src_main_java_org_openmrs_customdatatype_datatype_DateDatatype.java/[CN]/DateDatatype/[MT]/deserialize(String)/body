@@ -1,5 +1,7 @@
 {
-  if (StringUtils.isBlank(serializedValue))   return null;
+  if (StringUtils.isBlank(serializedValue)) {
+    return null;
+  }
   try {
     return new SimpleDateFormat(dateFormat).parse(serializedValue);
   }

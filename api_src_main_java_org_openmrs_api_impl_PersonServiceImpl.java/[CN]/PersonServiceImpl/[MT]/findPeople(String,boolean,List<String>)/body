@@ -4,7 +4,9 @@
     people.addAll(Context.getPersonService().getPeople(searchPhrase,includeVoided));
   }
  else {
-    for (    User u : Context.getUserService().findUsers(searchPhrase,roles,includeVoided))     people.add(u.getPerson());
+    for (    User u : Context.getUserService().findUsers(searchPhrase,roles,includeVoided)) {
+      people.add(u.getPerson());
+    }
   }
   return people;
 }

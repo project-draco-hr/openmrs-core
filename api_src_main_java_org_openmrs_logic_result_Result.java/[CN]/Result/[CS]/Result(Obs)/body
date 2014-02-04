@@ -7,10 +7,20 @@
     if (conceptDatatype == null) {
       return;
     }
-    if (conceptDatatype.isCoded())     this.datatype=Datatype.CODED;
- else     if (conceptDatatype.isNumeric())     this.datatype=Datatype.NUMERIC;
- else     if (conceptDatatype.isDate())     this.datatype=Datatype.DATETIME;
- else     if (conceptDatatype.isText())     this.datatype=Datatype.TEXT;
- else     if (conceptDatatype.isBoolean())     this.datatype=Datatype.BOOLEAN;
+    if (conceptDatatype.isCoded()) {
+      this.datatype=Datatype.CODED;
+    }
+ else     if (conceptDatatype.isNumeric()) {
+      this.datatype=Datatype.NUMERIC;
+    }
+ else     if (conceptDatatype.isDate()) {
+      this.datatype=Datatype.DATETIME;
+    }
+ else     if (conceptDatatype.isText()) {
+      this.datatype=Datatype.TEXT;
+    }
+ else     if (conceptDatatype.isBoolean()) {
+      this.datatype=Datatype.BOOLEAN;
+    }
   }
 }

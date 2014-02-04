@@ -1,5 +1,7 @@
 {
-  if (authenticatedRole != null)   return authenticatedRole;
+  if (authenticatedRole != null) {
+    return authenticatedRole;
+  }
   authenticatedRole=Context.getUserService().getRole(RoleConstants.AUTHENTICATED);
   if (authenticatedRole == null) {
     throw new RuntimeException("Database out of sync with code: " + RoleConstants.AUTHENTICATED + " role does not exist");

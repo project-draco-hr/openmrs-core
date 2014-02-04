@@ -36,7 +36,9 @@
       try {
         CustomDatatype<?> datatype=CustomDatatypeUtil.getDatatype(attributeType);
         CustomDatatypeHandler<?,?> handler=CustomDatatypeUtil.getHandler(attributeType);
-        if (!CustomDatatypeUtil.isCompatibleHandler(handler,datatype))         errors.rejectValue("preferredHandlerClassname","AttributeType.preferredHandlerClassname.wrongDatatype");
+        if (!CustomDatatypeUtil.isCompatibleHandler(handler,datatype)) {
+          errors.rejectValue("preferredHandlerClassname","AttributeType.preferredHandlerClassname.wrongDatatype");
+        }
       }
  catch (      Exception ex) {
         errors.rejectValue("handlerConfig","AttributeType.handlerConfig.invalid",new Object[]{ex.getMessage()},"Invalid");

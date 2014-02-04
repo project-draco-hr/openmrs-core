@@ -1,5 +1,7 @@
 {
-  if (formResource == null)   return null;
+  if (formResource == null) {
+    return null;
+  }
   FormResource toPersist=formResource;
   FormResource original=Context.getFormService().getFormResource(formResource.getForm(),formResource.getName());
   if (original != null) {

@@ -1,8 +1,12 @@
 {
   Role role=(Role)obj;
   String[] inheritiedRoles=request.getParameterValues("inheritedRoles");
-  if (inheritiedRoles == null)   role.setInheritedRoles(Collections.EMPTY_SET);
+  if (inheritiedRoles == null) {
+    role.setInheritedRoles(Collections.EMPTY_SET);
+  }
   String[] privileges=request.getParameterValues("privileges");
-  if (privileges == null)   role.setPrivileges(Collections.EMPTY_SET);
+  if (privileges == null) {
+    role.setPrivileges(Collections.EMPTY_SET);
+  }
   return super.processFormSubmission(request,response,role,errors);
 }

@@ -3,12 +3,18 @@
     if (at.getMinOccurs() > 0 || at.getMaxOccurs() != null) {
       int numFound=0;
       for (      A attr : customizable.getActiveAttributes()) {
-        if (attr.getAttributeType().equals(at))         ++numFound;
+        if (attr.getAttributeType().equals(at)) {
+          ++numFound;
+        }
       }
       if (at.getMinOccurs() > 0) {
         if (numFound < at.getMinOccurs()) {
-          if (at.getMinOccurs() == 1)           errors.rejectValue("activeAttributes","error.required",new Object[]{at.getName()},null);
- else           errors.rejectValue("activeAttributes","attribute.error.minOccurs",new Object[]{at.getName(),at.getMinOccurs()},null);
+          if (at.getMinOccurs() == 1) {
+            errors.rejectValue("activeAttributes","error.required",new Object[]{at.getName()},null);
+          }
+ else {
+            errors.rejectValue("activeAttributes","attribute.error.minOccurs",new Object[]{at.getName(),at.getMinOccurs()},null);
+          }
         }
       }
       if (at.getMaxOccurs() != null) {

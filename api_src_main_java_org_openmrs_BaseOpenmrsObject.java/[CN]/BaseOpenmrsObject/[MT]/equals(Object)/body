@@ -1,7 +1,13 @@
 {
-  if (this == obj)   return true;
-  if (!(obj instanceof BaseOpenmrsObject))   return false;
+  if (this == obj) {
+    return true;
+  }
+  if (!(obj instanceof BaseOpenmrsObject)) {
+    return false;
+  }
   BaseOpenmrsObject other=(BaseOpenmrsObject)obj;
-  if (getUuid() == null)   return false;
+  if (getUuid() == null) {
+    return false;
+  }
   return getUuid().equals(other.getUuid());
 }

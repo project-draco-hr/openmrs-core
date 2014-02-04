@@ -1,7 +1,9 @@
 {
   String localeParameter=httpRequest.getParameter(FilterUtil.LOCALE_ATTRIBUTE);
   Boolean rememberLocale=false;
-  if (httpRequest.getParameter(FilterUtil.REMEMBER_ATTRIBUTE) != null)   rememberLocale=true;
+  if (httpRequest.getParameter(FilterUtil.REMEMBER_ATTRIBUTE) != null) {
+    rememberLocale=true;
+  }
   if (localeParameter != null) {
     String storedLocale=null;
     if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {

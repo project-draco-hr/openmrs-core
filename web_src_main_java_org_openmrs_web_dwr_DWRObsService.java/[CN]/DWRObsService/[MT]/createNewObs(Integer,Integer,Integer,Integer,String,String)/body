@@ -24,7 +24,9 @@
   }
  else {
     Location location=null;
-    if (locationId != null)     Context.getLocationService().getLocation(locationId);
+    if (locationId != null) {
+      Context.getLocationService().getLocation(locationId);
+    }
     if (location == null) {
       location=Context.getLocationService().getDefaultLocation();
     }

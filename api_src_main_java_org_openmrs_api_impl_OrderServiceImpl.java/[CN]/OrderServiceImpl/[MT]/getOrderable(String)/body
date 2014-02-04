@@ -1,5 +1,7 @@
 {
-  if (identifier == null)   throw new IllegalArgumentException("Orderable identifier is required");
+  if (identifier == null) {
+    throw new IllegalArgumentException("Orderable identifier is required");
+  }
   Integer numericIdentifier=GenericDrug.getNumericIdentifier(identifier);
   if (numericIdentifier != null) {
     Concept concept=Context.getConceptService().getConcept(numericIdentifier);

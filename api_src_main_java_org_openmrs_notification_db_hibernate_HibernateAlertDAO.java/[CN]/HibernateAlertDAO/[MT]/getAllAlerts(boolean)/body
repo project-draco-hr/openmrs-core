@@ -1,5 +1,7 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Alert.class);
-  if (!includeExpired)   crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),Restrictions.gt("dateToExpire",new Date())));
+  if (!includeExpired) {
+    crit.add(Restrictions.or(Restrictions.isNull("dateToExpire"),Restrictions.gt("dateToExpire",new Date())));
+  }
   return crit.list();
 }

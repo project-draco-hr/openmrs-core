@@ -1,6 +1,8 @@
 {
   super.beforeCreateEncounter(encounter);
-  if (encounter.getVisit() != null)   return;
+  if (encounter.getVisit() != null) {
+    return;
+  }
   Visit visit=new Visit();
   visit.setStartDatetime(encounter.getEncounterDatetime());
   visit.setLocation(encounter.getLocation());

@@ -3,8 +3,12 @@
   String[] tokens=delimitedString.split(delimiter);
   for (  String token : tokens) {
     token=token.trim();
-    if (token.length() == 0)     continue;
- else     ret.add(Integer.valueOf(token));
+    if (token.length() == 0) {
+      continue;
+    }
+ else {
+      ret.add(Integer.valueOf(token));
+    }
   }
   return ret;
 }

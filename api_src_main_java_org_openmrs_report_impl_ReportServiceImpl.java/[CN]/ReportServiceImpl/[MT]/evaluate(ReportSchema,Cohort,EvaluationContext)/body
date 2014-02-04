@@ -5,8 +5,10 @@
   ret.setReportSchema(reportSchema);
   ret.setEvaluationContext(evalContext);
   DataSetService dss=Context.getDataSetService();
-  if (reportSchema.getDataSetDefinitions() != null)   for (  DataSetDefinition dataSetDefinition : reportSchema.getDataSetDefinitions()) {
-    data.put(dataSetDefinition.getName(),dss.evaluate(dataSetDefinition,inputCohort,evalContext));
+  if (reportSchema.getDataSetDefinitions() != null) {
+    for (    DataSetDefinition dataSetDefinition : reportSchema.getDataSetDefinitions()) {
+      data.put(dataSetDefinition.getName(),dss.evaluate(dataSetDefinition,inputCohort,evalContext));
+    }
   }
   return ret;
 }

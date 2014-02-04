@@ -10,9 +10,11 @@
     EncounterService es=Context.getEncounterService();
     patient1Encounters=es.getEncountersByPatient(p1);
     String[] patientIds=request.getParameterValues("patientId");
-    if (patientIds != null)     for (    String patient : patientIds) {
-      patientList.add(Context.getPatientService().getPatient(Integer.valueOf(patient)));
-      encounterList.add(es.getEncountersByPatient(Context.getPatientService().getPatient(Integer.valueOf(patient))));
+    if (patientIds != null) {
+      for (      String patient : patientIds) {
+        patientList.add(Context.getPatientService().getPatient(Integer.valueOf(patient)));
+        encounterList.add(es.getEncountersByPatient(Context.getPatientService().getPatient(Integer.valueOf(patient))));
+      }
     }
     if (patientIds != null && patientIds.length > 1 && !patientIds[0].equals(patientIds[1])) {
       String patientId=patientIds[1];

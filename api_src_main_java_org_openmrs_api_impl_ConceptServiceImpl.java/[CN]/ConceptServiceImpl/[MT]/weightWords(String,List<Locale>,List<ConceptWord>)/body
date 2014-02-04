@@ -1,6 +1,8 @@
 {
   Map<Integer,ConceptWord> uniqueConcepts=new HashMap<Integer,ConceptWord>();
-  if (phrase == null)   phrase="";
+  if (phrase == null) {
+    phrase="";
+  }
   List<String> searchedWords=ConceptWord.getUniqueWords(phrase);
   Integer conceptId=null;
   Concept concept=null;
@@ -11,9 +13,15 @@
     conceptName=currentWord.getConceptName();
     currentWord.setWeight(0.0);
     for (    Locale locale : locales) {
-      if (conceptName.isPreferredInCountry(locale.getCountry()))       currentWord.increaseWeight(5.0);
- else       if (conceptName.isPreferredInLanguage(locale.getLanguage()))       currentWord.increaseWeight(3.0);
- else       if (conceptName.isPreferred())       currentWord.increaseWeight(1.0);
+      if (conceptName.isPreferredInCountry(locale.getCountry())) {
+        currentWord.increaseWeight(5.0);
+      }
+ else       if (conceptName.isPreferredInLanguage(locale.getLanguage())) {
+        currentWord.increaseWeight(3.0);
+      }
+ else       if (conceptName.isPreferred()) {
+        currentWord.increaseWeight(1.0);
+      }
     }
     Double percentMatched=getPercentMatched(searchedWords,conceptName.getName());
     currentWord.increaseWeight(5.0 * percentMatched);

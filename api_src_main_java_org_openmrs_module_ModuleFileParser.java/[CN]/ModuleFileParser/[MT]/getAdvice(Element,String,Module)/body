@@ -11,15 +11,21 @@
       String point="", adviceClass="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("point".equals(childNode.getNodeName()))         point=childNode.getTextContent().trim();
- else         if ("class".equals(childNode.getNodeName()))         adviceClass=childNode.getTextContent().trim();
+        if ("point".equals(childNode.getNodeName())) {
+          point=childNode.getTextContent().trim();
+        }
+ else         if ("class".equals(childNode.getNodeName())) {
+          adviceClass=childNode.getTextContent().trim();
+        }
         x++;
       }
       log.debug("point: " + point + " class: "+ adviceClass);
       if (point.length() > 0 && adviceClass.length() > 0) {
         advicePoints.add(new AdvicePoint(mod,point,adviceClass));
       }
- else       log.warn("'point' and 'class' are required for advice. Given '" + point + "' and '"+ adviceClass+ "'");
+ else {
+        log.warn("'point' and 'class' are required for advice. Given '" + point + "' and '"+ adviceClass+ "'");
+      }
       i++;
     }
   }

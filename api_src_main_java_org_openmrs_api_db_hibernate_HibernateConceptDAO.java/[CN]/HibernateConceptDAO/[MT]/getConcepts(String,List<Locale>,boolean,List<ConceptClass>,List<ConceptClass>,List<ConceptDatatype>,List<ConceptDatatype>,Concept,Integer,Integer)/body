@@ -12,8 +12,12 @@
     pl.add(Projections.min("cw1.conceptName"));
     searchCriteria.setProjection(pl);
     searchCriteria.addOrder(Order.desc("maxWeight"));
-    if (start != null)     searchCriteria.setFirstResult(start);
-    if (size != null && size > 0)     searchCriteria.setMaxResults(size);
+    if (start != null) {
+      searchCriteria.setFirstResult(start);
+    }
+    if (size != null && size > 0) {
+      searchCriteria.setMaxResults(size);
+    }
     searchCriteria.setResultTransformer(Transformers.TO_LIST);
     List resultObjects=searchCriteria.list();
     for (    Object obj : resultObjects) {

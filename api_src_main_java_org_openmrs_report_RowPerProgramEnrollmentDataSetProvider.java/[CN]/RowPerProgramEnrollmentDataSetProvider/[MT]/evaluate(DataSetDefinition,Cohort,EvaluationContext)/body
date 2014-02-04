@@ -2,8 +2,12 @@
   RowPerProgramEnrollmentDataSetDefinition definition=(RowPerProgramEnrollmentDataSetDefinition)dataSetDefinition;
   Cohort patients=inputCohort;
   if (definition.getFilter() != null) {
-    if (patients != null)     patients=Cohort.intersect(patients,Context.getCohortService().evaluate(definition.getFilter(),evalContext));
- else     patients=Context.getCohortService().evaluate(definition.getFilter(),evalContext);
+    if (patients != null) {
+      patients=Cohort.intersect(patients,Context.getCohortService().evaluate(definition.getFilter(),evalContext));
+    }
+ else {
+      patients=Context.getCohortService().evaluate(definition.getFilter(),evalContext);
+    }
   }
   RowPerProgramEnrollmentDataSet ret=new RowPerProgramEnrollmentDataSet();
   ret.setDefinition(definition);

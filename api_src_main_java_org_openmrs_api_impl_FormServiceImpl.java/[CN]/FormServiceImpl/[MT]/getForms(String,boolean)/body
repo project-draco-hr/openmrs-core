@@ -3,8 +3,12 @@
   Set<String> namesAlreadySeen=new HashSet<String>();
   for (Iterator<Form> i=forms.iterator(); i.hasNext(); ) {
     Form form=i.next();
-    if (namesAlreadySeen.contains(form.getName()))     i.remove();
- else     namesAlreadySeen.add(form.getName());
+    if (namesAlreadySeen.contains(form.getName())) {
+      i.remove();
+    }
+ else {
+      namesAlreadySeen.add(form.getName());
+    }
   }
   return forms;
 }

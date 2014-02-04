@@ -5,7 +5,9 @@
       return dependentModulesStopped;
     }
     try {
-      if (mod.getModuleActivator() != null)       mod.getModuleActivator().willStop();
+      if (mod.getModuleActivator() != null) {
+        mod.getModuleActivator().willStop();
+      }
     }
  catch (    Exception e) {
       log.warn("Unable to call module's Activator.willStop() method",e);
@@ -85,8 +87,12 @@
       }
     }
     try {
-      if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
- else       mod.getActivator().shutdown();
+      if (mod.getModuleActivator() != null) {
+        mod.getModuleActivator().stopped();
+      }
+ else {
+        mod.getActivator().shutdown();
+      }
     }
  catch (    Exception e) {
       log.warn("Unable to call module's Activator.shutdown() method",e);

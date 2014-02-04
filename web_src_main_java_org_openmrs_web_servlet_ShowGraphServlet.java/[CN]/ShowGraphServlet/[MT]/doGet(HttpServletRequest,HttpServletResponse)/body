@@ -5,12 +5,22 @@
     String heightString=request.getParameter("height");
     Integer width;
     Integer height;
-    if (widthString != null && widthString.length() > 0)     width=Integer.parseInt(widthString);
- else     width=500;
-    if (heightString != null && heightString.length() > 0)     height=Integer.parseInt(heightString);
- else     height=300;
+    if (widthString != null && widthString.length() > 0) {
+      width=Integer.parseInt(widthString);
+    }
+ else {
+      width=500;
+    }
+    if (heightString != null && heightString.length() > 0) {
+      height=Integer.parseInt(heightString);
+    }
+ else {
+      height=300;
+    }
     String mimeType=request.getParameter("mimeType");
-    if (mimeType == null)     mimeType=PNG_MIME_TYPE;
+    if (mimeType == null) {
+      mimeType=PNG_MIME_TYPE;
+    }
     response.setHeader("Pragma","No-cache");
     response.setDateHeader("Expires",0);
     response.setHeader("Cache-Control","no-cache");

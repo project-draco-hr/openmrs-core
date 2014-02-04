@@ -2,15 +2,21 @@
   if (log.isDebugEnabled()) {
     StringBuffer sb=new StringBuffer();
     for (    GlobalPropertyListener gpl : globalPropertyListeners) {
-      if (sb.length() > 0)       sb.append(", ");
+      if (sb.length() > 0) {
+        sb.append(", ");
+      }
       sb.append(gpl.getClass().getName());
     }
     log.debug("GlobalPropertyListeners set to: " + sb.toString());
   }
-  if (EventListeners.globalPropertyListeners == null)   EventListeners.globalPropertyListeners=globalPropertyListeners;
+  if (EventListeners.globalPropertyListeners == null) {
+    EventListeners.globalPropertyListeners=globalPropertyListeners;
+  }
  else {
     for (    GlobalPropertyListener gpl : globalPropertyListeners) {
-      if (!EventListeners.globalPropertyListeners.contains(gpl))       EventListeners.globalPropertyListeners.add(gpl);
+      if (!EventListeners.globalPropertyListeners.contains(gpl)) {
+        EventListeners.globalPropertyListeners.add(gpl);
+      }
     }
   }
 }

@@ -15,7 +15,9 @@
     List<Order> orders=os.getOrders(Order.class,patients,null,null,null,null,null,null);
     if (CollectionUtils.isNotEmpty(orders)) {
       for (      Order order : orders) {
-        if (order.isVoided() && order.getDateVoided().equals(origParentVoidedDate) && order.getVoidedBy().equals(originalVoidingUser))         os.unvoidOrder(order);
+        if (order.isVoided() && order.getDateVoided().equals(origParentVoidedDate) && order.getVoidedBy().equals(originalVoidingUser)) {
+          os.unvoidOrder(order);
+        }
       }
     }
   }

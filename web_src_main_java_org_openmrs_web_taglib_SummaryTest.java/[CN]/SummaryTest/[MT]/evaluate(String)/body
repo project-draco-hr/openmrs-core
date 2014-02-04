@@ -15,7 +15,9 @@
       command.append(line.trim());
       command.append("\n");
     }
-    if (command.length() > 0)     commands.add(command.toString());
+    if (command.length() > 0) {
+      commands.add(command.toString());
+    }
   }
   boolean andMode=true;
   List<Boolean> commandResults=new ArrayList<Boolean>();
@@ -37,8 +39,12 @@
   }
   boolean ret=andMode ? true : false;
   for (  Boolean b : commandResults) {
-    if (andMode)     ret&=b;
- else     ret|=b;
+    if (andMode) {
+      ret&=b;
+    }
+ else {
+      ret|=b;
+    }
   }
   return ret;
 }

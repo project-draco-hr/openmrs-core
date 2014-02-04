@@ -7,19 +7,27 @@
     if (this.fieldGenTag.getParameterMap() != null) {
       optionHeader=(String)this.fieldGenTag.getParameterMap().get("optionHeader");
     }
-    if (optionHeader == null)     optionHeader="";
+    if (optionHeader == null) {
+      optionHeader="";
+    }
     String reasonOrderStopped=Context.getAdministrationService().getGlobalProperty("concept.reasonOrderStopped");
     Concept reasonStopped=Context.getConceptService().getConcept(reasonOrderStopped);
-    if (reasonStopped == null)     log.debug("Could not get even the default reason concept from global properties");
+    if (reasonStopped == null) {
+      log.debug("Could not get even the default reason concept from global properties");
+    }
     if (this.fieldGenTag.getParameterMap() != null) {
       String reasonSetOverride=(String)this.fieldGenTag.getParameterMap().get("reasonSet");
-      if (reasonSetOverride != null)       reasonStopped=Context.getConceptService().getConcept(reasonSetOverride);
+      if (reasonSetOverride != null) {
+        reasonStopped=Context.getConceptService().getConcept(reasonSetOverride);
+      }
     }
     List<Concept> possibleReasons=null;
     if (reasonStopped != null) {
       Collection<ConceptAnswer> answers=reasonStopped.getAnswers(false);
       for (      ConceptAnswer answer : answers) {
-        if (possibleReasons == null)         possibleReasons=new ArrayList<Concept>();
+        if (possibleReasons == null) {
+          possibleReasons=new ArrayList<Concept>();
+        }
         possibleReasons.add(answer.getAnswerConcept());
       }
     }

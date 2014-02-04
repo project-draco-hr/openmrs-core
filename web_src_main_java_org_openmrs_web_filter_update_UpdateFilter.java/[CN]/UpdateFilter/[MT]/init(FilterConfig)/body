@@ -4,10 +4,16 @@
   if (!InitializationFilter.initializationRequired()) {
     model=new UpdateFilterModel();
     try {
-      if (model.updateRequired)       setUpdatesRequired(true);
- else       if (model.changes == null)       setUpdatesRequired(false);
+      if (model.updateRequired) {
+        setUpdatesRequired(true);
+      }
+ else       if (model.changes == null) {
+        setUpdatesRequired(false);
+      }
  else {
-        if (log.isDebugEnabled())         log.debug("Setting updates required to " + (model.changes.size() > 0) + " because of the size of unrun changes");
+        if (log.isDebugEnabled()) {
+          log.debug("Setting updates required to " + (model.changes.size() > 0) + " because of the size of unrun changes");
+        }
         setUpdatesRequired(model.changes.size() > 0);
       }
     }

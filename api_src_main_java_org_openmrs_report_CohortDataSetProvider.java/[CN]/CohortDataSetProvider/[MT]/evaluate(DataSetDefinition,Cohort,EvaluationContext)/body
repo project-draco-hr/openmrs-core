@@ -8,7 +8,9 @@
   CohortService cs=Context.getCohortService();
   for (  Map.Entry<String,CohortDefinition> e : def.getStrategies().entrySet()) {
     Cohort temp=cs.evaluate(e.getValue(),evalContext);
-    if (inputCohort != null)     temp=Cohort.intersect(temp,inputCohort);
+    if (inputCohort != null) {
+      temp=Cohort.intersect(temp,inputCohort);
+    }
     results.put(e.getKey(),temp);
   }
   data.setCohortData(results);

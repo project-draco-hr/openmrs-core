@@ -1,4 +1,6 @@
 {
-  if (concept.getConceptId() == null)   return Collections.emptyList();
+  if (concept.getConceptId() == null) {
+    return Collections.emptyList();
+  }
   return dao.getFormsContainingConcept(concept);
 }

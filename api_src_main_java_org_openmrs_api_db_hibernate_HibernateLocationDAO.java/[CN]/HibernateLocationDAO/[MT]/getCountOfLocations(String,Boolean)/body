@@ -1,7 +1,11 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Location.class);
-  if (!includeRetired)   criteria.add(Restrictions.eq("retired",false));
-  if (StringUtils.isNotBlank(nameFragment))   criteria.add(Restrictions.ilike("name",nameFragment,MatchMode.START));
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
+  if (StringUtils.isNotBlank(nameFragment)) {
+    criteria.add(Restrictions.ilike("name",nameFragment,MatchMode.START));
+  }
   criteria.setProjection(Projections.rowCount());
   return (Long)criteria.uniqueResult();
 }

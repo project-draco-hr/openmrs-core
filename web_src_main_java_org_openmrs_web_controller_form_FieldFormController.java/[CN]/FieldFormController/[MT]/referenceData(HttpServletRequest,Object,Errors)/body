@@ -6,8 +6,12 @@
   if (Context.isAuthenticated()) {
     FormService fs=Context.getFormService();
     map.put("fieldTypes",fs.getAllFieldTypes());
-    if (field.getConcept() != null)     map.put("conceptName",field.getConcept().getName(locale));
- else     map.put("conceptName","");
+    if (field.getConcept() != null) {
+      map.put("conceptName",field.getConcept().getName(locale));
+    }
+ else {
+      map.put("conceptName","");
+    }
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
   }
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);

@@ -9,7 +9,9 @@
     if (servletPath.startsWith("/images") || servletPath.startsWith("/initfilter/scripts")) {
       servletPath=servletPath.replaceFirst("/initfilter","/WEB-INF/view");
       File file=new File(filterConfig.getServletContext().getRealPath(servletPath));
-      if (httpRequest.getPathInfo() != null)       file=new File(file,httpRequest.getPathInfo());
+      if (httpRequest.getPathInfo() != null) {
+        file=new File(file,httpRequest.getPathInfo());
+      }
       InputStream imageFileInputStream=null;
       try {
         imageFileInputStream=new FileInputStream(file);

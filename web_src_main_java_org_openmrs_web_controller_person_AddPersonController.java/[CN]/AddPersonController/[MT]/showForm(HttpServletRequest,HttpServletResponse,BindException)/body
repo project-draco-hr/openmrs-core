@@ -18,7 +18,9 @@
     String gender=person.get("gender");
     String viewType=person.get("viewType");
     String personType=person.get("personType");
-    if (viewType == null)     viewType="edit";
+    if (viewType == null) {
+      viewType="edit";
+    }
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
       mav.clear();

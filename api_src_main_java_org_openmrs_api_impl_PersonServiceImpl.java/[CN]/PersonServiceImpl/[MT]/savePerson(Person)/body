@@ -10,7 +10,9 @@
       preferredName=name;
       continue;
     }
-    if (!name.equals(preferredName))     name.setPreferred(false);
+    if (!name.equals(preferredName)) {
+      name.setPreferred(false);
+    }
   }
   PersonAddress preferredAddress=null;
   PersonAddress possiblePreferredAddress=person.getPersonAddress();
@@ -23,7 +25,9 @@
       preferredAddress=address;
       continue;
     }
-    if (!address.equals(preferredAddress))     address.setPreferred(false);
+    if (!address.equals(preferredAddress)) {
+      address.setPreferred(false);
+    }
   }
   return dao.savePerson(person);
 }

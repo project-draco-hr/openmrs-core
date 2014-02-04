@@ -10,7 +10,9 @@
       anyNonOperator=true;
     }
  else     if (o instanceof BooleanOperator) {
-      if (lastIsOperator && (BooleanOperator)o != BooleanOperator.NOT)       return false;
+      if (lastIsOperator && (BooleanOperator)o != BooleanOperator.NOT) {
+        return false;
+      }
       anyOperator=true;
     }
  else     if (o instanceof Integer) {
@@ -22,8 +24,14 @@
     lastIsNot=((o instanceof BooleanOperator) && (((BooleanOperator)o) == BooleanOperator.NOT));
     lastIsOperator=o instanceof BooleanOperator;
   }
-  if (list.size() > 2 && !anyOperator)   return false;
-  if (lastIsNot)   return false;
-  if (!anyNonOperator)   return false;
+  if (list.size() > 2 && !anyOperator) {
+    return false;
+  }
+  if (lastIsNot) {
+    return false;
+  }
+  if (!anyNonOperator) {
+    return false;
+  }
   return true;
 }

@@ -25,12 +25,16 @@
         }
       }
       if (ordersForConcept.size() > 0) {
-        if (hmRet == null)         hmRet=new HashMap<Concept,List<DrugOrder>>();
+        if (hmRet == null) {
+          hmRet=new HashMap<Concept,List<DrugOrder>>();
+        }
         hmRet.put(c,ordersForConcept);
         log.debug("Concept " + c.getName(Context.getLocale()) + " was put to the map with a list of size "+ ordersForConcept.size());
       }
     }
   }
- else   log.debug("drugSets is null");
+ else {
+    log.debug("drugSets is null");
+  }
   return hmRet;
 }

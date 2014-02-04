@@ -2,7 +2,9 @@
   try {
     OutputStreamWriter osw=new OutputStreamWriter(new BufferedOutputStream(outStream),"UTF-8");
     Writer out=new BufferedWriter(osw);
-    if (comment != null)     out.write("\n#" + comment + "\n");
+    if (comment != null) {
+      out.write("\n#" + comment + "\n");
+    }
     out.write("#" + new Date() + "\n");
     for (    Map.Entry<Object,Object> e : properties.entrySet()) {
       out.write(e.getKey() + "=" + e.getValue()+ "\n");

@@ -16,15 +16,21 @@ case ')':
 case ' ':
 case '\t':
 case '\n':
-  if (thisElement != null)   thisElement.append(c);
+  if (thisElement != null) {
+    thisElement.append(c);
+  }
 break;
 case '[':
-if (thisElement != null) tokens.add(thisElement.toString().trim());
+if (thisElement != null) {
+tokens.add(thisElement.toString().trim());
+}
 thisElement=new StringBuilder();
 thisElement.append(c);
 break;
 default :
-if (thisElement == null) thisElement=new StringBuilder();
+if (thisElement == null) {
+thisElement=new StringBuilder();
+}
 thisElement.append(c);
 if (c == ']') {
 tokens.add(thisElement.toString().trim());
@@ -33,7 +39,9 @@ thisElement=null;
 break;
 }
 }
-if (thisElement != null) tokens.add(thisElement.toString().trim());
+if (thisElement != null) {
+tokens.add(thisElement.toString().trim());
+}
 }
 for (ListIterator<Object> i=tokens.listIterator(); i.hasNext(); ) {
 Object o=i.next();
@@ -51,13 +59,19 @@ name=t;
 }
  else {
 int ind=t.indexOf('=');
-if (ind < 0) throw new IllegalArgumentException("The fragment '" + t + "' in "+ s+ " has no =");
+if (ind < 0) {
+throw new IllegalArgumentException("The fragment '" + t + "' in "+ s+ " has no =");
+}
 paramValues.put(t.substring(0,ind),t.substring(ind + 1));
 }
 }
-if (name == null) throw new IllegalArgumentException("Could not find a cohort name in " + s);
+if (name == null) {
+throw new IllegalArgumentException("Could not find a cohort name in " + s);
+}
 PatientSearch search=Context.getReportObjectService().getPatientSearch(name);
-if (search == null) throw new IllegalArgumentException("Could not load a cohort named " + name);
+if (search == null) {
+throw new IllegalArgumentException("Could not load a cohort named " + name);
+}
 for (Map.Entry<String,String> e : paramValues.entrySet()) {
 search.setParameterValue(e.getKey(),e.getValue());
 }

@@ -25,7 +25,9 @@
   }
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);
-    if (encounter.getLocation() != null)     originalLocation=dao.getSavedEncounterLocation(encounter);
+    if (encounter.getLocation() != null) {
+      originalLocation=dao.getSavedEncounterLocation(encounter);
+    }
     Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs(true)) {
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {

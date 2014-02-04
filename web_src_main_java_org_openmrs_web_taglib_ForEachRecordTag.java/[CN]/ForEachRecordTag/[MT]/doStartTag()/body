@@ -56,7 +56,9 @@
  else   if (name.equals("civilStatus")) {
     ConceptService cs=Context.getConceptService();
     Concept civilStatus=cs.getConcept(OpenmrsConstants.CIVIL_STATUS_CONCEPT_ID);
-    if (civilStatus == null)     log.error("OpenmrsConstants.CIVIL_STATUS_CONCEPT_ID is defined incorrectly.");
+    if (civilStatus == null) {
+      log.error("OpenmrsConstants.CIVIL_STATUS_CONCEPT_ID is defined incorrectly.");
+    }
  else {
       records=civilStatus.getAnswers(false).iterator();
       Map<String,String> opts=new HashMap<String,String>();
@@ -64,13 +66,17 @@
         opts.put(a.getAnswerConcept().getConceptId().toString(),a.getAnswerConcept().getBestName(locale).getName());
       }
       records=opts.entrySet().iterator();
-      if (select != null)       select=select.toString() + "=" + opts.get(select);
+      if (select != null) {
+        select=select.toString() + "=" + opts.get(select);
+      }
     }
   }
  else   if (name.equals("gender")) {
     Map<String,String> opts=OpenmrsConstants.GENDER();
     records=opts.entrySet().iterator();
-    if (select != null)     select=select.toString() + "=" + opts.get(select);
+    if (select != null) {
+      select=select.toString() + "=" + opts.get(select);
+    }
   }
  else   if (name.equals("workflowStatus")) {
     List<ProgramWorkflowState> ret=Context.getProgramWorkflowService().getStates();
@@ -85,21 +91,31 @@
     records=ret.iterator();
   }
  else   if (name.equals("conceptSet")) {
-    if (conceptSet == null)     throw new IllegalArgumentException("Must specify conceptSet");
+    if (conceptSet == null) {
+      throw new IllegalArgumentException("Must specify conceptSet");
+    }
     Concept c=OpenmrsUtil.getConceptByIdOrName(conceptSet);
-    if (c == null)     throw new IllegalArgumentException("Can't find conceptSet " + conceptSet);
+    if (c == null) {
+      throw new IllegalArgumentException("Can't find conceptSet " + conceptSet);
+    }
     List<Concept> list=Context.getConceptService().getConceptsByConceptSet(c);
     records=list.iterator();
   }
  else   if (name.equals("answer")) {
-    if (concept == null)     throw new IllegalArgumentException("Must specify concept");
+    if (concept == null) {
+      throw new IllegalArgumentException("Must specify concept");
+    }
     Concept c=OpenmrsUtil.getConceptByIdOrName(concept);
     if (c == null) {
       log.error("Can't find concept with name or id of: " + concept + " and so no answers will be returned");
       records=null;
     }
- else     if (c.getAnswers(false) != null)     records=c.getAnswers(false).iterator();
- else     records=new ArrayList<Concept>().iterator();
+ else     if (c.getAnswers(false) != null) {
+      records=c.getAnswers(false).iterator();
+    }
+ else {
+      records=new ArrayList<Concept>().iterator();
+    }
   }
  else {
     try {
@@ -116,5 +132,7 @@
     records=null;
     return SKIP_BODY;
   }
- else   return EVAL_BODY_BUFFERED;
+ else {
+    return EVAL_BODY_BUFFERED;
+  }
 }

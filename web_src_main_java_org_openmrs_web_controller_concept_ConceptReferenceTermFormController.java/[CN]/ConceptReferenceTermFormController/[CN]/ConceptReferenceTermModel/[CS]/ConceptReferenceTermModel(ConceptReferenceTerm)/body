@@ -5,6 +5,8 @@
     maps=new ArrayList<ConceptReferenceTermMap>();
     maps.add(new ConceptReferenceTermMap(null,null));
   }
- else   maps=new ArrayList<ConceptReferenceTermMap>(conceptReferenceTerm.getConceptReferenceTermMaps());
+ else {
+    maps=new ArrayList<ConceptReferenceTermMap>(conceptReferenceTerm.getConceptReferenceTermMaps());
+  }
   termMaps=ListUtils.lazyList(maps,FactoryUtils.instantiateFactory(ConceptReferenceTermMap.class));
 }

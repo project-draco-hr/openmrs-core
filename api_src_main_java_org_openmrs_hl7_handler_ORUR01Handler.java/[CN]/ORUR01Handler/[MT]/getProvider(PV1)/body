@@ -29,7 +29,9 @@
       try {
         Person person=Context.getPersonService().getPerson(Integer.valueOf(id));
         Collection<Provider> providers=Context.getProviderService().getProvidersByPerson(person);
-        if (!providers.isEmpty())         provider=providers.iterator().next();
+        if (!providers.isEmpty()) {
+          provider=providers.iterator().next();
+        }
       }
  catch (      NumberFormatException e) {
       }

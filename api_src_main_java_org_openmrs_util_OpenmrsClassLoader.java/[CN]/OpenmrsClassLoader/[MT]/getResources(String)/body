@@ -4,11 +4,13 @@
     Enumeration<URL> urls=classLoader.getResources(packageName);
     while (urls.hasMoreElements()) {
       URL result=urls.nextElement();
-      if (result != null)       try {
-        results.add(result.toURI());
-      }
- catch (      URISyntaxException e) {
-        throwInvalidURI(result,e);
+      if (result != null) {
+        try {
+          results.add(result.toURI());
+        }
+ catch (        URISyntaxException e) {
+          throwInvalidURI(result,e);
+        }
       }
     }
   }

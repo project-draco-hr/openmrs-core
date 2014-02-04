@@ -1,6 +1,10 @@
 {
-  if (maximumResults == null)   setMaximumResults(getMaximumSearchResults());
-  if (length != null && length > maximumResults)   length=maximumResults;
+  if (maximumResults == null) {
+    setMaximumResults(getMaximumSearchResults());
+  }
+  if (length != null && length > maximumResults) {
+    length=maximumResults;
+  }
   List<Object> patientList=new Vector<Object>();
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
@@ -12,7 +16,9 @@
     return patientList;
   }
   patientList=new Vector<Object>(patients.size());
-  for (  Patient p : patients)   patientList.add(new PatientListItem(p,searchValue));
+  for (  Patient p : patients) {
+    patientList.add(new PatientListItem(p,searchValue));
+  }
   if (patients.size() == 0 && searchValue.matches(".*\\d+.*")) {
     Collection<IdentifierValidator> pivs=ps.getAllIdentifierValidators();
     boolean shouldWarnUser=true;
@@ -30,8 +36,12 @@
       }
     }
     if (identifierMatchesValidationScheme) {
-      if (shouldWarnUser)       patientList.add("<p style=\"color:red; font-size:big;\"><b>WARNING: Identifier has been typed incorrectly!  Please double check the identifier.</b></p>");
- else       if (validCheckDigit)       patientList.add("<p style=\"color:green; font-size:big;\"><b>This identifier has been entered correctly, but still no patients have been found.</b></p>");
+      if (shouldWarnUser) {
+        patientList.add("<p style=\"color:red; font-size:big;\"><b>WARNING: Identifier has been typed incorrectly!  Please double check the identifier.</b></p>");
+      }
+ else       if (validCheckDigit) {
+        patientList.add("<p style=\"color:green; font-size:big;\"><b>This identifier has been entered correctly, but still no patients have been found.</b></p>");
+      }
     }
   }
   return patientList;

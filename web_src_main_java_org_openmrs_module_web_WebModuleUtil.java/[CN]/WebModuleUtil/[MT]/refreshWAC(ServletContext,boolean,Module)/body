@@ -1,6 +1,8 @@
 {
   XmlWebApplicationContext wac=(XmlWebApplicationContext)WebApplicationContextUtils.getWebApplicationContext(servletContext);
-  if (log.isDebugEnabled())   log.debug("Refreshing web applciation Context of class: " + wac.getClass().getName());
+  if (log.isDebugEnabled()) {
+    log.debug("Refreshing web applciation Context of class: " + wac.getClass().getName());
+  }
   if (dispatcherServlet != null) {
     dispatcherServlet.stopAndCloseApplicationContext();
   }
@@ -15,7 +17,9 @@
     OpenmrsJspServlet.jspServlet.refresh();
   }
   try {
-    if (dispatcherServlet != null)     dispatcherServlet.reInitFrameworkServlet();
+    if (dispatcherServlet != null) {
+      dispatcherServlet.reInitFrameworkServlet();
+    }
     if (staticDispatcherServlet != null) {
       staticDispatcherServlet.refreshApplicationContext();
     }
@@ -24,7 +28,9 @@
     log.warn("Caught a servlet exception while refreshing the dispatcher servlet",se);
   }
   try {
-    if (dwrServlet != null)     dwrServlet.reInitServlet();
+    if (dwrServlet != null) {
+      dwrServlet.reInitServlet();
+    }
   }
  catch (  ServletException se) {
     log.warn("Cause a servlet exception while refreshing the dwr servlet",se);

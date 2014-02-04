@@ -4,8 +4,12 @@
     ret=true;
   }
  else {
-    if (ifTrue != null && ifTrue.length() > 0)     ret|=evaluate(ifTrue);
-    if (ifFalse != null && ifFalse.length() > 0)     ret|=!evaluate(ifFalse);
+    if (ifTrue != null && ifTrue.length() > 0) {
+      ret|=evaluate(ifTrue);
+    }
+    if (ifFalse != null && ifFalse.length() > 0) {
+      ret|=!evaluate(ifFalse);
+    }
   }
   pageContext.setAttribute(var,ret);
   return SKIP_BODY;

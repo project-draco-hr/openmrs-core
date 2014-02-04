@@ -2,7 +2,9 @@
   String token=getXmlToken(s);
   if (tagList.contains(token)) {
     int i=1;
-    while (tagList.contains(token + "_" + i))     i++;
+    while (tagList.contains(token + "_" + i)) {
+      i++;
+    }
     String tagName=token + "_" + i;
     tagList.add(tagName);
     return tagName;

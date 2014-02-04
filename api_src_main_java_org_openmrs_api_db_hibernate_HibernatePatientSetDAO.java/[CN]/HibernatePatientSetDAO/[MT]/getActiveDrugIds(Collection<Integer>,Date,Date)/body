@@ -3,7 +3,9 @@
   Map<Integer,Collection<Integer>> ret=new HashMap<Integer,Collection<Integer>>();
   List<String> whereClauses=new ArrayList<String>();
   whereClauses.add("o.voided = false");
-  if (toDate != null)   whereClauses.add("o.start_date <= :toDate");
+  if (toDate != null) {
+    whereClauses.add("o.start_date <= :toDate");
+  }
   if (fromDate != null) {
     whereClauses.add("(o.auto_expire_date is null or o.auto_expire_date > :fromDate)");
     whereClauses.add("(o.discontinued_date is null or o.discontinued_date > :fromDate)");
@@ -15,8 +17,12 @@
   log.debug("sql= " + sql);
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sql.toString());
   query.setCacheMode(CacheMode.IGNORE);
-  if (toDate != null)   query.setDate("toDate",toDate);
-  if (fromDate != null)   query.setDate("fromDate",fromDate);
+  if (toDate != null) {
+    query.setDate("toDate",toDate);
+  }
+  if (fromDate != null) {
+    query.setDate("fromDate",fromDate);
+  }
   List<Object[]> results=(List<Object[]>)query.list();
   for (  Object[] row : results) {
     Integer patientId=(Integer)row[0];

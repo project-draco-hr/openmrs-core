@@ -14,7 +14,9 @@
     writer.write("*********** END OF DATABASE UPDATE LOGS AS AT " + date + " ***********");
     writer.write(lineSeparator);
     writer.write(lineSeparator);
-    if (writer.checkError())     log.warn("An Error occured while writing warnings to the database update log file'");
+    if (writer.checkError()) {
+      log.warn("An Error occured while writing warnings to the database update log file'");
+    }
     writer.close();
   }
  catch (  FileNotFoundException e) {

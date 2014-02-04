@@ -1,7 +1,9 @@
 {
   for (  Locale allowedLoc : allowedLocales) {
     List<ConceptName> possibleFullySpecNames=localeConceptNamesMap.get(allowedLoc);
-    if (CollectionUtils.isEmpty(possibleFullySpecNames))     continue;
+    if (CollectionUtils.isEmpty(possibleFullySpecNames)) {
+      continue;
+    }
     for (    ConceptName cn : possibleFullySpecNames) {
       if (cn.isSynonym()) {
         cn.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);

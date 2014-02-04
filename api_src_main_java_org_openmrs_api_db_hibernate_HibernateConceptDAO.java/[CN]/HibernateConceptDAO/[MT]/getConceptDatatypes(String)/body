@@ -1,5 +1,7 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(ConceptDatatype.class);
-  if (name != null)   crit.add(Restrictions.like("name",name,MatchMode.START));
+  if (name != null) {
+    crit.add(Restrictions.like("name",name,MatchMode.START));
+  }
   return crit.list();
 }

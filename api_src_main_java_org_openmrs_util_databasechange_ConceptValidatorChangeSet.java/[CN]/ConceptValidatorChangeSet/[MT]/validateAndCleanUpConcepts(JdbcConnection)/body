@@ -22,7 +22,9 @@
           updateWarnings.add("ConceptName with id " + nameInLocale.getConceptNameId() + " ("+ nameInLocale.getName()+ ") is null, white space character or empty string");
         }
         if (conceptNameLocale == null) {
-          if (namesWithNoLocale == null)           namesWithNoLocale=new LinkedList<ConceptName>();
+          if (namesWithNoLocale == null) {
+            namesWithNoLocale=new LinkedList<ConceptName>();
+          }
           namesWithNoLocale.add(nameInLocale);
           continue;
         }
@@ -39,7 +41,9 @@
               nameInLocale.setLocalePreferred(false);
               reportUpdatedName(nameInLocale,"Preferred name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been dropped as the preferred name because it is a short name");
             }
- else             preferredNameForLocaleFound=true;
+ else {
+              preferredNameForLocaleFound=true;
+            }
           }
  else           if (nameInLocale.isLocalePreferred() && preferredNameForLocaleFound) {
             nameInLocale.setLocalePreferred(false);
@@ -51,15 +55,21 @@
           reportUpdatedName(nameInLocale,"The locale preferred property of name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been updated to false from null");
         }
         if (nameInLocale.isFullySpecifiedName()) {
-          if (!hasFullySpecifiedName)           hasFullySpecifiedName=true;
-          if (!fullySpecifiedNameForLocaleFound)           fullySpecifiedNameForLocaleFound=true;
+          if (!hasFullySpecifiedName) {
+            hasFullySpecifiedName=true;
+          }
+          if (!fullySpecifiedNameForLocaleFound) {
+            fullySpecifiedNameForLocaleFound=true;
+          }
  else {
             nameInLocale.setConceptNameType(null);
             reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from fully specified to a synonym");
           }
         }
         if (nameInLocale.isShort()) {
-          if (!shortNameForLocaleFound)           shortNameForLocaleFound=true;
+          if (!shortNameForLocaleFound) {
+            shortNameForLocaleFound=true;
+          }
  else {
             nameInLocale.setConceptNameType(null);
             reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from a short name to a synonym");
@@ -67,17 +77,25 @@
         }
         if (nameInLocale.isFullySpecifiedName() || nameInLocale.isPreferred()) {
           if (!isNameUniqueInLocale(connection,nameInLocale,conceptId)) {
-            if (localeDuplicateNamesMap == null)             localeDuplicateNamesMap=new HashMap<Locale,Set<String>>();
-            if (!localeDuplicateNamesMap.containsKey(conceptNameLocale))             localeDuplicateNamesMap.put(conceptNameLocale,new HashSet<String>());
+            if (localeDuplicateNamesMap == null) {
+              localeDuplicateNamesMap=new HashMap<Locale,Set<String>>();
+            }
+            if (!localeDuplicateNamesMap.containsKey(conceptNameLocale)) {
+              localeDuplicateNamesMap.put(conceptNameLocale,new HashSet<String>());
+            }
             localeDuplicateNamesMap.get(conceptNameLocale).add(nameInLocale.getName());
           }
         }
         String name=nameInLocale.getName().toLowerCase();
-        if (!nameDuplicateConceptNamesMap.containsKey(name))         nameDuplicateConceptNamesMap.put(name,new ArrayList<ConceptName>());
+        if (!nameDuplicateConceptNamesMap.containsKey(name)) {
+          nameDuplicateConceptNamesMap.put(name,new ArrayList<ConceptName>());
+        }
         nameDuplicateConceptNamesMap.get(name).add(nameInLocale);
       }
       for (      Map.Entry<String,List<ConceptName>> entry : nameDuplicateConceptNamesMap.entrySet()) {
-        if (entry.getValue().size() < 2)         continue;
+        if (entry.getValue().size() < 2) {
+          continue;
+        }
         logMessages.add("The name '" + entry.getKey() + "' was found multiple times for the concept with id '"+ conceptId+ "' in locale '"+ conceptNameLocale.getDisplayName()+ "'");
       }
       if (!preferredNameForLocaleFound) {
@@ -88,15 +106,19 @@
             break;
           }
         }
-        if (!preferredNameForLocaleFound)         for (        ConceptName cn : localeConceptNamesMap.get(conceptNameLocale)) {
-          if (cn.isSynonym()) {
-            cn.setLocalePreferred(true);
-            break;
+        if (!preferredNameForLocaleFound) {
+          for (          ConceptName cn : localeConceptNamesMap.get(conceptNameLocale)) {
+            if (cn.isSynonym()) {
+              cn.setLocalePreferred(true);
+              break;
+            }
           }
         }
       }
     }
-    if (!hasFullySpecifiedName)     hasFullySpecifiedName=setFullySpecifiedName(conceptId,localeConceptNamesMap);
+    if (!hasFullySpecifiedName) {
+      hasFullySpecifiedName=setFullySpecifiedName(conceptId,localeConceptNamesMap);
+    }
     if (!CollectionUtils.isEmpty(namesWithNoLocale)) {
       for (      ConceptName conceptName : namesWithNoLocale) {
         conceptName.setLocale(defaultLocale);
@@ -116,12 +138,18 @@
         }
       }
     }
-    if (!hasFullySpecifiedName)     updateWarnings.add("Concept with id: " + conceptId + " has no fully specified name");
+    if (!hasFullySpecifiedName) {
+      updateWarnings.add("Concept with id: " + conceptId + " has no fully specified name");
+    }
   }
   if (!MapUtils.isEmpty(localeDuplicateNamesMap)) {
     for (    Map.Entry<Locale,Set<String>> entry : localeDuplicateNamesMap.entrySet()) {
-      if (CollectionUtils.isEmpty(entry.getValue()))       continue;
-      for (      String duplicateName : entry.getValue())       updateWarnings.add("Concept Name '" + duplicateName + "' was found multiple times in locale '"+ entry.getKey()+ "'");
+      if (CollectionUtils.isEmpty(entry.getValue())) {
+        continue;
+      }
+      for (      String duplicateName : entry.getValue()) {
+        updateWarnings.add("Concept Name '" + duplicateName + "' was found multiple times in locale '"+ entry.getKey()+ "'");
+      }
     }
   }
   logMessages.add("Number of Updated ConceptNames: " + updatedConceptNames.size());

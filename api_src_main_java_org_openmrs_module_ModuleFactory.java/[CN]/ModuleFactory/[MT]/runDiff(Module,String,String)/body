@@ -9,7 +9,9 @@
       log.debug("version:column " + version + ":"+ currentDbVersion);
       log.debug("compare: " + ModuleUtil.compareVersion(version,currentDbVersion));
     }
-    if (ModuleUtil.compareVersion(version,currentDbVersion) > 0)     executeSQL=true;
+    if (ModuleUtil.compareVersion(version,currentDbVersion) > 0) {
+      executeSQL=true;
+    }
   }
  else {
     executeSQL=true;
@@ -20,7 +22,9 @@
       log.debug("Executing sql: " + sql);
       String[] sqlStatements=sql.split(";");
       for (      String sqlStatement : sqlStatements) {
-        if (sqlStatement.trim().length() > 0)         as.executeSQL(sqlStatement,false);
+        if (sqlStatement.trim().length() > 0) {
+          as.executeSQL(sqlStatement,false);
+        }
       }
     }
   finally {

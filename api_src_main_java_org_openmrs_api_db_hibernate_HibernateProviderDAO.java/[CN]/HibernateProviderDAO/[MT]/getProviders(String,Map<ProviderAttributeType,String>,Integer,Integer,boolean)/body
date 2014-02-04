@@ -1,7 +1,11 @@
 {
   Criteria criteria=prepareProviderCriteria(name,includeRetired);
-  if (start != null)   criteria.setFirstResult(start);
-  if (length != null)   criteria.setMaxResults(length);
+  if (start != null) {
+    criteria.setFirstResult(start);
+  }
+  if (length != null) {
+    criteria.setMaxResults(length);
+  }
   if (includeRetired) {
     criteria.addOrder(Order.asc("retired"));
   }

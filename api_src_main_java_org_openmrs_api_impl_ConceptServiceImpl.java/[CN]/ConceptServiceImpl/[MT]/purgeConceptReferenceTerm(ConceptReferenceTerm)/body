@@ -1,4 +1,6 @@
 {
-  if (dao.isConceptReferenceTermInUse(conceptReferenceTerm))   throw new APIException(Context.getMessageSourceService().getMessage("ConceptRefereceTerm.inUse"));
+  if (dao.isConceptReferenceTermInUse(conceptReferenceTerm)) {
+    throw new APIException(Context.getMessageSourceService().getMessage("ConceptRefereceTerm.inUse"));
+  }
   dao.deleteConceptReferenceTerm(conceptReferenceTerm);
 }

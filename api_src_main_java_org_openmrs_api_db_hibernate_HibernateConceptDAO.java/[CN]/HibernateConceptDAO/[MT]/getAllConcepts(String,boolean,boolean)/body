@@ -23,8 +23,12 @@
     hql+=" left join concept.names as names where names.conceptNameType = 'FULLY_SPECIFIED'";
   }
   if (!includeRetired) {
-    if (hasWhereClause)     hql+=" and";
- else     hql+=" where";
+    if (hasWhereClause) {
+      hql+=" and";
+    }
+ else {
+      hql+=" where";
+    }
     hql+=" concept.retired = false";
   }
   if (isNameField) {

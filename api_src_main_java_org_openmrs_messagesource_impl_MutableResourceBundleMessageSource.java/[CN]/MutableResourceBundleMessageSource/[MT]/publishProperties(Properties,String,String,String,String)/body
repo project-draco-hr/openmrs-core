@@ -4,7 +4,9 @@
   Resource propertiesResource=applicationContext.getResource(propertiesPath);
   try {
     File propertiesFile=propertiesResource.getFile();
-    if (!propertiesFile.exists())     propertiesFile.createNewFile();
+    if (!propertiesFile.exists()) {
+      propertiesFile.createNewFile();
+    }
     OpenmrsUtil.storeProperties(props,propertiesFile,namespace + ": " + name+ " v"+ version);
   }
  catch (  Exception ex) {

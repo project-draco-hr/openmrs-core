@@ -22,7 +22,9 @@
     }
     Element rootNode=updateDoc.getDocumentElement();
     String configVersion=rootNode.getAttribute("configVersion");
-    if (!validConfigVersions().contains(configVersion))     throw new ModuleException("Invalid configVersion: '" + configVersion + "' found In content: "+ content);
+    if (!validConfigVersions().contains(configVersion)) {
+      throw new ModuleException("Invalid configVersion: '" + configVersion + "' found In content: "+ content);
+    }
     if ("1.0".equals(configVersion)) {
       this.moduleId=getElement(rootNode,configVersion,"moduleId");
       this.currentVersion=getElement(rootNode,configVersion,"currentVersion");
@@ -49,6 +51,8 @@
     throw e;
   }
  finally {
-    if (stringReader != null)     stringReader.close();
+    if (stringReader != null) {
+      stringReader.close();
+    }
   }
 }

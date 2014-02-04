@@ -1,4 +1,6 @@
 {
-  if (patientToMatch == null || patientToMatch.getPatientId() == null)   return null;
+  if (patientToMatch == null || patientToMatch.getPatientId() == null) {
+    return null;
+  }
   return Context.getPatientService().getPatient(patientToMatch.getPatientId());
 }

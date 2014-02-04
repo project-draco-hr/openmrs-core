@@ -1,11 +1,17 @@
 {
   Map<Integer,List<DrugOrder>> ret=new HashMap<Integer,List<DrugOrder>>();
-  if (patients != null && patients.size() == 0)   return ret;
+  if (patients != null && patients.size() == 0) {
+    return ret;
+  }
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
   criteria.setFetchMode("patient",FetchMode.JOIN);
   criteria.setCacheMode(CacheMode.IGNORE);
-  if (patients != null)   criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
-  if (drugConcepts != null)   criteria.add(Restrictions.in("concept",drugConcepts));
+  if (patients != null) {
+    criteria.add(Restrictions.in("patient.personId",patients.getMemberIds()));
+  }
+  if (drugConcepts != null) {
+    criteria.add(Restrictions.in("concept",drugConcepts));
+  }
   criteria.add(Restrictions.eq("voided",false));
   criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
   log.debug("criteria: " + criteria);

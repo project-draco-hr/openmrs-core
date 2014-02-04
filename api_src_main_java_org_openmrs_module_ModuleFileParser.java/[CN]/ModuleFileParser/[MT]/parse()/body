@@ -10,7 +10,9 @@
       throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.cannotGetJarFile"),moduleFile.getName(),e);
     }
     ZipEntry config=jarfile.getEntry("config.xml");
-    if (config == null)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noConfigFile"),moduleFile.getName());
+    if (config == null) {
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.noConfigFile"),moduleFile.getName());
+    }
     try {
       configStream=jarfile.getInputStream(config);
     }
@@ -37,7 +39,9 @@
         out=new ByteArrayOutputStream();
         byte[] buffer=new byte[4096];
         int bytes_read;
-        while ((bytes_read=configStream.read(buffer)) != -1)         out.write(buffer,0,bytes_read);
+        while ((bytes_read=configStream.read(buffer)) != -1) {
+          out.write(buffer,0,bytes_read);
+        }
         output=out.toString();
       }
  catch (      Exception e2) {
@@ -55,16 +59,24 @@
     }
     Element rootNode=configDoc.getDocumentElement();
     String configVersion=rootNode.getAttribute("configVersion").trim();
-    if (!validConfigVersions.contains(configVersion))     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.invalidConfigVersion",new Object[]{configVersion},Context.getLocale()),moduleFile.getName());
+    if (!validConfigVersions.contains(configVersion)) {
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.invalidConfigVersion",new Object[]{configVersion},Context.getLocale()),moduleFile.getName());
+    }
     String name=getElement(rootNode,configVersion,"name").trim();
     String moduleId=getElement(rootNode,configVersion,"id").trim();
     String packageName=getElement(rootNode,configVersion,"package").trim();
     String author=getElement(rootNode,configVersion,"author").trim();
     String desc=getElement(rootNode,configVersion,"description").trim();
     String version=getElement(rootNode,configVersion,"version").trim();
-    if (name == null || name.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.nameCannotBeEmpty"),moduleFile.getName());
-    if (moduleId == null || moduleId.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.idCannotBeEmpty"),name);
-    if (packageName == null || packageName.length() == 0)     throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.packageCannotBeEmpty"),name);
+    if (name == null || name.length() == 0) {
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.nameCannotBeEmpty"),moduleFile.getName());
+    }
+    if (moduleId == null || moduleId.length() == 0) {
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.idCannotBeEmpty"),name);
+    }
+    if (packageName == null || packageName.length() == 0) {
+      throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.packageCannotBeEmpty"),name);
+    }
     Document log4jDoc=null;
     try {
       ZipEntry log4j=jarfile.getEntry("log4j.xml");

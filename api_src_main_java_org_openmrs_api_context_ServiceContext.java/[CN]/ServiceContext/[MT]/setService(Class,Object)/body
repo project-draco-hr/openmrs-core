@@ -14,8 +14,12 @@
           factory.setTarget(classInstance);
           advisedService=(Advised)factory.getProxy(OpenmrsClassLoader.getInstance());
         }
- else         advisedService=(Advised)classInstance;
-        if (replacingService)         moveAddedAOP(cachedService,advisedService);
+ else {
+          advisedService=(Advised)classInstance;
+        }
+        if (replacingService) {
+          moveAddedAOP(cachedService,advisedService);
+        }
         services.put(cls,advisedService);
       }
       log.debug("Service: " + cls + " set successfully");

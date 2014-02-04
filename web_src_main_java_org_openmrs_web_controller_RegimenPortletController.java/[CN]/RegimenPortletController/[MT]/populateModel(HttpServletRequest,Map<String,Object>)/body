@@ -16,7 +16,9 @@
           }
           Concept drugSet=Context.getConceptService().getConcept(setId);
           Collection<Concept> members=new ArrayList<Concept>();
-          if (drugSet != null)           members=Context.getConceptService().getConceptsByConceptSet(drugSet);
+          if (drugSet != null) {
+            members=Context.getConceptService().getConceptsByConceptSet(drugSet);
+          }
           drugConceptsBySetId.put(setId,members);
         }
       }
@@ -33,11 +35,17 @@
               }
             }
           }
-          if (setIdToUse == null && includeOther)           setIdToUse="*";
+          if (setIdToUse == null && includeOther) {
+            setIdToUse="*";
+          }
           if (setIdToUse != null) {
             helper(patientDrugOrderSets,setIdToUse,order);
-            if (order.isCurrent() || order.isFuture())             helper(currentDrugOrderSets,setIdToUse,order);
- else             helper(completedDrugOrderSets,setIdToUse,order);
+            if (order.isCurrent() || order.isFuture()) {
+              helper(currentDrugOrderSets,setIdToUse,order);
+            }
+ else {
+              helper(completedDrugOrderSets,setIdToUse,order);
+            }
           }
         }
       }
