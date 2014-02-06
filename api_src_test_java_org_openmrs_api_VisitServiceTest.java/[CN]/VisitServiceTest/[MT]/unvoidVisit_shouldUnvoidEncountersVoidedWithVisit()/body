@@ -1,13 +1,13 @@
 {
   executeDataSet(VISITS_WITH_DATES_XML);
-  Visit visit=service.getVisit(7);
+  Visit visit=visitService.getVisit(7);
   List<Encounter> encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,true);
   assertEquals(2,encountersByVisit.size());
-  service.voidVisit(visit,"test reason");
+  visitService.voidVisit(visit,"test reason");
   assertTrue(visit.isVoided());
   encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
   assertTrue(encountersByVisit.isEmpty());
-  visit=service.unvoidVisit(visit);
+  visit=visitService.unvoidVisit(visit);
   Assert.assertFalse(visit.isVoided());
   encountersByVisit=Context.getEncounterService().getEncountersByVisit(visit,false);
   assertEquals(1,encountersByVisit.size());

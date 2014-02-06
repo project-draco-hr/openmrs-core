@@ -1,4 +1,6 @@
 {
   executeDataSet(DATA_XML);
-  service=Context.getVisitService();
+  visitService=Context.getVisitService();
+  globalPropertiesTestHelper=new GlobalPropertiesTestHelper(Context.getAdministrationService());
+  globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ALLOW_OVERLAPPING_VISITS,"false");
 }
