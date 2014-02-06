@@ -11,12 +11,12 @@
   Order secondOrderToDiscontinue=orderService.getOrder(5);
   assertEquals(patient,secondOrderToDiscontinue.getPatient());
   assertTrue(OrderUtil.isOrderActive(secondOrderToDiscontinue,null));
+  Order discontinuationOrder2=orderService.discontinueOrder(secondOrderToDiscontinue,"Testing",null);
+  assertEquals(secondOrderToDiscontinue,discontinuationOrder2.getPreviousOrder());
   Order thirdOrderToDiscontinue=orderService.getOrder(7);
   assertTrue(OrderUtil.isOrderActive(thirdOrderToDiscontinue,null));
   Order discontinuationOrder=thirdOrderToDiscontinue.cloneForDiscontinuing();
   orderService.saveOrder(discontinuationOrder);
-  Order discontinuationOrder2=orderService.discontinueOrder(secondOrderToDiscontinue,"Testing",null);
-  assertEquals(secondOrderToDiscontinue,discontinuationOrder2.getPreviousOrder());
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(ordersCount - 3,activeOrders.size());
   assertFalse(activeOrders.contains(firstOrderToDiscontinue));
