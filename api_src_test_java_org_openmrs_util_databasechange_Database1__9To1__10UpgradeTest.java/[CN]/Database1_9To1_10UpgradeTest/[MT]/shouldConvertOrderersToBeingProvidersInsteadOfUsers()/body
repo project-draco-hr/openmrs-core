@@ -28,7 +28,7 @@
   upgradeTestUtil.insertGlobalProperty("orderEntry.unitsToConceptsMappings","mg:111,tab(s):112,1/day x 7 days/week:113,2/day x 7 days/week:114");
   upgradeTestUtil.upgrade();
   Set<Integer> newProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
-  Assert.assertEquals(originalProviderIds.size() + 2,newProviderIds.size());
+  Assert.assertEquals(originalProviderIds.size() + personIdsWithNoProviderAccount.size(),newProviderIds.size());
   rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer is null ",true);
   List<Integer> newOrdersWithNullOrderer=new ArrayList<Integer>();
   for (  List<Object> row : rows) {
@@ -39,11 +39,12 @@
   for (  OrderAndPerson op : ordersAndOrderersWithAProviderAccount) {
     rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where order_id = " + op.getOrderId(),true);
     Assert.assertEquals(op.getPersonId(),rows.get(0).get(1));
-    Assert.assertFalse(originalProviderIds.contains(rows.get(0).get(0)));
+    Assert.assertTrue(originalProviderIds.contains(rows.get(0).get(0)));
   }
   for (  OrderAndPerson op : ordersAndOrderersWithNoProviderAccount) {
-    rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where order_id = " + op.getOrderId(),true);
+    rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where o.order_id = " + op.getOrderId(),true);
+    Assert.assertEquals(1,rows.size());
     Assert.assertEquals(op.getPersonId(),rows.get(0).get(1));
-    Assert.assertFalse(newProviderIds.contains(rows.get(0).get(0)));
+    Assert.assertFalse(originalProviderIds.contains(rows.get(0).get(0)));
   }
 }
