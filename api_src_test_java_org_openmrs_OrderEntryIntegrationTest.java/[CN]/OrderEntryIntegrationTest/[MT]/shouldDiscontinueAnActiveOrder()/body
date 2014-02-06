@@ -1,0 +1,20 @@
+{
+  executeDataSet(ORDER_ENTRY_DATASET_XML);
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueReason.xml");
+  Order firstOrderToDiscontinue=orderService.getOrder(3);
+  assertTrue(OrderUtil.isOrderActive(firstOrderToDiscontinue,null));
+  Patient patient=firstOrderToDiscontinue.getPatient();
+  int ordersCount=orderService.getActiveOrders(patient,null,null,null).size();
+  Concept concept=Context.getConceptService().getConcept(1);
+  Order discontinuationOrder1=orderService.discontinueOrder(firstOrderToDiscontinue,concept,null);
+  assertEquals(firstOrderToDiscontinue,discontinuationOrder1.getPreviousOrder());
+  Order secondOrderToDiscontinue=orderService.getOrder(5);
+  assertEquals(patient,secondOrderToDiscontinue.getPatient());
+  assertTrue(OrderUtil.isOrderActive(secondOrderToDiscontinue,null));
+  Order discontinuationOrder2=orderService.discontinueOrder(secondOrderToDiscontinue,"Testing",null);
+  assertEquals(secondOrderToDiscontinue,discontinuationOrder2.getPreviousOrder());
+  List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
+  assertEquals(ordersCount - 2,activeOrders.size());
+  assertFalse(activeOrders.contains(firstOrderToDiscontinue));
+  assertFalse(activeOrders.contains(secondOrderToDiscontinue));
+}
