@@ -4,9 +4,9 @@
   assertEquals(5,orders.size());
   Order[] expectedOrders={orderService.getOrder(222),orderService.getOrder(3),orderService.getOrder(444),orderService.getOrder(5),orderService.getOrder(7)};
   assertThat(orders,hasItems(expectedOrders));
-  assertTrue(isOrderActive(orders.get(0),null));
-  assertTrue(isOrderActive(orders.get(1),null));
-  assertTrue(isOrderActive(orders.get(2),null));
-  assertTrue(isOrderActive(orders.get(3),null));
-  assertTrue(isOrderActive(orders.get(4),null));
+  assertTrue(OrderUtil.isOrderActive(orders.get(0),null));
+  assertTrue(OrderUtil.isOrderActive(orders.get(1),null));
+  assertTrue(OrderUtil.isOrderActive(orders.get(2),null));
+  assertTrue(OrderUtil.isOrderActive(orders.get(3),null));
+  assertTrue(OrderUtil.isOrderActive(orders.get(4),null));
 }

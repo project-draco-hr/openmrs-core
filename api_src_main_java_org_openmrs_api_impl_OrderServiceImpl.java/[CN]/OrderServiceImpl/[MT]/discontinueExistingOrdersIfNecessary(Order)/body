@@ -7,7 +7,7 @@
     if (!previousOrder.getConcept().equals(order.getConcept())) {
       throw new APIException("Concept of previous order and this order should be the same");
     }
-    if (isValidActiveOrder(previousOrder)) {
+    if (OrderUtil.isOrderActive(previousOrder,null)) {
       markAsDiscontinued(previousOrder,order.getStartDate());
       saveOrderInternal(previousOrder);
     }

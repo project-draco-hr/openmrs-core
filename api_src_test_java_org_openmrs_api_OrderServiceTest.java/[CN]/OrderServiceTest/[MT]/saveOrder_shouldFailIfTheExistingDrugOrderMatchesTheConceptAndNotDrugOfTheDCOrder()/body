@@ -1,7 +1,7 @@
 {
   executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
   final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(5);
-  assertTrue(isOrderActive(orderToDiscontinue,null));
+  assertTrue(OrderUtil.isOrderActive(orderToDiscontinue,null));
   Drug discontinuationOrderDrug=new Drug();
   discontinuationOrderDrug.setConcept(orderToDiscontinue.getConcept());
   discontinuationOrderDrug=Context.getConceptService().saveDrug(discontinuationOrderDrug);
