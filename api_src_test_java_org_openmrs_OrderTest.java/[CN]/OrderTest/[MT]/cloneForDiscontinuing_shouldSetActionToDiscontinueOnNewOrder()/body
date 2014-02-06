@@ -1,6 +1,0 @@
-{
-  Order anOrder=new Order();
-  anOrder.setUuid(UUID.randomUUID().toString());
-  Order orderThatCanDiscontinueTheOrder=anOrder.cloneForDiscontinuing();
-  assertEquals("should set new order action to new",orderThatCanDiscontinueTheOrder.getAction(),Order.Action.DISCONTINUE);
-}

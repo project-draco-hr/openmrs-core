@@ -8,6 +8,7 @@
   order.setCareSetting(orderService.getCareSetting(1));
   order.setStartDate(new Date());
   Order previousOrder=orderService.getOrder(111);
+  assertTrue(isOrderActive(previousOrder,null));
   order.setPreviousOrder(previousOrder);
   orderService.saveOrder(order);
   Assert.assertNotNull("previous order should be discontinued",previousOrder.getDateStopped());

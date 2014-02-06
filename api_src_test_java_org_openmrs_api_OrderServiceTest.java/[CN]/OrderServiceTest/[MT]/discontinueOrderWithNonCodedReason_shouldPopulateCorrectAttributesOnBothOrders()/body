@@ -1,6 +1,7 @@
 {
   executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
   Order order=orderService.getOrderByOrderNumber("111");
+  assertTrue(isOrderActive(order,null));
   Date discontinueDate=new Date();
   String discontinueReasonNonCoded="Test if I can discontinue this";
   Order discontinueOrder=orderService.discontinueOrder(order,discontinueReasonNonCoded,discontinueDate);
