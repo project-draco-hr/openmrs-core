@@ -1,6 +1,7 @@
 {
-  Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class);
-  searchCriteria.createAlias("drugReferenceMaps","map");
+  Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
+  searchCriteria.setResultTransformer(DistinctRootEntityResultTransformer.INSTANCE);
+  searchCriteria.createAlias("drug.drugReferenceMaps","map");
   searchCriteria.createAlias("map.conceptReferenceTerm","term");
   if (code != null) {
     searchCriteria.add(Restrictions.eq("term.code",code));
@@ -9,7 +10,7 @@
     searchCriteria.add(Restrictions.eq("term.conceptSource",conceptSource));
   }
   if (!includeRetired) {
-    searchCriteria.add(Restrictions.eq("retired",false));
+    searchCriteria.add(Restrictions.eq("drug.retired",false));
   }
   return searchCriteria;
 }

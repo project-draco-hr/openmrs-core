@@ -1,6 +1,0 @@
-{
-  executeDataSet(GET_DRUG_MAPPINGS);
-  List<ConceptMapType> conceptMapTypeList=conceptService.getConceptMapTypes(false,true);
-  Drug drug=conceptService.getDrugByMapping("CD41003",conceptService.getConceptSource(1),conceptMapTypeList,false);
-  assertNull(drug);
-}

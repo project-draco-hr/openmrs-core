@@ -1,3 +1,9 @@
 {
+  if (code == null && conceptSource == null && CollectionUtils.isEmpty(withAnyOfTheseTypesOrOrderOfPreference)) {
+    throw new APIException("Please provide a code or concept source or map types");
+  }
+  if (withAnyOfTheseTypesOrOrderOfPreference == null) {
+    withAnyOfTheseTypesOrOrderOfPreference=Collections.EMPTY_LIST;
+  }
   return dao.getDrugByMapping(code,conceptSource,withAnyOfTheseTypesOrOrderOfPreference,includeRetired);
 }

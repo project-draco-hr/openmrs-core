@@ -1,0 +1,6 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  List<Drug> drugs=conceptService.getDrugsByMapping(null,conceptService.getConceptSource(2),null,false);
+  assertEquals(1,drugs.size());
+  assertTrue(containsId(drugs,2));
+}
