@@ -13,7 +13,7 @@
   c.addName(synonym);
   c.addName(indexTerm);
   c.addName(shortName);
-  Assert.assertFalse("check test assumption - the API didn't automatically set preferred vlag",c.getFullySpecifiedName(loc).isPreferred());
+  assertFalse("check test assumption - the API didn't automatically set preferred vlag",c.getFullySpecifiedName(loc).isPreferred());
   assertNotNull("Concept is legit, save succeeds",Context.getConceptService().saveConcept(c));
   Context.getConceptService().saveConcept(c);
   assertNotNull("there's a preferred name",c.getPreferredName(loc));
