@@ -1,8 +1,7 @@
 {
   Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
   searchCriteria.add(Restrictions.eq("property",OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER_SEED));
-  searchCriteria.setLockMode(LockMode.PESSIMISTIC_WRITE);
-  GlobalProperty globalProperty=(GlobalProperty)searchCriteria.uniqueResult();
+  GlobalProperty globalProperty=(GlobalProperty)sessionFactory.getCurrentSession().get(GlobalProperty.class,OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER_SEED,LockOptions.UPGRADE);
   if (globalProperty == null) {
     throw new APIException("Missing global property named: " + OpenmrsConstants.GLOBAL_PROPERTY_NEXT_ORDER_NUMBER_SEED);
   }
