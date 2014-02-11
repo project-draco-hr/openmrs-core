@@ -3,8 +3,14 @@
     if (version == null || value == null)     return 0;
     List<String> versions=new Vector<String>();
     List<String> values=new Vector<String>();
-    version=version.replace("-SNAPSHOT",".0");
-    value=value.replace("-SNAPSHOT",".0");
+    int qualifierIndex=version.indexOf("-");
+    if (qualifierIndex != -1) {
+      version=version.substring(0,qualifierIndex);
+    }
+    qualifierIndex=value.indexOf("-");
+    if (qualifierIndex != -1) {
+      value=value.substring(0,qualifierIndex);
+    }
     Collections.addAll(versions,version.split("\\."));
     Collections.addAll(values,value.split("\\."));
     while (versions.size() < values.size()) {
