@@ -1,0 +1,9 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-reviseActiveOrders.xml");
+  Order order=orderService.getOrder(16);
+  DrugOrder revisionOrder=(DrugOrder)order.cloneForRevision();
+  revisionOrder.setAction(Action.DISCONTINUE);
+  expectedEx.expect(APIException.class);
+  expectedEx.expectMessage("Action has to be 'REVISE'");
+  orderService.saveRevisedOrder(revisionOrder).getOrderId();
+}
