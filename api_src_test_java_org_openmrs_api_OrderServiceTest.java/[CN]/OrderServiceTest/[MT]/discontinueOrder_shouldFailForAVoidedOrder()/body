@@ -1,5 +1,4 @@
 {
-  executeDataSet("org/openmrs/api/include/OrderServiceTest-globalProperties.xml");
   Order orderToDiscontinue=orderService.getOrder(8);
   assertTrue(orderToDiscontinue.isVoided());
   orderService.discontinueOrder(orderToDiscontinue,"testing",null);
