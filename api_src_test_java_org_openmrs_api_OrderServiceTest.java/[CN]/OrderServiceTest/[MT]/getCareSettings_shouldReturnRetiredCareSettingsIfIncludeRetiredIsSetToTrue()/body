@@ -1,0 +1,7 @@
+{
+  CareSetting retiredCareSetting=orderService.getCareSetting(3);
+  assertTrue(retiredCareSetting.isRetired());
+  List<CareSetting> careSettings=orderService.getCareSettings(true);
+  assertEquals(3,careSettings.size());
+  assertTrue(containsId(careSettings,retiredCareSetting.getCareSettingId()));
+}
