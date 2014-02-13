@@ -1,8 +1,9 @@
 {
   Concept c=Context.getConceptService().getConcept(22);
   ConceptNumeric cn=new ConceptNumeric(c);
+  Context.getConceptService().saveConcept(cn);
+  Assert.assertFalse(Context.getConceptService().getConceptNumeric(22).getAllowDecimal());
   cn.setAllowDecimal(true);
   Context.getConceptService().saveConcept(cn);
-  Assert.assertTrue(cn.isAllowDecimal());
-  Assert.assertSame(Context.getConceptService().getConceptNumeric(22).isAllowDecimal(),cn.isPrecise());
+  Assert.assertTrue(Context.getConceptService().getConceptNumeric(22).getAllowDecimal());
 }
