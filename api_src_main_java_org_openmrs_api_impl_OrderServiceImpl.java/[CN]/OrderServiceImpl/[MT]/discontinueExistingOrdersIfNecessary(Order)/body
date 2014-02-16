@@ -7,10 +7,7 @@
     if (!previousOrder.getConcept().equals(order.getConcept())) {
       throw new APIException("Concept of previous order and this order should be the same");
     }
-    if (OrderUtil.isOrderActive(previousOrder,null)) {
-      markAsDiscontinued(previousOrder,order.getStartDate());
-      saveOrderInternal(previousOrder);
-    }
+    stopOrder(previousOrder,order.getStartDate());
     return;
   }
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getClass(),order.getCareSetting(),null);
@@ -29,8 +26,7 @@
     }
     if (shouldMarkAsDiscontinued) {
       order.setPreviousOrder(activeOrder);
-      markAsDiscontinued(activeOrder,order.getStartDate());
-      saveOrderInternal(activeOrder);
+      stopOrder(activeOrder,order.getStartDate());
       return;
     }
   }

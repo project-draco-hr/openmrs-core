@@ -1,0 +1,9 @@
+{
+  Order originalOrder=orderService.getOrder(8);
+  assertTrue(originalOrder.isVoided());
+  Order revisedOrder=originalOrder.cloneForRevision();
+  revisedOrder.setInstructions("Take after a meal");
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot discontinue an order that is already stopped, expired or voided");
+  orderService.saveOrder(revisedOrder);
+}

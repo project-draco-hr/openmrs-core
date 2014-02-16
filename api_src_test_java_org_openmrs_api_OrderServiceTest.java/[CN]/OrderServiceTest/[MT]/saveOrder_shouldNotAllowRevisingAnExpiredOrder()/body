@@ -1,0 +1,10 @@
+{
+  Order originalOrder=orderService.getOrder(6);
+  assertNotNull(originalOrder.getAutoExpireDate());
+  assertTrue(originalOrder.getAutoExpireDate().before(new Date()));
+  Order revisedOrder=originalOrder.cloneForRevision();
+  revisedOrder.setInstructions("Take after a meal");
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot discontinue an order that is already stopped, expired or voided");
+  orderService.saveOrder(revisedOrder);
+}

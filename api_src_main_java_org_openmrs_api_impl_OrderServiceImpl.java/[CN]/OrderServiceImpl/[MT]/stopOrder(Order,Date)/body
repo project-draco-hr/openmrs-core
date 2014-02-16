@@ -5,11 +5,12 @@
   if (discontinueDate.after(new Date())) {
     throw new IllegalArgumentException("Discontinue date cannot be in the future");
   }
-  if (!orderToDiscontinue.isCurrent()) {
+  if (!orderToStop.isCurrent()) {
     throw new APIException("Cannot discontinue an order that is already stopped, expired or voided");
   }
-  if (orderToDiscontinue.getAction().equals(Order.Action.DISCONTINUE)) {
+  if (orderToStop.getAction().equals(Order.Action.DISCONTINUE)) {
     throw new APIException("An order with action " + Order.Action.DISCONTINUE + " cannot be discontinued.");
   }
-  orderToDiscontinue.setDateStopped(discontinueDate);
+  orderToStop.setDateStopped(discontinueDate);
+  saveOrderInternal(orderToStop);
 }
