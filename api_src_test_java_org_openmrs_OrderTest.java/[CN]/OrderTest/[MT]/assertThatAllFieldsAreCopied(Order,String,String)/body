@@ -1,8 +1,15 @@
 {
-  Collection<?> fieldToExclude=Collections.unmodifiableCollection(Arrays.asList("log","serialVersionUID","orderId","uuid"));
+  if (methodName == null) {
+    methodName="copy";
+  }
+  List<String> fieldsToExclude=new ArrayList<String>();
+  fieldsToExclude.addAll(Arrays.asList("log","serialVersionUID","orderId","uuid"));
+  if (otherfieldsToExclude != null) {
+    fieldsToExclude.addAll(Arrays.asList(otherfieldsToExclude));
+  }
   List<Field> fields=Reflect.getAllFields(original.getClass());
   for (  Field field : fields) {
-    if (fieldToExclude.contains(field.getName())) {
+    if (fieldsToExclude.contains(field.getName())) {
       continue;
     }
     field.setAccessible(true);
@@ -24,13 +31,13 @@
     }
     field.set(original,fieldValue);
   }
-  Order copy=original.copy();
+  Order copy=(Order)MethodUtils.invokeExactMethod(original,methodName,null);
   for (  Field field : fields) {
     Object copyValue=field.get(copy);
-    if (fieldToExclude.contains(field.getName())) {
+    if (fieldsToExclude.contains(field.getName())) {
       continue;
     }
-    assertNotNull("Order.copy should set " + field.getName() + " on the new Order",copyValue);
-    assertEquals("Order.copy should set " + field.getName() + " on the new Order",field.get(original),copyValue);
+    assertNotNull("Order." + methodName + " should set "+ field.getName()+ " on the new Order",copyValue);
+    assertEquals("Order." + methodName + " should set "+ field.getName()+ " on the new Order",field.get(original),copyValue);
   }
 }
