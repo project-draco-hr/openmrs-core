@@ -5,8 +5,8 @@
   assertTrue(OrderUtil.isOrderActive(firstOrderToDiscontinue,null));
   Patient patient=firstOrderToDiscontinue.getPatient();
   int ordersCount=orderService.getActiveOrders(patient,null,null,null).size();
-  Concept concept=Context.getConceptService().getConcept(1);
-  Order discontinuationOrder1=orderService.discontinueOrder(firstOrderToDiscontinue,concept,null);
+  Concept discontinueReason=Context.getConceptService().getConcept(1);
+  Order discontinuationOrder1=orderService.discontinueOrder(firstOrderToDiscontinue,discontinueReason,null);
   assertEquals(firstOrderToDiscontinue,discontinuationOrder1.getPreviousOrder());
   Order secondOrderToDiscontinue=orderService.getOrder(5);
   assertEquals(patient,secondOrderToDiscontinue.getPatient());
