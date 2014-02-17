@@ -21,7 +21,7 @@
     subquery.setProjection(Projections.count("ff.formFieldId"));
     subquery.add(Restrictions.eqProperty("ff.form","form"));
     subquery.add(Restrictions.in("ff.formFieldId",anyFormFieldIds));
-    crit.add(Subqueries.gt(0L,subquery));
+    crit.add(Subqueries.lt(0L,subquery));
   }
   if (!containingAllFormFields.isEmpty()) {
     Set<Integer> allFormFieldIds=new HashSet<Integer>();
