@@ -1,0 +1,16 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-otherOrderFrequencies.xml");
+  final String searchPhrase="once";
+  final Locale locale=Locale.ENGLISH;
+  List<OrderFrequency> orderFrequencies=orderService.getOrderFrequencies(searchPhrase,locale,true,false);
+  assertEquals(1,orderFrequencies.size());
+  final OrderFrequency expectedOrderFrequency=orderService.getOrderFrequency(100);
+  assertEquals(expectedOrderFrequency,orderFrequencies.get(0));
+  Concept frequencyConcept=expectedOrderFrequency.getConcept();
+  final String newConceptName=searchPhrase + " A Day";
+  frequencyConcept.addName(new ConceptName(newConceptName,locale));
+  conceptService.saveConcept(frequencyConcept);
+  orderFrequencies=orderService.getOrderFrequencies(searchPhrase,locale,true,false);
+  assertEquals(1,orderFrequencies.size());
+  assertEquals(expectedOrderFrequency,orderFrequencies.get(0));
+}
