@@ -20,7 +20,7 @@
   order.setDuration(20.0);
   Concept days=conceptService.getConcept(1002);
   order.setDurationUnits(days);
-  OrderFrequency onceDaily=orderService.getOrderFrequency(1003);
+  OrderFrequency onceDaily=orderService.getOrderFrequency(3000);
   order.setFrequency(onceDaily);
   orderService.saveOrder(order);
   List<DrugOrder> activeOrders=orderService.getActiveOrders(patient,DrugOrder.class,careSetting,null);
