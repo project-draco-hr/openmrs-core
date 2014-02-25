@@ -21,7 +21,14 @@
   if (CollectionUtils.isNotEmpty(sortList)) {
     for (    String sort : sortList) {
       if (sort != null && !"".equals(sort)) {
-        criteria.addOrder(Order.desc(sort));
+        String[] split=sort.split(" ",2);
+        String fieldName=split[0];
+        if (split.length == 2 && "asc".equals(split[1])) {
+          criteria.addOrder(Order.asc(fieldName));
+        }
+ else {
+          criteria.addOrder(Order.desc(fieldName));
+        }
       }
     }
   }
