@@ -1,0 +1,15 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(DrugOrder.class);
+  criteria.add(Restrictions.eq("frequency",orderFrequency));
+  criteria.setMaxResults(1);
+  if (criteria.list().size() > 0) {
+    return true;
+  }
+  criteria=sessionFactory.getCurrentSession().createCriteria(TestOrder.class);
+  criteria.add(Restrictions.eq("frequency",orderFrequency));
+  criteria.setMaxResults(1);
+  if (criteria.list().size() > 0) {
+    return true;
+  }
+  return false;
+}

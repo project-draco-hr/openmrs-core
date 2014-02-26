@@ -1,0 +1,6 @@
+{
+  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(2);
+  assertNotNull(orderFrequency);
+  orderFrequency.setFrequencyPerDay(4d);
+  Context.getOrderService().saveOrderFrequency(orderFrequency);
+}

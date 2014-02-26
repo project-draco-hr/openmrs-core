@@ -1,0 +1,8 @@
+{
+  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(3);
+  assertNotNull(orderFrequency);
+  Context.getOrderService().purgeOrderFrequency(orderFrequency);
+  orderFrequency=Context.getOrderService().getOrderFrequency(3);
+  Assert.assertNull(orderFrequency);
+  assertEquals(2,Context.getOrderService().getOrderFrequencies(true).size());
+}

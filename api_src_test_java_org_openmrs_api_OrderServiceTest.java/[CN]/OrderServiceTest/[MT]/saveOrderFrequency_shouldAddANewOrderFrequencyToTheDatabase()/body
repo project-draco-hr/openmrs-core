@@ -1,0 +1,13 @@
+{
+  OrderService os=Context.getOrderService();
+  Integer originalSize=os.getOrderFrequencies(true).size();
+  OrderFrequency orderFrequency=new OrderFrequency();
+  orderFrequency.setConcept(new Concept(3));
+  orderFrequency.setFrequencyPerDay(2d);
+  orderFrequency=os.saveOrderFrequency(orderFrequency);
+  assertNotNull(orderFrequency.getId());
+  assertNotNull(orderFrequency.getUuid());
+  assertNotNull(orderFrequency.getCreator());
+  assertNotNull(orderFrequency.getDateCreated());
+  assertEquals(originalSize + 1,os.getOrderFrequencies(true).size());
+}
