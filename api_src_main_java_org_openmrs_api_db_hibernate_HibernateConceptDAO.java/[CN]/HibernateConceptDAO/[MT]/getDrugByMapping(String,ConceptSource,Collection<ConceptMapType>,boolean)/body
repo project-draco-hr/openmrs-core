@@ -3,13 +3,23 @@
   if (withAnyOfTheseTypesOrOrderOfPreference.size() > 0) {
     for (    ConceptMapType conceptMapType : withAnyOfTheseTypesOrOrderOfPreference) {
       criteria.add(Restrictions.eq("map.conceptMapType",conceptMapType));
-      if (criteria.list().size() > 1) {
+      List<Drug> drugs=criteria.list();
+      if (drugs.size() > 1) {
         throw new DAOException("There are multiple matches for the highest-priority ConceptMapType");
       }
- else       if (criteria.list().size() == 1) {
-        return (Drug)criteria.list().get(0);
+ else       if (drugs.size() == 1) {
+        return drugs.get(0);
       }
       criteria=createSearchDrugByMappingCriteria(code,conceptSource,includeRetired);
+    }
+  }
+ else {
+    List<Drug> drugs=criteria.list();
+    if (drugs.size() > 1) {
+      throw new DAOException("There are multiple matches for the highest-priority ConceptMapType");
+    }
+ else     if (drugs.size() == 1) {
+      return drugs.get(0);
     }
   }
   return null;
