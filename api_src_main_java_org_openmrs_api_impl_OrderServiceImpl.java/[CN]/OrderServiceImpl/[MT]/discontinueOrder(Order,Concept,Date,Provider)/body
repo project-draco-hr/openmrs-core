@@ -2,5 +2,6 @@
   stopOrder(orderToDiscontinue,discontinueDate);
   Order newOrder=orderToDiscontinue.cloneForDiscontinuing();
   newOrder.setOrderReason(reasonCoded);
+  newOrder.setOrderer(orderer);
   return saveOrderInternal(newOrder);
 }

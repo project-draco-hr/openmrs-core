@@ -3,7 +3,7 @@
   assertTrue(OrderUtil.isOrderActive(order,null));
   Date discontinueDate=new Date();
   String discontinueReasonNonCoded="Test if I can discontinue this";
-  Order discontinueOrder=orderService.discontinueOrder(order,discontinueReasonNonCoded,discontinueDate);
+  Order discontinueOrder=orderService.discontinueOrder(order,discontinueReasonNonCoded,discontinueDate,null);
   Assert.assertEquals(order.getDateStopped(),discontinueDate);
   Assert.assertNotNull(discontinueOrder);
   Assert.assertNotNull(discontinueOrder.getId());

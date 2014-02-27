@@ -2,5 +2,5 @@
   Order orderToDiscontinue=orderService.getOrder(6);
   assertNotNull(orderToDiscontinue.getAutoExpireDate());
   assertTrue(orderToDiscontinue.getAutoExpireDate().before(new Date()));
-  orderService.discontinueOrder(orderToDiscontinue,Context.getConceptService().getConcept(1),null);
+  orderService.discontinueOrder(orderToDiscontinue,Context.getConceptService().getConcept(1),null,null);
 }

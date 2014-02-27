@@ -4,5 +4,5 @@
   Patient patient=Context.getPatientService().getPatient(2);
   CareSetting careSetting=orderService.getCareSetting(1);
   Order orderToDiscontinue=orderService.getActiveOrders(patient,Order.class,careSetting,null).get(0);
-  orderService.discontinueOrder(orderToDiscontinue,new Concept(),cal.getTime());
+  orderService.discontinueOrder(orderToDiscontinue,new Concept(),cal.getTime(),null);
 }
