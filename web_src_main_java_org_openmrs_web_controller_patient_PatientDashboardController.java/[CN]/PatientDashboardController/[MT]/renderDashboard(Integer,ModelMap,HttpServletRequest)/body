@@ -8,7 +8,10 @@
     log.warn("There is no patient with id: '" + patientId + "'",noPatientEx);
   }
   if (patient == null) {
-    throw new ServletException("There is no patient with id: '" + patientId + "'");
+    HttpSession session=request.getSession();
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"patientDashboard.noPatientWithId");
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ARGS,patientId);
+    return "findPatient";
   }
   log.debug("patient: '" + patient + "'");
   map.put("patient",patient);
