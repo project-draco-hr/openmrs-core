@@ -1,0 +1,9 @@
+{
+  Concept concept=new Concept(1);
+  concept.setConceptClass(Context.getConceptService().getConceptClass(19));
+  OrderFrequency orderFrequency=new OrderFrequency();
+  orderFrequency.setConcept(concept);
+  Errors errors=new BindException(orderFrequency,"orderFrequency");
+  new OrderFrequencyValidator().validate(orderFrequency,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
