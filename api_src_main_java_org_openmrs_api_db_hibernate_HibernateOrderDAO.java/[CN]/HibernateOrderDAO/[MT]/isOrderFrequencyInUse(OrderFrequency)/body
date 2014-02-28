@@ -1,13 +1,15 @@
 {
-  ClassPathScanningCandidateComponentProvider provider=new ClassPathScanningCandidateComponentProvider(false);
-  provider.addIncludeFilter(new AssignableTypeFilter(Order.class));
-  Set<BeanDefinition> components=provider.findCandidateComponents("org/openmrs");
-  for (  BeanDefinition component : components) {
+  Map<String,ClassMetadata> metadata=sessionFactory.getAllClassMetadata();
+  for (Iterator<ClassMetadata> i=metadata.values().iterator(); i.hasNext(); ) {
+    Class<?> entityClass=((EntityPersister)i.next()).getClassMetadata().getMappedClass(EntityMode.POJO);
+    if (Order.class.getName().equals(entityClass.getName())) {
+      continue;
+    }
+    if (!Order.class.isAssignableFrom(entityClass)) {
+      continue;
+    }
     try {
-      if (Order.class.getName().equals(component.getBeanClassName())) {
-        continue;
-      }
-      Class<?> cls=Context.loadClass(component.getBeanClassName());
+      Class<?> cls=Context.loadClass(entityClass.getName());
       Field[] fields=cls.getDeclaredFields();
       for (      Field field : fields) {
         if (field.getType().equals(OrderFrequency.class)) {
@@ -21,7 +23,7 @@
       }
     }
  catch (    ClassNotFoundException ex) {
-      log.error("Failed to check whether order frequency is in use for: " + component.getBeanClassName(),ex);
+      log.error("Failed to check whether order frequency is in use for: " + entityClass.getName(),ex);
     }
   }
   return false;
