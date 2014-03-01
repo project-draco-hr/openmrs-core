@@ -9,6 +9,7 @@
     synonymsByLocale.put(locale,(List<ConceptName>)concept.getSynonyms(locale));
     descriptionsByLocale.put(locale,concept.getDescription(locale,true));
     indexTermsByLocale.put(locale,(List<ConceptName>)concept.getIndexTermsForLocale(locale));
+    conceptAnswersByLocale.put(locale,(Map<String,String>)getConceptAnswers(locale));
     if (namesByLocale.get(locale) == null) {
       namesByLocale.put(locale,new ConceptName(null,locale));
     }
