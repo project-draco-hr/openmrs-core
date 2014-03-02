@@ -1,0 +1,16 @@
+{
+  LocationAttributeType type=new LocationAttributeType();
+  type.setName(null);
+  type.setDescription("description");
+  Errors errors=new BindException(type,"type");
+  new LocationAttributeTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  type.setName("");
+  errors=new BindException(type,"type");
+  new LocationAttributeTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  type.setName(" ");
+  errors=new BindException(type,"type");
+  new LocationAttributeTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}
