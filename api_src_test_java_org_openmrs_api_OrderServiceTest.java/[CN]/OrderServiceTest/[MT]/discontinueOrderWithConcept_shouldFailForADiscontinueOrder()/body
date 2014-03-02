@@ -3,5 +3,6 @@
   executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueReason.xml");
   OrderService orderService=Context.getOrderService();
   Order discontinueOrder=orderService.getOrder(26);
-  orderService.discontinueOrder(discontinueOrder,(Concept)null,null,null);
+  Encounter encounter=encounterService.getEncounter(3);
+  orderService.discontinueOrder(discontinueOrder,(Concept)null,null,null,encounter);
 }

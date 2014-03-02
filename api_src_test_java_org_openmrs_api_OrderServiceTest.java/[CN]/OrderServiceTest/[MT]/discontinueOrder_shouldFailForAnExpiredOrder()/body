@@ -1,6 +1,7 @@
 {
   Order orderToDiscontinue=orderService.getOrder(6);
+  Encounter encounter=encounterService.getEncounter(3);
   assertNotNull(orderToDiscontinue.getAutoExpireDate());
   assertTrue(orderToDiscontinue.getAutoExpireDate().before(new Date()));
-  orderService.discontinueOrder(orderToDiscontinue,Context.getConceptService().getConcept(1),null,null);
+  orderService.discontinueOrder(orderToDiscontinue,Context.getConceptService().getConcept(1),null,null,encounter);
 }

@@ -3,5 +3,6 @@
   Order newOrder=orderToDiscontinue.cloneForDiscontinuing();
   newOrder.setOrderReasonNonCoded(reasonNonCoded);
   newOrder.setOrderer(orderer);
+  newOrder.setEncounter(encounter);
   return saveOrderInternal(newOrder);
 }

@@ -1,5 +1,6 @@
 {
   Order orderToDiscontinue=orderService.getOrder(8);
+  Encounter encounter=encounterService.getEncounter(3);
   assertTrue(orderToDiscontinue.isVoided());
-  orderService.discontinueOrder(orderToDiscontinue,"testing",null,null);
+  orderService.discontinueOrder(orderToDiscontinue,"testing",null,null,encounter);
 }
