@@ -1,29 +1,24 @@
 {
   Map<String,ClassMetadata> metadata=sessionFactory.getAllClassMetadata();
   for (Iterator<ClassMetadata> i=metadata.values().iterator(); i.hasNext(); ) {
-    Class<?> entityClass=((EntityPersister)i.next()).getClassMetadata().getMappedClass(EntityMode.POJO);
-    if (Order.class.getName().equals(entityClass.getName())) {
+    ClassMetadata classMetadata=i.next();
+    Class<?> entityClass=classMetadata.getMappedClass(EntityMode.POJO);
+    if (Order.class.equals(entityClass)) {
       continue;
     }
     if (!Order.class.isAssignableFrom(entityClass)) {
       continue;
     }
-    try {
-      Class<?> cls=Context.loadClass(entityClass.getName());
-      Field[] fields=cls.getDeclaredFields();
-      for (      Field field : fields) {
-        if (field.getType().equals(OrderFrequency.class)) {
-          Criteria criteria=sessionFactory.getCurrentSession().createCriteria(cls);
-          criteria.add(Restrictions.eq(field.getName(),orderFrequency));
-          criteria.setMaxResults(1);
-          if (criteria.list().size() > 0) {
-            return true;
-          }
+    String[] names=classMetadata.getPropertyNames();
+    for (    String name : names) {
+      if (classMetadata.getPropertyType(name).getName().equals(OrderFrequency.class.getName())) {
+        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(entityClass);
+        criteria.add(Restrictions.eq(name,orderFrequency));
+        criteria.setMaxResults(1);
+        if (criteria.list().size() > 0) {
+          return true;
         }
       }
-    }
- catch (    ClassNotFoundException ex) {
-      log.error("Failed to check whether order frequency is in use for: " + entityClass.getName(),ex);
     }
   }
   return false;
