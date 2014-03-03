@@ -1,11 +1,12 @@
 {
   executeDataSet(GET_DRUG_MAPPINGS);
   List<ConceptMapType> conceptMapTypeList=conceptService.getConceptMapTypes(false,true);
-  List<Drug> drugs=conceptService.getDrugsByMapping(null,null,conceptMapTypeList,false);
+  ConceptSource source=conceptService.getConceptSource(1);
+  List<Drug> drugs=conceptService.getDrugsByMapping(null,source,conceptMapTypeList,false);
   assertEquals(2,drugs.size());
   assertTrue(containsId(drugs,2));
   assertTrue(containsId(drugs,3));
-  drugs=conceptService.getDrugsByMapping(null,null,conceptMapTypeList,true);
+  drugs=conceptService.getDrugsByMapping(null,source,conceptMapTypeList,true);
   assertEquals(3,drugs.size());
   assertTrue(containsId(drugs,2));
   assertTrue(containsId(drugs,3));

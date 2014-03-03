@@ -7,12 +7,12 @@
   List<ConceptMapType> conceptMapTypeList=new ArrayList<ConceptMapType>();
   conceptMapTypeList.add(mapTypeWithMatch);
   conceptMapTypeList.add(mapTypeWithNoMatch);
-  Drug drug=conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList,false);
+  Drug drug=conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList);
   assertEquals(expectedDrugId,drug.getDrugId());
   conceptMapTypeList.clear();
   conceptMapTypeList.add(mapTypeWithNoMatch);
-  assertNull(conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList,false));
+  assertNull(conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList));
   conceptMapTypeList.add(mapTypeWithMatch);
-  drug=conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList,false);
+  drug=conceptService.getDrugByMapping("WGT234",source,conceptMapTypeList);
   assertEquals(expectedDrugId,drug.getDrugId());
 }

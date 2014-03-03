@@ -1,6 +1,6 @@
 {
-  if (code == null && conceptSource == null && CollectionUtils.isEmpty(withAnyOfTheseTypes)) {
-    throw new APIException("Please provide a code or concept source or map types");
+  if (conceptSource == null) {
+    throw new APIException("ConceptSource is required");
   }
   if (withAnyOfTheseTypes == null) {
     withAnyOfTheseTypes=Collections.EMPTY_LIST;

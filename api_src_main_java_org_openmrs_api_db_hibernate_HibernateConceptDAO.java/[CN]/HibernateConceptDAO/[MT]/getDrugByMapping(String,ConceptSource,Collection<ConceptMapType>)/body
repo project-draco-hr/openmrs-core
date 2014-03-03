@@ -1,5 +1,5 @@
 {
-  Criteria criteria=createSearchDrugByMappingCriteria(code,conceptSource,includeRetired);
+  Criteria criteria=createSearchDrugByMappingCriteria(code,conceptSource,true);
   if (withAnyOfTheseTypesOrOrderOfPreference.size() > 0) {
     for (    ConceptMapType conceptMapType : withAnyOfTheseTypesOrOrderOfPreference) {
       criteria.add(Restrictions.eq("map.conceptMapType",conceptMapType));
@@ -10,7 +10,7 @@
  else       if (drugs.size() == 1) {
         return drugs.get(0);
       }
-      criteria=createSearchDrugByMappingCriteria(code,conceptSource,includeRetired);
+      criteria=createSearchDrugByMappingCriteria(code,conceptSource,true);
     }
   }
  else {
