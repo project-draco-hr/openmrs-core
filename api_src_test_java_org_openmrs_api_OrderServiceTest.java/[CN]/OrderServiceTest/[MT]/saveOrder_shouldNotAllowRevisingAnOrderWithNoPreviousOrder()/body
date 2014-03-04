@@ -4,6 +4,7 @@
   Order revisedOrder=originalOrder.cloneForRevision();
   revisedOrder.setInstructions("Take after a meal");
   revisedOrder.setPreviousOrder(null);
+  revisedOrder.setOrderer(providerService.getProvider(1));
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Previous Order is required for a revised order");
   orderService.saveOrder(revisedOrder);

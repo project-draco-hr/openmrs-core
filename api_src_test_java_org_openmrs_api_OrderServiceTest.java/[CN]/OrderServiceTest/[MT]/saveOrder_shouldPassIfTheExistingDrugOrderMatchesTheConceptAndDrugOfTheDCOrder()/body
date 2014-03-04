@@ -7,6 +7,7 @@
   order.setOrderReasonNonCoded("Discontinue this");
   order.setPatient(orderToDiscontinue.getPatient());
   order.setConcept(orderToDiscontinue.getConcept());
+  order.setOrderer(orderToDiscontinue.getOrderer());
   order.setCareSetting(orderToDiscontinue.getCareSetting());
   order.setStartDate(new Date());
   orderService.saveOrder(order);
