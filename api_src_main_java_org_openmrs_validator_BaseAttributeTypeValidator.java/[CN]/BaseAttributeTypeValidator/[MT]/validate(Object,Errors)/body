@@ -26,7 +26,10 @@
     }
  else {
       try {
-        CustomDatatypeUtil.getDatatype(attributeType);
+        CustomDatatype<?> datatype=CustomDatatypeUtil.getDatatype(attributeType);
+        if (datatype instanceof RegexValidatedTextDatatype && StringUtils.isBlank(attributeType.getDatatypeConfig())) {
+          errors.rejectValue("datatypeConfig","error.null");
+        }
       }
  catch (      Exception ex) {
         errors.rejectValue("datatypeConfig","AttributeType.datatypeConfig.invalid",new Object[]{ex.getMessage()},"Invalid");
