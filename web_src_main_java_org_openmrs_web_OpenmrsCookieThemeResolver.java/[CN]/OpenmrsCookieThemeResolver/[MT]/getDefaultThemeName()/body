@@ -8,7 +8,9 @@
     }
     themeName=Context.getAdministrationService().getGlobalProperty(GP_THEME_NAME);
   }
-  finally {
+ catch (  Exception ex) {
+  }
+ finally {
     if (openedSession) {
       Context.closeSession();
     }
