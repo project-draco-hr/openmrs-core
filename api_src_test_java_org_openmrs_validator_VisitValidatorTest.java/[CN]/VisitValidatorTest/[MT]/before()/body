@@ -1,6 +1,10 @@
 {
   executeDataSet(DATA_XML);
   visitService=Context.getVisitService();
+  SimpleDateFormat formatter=new SimpleDateFormat("yyyy/MM/dd");
+  DATE_TIME_2014_01_04_00_00_00_0=formatter.parse("2014/01/04").getTime();
+  DATE_TIME_2014_02_05_00_00_00_0=formatter.parse("2014/02/05").getTime();
+  DATE_TIME_2014_02_11_00_00_00_0=formatter.parse("2014/02/11").getTime();
   globalPropertiesTestHelper=new GlobalPropertiesTestHelper(Context.getAdministrationService());
   globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ALLOW_OVERLAPPING_VISITS,"false");
 }
