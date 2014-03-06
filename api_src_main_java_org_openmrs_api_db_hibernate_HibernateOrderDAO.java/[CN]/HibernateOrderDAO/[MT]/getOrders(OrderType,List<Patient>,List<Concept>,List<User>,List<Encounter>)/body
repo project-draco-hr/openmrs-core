@@ -1,5 +1,6 @@
 {
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(orderClassType);
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Order.class);
+  if (orderType != null)   crit.add(Restrictions.eq("orderType",orderType));
   if (patients.size() > 0)   crit.add(Restrictions.in("patient",patients));
   if (concepts.size() > 0)   crit.add(Restrictions.in("concept",concepts));
   if (orderers.size() > 0)   crit.add(Restrictions.in("orderer",orderers));
