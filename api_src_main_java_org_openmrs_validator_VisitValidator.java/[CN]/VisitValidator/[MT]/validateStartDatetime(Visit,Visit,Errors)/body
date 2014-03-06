@@ -1,0 +1,8 @@
+{
+  if (visit.getStartDatetime() != null && otherVisit.getStartDatetime() != null && visit.getStartDatetime().equals(otherVisit.getStartDatetime())) {
+    errors.rejectValue("startDatetime","Visit.startCannotBeTheSameAsOtherStartDateOfTheSamePatient","This visit has the same start date and time as another visit of this patient.");
+  }
+  if (visit.getStartDatetime() != null && otherVisit.getStartDatetime() != null && otherVisit.getStopDatetime() != null && visit.getStartDatetime().after(otherVisit.getStartDatetime()) && visit.getStartDatetime().before(otherVisit.getStopDatetime())) {
+    errors.rejectValue("startDatetime","Visit.startDateCannotFallIntoAnotherVisitOfTheSamePatient","This visit has a start date that falls into another visit of the same patient.");
+  }
+}

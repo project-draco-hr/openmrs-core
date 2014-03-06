@@ -1,14 +1,14 @@
 {
-  String oldPropertyValue=patientSearchTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_ANYWHERE);
+  String oldPropertyValue=globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_ANYWHERE);
   List<Patient> patients=dao.getPatients("aggins",0,11);
   Assert.assertEquals(2,patients.size());
   Assert.assertEquals("Baggins",patients.get(0).getFamilyName());
   Assert.assertEquals("Baggins",patients.get(1).getFamilyName());
   Assert.assertFalse(patients.get(0).getGivenName().equalsIgnoreCase(patients.get(1).getGivenName()));
   if (oldPropertyValue != null) {
-    patientSearchTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,oldPropertyValue);
+    globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,oldPropertyValue);
   }
  else {
-    patientSearchTestHelper.purgeGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE);
+    globalPropertiesTestHelper.purgeGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE);
   }
 }

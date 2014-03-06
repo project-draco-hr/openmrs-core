@@ -5,5 +5,5 @@
   visit.setStartDatetime(new Date());
   Errors errors=new BindException(visit,"visit");
   new VisitValidator().validate(visit,errors);
-  Assert.assertTrue(errors.hasFieldErrors("patient"));
+  assertTrue(errors.hasFieldErrors("patient"));
 }

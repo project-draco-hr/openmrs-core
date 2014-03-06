@@ -1,9 +1,9 @@
 {
   executeDataSet(VISITS_ATTRIBUTES_XML);
-  assertEquals(3,service.getAllVisitAttributeTypes().size());
-  VisitAttributeType vat=service.getVisitAttributeType(1);
+  assertEquals(3,visitService.getAllVisitAttributeTypes().size());
+  VisitAttributeType vat=visitService.getVisitAttributeType(1);
   vat.setName("A new name");
-  service.saveVisitAttributeType(vat);
-  assertEquals(3,service.getAllVisitAttributeTypes().size());
-  assertEquals("A new name",service.getVisitAttributeType(1).getName());
+  visitService.saveVisitAttributeType(vat);
+  assertEquals(3,visitService.getAllVisitAttributeTypes().size());
+  assertEquals("A new name",visitService.getVisitAttributeType(1).getName());
 }
