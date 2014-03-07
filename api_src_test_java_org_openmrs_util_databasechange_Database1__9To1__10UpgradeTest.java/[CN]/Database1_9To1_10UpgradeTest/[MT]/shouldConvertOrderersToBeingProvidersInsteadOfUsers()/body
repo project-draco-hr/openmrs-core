@@ -25,7 +25,7 @@
   }
   Assert.assertEquals(2,ordersWithNullOrderer.size());
   Set<Integer> originalProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
-  upgradeTestUtil.insertGlobalProperty("orderEntry.unitsToConceptsMappings","mg:111,tab(s):112,1/day x 7 days/week:113,2/day x 7 days/week:114");
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
   upgradeTestUtil.upgrade();
   Set<Integer> newProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
   Assert.assertEquals(originalProviderIds.size() + personIdsWithNoProviderAccount.size(),newProviderIds.size());

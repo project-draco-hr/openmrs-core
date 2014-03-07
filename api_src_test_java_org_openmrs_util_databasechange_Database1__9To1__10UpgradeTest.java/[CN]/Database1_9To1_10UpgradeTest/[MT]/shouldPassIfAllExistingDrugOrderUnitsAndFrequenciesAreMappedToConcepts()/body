@@ -5,6 +5,6 @@
   Set<String> uniqueFrequencies=DatabaseUtil.getUniqueNonNullColumnValues("frequency","drug_order",String.class,upgradeTestUtil.getConnection());
   Assert.assertTrue(uniqueFrequencies.size() > 0);
   upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
-  upgradeTestUtil.insertGlobalProperty("orderEntry.unitsToConceptsMappings","mg:111,tab(s):112,1/day x 7 days/week:113,2/day x 7 days/week:114");
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
   upgradeTestUtil.upgrade();
 }

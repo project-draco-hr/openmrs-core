@@ -2,7 +2,7 @@
   Set<String> unmappedText=new HashSet<String>(textList.size());
   for (  String text : textList) {
     try {
-      if (DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),text) != null) {
+      if (UpgradeUtil.getConceptIdForUnits(text) != null) {
         continue;
       }
     }

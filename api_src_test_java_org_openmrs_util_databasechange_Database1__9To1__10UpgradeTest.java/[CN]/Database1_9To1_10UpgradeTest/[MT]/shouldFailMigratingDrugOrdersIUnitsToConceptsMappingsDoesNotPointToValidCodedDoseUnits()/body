@@ -1,5 +1,5 @@
 {
   upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
-  upgradeTestUtil.insertGlobalProperty("orderEntry.unitsToConceptsMappings","mg:-1,tab(s):-2");
+  createOrderEntryUpgradeFileWithTestData("mg=-1\ntab(s)=-2");
   upgradeTestUtil.upgrade();
 }

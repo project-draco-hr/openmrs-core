@@ -7,7 +7,7 @@
     insertOrderFrequencyStatement=connection.prepareStatement("insert into order_frequency " + "(concept_id, creator, date_created, retired, uuid) values (?, ?, ?, ?, ?)");
     Date date=new Date(new java.util.Date().getTime());
     for (    String frequency : uniqueFrequencies) {
-      Integer conceptIdForFrequency=DatabaseUtil.getConceptIdForUnits(connection.getUnderlyingConnection(),frequency);
+      Integer conceptIdForFrequency=UpgradeUtil.getConceptIdForUnits(frequency);
       if (conceptIdForFrequency == null) {
         throw new CustomChangeException("No concept mapping found for frequency: " + frequency);
       }

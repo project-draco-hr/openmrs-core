@@ -1,0 +1,5 @@
+{
+  Database1_9To1_10UpgradeTest.createOrderEntryUpgradeFileWithTestData("mg=5401" + "\n" + "drug_order_quantity_units=5403"+ "\n"+ "ounces=5402");
+  Integer conceptId=UpgradeUtil.getConceptIdForUnits("drug_order_quantity_units");
+  Assert.assertThat(conceptId,Is.is(5403));
+}
