@@ -1,10 +1,10 @@
 {
   Field field=(Field)obj;
   Locale locale=Context.getLocale();
+  FormService fs=Context.getFormService();
   Map<String,Object> map=new HashMap<String,Object>();
   String defaultVerbose="false";
   if (Context.isAuthenticated()) {
-    FormService fs=Context.getFormService();
     map.put("fieldTypes",fs.getAllFieldTypes());
     if (field.getConcept() != null) {
       map.put("conceptName",field.getConcept().getName(locale));
@@ -15,5 +15,17 @@
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
   }
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
+  Collection<EncounterType> encounterTypes=new ArrayList<EncounterType>();
+  Collection<FormField> containingAnyFormField=new ArrayList<FormField>();
+  Collection<FormField> containingAllFormFields=new ArrayList<FormField>();
+  Collection<Field> fields=new ArrayList<Field>();
+  fields.add(field);
+  List<Form> formsReturned=null;
+  try {
+    formsReturned=fs.getForms(null,null,encounterTypes,null,containingAnyFormField,containingAllFormFields,fields);
+  }
+ catch (  Exception e) {
+  }
+  map.put("formList",formsReturned);
   return map;
 }
