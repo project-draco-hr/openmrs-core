@@ -1,0 +1,7 @@
+{
+  OrderType orderType=new OrderType();
+  orderType.setName("unique name");
+  Errors errors=new BindException(orderType,"orderType");
+  new OrderTypeValidator().validate(orderType,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
