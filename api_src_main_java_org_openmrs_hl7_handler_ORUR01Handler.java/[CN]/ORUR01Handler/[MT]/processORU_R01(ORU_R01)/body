@@ -46,7 +46,7 @@
     ORU_R01_ORDER_OBSERVATION orderObs=patientResult.getORDER_OBSERVATION(i);
     OBR obr=orderObs.getOBR();
     if (!StringUtils.hasText(obr.getUniversalServiceIdentifier().getIdentifier().getValue())) {
-      throw new HL7Exception("Check to ensure that the form's OBS section is a concept field. Invalid OBR in hl7 message with uid: " + messageControlId);
+      throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.errorInvalidOBR ",new Object[]{messageControlId},null));
     }
     Obs obsGrouper=null;
     Concept obrConcept=getConcept(obr.getUniversalServiceIdentifier(),messageControlId);
@@ -119,7 +119,7 @@ catch (      HL7Exception e) {
       }
  finally {
         if (errorInHL7Queue != null) {
-          throw new HL7Exception("Improperly formatted OBX: " + PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&")),HL7Exception.DATA_TYPE_ERROR,errorInHL7Queue);
+          throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.improperlyFormattedOBX",new Object[]{PipeParser.encode(obx,new EncodingCharacters('|',"^~\\&"))},null),HL7Exception.DATA_TYPE_ERROR,errorInHL7Queue);
         }
       }
     }

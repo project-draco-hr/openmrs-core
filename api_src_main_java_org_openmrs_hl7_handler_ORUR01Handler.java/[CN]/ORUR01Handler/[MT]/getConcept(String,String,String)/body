@@ -5,7 +5,7 @@
       return Context.getConceptService().getConcept(conceptId);
     }
  catch (    NumberFormatException e) {
-      throw new HL7Exception("Invalid concept ID '" + hl7ConceptId + "' in hl7 message with uid: "+ uid);
+      throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.hl7ConceptId",new Object[]{hl7ConceptId,uid},null));
     }
   }
  else {

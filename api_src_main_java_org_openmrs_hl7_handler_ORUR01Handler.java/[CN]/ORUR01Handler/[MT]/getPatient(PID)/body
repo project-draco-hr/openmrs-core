@@ -1,7 +1,7 @@
 {
   Integer patientId=Context.getHL7Service().resolvePatientId(pid);
   if (patientId == null) {
-    throw new HL7Exception("Could not resolve patient");
+    throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UnresolvedPatient"));
   }
   return Context.getPatientService().getPatient(patientId);
 }

@@ -25,7 +25,7 @@
       form=Context.getFormService().getForm(formId);
     }
  catch (    NumberFormatException e) {
-      throw new HL7Exception("Error parsing form id from message",e);
+      throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.parse"),e);
     }
   }
   return form;
