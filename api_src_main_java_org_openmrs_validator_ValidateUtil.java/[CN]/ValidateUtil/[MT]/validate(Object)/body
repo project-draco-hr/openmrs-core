@@ -1,5 +1,5 @@
 {
-  BindException errors=new BindException(obj,"");
+  Errors errors=new BindException(obj,"");
   Context.getAdministrationService().validate(obj,errors);
   if (errors.hasErrors()) {
     Set<String> uniqueErrorMessages=new LinkedHashSet<String>();
@@ -13,6 +13,6 @@
     }
     String exceptionMessage="'" + obj + "' failed to validate with reason: ";
     exceptionMessage+=StringUtils.join(uniqueErrorMessages,", ");
-    throw new ValidationException(exceptionMessage,errors.getCause());
+    throw new ValidationException(exceptionMessage,errors);
   }
 }
