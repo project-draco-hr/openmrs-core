@@ -10,6 +10,7 @@
   revisedOrder.setStartDate(new Date());
   revisedOrder.setOrderer(providerService.getProvider(1));
   orderService.saveOrder(revisedOrder,null);
+  Thread.sleep(1);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(originalOrderCount,activeOrders.size());
   assertFalse(OrderUtil.isOrderActive(originalOrder,null));
