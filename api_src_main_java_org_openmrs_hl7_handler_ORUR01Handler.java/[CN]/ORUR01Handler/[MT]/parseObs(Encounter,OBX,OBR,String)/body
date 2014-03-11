@@ -64,7 +64,7 @@
           obs.setValueNumeric(Double.valueOf(value));
         }
  catch (        NumberFormatException e) {
-          throw new HL7Exception("numeric (NM) value '" + value + "' is not numeric for concept #"+ concept.getConceptId()+ " ("+ conceptName.getName()+ ") in message "+ uid,e);
+          throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",new Object[]{value,concept.getConceptId(),conceptName.getName(),uid},null),e);
         }
       }
  else       if (concept.getDatatype().isCoded()) {
@@ -81,11 +81,11 @@
           }
         }
         if (!isValidAnswer) {
-          throw new HL7Exception(answer.toString() + " is not a valid answer for obs with uuid " + uid);
+          throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.invalidAnswer",new Object[]{answer.toString(),uid},null));
         }
       }
  else {
-        throw new HL7Exception("Can't set boolean concept answer for concept with id " + obs.getConcept().getConceptId());
+        throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.CannotSetBoolean",new Object[]{obs.getConcept().getConceptId()},null));
       }
     }
  else {
@@ -93,7 +93,7 @@
         obs.setValueNumeric(Double.valueOf(value));
       }
  catch (      NumberFormatException e) {
-        throw new HL7Exception("numeric (NM) value '" + value + "' is not numeric for concept #"+ concept.getConceptId()+ " ("+ conceptName.getName()+ ") in message "+ uid,e);
+        throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.notnumericConcept",new Object[]{value,concept.getConceptId(),conceptName.getName(),uid},null),e);
       }
     }
   }
@@ -132,7 +132,7 @@
         }
       }
  catch (      NumberFormatException e) {
-        throw new HL7Exception("Invalid concept ID '" + valueIdentifier + "' for OBX-5 value '"+ valueName+ "'");
+        throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.InvalidConceptId",new Object[]{valueIdentifier,valueName},null));
       }
     }
     if (log.isDebugEnabled()) {
@@ -152,7 +152,7 @@
         obs.setValueCodedName(getConceptName(value));
       }
  catch (      NumberFormatException e) {
-        throw new HL7Exception("Invalid concept ID '" + valueIdentifier + "' for OBX-5 value '"+ valueName+ "'");
+        throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.InvalidConceptId",new Object[]{valueIdentifier,valueName},null));
       }
     }
   }
@@ -221,7 +221,7 @@
     obs.setComplexData(new ComplexData(title,value.getData().getValue()));
   }
  else {
-    throw new HL7Exception("Unsupported observation datatype '" + hl7Datatype + "'");
+    throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UpsupportedObs",new Object[]{hl7Datatype},null));
   }
   return obs;
 }
