@@ -1,0 +1,10 @@
+{
+  String nextOrderNumber=null;
+  if (orderContext != null) {
+    nextOrderNumber=(String)orderContext.getAttribute(NEXT_ORDER_NUMBER);
+  }
+  if (StringUtils.isBlank(nextOrderNumber)) {
+    nextOrderNumber=ORDER_NUMBER_PREFIX + System.currentTimeMillis();
+  }
+  return nextOrderNumber;
+}

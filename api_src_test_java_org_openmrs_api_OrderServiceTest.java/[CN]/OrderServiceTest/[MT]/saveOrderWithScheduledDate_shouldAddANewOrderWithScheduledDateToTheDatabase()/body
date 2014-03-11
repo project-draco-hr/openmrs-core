@@ -8,7 +8,7 @@
   order.setOrderer(orderService.getOrder(1).getOrderer());
   order.setStartDate(new Date());
   order.setScheduledDate(scheduledDate);
-  order=orderService.saveOrder(order);
+  order=orderService.saveOrder(order,null);
   Order neworder=orderService.getOrder(order.getOrderId());
   assertNotNull(order);
   assertEquals(scheduledDate,order.getScheduledDate());

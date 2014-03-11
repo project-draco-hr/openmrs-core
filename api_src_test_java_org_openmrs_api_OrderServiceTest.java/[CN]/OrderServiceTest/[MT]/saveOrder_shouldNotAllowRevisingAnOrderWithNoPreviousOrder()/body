@@ -7,5 +7,5 @@
   revisedOrder.setOrderer(providerService.getProvider(1));
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Previous Order is required for a revised order");
-  orderService.saveOrder(revisedOrder);
+  orderService.saveOrder(revisedOrder,null);
 }

@@ -12,5 +12,5 @@
     throw new APIException("An order with action " + Order.Action.DISCONTINUE + " cannot be discontinued.");
   }
   orderToStop.setDateStopped(discontinueDate);
-  saveOrderInternal(orderToStop);
+  saveOrderInternal(orderToStop,null);
 }

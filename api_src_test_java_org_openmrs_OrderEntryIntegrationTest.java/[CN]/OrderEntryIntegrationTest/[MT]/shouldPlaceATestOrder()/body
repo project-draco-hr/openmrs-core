@@ -13,7 +13,7 @@
   order.setFrequency(orderService.getOrderFrequency(3000));
   order.setSpecimenSource(conceptService.getConcept(1000));
   order.setNumberOfRepeats(3);
-  orderService.saveOrder(order);
+  orderService.saveOrder(order,null);
   List<TestOrder> activeOrders=orderService.getActiveOrders(patient,TestOrder.class,careSetting,null);
   assertEquals(++activeTestOrderCount,activeOrders.size());
   assertThat(activeOrders,hasItems(order));

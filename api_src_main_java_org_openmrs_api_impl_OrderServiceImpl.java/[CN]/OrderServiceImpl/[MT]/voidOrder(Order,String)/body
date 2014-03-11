@@ -5,5 +5,5 @@
   order.setVoidReason(voidReason);
   order.setVoidedBy(Context.getAuthenticatedUser());
   if (order.getDateVoided() == null)   order.setDateVoided(new Date());
-  return saveOrderInternal(order);
+  return saveOrderInternal(order,null);
 }

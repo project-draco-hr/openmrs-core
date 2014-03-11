@@ -10,6 +10,6 @@
   order.setOrderer(orderToDiscontinue.getOrderer());
   order.setCareSetting(orderToDiscontinue.getCareSetting());
   order.setStartDate(new Date());
-  orderService.saveOrder(order);
+  orderService.saveOrder(order,null);
   Assert.assertNotNull("previous order should be discontinued",orderToDiscontinue.getDateStopped());
 }

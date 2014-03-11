@@ -1,0 +1,12 @@
+{
+  if (orderNumberGenerator == null) {
+    String generatorBeanId=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_ORDER_NUMBER_GENERATOR_BEAN_ID);
+    if (StringUtils.hasText(generatorBeanId)) {
+      orderNumberGenerator=Context.getRegisteredComponent(generatorBeanId,OrderNumberGenerator.class);
+    }
+ else {
+      orderNumberGenerator=this;
+    }
+  }
+  return orderNumberGenerator;
+}

@@ -9,7 +9,7 @@
   revisedOrder.setInstructions("Take after a meal");
   revisedOrder.setStartDate(new Date());
   revisedOrder.setOrderer(providerService.getProvider(1));
-  orderService.saveOrder(revisedOrder);
+  orderService.saveOrder(revisedOrder,null);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(originalOrderCount,activeOrders.size());
   assertFalse(originalOrder.isCurrent());

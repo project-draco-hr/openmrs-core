@@ -3,7 +3,7 @@
     try {
       Field field=Order.class.getDeclaredField("orderNumber");
       field.setAccessible(true);
-      field.set(order,getNewOrderNumber());
+      field.set(order,getOrderNumberGenerator().getNewOrderNumber(orderContext));
     }
  catch (    Exception e) {
       throw new APIException("Failed to assign order number",e);

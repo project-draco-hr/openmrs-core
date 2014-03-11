@@ -10,6 +10,6 @@
   Order previousOrder=orderService.getOrder(111);
   assertTrue(OrderUtil.isOrderActive(previousOrder,null));
   order.setPreviousOrder(previousOrder);
-  orderService.saveOrder(order);
+  orderService.saveOrder(order,null);
   Assert.assertNotNull("previous order should be discontinued",previousOrder.getDateStopped());
 }

@@ -18,7 +18,7 @@
   assertTrue(OrderUtil.isOrderActive(thirdOrderToDiscontinue,null));
   Order discontinuationOrder=thirdOrderToDiscontinue.cloneForDiscontinuing();
   discontinuationOrder.setOrderer(providerService.getProvider(1));
-  orderService.saveOrder(discontinuationOrder);
+  orderService.saveOrder(discontinuationOrder,null);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(ordersCount - 3,activeOrders.size());
   assertFalse(activeOrders.contains(firstOrderToDiscontinue));

@@ -8,7 +8,7 @@
         try {
           Context.openSession();
           Context.addProxyPrivilege(PrivilegeConstants.ADD_ORDERS);
-          uniqueOrderNumbers.add(((OrderNumberGenerator)Context.getOrderService()).getNewOrderNumber());
+          uniqueOrderNumbers.add(((OrderNumberGenerator)Context.getOrderService()).getNewOrderNumber(null));
         }
   finally {
           Context.removeProxyPrivilege(PrivilegeConstants.ADD_ORDERS);

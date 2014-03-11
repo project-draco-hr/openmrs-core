@@ -22,7 +22,7 @@
   order.setDurationUnits(days);
   OrderFrequency onceDaily=orderService.getOrderFrequency(3000);
   order.setFrequency(onceDaily);
-  orderService.saveOrder(order);
+  orderService.saveOrder(order,null);
   List<DrugOrder> activeOrders=orderService.getActiveOrders(patient,DrugOrder.class,careSetting,null);
   assertEquals(++activeDrugOrderCount,activeOrders.size());
   assertThat(activeOrders,hasItems(order));
