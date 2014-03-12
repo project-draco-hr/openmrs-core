@@ -2,7 +2,7 @@
   Patient patient=Context.getPatientService().getPatient(2);
   PersonAddress personAddress=patient.getPersonAddress();
   MockHttpServletRequest request=webTestHelper.newPOST("/admin/patients/shortPatientForm.form");
-  request.setParameter("patientId",patient.getPatientId().toString());
+  request.setParameter("patientId","2");
   request.setParameter("personAddress.address1","new");
   request.setParameter("personAddress.countyDistrict","");
   webTestHelper.handle(request);
