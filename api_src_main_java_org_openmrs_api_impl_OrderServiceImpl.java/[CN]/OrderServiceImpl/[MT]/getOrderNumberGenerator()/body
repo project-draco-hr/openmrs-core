@@ -3,9 +3,11 @@
     String generatorBeanId=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_ORDER_NUMBER_GENERATOR_BEAN_ID);
     if (StringUtils.hasText(generatorBeanId)) {
       orderNumberGenerator=Context.getRegisteredComponent(generatorBeanId,OrderNumberGenerator.class);
+      log.info("Successfully set the configured order number generator");
     }
  else {
       orderNumberGenerator=this;
+      log.info("Setting default order number generator");
     }
   }
   return orderNumberGenerator;
