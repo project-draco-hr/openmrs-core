@@ -1,0 +1,15 @@
+{
+  List<OrderType> orderTypeListWithRetiredOrderTypes=Context.getOrderService().getOrderTypes(true);
+  assertNotNull(orderTypeListWithRetiredOrderTypes);
+  int totalOrderTypes=orderTypeListWithRetiredOrderTypes.size();
+  int count=0;
+  for (  OrderType orderType : orderTypeListWithRetiredOrderTypes) {
+    if (orderType.getRetired()) {
+      count++;
+    }
+  }
+  List<OrderType> orderTypeListWithoutRetiredOrderTypes=Context.getOrderService().getOrderTypes(false);
+  int totalOrdersWithoutRetiredOrderTypes=orderTypeListWithoutRetiredOrderTypes.size();
+  int actualValue=totalOrderTypes - count;
+  assertEquals(actualValue,totalOrdersWithoutRetiredOrderTypes);
+}

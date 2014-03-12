@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(OrderType.class);
+  criteria.add(Restrictions.eq("orderTypeId",orderTypeId));
+  return (OrderType)criteria.uniqueResult();
+}
