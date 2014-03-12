@@ -1,0 +1,11 @@
+{
+  Drug drug=conceptService.getDrug(11);
+  Errors errors=new BindException(drug,"drug");
+  for (  DrugReferenceMap drugReferenceMap : drug.getDrugReferenceMaps()) {
+    if (drugReferenceMap.getId().equals(3)) {
+      drugReferenceMap.setConceptMapType(null);
+    }
+  }
+  new DrugValidator().validate(drug,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("drugReferenceMaps[0].conceptMapType"));
+}
