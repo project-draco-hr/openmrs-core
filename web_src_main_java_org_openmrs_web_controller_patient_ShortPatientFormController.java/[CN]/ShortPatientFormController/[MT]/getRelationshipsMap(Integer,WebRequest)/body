@@ -1,10 +1,16 @@
 {
-  String showRelationships=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEWPATIENTFORM_SHOW_RELATIONSHIPS,"false");
-  if ("false".equals(showRelationships) || result.hasErrors()) {
-    return new LinkedHashMap<String,Relationship>();
-  }
-  Person person=patientModel.getPatient();
   Map<String,Relationship> relationshipMap=new LinkedHashMap<String,Relationship>();
+  if (patientId == null) {
+    return relationshipMap;
+  }
+  Person person=Context.getPersonService().getPerson(patientId);
+  if (person == null) {
+    throw new IllegalArgumentException("Patient does not exist: " + patientId);
+  }
+  String showRelationships=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEWPATIENTFORM_SHOW_RELATIONSHIPS,"false");
+  if ("false".equals(showRelationships)) {
+    return relationshipMap;
+  }
   String relationshipsString=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_NEWPATIENTFORM_RELATIONSHIPS,"");
   relationshipsString=relationshipsString.trim();
   if (relationshipsString.length() > 0) {
