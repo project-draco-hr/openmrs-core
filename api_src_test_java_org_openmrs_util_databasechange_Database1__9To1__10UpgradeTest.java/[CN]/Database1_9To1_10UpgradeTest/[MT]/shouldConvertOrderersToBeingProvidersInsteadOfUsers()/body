@@ -17,25 +17,12 @@
   for (  List<Object> row : rows) {
     ordersAndOrderersWithAProviderAccount.add(new OrderAndPerson((Integer)row.get(0),(Integer)row.get(1)));
   }
-  Assert.assertEquals(7,ordersAndOrderersWithAProviderAccount.size());
-  rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer is null ",true);
-  List<Integer> ordersWithNullOrderer=new ArrayList<Integer>();
-  for (  List<Object> row : rows) {
-    ordersWithNullOrderer.add((Integer)row.get(0));
-  }
-  Assert.assertEquals(2,ordersWithNullOrderer.size());
+  Assert.assertEquals(9,ordersAndOrderersWithAProviderAccount.size());
   Set<Integer> originalProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
   createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
   upgradeTestUtil.upgrade();
   Set<Integer> newProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
   Assert.assertEquals(originalProviderIds.size() + personIdsWithNoProviderAccount.size(),newProviderIds.size());
-  rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer is null ",true);
-  List<Integer> newOrdersWithNullOrderer=new ArrayList<Integer>();
-  for (  List<Object> row : rows) {
-    newOrdersWithNullOrderer.add((Integer)row.get(0));
-  }
-  Assert.assertEquals(2,newOrdersWithNullOrderer.size());
-  Assert.assertEquals(ordersWithNullOrderer,newOrdersWithNullOrderer);
   for (  OrderAndPerson op : ordersAndOrderersWithAProviderAccount) {
     rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where order_id = " + op.getOrderId(),true);
     Assert.assertEquals(op.getPersonId(),rows.get(0).get(1));
