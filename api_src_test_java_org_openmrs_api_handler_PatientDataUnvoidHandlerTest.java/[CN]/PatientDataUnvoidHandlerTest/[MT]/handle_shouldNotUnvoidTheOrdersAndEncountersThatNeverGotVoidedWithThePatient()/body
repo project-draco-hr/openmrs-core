@@ -11,7 +11,7 @@
   Assert.assertTrue(testEncounter.isVoided());
   List<Patient> patients=new ArrayList<Patient>();
   patients.add(patient);
-  Order testOrder=os.getOrders(Order.class,patients,null,null,null).get(0);
+  Order testOrder=os.getOrders(null,patients,null,null,null).get(0);
   Assert.assertNotNull(testOrder);
   Assert.assertNull(testOrder.getDateVoided());
   Assert.assertNull(testOrder.getVoidedBy());

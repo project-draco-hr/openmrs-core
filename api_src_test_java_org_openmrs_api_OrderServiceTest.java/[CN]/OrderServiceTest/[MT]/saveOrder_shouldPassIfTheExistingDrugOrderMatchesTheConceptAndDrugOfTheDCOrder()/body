@@ -3,6 +3,7 @@
   assertTrue(OrderUtil.isOrderActive(orderToDiscontinue,null));
   DrugOrder order=new DrugOrder();
   order.setDrug(orderToDiscontinue.getDrug());
+  order.setOrderType(orderService.getOrderTypeByName("Drug order"));
   order.setAction(Order.Action.DISCONTINUE);
   order.setOrderReasonNonCoded("Discontinue this");
   order.setPatient(orderToDiscontinue.getPatient());

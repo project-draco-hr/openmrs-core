@@ -5,8 +5,5 @@
   if (asOfDate == null) {
     asOfDate=new Date();
   }
-  if (orderClass == null) {
-    orderClass=(Class<Ord>)Order.class;
-  }
-  return dao.getActiveOrders(patient,orderClass,careSetting,asOfDate);
+  return dao.getActiveOrders(patient,orderType,careSetting,asOfDate);
 }

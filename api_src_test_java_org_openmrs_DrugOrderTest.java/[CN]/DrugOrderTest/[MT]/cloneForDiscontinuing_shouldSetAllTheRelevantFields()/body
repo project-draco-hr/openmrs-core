@@ -4,6 +4,7 @@
   order.setCareSetting(new CareSetting());
   order.setConcept(new Concept());
   order.setDrug(new Drug());
+  order.setOrderType(new OrderType());
   DrugOrder dcOrder=(DrugOrder)order.cloneForDiscontinuing();
   assertEquals(order.getDrug(),dcOrder.getDrug());
   assertEquals(order.getPatient(),dcOrder.getPatient());
@@ -11,4 +12,5 @@
   assertEquals("should set previous order to anOrder",order,dcOrder.getPreviousOrder());
   assertEquals("should set new order action to new",dcOrder.getAction(),Order.Action.DISCONTINUE);
   assertEquals(order.getCareSetting(),dcOrder.getCareSetting());
+  assertEquals(order.getOrderType(),dcOrder.getOrderType());
 }

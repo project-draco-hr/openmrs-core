@@ -3,7 +3,7 @@
   cal.add(Calendar.HOUR_OF_DAY,1);
   Patient patient=Context.getPatientService().getPatient(2);
   CareSetting careSetting=orderService.getCareSetting(1);
-  Order orderToDiscontinue=orderService.getActiveOrders(patient,Order.class,careSetting,null).get(0);
+  Order orderToDiscontinue=orderService.getActiveOrders(patient,null,careSetting,null).get(0);
   Encounter encounter=encounterService.getEncounter(3);
   orderService.discontinueOrder(orderToDiscontinue,new Concept(),cal.getTime(),null,encounter);
 }

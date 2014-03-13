@@ -1,7 +1,7 @@
 {
   Patient patient=patientService.getPatient(2);
-  List<DrugOrder> orders=orderService.getActiveOrders(patient,DrugOrder.class,null,null);
+  List<Order> orders=orderService.getActiveOrders(patient,orderService.getOrderTypeByName("Drug order"),null,null);
   assertEquals(2,orders.size());
-  DrugOrder[] expectedOrders={(DrugOrder)orderService.getOrder(3),(DrugOrder)orderService.getOrder(5)};
+  Order[] expectedOrders={(Order)orderService.getOrder(3),(Order)orderService.getOrder(5)};
   assertThat(orders,hasItems(expectedOrders));
 }

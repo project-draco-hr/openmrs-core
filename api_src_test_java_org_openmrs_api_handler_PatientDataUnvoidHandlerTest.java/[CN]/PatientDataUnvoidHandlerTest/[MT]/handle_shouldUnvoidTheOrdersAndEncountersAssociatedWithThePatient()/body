@@ -14,7 +14,7 @@
   OrderService os=Context.getOrderService();
   List<Patient> patients=new ArrayList<Patient>();
   patients.add(patient);
-  List<Order> orders=os.getOrders(Order.class,patients,null,null,null);
+  List<Order> orders=os.getOrders(null,patients,null,null,null);
   Assert.assertTrue(CollectionUtils.isNotEmpty(orders));
   for (  Order order : orders) {
     Assert.assertTrue(order.isVoided());

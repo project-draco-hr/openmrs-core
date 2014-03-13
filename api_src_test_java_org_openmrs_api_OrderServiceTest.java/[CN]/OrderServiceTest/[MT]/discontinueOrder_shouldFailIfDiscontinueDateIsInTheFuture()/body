@@ -1,7 +1,7 @@
 {
   Calendar cal=Calendar.getInstance();
   cal.add(Calendar.HOUR_OF_DAY,1);
-  Order orderToDiscontinue=orderService.getActiveOrders(Context.getPatientService().getPatient(2),Order.class,orderService.getCareSetting(1),null).get(0);
+  Order orderToDiscontinue=orderService.getActiveOrders(Context.getPatientService().getPatient(2),null,orderService.getCareSetting(1),null).get(0);
   Encounter encounter=encounterService.getEncounter(3);
   orderService.discontinueOrder(orderToDiscontinue,"Testing",cal.getTime(),null,encounter);
 }

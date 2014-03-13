@@ -8,6 +8,7 @@
   assertNotNull(orderToDiscontinue.getDrug());
   DrugOrder order=new DrugOrder();
   order.setDrug(discontinuationOrderDrug);
+  order.setOrderType(orderService.getOrderTypeByName("Drug order"));
   order.setAction(Order.Action.DISCONTINUE);
   order.setOrderReasonNonCoded("Discontinue this");
   order.setPatient(orderToDiscontinue.getPatient());
