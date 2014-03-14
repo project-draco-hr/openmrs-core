@@ -1,11 +1,10 @@
 {
   OrderType orderType=new OrderType();
-  orderType.setName("unique name");
-  orderType.setJavaClassName("org.openmrs.TestDrugOrder");
+  orderType.setName("concept class test");
   Collection<ConceptClass> col=new HashSet<ConceptClass>();
-  col.add(Context.getConceptService().getConceptClass(2));
+  col.add(Context.getConceptService().getConceptClass(1));
   orderType.setConceptClasses(col);
   Errors errors=new BindException(orderType,"orderType");
   new OrderTypeValidator().validate(orderType,errors);
-  Assert.assertFalse(errors.hasErrors());
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptClasses"));
 }

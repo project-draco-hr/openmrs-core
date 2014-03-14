@@ -8,9 +8,23 @@
     if (!StringUtils.hasText(name)) {
       errors.rejectValue("name","error.name");
     }
-    OrderType ot=Context.getOrderService().getOrderTypeByName(name);
-    if (ot != null && !orderType.equals(ot)) {
+    OrderType duplicate=Context.getOrderService().getOrderTypeByName(name);
+    if (duplicate != null && !orderType.equals(duplicate)) {
       errors.rejectValue("name","OrderType.duplicate.name","Duplicate order type name: " + name);
+    }
+    for (    OrderType ot : Context.getOrderService().getOrderTypes(true)) {
+      if (ot != null) {
+        if (OpenmrsUtil.nullSafeEquals(orderType.getJavaClassName(),ot.getJavaClassName())) {
+          errors.rejectValue("javaClassName","OrderType.duplicate.javaClass","Duplicate order type java class: " + ot.getJavaClassName());
+        }
+ else {
+          for (          ConceptClass cc : ot.getConceptClasses()) {
+            if (cc != null && orderType.getConceptClasses().contains(cc)) {
+              errors.rejectValue("conceptClasses","OrderType.duplicate.conceptClass","Duplicate order type concept class: " + cc.getName());
+            }
+          }
+        }
+      }
     }
   }
 }
