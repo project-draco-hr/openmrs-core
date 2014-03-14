@@ -1,0 +1,9 @@
+{
+  String moduleId="basicmodule";
+  String version="0.1";
+  String resource="messages_doesnotexist.properties";
+  JarFile moduleJarFile=loadModuleJarFile(moduleId,version);
+  Assert.assertNotNull(moduleJarFile);
+  InputStream resultStream=ModuleUtil.getResourceFromApi(moduleJarFile,moduleId,version,resource);
+  Assert.assertNull(resultStream);
+}

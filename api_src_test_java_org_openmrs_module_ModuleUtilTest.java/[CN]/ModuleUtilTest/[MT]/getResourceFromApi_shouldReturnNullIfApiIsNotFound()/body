@@ -1,0 +1,9 @@
+{
+  String moduleId="logic";
+  String version="0.2";
+  String resource="messages.properties";
+  JarFile moduleJarFile=loadModuleJarFile(moduleId,version);
+  Assert.assertNotNull(moduleJarFile);
+  InputStream resultStream=ModuleUtil.getResourceFromApi(moduleJarFile,moduleId,version,resource);
+  Assert.assertNull(resultStream);
+}

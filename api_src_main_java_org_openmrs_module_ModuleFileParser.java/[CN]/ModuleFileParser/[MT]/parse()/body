@@ -24,7 +24,7 @@
       DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
       DocumentBuilder db=dbf.newDocumentBuilder();
       db.setEntityResolver(new EntityResolver(){
-        public InputSource resolveEntity(        String publicId,        String systemId) throws SAXException, IOException {
+        @Override public InputSource resolveEntity(        String publicId,        String systemId) throws SAXException, IOException {
           return new InputSource(new StringReader(""));
         }
       }
@@ -77,24 +77,6 @@
     if (packageName == null || packageName.length() == 0) {
       throw new ModuleException(Context.getMessageSourceService().getMessage("Module.error.packageCannotBeEmpty"),name);
     }
-    Document log4jDoc=null;
-    try {
-      ZipEntry log4j=jarfile.getEntry("log4j.xml");
-      if (log4j != null) {
-        InputStream log4jStream=jarfile.getInputStream(log4j);
-        DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-        DocumentBuilder db=dbf.newDocumentBuilder();
-        db.setEntityResolver(new EntityResolver(){
-          public InputSource resolveEntity(          String publicId,          String systemId) throws SAXException, IOException {
-            return new InputSource(new StringReader(""));
-          }
-        }
-);
-        log4jDoc=db.parse(log4jStream);
-      }
-    }
- catch (    Exception e) {
-    }
     module=new Module(name,moduleId,packageName,author,desc,version);
     module.setActivatorName(getElement(rootNode,configVersion,"activator").trim());
     module.setRequireDatabaseVersion(getElement(rootNode,configVersion,"require_database_version").trim());
@@ -106,11 +88,10 @@
     module.setExtensionNames(getExtensions(rootNode,configVersion));
     module.setPrivileges(getPrivileges(rootNode,configVersion));
     module.setGlobalProperties(getGlobalProperties(rootNode,configVersion));
-    module.setMessages(getMessages(rootNode,configVersion,jarfile));
+    module.setMessages(getMessages(rootNode,configVersion,jarfile,moduleId,version));
     module.setMappingFiles(getMappingFiles(rootNode,configVersion,jarfile));
     module.setPackagesWithMappedClasses(getPackagesWithMappedClasses(rootNode,configVersion));
     module.setConfig(configDoc);
-    module.setLog4j(log4jDoc);
     module.setMandatory(getMandatory(rootNode,configVersion,jarfile));
     module.setFile(moduleFile);
   }
