@@ -5,6 +5,7 @@
  else {
     Drug drug=(Drug)obj;
     Set<DrugReferenceMap> drugReferenceMaps=drug.getDrugReferenceMaps();
+    Set<String> mappedTermUuids=new HashSet<String>();
     int index=0;
     for (    DrugReferenceMap referenceMap : drugReferenceMaps) {
       Drug mappedDrug=referenceMap.getDrug();
@@ -36,6 +37,12 @@
   finally {
           errors.popNestedPath();
         }
+      }
+      if (errors.hasErrors()) {
+        return;
+      }
+      if (!mappedTermUuids.add(referenceMap.getConceptReferenceTerm().getUuid())) {
+        errors.rejectValue("drugReferenceMaps[" + index + "].conceptReferenceTerm","Drug.drugReferenceMap.termAlreadyMapped","Cannot map a drug multiple times to the same reference term");
       }
       index++;
     }
