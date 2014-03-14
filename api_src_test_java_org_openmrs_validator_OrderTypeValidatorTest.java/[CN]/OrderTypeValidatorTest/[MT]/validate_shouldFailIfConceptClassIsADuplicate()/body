@@ -1,10 +1,10 @@
 {
   OrderType orderType=new OrderType();
   orderType.setName("concept class test");
-  Collection<ConceptClass> col=new HashSet<ConceptClass>();
-  col.add(Context.getConceptService().getConceptClass(1));
-  orderType.setConceptClasses(col);
+  OrderType existing=orderService.getOrderType(1);
+  assertEquals(1,existing.getConceptClasses().size());
+  orderType.addConceptClass(existing.getConceptClasses().iterator().next());
   Errors errors=new BindException(orderType,"orderType");
   new OrderTypeValidator().validate(orderType,errors);
-  Assert.assertEquals(true,errors.hasFieldErrors("conceptClasses"));
+  Assert.assertEquals(true,errors.hasFieldErrors("conceptClasses[0]"));
 }
