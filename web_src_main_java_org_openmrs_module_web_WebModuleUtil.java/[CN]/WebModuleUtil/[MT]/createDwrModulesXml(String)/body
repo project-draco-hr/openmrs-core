@@ -1,0 +1,20 @@
+{
+  try {
+    DocumentBuilderFactory docFactory=DocumentBuilderFactory.newInstance();
+    DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
+    Document doc=docBuilder.newDocument();
+    Element rootElement=doc.createElement("dwr");
+    doc.appendChild(rootElement);
+    TransformerFactory transformerFactory=TransformerFactory.newInstance();
+    Transformer transformer=transformerFactory.newTransformer();
+    DOMSource source=new DOMSource(doc);
+    StreamResult result=new StreamResult(new File(realPath + "/WEB-INF/dwr-modules.xml".replace("/",File.separator)));
+    transformer.transform(source,result);
+  }
+ catch (  ParserConfigurationException pce) {
+    log.error(pce);
+  }
+catch (  TransformerException tfe) {
+    log.error(tfe);
+  }
+}

@@ -3,7 +3,10 @@
     log.debug("trying to start module " + mod);
   }
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
-    String realPath=servletContext.getRealPath("");
+    String realPath=getRealPath(servletContext);
+    if (realPath == null)     realPath=System.getProperty("user.dir");
+    File webInf=new File(realPath + "/WEB-INF".replace("/",File.separator));
+    if (!webInf.exists())     webInf.mkdir();
     copyModuleMessagesIntoWebapp(mod,realPath);
     log.debug("Done copying messages");
     boolean moduleNeedsContextRefresh=false;
@@ -92,6 +95,9 @@
       Element root=config.getDocumentElement();
       if (root.getElementsByTagName("dwr").getLength() > 0) {
         File f=new File(realPath + "/WEB-INF/dwr-modules.xml".replace("/",File.separator));
+        if (!f.exists()) {
+          createDwrModulesXml(realPath);
+        }
         inputStream=new FileInputStream(f);
         Document dwrmodulexml=getDWRModuleXML(inputStream,realPath);
         Element outputRoot=dwrmodulexml.getDocumentElement();
