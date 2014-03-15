@@ -3,6 +3,9 @@
   executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueReason.xml");
   OrderService orderService=Context.getOrderService();
   Order discontinueOrder=orderService.getOrder(26);
+  assertEquals(Action.DISCONTINUE,discontinueOrder.getAction());
   Encounter encounter=encounterService.getEncounter(3);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("An order with action " + Action.DISCONTINUE + " cannot be discontinued.");
   orderService.discontinueOrder(discontinueOrder,(Concept)null,null,null,encounter);
 }

@@ -15,7 +15,7 @@
   List<Patient> patients=new ArrayList<Patient>();
   patients.add(patient);
   List<Order> orders=os.getOrders(null,patients,null,null,null);
-  Assert.assertTrue(CollectionUtils.isNotEmpty(orders));
+  Assert.assertFalse(orders.isEmpty());
   for (  Order order : orders) {
     Assert.assertTrue(order.isVoided());
     Assert.assertNotNull(order.getDateVoided());

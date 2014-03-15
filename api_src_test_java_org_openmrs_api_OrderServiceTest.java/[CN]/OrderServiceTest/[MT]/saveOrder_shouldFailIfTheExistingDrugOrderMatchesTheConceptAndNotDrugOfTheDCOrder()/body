@@ -15,6 +15,7 @@
   order.setConcept(orderToDiscontinue.getConcept());
   order.setOrderer(orderToDiscontinue.getOrderer());
   order.setCareSetting(orderToDiscontinue.getCareSetting());
+  order.setEncounter(encounterService.getEncounter(3));
   order.setStartDate(new Date());
   orderService.saveOrder(order,null);
   Assert.assertNotNull("previous order should be discontinued",orderToDiscontinue.getDateStopped());

@@ -1,4 +1,7 @@
 {
+  executeDataSet(OTHER_ENCOUNTERS_XML);
   final DrugOrder order=(DrugOrder)orderService.getOrder(5);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot edit an existing order, you need to revise it instead");
   orderService.saveOrder(order,null);
 }
