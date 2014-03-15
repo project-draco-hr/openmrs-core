@@ -1,0 +1,7 @@
+{
+  OrderService orderService=Context.getOrderService();
+  OrderType orderType=orderService.getOrderType(13);
+  assertNotNull(orderType);
+  orderService.purgeOrderType(orderType);
+  assertNull(orderService.getOrderType(13));
+}

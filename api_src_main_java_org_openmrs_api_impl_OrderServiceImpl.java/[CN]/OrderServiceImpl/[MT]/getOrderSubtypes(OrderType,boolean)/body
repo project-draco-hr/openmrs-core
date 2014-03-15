@@ -1,0 +1,15 @@
+{
+  List<OrderType> orderSuTypes=new ArrayList<OrderType>();
+  List<OrderType> tempFirstLevelList;
+  List<OrderType> tempSecondLevelList=new ArrayList<OrderType>();
+  tempFirstLevelList=dao.getOrderSubtypesOfParent(orderType,includeRetired);
+  while (!tempFirstLevelList.isEmpty()) {
+    for (    OrderType type : tempFirstLevelList) {
+      orderSuTypes.add(type);
+      tempSecondLevelList.addAll(dao.getOrderSubtypesOfParent(type,includeRetired));
+    }
+    tempFirstLevelList=tempSecondLevelList;
+    tempSecondLevelList=new ArrayList<OrderType>();
+  }
+  return orderSuTypes;
+}

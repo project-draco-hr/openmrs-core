@@ -1,0 +1,5 @@
+{
+  OrderService orderService=Context.getOrderService();
+  List<OrderType> orderTypeList=orderService.getOrderSubtypes(orderService.getOrderType(2),true);
+  assertEquals(7,orderTypeList.size());
+}
