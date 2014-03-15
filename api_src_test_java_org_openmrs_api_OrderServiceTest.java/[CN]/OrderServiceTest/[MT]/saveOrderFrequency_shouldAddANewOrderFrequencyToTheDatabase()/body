@@ -1,8 +1,11 @@
 {
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("new name",Context.getLocale()));
+  concept=conceptService.saveConcept(concept);
   OrderService os=Context.getOrderService();
   Integer originalSize=os.getOrderFrequencies(true).size();
   OrderFrequency orderFrequency=new OrderFrequency();
-  orderFrequency.setConcept(new Concept(3));
+  orderFrequency.setConcept(concept);
   orderFrequency.setFrequencyPerDay(2d);
   orderFrequency=os.saveOrderFrequency(orderFrequency);
   assertNotNull(orderFrequency.getId());
