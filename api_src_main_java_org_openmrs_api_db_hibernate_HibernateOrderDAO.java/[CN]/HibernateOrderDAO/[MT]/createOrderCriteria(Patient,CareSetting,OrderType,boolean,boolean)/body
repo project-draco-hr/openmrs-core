@@ -1,0 +1,19 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Order.class);
+  if (patient != null) {
+    criteria.add(Restrictions.eq("patient",patient));
+  }
+  if (careSetting != null) {
+    criteria.add(Restrictions.eq("careSetting",careSetting));
+  }
+  if (orderType != null) {
+    criteria.add(Restrictions.eq("orderType",orderType));
+  }
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",false));
+  }
+  if (!includeDiscontinuationOrders) {
+    criteria.add(Restrictions.ne("action",Order.Action.DISCONTINUE));
+  }
+  return criteria;
+}

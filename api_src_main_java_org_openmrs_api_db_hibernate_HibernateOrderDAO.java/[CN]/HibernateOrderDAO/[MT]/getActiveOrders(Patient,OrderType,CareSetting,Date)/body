@@ -1,14 +1,5 @@
 {
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Order.class);
-  if (orderType != null) {
-    crit.add(Restrictions.eq("orderType",orderType));
-  }
-  crit.add(Restrictions.eq("patient",patient));
-  if (careSetting != null) {
-    crit.add(Restrictions.eq("careSetting",careSetting));
-  }
-  crit.add(Restrictions.ne("action",Action.DISCONTINUE));
-  crit.add(Restrictions.eq("voided",false));
+  Criteria crit=createOrderCriteria(patient,careSetting,orderType,false,false);
   Criterion startDateEqualToOrBeforeAsOfDate=Restrictions.le("startDate",asOfDate);
   crit.add(startDateEqualToOrBeforeAsOfDate);
   Disjunction dateStoppedAndAutoExpDateDisjunction=Restrictions.disjunction();

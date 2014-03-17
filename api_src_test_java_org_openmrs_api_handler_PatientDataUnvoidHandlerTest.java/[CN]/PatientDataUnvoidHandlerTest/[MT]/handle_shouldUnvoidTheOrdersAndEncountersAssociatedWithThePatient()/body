@@ -12,9 +12,7 @@
     Assert.assertNotNull(encounter.getVoidReason());
   }
   OrderService os=Context.getOrderService();
-  List<Patient> patients=new ArrayList<Patient>();
-  patients.add(patient);
-  List<Order> orders=os.getOrders(null,patients,null,null,null);
+  List<Order> orders=os.getAllOrdersByPatient(patient);
   Assert.assertFalse(orders.isEmpty());
   for (  Order order : orders) {
     Assert.assertTrue(order.isVoided());

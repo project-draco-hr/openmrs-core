@@ -1,0 +1,9 @@
+{
+  if (patient == null) {
+    throw new IllegalArgumentException("Patient is required");
+  }
+  if (careSetting == null) {
+    throw new IllegalArgumentException("CareSetting is required");
+  }
+  return dao.getOrders(patient,careSetting,orderType,includeVoided,false);
+}

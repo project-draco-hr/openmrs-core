@@ -16,7 +16,6 @@
     boolean shouldMarkAsDiscontinued=false;
     if (isDrugOrderAndHasADrug) {
       DrugOrder drugOrder1=(DrugOrder)order;
-      System.out.println("ID:" + activeOrder.getId());
       DrugOrder drugOrder2=(DrugOrder)activeOrder;
       if (OpenmrsUtil.nullSafeEquals(drugOrder1.getDrug(),drugOrder2.getDrug())) {
         shouldMarkAsDiscontinued=true;
