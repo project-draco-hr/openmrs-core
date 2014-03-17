@@ -1,0 +1,3 @@
+{
+  return (OrderType)sessionFactory.getCurrentSession().createQuery("from OrderType where :conceptClass in elements(conceptClasses)").setParameter("conceptClass",conceptClass).uniqueResult();
+}

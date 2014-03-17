@@ -1,0 +1,5 @@
+{
+  OrderType orderType=dao.getOrderTypeByConceptClass(Context.getConceptService().getConceptClass(1));
+  Assert.assertNotNull(orderType);
+  Assert.assertTrue(orderType.getOrderTypeId() == 1);
+}
