@@ -1,6 +1,10 @@
 {
-  Concept concept=new Concept(1);
-  concept.setConceptClass(Context.getConceptService().getConceptClass(19));
+  ConceptService cs=Context.getConceptService();
+  Concept concept=new Concept();
+  ConceptName cn=new ConceptName("new name",Context.getLocale());
+  concept.setConceptClass(cs.getConceptClass(19));
+  concept.addName(cn);
+  cs.saveConcept(concept);
   OrderFrequency orderFrequency=new OrderFrequency();
   orderFrequency.setConcept(concept);
   Errors errors=new BindException(orderFrequency,"orderFrequency");
