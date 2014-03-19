@@ -6,7 +6,7 @@
       stopModule(dependentModule,servletContext,skipRefresh);
     }
   }
-  String realPath=servletContext.getRealPath("");
+  String realPath=getRealPath(servletContext);
   String absPath=realPath + "/WEB-INF/view/module/" + moduleId;
   File moduleWebFolder=new File(absPath.replace("/",File.separator));
   if (moduleWebFolder.exists()) {
@@ -25,6 +25,9 @@
     Element root=config.getDocumentElement();
     if (root.getElementsByTagName("dwr").getLength() > 0) {
       File f=new File(realPath + "/WEB-INF/dwr-modules.xml".replace("/",File.separator));
+      if (!f.exists()) {
+        createDwrModulesXml(realPath);
+      }
       inputStream=new FileInputStream(f);
       Document dwrmodulexml=getDWRModuleXML(inputStream,realPath);
       Element outputRoot=dwrmodulexml.getDocumentElement();

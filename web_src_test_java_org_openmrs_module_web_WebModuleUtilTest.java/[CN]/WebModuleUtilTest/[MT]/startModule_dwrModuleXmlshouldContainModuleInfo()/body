@@ -1,0 +1,21 @@
+{
+  partialMockWebModuleUtilForMessagesTests();
+  Module mod=buildModuleForMessageTest();
+  ModuleFactory.getStartedModulesMap().put(mod.getModuleId(),mod);
+  ServletContext servletContext=mock(ServletContext.class);
+  String realPath=servletContext.getRealPath("");
+  if (realPath == null)   realPath=System.getProperty("user.dir");
+  WebModuleUtil.startModule(mod,servletContext,true);
+  File f=new File(realPath + "/WEB-INF/dwr-modules.xml");
+  Scanner scanner=new Scanner(f);
+  boolean found=false;
+  while (scanner.hasNextLine()) {
+    String line=scanner.nextLine();
+    if (line.contains(mod.getModuleId())) {
+      found=true;
+      break;
+    }
+  }
+  if (scanner != null)   scanner.close();
+  assertTrue(found);
+}
