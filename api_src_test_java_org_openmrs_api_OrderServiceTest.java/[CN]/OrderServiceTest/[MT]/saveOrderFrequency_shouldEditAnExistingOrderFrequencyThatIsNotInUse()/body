@@ -1,5 +1,6 @@
 {
-  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(2);
+  executeDataSet(OTHER_ORDER_FREQUENCIES_XML);
+  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(100);
   assertNotNull(orderFrequency);
   orderFrequency.setFrequencyPerDay(4d);
   Context.getOrderService().saveOrderFrequency(orderFrequency);

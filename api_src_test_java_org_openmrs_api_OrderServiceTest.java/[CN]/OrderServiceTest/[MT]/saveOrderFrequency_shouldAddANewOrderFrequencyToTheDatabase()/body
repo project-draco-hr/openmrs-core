@@ -1,6 +1,7 @@
 {
   Concept concept=new Concept();
   concept.addName(new ConceptName("new name",Context.getLocale()));
+  concept.setConceptClass(conceptService.getConceptClassByName("Frequency"));
   concept=conceptService.saveConcept(concept);
   OrderService os=Context.getOrderService();
   Integer originalSize=os.getOrderFrequencies(true).size();
