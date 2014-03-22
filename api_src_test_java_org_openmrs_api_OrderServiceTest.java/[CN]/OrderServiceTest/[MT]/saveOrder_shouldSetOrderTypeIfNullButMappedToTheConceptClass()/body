@@ -8,5 +8,5 @@
   order.setEncounter(encounterService.getEncounter(6));
   order.setStartDate(new Date());
   order=orderService.saveOrder(order,null);
-  assertTrue(order.getOrderType().getOrderTypeId() == 1);
+  assertEquals(2,order.getOrderType().getOrderTypeId().intValue());
 }
