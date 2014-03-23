@@ -1,7 +1,5 @@
 {
   Criteria crit=createOrderCriteria(patient,careSetting,orderType,false,false);
-  Criterion startDateEqualToOrBeforeAsOfDate=Restrictions.le("startDate",asOfDate);
-  crit.add(startDateEqualToOrBeforeAsOfDate);
   Disjunction dateStoppedAndAutoExpDateDisjunction=Restrictions.disjunction();
   Criterion stopAndAutoExpDateAreBothNull=Restrictions.and(Restrictions.isNull("dateStopped"),Restrictions.isNull("autoExpireDate"));
   dateStoppedAndAutoExpDateDisjunction.add(stopAndAutoExpDateAreBothNull);
