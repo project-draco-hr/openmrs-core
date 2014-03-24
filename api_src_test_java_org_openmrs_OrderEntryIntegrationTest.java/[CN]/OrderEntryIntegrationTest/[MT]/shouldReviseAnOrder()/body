@@ -1,6 +1,6 @@
 {
   Order originalOrder=orderService.getOrder(111);
-  assertTrue(OrderUtil.isOrderActive(originalOrder,null));
+  assertTrue(OrderUtilTest.isActiveOrder(originalOrder,null));
   final Patient patient=originalOrder.getPatient();
   List<Order> originalActiveOrders=orderService.getActiveOrders(patient,null,null,null);
   final int originalOrderCount=originalActiveOrders.size();
@@ -14,5 +14,5 @@
   Thread.sleep(1);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(originalOrderCount,activeOrders.size());
-  assertFalse(OrderUtil.isOrderActive(originalOrder,null));
+  assertFalse(OrderUtilTest.isActiveOrder(originalOrder,null));
 }

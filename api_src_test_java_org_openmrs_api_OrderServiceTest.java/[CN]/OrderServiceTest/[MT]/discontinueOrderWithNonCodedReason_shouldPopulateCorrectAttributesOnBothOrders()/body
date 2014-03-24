@@ -2,7 +2,7 @@
   Order order=orderService.getOrderByOrderNumber("111");
   Encounter encounter=encounterService.getEncounter(3);
   Provider orderer=providerService.getProvider(1);
-  assertTrue(OrderUtil.isOrderActive(order,null));
+  assertTrue(OrderUtilTest.isActiveOrder(order,null));
   Date discontinueDate=new Date();
   String discontinueReasonNonCoded="Test if I can discontinue this";
   Order discontinueOrder=orderService.discontinueOrder(order,discontinueReasonNonCoded,discontinueDate,orderer,encounter);

@@ -1,6 +1,6 @@
 {
   final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(5);
-  assertTrue(OrderUtil.isOrderActive(orderToDiscontinue,null));
+  assertTrue(OrderUtilTest.isActiveOrder(orderToDiscontinue,null));
   Drug discontinuationOrderDrug=new Drug();
   discontinuationOrderDrug.setConcept(orderToDiscontinue.getConcept());
   discontinuationOrderDrug=Context.getConceptService().saveDrug(discontinuationOrderDrug);

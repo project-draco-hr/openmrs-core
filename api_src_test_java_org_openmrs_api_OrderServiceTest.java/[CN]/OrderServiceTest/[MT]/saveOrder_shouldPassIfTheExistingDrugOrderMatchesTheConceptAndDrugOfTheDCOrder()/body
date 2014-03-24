@@ -1,7 +1,7 @@
 {
   executeDataSet(OTHER_ENCOUNTERS_XML);
   final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(444);
-  assertTrue(OrderUtil.isOrderActive(orderToDiscontinue,null));
+  assertTrue(OrderUtilTest.isActiveOrder(orderToDiscontinue,null));
   DrugOrder order=new DrugOrder();
   order.setDrug(orderToDiscontinue.getDrug());
   order.setOrderType(orderService.getOrderTypeByName("Drug order"));
