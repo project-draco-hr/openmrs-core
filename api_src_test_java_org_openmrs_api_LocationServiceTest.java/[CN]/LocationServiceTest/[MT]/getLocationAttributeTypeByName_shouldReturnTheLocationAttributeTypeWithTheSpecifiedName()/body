@@ -1,0 +1,6 @@
+{
+  executeDataSet(LOC_ATTRIBUTE_DATA_XML);
+  LocationAttributeType locationAttributeType=Context.getLocationService().getLocationAttributeTypeByName("Audit Date");
+  Assert.assertNotNull(locationAttributeType);
+  Assert.assertEquals("Audit Date",locationAttributeType.getName());
+}

@@ -1,0 +1,7 @@
+{
+  LocationAttributeType et=Context.getLocationService().getLocationAttributeTypeByName("Audit Date");
+  Assert.assertNotNull(et);
+  Errors errors=new BindException(et,"locationAttributeType");
+  new LocationAttributeTypeValidator().validate(et,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
