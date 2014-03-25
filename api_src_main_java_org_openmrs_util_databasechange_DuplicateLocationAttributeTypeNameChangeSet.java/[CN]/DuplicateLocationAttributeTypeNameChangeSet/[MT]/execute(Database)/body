@@ -4,7 +4,9 @@
   Statement stmt=null;
   PreparedStatement pStmt=null;
   ResultSet rs=null;
+  boolean autoCommit=true;
   try {
+    autoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
     stmt=connection.createStatement();
     rs=stmt.executeQuery("SELECT * FROM location_attribute_type" + "INNER JOIN (SELECT name FROM location_attribute_type GROUP BY name HAVING count(name) > 1) " + "dup ON location_attribute_type.name = dup.name");
@@ -73,22 +75,13 @@
     }
     throw new CustomChangeException("Failed to update one or more duplicate LocationAttributeType names",e);
   }
-catch (  DatabaseException e) {
-    throw new CustomChangeException("Error while updating duplicate LocationAttributeType object names",e);
-  }
-catch (  SQLException e) {
-    throw new CustomChangeException("Error while updating duplicate LocationAttributeType object names",e);
-  }
-catch (  DAOException e) {
-    throw new CustomChangeException("Error accessing database connection",e);
-  }
 catch (  Exception e) {
-    throw new CustomChangeException("Error accessing database connection",e);
+    throw new CustomChangeException("Error while updating duplicate LocationAttributeType object names",e);
   }
  finally {
     try {
       connection.commit();
-      connection.setAutoCommit(true);
+      connection.setAutoCommit(autoCommit);
     }
  catch (    DatabaseException e) {
       log.warn("Failed to reset auto commit back to true",e);
