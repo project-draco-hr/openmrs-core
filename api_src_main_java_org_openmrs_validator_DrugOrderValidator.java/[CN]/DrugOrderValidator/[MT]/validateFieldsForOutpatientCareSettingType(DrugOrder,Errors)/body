@@ -1,0 +1,7 @@
+{
+  if (order.getCareSetting() != null && order.getCareSetting().getCareSettingType().equals(CareSetting.CareSettingType.OUTPATIENT)) {
+    ValidationUtils.rejectIfEmpty(errors,"quantity","error.quantityIsNullForOutPatient");
+    ValidationUtils.rejectIfEmpty(errors,"quantityUnits","error.quantityUnitsIsNullForOutPatient");
+    ValidationUtils.rejectIfEmpty(errors,"numRefills","error.numRefillsIsNullForOutPatient");
+  }
+}

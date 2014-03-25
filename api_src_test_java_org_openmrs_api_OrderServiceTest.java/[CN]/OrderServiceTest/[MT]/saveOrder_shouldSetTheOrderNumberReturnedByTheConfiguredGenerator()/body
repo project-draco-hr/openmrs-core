@@ -3,6 +3,7 @@
   GlobalProperty gp=new GlobalProperty(OpenmrsConstants.GP_ORDER_NUMBER_GENERATOR_BEAN_ID,"orderEntry.OrderNumberGenerator");
   Context.getAdministrationService().saveGlobalProperty(gp);
   Order order=new Order();
+  order.setEncounter(encounterService.getEncounter(6));
   order.setPatient(patientService.getPatient(2));
   order.setConcept(conceptService.getConcept(5497));
   order.setOrderer(providerService.getProvider(1));

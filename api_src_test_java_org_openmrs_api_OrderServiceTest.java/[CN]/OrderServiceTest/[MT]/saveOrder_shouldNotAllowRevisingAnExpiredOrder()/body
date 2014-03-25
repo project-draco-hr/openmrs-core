@@ -1,10 +1,14 @@
 {
+  executeDataSet(OTHER_ENCOUNTERS_XML);
   Order originalOrder=orderService.getOrder(6);
   assertNotNull(originalOrder.getAutoExpireDate());
   assertTrue(originalOrder.getAutoExpireDate().before(new Date()));
   Order revisedOrder=originalOrder.cloneForRevision();
+  revisedOrder.setEncounter(encounterService.getEncounter(7));
   revisedOrder.setInstructions("Take after a meal");
   revisedOrder.setOrderer(providerService.getProvider(1));
+  revisedOrder.setStartDate(new Date());
+  revisedOrder.setAutoExpireDate(new Date());
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Cannot discontinue an order that is already stopped, expired or voided");
   orderService.saveOrder(revisedOrder,null);

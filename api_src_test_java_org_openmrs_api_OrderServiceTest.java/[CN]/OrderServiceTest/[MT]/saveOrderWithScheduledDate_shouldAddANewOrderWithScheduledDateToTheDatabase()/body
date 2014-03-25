@@ -6,14 +6,15 @@
   order.setConcept(Context.getConceptService().getConcept(88));
   order.setCareSetting(orderService.getCareSetting(1));
   order.setOrderer(orderService.getOrder(1).getOrderer());
+  order.setEncounter(encounterService.getEncounter(3));
   order.setStartDate(new Date());
   order.setScheduledDate(scheduledDate);
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderType(orderService.getOrderType(1));
   order=orderService.saveOrder(order,null);
-  Order neworder=orderService.getOrder(order.getOrderId());
+  Order newOrder=orderService.getOrder(order.getOrderId());
   assertNotNull(order);
   assertEquals(scheduledDate,order.getScheduledDate());
-  assertNotNull(neworder);
-  assertEquals(scheduledDate,neworder.getScheduledDate());
+  assertNotNull(newOrder);
+  assertEquals(scheduledDate,newOrder.getScheduledDate());
 }
