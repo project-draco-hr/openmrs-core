@@ -6,8 +6,8 @@
   if (careSetting != null) {
     criteria.add(Restrictions.eq("careSetting",careSetting));
   }
-  if (orderType != null) {
-    criteria.add(Restrictions.eq("orderType",orderType));
+  if (orderTypes != null && orderTypes.size() > 0) {
+    criteria.add(Restrictions.in("orderType",orderTypes));
   }
   if (!includeVoided) {
     criteria.add(Restrictions.eq("voided",false));

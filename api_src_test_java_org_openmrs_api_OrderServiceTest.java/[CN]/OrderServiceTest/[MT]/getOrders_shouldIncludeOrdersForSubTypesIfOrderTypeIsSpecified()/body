@@ -1,0 +1,15 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-otherOrders.xml");
+  Patient patient=patientService.getPatient(2);
+  OrderType testOrderType=orderService.getOrderType(2);
+  CareSetting outPatient=orderService.getCareSetting(1);
+  List<Order> orders=orderService.getOrders(patient,outPatient,testOrderType,false);
+  assertEquals(7,orders.size());
+  Order[] expectedOrder1={orderService.getOrder(6),orderService.getOrder(7),orderService.getOrder(9),orderService.getOrder(101),orderService.getOrder(102),orderService.getOrder(103),orderService.getOrder(104)};
+  assertThat(orders,hasItems(expectedOrder1));
+  OrderType labTestOrderType=orderService.getOrderType(7);
+  orders=orderService.getOrders(patient,outPatient,labTestOrderType,false);
+  assertEquals(3,orderService.getOrders(patient,outPatient,labTestOrderType,false).size());
+  Order[] expectedOrder2={orderService.getOrder(101),orderService.getOrder(103),orderService.getOrder(104)};
+  assertThat(orders,hasItems(expectedOrder2));
+}
