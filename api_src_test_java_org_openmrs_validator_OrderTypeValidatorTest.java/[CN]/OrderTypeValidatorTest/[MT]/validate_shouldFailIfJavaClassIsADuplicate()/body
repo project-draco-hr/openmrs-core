@@ -1,8 +1,0 @@
-{
-  OrderType orderType=new OrderType();
-  orderType.setName("java class test");
-  orderType.setJavaClassName(orderService.getOrderType(1).getJavaClassName());
-  Errors errors=new BindException(orderType,"orderType");
-  new OrderTypeValidator().validate(orderType,errors);
-  Assert.assertEquals(true,errors.hasFieldErrors("javaClassName"));
-}
