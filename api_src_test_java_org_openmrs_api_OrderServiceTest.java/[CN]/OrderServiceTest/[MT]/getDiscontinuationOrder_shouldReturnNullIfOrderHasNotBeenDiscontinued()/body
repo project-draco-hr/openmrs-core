@@ -1,0 +1,5 @@
+{
+  Order order=orderService.getOrder(111);
+  Order discontinuationOrder=orderService.getDiscontinuationOrder(order);
+  assertThat(discontinuationOrder,is(nullValue()));
+}
