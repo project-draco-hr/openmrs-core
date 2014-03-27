@@ -1,0 +1,6 @@
+{
+  OrderType orderType=order.getOrderType();
+  if (orderType != null && !order.getClass().isAssignableFrom(orderType.getJavaClass())) {
+    errors.rejectValue("orderType","error.orderTypeClassMismatchesOrderClass");
+  }
+}

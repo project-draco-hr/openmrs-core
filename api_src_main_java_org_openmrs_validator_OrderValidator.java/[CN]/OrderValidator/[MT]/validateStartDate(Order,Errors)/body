@@ -11,5 +11,9 @@
       errors.rejectValue("startDate","Order.error.startDateAfterAutoExpireDate");
       errors.rejectValue("autoExpireDate","Order.error.startDateAfterAutoExpireDate");
     }
+    Encounter encounter=order.getEncounter();
+    if (encounter != null && encounter.getEncounterDatetime() != null && encounter.getEncounterDatetime().after(startDate)) {
+      errors.rejectValue("startDate","Order.error.startDateAfterEncounterDatetime");
+    }
   }
 }

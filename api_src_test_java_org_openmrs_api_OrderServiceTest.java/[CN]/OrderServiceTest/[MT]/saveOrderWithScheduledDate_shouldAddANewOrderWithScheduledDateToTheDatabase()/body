@@ -9,6 +9,7 @@
   order.setEncounter(encounterService.getEncounter(3));
   order.setStartDate(new Date());
   order.setScheduledDate(scheduledDate);
+  order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderType(orderService.getOrderType(1));
   order=orderService.saveOrder(order,null);

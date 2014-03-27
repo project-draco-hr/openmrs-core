@@ -13,6 +13,8 @@
     ValidationUtils.rejectIfEmpty(errors,"startDate","error.null");
     ValidationUtils.rejectIfEmpty(errors,"action","error.null");
     validateSamePatientInOrderAndEncounter(order,errors);
+    validateOrderTypeClass(order,errors);
     validateStartDate(order,errors);
+    validateScheduledDate(order,errors);
   }
 }

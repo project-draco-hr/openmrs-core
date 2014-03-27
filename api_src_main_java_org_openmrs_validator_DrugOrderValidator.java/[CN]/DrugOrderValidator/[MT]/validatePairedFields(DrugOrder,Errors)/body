@@ -5,4 +5,7 @@
   if (order.getQuantity() != null) {
     ValidationUtils.rejectIfEmpty(errors,"quantityUnits","error.quantityUnitsRequiredWithQuantity");
   }
+  if (order.getDuration() != null) {
+    ValidationUtils.rejectIfEmpty(errors,"durationUnits","error.durationUnitsRequiredWithDuration");
+  }
 }
