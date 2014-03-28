@@ -1,16 +1,18 @@
 {
+  MessageSourceService mss=Context.getMessageSourceService();
+  Locale locale=Context.getLocale();
   StringBuilder sb=new StringBuilder();
   if (groupMethod != null && groupMethod == GroupMethod.NONE) {
-    sb.append("No drug orders");
+    sb.append(mss.getMessage("reporting.noDrugOrders"));
   }
  else   if (drugId != null || drugConcept != null) {
-    sb.append("Taking ");
+    sb.append(mss.getMessage("reporting.taking")).append(" ");
     SortedSet<String> names=new TreeSet<String>();
     if (drugId != null) {
       Drug drug=Context.getConceptService().getDrug(drugId);
       if (drug == null) {
         log.error("Can't find drug with id " + drugId);
-        names.add("MISSING DRUG " + drugId);
+        names.add(mss.getMessage("reporting.missingDrug") + " " + drugId);
       }
  else {
         names.add(drug.getName());
@@ -19,13 +21,13 @@
     if (drugConcept != null) {
       names.add(drugConcept.getName(Context.getLocale(),false).getName());
     }
-    sb.append(OpenmrsUtil.join(names," or "));
+    sb.append(OpenmrsUtil.join(names," " + mss.getMessage("reporting.or") + " "));
   }
  else {
-    sb.append("Any Drug Order");
+    sb.append(mss.getMessage("reporting.anyDrugOrder"));
   }
   if (getOnDate() != null) {
-    sb.append(" on " + getOnDate());
+    sb.append(" ").append(mss.getMessage("reporting.on",new Object[]{getOnDate()},locale));
   }
   return sb.toString();
 }

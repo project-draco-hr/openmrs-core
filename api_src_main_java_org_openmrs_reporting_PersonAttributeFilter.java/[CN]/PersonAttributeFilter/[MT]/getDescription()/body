@@ -1,9 +1,10 @@
 {
+  MessageSourceService msa=Context.getMessageSourceService();
   StringBuilder sb=new StringBuilder();
-  sb.append("Patients with ");
-  sb.append(getAttribute() != null ? getAttribute().getName() : " any attribute");
+  sb.append(msa.getMessage("reporting.patientsWith")).append(" ");
+  sb.append(getAttribute() != null ? getAttribute().getName() : " " + msa.getMessage("reporting.anyAttribute"));
   if (getValue() != null) {
-    sb.append(" equal to ");
+    sb.append(" ").append(msa.getMessage("reporting.equalTo")).append(" ");
     sb.append(getValue());
   }
   return sb.toString();
