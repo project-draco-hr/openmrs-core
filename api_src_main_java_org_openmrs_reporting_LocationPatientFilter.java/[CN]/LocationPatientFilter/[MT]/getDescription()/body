@@ -1,7 +1,8 @@
 {
+  MessageSourceService msa=Context.getMessageSourceService();
   StringBuilder sb=new StringBuilder();
-  sb.append("Patients who belong to ");
-  sb.append(getLocation() == null ? "NULL" : getLocation().getName());
-  sb.append(" (by method " + getCalculationMethod() + ")");
+  sb.append(msa.getMessage("reporting.patientsWhoBelongTo")).append(" ");
+  sb.append(getLocation() == null ? msa.getMessage("reporting.null") : getLocation().getName());
+  sb.append(" (").append(msa.getMessage("reporting.byMethod")).append(" ").append(getCalculationMethod()).append(")");
   return sb.toString();
 }
