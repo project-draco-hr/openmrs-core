@@ -1,0 +1,12 @@
+{
+  Order order=orderService.getOrder(7).cloneForRevision();
+  order.setStartDate(new Date());
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  Concept newConcept=conceptService.getConcept(5089);
+  assertFalse(order.getPreviousOrder().getConcept().equals(newConcept));
+  order.getPreviousOrder().setConcept(newConcept);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot change the concept of an order");
+  orderService.saveOrder(order,null);
+}
