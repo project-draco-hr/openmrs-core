@@ -4,15 +4,15 @@
   }
   Order previousOrder=order.getPreviousOrder();
   if (previousOrder != null) {
-    if (!previousOrder.getConcept().equals(order.getConcept())) {
-      throw new APIException("Concept of previous order and this order should be the same");
-    }
     stopOrder(previousOrder,order.getStartDate());
     return;
   }
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
   boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(order.getClass()) && ((DrugOrder)order).getDrug() != null;
   for (  Order activeOrder : orders) {
+    if (!order.getClass().equals(activeOrder.getClass())) {
+      continue;
+    }
     boolean shouldMarkAsDiscontinued=false;
     if (isDrugOrderAndHasADrug) {
       DrugOrder drugOrder1=(DrugOrder)order;

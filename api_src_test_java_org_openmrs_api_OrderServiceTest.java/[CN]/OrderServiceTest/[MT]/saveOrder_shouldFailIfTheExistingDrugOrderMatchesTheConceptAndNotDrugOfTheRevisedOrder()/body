@@ -1,6 +1,5 @@
 {
   final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(5);
-  assertTrue(OrderUtilTest.isActiveOrder(orderToDiscontinue,null));
   Drug discontinuationOrderDrug=new Drug();
   discontinuationOrderDrug.setConcept(orderToDiscontinue.getConcept());
   discontinuationOrderDrug=conceptService.saveDrug(discontinuationOrderDrug);
@@ -11,7 +10,6 @@
   order.setOrderer(providerService.getProvider(1));
   order.setEncounter(encounterService.getEncounter(6));
   order.setDrug(discontinuationOrderDrug);
-  order.setOrderReasonNonCoded("Discontinue this");
   expectedException.expect(APIException.class);
   expectedException.expectMessage("The drug of the previous order and the new revised order don't match");
   orderService.saveOrder(order,null);

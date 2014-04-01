@@ -25,7 +25,7 @@
     if (previousOrder == null) {
       throw new APIException("Previous Order is required for a revised order");
     }
-    stopOrder(previousOrder,null);
+    stopOrder(previousOrder,order.getStartDate());
   }
  else   if (Order.Action.DISCONTINUE.equals(order.getAction())) {
     discontinueExistingOrdersIfNecessary(order);
@@ -50,6 +50,17 @@
     }
  else     if (isDrugOrder && !rowData.get(3).equals(((DrugOrder)previousOrder).getDrug().getDrugId())) {
       throw new APIException("Cannot change the drug of a drug order");
+    }
+    boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(order.getClass()) && ((DrugOrder)order).getDrug() != null;
+    if (!order.getConcept().equals(previousOrder.getConcept())) {
+      throw new APIException("The concept of the previous order and the new revised order don't match");
+    }
+ else     if (isDrugOrderAndHasADrug) {
+      DrugOrder drugOrder1=(DrugOrder)order;
+      DrugOrder drugOrder2=(DrugOrder)previousOrder;
+      if (!OpenmrsUtil.nullSafeEquals(drugOrder1.getDrug(),drugOrder2.getDrug())) {
+        throw new APIException("The drug of the previous order and the new revised order don't match");
+      }
     }
   }
   return saveOrderInternal(order,orderContext);

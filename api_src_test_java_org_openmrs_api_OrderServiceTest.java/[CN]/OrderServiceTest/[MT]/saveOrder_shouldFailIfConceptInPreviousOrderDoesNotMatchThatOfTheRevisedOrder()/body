@@ -1,11 +1,9 @@
 {
   Order previousOrder=orderService.getOrder(7);
-  assertTrue(OrderUtilTest.isActiveOrder(previousOrder,null));
-  Order order=previousOrder.cloneForDiscontinuing();
+  Order order=previousOrder.cloneForRevision();
   order.setStartDate(new Date());
-  order.setOrderReasonNonCoded("Discontinue this");
-  order.setEncounter(encounterService.getEncounter(6));
   order.setOrderer(providerService.getProvider(1));
+  order.setEncounter(encounterService.getEncounter(6));
   Concept newConcept=conceptService.getConcept(5089);
   assertFalse(previousOrder.getConcept().equals(newConcept));
   order.setConcept(newConcept);
