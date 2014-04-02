@@ -1,0 +1,14 @@
+{
+  Order order=orderService.getOrder(7);
+  assertTrue(OrderUtilTest.isActiveOrder(order,null));
+  Order discontinuationOrder=order.cloneForDiscontinuing();
+  OrderType orderType=orderService.getOrderType(7);
+  assertNotEquals(discontinuationOrder.getOrderType(),orderType);
+  assertTrue(OrderUtil.isType(discontinuationOrder.getOrderType(),orderType));
+  discontinuationOrder.setOrderType(orderType);
+  discontinuationOrder.setOrderer(Context.getProviderService().getProvider(1));
+  discontinuationOrder.setEncounter(Context.getEncounterService().getEncounter(6));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("The order type does not match that of the previous order");
+  orderService.saveOrder(discontinuationOrder,null);
+}

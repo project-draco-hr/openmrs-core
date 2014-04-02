@@ -14,7 +14,7 @@
         errors.rejectValue("concept","error.concept");
       }
     }
-    if (order.getDosingType() != null) {
+    if (order.getAction() != Order.Action.DISCONTINUE && order.getDosingType() != null) {
       if (order.getDosingType().equals(DrugOrder.DosingType.SIMPLE)) {
         ValidationUtils.rejectIfEmpty(errors,"dose","error.doseIsNullForDosingTypeSimple");
         ValidationUtils.rejectIfEmpty(errors,"doseUnits","error.doseUnitsIsNullForDosingTypeSimple");

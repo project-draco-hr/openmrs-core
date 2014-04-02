@@ -4,5 +4,9 @@
   newOrder.setOrderReasonNonCoded(reasonNonCoded);
   newOrder.setOrderer(orderer);
   newOrder.setEncounter(encounter);
+  if (discontinueDate == null) {
+    discontinueDate=new Date();
+  }
+  newOrder.setStartDate(discontinueDate);
   return saveOrderInternal(newOrder,null);
 }

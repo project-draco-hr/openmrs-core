@@ -1,0 +1,17 @@
+{
+  Order order=orderService.getOrder(7);
+  assertTrue(OrderUtilTest.isActiveOrder(order,null));
+  Order discontinuationOrder=new SomeTestOrder();
+  discontinuationOrder.setCareSetting(order.getCareSetting());
+  discontinuationOrder.setConcept(order.getConcept());
+  discontinuationOrder.setAction(Order.Action.DISCONTINUE.DISCONTINUE);
+  discontinuationOrder.setPreviousOrder(order);
+  discontinuationOrder.setPatient(order.getPatient());
+  assertTrue(order.getOrderType().getJavaClass().isAssignableFrom(discontinuationOrder.getClass()));
+  discontinuationOrder.setOrderType(order.getOrderType());
+  discontinuationOrder.setOrderer(Context.getProviderService().getProvider(1));
+  discontinuationOrder.setEncounter(Context.getEncounterService().getEncounter(6));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("The class does not match that of the previous order");
+  orderService.saveOrder(discontinuationOrder,null);
+}
