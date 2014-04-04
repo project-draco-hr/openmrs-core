@@ -1,0 +1,9 @@
+{
+  PreparedStatement insert=connection.prepareStatement("insert into global_property (property, property_value, uuid) values (?, ?, ?)");
+  insert.setString(1,globalProperty);
+  insert.setString(2,value);
+  insert.setString(3,UUID.randomUUID().toString());
+  insert.executeUpdate();
+  insert.close();
+  connection.commit();
+}
