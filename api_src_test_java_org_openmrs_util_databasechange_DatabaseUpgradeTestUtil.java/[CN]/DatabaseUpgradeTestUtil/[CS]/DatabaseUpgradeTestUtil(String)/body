@@ -30,8 +30,7 @@
     IOUtils.closeQuietly(tempDBOutputStream);
   }
   String databaseUrl=tempDir.getAbsolutePath().replace("\\","/") + "/openmrs";
-  connectionUrl="jdbc:h2:" + databaseUrl + ";AUTO_RECONNECT=TRUE;DB_CLOSE_DELAY=-1";
-  connection=DriverManager.getConnection(connectionUrl,"sa","sa");
+  connection=DriverManager.getConnection("jdbc:h2:" + databaseUrl + ";AUTO_RECONNECT=TRUE;DB_CLOSE_DELAY=-1","sa","sa");
   connection.setAutoCommit(true);
   try {
     liqubaseConnection=DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(connection));
