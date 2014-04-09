@@ -6,7 +6,7 @@
   try {
     autoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
-    insertStatement=connection.prepareStatement("Insert into orders(previous_order_id, concept_id, patient_id, encounter_id, " + "creator, date_created, date_stopped, discontinued_by, discontinued_reason, discontinued_reason_non_coded, " + "uuid, order_action, orderer, order_number) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    insertStatement=connection.prepareStatement("Insert into orders(previous_order_id, concept_id, patient_id, encounter_id, " + "creator, date_created, date_stopped, discontinued_by, discontinued_reason, discontinued_reason_non_coded, " + "uuid, order_action, orderer, order_number, order_type_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
     for (    DiscontinuedOrder discontinuedOrder : discontinuedOrders) {
       insertStatement.setInt(1,discontinuedOrder.previousOrderId);
       insertStatement.setInt(2,discontinuedOrder.conceptId);
@@ -22,6 +22,7 @@
       insertStatement.setString(12,Order.Action.DISCONTINUE.name());
       setIntOrNull(insertStatement,13,discontinuedOrder.orderer);
       insertStatement.setString(14,discontinuedOrder.orderNumber);
+      insertStatement.setInt(15,discontinuedOrder.orderTypeId);
       insertStatement.addBatch();
       if (index % batchSize == 0) {
         insertStatement.executeBatch();
