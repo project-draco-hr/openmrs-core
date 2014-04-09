@@ -1,5 +1,5 @@
 {
-  HashMap<String,String> parameters=new HashMap<String,String>();
+  Map<String,String> parameters=new TreeMap<String,String>();
   parameters.put("one","one");
   parameters.put("two","two");
   ByteArrayOutputStream stream=new ByteArrayOutputStream();
@@ -11,6 +11,6 @@
   verify(connection).setRequestMethod("POST");
   verify(connection).setRequestProperty("Content-Length",String.valueOf(16));
   verify(connection).setRequestProperty("Content-Type","application/x-www-form-urlencoded");
-  assertThat(stream.toString(),is("&two=two&one=one"));
-  assertThat(response,containsString("response"));
+  assertThat(stream.toString(),is("&one=one&two=two"));
+  assertThat(response,CoreMatchers.containsString("response"));
 }
