@@ -1,11 +1,13 @@
 {
+  if (referenceMap == null) {
+    return;
+  }
   Object locale=referenceMap.get(FilterUtil.LOCALE_ATTRIBUTE);
   ToolContext toolContext=getToolContext(locale != null ? locale.toString() : Context.getLocale().toString());
   VelocityContext velocityContext=new VelocityContext(toolContext);
-  if (referenceMap != null) {
-    for (    Map.Entry<String,Object> entry : referenceMap.entrySet()) {
-      velocityContext.put(entry.getKey(),entry.getValue());
-    }
+  ;
+  for (  Map.Entry<String,Object> entry : referenceMap.entrySet()) {
+    velocityContext.put(entry.getKey(),entry.getValue());
   }
   Object model=getModel();
   for (  Field field : model.getClass().getDeclaredFields()) {

@@ -1,0 +1,6 @@
+{
+  String identifier="101";
+  List<PatientIdentifier> patientIdentifiers=dao.getPatientIdentifiers(identifier,new ArrayList<PatientIdentifierType>(),new ArrayList<Location>(),new ArrayList<Patient>(),null);
+  Assert.assertEquals(1,patientIdentifiers.size());
+  Assert.assertEquals(identifier,patientIdentifiers.get(0).getIdentifier());
+}

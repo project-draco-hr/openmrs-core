@@ -1,12 +1,12 @@
 {
   executeDataSet(VISITS_ATTRIBUTES_XML);
-  Visit visit=service.getVisit(1);
-  VisitAttributeType attrType=service.getVisitAttributeType(1);
+  Visit visit=visitService.getVisit(1);
+  VisitAttributeType attrType=visitService.getVisitAttributeType(1);
   List<VisitAttribute> attributes=visit.getActiveAttributes(attrType);
   assertTrue(attributes.size() > 0);
   VisitAttribute attribute=attributes.get(0);
   attribute.setVoided(true);
-  service.saveVisit(visit);
+  visitService.saveVisit(visit);
   assertNotNull(attribute.getVoidedBy());
   assertNotNull(attribute.getDateVoided());
 }

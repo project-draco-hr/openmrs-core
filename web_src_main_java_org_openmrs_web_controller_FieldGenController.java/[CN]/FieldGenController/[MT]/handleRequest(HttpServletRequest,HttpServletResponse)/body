@@ -1,12 +1,18 @@
 {
   Object uri=request.getAttribute("javax.servlet.include.servlet_path.fieldGen");
-  if (uri == null)   uri=request.getAttribute("javax.servlet.include.servlet_path");
+  if (uri == null) {
+    uri=request.getAttribute("javax.servlet.include.servlet_path");
+  }
   String fieldGenPath="";
   Map<String,Object> model=new HashMap<String,Object>();
   if (uri != null) {
     fieldGenPath=uri.toString();
-    if (fieldGenPath.endsWith("field"))     fieldGenPath=fieldGenPath.replace(".field","");
- else     if (fieldGenPath.endsWith("jsp"))     throw new ServletException("Illegal extension used for fieldGen: '.jsp'. Allowable extensions are '' (no extension) and '.field'");
+    if (fieldGenPath.endsWith("field")) {
+      fieldGenPath=fieldGenPath.replace(".field","");
+    }
+ else     if (fieldGenPath.endsWith("jsp")) {
+      throw new ServletException("Illegal extension used for fieldGen: '.jsp'. Allowable extensions are '' (no extension) and '.field'");
+    }
     String type=(String)request.getAttribute("org.openmrs.fieldGen.type");
     String formFieldName=(String)request.getAttribute("org.openmrs.fieldGen.formFieldName");
     Map<String,Object> params=(Map<String,Object>)request.getAttribute("org.openmrs.fieldGen.parameters");

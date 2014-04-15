@@ -1,3 +1,7 @@
 {
-  return Objects.toStringHelper(getClass()).add("providerId",providerId).add("identifier",identifier).add("person",person).toString();
+  StringBuilder sb=new StringBuilder();
+  sb.append(providerId);
+  sb.append(" providerName:");
+  sb.append((person != null) ? person.getNames() : "");
+  return "[Provider: providerId:" + sb.toString() + " ]";
 }

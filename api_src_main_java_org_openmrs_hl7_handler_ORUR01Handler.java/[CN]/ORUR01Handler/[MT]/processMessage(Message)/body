@@ -1,5 +1,7 @@
 {
-  if (!(message instanceof ORU_R01))   throw new ApplicationException("Invalid message sent to ORU_R01 handler");
+  if (!(message instanceof ORU_R01)) {
+    throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessage"));
+  }
   log.debug("Processing ORU_R01 message");
   Message response;
   try {
@@ -7,12 +9,12 @@
     response=processORU_R01(oru);
   }
  catch (  ClassCastException e) {
-    log.error("Error casting " + message.getClass().getName() + " to ORU_R01",e);
-    throw new ApplicationException("Invalid message type for handler");
+    log.warn("Error casting " + message.getClass().getName() + " to ORU_R01",e);
+    throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.invalidMessageType ",new Object[]{message.getClass().getName()},null),e);
   }
 catch (  HL7Exception e) {
-    log.error("Error while processing ORU_R01 message",e);
-    throw new ApplicationException(e);
+    log.warn("Error while processing ORU_R01 message",e);
+    throw new ApplicationException(Context.getMessageSourceService().getMessage("ORUR01.error.WhileProcessing"),e);
   }
   log.debug("Finished processing ORU_R01 message");
   return response;

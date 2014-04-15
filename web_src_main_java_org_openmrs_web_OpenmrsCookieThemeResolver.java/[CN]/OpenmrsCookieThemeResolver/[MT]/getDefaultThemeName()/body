@@ -8,11 +8,17 @@
     }
     themeName=Context.getAdministrationService().getGlobalProperty(GP_THEME_NAME);
   }
-  finally {
-    if (openedSession)     Context.closeSession();
+ catch (  Exception ex) {
+  }
+ finally {
+    if (openedSession) {
+      Context.closeSession();
+    }
   }
   if (StringUtils.hasText(themeName)) {
     return themeName;
   }
- else   return super.getDefaultThemeName();
+ else {
+    return super.getDefaultThemeName();
+  }
 }

@@ -8,8 +8,12 @@
     for (Iterator<Relationship> i=rels.iterator(); i.hasNext(); ) {
       Relationship r=i.next();
       Patient p=patientService.getPatient(r.getPersonA().getPersonId());
-      if (p != null)       sb.append("Patient " + p.getPatientIdentifier());
-      if (i.hasNext())       sb.append(" ");
+      if (p != null) {
+        sb.append("Patient " + p.getPatientIdentifier());
+      }
+      if (i.hasNext()) {
+        sb.append(" ");
+      }
     }
     return sb.toString();
   }

@@ -1,0 +1,30 @@
+{
+  PatientSearchMode patientSearchMode=getSearchMode(name,identifier,identifierTypes,searchOnNamesOrIdentifiers);
+switch (patientSearchMode) {
+case PATIENT_SEARCH_BY_NAME:
+    addAliasForName(criteria,orderByNames);
+  criteria.add(prepareCriterionForName(name));
+break;
+case PATIENT_SEARCH_BY_IDENTIFIER:
+addAliasForIdentifiers(criteria);
+criteria.add(prepareCriterionForIdentifier(identifier,identifierTypes,matchIdentifierExactly));
+break;
+case PATIENT_SEARCH_BY_NAME_OR_IDENTIFIER:
+name=copySearchParameter(identifier,name);
+identifier=copySearchParameter(name,identifier);
+addAliasForName(criteria,orderByNames);
+addAliasForIdentifiers(criteria);
+criteria.add(Restrictions.disjunction().add(prepareCriterionForName(name)).add(prepareCriterionForIdentifier(identifier,identifierTypes,matchIdentifierExactly)));
+break;
+case PATIENT_SEARCH_BY_NAME_AND_IDENTIFIER:
+addAliasForName(criteria,orderByNames);
+addAliasForIdentifiers(criteria);
+criteria.add(prepareCriterionForName(name));
+criteria.add(prepareCriterionForIdentifier(identifier,identifierTypes,matchIdentifierExactly));
+break;
+}
+criteria.add(Restrictions.eq("voided",false));
+criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+log.debug(criteria.toString());
+return criteria;
+}

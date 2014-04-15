@@ -7,7 +7,9 @@
  catch (    Exception ex) {
       Visit v=vs.getVisitByUuid(text);
       setValue(v);
-      if (v == null)       throw new IllegalArgumentException("Visit not found: " + ex.getMessage());
+      if (v == null) {
+        throw new IllegalArgumentException("Visit not found: " + ex.getMessage());
+      }
     }
   }
  else {

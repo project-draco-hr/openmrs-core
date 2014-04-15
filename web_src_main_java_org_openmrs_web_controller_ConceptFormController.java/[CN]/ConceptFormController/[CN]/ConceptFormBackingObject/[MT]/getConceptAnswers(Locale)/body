@@ -1,0 +1,21 @@
+{
+  Map<String,String> conceptAnswers=new LinkedHashMap<String,String>();
+  for (  ConceptAnswer answer : concept.getAnswers(true)) {
+    log.debug("getting answers");
+    String key=answer.getAnswerConcept().getConceptId().toString();
+    ConceptName cn=answer.getAnswerConcept().getName(locale);
+    String name="";
+    if (cn != null) {
+      name=cn.toString();
+    }
+    if (answer.getAnswerDrug() != null) {
+      key=key + "^" + answer.getAnswerDrug().getDrugId();
+      name=answer.getAnswerDrug().getFullName(locale);
+    }
+    if (answer.getAnswerConcept().isRetired()) {
+      name="<span class='retired'>" + name + "</span>";
+    }
+    conceptAnswers.put(key,name);
+  }
+  return conceptAnswers;
+}

@@ -1,0 +1,12 @@
+{
+  init();
+  createWebInfFolderIfNotExist();
+  MockHttpServletRequest request=new MockHttpServletRequest("POST","");
+  HttpServletResponse response=new MockHttpServletResponse();
+  request.setParameter("action","start");
+  request.setParameter("moduleId",MODULE3_ID);
+  ModuleListController controller=(ModuleListController)applicationContext.getBean("moduleListController");
+  controller.handleRequest(request,response);
+  assertTrue("Module.started".equals(request.getSession().getAttribute(WebConstants.OPENMRS_MSG_ATTR)));
+  assertTrue(request.getSession().getAttribute(WebConstants.OPENMRS_ERROR_ATTR) == null);
+}

@@ -1,5 +1,7 @@
 {
-  if (obj == null || !(obj instanceof ConceptReferenceTerm))   throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + ConceptReferenceTerm.class);
+  if (obj == null || !(obj instanceof ConceptReferenceTerm)) {
+    throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + ConceptReferenceTerm.class);
+  }
   ConceptReferenceTerm conceptReferenceTerm=(ConceptReferenceTerm)obj;
   String code=conceptReferenceTerm.getCode();
   if (!StringUtils.hasText(code)) {
@@ -13,7 +15,7 @@
   code=code.trim();
   ConceptReferenceTerm termWithDuplicateCode=Context.getConceptService().getConceptReferenceTermByCode(code,conceptReferenceTerm.getConceptSource());
   if (termWithDuplicateCode != null) {
-    if (!OpenmrsUtil.nullSafeEquals(termWithDuplicateCode.getId(),conceptReferenceTerm.getId())) {
+    if (!OpenmrsUtil.nullSafeEquals(termWithDuplicateCode.getUuid(),conceptReferenceTerm.getUuid())) {
       errors.rejectValue("code","ConceptReferenceTerm.duplicate.code","Duplicate concept reference term code in its concept source: " + code);
     }
   }
@@ -21,7 +23,9 @@
     int index=0;
     Set<String> mappedTermUuids=null;
     for (    ConceptReferenceTermMap map : conceptReferenceTerm.getConceptReferenceTermMaps()) {
-      if (map == null)       throw new APIException("Cannot add a null concept reference term map");
+      if (map == null) {
+        throw new APIException("Cannot add a null concept reference term map");
+      }
       if (map.getConceptMapType() == null) {
         errors.rejectValue("conceptReferenceTermMaps[" + index + "].conceptMapType","ConceptReferenceTerm.error.mapTypeRequired","Concept Map Type is required");
       }
@@ -31,8 +35,12 @@
  else       if (map.getTermB().equals(conceptReferenceTerm)) {
         errors.rejectValue("conceptReferenceTermMaps[" + index + "].termB","ConceptReferenceTerm.map.sameTerm","Cannot map a concept reference term to itself");
       }
-      if (errors.hasErrors())       return;
-      if (mappedTermUuids == null)       mappedTermUuids=new HashSet<String>();
+      if (errors.hasErrors()) {
+        return;
+      }
+      if (mappedTermUuids == null) {
+        mappedTermUuids=new HashSet<String>();
+      }
       if (!mappedTermUuids.add(map.getTermB().getUuid())) {
         errors.rejectValue("conceptReferenceTermMaps[" + index + "].termB","ConceptReferenceTerm.termToTerm.alreadyMapped","Cannot map a reference term multiple times to the same concept reference term");
       }

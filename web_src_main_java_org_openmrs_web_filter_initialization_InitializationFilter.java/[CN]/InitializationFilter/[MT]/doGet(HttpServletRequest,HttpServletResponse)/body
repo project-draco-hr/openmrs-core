@@ -1,21 +1,58 @@
 {
-  String page=httpRequest.getParameter("page");
+  loadInstallationScriptIfPresent();
+  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) == null) {
+    checkLocaleAttributesForFirstTime(httpRequest);
+  }
   Map<String,Object> referenceMap=new HashMap<String,Object>();
-  if (httpRequest.getServletPath().equals("/" + AUTO_RUN_OPENMRS)) {
-    autoRunOpenMRS(httpRequest);
-    return;
-  }
-  if (httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE) != null) {
-    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
-  }
+  String page=httpRequest.getParameter("page");
+  referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
+  httpResponse.setHeader("Cache-Control","no-cache");
   if (isInstallationStarted() && !PROGRESS_VM_AJAXREQUEST.equals(page)) {
     referenceMap.put("isInstallationStarted",true);
     httpResponse.setContentType("text/html");
     renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
   }
+ else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
+    httpResponse.setContentType("text/json");
+    Map<String,Object> result=new HashMap<String,Object>();
+    if (initJob != null) {
+      result.put("hasErrors",initJob.hasErrors());
+      if (initJob.hasErrors()) {
+        result.put("errorPage",initJob.getErrorPage());
+        errors.putAll(initJob.getErrors());
+      }
+      result.put("initializationComplete",isInitializationComplete());
+      result.put("message",initJob.getMessage());
+      result.put("actionCounter",initJob.getStepsComplete());
+      if (!isInitializationComplete()) {
+        result.put("executingTask",initJob.getExecutingTask());
+        result.put("executedTasks",initJob.getExecutedTasks());
+        result.put("completedPercentage",initJob.getCompletedPercentage());
+      }
+      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
+      if (appender instanceof MemoryAppender) {
+        MemoryAppender memoryAppender=(MemoryAppender)appender;
+        List<String> logLines=memoryAppender.getLogLines();
+        if (logLines.size() > 5) {
+          logLines=logLines.subList(logLines.size() - 5,logLines.size());
+        }
+        result.put("logLines",logLines);
+      }
+ else {
+        result.put("logLines",new ArrayList<String>());
+      }
+    }
+    PrintWriter writer=httpResponse.getWriter();
+    writer.write(toJSONString(result,true));
+    writer.close();
+  }
+ else   if (InitializationWizardModel.INSTALL_METHOD_AUTO.equals(wizardModel.installMethod) || httpRequest.getServletPath().equals("/" + AUTO_RUN_OPENMRS)) {
+    autoRunOpenMRS(httpRequest);
+    referenceMap.put("isInstallationStarted",true);
+    httpResponse.setContentType("text/html");
+    renderTemplate(PROGRESS_VM,referenceMap,httpResponse);
+  }
  else   if (page == null) {
-    checkLocaleAttributesForFirstTime(httpRequest);
-    referenceMap.put(FilterUtil.LOCALE_ATTRIBUTE,httpRequest.getSession().getAttribute(FilterUtil.LOCALE_ATTRIBUTE));
     httpResponse.setContentType("text/html");
     renderTemplate(DEFAULT_PAGE,referenceMap,httpResponse);
   }
@@ -43,36 +80,5 @@
     wizardModel.runtimePropertiesPath=runtimeProperties.getAbsolutePath();
     httpResponse.setContentType("text/html");
     renderTemplate(INSTALL_METHOD,referenceMap,httpResponse);
-  }
- else   if (PROGRESS_VM_AJAXREQUEST.equals(page)) {
-    httpResponse.setContentType("text/json");
-    httpResponse.setHeader("Cache-Control","no-cache");
-    Map<String,Object> result=new HashMap<String,Object>();
-    if (initJob != null) {
-      result.put("hasErrors",initJob.hasErrors());
-      if (initJob.hasErrors()) {
-        result.put("errorPage",initJob.getErrorPage());
-        errors.putAll(initJob.getErrors());
-      }
-      result.put("initializationComplete",isInitializationComplete());
-      result.put("message",initJob.getMessage());
-      result.put("actionCounter",initJob.getStepsComplete());
-      if (!isInitializationComplete()) {
-        result.put("executingTask",initJob.getExecutingTask());
-        result.put("executedTasks",initJob.getExecutedTasks());
-        result.put("completedPercentage",initJob.getCompletedPercentage());
-      }
-      Appender appender=Logger.getRootLogger().getAppender("MEMORY_APPENDER");
-      if (appender instanceof MemoryAppender) {
-        MemoryAppender memoryAppender=(MemoryAppender)appender;
-        List<String> logLines=memoryAppender.getLogLines();
-        if (logLines.size() > 5)         logLines=logLines.subList(logLines.size() - 5,logLines.size());
-        result.put("logLines",logLines);
-      }
- else {
-        result.put("logLines",new ArrayList<String>());
-      }
-    }
-    httpResponse.getWriter().write(toJSONString(result,true));
   }
 }

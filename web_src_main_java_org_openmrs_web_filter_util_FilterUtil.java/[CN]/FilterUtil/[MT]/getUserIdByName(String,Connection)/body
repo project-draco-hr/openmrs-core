@@ -6,7 +6,9 @@
   Integer userId=null;
   if (statement.execute()) {
     ResultSet results=statement.getResultSet();
-    if (results.next())     userId=results.getInt(1);
+    if (results.next()) {
+      userId=results.getInt(1);
+    }
   }
   return userId;
 }

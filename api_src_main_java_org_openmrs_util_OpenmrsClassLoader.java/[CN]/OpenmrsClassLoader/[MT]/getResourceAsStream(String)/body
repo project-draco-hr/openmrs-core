@@ -1,7 +1,9 @@
 {
   for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
     InputStream result=classLoader.getResourceAsStream(file);
-    if (result != null)     return result;
+    if (result != null) {
+      return result;
+    }
   }
   return super.getResourceAsStream(file);
 }

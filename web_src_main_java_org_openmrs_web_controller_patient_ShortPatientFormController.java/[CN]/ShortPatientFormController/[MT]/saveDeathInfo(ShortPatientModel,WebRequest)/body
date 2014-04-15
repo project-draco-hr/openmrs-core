@@ -32,14 +32,18 @@
             obsDeath.setValueCoded(currCause);
             obsDeath.setValueCodedName(currCause.getName());
             Date dateDeath=patientModel.getPatient().getDeathDate();
-            if (dateDeath == null)             dateDeath=new Date();
+            if (dateDeath == null) {
+              dateDeath=new Date();
+            }
             obsDeath.setObsDatetime(dateDeath);
             String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
             Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
             if (conceptOther != null) {
               if (conceptOther.equals(currCause)) {
                 String otherInfo=request.getParameter("patient.causeOfDeath_other");
-                if (otherInfo == null)                 otherInfo="";
+                if (otherInfo == null) {
+                  otherInfo="";
+                }
                 log.debug("Setting value_text as " + otherInfo);
                 obsDeath.setValueText(otherInfo);
               }
@@ -52,7 +56,9 @@
               log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
               obsDeath.setValueText("");
             }
-            if (StringUtils.isBlank(obsDeath.getVoidReason()))             obsDeath.setVoidReason(Context.getMessageSourceService().getMessage("general.default.changeReason"));
+            if (StringUtils.isBlank(obsDeath.getVoidReason())) {
+              obsDeath.setVoidReason(Context.getMessageSourceService().getMessage("general.default.changeReason"));
+            }
             Context.getObsService().saveObs(obsDeath,obsDeath.getVoidReason());
           }
  else {

@@ -1,5 +1,5 @@
 {
-  for (  PatientProgram p : getPatientPrograms(null,null,null,null,null,null,false)) {
+  for (  PatientProgram p : Context.getProgramWorkflowService().getPatientPrograms(null,null,null,null,null,null,false)) {
     PatientState state=p.getPatientState(patientStateId);
     if (state != null) {
       return state;

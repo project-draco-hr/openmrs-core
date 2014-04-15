@@ -1,6 +1,5 @@
 {
   String s="";
-  AST readAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   AST k=null;
   AST x=null;
   AST y=null;
@@ -14,12 +13,13 @@
   String a="", b="", ret_val="";
   try {
 {
-      if (_t == null)       _t=ASTNULL;
+      if (_t == null) {
+        _t=ASTNULL;
+      }
 switch (_t.getType()) {
 case READ:
 {
           AST __t365=_t;
-          AST tmp3_AST_in=(AST)_t;
           match(_t,READ);
           _t=_t.getFirstChild();
           a=readAST(_t,obj,instr);
@@ -36,18 +36,15 @@ case LATEST:
 {
 {
 {
-            if (_t == null)             _t=ASTNULL;
 switch (_t.getType()) {
 case LAST:
 {
-                AST tmp4_AST_in=(AST)_t;
                 match(_t,LAST);
                 _t=_t.getNextSibling();
                 break;
               }
 case LATEST:
 {
-              AST tmp5_AST_in=(AST)_t;
               match(_t,LATEST);
               _t=_t.getNextSibling();
               break;
@@ -59,7 +56,6 @@ default :
       }
     }
 {
-      if (_t == null)       _t=ASTNULL;
       if ((_t.getType() == INTLIT)) {
         k=(AST)_t;
         match(_t,INTLIT);
@@ -91,18 +87,15 @@ case EARLIEST:
 {
 {
 {
-    if (_t == null)     _t=ASTNULL;
 switch (_t.getType()) {
 case FIRST:
 {
-        AST tmp6_AST_in=(AST)_t;
         match(_t,FIRST);
         _t=_t.getNextSibling();
         break;
       }
 case EARLIEST:
 {
-      AST tmp7_AST_in=(AST)_t;
       match(_t,EARLIEST);
       _t=_t.getNextSibling();
       break;
@@ -114,7 +107,6 @@ default :
 }
 }
 {
-if (_t == null) _t=ASTNULL;
 if ((_t.getType() == INTLIT)) {
 x=(AST)_t;
 match(_t,INTLIT);
@@ -146,24 +138,20 @@ case MAX:
 case INTLIT:
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case MAXIMUM:
 case MAX:
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case MAXIMUM:
 {
-    AST tmp8_AST_in=(AST)_t;
     match(_t,MAXIMUM);
     _t=_t.getNextSibling();
     break;
   }
 case MAX:
 {
-  AST tmp9_AST_in=(AST)_t;
   match(_t,MAX);
   _t=_t.getNextSibling();
   break;
@@ -176,7 +164,9 @@ throw new NoViableAltException(_t);
 }
 {
 {
-if (_t == null) _t=ASTNULL;
+if (_t == null) {
+_t=ASTNULL;
+}
 if ((_t.getType() == INTLIT)) {
 y=(AST)_t;
 match(_t,INTLIT);
@@ -231,18 +221,15 @@ case MIN:
 {
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case MINIMUM:
 {
-AST tmp10_AST_in=(AST)_t;
 match(_t,MINIMUM);
 _t=_t.getNextSibling();
 break;
 }
 case MIN:
 {
-AST tmp11_AST_in=(AST)_t;
 match(_t,MIN);
 _t=_t.getNextSibling();
 break;
@@ -254,7 +241,9 @@ throw new NoViableAltException(_t);
 }
 }
 {
-if (_t == null) _t=ASTNULL;
+if (_t == null) {
+_t=ASTNULL;
+}
 if ((_t.getType() == INTLIT)) {
 z=(AST)_t;
 match(_t,INTLIT);
@@ -286,18 +275,15 @@ case EXISTS:
 {
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case EXIST:
 {
-AST tmp12_AST_in=(AST)_t;
 match(_t,EXIST);
 _t=_t.getNextSibling();
 break;
 }
 case EXISTS:
 {
-AST tmp13_AST_in=(AST)_t;
 match(_t,EXISTS);
 _t=_t.getNextSibling();
 break;
@@ -322,18 +308,15 @@ case AVERAGE:
 {
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case AVERAGE:
 {
-AST tmp14_AST_in=(AST)_t;
 match(_t,AVERAGE);
 _t=_t.getNextSibling();
 break;
 }
 case AVG:
 {
-AST tmp15_AST_in=(AST)_t;
 match(_t,AVG);
 _t=_t.getNextSibling();
 break;
@@ -355,7 +338,6 @@ break;
 case COUNT:
 {
 {
-AST tmp16_AST_in=(AST)_t;
 match(_t,COUNT);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
@@ -369,7 +351,6 @@ break;
 case SUM:
 {
 {
-AST tmp17_AST_in=(AST)_t;
 match(_t,SUM);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
@@ -382,7 +363,6 @@ break;
 case MEDIAN:
 {
 {
-AST tmp18_AST_in=(AST)_t;
 match(_t,MEDIAN);
 _t=_t.getNextSibling();
 b=readAST(_t,obj,instr);
@@ -398,7 +378,6 @@ case ID:
 case ARDEN_CURLY_BRACKETS:
 {
 {
-if (_t == null) _t=ASTNULL;
 switch (_t.getType()) {
 case ARDEN_CURLY_BRACKETS:
 {
@@ -411,11 +390,12 @@ System.err.println("Fetch this data - " + j.getText());
 s=j.getText();
 obj.AddConcept(s);
 {
-if (_t == null) _t=ASTNULL;
+if (_t == null) {
+_t=ASTNULL;
+}
 switch (_t.getType()) {
 case WHERE:
 {
-AST tmp19_AST_in=(AST)_t;
 match(_t,WHERE);
 _t=_t.getNextSibling();
 System.err.println("Where=TRUE");

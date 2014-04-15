@@ -18,7 +18,9 @@
         c=Context.getConceptService().getConceptByName(token);
       }
       if (c != null) {
-        if (ret == null)         ret=new ArrayList<Concept>();
+        if (ret == null) {
+          ret=new ArrayList<Concept>();
+        }
         ret.add(c);
       }
     }

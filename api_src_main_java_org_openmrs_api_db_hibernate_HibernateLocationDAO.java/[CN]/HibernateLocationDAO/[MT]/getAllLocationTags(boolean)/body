@@ -1,7 +1,7 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(LocationTag.class);
   if (!includeRetired) {
-    criteria.add(Expression.like("retired",false));
+    criteria.add(Restrictions.like("retired",false));
   }
   criteria.addOrder(Order.asc("name"));
   return criteria.list();

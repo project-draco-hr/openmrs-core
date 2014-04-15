@@ -2,9 +2,11 @@
   String moduleId=mod.getModuleId();
   String modulePackage=mod.getPackageName();
   for (  Module dependentModule : ModuleFactory.getStartedModules()) {
-    if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage))     stopModule(dependentModule,servletContext,skipRefresh);
+    if (!dependentModule.equals(mod) && dependentModule.getRequiredModules().contains(modulePackage)) {
+      stopModule(dependentModule,servletContext,skipRefresh);
+    }
   }
-  String realPath=servletContext.getRealPath("");
+  String realPath=getRealPath(servletContext);
   String absPath=realPath + "/WEB-INF/view/module/" + moduleId;
   File moduleWebFolder=new File(absPath.replace("/",File.separator));
   if (moduleWebFolder.exists()) {
@@ -23,6 +25,9 @@
     Element root=config.getDocumentElement();
     if (root.getElementsByTagName("dwr").getLength() > 0) {
       File f=new File(realPath + "/WEB-INF/dwr-modules.xml".replace("/",File.separator));
+      if (!f.exists()) {
+        createDwrModulesXml(realPath);
+      }
       inputStream=new FileInputStream(f);
       Document dwrmodulexml=getDWRModuleXML(inputStream,realPath);
       Element outputRoot=dwrmodulexml.getDocumentElement();
@@ -36,9 +41,13 @@
           if (attr != null && moduleId.equals(attr.getNodeValue())) {
             outputRoot.removeChild(current);
           }
- else           i++;
+ else {
+            i++;
+          }
         }
- else         i++;
+ else {
+          i++;
+        }
       }
       OpenmrsUtil.saveDocument(dwrmodulexml,f);
     }

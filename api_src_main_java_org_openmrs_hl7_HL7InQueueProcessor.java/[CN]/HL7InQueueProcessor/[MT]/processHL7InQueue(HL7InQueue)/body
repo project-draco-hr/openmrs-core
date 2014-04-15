@@ -1,12 +1,15 @@
 {
-  if (log.isDebugEnabled())   log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  if (log.isDebugEnabled()) {
+    log.debug("Processing HL7 inbound queue (id=" + hl7InQueue.getHL7InQueueId() + ",key="+ hl7InQueue.getHL7SourceKey()+ ")");
+  }
   try {
     Context.getHL7Service().processHL7InQueue(hl7InQueue);
   }
  catch (  HL7Exception e) {
     log.error("Unable to process hl7 in queue",e);
   }
-  if (++count > 25) {
+  setCount(count + 1);
+  if (count > 25) {
     try {
       Context.getHL7Service().garbageCollect();
     }

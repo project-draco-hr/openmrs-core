@@ -1,0 +1,16 @@
+{
+  uuid1="some uuid 1";
+  uuid2="some uuid 2";
+  PatientState patientState=new PatientState();
+  patientState.setStartDate(leftRange);
+  patientState.setEndDate(rightRange);
+  patientState.setUuid(uuid1);
+  patientState.setVoided(false);
+  PatientState patientState2=new PatientState();
+  patientState2.setStartDate(leftRange);
+  patientState2.setEndDate(rightRange);
+  patientState2.setUuid(uuid2);
+  patientState2.setVoided(false);
+  int result=(patientState.compareTo(patientState2));
+  Assert.assertTrue(result <= -1 || result >= 1);
+}

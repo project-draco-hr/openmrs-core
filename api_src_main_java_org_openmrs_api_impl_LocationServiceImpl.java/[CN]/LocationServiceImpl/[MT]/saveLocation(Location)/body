@@ -5,16 +5,21 @@
   if (location.getTags() != null) {
     for (    LocationTag tag : location.getTags()) {
       if (tag.getLocationTagId() == null) {
-        if (!StringUtils.hasLength(tag.getName()))         throw new APIException("A tag name is required");
+        if (!StringUtils.hasLength(tag.getName())) {
+          throw new APIException("A tag name is required");
+        }
         LocationTag existing=Context.getLocationService().getLocationTagByName(tag.getName());
         if (existing != null) {
           location.removeTag(tag);
           location.addTag(existing);
         }
- else         throw new APIException("Cannot add transient tags! " + "Save all location tags to the database before saving this location");
+ else {
+          throw new APIException("Cannot add transient tags! " + "Save all location tags to the database before saving this location");
+        }
       }
     }
   }
+  location.validateXSS();
   CustomDatatypeUtil.saveAttributesIfNecessary(location);
   return dao.saveLocation(location);
 }

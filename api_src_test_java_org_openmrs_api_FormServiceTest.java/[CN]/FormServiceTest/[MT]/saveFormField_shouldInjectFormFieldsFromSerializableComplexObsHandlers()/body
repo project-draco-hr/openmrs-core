@@ -1,0 +1,22 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptComplex.xml");
+  Context.getObsService().registerHandler("NeigborHandler",new NeighborHandler());
+  Concept concept=Context.getConceptService().getConcept(6043);
+  Field field=new Field();
+  field.setName("neighbor");
+  field.setConcept(concept);
+  FormField formField=new FormField();
+  formField.setField(field);
+  FormService fs=Context.getFormService();
+  formField.setForm(fs.getForm(1));
+  List<FormField> originalFormFields=fs.getAllFormFields();
+  int initialFormFieldCount=originalFormFields.size();
+  formField=fs.saveFormField(formField);
+  List<FormField> updatedFormFields=fs.getAllFormFields();
+  Assert.assertEquals(initialFormFieldCount+=3,updatedFormFields.size());
+  List<FormField> childFormFields=ListUtils.subtract(updatedFormFields,originalFormFields);
+  childFormFields.remove(formField);
+  for (  FormField ff : childFormFields) {
+    Assert.assertEquals(formField,ff.getParent());
+  }
+}

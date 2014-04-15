@@ -1,10 +1,19 @@
 {
   try {
-    if (version == null || value == null)     return 0;
+    if (version == null || value == null) {
+      return 0;
+    }
     List<String> versions=new Vector<String>();
     List<String> values=new Vector<String>();
-    version=version.replace("-SNAPSHOT",".0");
-    value=value.replace("-SNAPSHOT",".0");
+    String separator="-";
+    int qualifierIndex=version.indexOf(separator);
+    if (qualifierIndex != -1) {
+      version=version.substring(0,qualifierIndex);
+    }
+    qualifierIndex=value.indexOf(separator);
+    if (qualifierIndex != -1) {
+      value=value.substring(0,qualifierIndex);
+    }
     Collections.addAll(versions,version.split("\\."));
     Collections.addAll(values,value.split("\\."));
     while (versions.size() < values.size()) {
@@ -19,7 +28,9 @@
       Integer ver=NumberUtils.toInt(verNum,0);
       Integer val=NumberUtils.toInt(valNum,0);
       int ret=ver.compareTo(val);
-      if (ret != 0)       return ret;
+      if (ret != 0) {
+        return ret;
+      }
     }
   }
  catch (  NumberFormatException e) {

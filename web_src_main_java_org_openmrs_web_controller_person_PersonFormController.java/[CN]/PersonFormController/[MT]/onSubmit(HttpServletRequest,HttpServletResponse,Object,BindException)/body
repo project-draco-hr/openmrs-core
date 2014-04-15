@@ -24,7 +24,9 @@
   }
  else   if (action.equals(msa.getMessage("Person.void"))) {
     String voidReason=request.getParameter("voidReason");
-    if (StringUtils.isBlank(voidReason))     voidReason=msa.getMessage("PersonForm.default.voidReason",null,"Voided from person form",Context.getLocale());
+    if (StringUtils.isBlank(voidReason)) {
+      voidReason=msa.getMessage("PersonForm.default.voidReason",null,"Voided from person form",Context.getLocale());
+    }
     ps.voidPerson(person,voidReason);
     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Person.voided");
     return new ModelAndView(new RedirectView(getSuccessView() + "?personId=" + person.getPersonId()));
@@ -58,8 +60,12 @@
               obsDeath.setPerson(person);
               obsDeath.setConcept(causeOfDeath);
               Location location=Context.getLocationService().getDefaultLocation();
-              if (location != null)               obsDeath.setLocation(location);
- else               log.error("Could not find a suitable location for which to create this new Obs");
+              if (location != null) {
+                obsDeath.setLocation(location);
+              }
+ else {
+                log.error("Could not find a suitable location for which to create this new Obs");
+              }
             }
             Concept currCause=person.getCauseOfDeath();
             if (currCause == null) {
@@ -72,7 +78,9 @@
               obsDeath.setValueCoded(currCause);
               obsDeath.setValueCodedName(currCause.getName());
               Date dateDeath=person.getDeathDate();
-              if (dateDeath == null)               dateDeath=new Date();
+              if (dateDeath == null) {
+                dateDeath=new Date();
+              }
               obsDeath.setObsDatetime(dateDeath);
               String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
               Concept conceptOther=Context.getConceptService().getConcept(otherConcept);
@@ -96,7 +104,9 @@
               }
               boolean shouldSaveObs=(null == obsDeath.getId()) || deathReasonChanged;
               if (shouldSaveObs) {
-                if (null == obsDeath.getVoidReason())                 obsDeath.setVoidReason("Changed in patient demographics editor");
+                if (null == obsDeath.getVoidReason()) {
+                  obsDeath.setVoidReason("Changed in patient demographics editor");
+                }
                 Context.getObsService().saveObs(obsDeath,obsDeath.getVoidReason());
               }
             }

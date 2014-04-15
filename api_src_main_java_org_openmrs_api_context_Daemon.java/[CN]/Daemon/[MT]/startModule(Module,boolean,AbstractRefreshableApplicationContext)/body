@@ -6,8 +6,8 @@
         Context.openSession();
         returnedObject=ModuleFactory.startModuleInternal(module,isOpenmrsStartup,applicationContext);
       }
- catch (      Throwable t) {
-        exceptionThrown=t;
+ catch (      Exception e) {
+        exceptionThrown=e;
       }
  finally {
         Context.closeSession();
@@ -22,8 +22,12 @@
  catch (  InterruptedException e) {
   }
   if (startModuleThread.exceptionThrown != null) {
-    if (startModuleThread.exceptionThrown instanceof ModuleException)     throw (ModuleException)startModuleThread.exceptionThrown;
- else     throw new ModuleException("Unable to start module as Daemon",startModuleThread.exceptionThrown);
+    if (startModuleThread.exceptionThrown instanceof ModuleException) {
+      throw (ModuleException)startModuleThread.exceptionThrown;
+    }
+ else {
+      throw new ModuleException("Unable to start module as Daemon",startModuleThread.exceptionThrown);
+    }
   }
   Module startedModule=(Module)startModuleThread.returnedObject;
   return startedModule;

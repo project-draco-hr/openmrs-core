@@ -1,0 +1,8 @@
+{
+  String changeMessage="Testing TRUNK-3283";
+  executeDataSet(ENCOUNTER_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Obs obs=obsService.getObs(13);
+  Obs obsSaved=obsService.saveObs(obs,changeMessage);
+  assertEquals(obs.getPerson(),obsSaved.getEncounter().getPatient());
+}

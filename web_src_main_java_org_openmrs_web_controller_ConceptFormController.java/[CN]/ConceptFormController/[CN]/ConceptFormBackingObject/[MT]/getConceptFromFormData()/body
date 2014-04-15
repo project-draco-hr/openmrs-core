@@ -8,9 +8,7 @@
       }
     }
     ConceptName shortNameInLocale=shortNamesByLocale.get(locale);
-    if (StringUtils.hasText(shortNameInLocale.getName())) {
-      concept.setShortName(shortNameInLocale);
-    }
+    concept.setShortName(shortNameInLocale);
     for (    ConceptName synonym : synonymsByLocale.get(locale)) {
       if (synonym != null && StringUtils.hasText(synonym.getName())) {
         synonym.setLocale(locale);
@@ -20,7 +18,9 @@
  else         if (!concept.getNames().contains(synonym) && !concept.hasName(synonym.getName(),locale)) {
           concept.addName(synonym);
         }
-        if (!synonym.isVoided())         synonym.setVoidReason(null);
+        if (!synonym.isVoided()) {
+          synonym.setVoidReason(null);
+        }
  else {
           synonym.setVoidReason(Context.getMessageSourceService().getMessage("general.default.voidReason"));
         }
@@ -33,8 +33,12 @@
           indexTerm.setLocale(locale);
           concept.addName(indexTerm);
         }
-        if (!indexTerm.isVoided())         indexTerm.setVoidReason(null);
- else         if (indexTerm.isVoided() && !StringUtils.hasText(indexTerm.getVoidReason()))         indexTerm.setVoidReason(Context.getMessageSourceService().getMessage("Concept.name.default.voidReason"));
+        if (!indexTerm.isVoided()) {
+          indexTerm.setVoidReason(null);
+        }
+ else         if (indexTerm.isVoided() && !StringUtils.hasText(indexTerm.getVoidReason())) {
+          indexTerm.setVoidReason(Context.getMessageSourceService().getMessage("Concept.name.default.voidReason"));
+        }
       }
     }
     ConceptDescription descInLocale=descriptionsByLocale.get(locale);
@@ -44,9 +48,13 @@
   }
   Set<Integer> mappedTermIds=null;
   for (  ConceptMap map : conceptMappings) {
-    if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
+    if (mappedTermIds == null) {
+      mappedTermIds=new HashSet<Integer>();
+    }
     if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
-      if (map.getConceptMapId() == null)       continue;
+      if (map.getConceptMapId() == null) {
+        continue;
+      }
       concept.removeConceptMapping(map);
     }
  else     if (!mappedTermIds.add(map.getConceptReferenceTerm().getConceptReferenceTermId())) {
@@ -68,7 +76,9 @@
   }
   if (concept.getDatatype().getName().equals("Numeric")) {
     ConceptNumeric cn;
-    if (concept instanceof ConceptNumeric)     cn=(ConceptNumeric)concept;
+    if (concept instanceof ConceptNumeric) {
+      cn=(ConceptNumeric)concept;
+    }
  else {
       cn=new ConceptNumeric(concept);
     }
@@ -79,12 +89,15 @@
     cn.setHiNormal(hiNormal);
     cn.setLowNormal(lowNormal);
     cn.setPrecise(precise);
+    cn.setDisplayPrecision(displayPrecision);
     cn.setUnits(units);
     concept=cn;
   }
  else   if (concept.getDatatype().getName().equals("Complex")) {
     ConceptComplex complexConcept;
-    if (concept instanceof ConceptComplex)     complexConcept=(ConceptComplex)concept;
+    if (concept instanceof ConceptComplex) {
+      complexConcept=(ConceptComplex)concept;
+    }
  else {
       complexConcept=new ConceptComplex(concept);
     }

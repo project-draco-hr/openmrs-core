@@ -7,13 +7,16 @@
     drugId=null;
   }
   if (drugId != null) {
-    return getDrug(drugId);
+    return Context.getConceptService().getDrug(drugId);
   }
  else {
-    List<Drug> drugs=new ArrayList<Drug>();
-    drugs=dao.getDrugs(drugNameOrId,null,false);
-    if (drugs.size() > 1)     log.warn("more than one drug name returned with name:" + drugNameOrId);
-    if (drugs.size() == 0)     return null;
+    List<Drug> drugs=dao.getDrugs(drugNameOrId,null,false);
+    if (drugs.size() > 1) {
+      log.warn("more than one drug name returned with name:" + drugNameOrId);
+    }
+    if (drugs.size() == 0) {
+      return null;
+    }
     return drugs.get(0);
   }
 }

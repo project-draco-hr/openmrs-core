@@ -10,7 +10,9 @@
           continue;
         }
         String content=getURL(url);
-        if (content.equals(""))         continue;
+        if (content.equals("")) {
+          continue;
+        }
         UpdateFileParser parser=new UpdateFileParser(content);
         parser.parse();
         log.debug("Update for mod: " + mod.getModuleId() + " compareVersion result: "+ compareVersion(mod.getVersion(),parser.getCurrentVersion()));
@@ -20,7 +22,9 @@
             mod.setUpdateVersion(parser.getCurrentVersion());
             updateFound=true;
           }
- else           log.warn("Module id does not match in update.rdf:" + parser.getModuleId());
+ else {
+            log.warn("Module id does not match in update.rdf:" + parser.getModuleId());
+          }
         }
  else {
           mod.setDownloadURL(null);

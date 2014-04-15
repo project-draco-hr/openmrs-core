@@ -7,7 +7,7 @@
     public void run(){
       try {
         String connectionUsername;
-        String connectionPassword;
+        StringBuilder connectionPassword=new StringBuilder();
         if (!wizardModel.hasCurrentOpenmrsDatabase) {
           setMessage("Create database");
           setExecutingTask(WizardTask.CREATE_SCHEMA);
@@ -18,10 +18,19 @@
  else           if (wizardModel.databaseConnection.contains("postgresql")) {
             sql="create database `?` encoding 'utf8'";
           }
+ else           if (wizardModel.databaseConnection.contains("h2")) {
+            sql=null;
+          }
  else {
             sql="create database `?`";
           }
-          int result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+          int result;
+          if (sql != null) {
+            result=executeStatement(false,wizardModel.createDatabaseUsername,wizardModel.createDatabasePassword,sql,wizardModel.databaseName);
+          }
+ else {
+            result=1;
+          }
           if (result < 0) {
             reportError(ErrorMessageConstants.ERROR_DB_CREATE_NEW,DEFAULT_PAGE);
             return;
@@ -35,13 +44,17 @@
           setMessage("Create database user");
           setExecutingTask(WizardTask.CREATE_DB_USER);
           connectionUsername=wizardModel.databaseName + "_user";
-          if (connectionUsername.length() > 16)           connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
-          connectionPassword="";
+          if (connectionUsername.length() > 16) {
+            connectionUsername=wizardModel.databaseName.substring(0,11) + "_user";
+          }
+          connectionPassword.append("");
           String chars="acdeghijklmnopqrtvwxyzACDEGHIJKLMNOPQRTVWXYZ0123456789.|~@#^&";
           Random r=new Random();
+          StringBuilder randomStr=new StringBuilder("");
           for (int x=0; x < 12; x++) {
-            connectionPassword+=chars.charAt(r.nextInt(chars.length()));
+            randomStr.append(chars.charAt(r.nextInt(chars.length())));
           }
+          connectionPassword.append(randomStr);
           String host="'%'";
           if (wizardModel.databaseConnection.contains("localhost")) {
             host="'localhost'";
@@ -49,7 +62,7 @@
           String sql="drop user '?'@" + host;
           executeStatement(true,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername);
           sql="create user '?'@" + host + " identified by '?'";
-          if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword)) {
+          if (-1 != executeStatement(false,wizardModel.createUserUsername,wizardModel.createUserPassword,sql,connectionUsername,connectionPassword.toString())) {
             wizardModel.workLog.add("Created user " + connectionUsername);
           }
  else {
@@ -69,10 +82,12 @@
         }
  else {
           connectionUsername=wizardModel.currentDatabaseUsername;
-          connectionPassword=wizardModel.currentDatabasePassword;
+          connectionPassword.setLength(0);
+          connectionPassword.append(wizardModel.currentDatabasePassword);
         }
         String finalDatabaseConnectionString=wizardModel.databaseConnection.replace("@DBNAME@",wizardModel.databaseName);
-        if (!verifyConnection(connectionUsername,connectionPassword,finalDatabaseConnectionString)) {
+        finalDatabaseConnectionString=finalDatabaseConnectionString.replace("@APPLICATIONDATADIR@",OpenmrsUtil.getApplicationDataDirectory().replace("\\","/"));
+        if (!verifyConnection(connectionUsername,connectionPassword.toString(),finalDatabaseConnectionString)) {
           setMessage("Verify that the database connection works");
           reportError("Unable to connect to database",DEFAULT_PAGE);
           return;
@@ -80,10 +95,19 @@
         Properties runtimeProperties=new Properties();
         runtimeProperties.put("connection.url",finalDatabaseConnectionString);
         runtimeProperties.put("connection.username",connectionUsername);
-        runtimeProperties.put("connection.password",connectionPassword);
-        if (StringUtils.hasText(wizardModel.databaseDriver))         runtimeProperties.put("connection.driver_class",wizardModel.databaseDriver);
-        if (finalDatabaseConnectionString.contains("postgres"))         runtimeProperties.put("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect");
-        if (finalDatabaseConnectionString.contains("sqlserver"))         runtimeProperties.put("hibernate.dialect","org.hibernate.dialect.SQLServerDialect");
+        runtimeProperties.put("connection.password",connectionPassword.toString());
+        if (StringUtils.hasText(wizardModel.databaseDriver)) {
+          runtimeProperties.put("connection.driver_class",wizardModel.databaseDriver);
+        }
+        if (finalDatabaseConnectionString.contains("postgres")) {
+          runtimeProperties.put("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect");
+        }
+        if (finalDatabaseConnectionString.contains("sqlserver")) {
+          runtimeProperties.put("hibernate.dialect","org.hibernate.dialect.SQLServerDialect");
+        }
+        if (finalDatabaseConnectionString.contains("h2")) {
+          runtimeProperties.put("hibernate.dialect","org.hibernate.dialect.H2Dialect");
+        }
         runtimeProperties.put("module.allow_web_admin",wizardModel.moduleWebAdmin.toString());
         runtimeProperties.put("auto_update_database",wizardModel.autoUpdateDatabase.toString());
         runtimeProperties.put(OpenmrsConstants.ENCRYPTION_VECTOR_RUNTIME_PROPERTY,Base64.encode(Security.generateNewInitVector()));
@@ -139,7 +163,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
               }
               setCompletedPercentage(40);
               setMessage("Loading imported test data...");
-              importTestDataSet(inData,finalDatabaseConnectionString,connectionUsername,connectionPassword);
+              importTestDataSet(inData,finalDatabaseConnectionString,connectionUsername,connectionPassword.toString());
               wizardModel.workLog.add("Imported test data");
               addExecutedTask(WizardTask.IMPORT_TEST_DATA);
               setCompletedPercentage(0);
@@ -203,10 +227,26 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
         setMessage("Starting OpenMRS");
         ContextLoader contextLoader=new ContextLoader();
         contextLoader.initWebApplicationContext(filterConfig.getServletContext());
+        FileOutputStream fos=null;
         try {
-          Context.openSession();
-          Listener.loadBundledModules(filterConfig.getServletContext());
-          Context.startup(runtimeProperties);
+          fos=new FileOutputStream(getRuntimePropertiesFile());
+          OpenmrsUtil.storeProperties(runtimeProperties,fos,"Auto generated by OpenMRS initialization wizard");
+          wizardModel.workLog.add("Saved runtime properties file " + getRuntimePropertiesFile());
+          wizardModel.workLog.add("Adjusting file posix properties to user readonly");
+          if (getRuntimePropertiesFile().setReadable(false,false) && getRuntimePropertiesFile().setReadable(true)) {
+            wizardModel.workLog.add("Successfully adjusted RuntimePropertiesFile to disallow world to read it");
+          }
+ else {
+            wizardModel.workLog.add("Unable to adjust RuntimePropertiesFile to disallow world to read it");
+          }
+        }
+  finally {
+          if (fos != null) {
+            fos.close();
+          }
+        }
+        try {
+          WebDaemon.startOpenmrs(filterConfig.getServletContext());
         }
  catch (        DatabaseUpdateException updateEx) {
           log.warn("Error while running the database update file",updateEx);
@@ -228,6 +268,7 @@ catch (        OpenmrsCoreModuleException coreModEx) {
           reportError(ErrorMessageConstants.ERROR_CORE_MOD_REQ,DEFAULT_PAGE,coreModEx.getMessage());
           return;
         }
+        Context.openSession();
         if (!wizardModel.implementationId.equals("")) {
           try {
             Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
@@ -241,9 +282,9 @@ catch (        OpenmrsCoreModuleException coreModEx) {
             implId.setDescription(wizardModel.implementationIdDescription);
             Context.getAdministrationService().setImplementationId(implId);
           }
- catch (          Throwable t) {
-            reportError(ErrorMessageConstants.ERROR_SET_INPL_ID,DEFAULT_PAGE,t.getMessage());
-            log.warn("Implementation ID could not be set.",t);
+ catch (          Exception e) {
+            reportError(ErrorMessageConstants.ERROR_SET_INPL_ID,DEFAULT_PAGE,e.getMessage());
+            log.warn("Implementation ID could not be set.",e);
             Context.shutdown();
             WebModuleUtil.shutdownModules(filterConfig.getServletContext());
             contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
@@ -260,29 +301,17 @@ catch (        OpenmrsCoreModuleException coreModEx) {
           if (wizardModel.createTables) {
             Context.authenticate("admin","test");
             Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
+            SchedulerConstants.SCHEDULER_DEFAULT_PASSWORD=wizardModel.adminUserPassword;
             Context.logout();
           }
-          Listener.performWebStartOfModules(filterConfig.getServletContext());
-          SchedulerUtil.startup(runtimeProperties);
         }
- catch (        Throwable t) {
+ catch (        Exception e) {
           Context.shutdown();
           WebModuleUtil.shutdownModules(filterConfig.getServletContext());
           contextLoader.closeWebApplicationContext(filterConfig.getServletContext());
-          reportError(ErrorMessageConstants.ERROR_COMPLETE_STARTUP,DEFAULT_PAGE,t.getMessage());
-          log.warn("Unable to complete the startup.",t);
+          reportError(ErrorMessageConstants.ERROR_COMPLETE_STARTUP,DEFAULT_PAGE,e.getMessage());
+          log.warn("Unable to complete the startup.",e);
           return;
-        }
-        FileOutputStream fos=null;
-        try {
-          fos=new FileOutputStream(getRuntimePropertiesFile());
-          OpenmrsUtil.storeProperties(runtimeProperties,fos,"Auto generated by OpenMRS initialization wizard");
-          wizardModel.workLog.add("Saved runtime properties file " + getRuntimePropertiesFile());
-        }
-  finally {
-          if (fos != null) {
-            fos.close();
-          }
         }
         Context.closeSession();
       }

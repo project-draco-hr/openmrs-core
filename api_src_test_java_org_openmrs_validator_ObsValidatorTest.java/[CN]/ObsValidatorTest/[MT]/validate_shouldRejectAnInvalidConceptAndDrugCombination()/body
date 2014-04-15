@@ -1,0 +1,17 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(new Person(7));
+  obs.setObsDatetime(new Date());
+  Concept questionConcept=new Concept(100);
+  ConceptDatatype dt=new ConceptDatatype(1);
+  dt.setUuid(ConceptDatatype.CODED_UUID);
+  questionConcept.setDatatype(dt);
+  obs.setConcept(questionConcept);
+  obs.setValueCoded(new Concept(101));
+  Drug drug=new Drug();
+  drug.setConcept(new Concept(102));
+  obs.setValueDrug(drug);
+  Errors errors=new BindException(obs,"obs");
+  new ObsValidator().validate(obs,errors);
+  Assert.assertTrue(errors.hasFieldErrors("valueDrug"));
+}

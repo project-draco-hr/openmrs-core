@@ -2,7 +2,9 @@
   File outFile;
   do {
     DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd-HHmm-ssSSS");
-    if (date == null)     date=new Date();
+    if (date == null) {
+      date=new Date();
+    }
     StringBuilder filename=new StringBuilder();
     filename.append(dateFormat.format(date));
     if (user != null) {

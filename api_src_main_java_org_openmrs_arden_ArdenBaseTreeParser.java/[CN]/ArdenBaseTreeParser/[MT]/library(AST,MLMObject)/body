@@ -1,32 +1,30 @@
 {
-  String s="";
-  AST library_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  StringBuilder s=new StringBuilder("");
   String a="", b="";
   try {
 {
       AST __t590=_t;
-      AST tmp164_AST_in=(AST)_t;
       match(_t,LIBRARY);
       _t=_t.getFirstChild();
 {
         _loop599:         do {
-          if (_t == null)           _t=ASTNULL;
+          if (_t == null) {
+            _t=ASTNULL;
+          }
 switch (_t.getType()) {
 case PURPOSE:
 {
               AST __t592=_t;
-              AST tmp165_AST_in=(AST)_t;
               match(_t,PURPOSE);
               _t=_t.getFirstChild();
-              AST tmp166_AST_in=(AST)_t;
               match(_t,COLON);
               _t=_t.getNextSibling();
-              s+=" Purpose: ";
+              s.append(" Purpose: ");
               b=textAST(_t,obj);
               _t=_retTree;
               obj.setPurpose(b);
-              s+=b;
-              s+="\n";
+              s.append(b);
+              s.append("\n");
               _t=__t592;
               _t=_t.getNextSibling();
               break;
@@ -34,18 +32,16 @@ case PURPOSE:
 case EXPLANATION:
 {
             AST __t593=_t;
-            AST tmp167_AST_in=(AST)_t;
             match(_t,EXPLANATION);
             _t=_t.getFirstChild();
-            AST tmp168_AST_in=(AST)_t;
             match(_t,COLON);
             _t=_t.getNextSibling();
-            s+=" Explanation: ";
+            s.append(" Explanation: ");
             b=textAST(_t,obj);
             _t=_retTree;
             obj.setExplanation(b);
-            s+=b;
-            s+="\n";
+            s.append(b);
+            s.append("\n");
             _t=__t593;
             _t=_t.getNextSibling();
             break;
@@ -53,18 +49,16 @@ case EXPLANATION:
 case KEYWORDS:
 {
           AST __t594=_t;
-          AST tmp169_AST_in=(AST)_t;
           match(_t,KEYWORDS);
           _t=_t.getFirstChild();
-          AST tmp170_AST_in=(AST)_t;
           match(_t,COLON);
           _t=_t.getNextSibling();
-          s+=" Keywords: ";
+          s.append(" Keywords: ");
           b=textAST(_t,obj);
           _t=_retTree;
           obj.setKeywords(b);
-          s+=b;
-          s+="\n";
+          s.append(b);
+          s.append("\n");
           _t=__t594;
           _t=_t.getNextSibling();
           break;
@@ -72,18 +66,16 @@ case KEYWORDS:
 case CITATIONS:
 {
         AST __t595=_t;
-        AST tmp171_AST_in=(AST)_t;
         match(_t,CITATIONS);
         _t=_t.getFirstChild();
-        AST tmp172_AST_in=(AST)_t;
         match(_t,COLON);
         _t=_t.getNextSibling();
-        s+=" Citations: ";
+        s.append(" Citations: ");
         b=textAST(_t,obj);
         _t=_retTree;
         obj.setCitations(b);
-        s+=b;
-        s+="\n";
+        s.append(b);
+        s.append("\n");
         _t=__t595;
         _t=_t.getNextSibling();
         break;
@@ -91,29 +83,28 @@ case CITATIONS:
 case LINKS:
 {
       AST __t596=_t;
-      AST tmp173_AST_in=(AST)_t;
       match(_t,LINKS);
       _t=_t.getFirstChild();
-      AST tmp174_AST_in=(AST)_t;
       match(_t,COLON);
       _t=_t.getNextSibling();
-      s+=" Links: ";
+      s.append(" Links: ");
 {
-        if (_t == null)         _t=ASTNULL;
+        if (_t == null) {
+          _t=ASTNULL;
+        }
         if ((_t.getType() == HTTP)) {
           AST __t598=_t;
-          AST tmp175_AST_in=(AST)_t;
           match(_t,HTTP);
           _t=_t.getFirstChild();
-          s+="http://";
+          s.append("http://");
           _t=__t598;
           _t=_t.getNextSibling();
         }
  else         if ((_tokenSet_11.member(_t.getType()))) {
           a=textAST(_t,obj);
           _t=_retTree;
-          s+=a;
-          s+="\n";
+          s.append(a);
+          s.append("\n");
         }
  else         if ((_tokenSet_11.member(_t.getType()))) {
         }
@@ -124,8 +115,8 @@ case LINKS:
       b=textAST(_t,obj);
       _t=_retTree;
       obj.setLinks(b);
-      s+=b;
-      s+="\n";
+      s.append(b);
+      s.append("\n");
       _t=__t596;
       _t=_t.getNextSibling();
       break;
@@ -149,5 +140,5 @@ _t=_t.getNextSibling();
 }
 }
 _retTree=_t;
-return s;
+return s.toString();
 }

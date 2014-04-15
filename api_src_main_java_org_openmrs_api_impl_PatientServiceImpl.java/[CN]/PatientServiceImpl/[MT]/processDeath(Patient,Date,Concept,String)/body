@@ -7,12 +7,20 @@
     saveCauseOfDeathObs(patient,dateDied,causeOfDeath,otherReason);
     String strPatientDied=Context.getAdministrationService().getGlobalProperty("concept.patientDied");
     Concept conceptPatientDied=Context.getConceptService().getConcept(strPatientDied);
-    if (conceptPatientDied == null)     log.debug("ConceptPatientDied is null");
+    if (conceptPatientDied == null) {
+      log.debug("ConceptPatientDied is null");
+    }
     exitFromCare(patient,dateDied,conceptPatientDied);
   }
  else {
-    if (patient == null)     throw new APIException("Attempting to set an invalid patient's status to 'dead'");
-    if (dateDied == null)     throw new APIException("Must supply a valid dateDied when indicating that a patient has died");
-    if (causeOfDeath == null)     throw new APIException("Must supply a valid causeOfDeath (even if 'Unknown') when indicating that a patient has died");
+    if (patient == null) {
+      throw new APIException("Attempting to set an invalid patient's status to 'dead'");
+    }
+    if (dateDied == null) {
+      throw new APIException("Must supply a valid dateDied when indicating that a patient has died");
+    }
+    if (causeOfDeath == null) {
+      throw new APIException("Must supply a valid causeOfDeath (even if 'Unknown') when indicating that a patient has died");
+    }
   }
 }

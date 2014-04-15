@@ -1,11 +1,15 @@
 {
-  if (super.getDescription() != null)   return super.getDescription();
+  if (super.getDescription() != null) {
+    return super.getDescription();
+  }
  else {
     StringBuilder ret=new StringBuilder();
     for (Iterator<PatientFilter> i=filters.iterator(); i.hasNext(); ) {
       PatientFilter pf=i.next();
       ret.append("[").append(pf.getName() == null ? pf.getDescription() : pf.getName()).append("]");
-      if (i.hasNext())       ret.append(" " + operator + " ");
+      if (i.hasNext()) {
+        ret.append(" " + operator + " ");
+      }
     }
     return ret.toString();
   }

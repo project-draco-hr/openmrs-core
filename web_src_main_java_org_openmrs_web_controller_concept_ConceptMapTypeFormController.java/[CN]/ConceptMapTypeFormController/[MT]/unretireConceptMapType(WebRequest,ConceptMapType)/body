@@ -1,7 +1,9 @@
 {
   try {
     Context.getConceptService().unretireConceptMapType(conceptMapType);
-    if (log.isDebugEnabled())     log.debug("Unretired concept map type with id: " + conceptMapType.getId());
+    if (log.isDebugEnabled()) {
+      log.debug("Unretired concept map type with id: " + conceptMapType.getId());
+    }
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("ConceptMapType.unretired"),WebRequest.SCOPE_SESSION);
     return "redirect:" + CONCEPT_MAP_TYPE_LIST_URL + ".list";
   }

@@ -1,0 +1,19 @@
+{
+  DocumentBuilderFactory docFactory=DocumentBuilderFactory.newInstance();
+  DocumentBuilder docBuilder=docFactory.newDocumentBuilder();
+  Document doc=docBuilder.newDocument();
+  Element rootElement=doc.createElement("module");
+  doc.appendChild(rootElement);
+  Element dwr=doc.createElement("dwr");
+  dwr.appendChild(doc.createTextNode(""));
+  rootElement.appendChild(dwr);
+  Element allow=doc.createElement("allow");
+  allow.appendChild(doc.createTextNode(""));
+  dwr.appendChild(allow);
+  Attr attr=doc.createAttribute("moduleId");
+  attr.setValue("mymodule");
+  allow.setAttributeNode(attr);
+  Element create=doc.createElement("create");
+  allow.appendChild(create);
+  return doc;
+}

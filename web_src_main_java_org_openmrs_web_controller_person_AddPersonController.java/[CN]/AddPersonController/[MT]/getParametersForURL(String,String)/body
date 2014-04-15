@@ -1,8 +1,0 @@
-{
-  if ("".equals(personId))   return "?addName=" + URLEncoder.encode(name,"UTF-8") + "&addBirthdate="+ birthdate+ "&addAge="+ age+ "&addGender="+ gender;
- else {
-    if ("patient".equals(personType))     return "?patientId=" + personId;
- else     if ("user".equals(personType))     return "?userId=" + personId;
- else     return "?personId=" + personId;
-  }
-}

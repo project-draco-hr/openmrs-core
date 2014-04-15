@@ -1,10 +1,14 @@
 {
   if (getNames() != null && getNames().size() > 0) {
     for (    PersonName name : getNames()) {
-      if (name.isPreferred() && !name.isVoided())       return name;
+      if (name.isPreferred() && !name.isVoided()) {
+        return name;
+      }
     }
     for (    PersonName name : getNames()) {
-      if (!name.isVoided())       return name;
+      if (!name.isVoided()) {
+        return name;
+      }
     }
     return null;
   }

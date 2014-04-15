@@ -16,7 +16,9 @@
     Map<String,String> properties=user.getUserProperties();
     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCATION,opts.getDefaultLocation());
     Locale locale=WebUtil.normalizeLocale(opts.getDefaultLocale());
-    if (locale != null)     properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE,locale.toString());
+    if (locale != null) {
+      properties.put(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE,locale.toString());
+    }
     properties.put(OpenmrsConstants.USER_PROPERTY_PROFICIENT_LOCALES,WebUtil.sanitizeLocales(opts.getProficientLocales()));
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_RETIRED,opts.getShowRetiredMessage().toString());
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE,opts.getVerbose().toString());
@@ -32,8 +34,12 @@
  catch (          PasswordException e) {
             errors.reject(e.getMessage());
           }
-          if (password.equals(opts.getOldPassword()) && !errors.hasErrors())           errors.reject("error.password.different");
-          if (!password.equals(opts.getConfirmPassword()))           errors.reject("error.password.match");
+          if (password.equals(opts.getOldPassword()) && !errors.hasErrors()) {
+            errors.reject("error.password.different");
+          }
+          if (!password.equals(opts.getConfirmPassword())) {
+            errors.reject("error.password.match");
+          }
         }
         if (!errors.hasErrors()) {
           us.changePassword(opts.getOldPassword(),password);
@@ -64,6 +70,17 @@
  else     if (!opts.getSecretAnswerNew().equals("")) {
       errors.rejectValue("secretQuestionPassword","error.password.incorrect");
     }
+    String notifyType=opts.getNotification();
+    if (notifyType != null) {
+      if (notifyType.equals("internal") || notifyType.equals("internalProtected") || notifyType.equals("email")) {
+        if (opts.getNotificationAddress().isEmpty()) {
+          errors.reject("error.options.notificationAddress.empty");
+        }
+ else         if (!EmailValidator.getInstance().isValid(opts.getNotificationAddress())) {
+          errors.reject("error.options.notificationAddress.invalid");
+        }
+      }
+    }
     if (opts.getUsername().length() > 0 && !errors.hasErrors()) {
       try {
         Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
@@ -88,6 +105,10 @@
         existingPersonName.setVoidReason("Changed name on own options form");
         newPersonName.setPreferred(true);
         user.addName(newPersonName);
+      }
+      ValidateUtil.validate(user,errors);
+      if (errors.hasErrors()) {
+        return super.processFormSubmission(request,response,opts,errors);
       }
       try {
         Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);

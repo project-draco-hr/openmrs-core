@@ -1,20 +1,30 @@
 {
   String methodName=method.getName();
-  if (args == null || args.length == 0)   return;
+  if (args == null || args.length == 0) {
+    return;
+  }
   Object mainArgument=args[0];
-  if (mainArgument == null)   return;
+  if (mainArgument == null) {
+    return;
+  }
   if (methodName.startsWith("save") || methodName.startsWith("create")) {
     Reflect reflect=new Reflect(OpenmrsObject.class);
     if (reflect.isSuperClass(mainArgument)) {
-      if (!methodNameEndsWithClassName(method,mainArgument.getClass()))       return;
+      if (!methodNameEndsWithClassName(method,mainArgument.getClass())) {
+        return;
+      }
       String other=null;
-      if (args.length > 1 && args[1] instanceof String)       other=(String)args[1];
+      if (args.length > 1 && args[1] instanceof String) {
+        other=(String)args[1];
+      }
       ValidateUtil.validate(mainArgument);
       recursivelyHandle(SaveHandler.class,(OpenmrsObject)mainArgument,other);
     }
  else     if (Reflect.isCollection(mainArgument) && isOpenmrsObjectCollection(mainArgument)) {
       String other=null;
-      if (args.length > 1)       other=(String)args[1];
+      if (args.length > 1) {
+        other=(String)args[1];
+      }
       Collection<OpenmrsObject> openmrsObjects=(Collection<OpenmrsObject>)mainArgument;
       for (      OpenmrsObject object : openmrsObjects) {
         ValidateUtil.validate(mainArgument);
@@ -23,7 +33,9 @@
     }
   }
  else {
-    if (!methodNameEndsWithClassName(method,mainArgument.getClass()))     return;
+    if (!methodNameEndsWithClassName(method,mainArgument.getClass())) {
+      return;
+    }
     if (methodName.startsWith("void")) {
       Voidable voidable=(Voidable)args[0];
       String voidReason=(String)args[1];

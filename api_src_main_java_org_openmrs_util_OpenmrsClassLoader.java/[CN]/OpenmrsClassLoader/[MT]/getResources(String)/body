@@ -1,14 +1,31 @@
 {
-  Set<URL> results=new HashSet<URL>();
+  Set<URI> results=new HashSet<URI>();
   for (  ModuleClassLoader classLoader : ModuleFactory.getModuleClassLoaders()) {
     Enumeration<URL> urls=classLoader.getResources(packageName);
     while (urls.hasMoreElements()) {
       URL result=urls.nextElement();
-      if (result != null)       results.add(result);
+      if (result != null) {
+        try {
+          results.add(result.toURI());
+        }
+ catch (        URISyntaxException e) {
+          throwInvalidURI(result,e);
+        }
+      }
     }
   }
   for (Enumeration<URL> en=super.getResources(packageName); en.hasMoreElements(); ) {
-    results.add(en.nextElement());
+    URL url=en.nextElement();
+    try {
+      results.add(url.toURI());
+    }
+ catch (    URISyntaxException e) {
+      throwInvalidURI(url,e);
+    }
   }
-  return Collections.enumeration(results);
+  List<URL> resources=new ArrayList<URL>(results.size());
+  for (  URI result : results) {
+    resources.add(result.toURL());
+  }
+  return Collections.enumeration(resources);
 }

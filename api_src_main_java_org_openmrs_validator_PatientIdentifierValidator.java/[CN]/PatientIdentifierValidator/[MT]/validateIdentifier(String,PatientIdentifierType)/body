@@ -6,7 +6,7 @@
   if (StringUtils.isBlank(identifier)) {
     throw new BlankIdentifierException("PatientIdentifier.error.nullOrBlank");
   }
-  checkIdentifierAgainstFormat(identifier,pit.getFormat());
+  checkIdentifierAgainstFormat(identifier,pit.getFormat(),pit.getFormatDescription());
   if (pit.hasValidator()) {
     IdentifierValidator validator=Context.getPatientService().getIdentifierValidator(pit.getValidator());
     checkIdentifierAgainstValidator(identifier,validator);

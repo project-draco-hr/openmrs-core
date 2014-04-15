@@ -1,0 +1,13 @@
+{
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","");
+  HttpServletResponse response=new MockHttpServletResponse();
+  request.setParameter("addName","Gayan Perera");
+  request.setParameter("addBirthdate","03/07/199s");
+  request.setParameter("addGender","M");
+  request.setParameter("personType","patient");
+  request.setParameter("viewType","edit");
+  AddPersonController controller=(AddPersonController)applicationContext.getBean("addPerson");
+  ModelAndView mav=controller.handleRequest(request,response);
+  assertNotNull(mav);
+  assertEquals("Person.birthdate.required",mav.getModel().get("errorMessage"));
+}

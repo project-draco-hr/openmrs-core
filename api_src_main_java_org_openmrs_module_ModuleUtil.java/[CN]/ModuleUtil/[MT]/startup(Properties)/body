@@ -11,7 +11,9 @@
     for (    String modulePath : moduleArray) {
       if (modulePath != null && modulePath.length() > 0) {
         File file=new File(modulePath);
-        if (file.exists())         modulesToLoad.add(file);
+        if (file.exists()) {
+          modulesToLoad.add(file);
+        }
  else {
           InputStream stream=ModuleUtil.class.getClassLoader().getResourceAsStream(modulePath);
           if (stream != null) {
@@ -27,7 +29,9 @@
               log.error("Unable to expand classpath found module: " + modulePath,io);
             }
           }
- else           log.error("Unable to load module at path: " + modulePath + " because no file exists there and it is not found on the classpath. (absolute path tried: "+ file.getAbsolutePath()+ ")");
+ else {
+            log.error("Unable to load module at path: " + modulePath + " because no file exists there and it is not found on the classpath. (absolute path tried: "+ file.getAbsolutePath()+ ")");
+          }
         }
       }
     }
@@ -36,8 +40,12 @@
   ModuleFactory.startModules();
   if (log.isDebugEnabled()) {
     Collection<Module> modules=ModuleFactory.getStartedModules();
-    if (modules == null || modules.size() == 0)     log.debug("No modules loaded");
- else     log.debug("Found and loaded " + modules.size() + " module(s)");
+    if (modules == null || modules.size() == 0) {
+      log.debug("No modules loaded");
+    }
+ else {
+      log.debug("Found and loaded " + modules.size() + " module(s)");
+    }
   }
   checkOpenmrsCoreModulesStarted();
   checkMandatoryModulesStarted();

@@ -1,5 +1,9 @@
 {
-  if (patient == null)   throw new IllegalArgumentException("patient is required");
-  if (ingredient == null)   throw new IllegalArgumentException("ingredient is required");
+  if (patient == null) {
+    throw new IllegalArgumentException("patient is required");
+  }
+  if (ingredient == null) {
+    throw new IllegalArgumentException("ingredient is required");
+  }
   return dao.getDrugOrdersByPatientAndIngredient(patient,ingredient);
 }

@@ -7,8 +7,12 @@
  else {
     for (int x=0; x < backingObject.getConceptMappings().size(); x++) {
       ConceptMap map=backingObject.getConceptMappings().get(x);
-      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null)       continue;
-      if (map.getConceptMapType() == null)       errors.rejectValue("conceptMappings[" + x + "].conceptMapType","Concept.map.typeRequired");
+      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
+        continue;
+      }
+      if (map.getConceptMapType() == null) {
+        errors.rejectValue("conceptMappings[" + x + "].conceptMapType","Concept.map.typeRequired");
+      }
     }
     boolean foundAtLeastOneFullySpecifiedName=false;
     for (    Locale locale : backingObject.getLocales()) {
@@ -34,7 +38,9 @@
         localesWithErrors.add(locale.getDisplayName());
       }
     }
-    if (!foundAtLeastOneFullySpecifiedName)     errors.reject("Concept.name.atLeastOneRequired");
+    if (!foundAtLeastOneFullySpecifiedName) {
+      errors.reject("Concept.name.atLeastOneRequired");
+    }
   }
   if (errors.hasErrors() && localesWithErrors.size() > 0) {
     StringBuilder sb=new StringBuilder(Context.getMessageSourceService().getMessage("Concept.localesWithErrors"));

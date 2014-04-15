@@ -1,12 +1,28 @@
 {
-  String value=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,null);
-  if (StringUtils.isBlank(value))   return null;
-  try {
-    Object handler=OpenmrsClassLoader.getInstance().loadClass(value).newInstance();
-    if (!(handler instanceof EncounterVisitHandler))     throw new APIException("The registered visit assignment handler should implement the EncounterVisitHandler interface");
-    return (EncounterVisitHandler)handler;
+  String handlerGlobalValue=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,null);
+  if (StringUtils.isBlank(handlerGlobalValue)) {
+    return null;
   }
- catch (  Exception ex) {
-    throw new APIException("Failed to instantiate assignment handler object for class class: " + value,ex);
+  EncounterVisitHandler handler=null;
+  String namePrefix=OpenmrsConstants.REGISTERED_COMPONENT_NAME_PREFIX;
+  if (handlerGlobalValue.startsWith(namePrefix)) {
+    String beanName=handlerGlobalValue.substring(namePrefix.length());
+    handler=Context.getRegisteredComponent(beanName,EncounterVisitHandler.class);
   }
+ else {
+    Object instance;
+    try {
+      instance=OpenmrsClassLoader.getInstance().loadClass(handlerGlobalValue).newInstance();
+    }
+ catch (    Exception ex) {
+      throw new APIException("Failed to instantiate assignment handler object for class class: " + handlerGlobalValue,ex);
+    }
+    if (instance instanceof EncounterVisitHandler) {
+      handler=(EncounterVisitHandler)instance;
+    }
+ else {
+      throw new APIException("The registered visit assignment handler should implement the EncounterVisitHandler interface");
+    }
+  }
+  return handler;
 }

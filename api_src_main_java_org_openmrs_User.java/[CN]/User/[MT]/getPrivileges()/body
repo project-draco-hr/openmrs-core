@@ -5,7 +5,9 @@
   for (Iterator<Role> i=tmproles.iterator(); i.hasNext(); ) {
     role=i.next();
     Collection<Privilege> privs=role.getPrivileges();
-    if (privs != null)     privileges.addAll(privs);
+    if (privs != null) {
+      privileges.addAll(privs);
+    }
   }
   return privileges;
 }

@@ -1,13 +1,11 @@
 {
   boolean objectWasChanged=false;
   if (entity instanceof OpenmrsObject) {
-    if (log.isDebugEnabled())     log.debug("Setting creator and dateCreated on " + entity);
-    if (setValue(currentState,propertyNames,"creator",Context.getAuthenticatedUser(),true)) {
-      objectWasChanged=true;
+    if (log.isDebugEnabled()) {
+      log.debug("Setting creator and dateCreated on " + entity);
     }
-    if (setValue(currentState,propertyNames,"dateCreated",new Date(),true)) {
-      objectWasChanged=true;
-    }
+    HashMap<String,Object> propertyValues=getPropertyValuesToSave();
+    objectWasChanged=changeProperties(currentState,propertyNames,objectWasChanged,propertyValues,true);
   }
   return objectWasChanged;
 }

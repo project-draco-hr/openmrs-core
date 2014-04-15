@@ -1,6 +1,10 @@
 {
-  if (visit.getVisitId() == null)   Context.requirePrivilege(PrivilegeConstants.ADD_VISITS);
- else   Context.requirePrivilege(PrivilegeConstants.EDIT_VISITS);
+  if (visit.getVisitId() == null) {
+    Context.requirePrivilege(PrivilegeConstants.ADD_VISITS);
+  }
+ else {
+    Context.requirePrivilege(PrivilegeConstants.EDIT_VISITS);
+  }
   CustomDatatypeUtil.saveAttributesIfNecessary(visit);
   return dao.saveVisit(visit);
 }

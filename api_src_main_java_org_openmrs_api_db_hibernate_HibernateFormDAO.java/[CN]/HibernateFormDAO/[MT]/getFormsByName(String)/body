@@ -1,7 +1,7 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(Form.class);
-  crit.add(Expression.eq("name",name));
-  crit.add(Expression.eq("retired",false));
+  crit.add(Restrictions.eq("name",name));
+  crit.add(Restrictions.eq("retired",false));
   crit.addOrder(Order.desc("version"));
   return crit.list();
 }

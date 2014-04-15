@@ -6,7 +6,9 @@
   List<ConceptListItem> possibleConceptsListItems=new Vector<ConceptListItem>();
   ConceptListItem listItem=null;
   Concept obsConcept=cp.getObsConcept();
-  if (obsConcept != null)   listItem=new ConceptListItem(obsConcept,obsConcept.getName(locale),locale);
+  if (obsConcept != null) {
+    listItem=new ConceptListItem(obsConcept,obsConcept.getName(locale),locale);
+  }
   map.put("obsConcept",listItem);
   String defaultVerbose="false";
   if (Context.isAuthenticated() && cp.getConceptProposalId() != null) {
@@ -14,15 +16,23 @@
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
     matchingProposals=cs.getConceptProposals(cp.getOriginalText());
     String phrase=cp.getOriginalText();
-    if (phrase.length() > 3)     phrase=phrase.substring(0,3);
+    if (phrase.length() > 3) {
+      phrase=phrase.substring(0,3);
+    }
     List<ConceptSearchResult> possibleConcepts=cs.getConcepts(phrase,locale,false);
-    if (possibleConcepts != null)     for (    ConceptSearchResult searchResult : possibleConcepts)     possibleConceptsListItems.add(new ConceptListItem(searchResult));
-    if (cp.getMappedConcept() != null)     map.put("mappedConceptName",cp.getMappedConcept().getName(locale));
+    if (possibleConcepts != null) {
+      for (      ConceptSearchResult searchResult : possibleConcepts) {
+        possibleConceptsListItems.add(new ConceptListItem(searchResult));
+      }
+    }
+    if (cp.getMappedConcept() != null) {
+      map.put("mappedConceptName",cp.getMappedConcept().getName(locale));
+    }
   }
   map.put("possibleConcepts",possibleConceptsListItems);
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
   map.put("states",OpenmrsConstants.CONCEPT_PROPOSAL_STATES());
   map.put("matchingProposals",matchingProposals);
-  map.put("locales",LocaleUtility.getLocalesInOrder());
+  map.put("locales",Context.getAdministrationService().getAllowedLocales());
   return map;
 }

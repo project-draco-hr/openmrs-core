@@ -15,7 +15,9 @@
       personName=PersonName.newInstance(user.getPersonName());
       personName.setPersonNameId(null);
     }
- else     personName=new PersonName();
+ else {
+      personName=new PersonName();
+    }
     opts.setPersonName(personName);
     opts.setNotification(props.get(OpenmrsConstants.USER_PROPERTY_NOTIFICATION));
     opts.setNotificationAddress(props.get(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS));

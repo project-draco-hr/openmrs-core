@@ -1,18 +1,20 @@
 {
   String s="";
-  AST expr_functionAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   try {
 {
-      if (_t == null)       _t=ASTNULL;
+      if (_t == null) {
+        _t=ASTNULL;
+      }
       if ((_tokenSet_7.member(_t.getType()))) {
         from_of_func_opAST(_t,obj);
         _t=_retTree;
 {
-          if (_t == null)           _t=ASTNULL;
+          if (_t == null) {
+            _t=ASTNULL;
+          }
 switch (_t.getType()) {
 case OF:
 {
-              AST tmp106_AST_in=(AST)_t;
               match(_t,OF);
               _t=_t.getNextSibling();
               break;
@@ -39,11 +41,12 @@ default :
   of_read_func_opAST(_t,obj);
   _t=_retTree;
 {
-    if (_t == null)     _t=ASTNULL;
+    if (_t == null) {
+      _t=ASTNULL;
+    }
 switch (_t.getType()) {
 case OF:
 {
-        AST tmp107_AST_in=(AST)_t;
         match(_t,OF);
         _t=_t.getNextSibling();
         break;
@@ -70,11 +73,12 @@ default :
 of_noread_func_opAST(_t,obj);
 _t=_retTree;
 {
-if (_t == null) _t=ASTNULL;
+if (_t == null) {
+_t=ASTNULL;
+}
 switch (_t.getType()) {
 case OF:
 {
-  AST tmp108_AST_in=(AST)_t;
   match(_t,OF);
   _t=_t.getNextSibling();
   break;

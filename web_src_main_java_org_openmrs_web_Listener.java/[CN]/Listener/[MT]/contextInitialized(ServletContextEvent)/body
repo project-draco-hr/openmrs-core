@@ -8,20 +8,20 @@
     clearDWRFile(servletContext);
     Properties props=getRuntimeProperties();
     if (props != null) {
-      runtimePropertiesFound=true;
+      setRuntimePropertiesFound(true);
       Context.setRuntimeProperties(props);
     }
     Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
     if (!setupNeeded()) {
       copyCustomizationIntoWebapp(servletContext,props);
-      ApplicationContext parent=loadParentContext(servletContext);
-      WebApplicationContext context=createWebApplicationContext(servletContext,parent);
+      XmlWebApplicationContext context=(XmlWebApplicationContext)createWebApplicationContext(servletContext);
+      configureAndRefreshWebApplicationContext(context,servletContext);
       servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE,context);
       WebDaemon.startOpenmrs(event.getServletContext());
     }
   }
- catch (  Throwable t) {
-    errorAtStartup=t;
-    log.fatal("Got exception while starting up: ",t);
+ catch (  Exception e) {
+    setErrorAtStartup(e);
+    log.fatal("Got exception while starting up: ",e);
   }
 }

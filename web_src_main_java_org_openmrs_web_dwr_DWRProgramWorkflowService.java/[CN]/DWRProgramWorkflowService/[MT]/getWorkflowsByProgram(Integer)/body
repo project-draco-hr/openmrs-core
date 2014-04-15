@@ -2,20 +2,22 @@
   Vector<ListItem> ret=new Vector<ListItem>();
   Program program=Context.getProgramWorkflowService().getProgram(programId);
   Set<ProgramWorkflow> workflows=program.getWorkflows();
-  if (workflows != null)   for (  ProgramWorkflow wf : workflows) {
-    ListItem li=new ListItem();
-    li.setId(wf.getProgramWorkflowId());
-    try {
-      li.setName(wf.getConcept().getName().getName());
+  if (workflows != null) {
+    for (    ProgramWorkflow wf : workflows) {
+      ListItem li=new ListItem();
+      li.setId(wf.getProgramWorkflowId());
+      try {
+        li.setName(wf.getConcept().getName().getName());
+      }
+ catch (      NullPointerException ex) {
+      }
+      try {
+        li.setDescription(wf.getConcept().getDescription().getDescription());
+      }
+ catch (      NullPointerException ex) {
+      }
+      ret.add(li);
     }
- catch (    NullPointerException ex) {
-    }
-    try {
-      li.setDescription(wf.getConcept().getDescription().getDescription());
-    }
- catch (    NullPointerException ex) {
-    }
-    ret.add(li);
   }
   return ret;
 }

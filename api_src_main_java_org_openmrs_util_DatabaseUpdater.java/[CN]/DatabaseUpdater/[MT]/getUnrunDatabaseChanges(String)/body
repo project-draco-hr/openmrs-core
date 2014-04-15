@@ -2,8 +2,12 @@
   log.debug("Getting unrun changesets");
   Database database=null;
   try {
-    if (changeLogFilenames == null)     throw new IllegalArgumentException("changeLogFilenames cannot be null");
-    if (changeLogFilenames.length == 0)     changeLogFilenames=new String[]{CHANGE_LOG_FILE};
+    if (changeLogFilenames == null) {
+      throw new IllegalArgumentException("changeLogFilenames cannot be null");
+    }
+    if (changeLogFilenames.length == 0) {
+      changeLogFilenames=new String[]{CHANGE_LOG_FILE};
+    }
     List<OpenMRSChangeSet> results=new ArrayList<OpenMRSChangeSet>();
     for (    String changelogFile : changeLogFilenames) {
       Liquibase liquibase=getLiquibase(changelogFile,null);
@@ -23,7 +27,7 @@
     try {
       database.getConnection().close();
     }
- catch (    Throwable t) {
+ catch (    Exception e) {
     }
   }
 }

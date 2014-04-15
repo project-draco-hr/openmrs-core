@@ -1,5 +1,7 @@
 {
-  if (log.isTraceEnabled())   log.trace("Getting service: " + cls);
+  if (log.isTraceEnabled()) {
+    log.trace("Getting service: " + cls);
+  }
 synchronized (refreshingContextLock) {
     try {
       while (refreshingContext) {
@@ -17,6 +19,8 @@ synchronized (refreshingContextLock) {
     }
   }
   Object service=services.get(cls);
-  if (service == null)   throw new APIException("Service not found: " + cls);
+  if (service == null) {
+    throw new APIException("Service not found: " + cls);
+  }
   return (T)service;
 }

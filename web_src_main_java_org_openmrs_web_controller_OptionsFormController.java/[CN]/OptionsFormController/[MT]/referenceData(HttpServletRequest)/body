@@ -7,16 +7,24 @@
     AdministrationService as=Context.getAdministrationService();
     map.put("languages",as.getPresentationLocales());
     String resetPassword=(String)httpSession.getAttribute("resetPassword");
-    if (resetPassword == null)     resetPassword="";
- else     httpSession.removeAttribute("resetPassword");
+    if (resetPassword == null) {
+      resetPassword="";
+    }
+ else {
+      httpSession.removeAttribute("resetPassword");
+    }
     map.put("resetPassword",resetPassword);
     ArrayList<String> hints=new ArrayList<String>(5);
     int minChar=1;
     MessageSourceService mss=Context.getMessageSourceService();
     try {
       String minCharStr=as.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_MINIMUM_LENGTH);
-      if (StringUtils.isNotBlank(minCharStr))       minChar=Integer.valueOf(minCharStr);
-      if (minChar < 1)       minChar=1;
+      if (StringUtils.isNotBlank(minCharStr)) {
+        minChar=Integer.valueOf(minCharStr);
+      }
+      if (minChar < 1) {
+        minChar=1;
+      }
     }
  catch (    NumberFormatException e) {
     }
@@ -25,19 +33,19 @@
     addHint(hints,as.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_REQUIRES_UPPER_AND_LOWER_CASE),mss.getMessage("options.login.password.containUpperCase"));
     addHint(hints,as.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_REQUIRES_DIGIT),mss.getMessage("options.login.password.containNumber"));
     addHint(hints,as.getGlobalProperty(OpenmrsConstants.GP_PASSWORD_REQUIRES_NON_DIGIT),mss.getMessage("options.login.password.containNonNumber"));
-    String passwordHint="";
+    StringBuilder passwordHint=new StringBuilder("");
     for (int i=0; i < hints.size(); i++) {
       if (i == 0) {
-        passwordHint+=hints.get(i);
+        passwordHint.append(hints.get(i));
       }
  else       if (i < (hints.size() - 1)) {
-        passwordHint+=", " + hints.get(i);
+        passwordHint.append(", ").append(hints.get(i));
       }
  else {
-        passwordHint+=" and " + hints.get(i);
+        passwordHint.append(" and ").append(hints.get(i));
       }
     }
-    map.put("passwordHint",passwordHint);
+    map.put("passwordHint",passwordHint.toString());
   }
   return map;
 }

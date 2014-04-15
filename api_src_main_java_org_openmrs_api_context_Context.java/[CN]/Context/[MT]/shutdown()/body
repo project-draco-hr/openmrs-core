@@ -21,7 +21,9 @@
     }
  catch (    APIException e) {
     }
-    if (dao != null)     dao.shutdown();
+    if (dao != null) {
+      dao.shutdown();
+    }
   }
  catch (  Exception e) {
     log.warn("Error while shutting down context dao",e);

@@ -1,10 +1,12 @@
 {
   StringBuilder sb=new StringBuilder();
   if (getRelationshipType() != null) {
-    sb.append("t" + getRelationshipType().getRelationshipTypeId() + ".");
-    sb.append(includeAtoB + ".");
-    sb.append(includeBtoA + ".");
+    sb.append("t").append(getRelationshipType().getRelationshipTypeId()).append(".");
+    sb.append(includeAtoB).append(".");
+    sb.append(includeBtoA).append(".");
   }
-  if (getPerson() != null)   sb.append("p" + getPerson().getPersonId() + ".");
+  if (getPerson() != null) {
+    sb.append("p").append(getPerson().getPersonId()).append(".");
+  }
   return sb.toString();
 }

@@ -1,6 +1,8 @@
 {
   if (isSingleResult()) {
-    if (valueDatetime != null)     return valueDatetime;
+    if (valueDatetime != null) {
+      return valueDatetime;
+    }
     if (datatype == Datatype.TEXT && valueText != null) {
       try {
         return Context.getDateFormat().parse(valueText);

@@ -1,6 +1,8 @@
 {
-  if (orderer == null)   throw new APIException("Unable to get orders if I am not given an orderer");
+  if (orderer == null) {
+    throw new APIException("Unable to get orders if I am not given an orderer");
+  }
   List<User> orderers=new ArrayList<User>();
   orderers.add(orderer);
-  return getOrders(Order.class,null,null,orderers,null,null,null,null);
+  return Context.getOrderService().getOrders(Order.class,null,null,orderers,null,null,null,null);
 }

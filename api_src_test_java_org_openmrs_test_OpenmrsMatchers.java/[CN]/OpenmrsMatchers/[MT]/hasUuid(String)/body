@@ -1,0 +1,8 @@
+{
+  return new FeatureMatcher<OpenmrsObject,String>(is(uuid),"uuid","uuid"){
+    @Override protected String featureValueOf(    final OpenmrsObject actual){
+      return actual.getUuid();
+    }
+  }
+;
+}

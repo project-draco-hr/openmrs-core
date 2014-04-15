@@ -2,7 +2,9 @@
   log.debug("Sending message to users " + users);
   for (  User user : users) {
     String address=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS);
-    if (address != null)     message.addRecipient(address);
+    if (address != null) {
+      message.addRecipient(address);
+    }
   }
-  sendMessage(message);
+  Context.getMessageService().sendMessage(message);
 }

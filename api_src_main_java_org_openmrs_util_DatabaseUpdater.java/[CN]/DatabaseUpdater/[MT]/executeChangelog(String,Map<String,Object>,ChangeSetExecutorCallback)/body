@@ -1,6 +1,8 @@
 {
   log.debug("installing the tables into the database");
-  if (changelog == null)   changelog=CHANGE_LOG_FILE;
+  if (changelog == null) {
+    changelog=CHANGE_LOG_FILE;
+  }
   try {
     return executeChangelog(changelog,CONTEXT,userInput,callback);
   }

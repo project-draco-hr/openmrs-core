@@ -32,7 +32,9 @@
  else         if (afterPrefix.startsWith(".existing[")) {
           Integer existingAttributeId=getFromSquareBrackets(afterPrefix);
           AttributeClass existing=findAttributeById(owner,existingAttributeId);
-          if (existing == null)           throw new RuntimeException("Visit was modified between page load and submit. Try again.");
+          if (existing == null) {
+            throw new RuntimeException("Visit was modified between page load and submit. Try again.");
+          }
           if (valueAsObject == null) {
             toVoid.add(existing);
           }
@@ -53,5 +55,7 @@
       }
     }
   }
-  for (  Attribute<?,?> attr : toVoid)   voidAttribute(attr);
+  for (  Attribute<?,?> attr : toVoid) {
+    voidAttribute(attr);
+  }
 }

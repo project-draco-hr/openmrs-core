@@ -2,7 +2,9 @@
   Map<String,Object> map=new HashMap<String,Object>();
   ConceptService cs=Context.getConceptService();
   String defaultVerbose="false";
-  if (Context.isAuthenticated())   defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+  if (Context.isAuthenticated()) {
+    defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);
+  }
   map.put("defaultVerbose",defaultVerbose.equals("true") ? true : false);
   map.put("tags",cs.getAllConceptNameTags());
   if (Context.hasPrivilege(PrivilegeConstants.VIEW_CONCEPT_CLASSES)) {
@@ -17,7 +19,9 @@
     try {
       Concept concept=cs.getConcept(Integer.valueOf(conceptId));
       dataTypeReadOnly=cs.hasAnyObservation(concept);
-      if (concept != null && concept.getDatatype().isBoolean())       map.put("isBoolean",true);
+      if (concept != null && concept.getDatatype().isBoolean()) {
+        map.put("isBoolean",true);
+      }
     }
  catch (    NumberFormatException ex) {
     }

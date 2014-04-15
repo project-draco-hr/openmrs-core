@@ -1,0 +1,15 @@
+{
+  Listener.performWebStartOfModules(((XmlWebApplicationContext)applicationContext).getServletContext());
+  assertTrue(moduleTestData.getWillRefreshContextCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getWillRefreshContextCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getWillRefreshContextCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getContextRefreshedCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getContextRefreshedCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getContextRefreshedCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getWillStartCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getWillStartCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getWillStartCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getStartedCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getStartedCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getStartedCallCount(MODULE3_ID) == 1);
+}

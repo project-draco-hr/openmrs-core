@@ -7,15 +7,21 @@
   List<Encounter> encounters=new Vector<Encounter>();
   try {
     Encounter e=es.getEncounter(Integer.valueOf(searchString));
-    if (e != null)     encounters.add(e);
+    if (e != null) {
+      encounters.add(e);
+    }
   }
  catch (  NumberFormatException e) {
   }
   List<Obs> returnList=new Vector<Obs>();
-  if (encounters.size() > 0 || persons.size() > 0)   returnList=getObservations(persons,encounters,null,null,null,null,null,null,null,null,null,false);
+  if (encounters.size() > 0 || persons.size() > 0) {
+    returnList=Context.getObsService().getObservations(persons,encounters,null,null,null,null,null,null,null,null,null,false);
+  }
   try {
     Obs o=getObs(Integer.valueOf(searchString));
-    if (o != null)     returnList.add(o);
+    if (o != null) {
+      returnList.add(o);
+    }
   }
  catch (  NumberFormatException e) {
   }

@@ -3,8 +3,8 @@
   DateFormat dateFormat=Context.getDateFormat();
   velocityContext.put("date",dateFormat);
   Calendar cal=Calendar.getInstance();
-  Date start=new Date();
-  Date end=new Date();
+  Date start;
+  Date end;
   String startDate=request.getParameter("startDate");
   String endDate=request.getParameter("endDate");
   if (startDate != null && startDate.length() != 0) {
@@ -15,7 +15,9 @@
       throw new ServletException("Error parsing 'Start Date'",e);
     }
   }
- else   cal.setTime(new Date());
+ else {
+    cal.setTime(new Date());
+  }
   if (endDate == null || endDate.equals("")) {
     while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
       cal.add(Calendar.DAY_OF_MONTH,-1);
@@ -38,12 +40,9 @@
   allObs=os.getObservations(null,null,null,null,null,null,null,null,null,start,end,true);
   List<Obs> obs=new Vector<Obs>();
   for (  Obs o : allObs) {
-    if (o.getVoided() == true)     obs.add(o);
+    if (o.getVoided() == true) {
+      obs.add(o);
+    }
   }
-  if (obs != null) {
-    velocityContext.put("observations",obs);
-  }
- else {
-    report.append("No Observations found");
-  }
+  velocityContext.put("observations",obs);
 }

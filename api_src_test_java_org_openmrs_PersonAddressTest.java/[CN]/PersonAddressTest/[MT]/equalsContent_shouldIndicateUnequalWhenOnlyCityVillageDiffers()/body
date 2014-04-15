@@ -1,0 +1,7 @@
+{
+  PersonAddress address1=new PersonAddress();
+  PersonAddress address2=new PersonAddress();
+  address2.setCityVillage("faketown");
+  address1.setCityVillage("realtown");
+  assertThat(address2.equalsContent(address1),is(false));
+}

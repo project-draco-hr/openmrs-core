@@ -1,0 +1,5 @@
+{
+  Criteria criteria=createEncounterByQueryCriteria(query,patientId,includeVoided,false);
+  criteria.setProjection(Projections.countDistinct("enc.encounterId"));
+  return (Long)criteria.uniqueResult();
+}

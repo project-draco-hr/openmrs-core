@@ -15,7 +15,9 @@
           if (request instanceof MultipartHttpServletRequest) {
             InputStream complexDataInputStream=setComplexData(obs,request);
             newlySavedObs=os.saveObs(obs,reason);
-            complexDataInputStream.close();
+            if (complexDataInputStream != null) {
+              complexDataInputStream.close();
+            }
           }
         }
  else {
@@ -37,7 +39,11 @@
         httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Obs.unvoidedSuccessfully");
       }
     }
- catch (    APIException e) {
+ catch (    IllegalArgumentException e) {
+      errors.reject("invalidImage","Obs.invalidImage");
+      return showForm(request,response,errors);
+    }
+catch (    APIException e) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
       return showForm(request,response,errors);
     }
@@ -45,7 +51,9 @@
       String view=getSuccessView() + "?encounterId=" + obs.getEncounter().getEncounterId()+ "&phrase="+ request.getParameter("phrase");
       return new ModelAndView(new RedirectView(view));
     }
- else     return new ModelAndView(new RedirectView("obs.form?obsId=" + newlySavedObs.getObsId()));
+ else {
+      return new ModelAndView(new RedirectView("obs.form?obsId=" + newlySavedObs.getObsId()));
+    }
   }
   return showForm(request,response,errors);
 }

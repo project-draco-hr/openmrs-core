@@ -8,10 +8,16 @@
   String valueSql="o.value_numeric";
   boolean doInvert=false;
   String dateSql="";
-  if (fromDate != null)   dateSql+=" and o.obs_datetime >= :fromDate ";
-  if (toDate != null)   dateSql+=" and o.obs_datetime <= :toDate ";
+  if (fromDate != null) {
+    dateSql+=" and o.obs_datetime >= :fromDate ";
+  }
+  if (toDate != null) {
+    dateSql+=" and o.obs_datetime <= :toDate ";
+  }
   if (timeModifier == TimeModifier.ANY || timeModifier == TimeModifier.NO) {
-    if (timeModifier == TimeModifier.NO)     doInvert=true;
+    if (timeModifier == TimeModifier.NO) {
+      doInvert=true;
+    }
     sb.append("select o.person_id from obs o " + "where voided = false and concept_id = :concept_id ");
     sb.append(dateSql);
   }
@@ -32,7 +38,9 @@
     sb.append(valueSql + " ");
     sb.append(modifier.getSqlRepresentation() + " :value");
   }
-  if (!doSqlAggregation)   sb.append(" group by o.person_id ");
+  if (!doSqlAggregation) {
+    sb.append(" group by o.person_id ");
+  }
   log.debug("query: " + sb);
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sb.toString());
   query.setCacheMode(CacheMode.IGNORE);
@@ -40,8 +48,12 @@
   if (useValue) {
     query.setDouble("value",value.doubleValue());
   }
-  if (fromDate != null)   query.setDate("fromDate",fromDate);
-  if (toDate != null)   query.setDate("toDate",fromDate);
+  if (fromDate != null) {
+    query.setDate("fromDate",fromDate);
+  }
+  if (toDate != null) {
+    query.setDate("toDate",fromDate);
+  }
   Cohort ret;
   if (doInvert) {
     ret=getAllPatients();

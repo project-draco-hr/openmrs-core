@@ -1,4 +1,6 @@
 {
-  if (identifierTypes == null)   identifierTypes=Collections.emptyList();
-  return getPatients(name,identifier,identifierTypes,matchIdentifierExactly,0,null);
+  if (identifierTypes == null) {
+    identifierTypes=Collections.emptyList();
+  }
+  return Context.getPatientService().getPatients(name,identifier,identifierTypes,matchIdentifierExactly,0,null);
 }

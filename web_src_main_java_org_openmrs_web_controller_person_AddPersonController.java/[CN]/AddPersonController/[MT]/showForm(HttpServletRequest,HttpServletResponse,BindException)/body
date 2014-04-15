@@ -11,8 +11,16 @@
   List personList=(List)o;
   log.debug("Found list of size: " + personList.size());
   if (personList.size() < 1 && Context.isAuthenticated()) {
-    getParametersFromRequest(request);
-    if (viewType == null)     viewType="edit";
+    HashMap<String,String> person=getParametersFromRequest(request);
+    String name=person.get("name");
+    String birthdate=person.get("birthdate");
+    String age=person.get("age");
+    String gender=person.get("gender");
+    String viewType=person.get("viewType");
+    String personType=person.get("personType");
+    if (viewType == null) {
+      viewType="edit";
+    }
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
       mav.clear();

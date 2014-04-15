@@ -1,0 +1,28 @@
+{
+  Module module=ModuleFactory.getModuleById(MODULE1_ID);
+  assertTrue(module.getVersion().equals("1.0-SNAPSHOT"));
+  URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test1-2.0-SNAPSHOT.omod");
+  module.setDownloadURL("file:" + url.getFile());
+  createWebInfFolderIfNotExist();
+  assertTrue(ModuleFactory.getModuleById(MODULE1_ID).isStarted());
+  assertTrue(ModuleFactory.getModuleById(MODULE2_ID).isStarted());
+  assertTrue(ModuleFactory.getModuleById(MODULE3_ID).isStarted());
+  assertTrue(ModuleFactory.getLoadedModules().size() == 3);
+  assertTrue(ModuleFactory.getStartedModules().size() == 3);
+  ModuleFactory.stopModule(module,false,true);
+  WebModuleUtil.stopModule(module,((XmlWebApplicationContext)applicationContext).getServletContext());
+  assertTrue(!ModuleFactory.getModuleById(MODULE1_ID).isStarted());
+  assertTrue(!ModuleFactory.getModuleById(MODULE2_ID).isStarted());
+  assertTrue(!ModuleFactory.getModuleById(MODULE3_ID).isStarted());
+  Module newModule=ModuleFactory.updateModule(module);
+  WebModuleUtil.startModule(newModule,((XmlWebApplicationContext)applicationContext).getServletContext(),false);
+  module=ModuleFactory.getModuleById(MODULE1_ID);
+  assertTrue(module.isStarted());
+  assertTrue(module.getVersion().equals("2.0-SNAPSHOT"));
+  ModuleFactory.startModule(ModuleFactory.getModuleById(MODULE2_ID));
+  ModuleFactory.startModule(ModuleFactory.getModuleById(MODULE3_ID));
+  assertTrue(ModuleFactory.getModuleById(MODULE2_ID).isStarted());
+  assertTrue(ModuleFactory.getModuleById(MODULE3_ID).isStarted());
+  assertTrue(ModuleFactory.getLoadedModules().size() == 3);
+  assertTrue(ModuleFactory.getStartedModules().size() == 3);
+}

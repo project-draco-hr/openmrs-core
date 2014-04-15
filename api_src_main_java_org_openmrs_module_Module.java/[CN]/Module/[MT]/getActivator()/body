@@ -2,7 +2,9 @@
   try {
     if (activator == null) {
       ModuleClassLoader classLoader=ModuleFactory.getModuleClassLoader(this);
-      if (classLoader == null)       throw new ModuleException("The classloader is null",getModuleId());
+      if (classLoader == null) {
+        throw new ModuleException("The classloader is null",getModuleId());
+      }
       Class<?> c=classLoader.loadClass(getActivatorName());
       setActivator((Activator)c.newInstance());
     }

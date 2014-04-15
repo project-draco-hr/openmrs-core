@@ -1,0 +1,22 @@
+{
+  InputStream moduleStream=null;
+  File tempFile=null;
+  OutputStream tempFileStream=null;
+  JarFile jarFile=null;
+  try {
+    moduleStream=getClass().getClassLoader().getResourceAsStream("org/openmrs/module/include/" + moduleId + "-"+ version+ ".omod");
+    Assert.assertNotNull(moduleStream);
+    tempFile=File.createTempFile("moduleTest","omod");
+    tempFileStream=new FileOutputStream(tempFile);
+    IOUtils.copy(moduleStream,tempFileStream);
+    jarFile=new JarFile(tempFile);
+  }
+  finally {
+    IOUtils.closeQuietly(moduleStream);
+    IOUtils.closeQuietly(tempFileStream);
+    if (tempFile != null) {
+      tempFile.delete();
+    }
+  }
+  return jarFile;
+}

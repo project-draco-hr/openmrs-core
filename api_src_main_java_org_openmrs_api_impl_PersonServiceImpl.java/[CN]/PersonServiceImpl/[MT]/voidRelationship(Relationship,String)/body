@@ -1,8 +1,14 @@
 {
-  if (relationship.isVoided())   return relationship;
+  if (relationship.isVoided()) {
+    return relationship;
+  }
   relationship.setVoided(true);
-  if (relationship.getVoidedBy() == null)   relationship.setVoidedBy(Context.getAuthenticatedUser());
-  if (voidReason != null)   relationship.setVoidReason(voidReason);
+  if (relationship.getVoidedBy() == null) {
+    relationship.setVoidedBy(Context.getAuthenticatedUser());
+  }
+  if (voidReason != null) {
+    relationship.setVoidReason(voidReason);
+  }
   relationship.setDateVoided(new Date());
-  return saveRelationship(relationship);
+  return Context.getPersonService().saveRelationship(relationship);
 }

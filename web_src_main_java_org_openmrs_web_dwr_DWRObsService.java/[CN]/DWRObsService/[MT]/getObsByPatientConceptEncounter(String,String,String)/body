@@ -18,9 +18,15 @@
   Person p=null;
   Concept c=null;
   Encounter e=null;
-  if (pId != null)   p=Context.getPersonService().getPerson(pId);
-  if (conceptId != null)   c=OpenmrsUtil.getConceptByIdOrName(conceptId);
-  if (eId != null)   e=Context.getEncounterService().getEncounter(eId);
+  if (pId != null) {
+    p=Context.getPersonService().getPerson(pId);
+  }
+  if (conceptId != null) {
+    c=OpenmrsUtil.getConceptByIdOrName(conceptId);
+  }
+  if (eId != null) {
+    e=Context.getEncounterService().getEncounter(eId);
+  }
   Collection<Obs> obss=null;
   if (p != null && c != null) {
     log.debug("Getting obss with patient and concept");

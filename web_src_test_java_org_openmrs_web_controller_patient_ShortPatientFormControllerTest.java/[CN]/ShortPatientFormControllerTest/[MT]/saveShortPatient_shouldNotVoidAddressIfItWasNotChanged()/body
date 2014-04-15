@@ -1,13 +1,13 @@
 {
   Patient patient=Context.getPatientService().getPatient(2);
   PersonAddress personAddress=patient.getPersonAddress();
-  request.setParameter("patientId",patient.getPatientId().toString());
+  MockHttpServletRequest request=webTestHelper.newPOST("/admin/patients/shortPatientForm.form");
+  request.setParameter("patientId","2");
   request.setParameter("personAddress.address1",personAddress.getAddress1());
   request.setParameter("personAddress.countyDistrict","");
-  request.setMethod("POST");
-  request.setRequestURI("/admin/patients/shortPatientForm.form");
-  Object handler=handlerMapping.getHandler(request).getHandler();
-  handlerAdapter.handle(request,response,handler);
-  assertFalse(personAddress.isVoided());
+  webTestHelper.handle(request);
+  patient=Context.getPatientService().getPatient(2);
+  assertEquals(1,patient.getAddresses().size());
+  assertFalse(patient.getPersonAddress().isVoided());
   assertEquals(personAddress,patient.getPersonAddress());
 }

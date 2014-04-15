@@ -12,6 +12,7 @@
   ModelAndView mav=conceptFormController.handleRequest(mockRequest,response);
   assertNotNull(mav);
   assertTrue(mav.getModel().isEmpty());
+  updateSearchIndex();
   Concept actualConcept=cs.getConceptByName("new name");
   assertNotNull(actualConcept);
   assertEquals(concept.getConceptId(),actualConcept.getConceptId());

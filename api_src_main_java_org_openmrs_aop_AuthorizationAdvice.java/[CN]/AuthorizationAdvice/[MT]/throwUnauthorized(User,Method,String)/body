@@ -1,4 +1,6 @@
 {
-  if (log.isDebugEnabled())   log.debug("User " + user + " is not authorized to access "+ method.getName());
+  if (log.isDebugEnabled()) {
+    log.debug("User " + user + " is not authorized to access "+ method.getName());
+  }
   throw new APIAuthenticationException(Context.getMessageSourceService().getMessage("error.privilegesRequired",new Object[]{attr},null));
 }

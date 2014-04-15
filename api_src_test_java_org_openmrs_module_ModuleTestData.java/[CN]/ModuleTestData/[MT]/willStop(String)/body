@@ -1,0 +1,8 @@
+{
+  willStopCallTime.put(moduleId,new Date().getTime());
+  Integer count=willStopCallCount.get(moduleId);
+  if (count == null) {
+    count=0;
+  }
+  willStopCallCount.put(moduleId,count + 1);
+}

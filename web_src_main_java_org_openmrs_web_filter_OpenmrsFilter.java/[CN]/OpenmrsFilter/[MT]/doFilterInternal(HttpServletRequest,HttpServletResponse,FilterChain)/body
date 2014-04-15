@@ -11,11 +11,15 @@
   if (userContext == null) {
     userContext=new UserContext();
     httpSession.setAttribute(WebConstants.OPENMRS_USER_CONTEXT_HTTPSESSION_ATTR,userContext);
-    if (log.isDebugEnabled())     log.debug("Just set user context " + userContext + " as attribute on session");
+    if (log.isDebugEnabled()) {
+      log.debug("Just set user context " + userContext + " as attribute on session");
+    }
   }
  else {
     User user=userContext.getAuthenticatedUser();
-    if (user != null)     httpSession.setAttribute("username",user.getUsername());
+    if (user != null) {
+      httpSession.setAttribute("username",user.getUsername());
+    }
   }
   httpSession.setAttribute("locale",userContext.getLocale());
   Context.setUserContext(userContext);

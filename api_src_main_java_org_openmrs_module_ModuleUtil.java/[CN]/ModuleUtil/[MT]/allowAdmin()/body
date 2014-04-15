@@ -1,6 +1,8 @@
 {
   Properties properties=Context.getRuntimeProperties();
   String prop=properties.getProperty(ModuleConstants.RUNTIMEPROPERTY_ALLOW_UPLOAD,null);
-  if (prop == null)   prop=properties.getProperty(ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN,"false");
+  if (prop == null) {
+    prop=properties.getProperty(ModuleConstants.RUNTIMEPROPERTY_ALLOW_ADMIN,"false");
+  }
   return "true".equals(prop);
 }

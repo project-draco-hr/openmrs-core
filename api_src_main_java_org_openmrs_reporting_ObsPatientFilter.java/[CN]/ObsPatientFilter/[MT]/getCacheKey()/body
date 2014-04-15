@@ -1,7 +1,9 @@
 {
   StringBuilder sb=new StringBuilder();
   sb.append(getClass().getName()).append(".");
-  if (getQuestion() != null)   sb.append(getQuestion().getConceptId());
+  if (getQuestion() != null) {
+    sb.append(getQuestion().getConceptId());
+  }
   sb.append(".");
   sb.append(getModifier()).append(".");
   sb.append(getTimeModifier()).append(".");

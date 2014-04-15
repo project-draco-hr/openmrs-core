@@ -4,10 +4,18 @@
   String jumpAction=request.getParameter("jumpAction");
   if (jumpAction != null) {
     Concept newConcept=null;
-    if ("previous".equals(jumpAction))     newConcept=cs.getPrevConcept(concept);
- else     if ("next".equals(jumpAction))     newConcept=cs.getNextConcept(concept);
-    if (newConcept != null)     return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + newConcept.getConceptId()));
- else     return new ModelAndView(new RedirectView(getSuccessView()));
+    if ("previous".equals(jumpAction)) {
+      newConcept=cs.getPrevConcept(concept);
+    }
+ else     if ("next".equals(jumpAction)) {
+      newConcept=cs.getNextConcept(concept);
+    }
+    if (newConcept != null) {
+      return new ModelAndView(new RedirectView(getSuccessView() + "?conceptId=" + newConcept.getConceptId()));
+    }
+ else {
+      return new ModelAndView(new RedirectView(getSuccessView()));
+    }
   }
   return super.processFormSubmission(request,response,object,errors);
 }

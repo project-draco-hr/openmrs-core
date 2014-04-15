@@ -3,10 +3,26 @@
   if (partialName != null && !"".equals(partialName)) {
     crit.add(Restrictions.or(Restrictions.like("name",partialName,MatchMode.START),Restrictions.like("name"," " + partialName,MatchMode.ANYWHERE)));
   }
-  if (published != null)   crit.add(Restrictions.eq("published",published));
-  if (!encounterTypes.isEmpty())   crit.add(Restrictions.in("encounterType",encounterTypes));
-  if (retired != null)   crit.add(Restrictions.eq("retired",retired));
-  if (!containingAnyFormField.isEmpty())   crit.add(Restrictions.in("formField",containingAnyFormField));
+  if (published != null) {
+    crit.add(Restrictions.eq("published",published));
+  }
+  if (!encounterTypes.isEmpty()) {
+    crit.add(Restrictions.in("encounterType",encounterTypes));
+  }
+  if (retired != null) {
+    crit.add(Restrictions.eq("retired",retired));
+  }
+  if (!containingAnyFormField.isEmpty()) {
+    Set<Integer> anyFormFieldIds=new HashSet<Integer>();
+    for (    FormField ff : containingAnyFormField) {
+      anyFormFieldIds.add(ff.getFormFieldId());
+    }
+    DetachedCriteria subquery=DetachedCriteria.forClass(FormField.class,"ff");
+    subquery.setProjection(Projections.count("ff.formFieldId"));
+    subquery.add(Restrictions.eqProperty("ff.form","form"));
+    subquery.add(Restrictions.in("ff.formFieldId",anyFormFieldIds));
+    crit.add(Subqueries.lt(0L,subquery));
+  }
   if (!containingAllFormFields.isEmpty()) {
     Set<Integer> allFormFieldIds=new HashSet<Integer>();
     for (    FormField ff : containingAllFormFields) {

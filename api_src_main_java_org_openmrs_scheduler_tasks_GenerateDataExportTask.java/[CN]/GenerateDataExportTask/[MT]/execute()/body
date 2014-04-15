@@ -2,7 +2,9 @@
   Context.openSession();
   try {
     log.debug("Generating data exports...");
-    if (!Context.isAuthenticated())     authenticate();
+    if (!Context.isAuthenticated()) {
+      authenticate();
+    }
     if (idString != null && idString.length() > 0) {
       idString=idString.replace(","," ");
       String[] ids=idString.split(" ");

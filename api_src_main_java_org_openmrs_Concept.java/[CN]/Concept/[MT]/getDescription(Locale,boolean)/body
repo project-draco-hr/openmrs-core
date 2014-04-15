@@ -1,7 +1,9 @@
 {
   log.debug("Getting ConceptDescription for locale: " + locale);
   ConceptDescription foundDescription=null;
-  if (locale == null)   locale=LocaleUtility.getDefaultLocale();
+  if (locale == null) {
+    locale=LocaleUtility.getDefaultLocale();
+  }
   Locale desiredLocale=locale;
   ConceptDescription defaultDescription=null;
   for (Iterator<ConceptDescription> i=getDescriptions().iterator(); i.hasNext(); ) {
@@ -11,15 +13,21 @@
       foundDescription=availableDescription;
       break;
     }
-    if (!exact && LocaleUtility.areCompatible(availableLocale,desiredLocale))     foundDescription=availableDescription;
-    if (availableLocale.equals(LocaleUtility.getDefaultLocale()))     defaultDescription=availableDescription;
+    if (!exact && LocaleUtility.areCompatible(availableLocale,desiredLocale)) {
+      foundDescription=availableDescription;
+    }
+    if (availableLocale.equals(LocaleUtility.getDefaultLocale())) {
+      defaultDescription=availableDescription;
+    }
   }
   if (foundDescription == null) {
     if (exact) {
       log.debug("No concept description found for concept id " + conceptId + " for locale "+ desiredLocale.toString());
     }
  else {
-      if (defaultDescription == null)       log.debug("No concept description found for default locale for concept id " + conceptId);
+      if (defaultDescription == null) {
+        log.debug("No concept description found for default locale for concept id " + conceptId);
+      }
  else {
         foundDescription=defaultDescription;
       }

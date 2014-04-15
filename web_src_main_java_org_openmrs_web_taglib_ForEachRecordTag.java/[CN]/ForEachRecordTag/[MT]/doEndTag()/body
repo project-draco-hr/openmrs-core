@@ -1,6 +1,8 @@
 {
   try {
-    if (getBodyContent() != null && records != null)     getBodyContent().writeOut(getBodyContent().getEnclosingWriter());
+    if (getBodyContent() != null && records != null) {
+      getBodyContent().writeOut(getBodyContent().getEnclosingWriter());
+    }
   }
  catch (  java.io.IOException e) {
     throw new JspTagException("IO Error: " + e.getMessage());

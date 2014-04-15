@@ -1,11 +1,9 @@
 {
   String s="";
-  AST concludeAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   String a, b;
   try {
 {
       AST __t518=_t;
-      AST tmp71_AST_in=(AST)_t;
       match(_t,CONCLUDE);
       _t=_t.getFirstChild();
 {
@@ -18,11 +16,12 @@
         }
       }
 {
-        if (_t == null)         _t=ASTNULL;
+        if (_t == null) {
+          _t=ASTNULL;
+        }
 switch (_t.getType()) {
 case FALSE:
 {
-            AST tmp72_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getNextSibling();
             System.err.println("***CONCLUDE FALSE ");
@@ -31,7 +30,6 @@ case FALSE:
           }
 case TRUE:
 {
-          AST tmp73_AST_in=(AST)_t;
           match(_t,TRUE);
           _t=_t.getNextSibling();
           System.err.println("***CONCLUDE TRUE ");

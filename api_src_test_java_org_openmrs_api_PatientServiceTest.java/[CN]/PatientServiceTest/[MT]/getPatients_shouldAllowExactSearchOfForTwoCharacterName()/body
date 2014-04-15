@@ -1,5 +1,6 @@
 {
   initializeInMemoryDatabase();
   executeDataSet(FIND_PATIENTS_XML);
-  assertEquals(1,Context.getPatientService().getPatients("Ho").size());
+  List<Patient> patientList=Context.getPatientService().getPatients("Ho");
+  assertEquals(1,patientList.size());
 }

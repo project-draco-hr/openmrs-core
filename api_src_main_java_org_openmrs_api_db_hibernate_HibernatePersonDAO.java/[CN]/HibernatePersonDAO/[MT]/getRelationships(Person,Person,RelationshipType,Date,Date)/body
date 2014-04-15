@@ -1,14 +1,20 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class,"r");
-  if (fromPerson != null)   criteria.add(Expression.eq("personA",fromPerson));
-  if (toPerson != null)   criteria.add(Expression.eq("personB",toPerson));
-  if (relType != null)   criteria.add(Expression.eq("relationshipType",relType));
+  if (fromPerson != null) {
+    criteria.add(Restrictions.eq("personA",fromPerson));
+  }
+  if (toPerson != null) {
+    criteria.add(Restrictions.eq("personB",toPerson));
+  }
+  if (relType != null) {
+    criteria.add(Restrictions.eq("relationshipType",relType));
+  }
   if (startEffectiveDate != null) {
-    criteria.add(Restrictions.disjunction().add(Restrictions.and(Expression.le("startDate",startEffectiveDate),Expression.ge("endDate",startEffectiveDate))).add(Restrictions.and(Expression.le("startDate",startEffectiveDate),Restrictions.isNull("endDate"))).add(Restrictions.and(Restrictions.isNull("startDate"),Expression.ge("endDate",startEffectiveDate))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.isNull("endDate"))));
+    criteria.add(Restrictions.disjunction().add(Restrictions.and(Restrictions.le("startDate",startEffectiveDate),Restrictions.ge("endDate",startEffectiveDate))).add(Restrictions.and(Restrictions.le("startDate",startEffectiveDate),Restrictions.isNull("endDate"))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.ge("endDate",startEffectiveDate))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.isNull("endDate"))));
   }
   if (endEffectiveDate != null) {
-    criteria.add(Restrictions.disjunction().add(Restrictions.and(Expression.le("startDate",endEffectiveDate),Expression.ge("endDate",endEffectiveDate))).add(Restrictions.and(Expression.le("startDate",endEffectiveDate),Restrictions.isNull("endDate"))).add(Restrictions.and(Restrictions.isNull("startDate"),Expression.ge("endDate",endEffectiveDate))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.isNull("endDate"))));
+    criteria.add(Restrictions.disjunction().add(Restrictions.and(Restrictions.le("startDate",endEffectiveDate),Restrictions.ge("endDate",endEffectiveDate))).add(Restrictions.and(Restrictions.le("startDate",endEffectiveDate),Restrictions.isNull("endDate"))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.ge("endDate",endEffectiveDate))).add(Restrictions.and(Restrictions.isNull("startDate"),Restrictions.isNull("endDate"))));
   }
-  criteria.add(Expression.eq("voided",false));
+  criteria.add(Restrictions.eq("voided",false));
   return criteria.list();
 }

@@ -1,0 +1,6 @@
+{
+  Assert.assertTrue(personAttributeHelper.nonSearchablePersonAttributeExists("Mushroom pie"));
+  List<Person> people=hibernatePersonDAO.getPeople("Gandalf Mushroom pie",false);
+  logPeople(people);
+  Assert.assertEquals(0,people.size());
+}

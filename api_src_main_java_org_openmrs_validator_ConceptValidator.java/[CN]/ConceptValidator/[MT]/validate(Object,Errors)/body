@@ -1,5 +1,7 @@
 {
-  if (obj == null || !(obj instanceof Concept))   throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + Concept.class);
+  if (obj == null || !(obj instanceof Concept)) {
+    throw new IllegalArgumentException("The parameter obj should not be null and must be of type" + Concept.class);
+  }
   Concept conceptToValidate=(Concept)obj;
   if (conceptToValidate.getNames().size() == 0) {
     errors.reject("Concept.name.atLeastOneRequired");
@@ -39,8 +41,12 @@
         }
       }
       if (nameInLocale.isFullySpecifiedName()) {
-        if (!hasFullySpecifiedName)         hasFullySpecifiedName=true;
-        if (!fullySpecifiedNameForLocaleFound)         fullySpecifiedNameForLocaleFound=true;
+        if (!hasFullySpecifiedName) {
+          hasFullySpecifiedName=true;
+        }
+        if (!fullySpecifiedNameForLocaleFound) {
+          fullySpecifiedNameForLocaleFound=true;
+        }
  else {
           log.warn("Found multiple fully specified names in locale '" + conceptNameLocale.toString() + "'");
           errors.reject("Concept.error.multipleFullySpecifiedNames");
@@ -51,7 +57,9 @@
         }
       }
       if (nameInLocale.isShort()) {
-        if (!shortNameForLocaleFound)         shortNameForLocaleFound=true;
+        if (!shortNameForLocaleFound) {
+          shortNameForLocaleFound=true;
+        }
  else {
           log.warn("Found multiple short names in locale '" + conceptNameLocale.toString() + "'");
           errors.reject("Concept.error.multipleShortNames");
@@ -65,9 +73,13 @@
         return;
       }
       if (!nameInLocale.isShort()) {
-        if (!validNamesFoundInLocale.add(nameInLocale.getName().toLowerCase()))         throw new DuplicateConceptNameException("'" + nameInLocale.getName() + "' is a duplicate name in locale '"+ conceptNameLocale.toString()+ "' for the same concept");
+        if (!validNamesFoundInLocale.add(nameInLocale.getName().toLowerCase())) {
+          throw new DuplicateConceptNameException("'" + nameInLocale.getName() + "' is a duplicate name in locale '"+ conceptNameLocale.toString()+ "' for the same concept");
+        }
       }
-      if (log.isDebugEnabled())       log.debug("Valid name found: " + nameInLocale.getName());
+      if (log.isDebugEnabled()) {
+        log.debug("Valid name found: " + nameInLocale.getName());
+      }
     }
   }
   if (!hasFullySpecifiedName) {
@@ -78,11 +90,7 @@
     int index=0;
     Set<Integer> mappedTermIds=null;
     for (    ConceptMap map : conceptToValidate.getConceptMappings()) {
-      if (map.getConceptReferenceTerm() == null) {
-        errors.rejectValue("conceptMappings[" + index + "].conceptReferenceTerm","Concept.map.termRequired","The concept reference term property is required for a concept map");
-        return;
-      }
- else       if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
+      if (map.getConceptReferenceTerm().getConceptReferenceTermId() == null) {
         try {
           errors.pushNestedPath("conceptMappings[" + index + "].conceptReferenceTerm");
           ValidationUtils.invokeValidator(new ConceptReferenceTermValidator(),map.getConceptReferenceTerm(),errors);
@@ -91,8 +99,12 @@
           errors.popNestedPath();
         }
       }
-      if (errors.hasErrors())       return;
-      if (mappedTermIds == null)       mappedTermIds=new HashSet<Integer>();
+      if (errors.hasErrors()) {
+        return;
+      }
+      if (mappedTermIds == null) {
+        mappedTermIds=new HashSet<Integer>();
+      }
       if (map.getConceptReferenceTerm().getId() != null) {
         if (!mappedTermIds.add(map.getConceptReferenceTerm().getId())) {
           errors.rejectValue("conceptMappings[" + index + "]","ConceptReferenceTerm.term.alreadyMapped","Cannot map a reference term multiple times to the same concept");

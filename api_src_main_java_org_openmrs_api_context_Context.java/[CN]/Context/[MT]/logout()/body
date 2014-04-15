@@ -1,6 +1,10 @@
 {
-  if (!isSessionOpen())   return;
-  if (log.isDebugEnabled())   log.debug("Logging out : " + getAuthenticatedUser());
+  if (!isSessionOpen()) {
+    return;
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Logging out : " + getAuthenticatedUser());
+  }
   getUserContext().logout();
   setUserContext(new UserContext());
 }

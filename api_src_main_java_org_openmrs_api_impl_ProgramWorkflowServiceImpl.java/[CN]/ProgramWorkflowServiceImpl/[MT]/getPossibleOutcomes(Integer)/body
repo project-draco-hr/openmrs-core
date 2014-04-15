@@ -1,6 +1,6 @@
 {
   List<Concept> possibleOutcomes=new ArrayList<Concept>();
-  Program program=getProgram(programId);
+  Program program=Context.getProgramWorkflowService().getProgram(programId);
   if (program == null) {
     return possibleOutcomes;
   }

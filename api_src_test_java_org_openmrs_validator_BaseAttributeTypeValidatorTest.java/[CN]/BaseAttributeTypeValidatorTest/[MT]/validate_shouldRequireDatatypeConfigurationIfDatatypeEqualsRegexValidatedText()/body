@@ -1,0 +1,5 @@
+{
+  attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+  validator.validate(attributeType,errors);
+  Assert.assertTrue(errors.getFieldErrors("datatypeConfig").size() > 0);
+}

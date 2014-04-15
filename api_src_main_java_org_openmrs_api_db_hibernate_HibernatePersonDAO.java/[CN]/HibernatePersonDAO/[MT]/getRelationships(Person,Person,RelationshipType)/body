@@ -1,8 +1,14 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class,"r");
-  if (fromPerson != null)   criteria.add(Expression.eq("personA",fromPerson));
-  if (toPerson != null)   criteria.add(Expression.eq("personB",toPerson));
-  if (relType != null)   criteria.add(Expression.eq("relationshipType",relType));
-  criteria.add(Expression.eq("voided",false));
+  if (fromPerson != null) {
+    criteria.add(Restrictions.eq("personA",fromPerson));
+  }
+  if (toPerson != null) {
+    criteria.add(Restrictions.eq("personB",toPerson));
+  }
+  if (relType != null) {
+    criteria.add(Restrictions.eq("relationshipType",relType));
+  }
+  criteria.add(Restrictions.eq("voided",false));
   return criteria.list();
 }

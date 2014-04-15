@@ -2,10 +2,16 @@
   Vector<Object> patientList=new Vector<Object>();
   try {
     List<String> options=new Vector<String>(searchOn.length);
-    for (    String s : searchOn)     options.add(s);
+    for (    String s : searchOn) {
+      options.add(s);
+    }
     List<Patient> patients=Context.getPatientService().getDuplicatePatientsByAttributes(options);
-    if (patients.size() > 200)     patients.subList(0,200);
-    for (    Patient p : patients)     patientList.add(new PatientListItem(p));
+    if (patients.size() > 200) {
+      patients.subList(0,200);
+    }
+    for (    Patient p : patients) {
+      patientList.add(new PatientListItem(p));
+    }
   }
  catch (  Exception e) {
     log.error(e);

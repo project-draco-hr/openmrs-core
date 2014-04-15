@@ -2,7 +2,7 @@
   List<Drug> drugs=new ArrayList<Drug>();
   try {
     Integer drugId=Integer.parseInt(phrase);
-    Drug targetDrug=getDrug(drugId);
+    Drug targetDrug=Context.getConceptService().getDrug(drugId);
     if (targetDrug != null) {
       drugs.add(targetDrug);
     }

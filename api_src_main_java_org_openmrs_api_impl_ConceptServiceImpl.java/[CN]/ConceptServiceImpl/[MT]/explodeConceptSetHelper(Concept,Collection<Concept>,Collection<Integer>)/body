@@ -1,5 +1,7 @@
 {
-  if (alreadySeen.contains(concept.getConceptId()))   return;
+  if (alreadySeen.contains(concept.getConceptId())) {
+    return;
+  }
   alreadySeen.add(concept.getConceptId());
   List<ConceptSet> cs=getConceptSets(concept);
   for (  ConceptSet set : cs) {

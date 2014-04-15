@@ -1,16 +1,30 @@
 {
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(orderClassType);
-  if (patients != null && patients.size() > 0)   crit.add(Expression.in("patient",patients));
-  if (concepts != null && concepts.size() > 0)   crit.add(Expression.in("concept",concepts));
-  if (asOfDate != null) {
-    crit.add(Expression.le("startDate",asOfDate));
-    crit.add(Expression.or(Expression.isNull("discontinuedDate"),Expression.ge("discontinueDate",asOfDate)));
-    crit.add(Expression.or(Expression.isNull("autoExpireDate"),Expression.ge("autoExpireDate",asOfDate)));
+  if (patients != null && patients.size() > 0) {
+    crit.add(Restrictions.in("patient",patients));
   }
-  if (orderers != null && orderers.size() > 0)   crit.add(Expression.in("orderer",orderers));
-  if (encounters != null && encounters.size() > 0)   crit.add(Expression.in("encounter",encounters));
-  if (actionsToInclude != null && actionsToInclude.size() > 0)   crit.add(Expression.in("action",actionsToInclude));
-  if (actionsToExclude != null && actionsToExclude.size() > 0)   crit.add(Expression.not(Expression.in("action",actionsToExclude)));
-  if (!includeVoided)   crit.add(Expression.eq("voided",false));
+  if (concepts != null && concepts.size() > 0) {
+    crit.add(Restrictions.in("concept",concepts));
+  }
+  if (asOfDate != null) {
+    crit.add(Restrictions.le("startDate",asOfDate));
+    crit.add(Restrictions.or(Restrictions.isNull("discontinuedDate"),Restrictions.ge("discontinueDate",asOfDate)));
+    crit.add(Restrictions.or(Restrictions.isNull("autoExpireDate"),Restrictions.ge("autoExpireDate",asOfDate)));
+  }
+  if (orderers != null && orderers.size() > 0) {
+    crit.add(Restrictions.in("orderer",orderers));
+  }
+  if (encounters != null && encounters.size() > 0) {
+    crit.add(Restrictions.in("encounter",encounters));
+  }
+  if (actionsToInclude != null && actionsToInclude.size() > 0) {
+    crit.add(Restrictions.in("action",actionsToInclude));
+  }
+  if (actionsToExclude != null && actionsToExclude.size() > 0) {
+    crit.add(Restrictions.not(Restrictions.in("action",actionsToExclude)));
+  }
+  if (!includeVoided) {
+    crit.add(Restrictions.eq("voided",false));
+  }
   return crit.list();
 }

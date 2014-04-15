@@ -1,5 +1,5 @@
 {
-  for (  Class<?> currentClass : getClasses("^.*(?<!Test)\\.class$")) {
+  for (  Class<?> currentClass : getClasses("^.*(?<!Test|IT)\\.class$")) {
     if (currentClass.getAnnotation(Ignore.class) == null) {
       boolean foundATestMethod=false;
       for (      Method method : currentClass.getMethods()) {

@@ -1,0 +1,9 @@
+{
+  query=HibernateUtil.escapeSqlWildcards(query,sessionFactory);
+  Conjunction conjunction=Restrictions.conjunction();
+  String[] queryParts=getQueryParts(query);
+  for (  String queryPart : queryParts) {
+    conjunction.add(personSearchCriteria.prepareCriterionForAttribute(queryPart));
+  }
+  return conjunction;
+}

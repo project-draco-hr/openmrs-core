@@ -1,0 +1,17 @@
+{
+  for (  PersonName newName : notPreferred.getNames()) {
+    boolean containsName=false;
+    for (    PersonName currentName : preferred.getNames()) {
+      containsName=currentName.equalsContent(newName);
+      if (containsName) {
+        break;
+      }
+    }
+    if (!containsName) {
+      PersonName tmpName=constructTemporaryName(newName);
+      preferred.addName(tmpName);
+      mergedData.addCreatedName(tmpName.getUuid());
+      log.debug("Merging name " + newName.getGivenName() + " to "+ preferred.getPatientId());
+    }
+  }
+}

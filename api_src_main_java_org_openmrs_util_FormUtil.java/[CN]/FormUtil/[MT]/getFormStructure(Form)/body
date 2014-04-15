@@ -8,7 +8,9 @@
       formStructure.get(base).add(formField);
     }
  else {
-      if (!formStructure.containsKey(parent.getFormFieldId()))       formStructure.put(parent.getFormFieldId(),new TreeSet<FormField>());
+      if (!formStructure.containsKey(parent.getFormFieldId())) {
+        formStructure.put(parent.getFormFieldId(),new TreeSet<FormField>());
+      }
       formStructure.get(parent.getFormFieldId()).add(formField);
     }
   }

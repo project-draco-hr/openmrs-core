@@ -1,0 +1,7 @@
+{
+  List<Patient> patients=dao.getPatients("Baggins",null,null,false,0,11,false);
+  Assert.assertEquals(2,patients.size());
+  Assert.assertEquals("Baggins",patients.get(0).getFamilyName());
+  Assert.assertEquals("Baggins",patients.get(1).getFamilyName());
+  Assert.assertFalse(patients.get(0).getGivenName().equalsIgnoreCase(patients.get(1).getGivenName()));
+}

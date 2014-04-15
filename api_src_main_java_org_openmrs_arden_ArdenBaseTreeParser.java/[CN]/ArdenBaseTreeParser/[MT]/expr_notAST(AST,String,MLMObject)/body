@@ -1,8 +1,9 @@
 {
   String s="";
-  AST expr_notAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   try {
-    if (_t == null)     _t=ASTNULL;
+    if (_t == null) {
+      _t=ASTNULL;
+    }
 switch (_t.getType()) {
 case COUNT:
 case MINIMUM:
@@ -37,7 +38,6 @@ case TERM_LITERAL:
 case NOT:
 {
 {
-        AST tmp109_AST_in=(AST)_t;
         match(_t,NOT);
         _t=_t.getNextSibling();
         obj.AddToEvaluateList(section,"NOT");

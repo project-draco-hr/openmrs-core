@@ -1,0 +1,13 @@
+{
+  Module module=ModuleFactory.getModuleById(MODULE3_ID);
+  assertTrue(module.getVersion().equals("1.0-SNAPSHOT"));
+  URL url=OpenmrsClassLoader.getInstance().getResource("org/openmrs/module/include/test3-2.0-SNAPSHOT.omod");
+  module.setDownloadURL("file:" + url.getFile());
+  createWebInfFolderIfNotExist();
+  ModuleFactory.stopModule(module,false,true);
+  WebModuleUtil.stopModule(module,((XmlWebApplicationContext)applicationContext).getServletContext());
+  Module newModule=ModuleFactory.updateModule(module);
+  WebModuleUtil.startModule(newModule,((XmlWebApplicationContext)applicationContext).getServletContext(),false);
+  module=ModuleFactory.getModuleById(MODULE3_ID);
+  assertTrue(module.getVersion().equals("2.0-SNAPSHOT"));
+}

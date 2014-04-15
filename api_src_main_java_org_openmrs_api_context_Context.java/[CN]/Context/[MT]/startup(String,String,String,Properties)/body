@@ -1,10 +1,11 @@
 {
-  if (properties == null)   properties=new Properties();
+  if (properties == null) {
+    properties=new Properties();
+  }
   properties.put("connection.url",url);
   properties.put("connection.username",username);
   properties.put("connection.password",password);
   setRuntimeProperties(properties);
-  @SuppressWarnings("unused") AbstractApplicationContext ctx=new ClassPathXmlApplicationContext("applicationContext-service.xml");
   openSession();
   startup(properties);
   SchedulerUtil.startup(properties);

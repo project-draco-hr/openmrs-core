@@ -1,7 +1,13 @@
 {
-  if (this == obj)   return true;
-  if (!(obj instanceof ConceptSearchResult))   return false;
+  if (this == obj) {
+    return true;
+  }
+  if (!(obj instanceof ConceptSearchResult)) {
+    return false;
+  }
   ConceptSearchResult other=(ConceptSearchResult)obj;
-  if (getConcept() == null)   return false;
+  if (getConcept() == null) {
+    return false;
+  }
   return getConcept().equals(other.getConcept());
 }

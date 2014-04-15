@@ -1,0 +1,12 @@
+{
+  if (!realServices.containsKey(type)) {
+    Object realService=null;
+    try {
+      realService=Context.getService(type);
+    }
+ catch (    Exception e) {
+    }
+    realServices.put(type,realService);
+  }
+  Context.getServiceContext().setService(type,service);
+}

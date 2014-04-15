@@ -1,0 +1,11 @@
+{
+  dao.saveUser(userJoe,PASSWORD);
+  dao.changeQuestionAnswer(userJoe,SECRET_QUESTION,SECRET_ANSWER);
+  LoginCredential lc=dao.getLoginCredential(userJoe);
+  assertEquals("question should be set",SECRET_QUESTION,lc.getSecretQuestion());
+  assertEquals("answer should be set",SECRET_ANSWER,lc.getSecretAnswer());
+  dao.changePassword(userJoe,"Openmr6zz");
+  lc=dao.getLoginCredential(userJoe);
+  assertEquals("question should not have changed",SECRET_QUESTION,lc.getSecretQuestion());
+  assertEquals("answer should not have changed",SECRET_ANSWER,lc.getSecretAnswer());
+}

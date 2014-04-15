@@ -1,5 +1,7 @@
 {
-  if (timeFormatCache.containsKey(locale))   return (SimpleDateFormat)timeFormatCache.get(locale).clone();
+  if (timeFormatCache.containsKey(locale)) {
+    return (SimpleDateFormat)timeFormatCache.get(locale).clone();
+  }
   SimpleDateFormat sdf=(SimpleDateFormat)DateFormat.getTimeInstance(DateFormat.SHORT,locale);
   String pattern=sdf.toPattern();
   if (!(pattern.contains("hh") || pattern.contains("HH"))) {

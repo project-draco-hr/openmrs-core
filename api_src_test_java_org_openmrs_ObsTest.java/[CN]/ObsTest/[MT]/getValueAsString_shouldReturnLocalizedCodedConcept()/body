@@ -1,0 +1,12 @@
+{
+  ConceptDatatype cdt=new ConceptDatatype();
+  cdt.setHl7Abbreviation("CWE");
+  Concept cn=new Concept();
+  cn.setDatatype(cdt);
+  cn.addName(new ConceptName(VERO,Locale.ITALIAN));
+  Obs obs=new Obs();
+  obs.setValueCoded(cn);
+  obs.setConcept(cn);
+  obs.setValueCodedName(new ConceptName("True",Locale.US));
+  Assert.assertEquals(VERO,obs.getValueAsString(Locale.ITALIAN));
+}

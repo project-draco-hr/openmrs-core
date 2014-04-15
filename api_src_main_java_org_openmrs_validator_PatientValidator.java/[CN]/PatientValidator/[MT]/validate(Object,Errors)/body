@@ -1,5 +1,7 @@
 {
-  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
+  if (log.isDebugEnabled()) {
+    log.debug(this.getClass().getName() + ".validate...");
+  }
   if (obj == null) {
     return;
   }
@@ -16,7 +18,7 @@
     errors.reject("error.preferredIdentifier");
   }
   if (!errors.hasErrors()) {
-    if (patient != null && patient.getIdentifiers() != null) {
+    if (patient.getIdentifiers() != null) {
       for (      PatientIdentifier identifier : patient.getIdentifiers()) {
         patientIdentifierValidator.validate(identifier,errors);
       }

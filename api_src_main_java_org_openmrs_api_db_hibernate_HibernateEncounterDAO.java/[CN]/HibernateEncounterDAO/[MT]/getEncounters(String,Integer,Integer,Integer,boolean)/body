@@ -1,0 +1,13 @@
+{
+  if (StringUtils.isBlank(query) && patientId == null) {
+    return Collections.emptyList();
+  }
+  Criteria criteria=createEncounterByQueryCriteria(query,patientId,includeVoided,true);
+  if (start != null) {
+    criteria.setFirstResult(start);
+  }
+  if (length != null && length > 0) {
+    criteria.setMaxResults(length);
+  }
+  return criteria.list();
+}

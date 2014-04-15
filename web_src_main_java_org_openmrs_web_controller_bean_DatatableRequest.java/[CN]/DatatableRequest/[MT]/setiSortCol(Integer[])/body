@@ -1,3 +1,8 @@
 {
-  this.iSortCol=iSortCol;
+  if (iSortCol == null) {
+    this.iSortCol=new Integer[0];
+  }
+ else {
+    this.iSortCol=Arrays.copyOf(iSortCol,iSortCol.length);
+  }
 }

@@ -1,0 +1,7 @@
+{
+  String newKey="Flag";
+  String initialValue=adminService.getGlobalProperty(newKey);
+  Assert.assertNull(initialValue);
+  adminService.setGlobalProperty(newKey,Boolean.FALSE.toString());
+  Assert.assertEquals(adminService.getGlobalProperty("Flag"),"false");
+}

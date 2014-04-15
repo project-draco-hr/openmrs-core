@@ -11,19 +11,22 @@
         first=false;
       }
  else {
-        if (!StringUtils.isBlank(otherNames))         otherNames+=",";
+        if (!StringUtils.isBlank(otherNames)) {
+          otherNames+=",";
+        }
         otherNames+=" " + pn.getGivenName() + " "+ pn.getMiddleName()+ " "+ pn.getFamilyName();
       }
     }
     gender=person.getGender();
     birthdate=person.getBirthdate();
-    birthdateString=Format.format(person.getBirthdate());
+    birthdateString=WebUtil.formatDate(person.getBirthdate());
     birthdateEstimated=person.isBirthdateEstimated();
     age=person.getAge();
     voided=person.isPersonVoided();
     if (person.getDeathDate() != null) {
-      this.deathDateString=Format.format(person.getDeathDate());
+      this.deathDateString=WebUtil.formatDate(person.getDeathDate());
     }
+    deathdateEstimated=person.getDeathdateEstimated();
     for (    PersonAttribute attribute : person.getActiveAttributes()) {
       attributes.put(attribute.getAttributeType().getName(),attribute.toString());
     }

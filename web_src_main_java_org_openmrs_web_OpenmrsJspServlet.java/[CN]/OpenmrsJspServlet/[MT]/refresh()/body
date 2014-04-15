@@ -1,0 +1,10 @@
+{
+  try {
+    Field field=this.getClass().getSuperclass().getDeclaredField("config");
+    field.setAccessible(true);
+    init((ServletConfig)field.get(this));
+  }
+ catch (  Throwable ex) {
+    log.error(ex);
+  }
+}

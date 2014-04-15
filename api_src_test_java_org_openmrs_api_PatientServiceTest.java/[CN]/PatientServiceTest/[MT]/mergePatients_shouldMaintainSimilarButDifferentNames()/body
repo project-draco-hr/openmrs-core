@@ -1,0 +1,9 @@
+{
+  executeDataSet(PATIENT_MERGE_XML);
+  Patient preferredPatient=patientService.getPatient(10000);
+  Patient nonPreferredPatient=patientService.getPatient(10001);
+  patientService.mergePatients(preferredPatient,nonPreferredPatient);
+  Set<PersonName> names=preferredPatient.getNames();
+  if ((PersonName.getFormat()).equals(OpenmrsConstants.PERSON_NAME_FORMAT_LONG))   assertThat(names,containsFullName("President John Fitzgerald Kennedy Esq."));
+ else   assertThat(names,containsFullName("John Fitzgerald Kennedy"));
+}

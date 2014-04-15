@@ -1,5 +1,7 @@
 {
-  if (obj == null || !(obj instanceof Result))   return false;
+  if (obj == null || !(obj instanceof Result)) {
+    return false;
+  }
   Result r=(Result)obj;
   if (EmptyResult.class.isAssignableFrom(r.getClass()) && this.isEmpty()) {
     return true;
@@ -26,10 +28,16 @@ default :
 return false;
 }
 }
-if (isSingleResult() || r.isSingleResult()) return false;
-if (this.size() != r.size()) return false;
+if (isSingleResult() || r.isSingleResult()) {
+return false;
+}
+if (this.size() != r.size()) {
+return false;
+}
 for (int i=0; i < this.size(); i++) {
-if (!this.get(i).equals(r.get(i))) return false;
+if (!this.get(i).equals(r.get(i))) {
+return false;
+}
 }
 return true;
 }

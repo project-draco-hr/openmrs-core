@@ -22,5 +22,7 @@
   patientIdentifier1.setDateCreated(new Date());
   patientIdentifier1.setIdentifierType(patientIdentifierType);
   patient.addIdentifier(patientIdentifier1);
-  Context.getPatientService().savePatient(patient);
+  Errors errors=new BindException(patient,"patient");
+  validator.validate(patient,errors);
+  Assert.assertFalse(errors.hasErrors());
 }

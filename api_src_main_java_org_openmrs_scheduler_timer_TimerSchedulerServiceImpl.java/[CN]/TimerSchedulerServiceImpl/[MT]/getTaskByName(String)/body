@@ -1,5 +1,7 @@
 {
-  if (log.isDebugEnabled())   log.debug("get task " + name);
+  if (log.isDebugEnabled()) {
+    log.debug("get task " + name);
+  }
   TaskDefinition foundTask=null;
   try {
     foundTask=getSchedulerDAO().getTaskByName(name);

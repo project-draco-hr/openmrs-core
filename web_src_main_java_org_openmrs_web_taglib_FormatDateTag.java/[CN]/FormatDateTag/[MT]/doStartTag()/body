@@ -11,7 +11,9 @@
       log.debug("status: " + status);
       if (status.getValue() != null) {
         log.debug("status.value: " + status.getValue());
-        if (status.getValue().getClass() == Date.class)         date=(Date)status.getValue();
+        if (status.getValue().getClass() == Date.class) {
+          date=(Date)status.getValue();
+        }
  else {
           log.debug("status.valueType: " + status.getValueType());
           Timestamp timestamp=(Timestamp)status.getEditor().getValue();
@@ -28,7 +30,9 @@
     log.warn("Both 'date' and 'path' cannot be null.  Page: " + pageContext.getPage() + " localname:"+ pageContext.getRequest().getLocalName()+ " rd:"+ pageContext.getRequest().getRequestDispatcher(""));
     return SKIP_BODY;
   }
-  if (type == null)   type="";
+  if (type == null) {
+    type="";
+  }
   DateFormat dateFormat=null;
   if (format != null && format.length() > 0) {
     dateFormat=new SimpleDateFormat(format,Context.getLocale());
@@ -44,14 +48,13 @@
  else     if (type.equals("medium")) {
       dateFormat=DateFormat.getDateInstance(DateFormat.MEDIUM,Context.getLocale());
     }
- else     if (type.equals("textbox")) {
-      dateFormat=Context.getDateFormat();
-    }
  else {
       dateFormat=Context.getDateFormat();
     }
   }
-  if (dateFormat == null)   dateFormat=new SimpleDateFormat("MM-dd-yyyy");
+  if (dateFormat == null) {
+    dateFormat=new SimpleDateFormat("MM-dd-yyyy");
+  }
   String datestr="";
   try {
     if (date != null) {
@@ -62,10 +65,16 @@
         if (showTodayOrYesterday && (DateUtils.isSameDay(Calendar.getInstance().getTime(),date) || OpenmrsUtil.isYesterday(date))) {
           String timeFormatString=(format != null && !format.contains("a")) ? "HH:mm" : "h:mm a";
           dateFormat=new SimpleDateFormat(timeFormatString);
-          if (DateUtils.isSameDay(Calendar.getInstance().getTime(),date))           datestr=Context.getMessageSourceService().getMessage("general.today") + " " + dateFormat.format(date);
- else           datestr=Context.getMessageSourceService().getMessage("general.yesterday") + " " + dateFormat.format(date);
+          if (DateUtils.isSameDay(Calendar.getInstance().getTime(),date)) {
+            datestr=Context.getMessageSourceService().getMessage("general.today") + " " + dateFormat.format(date);
+          }
+ else {
+            datestr=Context.getMessageSourceService().getMessage("general.yesterday") + " " + dateFormat.format(date);
+          }
         }
- else         datestr=dateFormat.format(date);
+ else {
+          datestr=dateFormat.format(date);
+        }
       }
     }
   }

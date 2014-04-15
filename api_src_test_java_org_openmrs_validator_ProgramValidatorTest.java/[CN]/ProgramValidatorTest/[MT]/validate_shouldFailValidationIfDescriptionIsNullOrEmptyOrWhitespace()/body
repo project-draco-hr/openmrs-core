@@ -1,0 +1,16 @@
+{
+  Program prog=new Program();
+  prog.setDescription(null);
+  prog.setConcept(Context.getConceptService().getConcept(3));
+  Errors errors=new BindException(prog,"prog");
+  programValidator.validate(prog,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  prog.setDescription("");
+  errors=new BindException(prog,"prog");
+  programValidator.validate(prog,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  prog.setDescription(" ");
+  errors=new BindException(prog,"prog");
+  programValidator.validate(prog,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

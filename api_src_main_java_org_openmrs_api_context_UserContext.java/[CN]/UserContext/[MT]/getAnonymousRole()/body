@@ -1,5 +1,7 @@
 {
-  if (anonymousRole != null)   return anonymousRole;
+  if (anonymousRole != null) {
+    return anonymousRole;
+  }
   anonymousRole=Context.getUserService().getRole(RoleConstants.ANONYMOUS);
   if (anonymousRole == null) {
     throw new RuntimeException("Database out of sync with code: " + RoleConstants.ANONYMOUS + " role does not exist");

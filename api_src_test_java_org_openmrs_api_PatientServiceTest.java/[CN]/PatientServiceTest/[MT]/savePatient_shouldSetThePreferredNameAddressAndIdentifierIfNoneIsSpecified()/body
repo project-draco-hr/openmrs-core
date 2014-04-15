@@ -1,0 +1,15 @@
+{
+  Patient patient=new Patient();
+  patient.setGender("M");
+  PatientIdentifier identifier=new PatientIdentifier("QWERTY",patientService.getPatientIdentifierType(2),locationService.getLocation(1));
+  patient.addIdentifier(identifier);
+  PersonName name=new PersonName("givenName","middleName","familyName");
+  patient.addName(name);
+  PersonAddress address=new PersonAddress();
+  address.setAddress1("some address");
+  patient.addAddress(address);
+  Context.getPatientService().savePatient(patient);
+  Assert.assertTrue(identifier.isPreferred());
+  Assert.assertTrue(name.isPreferred());
+  Assert.assertTrue(address.isPreferred());
+}

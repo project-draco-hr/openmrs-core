@@ -1,0 +1,9 @@
+{
+  Assert.assertNotNull(Context.getLocationService().getLocationAttributeTypeByName("Audit Date"));
+  LocationAttributeType type=new LocationAttributeType();
+  type.setName("Audit Date");
+  type.setDatatypeClassname("org.openmrs.customdatatype.datatype.FreeTextDatatype");
+  Errors errors=new BindException(type,"locationAttributeType");
+  new LocationAttributeTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}

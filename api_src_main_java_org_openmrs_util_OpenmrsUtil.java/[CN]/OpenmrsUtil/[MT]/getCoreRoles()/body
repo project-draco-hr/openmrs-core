@@ -4,8 +4,12 @@
   for (  Field fld : flds) {
     String fieldValue=null;
     AddOnStartup roleAnnotation=fld.getAnnotation(AddOnStartup.class);
-    if (null == roleAnnotation)     continue;
-    if (!roleAnnotation.core())     continue;
+    if (null == roleAnnotation) {
+      continue;
+    }
+    if (!roleAnnotation.core()) {
+      continue;
+    }
     try {
       fieldValue=(String)fld.get(null);
     }

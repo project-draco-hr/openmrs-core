@@ -1,0 +1,9 @@
+{
+  Calendar calendar=Calendar.getInstance();
+  calendar.setTimeInMillis(DATE_TIME_2014_01_04_00_00_00_0);
+  Visit visit=makeVisit(42);
+  visit.setStartDatetime(calendar.getTime());
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  assertTrue(errors.hasFieldErrors("startDatetime"));
+}

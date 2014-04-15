@@ -1,5 +1,7 @@
 {
-  String s=getGlobalProperty(propertyName);
-  if (s == null)   return defaultValue;
+  String s=Context.getAdministrationService().getGlobalProperty(propertyName);
+  if (s == null) {
+    return defaultValue;
+  }
   return s;
 }

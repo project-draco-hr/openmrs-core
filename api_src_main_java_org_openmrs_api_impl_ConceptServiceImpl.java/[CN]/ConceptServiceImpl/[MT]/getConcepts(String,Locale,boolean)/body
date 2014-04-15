@@ -1,5 +1,7 @@
 {
   List<Locale> locales=new Vector<Locale>();
-  if (locale != null)   locales.add(locale);
-  return getConcepts(phrase,locales,includeRetired,null,null,null,null,null,null,null);
+  if (locale != null) {
+    locales.add(locale);
+  }
+  return Context.getConceptService().getConcepts(phrase,locales,includeRetired,null,null,null,null,null,null,null);
 }

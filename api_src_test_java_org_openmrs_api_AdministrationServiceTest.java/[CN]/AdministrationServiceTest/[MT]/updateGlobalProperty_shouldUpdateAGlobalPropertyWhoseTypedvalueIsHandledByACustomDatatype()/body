@@ -1,0 +1,10 @@
+{
+  GlobalProperty gp=new GlobalProperty();
+  gp.setProperty("Flag");
+  gp.setDatatypeClassname(BooleanDatatype.class.getName());
+  gp.setValue(Boolean.FALSE);
+  adminService.saveGlobalProperty(gp);
+  Assert.assertEquals(adminService.getGlobalProperty("Flag"),"false");
+  adminService.updateGlobalProperty("Flag",Boolean.TRUE.toString());
+  Assert.assertEquals(adminService.getGlobalProperty("Flag"),"true");
+}

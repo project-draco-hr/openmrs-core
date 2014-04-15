@@ -1,6 +1,8 @@
 {
   for (  Module mod : getLoadedModulesMap().values()) {
-    if (mod.getPackageName().equals(modulePackage))     return mod;
+    if (mod.getPackageName().equals(modulePackage)) {
+      return mod;
+    }
   }
   return null;
 }

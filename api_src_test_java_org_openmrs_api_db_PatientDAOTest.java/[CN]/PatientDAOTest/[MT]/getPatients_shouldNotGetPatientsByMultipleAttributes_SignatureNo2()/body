@@ -1,0 +1,8 @@
+{
+  Assert.assertTrue(personAttributeHelper.searchablePersonAttributeExists("Story teller"));
+  Assert.assertTrue(personAttributeHelper.nonVoidedPersonAttributeExists("Story teller"));
+  Assert.assertTrue(personAttributeHelper.searchablePersonAttributeExists("Senior ring bearer"));
+  Assert.assertTrue(personAttributeHelper.nonVoidedPersonAttributeExists("Senior ring bearer"));
+  List<Patient> patients=dao.getPatients("Story bearer",0,11);
+  Assert.assertEquals(0,patients.size());
+}

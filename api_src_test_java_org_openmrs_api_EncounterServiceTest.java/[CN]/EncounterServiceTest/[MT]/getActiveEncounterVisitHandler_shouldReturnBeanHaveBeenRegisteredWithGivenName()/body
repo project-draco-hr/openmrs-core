@@ -1,0 +1,7 @@
+{
+  String correctBeanName=OpenmrsConstants.REGISTERED_COMPONENT_NAME_PREFIX + "existingOrNewVisitAssignmentHandler";
+  GlobalProperty visitHandlerProperty=new GlobalProperty(OpenmrsConstants.GP_VISIT_ASSIGNMENT_HANDLER,correctBeanName);
+  Context.getAdministrationService().saveGlobalProperty(visitHandlerProperty);
+  EncounterVisitHandler activeEncounterVisitHandler=Context.getEncounterService().getActiveEncounterVisitHandler();
+  Assert.assertNotNull(activeEncounterVisitHandler);
+}

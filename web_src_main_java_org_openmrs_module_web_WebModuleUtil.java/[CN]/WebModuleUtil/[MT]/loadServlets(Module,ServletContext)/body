@@ -8,10 +8,14 @@
     for (int j=0; j < childNodes.getLength(); j++) {
       Node childNode=childNodes.item(j);
       if ("servlet-name".equals(childNode.getNodeName())) {
-        if (childNode.getTextContent() != null)         name=childNode.getTextContent().trim();
+        if (childNode.getTextContent() != null) {
+          name=childNode.getTextContent().trim();
+        }
       }
  else       if ("servlet-class".equals(childNode.getNodeName())) {
-        if (childNode.getTextContent() != null)         className=childNode.getTextContent().trim();
+        if (childNode.getTextContent() != null) {
+          className=childNode.getTextContent().trim();
+        }
       }
     }
     if (name.length() == 0 || className.length() == 0) {
@@ -39,9 +43,9 @@ catch (    InstantiationException e) {
       ServletConfig servletConfig=new ModuleServlet.SimpleServletConfig(name,servletContext);
       httpServlet.init(servletConfig);
     }
- catch (    Throwable t) {
-      log.warn("Unable to initialize servlet: ",t);
-      throw new ModuleException("Unable to initialize servlet: " + httpServlet,mod.getModuleId(),t);
+ catch (    Exception e) {
+      log.warn("Unable to initialize servlet: ",e);
+      throw new ModuleException("Unable to initialize servlet: " + httpServlet,mod.getModuleId(),e);
     }
     HttpServlet otherServletUsingSameName=moduleServlets.get(name);
     if (otherServletUsingSameName != null) {

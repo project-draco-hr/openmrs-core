@@ -8,15 +8,27 @@
     if (existing.getValue().equals(attribute.getValue())) {
     }
  else {
-      if (existing.getId() != null)       existing.setVoided(true);
- else       getAttributes().remove(existing);
+      if (existing.getId() != null) {
+        existing.setVoided(true);
+      }
+ else {
+        getAttributes().remove(existing);
+      }
       getAttributes().add(attribute);
       attribute.setOwner(this);
     }
   }
  else {
-    for (    A existing : getActiveAttributes(attribute.getAttributeType()))     if (existing.getAttributeType().equals(attribute.getAttributeType()))     if (existing.getId() != null)     existing.setVoided(true);
- else     getAttributes().remove(existing);
+    for (    A existing : getActiveAttributes(attribute.getAttributeType())) {
+      if (existing.getAttributeType().equals(attribute.getAttributeType())) {
+        if (existing.getId() != null) {
+          existing.setVoided(true);
+        }
+ else {
+          getAttributes().remove(existing);
+        }
+      }
+    }
     getAttributes().add(attribute);
     attribute.setOwner(this);
   }

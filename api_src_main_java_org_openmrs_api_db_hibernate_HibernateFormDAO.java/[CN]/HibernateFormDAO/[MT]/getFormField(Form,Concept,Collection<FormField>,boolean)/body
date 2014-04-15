@@ -3,7 +3,7 @@
     log.debug("form is null, no fields will be matched");
     return null;
   }
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormField.class,"ff").createAlias("field","field").add(Expression.eq("field.concept",concept)).add(Expression.eq("form",form));
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(FormField.class,"ff").createAlias("field","field").add(Restrictions.eq("field.concept",concept)).add(Restrictions.eq("form",form));
   List<FormField> formFields=crit.list();
   String err="FormField warning.  No FormField matching concept '" + concept + "' for form '"+ form+ "'";
   if (formFields.size() < 1) {
@@ -13,7 +13,9 @@
   FormField backupPlan=formFields.get(0);
   formFields.removeAll(ignoreFormFields);
   if (formFields.size() < 1) {
-    if (force == false)     return backupPlan;
+    if (force == false) {
+      return backupPlan;
+    }
  else {
       log.debug(err);
       return null;

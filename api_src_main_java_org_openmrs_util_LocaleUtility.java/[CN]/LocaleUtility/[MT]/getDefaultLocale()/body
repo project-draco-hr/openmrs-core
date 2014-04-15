@@ -12,11 +12,13 @@
           }
         }
       }
- catch (      Throwable t) {
-        log.warn("Unable to get locale global property value. " + t.getMessage());
-        log.trace("Unable to get locale global property value",t);
+ catch (      Exception e) {
+        log.warn("Unable to get locale global property value. " + e.getMessage());
+        log.trace("Unable to get locale global property value",e);
       }
-      if (defaultLocaleCache == null)       defaultLocaleCache=fromSpecification(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE);
+      if (defaultLocaleCache == null) {
+        defaultLocaleCache=fromSpecification(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE);
+      }
     }
  else {
       return fromSpecification(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE);

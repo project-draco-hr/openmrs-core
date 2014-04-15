@@ -1,7 +1,7 @@
 {
   Criteria criteria=getSession().createCriteria(clazz);
   if (!includeRetired) {
-    criteria.add(Expression.eq("retired",false));
+    criteria.add(Restrictions.eq("retired",false));
   }
  else {
     criteria.addOrder(Order.asc("retired"));

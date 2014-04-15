@@ -1,0 +1,8 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  EncounterType encounterType=Context.getEncounterService().getEncounterType(2);
+  GlobalProperty gp=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_TYPES_LOCKED);
+  gp.setPropertyValue("true");
+  Context.getAdministrationService().saveGlobalProperty(gp);
+  encounterService.unretireEncounterType(encounterType);
+}

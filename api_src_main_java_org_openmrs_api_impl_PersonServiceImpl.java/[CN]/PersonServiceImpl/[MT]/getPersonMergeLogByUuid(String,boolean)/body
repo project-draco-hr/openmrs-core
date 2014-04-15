@@ -1,5 +1,7 @@
 {
-  if (uuid == null)   throw new APIException("UUID cannot be null");
+  if (uuid == null) {
+    throw new APIException("UUID cannot be null");
+  }
   PersonMergeLog personMergeLog=dao.getPersonMergeLogByUuid(uuid);
   if (deserialize) {
     deserialize(personMergeLog);

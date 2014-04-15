@@ -1,5 +1,7 @@
 {
-  if (log.isDebugEnabled())   log.debug(this.getClass().getName() + ".validate...");
+  if (log.isDebugEnabled()) {
+    log.debug(this.getClass().getName() + ".validate...");
+  }
   if (target == null) {
     return;
   }
@@ -27,7 +29,9 @@
     }
   }
   if (person.getBirthdate() != null) {
-    if (person.getBirthdate().after(new Date()))     errors.rejectValue("birthdate","error.date.future");
+    if (person.getBirthdate().after(new Date())) {
+      errors.rejectValue("birthdate","error.date.future");
+    }
  else {
       Calendar c=Calendar.getInstance();
       c.setTime(new Date());
@@ -37,7 +41,11 @@
       }
     }
   }
-  if (person.isVoided())   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
-  if (person.isDead())   ValidationUtils.rejectIfEmpty(errors,"causeOfDeath","Person.dead.causeOfDeathNull");
+  if (person.isVoided()) {
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
+  }
+  if (person.isDead()) {
+    ValidationUtils.rejectIfEmpty(errors,"causeOfDeath","Person.dead.causeOfDeathNull");
+  }
   ValidateUtil.validateFieldLengths(errors,Person.class,"gender");
 }

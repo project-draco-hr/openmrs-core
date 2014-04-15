@@ -2,11 +2,17 @@
   String value=defaultValue;
   if (Context.isAuthenticated()) {
     String prop=Context.getAuthenticatedUser().getUserProperty(key);
-    if (prop != null && !prop.equals(""))     value=prop;
+    if (prop != null && !prop.equals("")) {
+      value=prop;
+    }
   }
   try {
-    if (var != null)     pageContext.setAttribute(var,value);
- else     pageContext.getOut().write(value);
+    if (var != null) {
+      pageContext.setAttribute(var,value);
+    }
+ else {
+      pageContext.getOut().write(value);
+    }
   }
  catch (  Exception e) {
     log.error("error getting global property",e);

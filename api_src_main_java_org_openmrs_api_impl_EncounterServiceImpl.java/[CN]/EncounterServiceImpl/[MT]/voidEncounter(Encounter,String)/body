@@ -2,7 +2,9 @@
   if (!canEditEncounter(encounter,null)) {
     throw new APIException(String.format("Privilege %s required to void encounters of this type",encounter.getEncounterType().getEditPrivilege()));
   }
-  if (reason == null)   throw new IllegalArgumentException("The argument 'reason' is required and so cannot be null");
+  if (reason == null) {
+    throw new IllegalArgumentException("The argument 'reason' is required and so cannot be null");
+  }
   ObsService os=Context.getObsService();
   for (  Obs o : encounter.getObsAtTopLevel(false)) {
     if (!o.isVoided()) {
@@ -17,8 +19,10 @@
   }
   encounter.setVoided(true);
   encounter.setVoidedBy(Context.getAuthenticatedUser());
-  if (encounter.getDateVoided() == null)   encounter.setDateVoided(new Date());
+  if (encounter.getDateVoided() == null) {
+    encounter.setDateVoided(new Date());
+  }
   encounter.setVoidReason(reason);
-  saveEncounter(encounter);
+  Context.getEncounterService().saveEncounter(encounter);
   return encounter;
 }

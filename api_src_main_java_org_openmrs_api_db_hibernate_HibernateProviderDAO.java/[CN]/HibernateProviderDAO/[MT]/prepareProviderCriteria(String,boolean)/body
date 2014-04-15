@@ -1,0 +1,22 @@
+{
+  if (StringUtils.isBlank(name)) {
+    name="%";
+  }
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Provider.class).createAlias("person","p",Criteria.LEFT_JOIN);
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("retired",false));
+  }
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  criteria.createAlias("p.names","personName",Criteria.LEFT_JOIN);
+  Disjunction or=Restrictions.disjunction();
+  or.add(Restrictions.ilike("identifier",name,MatchMode.ANYWHERE));
+  or.add(Restrictions.ilike("name",name,MatchMode.ANYWHERE));
+  Conjunction and=Restrictions.conjunction();
+  or.add(and);
+  String[] splitNames=name.split(" ");
+  for (  String splitName : splitNames) {
+    and.add(getNameSearchExpression(splitName));
+  }
+  criteria.add(or);
+  return criteria;
+}

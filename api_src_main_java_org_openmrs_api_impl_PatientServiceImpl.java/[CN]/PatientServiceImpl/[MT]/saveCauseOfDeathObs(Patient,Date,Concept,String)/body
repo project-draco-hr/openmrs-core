@@ -1,7 +1,13 @@
 {
-  if (patient == null)   throw new APIException("Patient supplied to method is null");
-  if (deathDate == null)   throw new APIException("Death date supplied to method is null");
-  if (cause == null)   throw new APIException("Cause supplied to method is null");
+  if (patient == null) {
+    throw new APIException("Patient supplied to method is null");
+  }
+  if (deathDate == null) {
+    throw new APIException("Death date supplied to method is null");
+  }
+  if (cause == null) {
+    throw new APIException("Cause supplied to method is null");
+  }
   if (!patient.getDead()) {
     patient.setDead(true);
     patient.setDeathDate(deathDate);
@@ -46,7 +52,9 @@
           obsDeath.setValueCoded(currCause);
           obsDeath.setValueCodedName(currCause.getName());
           Date dateDeath=patient.getDeathDate();
-          if (dateDeath == null)           dateDeath=new Date();
+          if (dateDeath == null) {
+            dateDeath=new Date();
+          }
           obsDeath.setObsDatetime(dateDeath);
           String otherConcept=Context.getAdministrationService().getGlobalProperty("concept.otherNonCoded");
           Concept conceptOther=Context.getConceptService().getConcept(otherConcept);

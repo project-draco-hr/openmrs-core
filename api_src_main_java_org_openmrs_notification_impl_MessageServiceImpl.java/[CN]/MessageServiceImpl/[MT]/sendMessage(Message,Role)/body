@@ -5,5 +5,5 @@
   roles.add(role);
   Collection<User> users=Context.getUserService().getUsers(null,roles,false);
   log.debug("Sending message " + message + " to "+ users);
-  sendMessage(message,users);
+  Context.getMessageService().sendMessage(message,users);
 }

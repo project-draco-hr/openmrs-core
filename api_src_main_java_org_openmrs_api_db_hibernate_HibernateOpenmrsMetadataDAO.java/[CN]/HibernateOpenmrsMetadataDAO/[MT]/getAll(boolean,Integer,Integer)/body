@@ -1,0 +1,9 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(mappedClass);
+  if (!includeRetired) {
+    crit.add(Restrictions.eq("retired",false));
+  }
+  crit.setFirstResult(firstResult);
+  crit.setMaxResults(maxResults);
+  return crit.list();
+}

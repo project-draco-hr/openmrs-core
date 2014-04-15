@@ -4,8 +4,12 @@
     int idxCurr=-1;
     for (int i=0; i < nonTokens.length; i++) {
       String nonToken=nonTokens[i];
-      if (idxCurr + 1 < line.length())       idxCurr=line.indexOf(nonToken,idxCurr + 1);
-      if (ret == null)       ret=new Vector<Map<String,String>>();
+      if (idxCurr + 1 < line.length()) {
+        idxCurr=line.indexOf(nonToken,idxCurr + 1);
+      }
+      if (ret == null) {
+        ret=new Vector<Map<String,String>>();
+      }
       if (i == 0 && idxCurr > 0) {
         Map<String,String> currToken=new HashMap<String,String>();
         currToken.put("isToken",getLayoutToken());
@@ -50,7 +54,9 @@
   }
  else   if (line != null) {
     if (line.length() > 0) {
-      if (ret == null)       ret=new Vector<Map<String,String>>();
+      if (ret == null) {
+        ret=new Vector<Map<String,String>>();
+      }
       Map<String,String> currToken=new HashMap<String,String>();
       Map<String,String> currNonToken=new HashMap<String,String>();
       currNonToken.put("isToken",getNonLayoutToken());
@@ -64,7 +70,7 @@
       ret.add(currToken);
     }
   }
-  if (this.maxTokens < ret.size()) {
+  if (ret != null && this.maxTokens < ret.size()) {
     this.maxTokens=ret.size();
   }
   return ret;

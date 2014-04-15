@@ -1,6 +1,8 @@
 {
   String key=className + "." + property;
-  if (returnAll)   key+="--all";
+  if (returnAll) {
+    key+="--all";
+  }
   Map<Integer,Object> patientIdAttrMap;
   if (patientAttributeMap.containsKey(key)) {
     patientIdAttrMap=patientAttributeMap.get(key);

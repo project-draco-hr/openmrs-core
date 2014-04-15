@@ -7,9 +7,13 @@
   moduleId=moduleId.replace('/','.');
   while (true) {
     Module mod=ModuleFactory.getStartedModuleById(moduleId);
-    if (mod != null)     return mod;
+    if (mod != null) {
+      return mod;
+    }
     ind=moduleId.lastIndexOf('.');
-    if (ind < 0)     break;
+    if (ind < 0) {
+      break;
+    }
     moduleId=moduleId.substring(0,ind);
   }
   return null;

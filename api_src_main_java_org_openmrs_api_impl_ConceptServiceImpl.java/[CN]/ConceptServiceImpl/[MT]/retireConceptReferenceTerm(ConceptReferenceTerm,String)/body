@@ -1,5 +1,7 @@
 {
-  if (!StringUtils.hasText(retireReason))   retireReason=Context.getMessageSourceService().getMessage("general.default.retireReason");
+  if (!StringUtils.hasText(retireReason)) {
+    retireReason=Context.getMessageSourceService().getMessage("general.default.retireReason");
+  }
   conceptReferenceTerm.setRetireReason(retireReason);
   return dao.saveConceptReferenceTerm(conceptReferenceTerm);
 }

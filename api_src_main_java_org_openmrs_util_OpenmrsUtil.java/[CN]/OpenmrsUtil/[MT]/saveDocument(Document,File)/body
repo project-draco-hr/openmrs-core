@@ -22,7 +22,9 @@ catch (  FileNotFoundException e) {
   }
  finally {
     try {
-      if (outStream != null)       outStream.close();
+      if (outStream != null) {
+        outStream.close();
+      }
     }
  catch (    Exception e) {
       log.warn("Unable to close outstream",e);

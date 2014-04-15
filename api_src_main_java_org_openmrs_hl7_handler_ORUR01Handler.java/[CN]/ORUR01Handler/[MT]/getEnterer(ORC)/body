@@ -1,7 +1,9 @@
 {
   XCN hl7Enterer=orc.getEnteredBy(0);
   Integer entererId=Context.getHL7Service().resolveUserId(hl7Enterer);
-  if (entererId == null)   throw new HL7Exception("Could not resolve enterer");
+  if (entererId == null) {
+    throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.UnresolvedEnterer"));
+  }
   User enterer=new User();
   enterer.setUserId(entererId);
   return enterer;

@@ -1,6 +1,6 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Cohort.class);
-  criteria.add(Expression.ilike("name",nameFragment,MatchMode.ANYWHERE));
+  criteria.add(Restrictions.ilike("name",nameFragment,MatchMode.ANYWHERE));
   criteria.addOrder(Order.asc("name"));
   return criteria.list();
 }

@@ -1,0 +1,9 @@
+{
+  ModuleFactory.unloadModule(ModuleFactory.getModuleById(MODULE3_ID));
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE1_ID) == 0);
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE2_ID) == 0);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE1_ID) == 0);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE2_ID) == 0);
+}

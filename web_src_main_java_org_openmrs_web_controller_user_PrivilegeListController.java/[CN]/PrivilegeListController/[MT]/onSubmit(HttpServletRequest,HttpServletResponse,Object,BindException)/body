@@ -2,7 +2,7 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String success="";
+    StringBuilder success=new StringBuilder();
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String[] privilegeList=request.getParameterValues("privilegeId");
@@ -13,8 +13,10 @@
       for (      String p : privilegeList) {
         try {
           us.purgePrivilege(us.getPrivilege(p));
-          if (!success.equals(""))           success+="<br/>";
-          success+=p + " " + deleted;
+          if (!success.equals("")) {
+            success.append("<br/>");
+          }
+          success.append(p).append(" ").append(deleted);
         }
  catch (        DataIntegrityViolationException e) {
           error=handlePrivilegeIntegrityException(e,error,notDeleted);
@@ -24,10 +26,16 @@ catch (        APIException e) {
         }
       }
     }
- else     error=msa.getMessage("Privilege.select");
+ else {
+      error=msa.getMessage("Privilege.select");
+    }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!success.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+    }
+    if (!error.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

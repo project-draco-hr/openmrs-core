@@ -1,0 +1,15 @@
+{
+  List<String> dependentModules=null;
+  Module module=getModuleById(moduleId);
+  Map<String,Module> startedModules=getStartedModulesMap();
+  String modulePackage=module.getPackageName();
+  for (  Entry<String,Module> entry : startedModules.entrySet()) {
+    if (!moduleId.equals(entry.getKey()) && entry.getValue().getRequiredModules().contains(modulePackage)) {
+      if (dependentModules == null) {
+        dependentModules=new ArrayList<String>();
+      }
+      dependentModules.add(entry.getKey() + " " + entry.getValue().getVersion());
+    }
+  }
+  return dependentModules;
+}

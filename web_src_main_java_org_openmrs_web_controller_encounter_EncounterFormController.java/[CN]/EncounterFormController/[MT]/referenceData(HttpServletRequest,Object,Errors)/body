@@ -4,8 +4,12 @@
   List<Integer> editedObs=new Vector<Integer>();
   SortedMap<FormField,List<Obs>> obsMapToReturn=null;
   String sortType=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ENCOUNTER_FORM_OBS_SORT_ORDER);
-  if ("weight".equals(sortType))   obsMapToReturn=new TreeMap<FormField,List<Obs>>();
- else   obsMapToReturn=new TreeMap<FormField,List<Obs>>(new NumberingFormFieldComparator());
+  if ("weight".equals(sortType)) {
+    obsMapToReturn=new TreeMap<FormField,List<Obs>>();
+  }
+ else {
+    obsMapToReturn=new TreeMap<FormField,List<Obs>>(new NumberingFormFieldComparator());
+  }
   Map<Obs,FormField> otherFormFields=new HashMap<Obs,FormField>();
   if (Context.isAuthenticated()) {
     EncounterService es=Context.getEncounterService();
@@ -17,9 +21,13 @@
     map.put("encounterRoles",es.getAllEncounterRoles(false));
     map.put("forms",Context.getFormService().getAllForms());
     for (    Obs o : encounter.getObsAtTopLevel(true)) {
-      if (o.hasPreviousVersion())       editedObs.add(o.getObsId());
+      if (o.hasPreviousVersion()) {
+        editedObs.add(o.getObsId());
+      }
       FormField ff=fs.getFormField(form,o.getConcept(),obsMapToReturn.keySet(),false);
-      if (ff == null)       ff=new FormField();
+      if (ff == null) {
+        ff=new FormField();
+      }
       if (o.getObsGroup() == null) {
         List<Obs> list=obsMapToReturn.get(ff);
         if (list == null) {
@@ -33,11 +41,15 @@
       }
     }
   }
-  if (log.isDebugEnabled())   log.debug("setting obsMap in page context (size: " + obsMapToReturn.size() + ")");
+  if (log.isDebugEnabled()) {
+    log.debug("setting obsMap in page context (size: " + obsMapToReturn.size() + ")");
+  }
   map.put("obsMap",obsMapToReturn);
   map.put("otherFormFields",otherFormFields);
   map.put("locale",Context.getLocale());
   map.put("editedObs",editedObs);
-  if (encounter.getPatient() != null)   map.put("patientVisits",Context.getVisitService().getVisitsByPatient(encounter.getPatient()));
+  if (encounter.getPatient() != null) {
+    map.put("patientVisits",Context.getVisitService().getVisitsByPatient(encounter.getPatient()));
+  }
   return map;
 }

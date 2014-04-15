@@ -1,6 +1,8 @@
 {
   Date returnedDate=new Date();
-  if (dateFromRequest != null && dateFromRequest.length() > 0)   returnedDate.setTime(Long.parseLong(dateFromRequest));
+  if (dateFromRequest != null && dateFromRequest.length() > 0) {
+    returnedDate.setTime(Long.parseLong(dateFromRequest));
+  }
  else {
     Calendar cal=Calendar.getInstance();
     cal.setTime(returnedDate);

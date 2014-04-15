@@ -2,9 +2,15 @@
   this(name,description,(Integer[])null);
   if (patientsOrIds != null) {
     for (    Object o : patientsOrIds) {
-      if (o instanceof Patient)       memberIds.add(((Patient)o).getPatientId());
- else       if (o instanceof Integer)       memberIds.add((Integer)o);
- else       memberIds.add(Integer.valueOf(o.toString()));
+      if (o instanceof Patient) {
+        memberIds.add(((Patient)o).getPatientId());
+      }
+ else       if (o instanceof Integer) {
+        memberIds.add((Integer)o);
+      }
+ else {
+        memberIds.add(Integer.valueOf(o.toString()));
+      }
     }
   }
 }

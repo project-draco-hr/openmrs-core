@@ -1,9 +1,9 @@
 {
-  Visit visit=service.getVisit(1);
+  Visit visit=visitService.getVisit(1);
   visit.addAttribute(makeAttribute(new Date()));
   visit.addAttribute(makeAttribute("not a date"));
   Collection<VisitAttribute> activeAttributes=visit.getActiveAttributes();
   Errors errors=new BindException(visit,"visit");
   new VisitValidator().validate(visit,errors);
-  Assert.assertEquals(true,errors.hasFieldErrors("attributes"));
+  assertEquals(true,errors.hasFieldErrors("attributes"));
 }

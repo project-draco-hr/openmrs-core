@@ -21,7 +21,9 @@
       sb.append(columns.get(i).toTemplateString());
     }
   }
- else   log.warn("Report has column size less than 1");
+ else {
+    log.warn("Report has column size less than 1");
+  }
   sb.append("\n#end");
   sb.append("\n#end\n");
   return sb.toString();

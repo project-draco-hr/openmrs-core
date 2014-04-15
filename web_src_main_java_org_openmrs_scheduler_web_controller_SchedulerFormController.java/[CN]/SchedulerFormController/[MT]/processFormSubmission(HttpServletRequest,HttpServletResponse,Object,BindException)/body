@@ -3,8 +3,12 @@
   String[] names=request.getParameterValues("propertyName");
   String[] values=request.getParameterValues("propertyValue");
   Map<String,String> properties=new HashMap<String,String>();
-  if (names != null)   for (int x=0; x < names.length; x++) {
-    if (names[x].length() > 0)     properties.put(names[x],values[x]);
+  if (names != null) {
+    for (int x=0; x < names.length; x++) {
+      if (names[x].length() > 0) {
+        properties.put(names[x],values[x]);
+      }
+    }
   }
   task.setProperties(properties);
   String units=request.getParameter("repeatIntervalUnits");

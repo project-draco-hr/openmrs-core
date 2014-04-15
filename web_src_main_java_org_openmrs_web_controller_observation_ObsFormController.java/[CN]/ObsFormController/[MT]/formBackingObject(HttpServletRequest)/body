@@ -5,7 +5,9 @@
     EncounterService es=Context.getEncounterService();
     String obsId=request.getParameter("obsId");
     String encounterId=request.getParameter("encounterId");
-    if (obsId != null)     obs=os.getObs(Integer.valueOf(obsId));
+    if (obsId != null) {
+      obs=os.getObs(Integer.valueOf(obsId));
+    }
  else     if (StringUtils.hasText(encounterId)) {
       Encounter e=es.getEncounter(Integer.valueOf(encounterId));
       obs=new Obs();
@@ -15,6 +17,8 @@
       obs.setObsDatetime(e.getEncounterDatetime());
     }
   }
-  if (obs == null)   obs=new Obs();
+  if (obs == null) {
+    obs=new Obs();
+  }
   return obs;
 }

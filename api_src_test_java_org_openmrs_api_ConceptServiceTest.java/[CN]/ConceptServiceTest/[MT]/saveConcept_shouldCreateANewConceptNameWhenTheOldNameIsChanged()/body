@@ -9,6 +9,7 @@
     }
   }
   conceptService.saveConcept(concept);
+  Context.flushSession();
   Assert.assertEquals(4,concept.getNames(true).size());
   for (  ConceptName cn : concept.getNames()) {
     if (cn.getName().equals("new name")) {

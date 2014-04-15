@@ -11,16 +11,28 @@
       String property="", defaultValue="", description="", datatypeClassname="", datatypeConfig="";
       while (x < nodes.getLength()) {
         Node childNode=nodes.item(x);
-        if ("property".equals(childNode.getNodeName()))         property=childNode.getTextContent().trim();
- else         if ("defaultValue".equals(childNode.getNodeName()))         defaultValue=childNode.getTextContent();
- else         if ("description".equals(childNode.getNodeName()))         description=childNode.getTextContent().trim();
- else         if ("datatypeClassname".equals(childNode.getNodeName()))         datatypeClassname=childNode.getTextContent().trim();
- else         if ("datatypeConfig".equals(childNode.getNodeName()))         datatypeConfig=childNode.getTextContent().trim();
+        if ("property".equals(childNode.getNodeName())) {
+          property=childNode.getTextContent().trim();
+        }
+ else         if ("defaultValue".equals(childNode.getNodeName())) {
+          defaultValue=childNode.getTextContent();
+        }
+ else         if ("description".equals(childNode.getNodeName())) {
+          description=childNode.getTextContent().trim();
+        }
+ else         if ("datatypeClassname".equals(childNode.getNodeName())) {
+          datatypeClassname=childNode.getTextContent().trim();
+        }
+ else         if ("datatypeConfig".equals(childNode.getNodeName())) {
+          datatypeConfig=childNode.getTextContent().trim();
+        }
         x++;
       }
       log.debug("property: " + property + " defaultValue: "+ defaultValue+ " description: "+ description);
       log.debug("datatypeClassname: " + datatypeClassname + " datatypeConfig: "+ datatypeConfig);
-      if (description != null)       description=description.replaceAll("	","").trim();
+      if (description != null) {
+        description=description.replaceAll("	","").trim();
+      }
       if (datatypeClassname.length() > 0 && property.length() > 0) {
         try {
           Class<CustomDatatype<?>> datatypeClazz=(Class<CustomDatatype<?>>)Class.forName(datatypeClassname).asSubclass(CustomDatatype.class);
@@ -33,8 +45,12 @@ catch (        ClassNotFoundException ex) {
           log.error("The class specified by 'datatypeClassname' (" + datatypeClassname + ") could not be found.",ex);
         }
       }
- else       if (property.length() > 0)       properties.add(new GlobalProperty(property,defaultValue,description));
- else       log.warn("'property' is required for global properties. Given '" + property + "'");
+ else       if (property.length() > 0) {
+        properties.add(new GlobalProperty(property,defaultValue,description));
+      }
+ else {
+        log.warn("'property' is required for global properties. Given '" + property + "'");
+      }
       i++;
     }
   }

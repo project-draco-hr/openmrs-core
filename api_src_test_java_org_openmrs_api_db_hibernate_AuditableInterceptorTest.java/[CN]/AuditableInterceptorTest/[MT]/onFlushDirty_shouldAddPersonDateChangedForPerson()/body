@@ -1,0 +1,8 @@
+{
+  AuditableInterceptor interceptor=new AuditableInterceptor();
+  Person person=new Person();
+  String[] propertyNames=new String[]{"personDateChanged"};
+  Object[] currentState=new Object[]{null};
+  interceptor.onFlushDirty(person,null,currentState,null,propertyNames,null);
+  Assert.assertNotNull(currentState[0]);
+}

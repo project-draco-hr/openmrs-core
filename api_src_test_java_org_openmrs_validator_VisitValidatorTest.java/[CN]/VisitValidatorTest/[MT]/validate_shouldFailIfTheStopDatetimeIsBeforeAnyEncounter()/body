@@ -9,5 +9,5 @@
   visit.setStopDatetime(date);
   Errors errors=new BindException(visit,"visit");
   new VisitValidator().validate(visit,errors);
-  Assert.assertEquals(true,errors.hasFieldErrors("stopDatetime"));
+  assertEquals(true,errors.hasFieldErrors("stopDatetime"));
 }

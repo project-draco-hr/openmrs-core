@@ -1,0 +1,11 @@
+{
+  OrderService os=Context.getOrderService();
+  for (  Order o : os.getOrdersByPatient(notPreferred)) {
+    if (o.getEncounter() == null && !o.getVoided()) {
+      Order tmpOrder=o.copy();
+      tmpOrder.setPatient(preferred);
+      Order persisted=os.saveOrder(tmpOrder);
+      mergedData.addCreatedOrder(persisted.getUuid());
+    }
+  }
+}

@@ -2,7 +2,7 @@
   HttpSession httpSession=request.getSession();
   String view=getFormView();
   if (Context.isAuthenticated()) {
-    String success="";
+    StringBuilder success=new StringBuilder();
     String error="";
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String[] conceptClassList=request.getParameterValues("conceptClassId");
@@ -13,8 +13,10 @@
       for (      String cc : conceptClassList) {
         try {
           cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
-          if (!success.equals(""))           success+="<br/>";
-          success+=cc + " " + deleted;
+          if (!success.equals("")) {
+            success.append("<br/>");
+          }
+          success.append(cc).append(" ").append(deleted);
         }
  catch (        DataIntegrityViolationException e) {
           error=handleConceptClassIntegrityException(e,error,notDeleted);
@@ -24,10 +26,16 @@ catch (        APIException e) {
         }
       }
     }
- else     error=msa.getMessage("ConceptClass.select");
+ else {
+      error=msa.getMessage("ConceptClass.select");
+    }
     view=getSuccessView();
-    if (!success.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success);
-    if (!error.equals(""))     httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!success.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
+    }
+    if (!error.equals("")) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    }
   }
   return new ModelAndView(new RedirectView(view));
 }

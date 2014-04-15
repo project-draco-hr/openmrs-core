@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     UserService us=Context.getUserService();
     String r=request.getParameter("privilege");
-    if (r != null)     privilege=us.getPrivilege(r);
+    if (r != null) {
+      privilege=us.getPrivilege(r);
+    }
   }
-  if (privilege == null)   privilege=new Privilege();
+  if (privilege == null) {
+    privilege=new Privilege();
+  }
   return privilege;
 }

@@ -1,0 +1,10 @@
+{
+  Calendar calendar=Calendar.getInstance();
+  calendar.setTimeInMillis(DATE_TIME_2014_02_05_00_00_00_0);
+  Visit visit=makeVisit(42);
+  visit.setStartDatetime(calendar.getTime());
+  assertTrue(patientHasVoidedVisit(visit.getPatient(),DATE_TIME_2014_02_05_00_00_00_0,DATE_TIME_2014_02_11_00_00_00_0));
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  assertFalse(errors.hasFieldErrors("startDatetime"));
+}

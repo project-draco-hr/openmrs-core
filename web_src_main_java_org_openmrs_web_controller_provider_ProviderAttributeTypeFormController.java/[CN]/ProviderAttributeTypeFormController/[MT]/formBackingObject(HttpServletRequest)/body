@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     ProviderService os=Context.getProviderService();
     String providerAttributeTypeId=request.getParameter("providerAttributeTypeId");
-    if (providerAttributeTypeId != null)     providerAttributeType=os.getProviderAttributeType(Integer.valueOf(providerAttributeTypeId));
+    if (providerAttributeTypeId != null) {
+      providerAttributeType=os.getProviderAttributeType(Integer.valueOf(providerAttributeTypeId));
+    }
   }
-  if (providerAttributeType == null)   providerAttributeType=new ProviderAttributeType();
+  if (providerAttributeType == null) {
+    providerAttributeType=new ProviderAttributeType();
+  }
   return providerAttributeType;
 }

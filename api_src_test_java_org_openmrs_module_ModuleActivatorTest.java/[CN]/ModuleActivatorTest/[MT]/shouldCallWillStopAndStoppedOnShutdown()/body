@@ -1,0 +1,12 @@
+{
+  ModuleUtil.shutdown();
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getWillStopCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE1_ID) == 1);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE2_ID) == 1);
+  assertTrue(moduleTestData.getStoppedCallCount(MODULE3_ID) == 1);
+  assertTrue(moduleTestData.getWillStopCallTime(MODULE1_ID) <= moduleTestData.getStoppedCallTime(MODULE1_ID));
+  assertTrue(moduleTestData.getWillStopCallTime(MODULE2_ID) <= moduleTestData.getStoppedCallTime(MODULE2_ID));
+  assertTrue(moduleTestData.getWillStopCallTime(MODULE3_ID) <= moduleTestData.getStoppedCallTime(MODULE3_ID));
+}

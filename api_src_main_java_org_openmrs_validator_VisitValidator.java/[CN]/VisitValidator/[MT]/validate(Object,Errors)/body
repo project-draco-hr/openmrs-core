@@ -22,4 +22,11 @@
     }
   }
   super.validateAttributes(visit,errors,Context.getVisitService().getAllVisitAttributeTypes());
+  if (disallowOverlappingVisits()) {
+    List<Visit> otherVisitList=Context.getVisitService().getVisitsByPatient(visit.getPatient());
+    for (    Visit otherVisit : otherVisitList) {
+      validateStartDatetime(visit,otherVisit,errors);
+      validateStopDatetime(visit,otherVisit,errors);
+    }
+  }
 }

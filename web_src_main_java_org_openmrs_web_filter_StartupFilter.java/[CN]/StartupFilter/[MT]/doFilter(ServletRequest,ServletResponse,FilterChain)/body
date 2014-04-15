@@ -9,14 +9,26 @@
     if (servletPath.startsWith("/images") || servletPath.startsWith("/initfilter/scripts")) {
       servletPath=servletPath.replaceFirst("/initfilter","/WEB-INF/view");
       File file=new File(filterConfig.getServletContext().getRealPath(servletPath));
-      if (httpRequest.getPathInfo() != null)       file=new File(file,httpRequest.getPathInfo());
+      if (httpRequest.getPathInfo() != null) {
+        file=new File(file,httpRequest.getPathInfo());
+      }
+      InputStream imageFileInputStream=null;
       try {
-        InputStream imageFileInputStream=new FileInputStream(file);
+        imageFileInputStream=new FileInputStream(file);
         OpenmrsUtil.copyFile(imageFileInputStream,httpResponse.getOutputStream());
-        imageFileInputStream.close();
       }
  catch (      FileNotFoundException e) {
         log.error("Unable to find file: " + file.getAbsolutePath());
+      }
+ finally {
+        if (imageFileInputStream != null) {
+          try {
+            imageFileInputStream.close();
+          }
+ catch (          IOException io) {
+            log.warn("Couldn't close imageFileInputStream: " + io);
+          }
+        }
       }
     }
  else     if (servletPath.startsWith("/scripts")) {

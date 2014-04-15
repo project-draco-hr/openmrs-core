@@ -1,8 +1,12 @@
 {
-  if (!StringUtils.hasText(voidReason))   voidReason=Context.getMessageSourceService().getMessage("general.default.voidReason");
+  if (!StringUtils.hasText(voidReason)) {
+    voidReason=Context.getMessageSourceService().getMessage("general.default.voidReason");
+  }
   try {
     Context.getVisitService().voidVisit(visit,voidReason);
-    if (log.isDebugEnabled())     log.debug("Voided visit with id: " + visit.getId());
+    if (log.isDebugEnabled()) {
+      log.debug("Voided visit with id: " + visit.getId());
+    }
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.voided"),WebRequest.SCOPE_SESSION);
     return "redirect:" + VISIT_FORM_URL + ".form?visitId="+ visit.getVisitId()+ "&patientId="+ visit.getPatient().getPatientId();
   }
@@ -10,6 +14,6 @@
     log.warn("Error occurred while attempting to void visit",e);
     request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("Visit.void.error"),WebRequest.SCOPE_SESSION);
   }
-  addEncounterAndObservationCounts(visit,model);
+  addEncounterAndObservationCounts(visit,null,model);
   return VISIT_FORM;
 }

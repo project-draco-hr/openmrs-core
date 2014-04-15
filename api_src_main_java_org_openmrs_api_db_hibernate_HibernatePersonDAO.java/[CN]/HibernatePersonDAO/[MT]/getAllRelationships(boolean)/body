@@ -1,7 +1,7 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Relationship.class,"r");
   if (!includeVoided) {
-    criteria.add(Expression.eq("voided",false));
+    criteria.add(Restrictions.eq("voided",false));
   }
   return criteria.list();
 }

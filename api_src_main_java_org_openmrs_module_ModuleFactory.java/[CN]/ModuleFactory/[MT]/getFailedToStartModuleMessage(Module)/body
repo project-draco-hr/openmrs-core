@@ -1,0 +1,4 @@
+{
+  String[] params={module.getName(),OpenmrsUtil.join(getMissingRequiredModules(module),", ")};
+  return Context.getMessageSourceService().getMessage("Module.error.moduleCannotBeStarted",params,Context.getLocale());
+}

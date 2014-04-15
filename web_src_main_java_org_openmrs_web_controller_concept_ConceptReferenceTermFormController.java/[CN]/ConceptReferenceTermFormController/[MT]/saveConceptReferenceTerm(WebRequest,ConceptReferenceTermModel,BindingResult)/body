@@ -2,10 +2,14 @@
   ConceptReferenceTerm conceptReferenceTerm=conceptReferenceTermModel.getConceptReferenceTerm();
   Set<Integer> mappedTermIds=null;
   for (int x=0; x < conceptReferenceTermModel.getTermMaps().size(); x++) {
-    if (mappedTermIds == null)     mappedTermIds=new HashSet<Integer>();
+    if (mappedTermIds == null) {
+      mappedTermIds=new HashSet<Integer>();
+    }
     ConceptReferenceTermMap map=conceptReferenceTermModel.getTermMaps().get(x);
-    if (map.getTermB() != null && !mappedTermIds.add(map.getTermB().getConceptReferenceTermId()))     continue;
     if (map != null && map.getTermB() != null) {
+      if (!mappedTermIds.add(map.getTermB().getConceptReferenceTermId())) {
+        continue;
+      }
       if (request.getParameter("_termMaps[" + x + "].exists") == null) {
         conceptReferenceTerm.removeConceptReferenceTermMap(map);
       }
@@ -39,7 +43,9 @@
   if (!result.hasErrors()) {
     try {
       conceptReferenceTerm=Context.getConceptService().saveConceptReferenceTerm(conceptReferenceTerm);
-      if (log.isDebugEnabled())       log.debug("Saved concept reference term: " + conceptReferenceTerm.toString());
+      if (log.isDebugEnabled()) {
+        log.debug("Saved concept reference term: " + conceptReferenceTerm.toString());
+      }
       request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptReferenceTerm.saved",WebRequest.SCOPE_SESSION);
       return "redirect:" + CONCEPT_REFERENCE_TERM_FORM_URL + ".form?conceptReferenceTermId="+ conceptReferenceTerm.getConceptReferenceTermId();
     }

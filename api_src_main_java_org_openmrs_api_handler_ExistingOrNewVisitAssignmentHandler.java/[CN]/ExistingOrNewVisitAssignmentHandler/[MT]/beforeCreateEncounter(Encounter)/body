@@ -1,18 +1,21 @@
 {
   super.beforeCreateEncounter(encounter);
-  if (encounter.getVisit() != null)   return;
+  if (encounter.getVisit() != null) {
+    return;
+  }
   Visit visit=new Visit();
   visit.setStartDatetime(encounter.getEncounterDatetime());
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
   try {
     if (encounterVisitMapping == null) {
-      encounterVisitMapping=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
+      LoadingCache<EncounterType,VisitType> temp=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
         public VisitType load(        EncounterType key) throws APIException {
           return loadVisitType(key);
         }
       }
 );
+      setEncounterVisitMapping(temp);
       Context.getAdministrationService().addGlobalPropertyListener(this);
     }
     VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());

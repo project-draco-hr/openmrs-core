@@ -3,10 +3,12 @@
   Criteria crit=sessionFactory.getCurrentSession().createCriteria(User.class);
   crit.createAlias("person","person");
   crit.createAlias("person.names","names");
-  crit.add(Expression.eq("names.givenName",givenName));
-  crit.add(Expression.eq("names.familyName",familyName));
+  crit.add(Restrictions.eq("names.givenName",givenName));
+  crit.add(Restrictions.eq("names.familyName",familyName));
   crit.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-  if (!includeRetired)   crit.add(Expression.eq("retired",false));
+  if (!includeRetired) {
+    crit.add(Restrictions.eq("retired",false));
+  }
   for (  User u : (List<User>)crit.list()) {
     users.add(u);
   }

@@ -1,4 +1,6 @@
 {
-  if (pat == null)   return null;
-  return getPerson(pat.getPatientId());
+  if (pat == null) {
+    return null;
+  }
+  return Context.getPersonService().getPerson(pat.getPatientId());
 }

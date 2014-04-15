@@ -1,5 +1,7 @@
 {
   ConceptReferenceTerm term=(ConceptReferenceTerm)getValue();
-  if (term == null || term.getConceptReferenceTermId() == null)   return "";
+  if (term == null || term.getConceptReferenceTermId() == null) {
+    return "";
+  }
   return term.getConceptReferenceTermId().toString();
 }

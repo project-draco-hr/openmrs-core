@@ -9,7 +9,9 @@
     List<String> classNames=new Vector<String>();
     if (attribute == null) {
       columns=findObsValueColumnName(c);
-      if (columns.size() > 1)       conditional=true;
+      if (columns.size() > 1) {
+        conditional=true;
+      }
       continue;
     }
  else     if (attribute.equals("valueDate")) {
@@ -50,15 +52,25 @@
   ProjectionList projections=Projections.projectionList();
   projections.add(Projections.property("obs.personId"));
   for (  String col : columns) {
-    if (col.contains("."))     projections.add(Projections.property(col));
- else     projections.add(Projections.property(aliasName + "." + col));
+    if (col.contains(".")) {
+      projections.add(Projections.property(col));
+    }
+ else {
+      projections.add(Projections.property(aliasName + "." + col));
+    }
   }
   criteria.setProjection(projections);
-  if (patients != null)   criteria.add(Restrictions.in("obs.personId",patients.getMemberIds()));
-  criteria.add(Expression.eq("obs.concept",c));
-  criteria.add(Expression.eq("obs.voided",false));
-  if (showMostRecentFirst)   criteria.addOrder(org.hibernate.criterion.Order.desc("obs.obsDatetime"));
- else   criteria.addOrder(org.hibernate.criterion.Order.asc("obs.obsDatetime"));
+  if (patients != null) {
+    criteria.add(Restrictions.in("obs.personId",patients.getMemberIds()));
+  }
+  criteria.add(Restrictions.eq("obs.concept",c));
+  criteria.add(Restrictions.eq("obs.voided",false));
+  if (showMostRecentFirst) {
+    criteria.addOrder(org.hibernate.criterion.Order.desc("obs.obsDatetime"));
+  }
+ else {
+    criteria.addOrder(org.hibernate.criterion.Order.asc("obs.obsDatetime"));
+  }
   long start=System.currentTimeMillis();
   List<Object[]> rows=criteria.list();
   log.debug("Took: " + (System.currentTimeMillis() - start) + " ms to run the patient/obs query");
@@ -74,12 +86,18 @@
       while (index < rowArray.length) {
         Object value=rowArray[index++];
         if (tmpConditional) {
-          if (index == 2 && value != null)           row.add(value);
- else           row.add(rowArray[index]);
+          if (index == 2 && value != null) {
+            row.add(value);
+          }
+ else {
+            row.add(rowArray[index]);
+          }
           tmpConditional=false;
           index++;
         }
- else         row.add(value == null ? "" : value);
+ else {
+          row.add(value == null ? "" : value);
+        }
       }
       if (oldArr == null) {
         List<List<Object>> arr=new Vector<List<Object>>();

@@ -1,0 +1,6 @@
+{
+  SessionFactory sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
+  patientSearchCriteria=new PatientSearchCriteria(sessionFactory,criteria);
+  globalPropertiesTestHelper=new GlobalPropertiesTestHelper(Context.getAdministrationService());
+}

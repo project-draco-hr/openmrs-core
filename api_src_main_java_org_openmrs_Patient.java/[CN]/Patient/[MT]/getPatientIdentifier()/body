@@ -1,10 +1,14 @@
 {
   if (getIdentifiers() != null && getIdentifiers().size() > 0) {
     for (    PatientIdentifier id : getIdentifiers()) {
-      if (id.isPreferred() && !id.isVoided())       return id;
+      if (id.isPreferred() && !id.isVoided()) {
+        return id;
+      }
     }
     for (    PatientIdentifier id : getIdentifiers()) {
-      if (!id.isVoided())       return id;
+      if (!id.isVoided()) {
+        return id;
+      }
     }
     return null;
   }

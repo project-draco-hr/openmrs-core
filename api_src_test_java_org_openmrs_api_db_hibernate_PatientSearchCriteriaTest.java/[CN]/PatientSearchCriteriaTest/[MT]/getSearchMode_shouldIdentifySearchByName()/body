@@ -1,0 +1,7 @@
+{
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_NAME,patientSearchCriteria.getSearchMode("name",null,null,false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_NAME,patientSearchCriteria.getSearchMode("name","",null,false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_NAME,patientSearchCriteria.getSearchMode("name","  \n\t",null,false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_NAME,patientSearchCriteria.getSearchMode("name",null,new ArrayList<PatientIdentifierType>(),false));
+  Assert.assertEquals(PatientSearchMode.PATIENT_SEARCH_BY_NAME,patientSearchCriteria.getSearchMode("name","",new ArrayList<PatientIdentifierType>(),false));
+}

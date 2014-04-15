@@ -1,7 +1,7 @@
 {
   HttpSession httpSession=request.getSession();
   if (Context.isAuthenticated()) {
-    String view=getSuccessView();
+    StringBuilder view=new StringBuilder(getSuccessView());
     PatientService ps=Context.getPatientService();
     String pref=request.getParameter("preferred");
     String[] nonPreferred=request.getParameter("nonPreferred").split(",");
@@ -9,10 +9,10 @@
     String modalMode=request.getParameter("modalMode");
     Patient preferred=ps.getPatient(Integer.valueOf(pref));
     List<Patient> notPreferred=new ArrayList<Patient>();
-    view=view + "?patientId=" + preferred.getPatientId();
+    view.append("?patientId=").append(preferred.getPatientId());
     for (int i=0; i < nonPreferred.length; i++) {
       notPreferred.add(ps.getPatient(Integer.valueOf(nonPreferred[i])));
-      view=view + "&patientId=" + nonPreferred[i];
+      view.append("&patientId=").append(nonPreferred[i]);
     }
     try {
       ps.mergePatients(preferred,notPreferred);
@@ -29,9 +29,13 @@
     int index=redirectURL.indexOf(request.getContextPath(),2);
     if (index != -1) {
       redirectURL=redirectURL.substring(index);
-      if (redirectURL.contains(getSuccessView()))       redirectURL="findDuplicatePatients.htm";
+      if (redirectURL.contains(getSuccessView())) {
+        redirectURL="findDuplicatePatients.htm";
+      }
     }
- else     redirectURL=view;
+ else {
+      redirectURL=view.toString();
+    }
     return new ModelAndView(new RedirectView(redirectURL));
   }
   return new ModelAndView(new RedirectView(getFormView()));

@@ -1,0 +1,12 @@
+{
+  LocationService ls=Context.getLocationService();
+  LocationTag tag=ls.getLocationTag(1);
+  Assert.assertNull(tag.getDateChanged());
+  Assert.assertNull(tag.getChangedBy());
+  tag.setName("testing");
+  tag.setDescription("desc");
+  LocationTag editedTag=Context.getLocationService().saveLocationTag(tag);
+  Context.flushSession();
+  Assert.assertNotNull(editedTag.getDateChanged());
+  Assert.assertNotNull(editedTag.getChangedBy());
+}

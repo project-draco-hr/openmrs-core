@@ -6,17 +6,19 @@
       lookForNameType=ConceptNameType.valueOf(withConceptNameType);
     }
     ConceptNameTag lookForNameTag=null;
-    if (withConceptNameTag != null)     lookForNameTag=Context.getConceptService().getConceptNameTagByName(withConceptNameTag);
+    if (withConceptNameTag != null) {
+      lookForNameTag=Context.getConceptService().getConceptNameTagByName(withConceptNameTag);
+    }
     ConceptName name=concept.getName(loc,lookForNameType,lookForNameTag);
     if (name != null) {
-      sb.append(applyConversion(name.getName()));
+      sb.append(applyConversion(HtmlUtils.htmlEscape(name.getName())));
       return;
     }
   }
   ConceptName name=concept.getPreferredName(loc);
   if (name != null) {
-    sb.append(applyConversion(name.getName()));
+    sb.append(applyConversion(HtmlUtils.htmlEscape(name.getName())));
     return;
   }
-  sb.append(applyConversion(concept.getDisplayString()));
+  sb.append(applyConversion(HtmlUtils.htmlEscape(concept.getDisplayString())));
 }

@@ -2,7 +2,9 @@
   if (modules != null) {
     List<String> uniqueClasses=new Vector<String>();
     for (    ReportObjectFactoryModule mod : modules) {
-      if (!uniqueClasses.contains(mod.getClassName()))       uniqueClasses.add(mod.getClassName());
+      if (!uniqueClasses.contains(mod.getClassName())) {
+        uniqueClasses.add(mod.getClassName());
+      }
     }
     return uniqueClasses;
   }

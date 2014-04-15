@@ -1,5 +1,7 @@
 {
   Map<String,T> m=getRegisteredComponents(applicationContext,type);
-  if (log.isTraceEnabled())   log.trace("getRegisteredComponents(" + type + ") = "+ m);
+  if (log.isTraceEnabled()) {
+    log.trace("getRegisteredComponents(" + type + ") = "+ m);
+  }
   return new ArrayList<T>(m.values());
 }

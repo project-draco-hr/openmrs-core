@@ -1,5 +1,7 @@
 {
-  if (ro.getReportObjectId() == null)   createReportObject(ro);
+  if (ro.getReportObjectId() == null) {
+    createReportObject(ro);
+  }
  else {
     sessionFactory.getCurrentSession().clear();
     ReportObjectWrapper wrappedReportObject=new ReportObjectWrapper(ro);

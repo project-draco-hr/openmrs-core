@@ -3,8 +3,12 @@
   if (Context.isAuthenticated()) {
     FormService fs=Context.getFormService();
     String fieldId=request.getParameter("fieldId");
-    if (fieldId != null)     field=fs.getField(Integer.valueOf(fieldId));
+    if (fieldId != null) {
+      field=fs.getField(Integer.valueOf(fieldId));
+    }
   }
-  if (field == null)   field=new Field();
+  if (field == null) {
+    field=new Field();
+  }
   return field;
 }

@@ -1,4 +1,6 @@
 {
-  if (!isSessionOpen())   return LocaleUtility.getDefaultLocale();
+  if (!isSessionOpen()) {
+    return LocaleUtility.getDefaultLocale();
+  }
   return getUserContext().getLocale();
 }

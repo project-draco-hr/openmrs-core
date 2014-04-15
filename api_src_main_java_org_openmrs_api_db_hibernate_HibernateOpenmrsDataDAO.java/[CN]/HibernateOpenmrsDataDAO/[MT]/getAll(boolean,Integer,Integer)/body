@@ -1,0 +1,9 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(mappedClass);
+  if (!includeVoided) {
+    crit.add(Restrictions.eq("voided",false));
+  }
+  crit.setFirstResult(firstResult);
+  crit.setMaxResults(maxResults);
+  return crit.list();
+}

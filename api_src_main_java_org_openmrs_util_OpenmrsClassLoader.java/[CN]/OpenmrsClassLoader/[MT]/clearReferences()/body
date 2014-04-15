@@ -23,7 +23,9 @@
           }
           if (Modifier.isStatic(mods)) {
             try {
-              if (clazz.equals(OpenmrsClassLoader.class) && field.getName().equals("log"))               continue;
+              if (clazz.equals(OpenmrsClassLoader.class) && field.getName().equals("log")) {
+                continue;
+              }
               field.setAccessible(true);
               if (Modifier.isFinal(mods)) {
                 if (!(field.getType().getName().startsWith("javax."))) {
@@ -37,17 +39,17 @@
                 }
               }
             }
- catch (            Throwable t) {
+ catch (            Exception e) {
               if (log.isDebugEnabled()) {
-                log.debug("Could not set field " + field.getName() + " to null in class "+ clazz.getName(),t);
+                log.debug("Could not set field " + field.getName() + " to null in class "+ clazz.getName(),e);
               }
             }
           }
         }
       }
- catch (      Throwable t) {
+ catch (      Exception e) {
         if (log.isDebugEnabled()) {
-          log.debug("Could not clean fields for class " + clazz.getName(),t);
+          log.debug("Could not clean fields for class " + clazz.getName(),e);
         }
       }
     }

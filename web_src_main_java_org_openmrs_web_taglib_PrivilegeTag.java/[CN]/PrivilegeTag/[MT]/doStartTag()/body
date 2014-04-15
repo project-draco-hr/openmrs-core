@@ -15,7 +15,9 @@
     hasPrivilege=userContext.hasPrivilege(privilege);
   }
   boolean isInverted=false;
-  if (inverse != null)   isInverted="true".equals(inverse.toLowerCase());
+  if (inverse != null) {
+    isInverted="true".equals(inverse.toLowerCase());
+  }
   if ((hasPrivilege && !isInverted) || (!hasPrivilege && isInverted)) {
     pageContext.setAttribute("authenticatedUser",userContext.getAuthenticatedUser());
     return EVAL_BODY_INCLUDE;

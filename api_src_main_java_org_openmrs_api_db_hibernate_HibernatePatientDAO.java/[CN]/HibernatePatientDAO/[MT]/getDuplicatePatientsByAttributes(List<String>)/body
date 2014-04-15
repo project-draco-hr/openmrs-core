@@ -28,7 +28,9 @@
       identifierFieldNames.add(f.getName());
       log.debug(f.getName());
     }
-    if (!attributes.contains("includeVoided"))     where+="and p1.voided = false and p2.voided = false ";
+    if (!attributes.contains("includeVoided")) {
+      where+="and p1.voided = false and p2.voided = false ";
+    }
     for (    String s : attributes) {
       if (patientFieldNames.contains(s)) {
         where+=" and p1." + s + " = p2."+ s;
@@ -58,7 +60,9 @@
         where+=" and pi1." + s + " = pi2."+ s;
         orderBy+="pi1." + s + ", ";
       }
- else       log.warn("Unidentified attribute: " + s);
+ else {
+        log.warn("Unidentified attribute: " + s);
+      }
     }
     int index=orderBy.lastIndexOf(", ");
     orderBy=orderBy.substring(0,index);

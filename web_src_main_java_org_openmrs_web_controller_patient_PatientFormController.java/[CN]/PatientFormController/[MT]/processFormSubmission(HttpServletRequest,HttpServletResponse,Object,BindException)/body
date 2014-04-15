@@ -1,7 +1,4 @@
 {
-  if (errors.hasErrors()) {
-    return showForm(request,response,errors);
-  }
   Patient patient=(Patient)object;
   if (Context.isAuthenticated()) {
     PatientService ps=Context.getPatientService();
@@ -10,12 +7,18 @@
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String action=request.getParameter("action");
     if (action.equals(msa.getMessage("Patient.save"))) {
+      patientValidator.validate(patient,errors);
+      if (errors.hasErrors()) {
+        return showForm(request,response,errors);
+      }
       updatePersonNames(request,patient);
       updatePersonAddresses(request,patient);
       updatePersonAttributes(request,errors,patient);
       objs=patient.getIdentifiers().toArray();
       for (int i=0; i < objs.length; i++) {
-        if (request.getParameter("identifiers[" + i + "].identifier") == null)         patient.removeIdentifier((PatientIdentifier)objs[i]);
+        if (request.getParameter("identifiers[" + i + "].identifier") == null) {
+          patient.removeIdentifier((PatientIdentifier)objs[i]);
+        }
       }
       String[] ids=request.getParameterValues("identifier");
       String[] idTypes=request.getParameterValues("identifierType");
@@ -31,7 +34,9 @@
             if (StringUtils.isNotEmpty(locs[i])) {
               pi.setLocation(ls.getLocation(Integer.valueOf(locs[i])));
             }
-            if (idPrefStatus != null && idPrefStatus.length > i)             pi.setPreferred(new Boolean(idPrefStatus[i]));
+            if (idPrefStatus != null && idPrefStatus.length > i) {
+              pi.setPreferred(new Boolean(idPrefStatus[i]));
+            }
             new PatientIdentifierValidator().validate(pi,errors);
             if (errors.hasErrors()) {
               return showForm(request,response,errors);
@@ -56,20 +61,30 @@
         currentId.setPreferred(true);
       }
       for (      PatientIdentifier pi : patient.getIdentifiers()) {
-        if (pi.isVoided())         continue;
+        if (pi.isVoided()) {
+          continue;
+        }
         PatientIdentifierType pit=pi.getIdentifierType();
         String identifier=pi.getIdentifier();
         String format=pit.getFormat();
         String formatDescription=pit.getFormatDescription();
         String formatStr=format;
-        if (format == null)         formatStr="";
-        if (formatDescription != null)         if (formatDescription.length() > 0)         formatStr=formatDescription;
+        if (format == null) {
+          formatStr="";
+        }
+        if (formatDescription != null) {
+          if (formatDescription.length() > 0) {
+            formatStr=formatDescription;
+          }
+        }
         String[] args={identifier,formatStr};
         try {
-          if (format != null)           if (format.length() > 0 && !identifier.matches(format)) {
-            log.error("Identifier format is not valid: (" + format + ") "+ identifier);
-            String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
-            errors.rejectValue("identifiers",msg);
+          if (format != null) {
+            if (format.length() > 0 && !identifier.matches(format)) {
+              log.error("Identifier format is not valid: (" + format + ") "+ identifier);
+              String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
+              errors.rejectValue("identifiers",msg);
+            }
           }
         }
  catch (        Exception e) {
@@ -78,7 +93,9 @@
           String msg=getMessageSourceAccessor().getMessage("error.identifier.formatInvalid",args);
           errors.rejectValue("identifiers",msg);
         }
-        if (errors.hasErrors())         return showForm(request,response,errors);
+        if (errors.hasErrors()) {
+          return showForm(request,response,errors);
+        }
       }
     }
   }

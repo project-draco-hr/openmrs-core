@@ -1,6 +1,8 @@
 {
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(RelationshipType.class);
   criteria.add(Restrictions.sqlRestriction("CONCAT(a_Is_To_B, CONCAT('/', b_Is_To_A)) like (?)",relationshipTypeName,new StringType()));
-  if (preferred != null)   criteria.add(Expression.eq("preferred",preferred));
+  if (preferred != null) {
+    criteria.add(Restrictions.eq("preferred",preferred));
+  }
   return criteria.list();
 }

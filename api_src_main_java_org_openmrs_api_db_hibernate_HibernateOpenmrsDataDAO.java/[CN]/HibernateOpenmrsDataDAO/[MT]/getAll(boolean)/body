@@ -1,0 +1,7 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(mappedClass);
+  if (!includeVoided) {
+    crit.add(Restrictions.eq("voided",false));
+  }
+  return crit.list();
+}

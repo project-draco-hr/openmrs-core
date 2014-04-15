@@ -1,6 +1,5 @@
 {
   String s="";
-  AST exprStringAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
   AST ift=null;
   AST val=null;
   AST val2=null;
@@ -12,7 +11,9 @@
   String a="", b="";
   try {
 {
-      if (_t == null)       _t=ASTNULL;
+      if (_t == null) {
+        _t=ASTNULL;
+      }
 switch (_t.getType()) {
 case ID:
 {
@@ -54,12 +55,10 @@ case TRUE:
 case FALSE:
 {
 {
-          if (_t == null)           _t=ASTNULL;
 switch (_t.getType()) {
 case TRUE:
 {
               AST __t493=_t;
-              AST tmp82_AST_in=(AST)_t;
               match(_t,TRUE);
               _t=_t.getFirstChild();
               obj.SetAnswer(section,true,instr);
@@ -70,7 +69,6 @@ case TRUE:
 case FALSE:
 {
             AST __t494=_t;
-            AST tmp83_AST_in=(AST)_t;
             match(_t,FALSE);
             _t=_t.getFirstChild();
             obj.SetAnswer(section,false,instr);
@@ -97,11 +95,12 @@ case INTLIT:
   Double idbl=null;
 {
 {
-      if (_t == null)       _t=ASTNULL;
+      if (_t == null) {
+        _t=ASTNULL;
+      }
 switch (_t.getType()) {
 case DOT:
 {
-          AST tmp84_AST_in=(AST)_t;
           match(_t,DOT);
           _t=_t.getNextSibling();
           val2=(AST)_t;
@@ -226,14 +225,12 @@ break;
 case ACTION_OP:
 {
 AST __t501=_t;
-AST tmp85_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getFirstChild();
 id=(AST)_t;
 match(_t,ID);
 _t=_t.getNextSibling();
 a=id.getText();
-AST tmp86_AST_in=(AST)_t;
 match(_t,ACTION_OP);
 _t=_t.getNextSibling();
 str=(AST)_t;

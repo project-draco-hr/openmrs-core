@@ -8,13 +8,19 @@
       throw new APIException("Unknown handler for " + obs.getConcept());
     }
   }
-  if (obs.getObsId() == null) {
+  if (obs != null && obs.getObsId() == null) {
     Context.requirePrivilege(PrivilegeConstants.ADD_OBS);
     return dao.saveObs(obs);
   }
  else {
     Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
-    if (changeMessage == null)     throw new APIException("ChangeMessage is required when updating an obs in the database");
+    if (changeMessage == null) {
+      throw new APIException("ChangeMessage is required when updating an obs in the database");
+    }
+    Encounter encounter=obs.getEncounter();
+    if (encounter != null) {
+      obs.setPerson(encounter.getPatient());
+    }
     Obs newObs=Obs.newInstance(obs);
     newObs.setVoided(false);
     newObs.setVoidReason(null);
@@ -28,7 +34,7 @@
     try {
       Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
       Context.evictFromSession(obs);
-      obs=getObs(obs.getObsId());
+      obs=Context.getObsService().getObs(obs.getObsId());
       Context.getObsService().voidObs(obs,changeMessage);
     }
   finally {

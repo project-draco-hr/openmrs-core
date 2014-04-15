@@ -1,5 +1,9 @@
 {
-  if (sort == null)   sort=new Vector<String>();
-  if (sort.isEmpty())   sort.add("obsDatetime");
+  if (sort == null) {
+    sort=new Vector<String>();
+  }
+  if (sort.isEmpty()) {
+    sort.add("obsDatetime");
+  }
   return dao.getObservations(whom,encounters,questions,answers,personTypes,locations,sort,mostRecentN,obsGroupId,fromDate,toDate,includeVoidedObs);
 }

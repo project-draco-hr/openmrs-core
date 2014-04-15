@@ -9,7 +9,9 @@
       return objectList;
     }
     ConceptSource source=null;
-    if (sourceId != null)     source=cs.getConceptSource(sourceId);
+    if (sourceId != null) {
+      source=cs.getConceptSource(sourceId);
+    }
     terms.addAll(cs.getConceptReferenceTerms(phrase,source,start,length,includeRetired));
     if (terms.size() == 0) {
       objectList.add(mss.getMessage("general.noMatchesFound",new Object[]{"'" + phrase + "'"},Context.getLocale()));

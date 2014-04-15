@@ -1,6 +1,5 @@
 {
-  String s="";
-  AST textAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
+  StringBuilder s=new StringBuilder("");
   AST str=null;
   String a="", b="";
   try {
@@ -8,7 +7,9 @@
 {
 {
           _loop581:           do {
-            if (_t == null)             _t=ASTNULL;
+            if (_t == null) {
+              _t=ASTNULL;
+            }
             if ((_tokenSet_10.member(_t.getType()))) {
 {
                 str=(AST)_t;
@@ -16,7 +17,7 @@
                 _t=_t.getNextSibling();
               }
               a=" " + str.getText();
-              s+=a;
+              s.append(b);
             }
  else {
               break _loop581;
@@ -34,5 +35,5 @@
     }
   }
   _retTree=_t;
-  return s;
+  return s.toString();
 }

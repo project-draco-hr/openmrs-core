@@ -1,0 +1,9 @@
+{
+  List<Visit> visitList=Context.getVisitService().getVisitsByPatient(patient,true,true);
+  for (  Visit visit : visitList) {
+    if (visit.getStartDatetime() != null && visit.getStartDatetime().getTime() == startInMillis && visit.getStopDatetime() != null && visit.getStopDatetime().getTime() == stopInMillis && visit.isVoided()) {
+      return true;
+    }
+  }
+  return false;
+}

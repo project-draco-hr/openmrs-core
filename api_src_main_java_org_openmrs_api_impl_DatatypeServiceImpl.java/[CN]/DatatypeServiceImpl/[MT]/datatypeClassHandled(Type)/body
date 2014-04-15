@@ -12,7 +12,9 @@
  else   if (t instanceof Class) {
     for (    Type candidate : ((Class)t).getGenericInterfaces()) {
       Class ret=datatypeClassHandled(candidate);
-      if (ret != null)       return ret;
+      if (ret != null) {
+        return ret;
+      }
     }
   }
   return null;

@@ -1,10 +1,12 @@
 {
   List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
   types.add(type);
-  List<Patient> patients=getPatients(null,identifier,types,true);
+  List<Patient> patients=Context.getPatientService().getPatients(null,identifier,types,true);
   while (patients.remove(ignorePatient)) {
   }
   ;
-  if (patients.size() > 0)   return patients.get(0);
+  if (patients.size() > 0) {
+    return patients.get(0);
+  }
   return null;
 }

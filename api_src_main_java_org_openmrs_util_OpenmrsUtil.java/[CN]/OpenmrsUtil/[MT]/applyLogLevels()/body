@@ -4,7 +4,11 @@
   String[] levels=logLevel.split(",");
   for (  String level : levels) {
     String[] classAndLevel=level.split(":");
-    if (classAndLevel.length == 1)     applyLogLevel(OpenmrsConstants.LOG_CLASS_DEFAULT,logLevel);
- else     applyLogLevel(classAndLevel[0].trim(),classAndLevel[1].trim());
+    if (classAndLevel.length == 1) {
+      applyLogLevel(OpenmrsConstants.LOG_CLASS_DEFAULT,logLevel);
+    }
+ else {
+      applyLogLevel(classAndLevel[0].trim(),classAndLevel[1].trim());
+    }
   }
 }

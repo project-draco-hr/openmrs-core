@@ -2,7 +2,9 @@
   try {
     Integer patientId=visit.getPatient().getPatientId();
     Context.getVisitService().purgeVisit(visit);
-    if (log.isDebugEnabled())     log.debug("Purged visit with id: " + visit.getId());
+    if (log.isDebugEnabled()) {
+      log.debug("Purged visit with id: " + visit.getId());
+    }
     request.setAttribute(WebConstants.OPENMRS_MSG_ATTR,Context.getMessageSourceService().getMessage("Visit.purged"),WebRequest.SCOPE_SESSION);
     return "redirect:/patientDashboard.form?patientId=" + patientId;
   }

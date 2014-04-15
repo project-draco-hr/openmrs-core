@@ -3,7 +3,9 @@
   if (!"".equals(dateformat)) {
     dateformat=dateformat.toLowerCase().replaceAll("m","M");
   }
- else   dateformat=new String("MM/dd/yyyy");
+ else {
+    dateformat=new String("MM/dd/yyyy");
+  }
   df.applyPattern(dateformat);
   Calendar cal=Calendar.getInstance();
   cal.clear(Calendar.HOUR);
@@ -11,7 +13,9 @@
   cal.clear(Calendar.SECOND);
   cal.clear(Calendar.MILLISECOND);
   if ("".equals(birthdate)) {
-    if ("".equals(age))     return cal.getTime();
+    if ("".equals(age)) {
+      return cal.getTime();
+    }
     try {
       cal.add(Calendar.YEAR,-(Integer.parseInt(age)));
     }
@@ -19,6 +23,8 @@
     }
     return cal.getTime();
   }
- else   cal.setTime(df.parse(birthdate));
+ else {
+    cal.setTime(df.parse(birthdate));
+  }
   return cal.getTime();
 }

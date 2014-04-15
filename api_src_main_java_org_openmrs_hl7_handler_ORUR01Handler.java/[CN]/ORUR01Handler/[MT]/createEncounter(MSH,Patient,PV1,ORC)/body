@@ -19,7 +19,9 @@
     EncounterType encounterType=getEncounterType(msh,form);
     User enterer=getEnterer(orc);
     encounter.setEncounterDatetime(encounterDate);
-    if (unknownRole == null)     unknownRole=Context.getEncounterService().getEncounterRoleByUuid(EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID);
+    if (unknownRole == null) {
+      unknownRole=Context.getEncounterService().getEncounterRoleByUuid(EncounterRole.UNKNOWN_ENCOUNTER_ROLE_UUID);
+    }
     encounter.setProvider(unknownRole,provider);
     encounter.setPatient(patient);
     encounter.setLocation(location);

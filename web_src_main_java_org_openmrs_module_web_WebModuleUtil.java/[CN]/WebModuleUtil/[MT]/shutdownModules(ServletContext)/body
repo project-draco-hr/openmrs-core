@@ -1,5 +1,5 @@
 {
-  String realPath=servletContext.getRealPath("");
+  String realPath=getRealPath(servletContext);
   String messagesPath=realPath + "/WEB-INF/";
   File folder=new File(messagesPath.replace("/",File.separator));
   if (folder.exists()) {

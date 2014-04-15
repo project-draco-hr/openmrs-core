@@ -8,7 +8,9 @@
     String s=st.nextToken().trim();
     log.debug("looking at " + s);
     boolean isSet=s.startsWith("set:");
-    if (isSet)     s=s.substring(4).trim();
+    if (isSet) {
+      s=s.substring(4).trim();
+    }
     Concept c=null;
     if (s.startsWith("name:")) {
       String name=s.substring(5).trim();
@@ -63,11 +65,15 @@
   }
   if (!showEmptyConcepts) {
     for (Iterator<Concept> i=conceptList.iterator(); i.hasNext(); ) {
-      if (!conceptsWithObs.contains(i.next().getConceptId()))       i.remove();
+      if (!conceptsWithObs.contains(i.next().getConceptId())) {
+        i.remove();
+      }
     }
   }
   List<Date> dateOrder=new ArrayList<Date>(dates);
-  if (sortDescending)   Collections.reverse(dateOrder);
+  if (sortDescending) {
+    Collections.reverse(dateOrder);
+  }
   if (limit > 0 && limit < dateOrder.size()) {
     if (!sortDescending) {
       dateOrder=dateOrder.subList(dateOrder.size() - limit,dateOrder.size());
@@ -78,8 +84,12 @@
   }
   StringBuilder ret=new StringBuilder();
   ret.append("<table");
-  if (id != null)   ret.append(" id=\"" + id + "\"");
-  if (cssClass != null)   ret.append(" class=\"" + cssClass + "\"");
+  if (id != null) {
+    ret.append(" id=\"" + id + "\"");
+  }
+  if (cssClass != null) {
+    ret.append(" class=\"" + cssClass + "\"");
+  }
   ret.append(">");
   if (orientVertical) {
     if (showConceptHeader) {
@@ -92,7 +102,9 @@
     }
     for (    Date date : dateOrder) {
       ret.append("<tr>");
-      if (showDateHeader)       ret.append("<th>" + df.format(date) + "</th>");
+      if (showDateHeader) {
+        ret.append("<th>" + df.format(date) + "</th>");
+      }
       for (      Concept c : conceptList) {
         showConcept(loc,groupedObs,ret,date,c);
       }

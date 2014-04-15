@@ -1,7 +1,9 @@
 {
   Criteria criteria=getSession().createCriteria(Provider.class);
   criteria.add(Restrictions.eq("identifier",provider.getIdentifier()));
-  if (provider.getProviderId() != null)   criteria.add(Restrictions.not(Restrictions.eq("providerId",provider.getProviderId())));
+  if (provider.getProviderId() != null) {
+    criteria.add(Restrictions.not(Restrictions.eq("providerId",provider.getProviderId())));
+  }
   criteria.setProjection(Projections.countDistinct("providerId"));
   return (Long)criteria.uniqueResult() == 0L;
 }

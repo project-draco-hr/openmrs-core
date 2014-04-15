@@ -1,52 +1,18 @@
 {
-  try {
-    if (mod.getLog4j() != null) {
-      DOMConfigurator.configure(mod.getLog4j().getDocumentElement());
-    }
+  if (log.isDebugEnabled()) {
+    log.debug("trying to start module " + mod);
   }
- catch (  Exception e) {
-    log.warn("Unable to load module loggers",e);
-  }
-  if (log.isDebugEnabled())   log.debug("trying to start module " + mod);
   if (ModuleFactory.isModuleStarted(mod) && !mod.hasStartupError()) {
-    String realPath=servletContext.getRealPath("");
-    String path="/WEB-INF/module_messages@LANG@.properties";
-    for (    Entry<String,Properties> entry : mod.getMessages().entrySet()) {
-      if (log.isDebugEnabled())       log.debug("Copying message property file: " + entry.getKey());
-      String lang="_" + entry.getKey();
-      if (lang.equals("_en") || lang.equals("_"))       lang="";
-      String currentPath=path.replace("@LANG@",lang);
-      String absolutePath=realPath + currentPath;
-      File file=new File(absolutePath);
-      try {
-        if (!file.exists())         file.createNewFile();
-      }
- catch (      IOException ioe) {
-        log.error("Unable to create new file " + file.getAbsolutePath() + " "+ ioe);
-      }
-      Properties props=entry.getValue();
-      List<Object> keys=new Vector<Object>();
-      keys.addAll(props.keySet());
-      for (      Object obj : keys) {
-        String key=(String)obj;
-        if (!key.startsWith(mod.getModuleId())) {
-          props.put(mod.getModuleId() + "." + key,props.get(key));
-          props.remove(key);
-        }
-      }
-      try {
-        Properties allModulesProperties=new Properties();
-        OpenmrsUtil.loadProperties(allModulesProperties,file);
-        allModulesProperties.putAll(props);
-        OpenmrsUtil.storeProperties(allModulesProperties,new FileOutputStream(file),null);
-      }
- catch (      FileNotFoundException e) {
-        throw new ModuleException(file.getAbsolutePath(),e);
-      }
-    }
+    String realPath=getRealPath(servletContext);
+    if (realPath == null)     realPath=System.getProperty("user.dir");
+    File webInf=new File(realPath + "/WEB-INF".replace("/",File.separator));
+    if (!webInf.exists())     webInf.mkdir();
+    copyModuleMessagesIntoWebapp(mod,realPath);
     log.debug("Done copying messages");
     boolean moduleNeedsContextRefresh=false;
     JarFile jarFile=null;
+    OutputStream outStream=null;
+    InputStream inStream=null;
     try {
       File modFile=mod.getFile();
       jarFile=new JarFile(modFile);
@@ -66,7 +32,9 @@
             absPath.append("/view/module/");
           }
           absPath.append(mod.getModuleIdAsPath() + "/" + filepath);
-          if (log.isDebugEnabled())           log.debug("Moving file from: " + name + " to "+ absPath);
+          if (log.isDebugEnabled()) {
+            log.debug("Moving file from: " + name + " to "+ absPath);
+          }
           File outFile=new File(absPath.toString().replace("/",File.separator));
           if (entry.isDirectory()) {
             if (!outFile.exists()) {
@@ -78,11 +46,9 @@
             if (!parentDir.exists()) {
               parentDir.mkdirs();
             }
-            OutputStream outStream=new FileOutputStream(outFile,false);
-            InputStream inStream=jarFile.getInputStream(entry);
+            outStream=new FileOutputStream(outFile,false);
+            inStream=jarFile.getInputStream(entry);
             OpenmrsUtil.copyFile(inStream,outStream);
-            inStream.close();
-            outStream.close();
           }
         }
  else         if (name.equals("moduleApplicationContext.xml") || name.equals("webModuleApplicationContext.xml")) {
@@ -106,6 +72,22 @@
           log.warn("Couldn't close jar file: " + jarFile.getName(),io);
         }
       }
+      if (inStream != null) {
+        try {
+          inStream.close();
+        }
+ catch (        IOException io) {
+          log.warn("Couldn't close InputStream: " + io);
+        }
+      }
+      if (outStream != null) {
+        try {
+          outStream.close();
+        }
+ catch (        IOException io) {
+          log.warn("Couldn't close OutputStream: " + io);
+        }
+      }
     }
     InputStream inputStream=null;
     try {
@@ -113,6 +95,9 @@
       Element root=config.getDocumentElement();
       if (root.getElementsByTagName("dwr").getLength() > 0) {
         File f=new File(realPath + "/WEB-INF/dwr-modules.xml".replace("/",File.separator));
+        if (!f.exists()) {
+          createDwrModulesXml(realPath);
+        }
         inputStream=new FileInputStream(f);
         Document dwrmodulexml=getDWRModuleXML(inputStream,realPath);
         Element outputRoot=dwrmodulexml.getDocumentElement();
@@ -151,7 +136,9 @@
       }
     }
     if (moduleNeedsContextRefresh && delayContextRefresh == false) {
-      if (log.isDebugEnabled())       log.debug("Refreshing context for module" + mod);
+      if (log.isDebugEnabled()) {
+        log.debug("Refreshing context for module" + mod);
+      }
       try {
         refreshWAC(servletContext,false,mod);
         log.debug("Done Refreshing WAC");
@@ -159,13 +146,17 @@
  catch (      Exception e) {
         String msg="Unable to refresh the WebApplicationContext";
         mod.setStartupErrorMessage(msg,e);
-        if (log.isWarnEnabled())         log.warn(msg + " for module: " + mod.getModuleId(),e);
+        if (log.isWarnEnabled()) {
+          log.warn(msg + " for module: " + mod.getModuleId(),e);
+        }
         try {
           stopModule(mod,servletContext,true);
           ModuleFactory.stopModule(mod,true,true);
         }
  catch (        Exception e2) {
-          if (log.isWarnEnabled())           log.warn("Error while stopping a module that had an error on refreshWAC",e2);
+          if (log.isWarnEnabled()) {
+            log.warn("Error while stopping a module that had an error on refreshWAC",e2);
+          }
         }
         refreshWAC(servletContext,false,mod);
         notifySuperUsersAboutModuleFailure(mod);

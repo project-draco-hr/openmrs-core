@@ -1,10 +1,18 @@
 {
   Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
-  if (StringUtils.isBlank(drugName) && concept == null)   return 0L;
-  if (includeRetired == false)   searchCriteria.add(Restrictions.eq("drug.retired",false));
-  if (concept != null)   searchCriteria.add(Restrictions.eq("drug.concept",concept));
+  if (StringUtils.isBlank(drugName) && concept == null) {
+    return 0L;
+  }
+  if (!includeRetired) {
+    searchCriteria.add(Restrictions.eq("drug.retired",false));
+  }
+  if (concept != null) {
+    searchCriteria.add(Restrictions.eq("drug.concept",concept));
+  }
   MatchMode matchMode=MatchMode.START;
-  if (searchOnPhrase)   matchMode=MatchMode.ANYWHERE;
+  if (searchOnPhrase) {
+    matchMode=MatchMode.ANYWHERE;
+  }
   if (!StringUtils.isBlank(drugName)) {
     searchCriteria.add(Restrictions.ilike("drug.name",drugName,matchMode));
     if (searchDrugConceptNames) {

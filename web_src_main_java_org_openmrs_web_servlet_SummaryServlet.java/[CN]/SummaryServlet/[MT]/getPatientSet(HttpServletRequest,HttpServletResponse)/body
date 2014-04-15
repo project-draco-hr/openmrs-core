@@ -1,5 +1,4 @@
 {
-  Locale locale=Context.getLocale();
   DateFormat dateFormat=Context.getDateFormat();
   String startDateString=ServletRequestUtils.getStringParameter(request,"startDate","");
   String endDateString=ServletRequestUtils.getStringParameter(request,"endDate","");
@@ -19,7 +18,9 @@
         throw new ServletException("Error parsing 'Start Date'",e);
       }
     }
- else     cal.setTime(new Date());
+ else {
+      cal.setTime(new Date());
+    }
     if (endDateString.equals("")) {
       while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
         cal.add(Calendar.DAY_OF_MONTH,-1);
@@ -49,7 +50,9 @@
     String[] stringArr=identifierStrings.split("\\s");
     for (int x=0; x < stringArr.length; x++) {
       String s=stringArr[x].trim();
-      if (s.length() > 0)       identifiers.add(s);
+      if (s.length() > 0) {
+        identifiers.add(s);
+      }
     }
   }
   if (identifiers.size() > 0) {

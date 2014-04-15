@@ -1,5 +1,7 @@
 {
-  if (r.getReportId() == null)   createReport(r);
+  if (r.getReportId() == null) {
+    createReport(r);
+  }
  else {
     sessionFactory.getCurrentSession().saveOrUpdate(r);
   }

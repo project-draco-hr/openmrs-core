@@ -3,8 +3,6 @@
   String conceptId1=request.getParameter("conceptId");
   String conceptId2=request.getParameter("conceptId2");
   String chartTitle=request.getParameter("chartTitle");
-  String seriesTitle1=request.getParameter("seriesTitle1");
-  String seriesTitle2=request.getParameter("seriesTitle2");
   String units=request.getParameter("units");
   String minRangeString=request.getParameter("minRange");
   String maxRangeString=request.getParameter("maxRange");
@@ -31,8 +29,12 @@
   List<Obs> observations1=new ArrayList<Obs>();
   List<Obs> observations2=new ArrayList<Obs>();
   Concept concept1=null, concept2=null;
-  if (conceptId1 != null)   concept1=Context.getConceptService().getConcept(Integer.parseInt(conceptId1));
-  if (conceptId2 != null)   concept2=Context.getConceptService().getConcept(Integer.parseInt(conceptId2));
+  if (conceptId1 != null) {
+    concept1=Context.getConceptService().getConcept(Integer.parseInt(conceptId1));
+  }
+  if (conceptId2 != null) {
+    concept2=Context.getConceptService().getConcept(Integer.parseInt(conceptId2));
+  }
   if (concept1 != null) {
     observations1=Context.getObsService().getObservationsByPersonAndConcept(patient,concept1);
     chartTitle=concept1.getName().getName();
@@ -48,8 +50,12 @@
       if (concept2Units != null && concept2Units.equals(rangeAxisTitle)) {
         observations2=Context.getObsService().getObservationsByPersonAndConcept(patient,concept2);
         chartTitle+=" + " + concept2.getName().getName();
-        if (((ConceptNumeric)concept2).getHiAbsolute() != null && ((ConceptNumeric)concept2).getHiAbsolute() > maxRange)         maxRange=((ConceptNumeric)concept2).getHiAbsolute();
-        if (((ConceptNumeric)concept2).getLowAbsolute() != null && ((ConceptNumeric)concept2).getLowAbsolute() < minRange)         minRange=((ConceptNumeric)concept2).getLowAbsolute();
+        if (((ConceptNumeric)concept2).getHiAbsolute() != null && ((ConceptNumeric)concept2).getHiAbsolute() > maxRange) {
+          maxRange=((ConceptNumeric)concept2).getHiAbsolute();
+        }
+        if (((ConceptNumeric)concept2).getLowAbsolute() != null && ((ConceptNumeric)concept2).getLowAbsolute() < minRange) {
+          minRange=((ConceptNumeric)concept2).getLowAbsolute();
+        }
       }
  else {
         log.warn("Units for concept id: " + conceptId2 + " don't match units for concept id: "+ conceptId1+ ". Only displaying "+ conceptId1);
@@ -61,7 +67,9 @@
     chartTitle="Concept " + conceptId1 + " not found";
     rangeAxisTitle="Value";
   }
-  if (units != null && units.length() > 0)   rangeAxisTitle=units;
+  if (units != null && units.length() > 0) {
+    rangeAxisTitle=units;
+  }
   if (minRangeString != null) {
     minRange=Double.parseDouble(minRangeString);
     userSpecifiedMinRange=true;
@@ -70,12 +78,18 @@
     maxRange=Double.parseDouble(maxRangeString);
     userSpecifiedMaxRange=true;
   }
-  if (chartTitle == null)   chartTitle="";
-  if (rangeAxisTitle == null)   rangeAxisTitle="";
-  if (seriesTitle1 == null)   seriesTitle1=chartTitle;
-  if (seriesTitle2 == null)   seriesTitle2=chartTitle;
-  if (minRange == null)   minRange=0.0;
-  if (maxRange == null)   maxRange=200.0;
+  if (chartTitle == null) {
+    chartTitle="";
+  }
+  if (rangeAxisTitle == null) {
+    rangeAxisTitle="";
+  }
+  if (minRange == null) {
+    minRange=0.0;
+  }
+  if (maxRange == null) {
+    maxRange=200.0;
+  }
   TimeSeriesCollection dataset=new TimeSeriesCollection();
   TimeSeries series1, series2;
   Class<? extends RegularTimePeriod> timeScale=null;
@@ -91,9 +105,18 @@
     timeScale=Day.class;
     timeAxisTitle="Date";
   }
-  series1=new TimeSeries(concept1.getName().getName(),timeScale);
-  if (concept2 == null)   series2=new TimeSeries("NULL",Hour.class);
- else   series2=new TimeSeries(concept2.getName().getName(),timeScale);
+  if (concept1 == null) {
+    series1=new TimeSeries("NULL",Hour.class);
+  }
+ else {
+    series1=new TimeSeries(concept1.getName().getName(),timeScale);
+  }
+  if (concept2 == null) {
+    series2=new TimeSeries("NULL",Hour.class);
+  }
+ else {
+    series2=new TimeSeries(concept2.getName().getName(),timeScale);
+  }
   for (  Obs obs : observations1) {
     if (obs.getValueNumeric() != null && obs.getObsDatetime().getTime() >= fromDate.getTime() && obs.getObsDatetime().getTime() < toDate.getTime()) {
       cal.setTime(obs.getObsDatetime());
@@ -129,11 +152,17 @@
     }
   }
   dataset.addSeries(series1);
-  if (!series2.isEmpty())   dataset.addSeries(series2);
+  if (!series2.isEmpty()) {
+    dataset.addSeries(series2);
+  }
   ChartFactory.setChartTheme(StandardChartTheme.createLegacyTheme());
   JFreeChart chart=null;
-  if (concept2 == null)   chart=ChartFactory.createTimeSeriesChart(chartTitle,timeAxisTitle,rangeAxisTitle,dataset,false,false,false);
- else   chart=ChartFactory.createTimeSeriesChart(chartTitle,timeAxisTitle,rangeAxisTitle,dataset,true,false,false);
+  if (concept2 == null) {
+    chart=ChartFactory.createTimeSeriesChart(chartTitle,timeAxisTitle,rangeAxisTitle,dataset,false,false,false);
+  }
+ else {
+    chart=ChartFactory.createTimeSeriesChart(chartTitle,timeAxisTitle,rangeAxisTitle,dataset,true,false,false);
+  }
   Font font=new Font("Arial",Font.BOLD,12);
   TextTitle title=chart.getTitle();
   title.setFont(font);
@@ -179,12 +208,18 @@
     renderer.setBaseShapesVisible(true);
   }
   DateAxis timeAxis=(DateAxis)plot.getDomainAxis();
-  if (timeScale == Day.class)   timeAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yyyy"));
+  if (timeScale == Day.class) {
+    timeAxis.setDateFormatOverride(new SimpleDateFormat("dd-MMM-yyyy"));
+  }
   timeAxis.setRange(fromDate,toDate);
   NumberAxis rangeAxis=(NumberAxis)plot.getRangeAxis();
   rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-  if (userSpecifiedMinRange)   minRange=(rangeAxis.getLowerBound() < minRange) ? rangeAxis.getLowerBound() : minRange;
-  if (userSpecifiedMaxRange)   maxRange=(rangeAxis.getUpperBound() > maxRange) ? rangeAxis.getUpperBound() : maxRange;
+  if (userSpecifiedMinRange) {
+    minRange=(rangeAxis.getLowerBound() < minRange) ? rangeAxis.getLowerBound() : minRange;
+  }
+  if (userSpecifiedMaxRange) {
+    maxRange=(rangeAxis.getUpperBound() > maxRange) ? rangeAxis.getUpperBound() : maxRange;
+  }
   rangeAxis.setRange(minRange,maxRange);
   return chart;
 }

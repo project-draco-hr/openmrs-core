@@ -5,7 +5,9 @@
   List<Encounter> encountersToSave=new ArrayList<Encounter>();
   if (!ArrayUtils.isEmpty(ids)) {
     for (    String id : ids) {
-      if (StringUtils.hasText(id))       encounterIds.add(Integer.valueOf(id));
+      if (StringUtils.hasText(id)) {
+        encounterIds.add(Integer.valueOf(id));
+      }
     }
     List<Encounter> visitEncounters=(List<Encounter>)model.get("visitEncounters");
     for (    Encounter e : visitEncounters) {
@@ -13,7 +15,7 @@
         e.setVisit(null);
         validateEncounter(e,result);
         if (result.hasErrors()) {
-          addEncounterAndObservationCounts(visit,model);
+          addEncounterAndObservationCounts(visit,encounterIds,model);
           return VISIT_FORM;
         }
         encountersToSave.add(e);
@@ -28,7 +30,7 @@
         e.setVisit(visit);
         validateEncounter(e,result);
         if (result.hasErrors()) {
-          addEncounterAndObservationCounts(visit,model);
+          addEncounterAndObservationCounts(visit,encounterIds,model);
           return VISIT_FORM;
         }
         encountersToSave.add(e);
@@ -41,9 +43,13 @@
   if (!result.hasErrors()) {
     try {
       Context.getVisitService().saveVisit(visit);
-      if (log.isDebugEnabled())       log.debug("Saved visit: " + visit.toString());
+      if (log.isDebugEnabled()) {
+        log.debug("Saved visit: " + visit.toString());
+      }
       request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.saved");
-      for (      Encounter encounter : encountersToSave)       es.saveEncounter(encounter);
+      for (      Encounter encounter : encountersToSave) {
+        es.saveEncounter(encounter);
+      }
       return "redirect:" + "/patientDashboard.form?patientId=" + visit.getPatient().getPatientId();
     }
  catch (    APIException e) {
@@ -51,6 +57,6 @@
       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Visit.save.error");
     }
   }
-  addEncounterAndObservationCounts(visit,model);
+  addEncounterAndObservationCounts(visit,encounterIds,model);
   return VISIT_FORM;
 }

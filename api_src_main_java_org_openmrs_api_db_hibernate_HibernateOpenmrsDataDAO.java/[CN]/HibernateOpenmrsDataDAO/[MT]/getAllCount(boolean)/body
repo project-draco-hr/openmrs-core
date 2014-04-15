@@ -1,0 +1,9 @@
+{
+  String hql="select count(*)" + " from " + mappedClass;
+  if (!includeVoided) {
+    hql+=" where voided = false";
+  }
+  Query query=sessionFactory.getCurrentSession().createQuery(hql);
+  Number count=(Number)query.uniqueResult();
+  return count == null ? 0 : count.intValue();
+}

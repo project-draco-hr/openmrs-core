@@ -1,9 +1,9 @@
 {
+  assertThat(ModuleFactory.getStartedModules(),empty());
+  assertThat(ModuleConstants.CORE_MODULES.keySet(),contains("logic"));
+  initialRuntimeProperties=new Properties(Context.getRuntimeProperties());
+  Properties runtimeProperties=Context.getRuntimeProperties();
   runtimeProperties.setProperty(ModuleConstants.IGNORE_CORE_MODULES_PROPERTY,"false");
-  try {
-    ModuleUtil.checkOpenmrsCoreModulesStarted();
-  }
-  finally {
-    runtimeProperties.setProperty(ModuleConstants.IGNORE_CORE_MODULES_PROPERTY,"true");
-  }
+  Context.setRuntimeProperties(runtimeProperties);
+  ModuleUtil.checkOpenmrsCoreModulesStarted();
 }

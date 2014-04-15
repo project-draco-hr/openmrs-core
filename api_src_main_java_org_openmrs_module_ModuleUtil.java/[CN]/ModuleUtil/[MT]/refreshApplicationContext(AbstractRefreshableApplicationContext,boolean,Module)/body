@@ -1,10 +1,13 @@
 {
-  for (  Module module : ModuleFactory.getStartedModules()) {
+  Set<Module> startedModules=new LinkedHashSet<Module>(ModuleFactory.getStartedModulesInOrder());
+  for (  Module module : startedModules) {
     try {
-      if (module.getModuleActivator() != null)       module.getModuleActivator().willRefreshContext();
+      if (module.getModuleActivator() != null) {
+        module.getModuleActivator().willRefreshContext();
+      }
     }
- catch (    Throwable t) {
-      log.warn("Unable to call willRefreshContext() method in the module's activator",t);
+ catch (    Exception e) {
+      log.warn("Unable to call willRefreshContext() method in the module's activator",e);
     }
   }
   OpenmrsClassLoader.saveState();
@@ -29,20 +32,42 @@
   ctx.setClassLoader(OpenmrsClassLoader.getInstance());
   Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
   OpenmrsClassLoader.restoreState();
-  if (log.isDebugEnabled())   log.debug("Reloading advice for all started modules: " + ModuleFactory.getStartedModules().size());
-  for (  Module module : ModuleFactory.getStartedModules()) {
-    ModuleFactory.loadAdvice(module);
-    try {
-      ModuleFactory.passDaemonToken(module);
-      if (module.getModuleActivator() != null) {
-        module.getModuleActivator().contextRefreshed();
-        if (isOpenmrsStartup)         module.getModuleActivator().started();
- else         if (!isOpenmrsStartup && module.equals(startedModule))         module.getModuleActivator().started();
+  OpenmrsClassLoader.setThreadsToNewClassLoader();
+  if (log.isDebugEnabled()) {
+    log.debug("Reloading advice for all started modules: " + startedModules.size());
+  }
+  try {
+    Context.openSessionWithCurrentUser();
+    for (    Module module : startedModules) {
+      if (!module.isStarted()) {
+        continue;
+      }
+      ModuleFactory.loadAdvice(module);
+      try {
+        ModuleFactory.passDaemonToken(module);
+        if (module.getModuleActivator() != null) {
+          module.getModuleActivator().contextRefreshed();
+          try {
+            if (isOpenmrsStartup) {
+              module.getModuleActivator().started();
+            }
+ else             if (!isOpenmrsStartup && module.equals(startedModule)) {
+              module.getModuleActivator().started();
+            }
+          }
+ catch (          Exception e) {
+            log.warn("Unable to invoke started() method on the module's activator",e);
+            ModuleFactory.stopModule(module,true,true);
+          }
+        }
+      }
+ catch (      Exception e) {
+        log.warn("Unable to invoke method on the module's activator ",e);
       }
     }
- catch (    Throwable t) {
-      log.warn("Unable to invoke method on the module's activator ",t);
-    }
+  }
+  finally {
+    Context.closeSessionWithCurrentUser();
   }
   return ctx;
 }

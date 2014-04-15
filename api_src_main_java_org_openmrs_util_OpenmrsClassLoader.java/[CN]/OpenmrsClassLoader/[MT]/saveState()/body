@@ -1,8 +1,10 @@
 {
   try {
     String key=SchedulerService.class.getName();
-    if (!Context.isRefreshingContext())     mementos.put(key,Context.getSchedulerService().saveToMemento());
+    if (!Context.isRefreshingContext()) {
+      mementos.put(key,Context.getSchedulerService().saveToMemento());
+    }
   }
- catch (  Throwable t) {
+ catch (  Exception e) {
   }
 }

@@ -1,0 +1,10 @@
+{
+  Concept c=new Concept(123);
+  ConceptNumeric cn=new ConceptNumeric(c);
+  Assert.assertNotSame(c.getAnswers(),cn.getAnswers());
+  Assert.assertNotSame(c.getConceptSets(),cn.getConceptSets());
+  Assert.assertNotSame(cn.getConceptSets(),c.getConceptSets());
+  Assert.assertNotSame(c.getNames(),cn.getNames());
+  Assert.assertNotSame(c.getConceptMappings(),cn.getConceptMappings());
+  Assert.assertNotSame(c.getDescriptions(),cn.getDescriptions());
+}

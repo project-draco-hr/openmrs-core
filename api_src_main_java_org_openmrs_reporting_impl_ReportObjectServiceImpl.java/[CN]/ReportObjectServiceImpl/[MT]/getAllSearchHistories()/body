@@ -1,6 +1,8 @@
 {
   List<AbstractReportObject> temp=getReportObjectsByType("Search History");
   List<CohortSearchHistory> ret=new ArrayList<CohortSearchHistory>();
-  for (  AbstractReportObject o : temp)   ret.add((CohortSearchHistory)o);
+  for (  AbstractReportObject o : temp) {
+    ret.add((CohortSearchHistory)o);
+  }
   return ret;
 }

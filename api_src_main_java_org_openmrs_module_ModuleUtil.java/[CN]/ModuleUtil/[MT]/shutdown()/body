@@ -2,8 +2,12 @@
   List<Module> modules=new Vector<Module>();
   modules.addAll(ModuleFactory.getStartedModules());
   for (  Module mod : modules) {
-    if (log.isDebugEnabled())     log.debug("stopping module: " + mod.getModuleId());
-    if (mod.isStarted())     ModuleFactory.stopModule(mod,true,true);
+    if (log.isDebugEnabled()) {
+      log.debug("stopping module: " + mod.getModuleId());
+    }
+    if (mod.isStarted()) {
+      ModuleFactory.stopModule(mod,true,true);
+    }
   }
   log.debug("done shutting down modules");
   ModuleFactory.extensionMap=null;

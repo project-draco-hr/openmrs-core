@@ -2,7 +2,9 @@
   if (o instanceof Collection<?>) {
     for (Iterator<?> i=((Collection<?>)o).iterator(); i.hasNext(); ) {
       printObject(sb,i.next());
-      if (i.hasNext())       sb.append(", ");
+      if (i.hasNext()) {
+        sb.append(", ");
+      }
     }
   }
  else   if (o instanceof Date) {

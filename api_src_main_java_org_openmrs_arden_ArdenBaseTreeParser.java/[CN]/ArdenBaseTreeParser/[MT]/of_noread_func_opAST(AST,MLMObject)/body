@@ -1,10 +1,10 @@
 {
   String s="";
-  AST of_noread_func_opAST_AST_in=(_t == ASTNULL) ? null : (AST)_t;
-  String a, b, ret_val="";
   try {
 {
-      if (_t == null)       _t=ASTNULL;
+      if (_t == null) {
+        _t=ASTNULL;
+      }
 switch (_t.getType()) {
 case TRUE:
 case FALSE:
@@ -21,7 +21,6 @@ case TERM_LITERAL:
 case ANY:
 {
 {
-          AST tmp66_AST_in=(AST)_t;
           match(_t,ANY);
           _t=_t.getNextSibling();
         }

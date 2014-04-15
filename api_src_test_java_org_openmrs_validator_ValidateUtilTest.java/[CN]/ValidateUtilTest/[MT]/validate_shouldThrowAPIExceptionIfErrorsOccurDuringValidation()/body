@@ -1,4 +1,10 @@
 {
   Location loc=new Location();
-  ValidateUtil.validate(loc);
+  try {
+    ValidateUtil.validate(loc);
+  }
+ catch (  ValidationException validationException) {
+    assertNotNull(validationException.getErrors());
+    assertTrue(validationException.getErrors().hasErrors());
+  }
 }

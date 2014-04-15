@@ -1,0 +1,7 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(mappedClass);
+  if (!includeRetired) {
+    crit.add(Restrictions.eq("retired",false));
+  }
+  return crit.list();
+}

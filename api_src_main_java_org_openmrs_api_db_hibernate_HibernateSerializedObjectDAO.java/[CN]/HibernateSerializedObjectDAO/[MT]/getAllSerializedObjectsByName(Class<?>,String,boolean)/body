@@ -1,11 +1,11 @@
 {
   Criteria c=sessionFactory.getCurrentSession().createCriteria(SerializedObject.class);
-  c.add(Expression.or(Expression.eq("type",type.getName()),Expression.eq("subtype",type.getName())));
+  c.add(Restrictions.or(Restrictions.eq("type",type.getName()),Restrictions.eq("subtype",type.getName())));
   if (exactMatchOnly) {
-    c.add(Expression.eq("name",name));
+    c.add(Restrictions.eq("name",name));
   }
  else {
-    c.add(Expression.ilike("name",name,MatchMode.ANYWHERE));
+    c.add(Restrictions.ilike("name",name,MatchMode.ANYWHERE));
   }
   return (List<SerializedObject>)c.list();
 }

@@ -2,16 +2,13 @@
   if (codingSystem == null || HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
     try {
       Integer conceptId=new Integer(hl7ConceptId);
-      Concept concept=new Concept(conceptId);
-      return concept;
+      return Context.getConceptService().getConcept(conceptId);
     }
  catch (    NumberFormatException e) {
-      throw new HL7Exception("Invalid concept ID '" + hl7ConceptId + "' in hl7 message with uid: "+ uid);
+      throw new HL7Exception(Context.getMessageSourceService().getMessage("ORUR01.error.hl7ConceptId",new Object[]{hl7ConceptId,uid},null));
     }
   }
  else {
-    Concept concept=Context.getConceptService().getConceptByMapping(hl7ConceptId,codingSystem);
-    if (concept == null)     log.error("Unable to find concept with code: " + hl7ConceptId + " and mapping: "+ codingSystem+ " in hl7 message with uid: "+ uid);
-    return concept;
+    return Context.getConceptService().getConceptByMapping(hl7ConceptId,codingSystem);
   }
 }

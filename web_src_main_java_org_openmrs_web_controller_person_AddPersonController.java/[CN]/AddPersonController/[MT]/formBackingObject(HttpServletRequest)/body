@@ -5,16 +5,35 @@
     PersonService ps=Context.getPersonService();
     Integer userId=Context.getAuthenticatedUser().getUserId();
     invalidAgeFormat=false;
-    getParametersFromRequest(request);
+    HashMap<String,String> person=getParametersFromRequest(request);
+    String gender=person.get("gender");
+    String name=person.get("name");
+    String birthdate=person.get("birthdate");
+    String age=person.get("age");
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
       Integer d=null;
       birthdate=birthdate.trim();
-      String birthyear="";
-      if (birthdate.length() > 6)       birthyear=birthdate.substring(6);
       age=age.trim();
-      if (birthyear.length() > 3)       d=Integer.valueOf(birthyear);
+      int birthyear=-1;
+      try {
+        if (birthdate.length() > 0) {
+          Date birthdateFormatted=(Date)Context.getDateFormat().parse(birthdate);
+          Calendar calender=Calendar.getInstance();
+          calender.setTime(birthdateFormatted);
+          birthyear=calender.get(Calendar.YEAR);
+        }
+      }
+ catch (      ParseException e) {
+        if (log.isDebugEnabled()) {
+          log.debug("Parse exception occurred : " + e);
+        }
+        invalidAgeFormat=true;
+      }
+      if (birthyear != -1) {
+        d=Integer.valueOf(birthyear);
+      }
  else       if (age.length() > 0) {
         Calendar c=Calendar.getInstance();
         c.setTime(new Date());
@@ -26,7 +45,9 @@
           invalidAgeFormat=true;
         }
       }
-      if (gender.length() < 1)       gender=null;
+      if (gender.length() < 1) {
+        person.put("gender",null);
+      }
       personList=new Vector<PersonListItem>();
       for (      Person p : ps.getSimilarPeople(name,d,gender)) {
         personList.add(PersonListItem.createBestMatch(p));

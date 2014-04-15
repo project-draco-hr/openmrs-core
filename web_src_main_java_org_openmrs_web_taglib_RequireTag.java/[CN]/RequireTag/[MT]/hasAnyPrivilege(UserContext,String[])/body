@@ -1,7 +1,11 @@
 {
   for (  String p : anyPriviegeArray) {
-    if (userContext.hasPrivilege(p.trim()))     return true;
- else     addMissingPrivilege(p);
+    if (userContext.hasPrivilege(p.trim())) {
+      return true;
+    }
+ else {
+      addMissingPrivilege(p);
+    }
   }
   return false;
 }

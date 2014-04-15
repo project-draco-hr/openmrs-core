@@ -1,0 +1,8 @@
+{
+  String newKey="new_gp_key";
+  String initialValue=adminService.getGlobalProperty(newKey);
+  Assert.assertNull(initialValue);
+  adminService.setGlobalProperty(newKey,"new_key");
+  String newValue=adminService.getGlobalProperty(newKey);
+  Assert.assertNotNull(newValue);
+}

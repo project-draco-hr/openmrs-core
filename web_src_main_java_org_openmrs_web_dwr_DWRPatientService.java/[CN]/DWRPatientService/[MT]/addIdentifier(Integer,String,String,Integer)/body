@@ -1,6 +1,8 @@
 {
   String ret="";
-  if (identifier == null || identifier.length() == 0)   return "PatientIdentifier.error.general";
+  if (identifier == null || identifier.length() == 0) {
+    return "PatientIdentifier.error.general";
+  }
   PatientService ps=Context.getPatientService();
   LocationService ls=Context.getLocationService();
   Patient p=ps.getPatient(patientId);
@@ -17,7 +19,9 @@
       p.removeIdentifier(previousId);
     }
  else {
-      if (!previousId.getIdentifierType().equals(idType))       log.debug("Previous ID id type does not match: [" + previousId.getIdentifierType().getName() + "]["+ previousId.getIdentifier()+ "]");
+      if (!previousId.getIdentifierType().equals(idType)) {
+        log.debug("Previous ID id type does not match: [" + previousId.getIdentifierType().getName() + "]["+ previousId.getIdentifier()+ "]");
+      }
       if (!previousId.getLocation().equals(location)) {
         log.debug("Previous ID location is: " + previousId.getLocation());
         log.debug("New location is: " + location);
