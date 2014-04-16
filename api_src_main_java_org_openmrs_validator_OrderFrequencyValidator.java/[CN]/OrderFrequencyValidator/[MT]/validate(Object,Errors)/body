@@ -7,7 +7,7 @@
     ValidationUtils.rejectIfEmpty(errors,"concept","Concept.noConceptSelected");
     Concept concept=orderFrequency.getConcept();
     if (concept != null) {
-      if (!OrderFrequency.CONCEPT_CLASS_UUID.equals(concept.getConceptClass().getUuid())) {
+      if (!ConceptClass.FREQUENCY_UUID.equals(concept.getConceptClass().getUuid())) {
         errors.rejectValue("concept","OrderFrequency.concept.shouldBeClassFrequency");
       }
       OrderFrequency of=Context.getOrderService().getOrderFrequencyByConcept(concept);
