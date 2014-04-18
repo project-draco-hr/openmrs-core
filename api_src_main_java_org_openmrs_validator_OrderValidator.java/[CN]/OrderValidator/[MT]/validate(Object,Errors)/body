@@ -5,7 +5,9 @@
   }
  else {
     ValidationUtils.rejectIfEmpty(errors,"voided","error.null");
-    ValidationUtils.rejectIfEmpty(errors,"concept","Concept.noConceptSelected");
+    if (!DrugOrder.class.isAssignableFrom(order.getClass())) {
+      ValidationUtils.rejectIfEmpty(errors,"concept","Concept.noConceptSelected");
+    }
     ValidationUtils.rejectIfEmpty(errors,"patient","error.null");
     ValidationUtils.rejectIfEmpty(errors,"encounter","error.null");
     ValidationUtils.rejectIfEmpty(errors,"orderer","error.null");
