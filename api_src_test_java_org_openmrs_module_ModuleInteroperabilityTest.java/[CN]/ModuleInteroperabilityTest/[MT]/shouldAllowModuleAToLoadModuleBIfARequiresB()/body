@@ -5,7 +5,7 @@
   assertNotNull(atdServiceClass);
   assertNotNull(dssServiceClass);
   ModuleClassLoader atdClassLoader=(ModuleClassLoader)atdServiceClass.getClassLoader();
-  assertEquals("atd",atdClassLoader.getModule().getModuleId());
+  assertEquals("atdproducer",atdClassLoader.getModule().getModuleId());
   ModuleClassLoader dssClassLoader=(ModuleClassLoader)dssServiceClass.getClassLoader();
   assertEquals("dssmodule",dssClassLoader.getModule().getModuleId());
   Class<?> dssUtilClass=atdClassLoader.loadClass("org.openmrs.module.dssmodule.util.Util");
