@@ -1,5 +1,5 @@
 {
-  List<OrderFrequency> orderFrequencies=Context.getOrderService().getOrderFrequencies(true);
+  List<OrderFrequency> orderFrequencies=orderService.getOrderFrequencies(true);
   assertEquals(3,orderFrequencies.size());
   assertTrue(containsId(orderFrequencies,1));
   assertTrue(containsId(orderFrequencies,2));

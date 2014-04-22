@@ -1,7 +1,7 @@
 {
-  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(1);
+  OrderFrequency orderFrequency=orderService.getOrderFrequency(1);
   assertNotNull(orderFrequency);
   expectedException.expect(APIException.class);
   expectedException.expectMessage("This order frequency cannot be deleted because it is already in use");
-  Context.getOrderService().purgeOrderFrequency(orderFrequency);
+  orderService.purgeOrderFrequency(orderFrequency);
 }

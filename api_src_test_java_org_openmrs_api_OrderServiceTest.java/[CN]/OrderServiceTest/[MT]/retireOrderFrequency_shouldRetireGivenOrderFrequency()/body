@@ -1,14 +1,14 @@
 {
-  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(1);
+  OrderFrequency orderFrequency=orderService.getOrderFrequency(1);
   assertNotNull(orderFrequency);
   Assert.assertFalse(orderFrequency.isRetired());
   Assert.assertNull(orderFrequency.getRetireReason());
   Assert.assertNull(orderFrequency.getDateRetired());
-  Context.getOrderService().retireOrderFrequency(orderFrequency,"retire reason");
-  orderFrequency=Context.getOrderService().getOrderFrequency(1);
+  orderService.retireOrderFrequency(orderFrequency,"retire reason");
+  orderFrequency=orderService.getOrderFrequency(1);
   assertNotNull(orderFrequency);
   assertTrue(orderFrequency.isRetired());
   assertEquals("retire reason",orderFrequency.getRetireReason());
   assertNotNull(orderFrequency.getDateRetired());
-  assertEquals(3,Context.getOrderService().getOrderFrequencies(true).size());
+  assertEquals(3,orderService.getOrderFrequencies(true).size());
 }
