@@ -1,12 +1,8 @@
 {
   Set<String> unmappedText=new HashSet<String>(textList.size());
   for (  String text : textList) {
-    try {
-      if (UpgradeUtil.getConceptIdForUnits(text) != null) {
-        continue;
-      }
-    }
- catch (    Exception e) {
+    if (UpgradeUtil.getConceptIdForUnits(text) != null) {
+      continue;
     }
     unmappedText.add(text);
   }

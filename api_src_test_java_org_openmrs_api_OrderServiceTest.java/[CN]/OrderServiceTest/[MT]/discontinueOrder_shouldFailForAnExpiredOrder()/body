@@ -3,5 +3,7 @@
   Encounter encounter=encounterService.getEncounter(3);
   assertNotNull(orderToDiscontinue.getAutoExpireDate());
   assertTrue(orderToDiscontinue.getAutoExpireDate().before(new Date()));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot discontinue an order that is already stopped, expired or voided");
   orderService.discontinueOrder(orderToDiscontinue,Context.getConceptService().getConcept(1),null,null,encounter);
 }

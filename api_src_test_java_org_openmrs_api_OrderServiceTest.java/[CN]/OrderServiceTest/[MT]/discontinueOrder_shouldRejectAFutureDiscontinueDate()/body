@@ -5,5 +5,7 @@
   CareSetting careSetting=orderService.getCareSetting(1);
   Order orderToDiscontinue=orderService.getActiveOrders(patient,null,careSetting,null).get(0);
   Encounter encounter=encounterService.getEncounter(3);
+  expectedException.expect(IllegalArgumentException.class);
+  expectedException.expectMessage("Discontinue date cannot be in the future");
   orderService.discontinueOrder(orderToDiscontinue,new Concept(),cal.getTime(),null,encounter);
 }
