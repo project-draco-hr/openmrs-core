@@ -1,0 +1,9 @@
+{
+  FormService fs=Context.getFormService();
+  createFormsLockedGPAndSetValue("false");
+  Form form=fs.getForm(1);
+  form.setName("modified basic form");
+  fs.saveForm(form);
+  Form formUpdate=fs.getForm(1);
+  assertTrue(form.equals(formUpdate));
+}
