@@ -1,0 +1,17 @@
+{
+  Method method=null;
+  Boolean isMethodAccessible=null;
+  try {
+    method=Order.class.getDeclaredMethod("setDateStopped",Date.class);
+    isMethodAccessible=method.isAccessible();
+    if (!isMethodAccessible) {
+      method.setAccessible(true);
+    }
+    method.invoke(targetOrder,dateStopped);
+  }
+  finally {
+    if (method != null && isMethodAccessible != null) {
+      method.setAccessible(isMethodAccessible);
+    }
+  }
+}

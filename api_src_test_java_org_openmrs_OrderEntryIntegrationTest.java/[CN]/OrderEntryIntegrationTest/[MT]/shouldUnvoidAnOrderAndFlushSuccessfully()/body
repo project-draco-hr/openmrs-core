@@ -1,0 +1,13 @@
+{
+  Order order=orderService.getOrder(8);
+  assertTrue(order.getVoided());
+  assertNotNull(order.getDateVoided());
+  assertNotNull(order.getVoidedBy());
+  assertNotNull(order.getVoidReason());
+  orderService.unvoidOrder(order);
+  Context.flushSession();
+  assertFalse(order.getVoided());
+  assertNull(order.getDateVoided());
+  assertNull(order.getVoidedBy());
+  assertNull(order.getVoidReason());
+}

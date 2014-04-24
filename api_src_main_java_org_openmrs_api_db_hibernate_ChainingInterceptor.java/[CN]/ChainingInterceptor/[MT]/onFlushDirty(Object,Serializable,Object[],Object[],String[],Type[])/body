@@ -1,5 +1,15 @@
 {
   boolean objectChanged=false;
-  for (  Interceptor i : interceptors)   objectChanged=i.onFlushDirty(entity,id,currentState,previousState,propertyNames,types) || objectChanged;
+  List<Interceptor> immutableEntityInterceptors=new ArrayList<Interceptor>();
+  for (  Interceptor i : interceptors) {
+    if (ImmutableEntityInterceptor.class.isAssignableFrom(i.getClass())) {
+      immutableEntityInterceptors.add(i);
+      continue;
+    }
+    objectChanged=i.onFlushDirty(entity,id,currentState,previousState,propertyNames,types) || objectChanged;
+  }
+  for (  Interceptor i : immutableEntityInterceptors) {
+    objectChanged=i.onFlushDirty(entity,id,currentState,previousState,propertyNames,types) || objectChanged;
+  }
   return objectChanged;
 }
