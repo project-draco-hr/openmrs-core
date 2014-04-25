@@ -11,20 +11,20 @@
     query.append(newNamesQuery(searchLocales,phrase,true));
   }
   if (!includeRetired) {
-    query.append(" +concept.retired:false");
+    query.append(" concept.retired:false");
   }
-  appendIdsQuery(query,"+concept.conceptClass.conceptClassId",requireClasses);
+  appendIdsQuery(query,"concept.conceptClass.conceptClassId",requireClasses);
   appendIdsQuery(query,"-concept.conceptClass.conceptClassId",excludeClasses);
-  appendIdsQuery(query,"+concept.datatype.conceptDatatypeId",requireDatatypes);
+  appendIdsQuery(query,"concept.datatype.conceptDatatypeId",requireDatatypes);
   appendIdsQuery(query,"-concept.datatype.conceptDatatypeId",excludeDatatypes);
   if (answersToConcept != null) {
     Collection<ConceptAnswer> answers=answersToConcept.getAnswers(false);
     if (answers != null && !answers.isEmpty()) {
-      StringBuilder ids=new StringBuilder();
+      List<Integer> ids=new ArrayList<Integer>();
       for (      ConceptAnswer conceptAnswer : answersToConcept.getAnswers(false)) {
-        ids.append(conceptAnswer.getAnswerConcept().getId()).append(" ");
+        ids.add(conceptAnswer.getAnswerConcept().getId());
       }
-      query.append(" +concept.conceptId:(").append(ids).append(")");
+      query.append(" concept.conceptId:(").append(StringUtils.join(ids," OR ")).append(")");
     }
   }
   ListPart<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").listPart(start,size);
