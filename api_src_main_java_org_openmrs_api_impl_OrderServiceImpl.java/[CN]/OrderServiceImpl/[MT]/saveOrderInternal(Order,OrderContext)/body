@@ -1,12 +1,19 @@
 {
   if (order.getOrderId() == null) {
+    Boolean isAccessible=null;
+    Field field=null;
     try {
-      Field field=Order.class.getDeclaredField("orderNumber");
+      field=Order.class.getDeclaredField("orderNumber");
       field.setAccessible(true);
       field.set(order,getOrderNumberGenerator().getNewOrderNumber(orderContext));
     }
  catch (    Exception e) {
       throw new APIException("Failed to assign order number",e);
+    }
+ finally {
+      if (field != null && isAccessible != null) {
+        field.setAccessible(isAccessible);
+      }
     }
   }
   return dao.saveOrder(order);
