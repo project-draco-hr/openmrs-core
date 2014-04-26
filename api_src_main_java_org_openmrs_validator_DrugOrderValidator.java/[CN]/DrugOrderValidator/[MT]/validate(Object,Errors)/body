@@ -21,9 +21,6 @@
         ValidationUtils.rejectIfEmpty(errors,"route","DrugOrder.error.routeIsNullForDosingTypeSimple");
         ValidationUtils.rejectIfEmpty(errors,"frequency","DrugOrder.error.frequencyIsNullForDosingTypeSimple");
       }
- else       if (order.getDosingType().equals(DrugOrder.DosingType.FREE_TEXT)) {
-        ValidationUtils.rejectIfEmpty(errors,"instructions","DrugOrder.error.instructionIsNullForDosingTypeFreeText");
-      }
  else {
         ValidationUtils.rejectIfEmpty(errors,"dosingInstructions","DrugOrder.error.dosingInstructionsIsNullForDosingTypeOther");
       }
