@@ -1,0 +1,15 @@
+{
+  Patient preferred=patientService.getPatient(7);
+  Patient notPreferred=patientService.getPatient(8);
+  preferred.getPersonAddress().setPreferred(true);
+  notPreferred.getPersonAddress().setPreferred(true);
+  patientService.savePatient(preferred);
+  patientService.savePatient(notPreferred);
+  patientService.mergePatients(preferred,notPreferred);
+  Assert.assertThat(preferred.getAddresses().size(),is(2));
+  for (  PersonAddress pa : preferred.getAddresses()) {
+    if (pa.getCityVillage().equals("Jabali")) {
+      Assert.assertFalse(pa.isPreferred());
+    }
+  }
+}
