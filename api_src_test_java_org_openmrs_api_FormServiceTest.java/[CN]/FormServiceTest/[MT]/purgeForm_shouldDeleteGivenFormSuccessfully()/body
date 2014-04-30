@@ -1,0 +1,7 @@
+{
+  FormService fs=Context.getFormService();
+  createFormsLockedGPAndSetValue("false");
+  Form form=fs.getForm(1);
+  fs.purgeForm(form);
+  assertNull(fs.getForm(1));
+}
