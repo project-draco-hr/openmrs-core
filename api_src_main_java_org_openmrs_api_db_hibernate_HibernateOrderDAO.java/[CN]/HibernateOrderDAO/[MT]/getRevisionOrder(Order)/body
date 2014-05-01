@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Order.class);
+  criteria.add(Restrictions.eq("previousOrder",order)).add(Restrictions.eq("action",Order.Action.REVISE));
+  return (Order)criteria.uniqueResult();
+}
