@@ -1,21 +1,27 @@
 {
-  final String phrase;
+  final StringBuilder query=new StringBuilder();
+  query.append("(");
   if (keywords) {
-    phrase="(" + newRequirePartialWordsSearchPhrase(name) + " \""+ name+ "\"^1000)";
+    query.append(" name:(" + name + ")^0.2");
+    query.append(" OR name:(\"" + name + "\")^0.6");
+    String[] names=name.trim().split(" ");
+    query.append(" OR name:(" + StringUtils.join(names,"~ OR ") + "~)^0.1 OR name:("+ StringUtils.join(names,"* OR ")+ "*)^0.1");
   }
  else {
-    phrase="\"" + LuceneQuery.escapeQuery(name) + "\"";
-  }
-  StringBuilder query=new StringBuilder();
-  query.append(" +name:").append(phrase);
-  query.append(" +locale:(");
-  for (  Locale locale : locales) {
-    query.append(locale.getLanguage()).append("* ");
-    if (!StringUtils.isBlank(locale.getCountry())) {
-      query.append(locale).append("^2");
-    }
+    query.append(" name:\"" + LuceneQuery.escapeQuery(name) + "\"");
   }
   query.append(")");
-  query.append(" +voided:false");
+  List<String> localeQueries=new ArrayList<String>();
+  for (  Locale locale : locales) {
+    String localeQuery=locale.getLanguage() + "* ";
+    if (!StringUtils.isBlank(locale.getCountry())) {
+      localeQuery+=" OR " + locale + "^2 ";
+    }
+    localeQueries.add(localeQuery);
+  }
+  query.append(" locale:(");
+  query.append(StringUtils.join(localeQueries," OR "));
+  query.append(")");
+  query.append(" voided:false");
   return query.toString();
 }
