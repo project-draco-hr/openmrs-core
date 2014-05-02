@@ -9,6 +9,7 @@
   Assert.assertEquals(order.getDateStopped(),discontinueDate);
   Assert.assertNotNull(discontinueOrder);
   Assert.assertNotNull(discontinueOrder.getId());
+  Assert.assertEquals(discontinueOrder.getStartDate(),discontinueOrder.getDateStopped());
   Assert.assertEquals(discontinueOrder.getAction(),Action.DISCONTINUE);
   Assert.assertEquals(discontinueOrder.getOrderReasonNonCoded(),discontinueReasonNonCoded);
   Assert.assertEquals(discontinueOrder.getPreviousOrder(),order);

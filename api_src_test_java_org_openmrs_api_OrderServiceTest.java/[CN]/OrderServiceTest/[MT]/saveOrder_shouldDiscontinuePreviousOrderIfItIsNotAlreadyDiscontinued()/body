@@ -22,5 +22,6 @@
   assertTrue(OrderUtilTest.isActiveOrder(previousOrder,null));
   order.setPreviousOrder(previousOrder);
   orderService.saveOrder(order,null);
+  Assert.assertEquals(order.getStartDate(),order.getDateStopped());
   Assert.assertNotNull("previous order should be discontinued",previousOrder.getDateStopped());
 }

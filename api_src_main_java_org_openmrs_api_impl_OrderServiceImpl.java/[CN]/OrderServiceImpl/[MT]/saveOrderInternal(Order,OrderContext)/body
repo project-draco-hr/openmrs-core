@@ -16,5 +16,8 @@
       }
     }
   }
+  if (Order.Action.DISCONTINUE == order.getAction()) {
+    setDateStopped(order,order.getStartDate());
+  }
   return dao.saveOrder(order);
 }
