@@ -2,7 +2,7 @@
   List<DiscontinuedOrder> dcOrders=new ArrayList<DiscontinuedOrder>();
   PreparedStatement statement=null;
   try {
-    statement=connection.prepareStatement("select order_id, concept_id, patient_id, encounter_id, date_stopped, discontinued_by, discontinued_reason, discontinued_reason_non_coded, order_type_id, date_stopped from orders where discontinued = ?");
+    statement=connection.prepareStatement("select order_id, concept_id, patient_id, encounter_id, date_stopped, " + "discontinued_by, discontinued_reason, discontinued_reason_non_coded, order_type_id " + "from orders where discontinued = ?");
     statement.setBoolean(1,true);
     ResultSet rs=statement.executeQuery();
     while (rs.next()) {
