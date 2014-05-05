@@ -1,0 +1,7 @@
+{
+  Order order=orderService.getOrder(7);
+  Order discontinueOrder=orderService.discontinueOrder(order,"Some reason",new Date(),providerService.getProvider(1),encounterService.getEncounter(3));
+  orderService.voidOrder(discontinueOrder,"Invalid reason");
+  Order discontinuationOrder=orderService.getDiscontinuationOrder(order);
+  assertThat(discontinuationOrder,is(nullValue()));
+}
