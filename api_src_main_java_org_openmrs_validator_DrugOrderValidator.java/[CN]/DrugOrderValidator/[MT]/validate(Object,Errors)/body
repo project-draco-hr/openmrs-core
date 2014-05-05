@@ -6,7 +6,9 @@
   }
  else {
     ValidationUtils.rejectIfEmpty(errors,"asNeeded","error.null");
-    ValidationUtils.rejectIfEmpty(errors,"dosingType","error.null");
+    if (order.getAction() != Order.Action.DISCONTINUE) {
+      ValidationUtils.rejectIfEmpty(errors,"dosingType","error.null");
+    }
     if (order.getDrug() != null)     ValidationUtils.rejectIfEmpty(errors,"drug.concept","error.null");
     if (!(order.getConcept() == null)) {
       if (!(order.getDrug() == null) && !(order.getDrug().getConcept().equals(order.getConcept()))) {
