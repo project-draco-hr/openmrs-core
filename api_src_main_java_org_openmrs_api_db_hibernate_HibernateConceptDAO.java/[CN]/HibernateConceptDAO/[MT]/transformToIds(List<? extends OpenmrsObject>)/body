@@ -1,10 +1,10 @@
 {
   if (items == null || items.isEmpty()) {
-    return null;
+    return Collections.emptyList();
   }
-  StringBuilder ids=new StringBuilder();
+  List<Integer> ids=new ArrayList<Integer>();
   for (  OpenmrsObject item : items) {
-    ids.append(item.getId()).append(" ");
+    ids.add(item.getId());
   }
-  return ids.toString();
+  return ids;
 }

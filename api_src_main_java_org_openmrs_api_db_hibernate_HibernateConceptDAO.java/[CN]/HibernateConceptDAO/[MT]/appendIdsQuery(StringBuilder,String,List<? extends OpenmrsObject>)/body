@@ -1,6 +1,6 @@
 {
-  String ids=transformToIds(objects);
-  if (ids != null) {
-    query.append(" ").append(field).append(":(").append(ids).append(")");
+  List<Integer> ids=transformToIds(objects);
+  if (!ids.isEmpty()) {
+    query.append(" ").append(field).append(":(").append(StringUtils.join(ids," OR ")).append(")");
   }
 }
