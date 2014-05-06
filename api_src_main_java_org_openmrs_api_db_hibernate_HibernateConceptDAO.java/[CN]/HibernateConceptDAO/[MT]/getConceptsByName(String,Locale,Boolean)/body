@@ -18,7 +18,7 @@
     }
   }
   query.append(" +concept.retired:false");
-  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").list();
+  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId").list();
   final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

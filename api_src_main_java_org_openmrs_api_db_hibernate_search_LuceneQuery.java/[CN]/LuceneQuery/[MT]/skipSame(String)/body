@@ -1,0 +1,15 @@
+{
+  String idPropertyName=getSession().getSessionFactory().getClassMetadata(getType()).getIdentifierPropertyName();
+  List<Object> documents=listProjection(idPropertyName,field);
+  Set<Object> uniqueFieldValues=Sets.newHashSet();
+  TermsFilter termsFilter=new TermsFilter();
+  for (  Object document : documents) {
+    Object[] row=(Object[])document;
+    if (uniqueFieldValues.add(row[1])) {
+      termsFilter.addTerm(new Term(idPropertyName,row[0].toString()));
+    }
+  }
+  buildQuery();
+  fullTextQuery.setFilter(termsFilter);
+  return this;
+}

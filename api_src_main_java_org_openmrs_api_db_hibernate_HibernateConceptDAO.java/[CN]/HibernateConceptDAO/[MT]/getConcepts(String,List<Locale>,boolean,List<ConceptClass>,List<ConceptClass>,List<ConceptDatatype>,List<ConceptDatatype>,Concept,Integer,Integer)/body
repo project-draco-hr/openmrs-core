@@ -27,7 +27,7 @@
       query.append(" concept.conceptId:(").append(StringUtils.join(ids," OR ")).append(")");
     }
   }
-  ListPart<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId","conceptNameId").listPart(start,size);
+  ListPart<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId").listPart(start,size);
   List<ConceptSearchResult> results=Lists.transform(names.getList(),new Function<ConceptName,ConceptSearchResult>(){
     @Override public ConceptSearchResult apply(    ConceptName conceptName){
       return new ConceptSearchResult(phrase,conceptName.getConcept(),conceptName);
