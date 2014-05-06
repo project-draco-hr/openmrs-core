@@ -10,7 +10,7 @@
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
   boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(order.getClass()) && ((DrugOrder)order).getDrug() != null;
   for (  Order activeOrder : orders) {
-    if (!order.getClass().equals(activeOrder.getClass())) {
+    if (!getActualType(order).equals(getActualType(activeOrder))) {
       continue;
     }
     boolean shouldMarkAsDiscontinued=false;

@@ -77,7 +77,7 @@
  else     if (!order.getCareSetting().equals(previousOrder.getCareSetting())) {
       throw new APIException("The care setting does not match that of the previous order");
     }
- else     if (!order.getClass().equals(previousOrder.getClass())) {
+ else     if (!getActualType(order).equals(getActualType(previousOrder))) {
       throw new APIException("The class does not match that of the previous order");
     }
   }
