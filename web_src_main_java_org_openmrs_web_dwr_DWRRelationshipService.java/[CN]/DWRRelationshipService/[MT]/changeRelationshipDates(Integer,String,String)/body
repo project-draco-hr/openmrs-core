@@ -10,5 +10,14 @@
   }
   r.setStartDate(startDate);
   r.setEndDate(endDate);
-  Context.getPersonService().saveRelationship(r);
+  Map<String,String> map=new HashMap<String,String>();
+  MapBindingResult errors=new MapBindingResult(map,Relationship.class.getName());
+  new RelationshipValidator().validate(r,errors);
+  if (errors.hasErrors()) {
+    return false;
+  }
+ else {
+    Context.getPersonService().saveRelationship(r);
+    return true;
+  }
 }

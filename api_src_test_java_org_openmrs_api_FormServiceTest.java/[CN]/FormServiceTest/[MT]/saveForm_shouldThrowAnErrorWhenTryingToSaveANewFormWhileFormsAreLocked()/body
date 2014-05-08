@@ -1,0 +1,9 @@
+{
+  FormService fs=Context.getFormService();
+  createFormsLockedGPAndSetValue("true");
+  Form form=new Form();
+  form.setName("new form");
+  form.setVersion("1.0");
+  form.setDescription("testing TRUNK-4030");
+  fs.saveForm(form);
+}

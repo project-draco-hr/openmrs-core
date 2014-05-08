@@ -113,6 +113,7 @@
   props.add(new GlobalProperty(GLOBAL_PROPERTY_USER_REQUIRE_EMAIL_AS_USERNAME,"false","Indicates whether a username must be a valid e-mail or not.",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GP_LAST_FULL_INDEX_DATE,"","Indicates the last time the full index was built"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ALLOW_OVERLAPPING_VISITS,"true","true/false whether or not to allow visits of a given patient to overlap",BooleanDatatype.class,null));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_FORMS_LOCKED,"false","Set to a value of true if you do not want any changes to be made on forms, else set to false."));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }
