@@ -5,7 +5,7 @@
   if (order.getStartDate() == null) {
     order.setStartDate(new Date());
   }
-  Order prevOrder=order.getPreviousOrder();
+  Order previousOrder=order.getPreviousOrder();
   if (order.getOrderType() == null) {
     OrderType orderType=null;
     if (orderContext != null) {
@@ -14,7 +14,7 @@
     if (orderType == null) {
       orderType=getOrderTypeByConcept(order.getConcept());
     }
-    if (orderType == null || (prevOrder != null && !orderType.equals(prevOrder.getOrderType()))) {
+    if (orderType == null || (previousOrder != null && !orderType.equals(previousOrder.getOrderType()))) {
       throw new APIException("Cannot determine the order type of the order");
     }
     order.setOrderType(orderType);
@@ -24,13 +24,12 @@
     if (orderContext != null) {
       careSetting=orderContext.getCareSetting();
     }
-    if (careSetting == null || (prevOrder != null && !careSetting.equals(prevOrder.getCareSetting()))) {
+    if (careSetting == null || (previousOrder != null && !careSetting.equals(previousOrder.getCareSetting()))) {
       throw new APIException("Cannot determine the care setting of the order");
     }
     order.setCareSetting(careSetting);
   }
   if (Order.Action.REVISE.equals(order.getAction())) {
-    Order previousOrder=order.getPreviousOrder();
     if (previousOrder == null) {
       throw new APIException("Previous Order is required for a revised order");
     }
@@ -39,8 +38,7 @@
  else   if (Order.Action.DISCONTINUE.equals(order.getAction())) {
     discontinueExistingOrdersIfNecessary(order);
   }
-  if (order.getPreviousOrder() != null) {
-    Order previousOrder=order.getPreviousOrder();
+  if (previousOrder != null) {
     String query="SELECT patient_id, care_setting, concept_id FROM orders WHERE order_id = ";
     boolean isDrugOrder=DrugOrder.class.isAssignableFrom(previousOrder.getClass());
     if (isDrugOrder) {
