@@ -1,10 +1,10 @@
 {
   Field field=null;
-  Boolean isMethodAccessible=null;
+  Boolean isAccessible=null;
   try {
     field=Order.class.getDeclaredField("dateStopped");
-    isMethodAccessible=field.isAccessible();
-    if (!isMethodAccessible) {
+    isAccessible=field.isAccessible();
+    if (!isAccessible) {
       field.setAccessible(true);
     }
     field.set(targetOrder,dateStopped);
@@ -13,8 +13,8 @@
     throw new APIException("Failed to set dateStopped for order:" + targetOrder,e);
   }
  finally {
-    if (field != null && isMethodAccessible != null) {
-      field.setAccessible(isMethodAccessible);
+    if (field != null && isAccessible != null) {
+      field.setAccessible(isAccessible);
     }
   }
 }
