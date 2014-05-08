@@ -1,0 +1,7 @@
+{
+  Order dcOrder=orderService.getOrder(22);
+  Order previousOrder=dcOrder.getPreviousOrder();
+  assertNotNull(previousOrder);
+  previousOrder.getId();
+  DrugOrder previousDrugOrder=(DrugOrder)previousOrder;
+}
