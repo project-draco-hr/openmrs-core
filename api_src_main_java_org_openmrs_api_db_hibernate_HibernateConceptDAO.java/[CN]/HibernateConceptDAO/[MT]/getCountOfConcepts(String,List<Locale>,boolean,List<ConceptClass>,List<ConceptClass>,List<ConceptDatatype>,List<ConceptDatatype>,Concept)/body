@@ -1,5 +1,5 @@
 {
-  String query=createQuery(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
-  Long size=LuceneQuery.newQuery(query,sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId").resultSize();
+  LuceneQuery<ConceptName> query=createConceptNameQuery(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
+  Long size=query.resultSize();
   return size.intValue();
 }

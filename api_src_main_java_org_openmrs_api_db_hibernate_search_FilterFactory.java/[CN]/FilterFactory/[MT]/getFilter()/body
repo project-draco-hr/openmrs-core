@@ -1,0 +1,24 @@
+{
+  BooleanQuery query=new BooleanQuery();
+  for (  Map.Entry<String,Object> entry : fieldMap.entrySet()) {
+    String field=entry.getKey();
+    Object value=entry.getValue();
+    if (value.getClass().isArray()) {
+      BooleanQuery arrayQuery=new BooleanQuery();
+      BooleanClause.Occur clause=(field.startsWith("-")) ? BooleanClause.Occur.MUST_NOT : BooleanClause.Occur.SHOULD;
+      if (clause == BooleanClause.Occur.MUST_NOT) {
+        arrayQuery.add(new MatchAllDocsQuery(),BooleanClause.Occur.MUST);
+        field=field.substring(1);
+      }
+      Object[] values=(Object[])value;
+      for (      Object val : values) {
+        arrayQuery.add(new TermQuery(new Term(field,val.toString())),clause);
+      }
+      query.add(arrayQuery,BooleanClause.Occur.MUST);
+    }
+ else {
+      query.add(new TermQuery(new Term(field,value.toString())),BooleanClause.Occur.MUST);
+    }
+  }
+  return new CachingWrapperFilter(new QueryWrapperFilter(query));
+}

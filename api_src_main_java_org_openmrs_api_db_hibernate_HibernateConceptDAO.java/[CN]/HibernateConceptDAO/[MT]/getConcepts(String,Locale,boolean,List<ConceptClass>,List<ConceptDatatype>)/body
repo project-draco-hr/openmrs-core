@@ -17,10 +17,7 @@
       query.append(search);
     }
   }
-  query.append(" concept.retired:false");
-  appendIdsQuery(query,"concept.conceptClass.conceptClassId",classes);
-  appendIdsQuery(query,"concept.datatype.conceptDatatypeId",datatypes);
-  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId").list();
+  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).filter("concept.datatype.conceptDatatypeId",transformToIds(datatypes)).filter("concept.conceptClass.conceptClassId",transformToIds(classes)).filter("concept.retired","false").skipSame("concept.conceptId").list();
   final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }
