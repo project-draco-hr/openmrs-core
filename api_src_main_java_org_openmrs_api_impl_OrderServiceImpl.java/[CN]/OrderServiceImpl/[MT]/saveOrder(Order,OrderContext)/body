@@ -29,7 +29,7 @@
     }
     order.setCareSetting(careSetting);
   }
-  if (Order.Action.REVISE.equals(order.getAction())) {
+  if (REVISE.equals(order.getAction())) {
     if (previousOrder == null) {
       throw new APIException("Previous Order is required for a revised order");
     }

@@ -1,0 +1,17 @@
+{
+  Boolean isAccessible=null;
+  Field field=null;
+  try {
+    field=Order.class.getDeclaredField(propertyName);
+    field.setAccessible(true);
+    field.set(order,value);
+  }
+ catch (  Exception e) {
+    throw new APIException("Failed to set " + propertyName + " for order:"+ order,e);
+  }
+ finally {
+    if (field != null && isAccessible != null) {
+      field.setAccessible(isAccessible);
+    }
+  }
+}

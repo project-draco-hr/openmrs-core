@@ -2,7 +2,7 @@
   Order previousOrder=order.getPreviousOrder();
   if (previousOrder != null && isDiscontinueOrReviseOrder(order)) {
     if (!previousOrder.isCurrent()) {
-      final String action=Order.Action.DISCONTINUE == order.getAction() ? "discontinuation" : "revision";
+      final String action=DISCONTINUE == order.getAction() ? "discontinuation" : "revision";
       throw new APIException("Cannot unvoid a " + action + " order if the previous order is no longer active");
     }
     stopOrder(previousOrder,order.getStartDate());

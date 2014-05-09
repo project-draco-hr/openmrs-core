@@ -1,22 +1,8 @@
 {
   if (order.getOrderId() == null) {
-    Boolean isAccessible=null;
-    Field field=null;
-    try {
-      field=Order.class.getDeclaredField("orderNumber");
-      field.setAccessible(true);
-      field.set(order,getOrderNumberGenerator().getNewOrderNumber(orderContext));
-    }
- catch (    Exception e) {
-      throw new APIException("Failed to assign order number",e);
-    }
- finally {
-      if (field != null && isAccessible != null) {
-        field.setAccessible(isAccessible);
-      }
-    }
-    if (Order.Action.DISCONTINUE == order.getAction()) {
-      setDateStopped(order,order.getStartDate());
+    setProperty(order,"orderNumber",getOrderNumberGenerator().getNewOrderNumber(orderContext));
+    if (DISCONTINUE == order.getAction()) {
+      setProperty(order,"dateStopped",order.getStartDate());
     }
   }
   return dao.saveOrder(order);

@@ -4,7 +4,7 @@
   }
   Order previousOrder=order.getPreviousOrder();
   if (previousOrder != null && isDiscontinueOrReviseOrder(order)) {
-    setDateStopped(previousOrder,null);
+    setProperty(previousOrder,"dateStopped",null);
   }
   return saveOrderInternal(order,null);
 }
