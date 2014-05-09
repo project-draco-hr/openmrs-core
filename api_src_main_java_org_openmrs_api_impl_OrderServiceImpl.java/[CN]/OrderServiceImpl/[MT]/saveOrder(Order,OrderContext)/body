@@ -29,13 +29,13 @@
     }
     order.setCareSetting(careSetting);
   }
-  if (REVISE.equals(order.getAction())) {
+  if (REVISE == order.getAction()) {
     if (previousOrder == null) {
       throw new APIException("Previous Order is required for a revised order");
     }
     stopOrder(previousOrder,order.getStartDate());
   }
- else   if (Order.Action.DISCONTINUE.equals(order.getAction())) {
+ else   if (DISCONTINUE == order.getAction()) {
     discontinueExistingOrdersIfNecessary(order);
   }
   if (previousOrder != null) {

@@ -8,7 +8,7 @@
   if (!orderToStop.isCurrent()) {
     throw new APIException("Cannot discontinue an order that is already stopped, expired or voided");
   }
-  if (orderToStop.getAction().equals(DISCONTINUE)) {
+  if (DISCONTINUE == orderToStop.getAction()) {
     throw new APIException("An order with action " + DISCONTINUE + " cannot be discontinued.");
   }
   setProperty(orderToStop,"dateStopped",discontinueDate);
