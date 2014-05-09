@@ -1,9 +1,10 @@
 {
-  if (order.getVoided())   return order;
-  if (!StringUtils.hasLength(voidReason))   throw new IllegalArgumentException("voidReason cannot be empty or null");
-  order.setVoided(Boolean.TRUE);
-  order.setVoidReason(voidReason);
-  order.setVoidedBy(Context.getAuthenticatedUser());
-  if (order.getDateVoided() == null)   order.setDateVoided(new Date());
+  if (!StringUtils.hasLength(voidReason)) {
+    throw new IllegalArgumentException("voidReason cannot be empty or null");
+  }
+  Order previousOrder=order.getPreviousOrder();
+  if (previousOrder != null && isDiscontinueOrReviseOrder(order)) {
+    setDateStopped(previousOrder,null);
+  }
   return saveOrderInternal(order,null);
 }
