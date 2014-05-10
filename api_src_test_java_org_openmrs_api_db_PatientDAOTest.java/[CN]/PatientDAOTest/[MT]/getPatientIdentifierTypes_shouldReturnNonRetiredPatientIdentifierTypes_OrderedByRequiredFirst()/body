@@ -1,8 +1,9 @@
 {
-  PatientIdentifierType nonRetiredNonRequiredType=dao.getPatientIdentifierType(1);
+  PatientIdentifierType nonRetiredNonRequiredType1=dao.getPatientIdentifierType(1);
+  PatientIdentifierType nonRetiredNonRequiredType2=dao.getPatientIdentifierType(5);
   PatientIdentifierType nonRetiredRequiredType=dao.getPatientIdentifierType(2);
   nonRetiredRequiredType.setRequired(true);
   dao.savePatientIdentifierType(nonRetiredRequiredType);
   List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,null,null,null);
-  Assert.assertArrayEquals(new Object[]{nonRetiredRequiredType,nonRetiredNonRequiredType},patientIdentifierTypes.toArray());
+  Assert.assertArrayEquals(new Object[]{nonRetiredRequiredType,nonRetiredNonRequiredType1,nonRetiredNonRequiredType2},patientIdentifierTypes.toArray());
 }

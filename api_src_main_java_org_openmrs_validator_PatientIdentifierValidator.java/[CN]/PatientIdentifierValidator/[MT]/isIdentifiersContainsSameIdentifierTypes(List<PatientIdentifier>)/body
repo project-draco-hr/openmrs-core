@@ -1,0 +1,16 @@
+{
+  if (patientIdentifiers.size() > 1) {
+    List<PatientIdentifierType> patientIdentifierTypeList=new ArrayList();
+    Set<PatientIdentifierType> patientIdentifierTypeSet;
+    for (    PatientIdentifier pId : patientIdentifiers) {
+      if (!pId.isVoided()) {
+        patientIdentifierTypeList.add(pId.getIdentifierType());
+      }
+    }
+    patientIdentifierTypeSet=new HashSet<PatientIdentifierType>(patientIdentifierTypeList);
+    if (patientIdentifierTypeList.size() > patientIdentifierTypeSet.size()) {
+      return true;
+    }
+  }
+  return false;
+}
