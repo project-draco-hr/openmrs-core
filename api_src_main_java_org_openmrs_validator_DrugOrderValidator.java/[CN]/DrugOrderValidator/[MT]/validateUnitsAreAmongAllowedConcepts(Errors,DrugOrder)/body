@@ -1,0 +1,14 @@
+{
+  if (order.getDoseUnits() != null) {
+    List<Concept> drugDosingUnits=Context.getOrderService().getDrugDosingUnits();
+    if (!drugDosingUnits.contains(order.getDoseUnits())) {
+      errors.rejectValue("doseUnits","DrugOrder.error.notAmongAllowedConcepts");
+    }
+  }
+  if (order.getQuantityUnits() != null) {
+    List<Concept> unitsOfDispensing=Context.getOrderService().getUnitsOfDispensing();
+    if (!unitsOfDispensing.contains(order.getQuantityUnits())) {
+      errors.rejectValue("quantityUnits","DrugOrder.error.notAmongAllowedConcepts");
+    }
+  }
+}

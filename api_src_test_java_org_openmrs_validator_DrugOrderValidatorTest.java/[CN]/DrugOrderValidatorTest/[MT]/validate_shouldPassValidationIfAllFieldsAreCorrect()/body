@@ -18,7 +18,7 @@
   order.setDrug(Context.getConceptService().getDrug(3));
   order.setCareSetting(Context.getOrderService().getCareSetting(1));
   order.setQuantity(2.00);
-  order.setQuantityUnits(Context.getConceptService().getConcept(50));
+  order.setQuantityUnits(Context.getConceptService().getConcept(51));
   order.setNumRefills(10);
   Errors errors=new BindException(order,"order");
   new DrugOrderValidator().validate(order,errors);
