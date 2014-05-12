@@ -6,9 +6,15 @@
     }
   }
   if (order.getQuantityUnits() != null) {
-    List<Concept> unitsOfDispensing=Context.getOrderService().getUnitsOfDispensing();
-    if (!unitsOfDispensing.contains(order.getQuantityUnits())) {
+    List<Concept> drugDispensingUnits=Context.getOrderService().getDrugDispensingUnits();
+    if (!drugDispensingUnits.contains(order.getQuantityUnits())) {
       errors.rejectValue("quantityUnits","DrugOrder.error.notAmongAllowedConcepts");
+    }
+  }
+  if (order.getDurationUnits() != null) {
+    List<Concept> drugDurationUnits=Context.getOrderService().getDrugDurationUnits();
+    if (!drugDurationUnits.contains(order.getDurationUnits())) {
+      errors.rejectValue("durationUnits","DrugOrder.error.notAmongAllowedConcepts");
     }
   }
 }
