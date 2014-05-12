@@ -25,5 +25,5 @@
   Assert.assertNotNull("should save discontinue order",order.getId());
   Assert.assertEquals(expectedPreviousOrder,order.getPreviousOrder());
   Assert.assertNotNull(expectedPreviousOrder.getDateStopped());
-  Assert.assertEquals(order.getStartDate(),order.getDateStopped());
+  Assert.assertEquals(order.getStartDate(),order.getAutoExpireDate());
 }

@@ -4,10 +4,14 @@
   Date date=new Date();
   order.setStartDate(date);
   order.setPreviousOrder(new Order());
+  order.setAutoExpireDate(date);
+  order.setAccessionNumber("some number");
   OrderUtilTest.setDateStopped(order,date);
   Order clone=order.cloneForRevision();
   assertEquals(Order.Action.DISCONTINUE,clone.getAction());
   assertEquals(order.getStartDate(),clone.getStartDate());
   assertEquals(order.getPreviousOrder(),clone.getPreviousOrder());
+  assertNull(clone.getAutoExpireDate());
   assertNull(clone.getDateStopped());
+  assertNull(clone.getAccessionNumber());
 }
