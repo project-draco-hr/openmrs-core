@@ -1,0 +1,14 @@
+{
+  ConceptNameTag cnt=new ConceptNameTag();
+  Errors errors=new BindException(cnt,"cnt");
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertTrue(errors.hasFieldErrors("tag"));
+  cnt.setTag("");
+  errors=new BindException(cnt,"cnt");
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertTrue(errors.hasFieldErrors("tag"));
+  cnt.setTag(" ");
+  errors=new BindException(cnt,"cnt");
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertTrue(errors.hasFieldErrors("tag"));
+}
