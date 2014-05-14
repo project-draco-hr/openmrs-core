@@ -36,7 +36,12 @@
       try {
         Context.getPatientService().savePatient(patient);
       }
- catch (      InvalidIdentifierFormatException iife) {
+ catch (      ValidationException ve) {
+        log.error(ve);
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,ve.getMessage());
+        isError=true;
+      }
+catch (      InvalidIdentifierFormatException iife) {
         log.error(iife);
         patient.removeIdentifier(iife.getPatientIdentifier());
         httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"PatientIdentifier.error.formatInvalid");
