@@ -1,0 +1,12 @@
+{
+  Collection<ConceptName> localeNames=new Vector<ConceptName>();
+  String language=locale.getLanguage();
+  String country=locale.getCountry();
+  for (  ConceptName possibleName : getNames()) {
+    Locale possibleLocale=possibleName.getLocale();
+    if (language.equals(possibleLocale.getLanguage()) || (StringUtils.isNotBlank(country) && country.equals(possibleLocale.getCountry()))) {
+      localeNames.add(possibleName);
+    }
+  }
+  return localeNames;
+}
