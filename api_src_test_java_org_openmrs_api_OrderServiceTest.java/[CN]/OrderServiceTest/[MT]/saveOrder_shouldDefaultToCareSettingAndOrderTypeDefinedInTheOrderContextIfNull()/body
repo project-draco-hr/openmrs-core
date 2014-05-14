@@ -1,8 +1,8 @@
 {
   Order order=new Order();
   order.setPatient(patientService.getPatient(7));
-  Concept aspirin=conceptService.getConcept(88);
-  order.setConcept(aspirin);
+  Concept trimune30=conceptService.getConcept(792);
+  order.setConcept(trimune30);
   order.setOrderer(providerService.getProvider(1));
   order.setEncounter(encounterService.getEncounter(3));
   order.setStartDate(new Date());
@@ -12,7 +12,7 @@
   orderContext.setOrderType(expectedOrderType);
   orderContext.setCareSetting(expectedCareSetting);
   order=orderService.saveOrder(order,orderContext);
-  assertFalse(expectedOrderType.getConceptClasses().contains(aspirin.getConceptClass()));
+  assertFalse(expectedOrderType.getConceptClasses().contains(trimune30.getConceptClass()));
   assertEquals(expectedOrderType,order.getOrderType());
   assertEquals(expectedCareSetting,order.getCareSetting());
 }

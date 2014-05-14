@@ -2,12 +2,12 @@
   GlobalProperty gp=new GlobalProperty(OpenmrsConstants.GP_ORDER_NUMBER_GENERATOR_BEAN_ID,"orderEntry.OrderNumberGenerator");
   Context.getAdministrationService().saveGlobalProperty(gp);
   Order order=new TestOrder();
-  order.setPatient(patientService.getPatient(2));
+  order.setPatient(patientService.getPatient(7));
   order.setConcept(conceptService.getConcept(5497));
   order.setOrderer(providerService.getProvider(1));
   order.setCareSetting(orderService.getCareSetting(1));
   order.setOrderType(orderService.getOrderType(2));
-  order.setEncounter(encounterService.getEncounter(6));
+  order.setEncounter(encounterService.getEncounter(3));
   order.setStartDate(new Date());
   order=orderService.saveOrder(order,null);
   assertTrue(order.getOrderNumber().startsWith(TimestampOrderNumberGenerator.ORDER_NUMBER_PREFIX));
