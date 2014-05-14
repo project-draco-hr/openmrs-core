@@ -8,7 +8,7 @@
     return;
   }
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
-  boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(order.getClass()) && ((DrugOrder)order).getDrug() != null;
+  boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(getActualType(order)) && ((DrugOrder)order).getDrug() != null;
   for (  Order activeOrder : orders) {
     if (!getActualType(order).equals(getActualType(activeOrder))) {
       continue;
