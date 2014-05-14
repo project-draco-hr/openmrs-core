@@ -3,7 +3,7 @@
   final String identifier="XYZ";
   Assert.assertEquals(0,ps.getCountOfPatients(identifier).intValue());
   Patient patient=ps.getPatient(2);
-  PatientIdentifier pId=new PatientIdentifier(identifier,ps.getPatientIdentifierType(2),Context.getLocationService().getLocation(1));
+  PatientIdentifier pId=new PatientIdentifier(identifier,ps.getPatientIdentifierType(5),Context.getLocationService().getLocation(1));
   patient.addIdentifier(pId);
   ps.savePatient(patient);
   Map<String,Object> resultObjects=new DWRPatientService().findCountAndPatients(identifier.toLowerCase(),0,null,true);

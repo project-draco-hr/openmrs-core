@@ -3,10 +3,13 @@
   Assert.assertEquals(nonRetiredType1.getRetired(),false);
   PatientIdentifierType nonRetiredType2=dao.getPatientIdentifierType(2);
   Assert.assertEquals(nonRetiredType2.getRetired(),false);
+  PatientIdentifierType nonRetiredType3=dao.getPatientIdentifierType(5);
+  Assert.assertEquals(nonRetiredType3.getRetired(),false);
   PatientIdentifierType retiredType=dao.getPatientIdentifierType(4);
   Assert.assertEquals(retiredType.getRetired(),true);
   List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,null,null,null);
-  Assert.assertEquals(patientIdentifierTypes.size(),2);
+  Assert.assertEquals(patientIdentifierTypes.size(),3);
   Assert.assertTrue(patientIdentifierTypes.contains(nonRetiredType1));
   Assert.assertTrue(patientIdentifierTypes.contains(nonRetiredType2));
+  Assert.assertTrue(patientIdentifierTypes.contains(nonRetiredType3));
 }
