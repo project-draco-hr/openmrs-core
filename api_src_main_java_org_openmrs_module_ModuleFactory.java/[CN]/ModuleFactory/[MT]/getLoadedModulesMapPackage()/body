@@ -1,0 +1,11 @@
+{
+  if (loadedModules == null) {
+    loadedModules=new WeakHashMap<String,Module>();
+    return loadedModules;
+  }
+  Map<String,Module> map=new WeakHashMap<String,Module>();
+  for (  String key : loadedModules.keySet()) {
+    map.put(loadedModules.get(key).getPackageName(),loadedModules.get(key));
+  }
+  return map;
+}
