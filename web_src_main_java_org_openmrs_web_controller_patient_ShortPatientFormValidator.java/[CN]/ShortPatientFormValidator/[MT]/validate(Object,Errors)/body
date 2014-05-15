@@ -55,7 +55,7 @@
       errors.reject("PatientIdentifier.error.insufficientIdentifiers");
     }
   }
-  if (PatientIdentifierValidator.isIdentifiersContainsSameIdentifierTypes(shortPatientModel.getIdentifiers())) {
+  if (PatientIdentifierValidator.hasMoreThanOneIdentifierForSameIdentifierType(shortPatientModel.getIdentifiers())) {
     errors.reject("error.duplicateIdentifierTypes");
   }
   if (StringUtils.isBlank(shortPatientModel.getPatient().getGender())) {
