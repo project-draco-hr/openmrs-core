@@ -1,20 +1,26 @@
 {
+  OrderService orderService=Context.getOrderService();
   if (order.getDoseUnits() != null) {
-    List<Concept> drugDosingUnits=Context.getOrderService().getDrugDosingUnits();
+    List<Concept> drugDosingUnits=orderService.getDrugDosingUnits();
     if (!drugDosingUnits.contains(order.getDoseUnits())) {
       errors.rejectValue("doseUnits","DrugOrder.error.notAmongAllowedConcepts");
     }
   }
   if (order.getQuantityUnits() != null) {
-    List<Concept> drugDispensingUnits=Context.getOrderService().getDrugDispensingUnits();
+    List<Concept> drugDispensingUnits=orderService.getDrugDispensingUnits();
     if (!drugDispensingUnits.contains(order.getQuantityUnits())) {
       errors.rejectValue("quantityUnits","DrugOrder.error.notAmongAllowedConcepts");
     }
   }
   if (order.getDurationUnits() != null) {
-    List<Concept> drugDurationUnits=Context.getOrderService().getDrugDurationUnits();
+    List<Concept> drugDurationUnits=orderService.getDrugDurationUnits();
     if (!drugDurationUnits.contains(order.getDurationUnits())) {
       errors.rejectValue("durationUnits","DrugOrder.error.notAmongAllowedConcepts");
+    }
+  }
+  if (order.getRoute() != null) {
+    List<Concept> routes=orderService.getDrugRoutes();
+    if (!routes.contains(order.getRoute())) {
     }
   }
 }
