@@ -21,6 +21,7 @@
   if (order.getRoute() != null) {
     List<Concept> routes=orderService.getDrugRoutes();
     if (!routes.contains(order.getRoute())) {
+      errors.rejectValue("route","DrugOrder.error.routeNotAmongAllowedConcepts");
     }
   }
 }
