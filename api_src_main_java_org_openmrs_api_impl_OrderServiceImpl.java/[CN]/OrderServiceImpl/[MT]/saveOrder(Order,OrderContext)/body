@@ -6,11 +6,11 @@
     order.setStartDate(new Date());
   }
   boolean isDrugOrder=DrugOrder.class.isAssignableFrom(getActualType(order));
+  Concept concept=order.getConcept();
+  if (concept == null && isDrugOrder) {
+    concept=((DrugOrder)order).getDrug().getConcept();
+  }
   if (!isDiscontinueOrReviseOrder(order)) {
-    Concept concept=order.getConcept();
-    if (concept == null && isDrugOrder) {
-      concept=((DrugOrder)order).getDrug().getConcept();
-    }
     List<Order> activeOrders=getActiveOrders(order.getPatient(),null,null,null);
     for (    Order o : activeOrders) {
       if (o.getConcept().equals(concept)) {
@@ -25,7 +25,7 @@
       orderType=orderContext.getOrderType();
     }
     if (orderType == null) {
-      orderType=getOrderTypeByConcept(order.getConcept());
+      orderType=getOrderTypeByConcept(concept);
     }
     if (orderType == null || (previousOrder != null && !orderType.equals(previousOrder.getOrderType()))) {
       throw new APIException("Cannot determine the order type of the order");
@@ -93,7 +93,7 @@
     }
   }
   if (order.getConcept() == null && isDrugOrder) {
-    order.setConcept(((DrugOrder)order).getDrug().getConcept());
+    order.setConcept(concept);
   }
   return saveOrderInternal(order,orderContext);
 }
