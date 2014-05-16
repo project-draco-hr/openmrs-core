@@ -6,5 +6,5 @@
   Context.flushSession();
   Context.clearSession();
   ConceptNameTag savedNameTag=cs.getConceptNameTag(id);
-  Assert.assertNotNull(savedNameTag);
+  assertEquals(savedNameTag.getTag(),"dcba");
 }
