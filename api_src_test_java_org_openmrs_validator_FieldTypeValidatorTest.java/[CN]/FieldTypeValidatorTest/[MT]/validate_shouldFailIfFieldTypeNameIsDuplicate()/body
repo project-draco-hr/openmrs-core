@@ -1,0 +1,7 @@
+{
+  FieldType type=new FieldType();
+  type.setName("some field type");
+  Errors errors=new BindException(type,"type");
+  new FieldTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasErrors());
+}

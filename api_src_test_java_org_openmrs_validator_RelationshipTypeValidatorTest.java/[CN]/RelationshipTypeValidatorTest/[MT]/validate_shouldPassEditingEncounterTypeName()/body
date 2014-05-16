@@ -1,0 +1,8 @@
+{
+  RelationshipType type=new RelationshipType();
+  type.setaIsToB("Doctor");
+  type.setbIsToA("Patient");
+  Errors errors=new BindException(type,"type");
+  new RelationshipTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasErrors());
+}
