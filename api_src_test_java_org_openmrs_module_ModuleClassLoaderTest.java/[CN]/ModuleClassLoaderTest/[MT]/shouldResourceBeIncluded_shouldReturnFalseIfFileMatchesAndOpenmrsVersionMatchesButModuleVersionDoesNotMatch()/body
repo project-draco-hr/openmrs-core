@@ -1,0 +1,13 @@
+{
+  ModuleConditionalResource resource=new ModuleConditionalResource();
+  resource.setPath("lib/mockmodule-api-1.10.jar");
+  resource.setOpenmrsVersion("1.10");
+  ModuleConditionalResource.ModuleAndVersion module=new ModuleConditionalResource.ModuleAndVersion();
+  module.setModuleId("module");
+  module.setVersion("1.0-2.0,4.0");
+  resource.getModules().add(module);
+  mockModule.getConditionalResources().add(resource);
+  mockModules.put("module","3.0");
+  boolean result=ModuleClassLoader.shouldResourceBeIncluded(mockModule,URI.create("file://module/mockmodule/lib/mockmodule-api-1.10.jar").toURL(),"1.10.0-SNAPSHOT",mockModules);
+  assertThat(result,is(false));
+}

@@ -13,7 +13,7 @@
     }
     log.debug(buf.toString());
   }
-  collectRequiredModuleImports();
+  requiredModules=collectRequiredModuleImports(getModule());
   collectAwareOfModuleImports();
   collectFilters();
   for (Iterator<Map.Entry<URI,File>> it=libraryCache.entrySet().iterator(); it.hasNext(); ) {

@@ -4,7 +4,7 @@
     log.debug("URLs length: " + urls.size());
   }
   this.module=module;
-  collectRequiredModuleImports();
+  requiredModules=collectRequiredModuleImports(module);
   collectAwareOfModuleImports();
   collectFilters();
   libraryCache=new WeakHashMap<URI,File>();
