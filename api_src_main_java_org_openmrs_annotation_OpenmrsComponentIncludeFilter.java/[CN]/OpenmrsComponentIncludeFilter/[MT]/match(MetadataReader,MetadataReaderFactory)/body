@@ -1,0 +1,9 @@
+{
+  Map<String,Object> openmrsProfileAttributes=metadataReader.getAnnotationMetadata().getAnnotationAttributes("org.openmrs.annotation.OpenmrsComponent");
+  if (openmrsProfileAttributes != null) {
+    return openmrsProfileExcludeFilter.matchOpenmrsProfileAttributes(openmrsProfileAttributes);
+  }
+ else {
+    return false;
+  }
+}
