@@ -1,6 +1,6 @@
 {
   String className="org.openmrs.scheduler.tasks.InvalidTask";
-  Class c=OpenmrsClassLoader.getInstance().loadClass(className);
+  Class<?> c=OpenmrsClassLoader.getInstance().loadClass(className);
   Object o=c.newInstance();
   if (o instanceof Task)   fail("Class " + className + " is not supposed to be a valid Task");
  else   assertTrue("Class " + className + " is not a valid Task",true);
