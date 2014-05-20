@@ -10,7 +10,8 @@
   order.setConcept(cd4Count);
   order.setEncounter(encounterService.getEncounter(6));
   order.setOrderer(providerService.getProvider(1));
+  order.setCareSetting(duplicateOrder.getCareSetting());
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot have more than one active order for the same concept");
+  expectedException.expectMessage("Cannot have more than one active order for the same concept and care setting");
   orderService.saveOrder(order,null);
 }
