@@ -5,5 +5,11 @@
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
+    if (!errors.hasErrors()) {
+      ConceptClass exist=Context.getConceptService().getConceptClassByName(cc.getName());
+      if (exist != null && !exist.isRetired() && !OpenmrsUtil.nullSafeEquals(cc.getUuid(),exist.getUuid())) {
+        errors.rejectValue("name","conceptclass.duplicate.name");
+      }
+    }
   }
 }
