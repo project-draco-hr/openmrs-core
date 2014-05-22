@@ -1,16 +1,16 @@
 {
   SchedulerService schedulerService=Context.getSchedulerService();
   TaskDefinition td=new TaskDefinition();
-  td.setId(10);
   td.setName("Task");
   td.setStartOnStartup(false);
   td.setTaskClass(BareTask.class.getName());
   td.setStartTime(null);
   td.setName("name");
   td.setRepeatInterval(5000l);
-synchronized (SAVE_TASK_LOCK) {
+synchronized (TASK_TEST_METHOD_LOCK) {
+    latch=new CountDownLatch(1);
+    schedulerService.saveTaskDefinition(td);
     schedulerService.scheduleTask(td);
+    assertTrue(latch.await(CONCURRENT_TASK_WAIT_MS,TimeUnit.MILLISECONDS));
   }
-  Thread.sleep(500);
-  assertTrue(BareTask.outputList.contains("TEST"));
 }

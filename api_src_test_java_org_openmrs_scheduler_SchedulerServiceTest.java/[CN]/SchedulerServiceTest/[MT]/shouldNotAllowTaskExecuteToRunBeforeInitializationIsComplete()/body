@@ -1,16 +1,17 @@
 {
   SchedulerService schedulerService=Context.getSchedulerService();
   TaskDefinition t5=new TaskDefinition();
-  t5.setId(5);
   t5.setStartOnStartup(false);
   t5.setStartTime(null);
-  t5.setTaskClass(SampleTask5.class.getName());
-  t5.setProperty("outputKey","shouldNotAllowTaskExecuteToRunBeforeInitializationIsComplete");
+  t5.setTaskClass(InitSequenceTestTask.class.getName());
   t5.setName("name");
-  t5.setRepeatInterval(5000l);
-synchronized (SAVE_TASK_LOCK) {
+  t5.setRepeatInterval(CONCURRENT_TASK_WAIT_MS * 4);
+synchronized (TASK_TEST_METHOD_LOCK) {
+    latch=new CountDownLatch(1);
+    consecutiveInitResult.set(false);
+    schedulerService.saveTaskDefinition(t5);
     schedulerService.scheduleTask(t5);
-    Thread.sleep(2500);
-    assertEquals("INIT-START-5, INIT-END-5, IN EXECUTE",output.get("shouldNotAllowTaskExecuteToRunBeforeInitializationIsComplete"));
+    assertTrue("Init and execute methods should run consecutively",latch.await(CONCURRENT_TASK_WAIT_MS,TimeUnit.MILLISECONDS) && consecutiveInitResult.get());
   }
+  schedulerService.shutdownTask(t5);
 }

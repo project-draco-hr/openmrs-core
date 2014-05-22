@@ -1,29 +1,5 @@
 {
-  SchedulerService schedulerService=Context.getSchedulerService();
-  TaskDefinition t3=new TaskDefinition();
-  t3.setStartOnStartup(false);
-  t3.setStartTime(null);
-  t3.setTaskClass(SimpleTask.class.getName());
-  t3.setProperty("id","TASK-3");
-  t3.setProperty("delay","300");
-  t3.setProperty("outputKey","shouldAllowTwoTasksInitMethodsToRunConcurrently");
-  t3.setName("name");
-  t3.setRepeatInterval(5000l);
-  TaskDefinition t4=new TaskDefinition();
-  t4.setStartOnStartup(false);
-  t4.setStartTime(null);
-  t4.setTaskClass(SimpleTask.class.getName());
-  t4.setProperty("id","TASK-4");
-  t4.setProperty("delay","100");
-  t4.setProperty("outputKey","shouldAllowTwoTasksInitMethodsToRunConcurrently");
-  t4.setName("name");
-  t4.setRepeatInterval(5000l);
-synchronized (SAVE_TASK_LOCK) {
-    schedulerService.scheduleTask(t3);
-    schedulerService.scheduleTask(t4);
-  }
-  Thread.sleep(500);
-  assertEquals("TASK-3, TASK-4, TASK-4, TASK-3",output.get("shouldAllowTwoTasksInitMethodsToRunConcurrently"));
-  schedulerService.shutdownTask(t3);
-  schedulerService.shutdownTask(t4);
+  TaskDefinition t3=makeRepeatingTaskThatStartsImmediately(LatchInitializeTask.class.getName());
+  TaskDefinition t4=makeRepeatingTaskThatStartsImmediately(LatchInitializeTask.class.getName());
+  checkTasksRunConcurrently(t3,t4);
 }

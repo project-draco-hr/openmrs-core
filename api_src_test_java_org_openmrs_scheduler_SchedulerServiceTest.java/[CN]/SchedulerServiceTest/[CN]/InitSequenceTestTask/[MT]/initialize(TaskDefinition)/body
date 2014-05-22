@@ -1,0 +1,9 @@
+{
+  super.initialize(config);
+  try {
+    Thread.sleep(700);
+  }
+ catch (  InterruptedException ignored) {
+  }
+  consecutiveInitResult.set(latch.getCount() != 0);
+}

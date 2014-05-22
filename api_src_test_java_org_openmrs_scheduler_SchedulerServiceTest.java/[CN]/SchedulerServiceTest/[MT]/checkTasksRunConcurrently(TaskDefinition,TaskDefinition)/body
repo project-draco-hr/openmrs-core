@@ -1,0 +1,13 @@
+{
+  SchedulerService schedulerService=Context.getSchedulerService();
+synchronized (TASK_TEST_METHOD_LOCK) {
+    latch=new CountDownLatch(2);
+    awaitFailed.set(false);
+    schedulerService.scheduleTask(t1);
+    schedulerService.scheduleTask(t2);
+    assertTrue("methods ran consecutively or not at all",latch.await(CONCURRENT_TASK_WAIT_MS,TimeUnit.MILLISECONDS));
+    assertTrue("methods ran consecutively",!awaitFailed.get());
+  }
+  schedulerService.shutdownTask(t1);
+  schedulerService.shutdownTask(t2);
+}
