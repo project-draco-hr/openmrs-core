@@ -14,16 +14,16 @@
     String nodeType=isSelectable(loc,options) ? "selectable" : "default";
     Map<String,Object> attrs=new HashMap<String,Object>();
     attrs.put("id",loc.getLocationId());
-    attrs.put("name",loc.getName());
+    attrs.put("name",getName(loc));
     attrs.put("rel",nodeType);
     Map<String,Object> ret=new LinkedHashMap<String,Object>();
     ret.put("attributes",attrs);
-    StringBuilder sb=new StringBuilder(loc.getName());
+    StringBuilder sb=new StringBuilder(getName(loc));
     if (loc.getTags() != null && loc.getTags().size() > 0) {
       sb.append(" (");
       for (Iterator<LocationTag> i=loc.getTags().iterator(); i.hasNext(); ) {
         LocationTag t=i.next();
-        sb.append(t.getName());
+        sb.append(getName(t));
         if (i.hasNext()) {
           sb.append(", ");
         }
