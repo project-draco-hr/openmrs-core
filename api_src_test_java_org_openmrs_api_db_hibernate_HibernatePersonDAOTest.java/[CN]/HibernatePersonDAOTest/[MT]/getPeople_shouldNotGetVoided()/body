@@ -1,0 +1,5 @@
+{
+  List<Person> people=hibernatePersonDAO.getPeople("",false,false);
+  logPeople(people);
+  for (  Person p : people)   Assert.assertFalse(p.getVoided());
+}
