@@ -1,0 +1,10 @@
+{
+  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
+  Calendar c=Calendar.getInstance();
+  c.set(2014,3,1);
+  program.setDateEnrolled(new Date());
+  program.setDateCompleted(c.getTime());
+  BindException errors=new BindException(program,"");
+  new PatientProgramValidator().validate(program,errors);
+  Assert.assertTrue(errors.hasErrors());
+}
