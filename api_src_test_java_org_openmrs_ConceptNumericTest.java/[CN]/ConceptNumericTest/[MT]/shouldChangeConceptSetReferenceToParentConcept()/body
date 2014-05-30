@@ -1,9 +1,0 @@
-{
-  Concept c=new Concept(123);
-  c.addSetMember(new Concept(1));
-  c.addSetMember(new Concept(2));
-  ConceptNumeric cn=new ConceptNumeric(c);
-  for (  ConceptSet cSet : cn.getConceptSets()) {
-    Assert.assertSame(cn,cSet.getConcept());
-  }
-}

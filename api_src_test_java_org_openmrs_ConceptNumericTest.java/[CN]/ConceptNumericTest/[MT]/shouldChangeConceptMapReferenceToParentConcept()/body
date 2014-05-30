@@ -1,9 +1,0 @@
-{
-  Concept c=new Concept(123);
-  c.getConceptMappings().add(new ConceptMap(1));
-  c.getConceptMappings().add(new ConceptMap(2));
-  ConceptNumeric cn=new ConceptNumeric(c);
-  for (  ConceptMap cMap : cn.getConceptMappings()) {
-    Assert.assertSame(cn,cMap.getConcept());
-  }
-}

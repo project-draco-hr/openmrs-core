@@ -1,9 +1,0 @@
-{
-  Concept c=new Concept(123);
-  c.addDescription(new ConceptDescription(1));
-  c.addDescription(new ConceptDescription(2));
-  ConceptNumeric cn=new ConceptNumeric(c);
-  for (  ConceptDescription cDesc : cn.getDescriptions()) {
-    Assert.assertSame(cn,cDesc.getConcept());
-  }
-}
