@@ -301,7 +301,6 @@ catch (        OpenmrsCoreModuleException coreModEx) {
           if (wizardModel.createTables) {
             Context.authenticate("admin","test");
             Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
-            SchedulerConstants.SCHEDULER_DEFAULT_PASSWORD=wizardModel.adminUserPassword;
             Context.logout();
           }
         }
