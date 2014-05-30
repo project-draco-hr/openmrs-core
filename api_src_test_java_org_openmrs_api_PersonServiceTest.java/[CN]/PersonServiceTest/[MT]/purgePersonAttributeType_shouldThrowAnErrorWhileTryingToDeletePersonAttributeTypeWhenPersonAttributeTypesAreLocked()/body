@@ -1,0 +1,6 @@
+{
+  PersonService ps=Context.getPersonService();
+  createPersonAttributeTypeLockedGPAndSetValue("true");
+  PersonAttributeType pat=ps.getPersonAttributeType(1);
+  ps.purgePersonAttributeType(pat);
+}
