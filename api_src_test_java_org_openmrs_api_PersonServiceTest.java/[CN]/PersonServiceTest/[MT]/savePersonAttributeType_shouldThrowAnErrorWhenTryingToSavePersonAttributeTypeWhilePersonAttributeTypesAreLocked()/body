@@ -1,0 +1,7 @@
+{
+  PersonService ps=Context.getPersonService();
+  createPersonAttributeTypeLockedGPAndSetValue("true");
+  PersonAttributeType pat=ps.getPersonAttributeType(1);
+  pat.setDescription("New person attribute type");
+  ps.savePersonAttributeType(pat);
+}
