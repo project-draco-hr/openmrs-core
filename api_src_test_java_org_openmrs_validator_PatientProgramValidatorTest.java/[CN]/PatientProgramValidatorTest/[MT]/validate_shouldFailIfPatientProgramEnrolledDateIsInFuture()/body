@@ -1,0 +1,8 @@
+{
+  PatientProgram program=Context.getProgramWorkflowService().getPatientProgram(1);
+  Date date10DaysAfterSystemCurrentDate=new Date(System.currentTimeMillis() + 10 * 24 * 60* 60* 1000);
+  program.setDateEnrolled(date10DaysAfterSystemCurrentDate);
+  BindException errors=new BindException(program,"");
+  new PatientProgramValidator().validate(program,errors);
+  Assert.assertTrue(errors.hasFieldErrors("dateEnrolled"));
+}
