@@ -1,0 +1,6 @@
+{
+  PatientService ps=Context.getPatientService();
+  createPatientIdentifierTypeLockedGPAndSetValue("true");
+  PatientIdentifierType pit=ps.getPatientIdentifierType(1);
+  ps.unretirePatientIdentifierType(pit);
+}

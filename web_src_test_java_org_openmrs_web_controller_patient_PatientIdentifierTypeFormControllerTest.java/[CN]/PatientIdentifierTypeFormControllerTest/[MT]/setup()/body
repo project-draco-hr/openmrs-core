@@ -1,0 +1,11 @@
+{
+  executeDataSet("org/openmrs/web/patient/include/PatientIdentifierTypeFormControllerTest.xml");
+  controller=(PatientIdentifierTypeFormController)applicationContext.getBean("patientIdentifierTypeForm");
+  controller.setFormView("index.htm");
+  controller.setSuccessView("patientIdentifierType.form");
+  request=new MockHttpServletRequest("POST","/admin/patients/patientIdentifierType.form?patientIdentifierTypeId=1");
+  request.setSession(new MockHttpSession(null));
+  request.setContentType("application/x-www-form-urlencoded");
+  request.addParameter("name","TRUNK");
+  response=new MockHttpServletResponse();
+}
