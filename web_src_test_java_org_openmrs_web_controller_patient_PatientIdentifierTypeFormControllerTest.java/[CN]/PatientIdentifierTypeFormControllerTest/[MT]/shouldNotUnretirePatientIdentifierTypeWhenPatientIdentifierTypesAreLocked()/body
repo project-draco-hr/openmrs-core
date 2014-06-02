@@ -1,0 +1,7 @@
+{
+  request.addParameter("unretire","Unretire Identifier Type");
+  ModelAndView mav=controller.handleRequest(request,response);
+  Assert.assertEquals("The unretire attempt should have failed!","index.htm",mav.getViewName());
+  Assert.assertNotEquals("patientIdentifierType.form",mav.getViewName());
+  Assert.assertNotNull(Context.getPersonService().getPersonAttributeType(1));
+}
