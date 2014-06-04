@@ -10,6 +10,7 @@
       log.debug(w);
       searchCriteria.add(Restrictions.like("name",w,MatchMode.ANYWHERE));
     }
+    searchCriteria.add(Restrictions.eq("drug.retired",false));
     searchCriteria.addOrder(Order.asc("drug.concept"));
     conceptDrugs=searchCriteria.list();
   }
