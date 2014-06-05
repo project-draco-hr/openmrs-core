@@ -5,5 +5,8 @@
   if (OpenmrsUtil.getCoreRoles().keySet().contains(role.getRole())) {
     throw new APIException("Cannot delete a core role");
   }
+  if (role.hasChildRoles()) {
+    throw new CannotDeleteRoleWithChildrenException();
+  }
   dao.deleteRole(role);
 }

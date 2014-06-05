@@ -3,38 +3,42 @@
   String view=getFormView();
   if (Context.isAuthenticated()) {
     StringBuilder success=new StringBuilder();
-    String error="";
+    StringBuilder error=new StringBuilder();
     MessageSourceAccessor msa=getMessageSourceAccessor();
     String[] roleList=ServletRequestUtils.getStringParameters(request,"roleId");
     if (roleList.length > 0) {
       UserService us=Context.getUserService();
       String deleted=msa.getMessage("general.deleted");
       String notDeleted=msa.getMessage("Role.cannot.delete");
+      String notDeletedWithChild=msa.getMessage("Role.cannot.delete.with.child");
       for (      String p : roleList) {
         try {
           us.purgeRole(us.getRole(p));
-          if (!success.equals("")) {
+          if (!success.toString().isEmpty()) {
             success.append("<br/>");
           }
           success.append(p).append(" ").append(deleted);
         }
  catch (        DataIntegrityViolationException e) {
-          error=handleRoleIntegrityException(e,error,notDeleted);
+          handleRoleIntegrityException(e,error,notDeleted,p);
+        }
+catch (        CannotDeleteRoleWithChildrenException e) {
+          handleRoleIntegrityException(e,error,notDeletedWithChild,p);
         }
 catch (        APIException e) {
-          error=handleRoleIntegrityException(e,error,notDeleted);
+          handleRoleIntegrityException(e,error,notDeleted,p);
         }
       }
     }
  else {
-      error=msa.getMessage("Role.select");
+      error.append(msa.getMessage("Role.select"));
     }
     view=getSuccessView();
-    if (!success.equals("")) {
+    if (!success.toString().isEmpty()) {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
     }
-    if (!error.equals("")) {
-      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
+    if (!error.toString().isEmpty()) {
+      httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
     }
   }
   return new ModelAndView(new RedirectView(view));
