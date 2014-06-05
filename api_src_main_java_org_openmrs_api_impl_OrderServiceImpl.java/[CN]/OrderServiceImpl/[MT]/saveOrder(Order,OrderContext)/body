@@ -73,7 +73,7 @@
       throw new APIException("Cannot change the drug of a drug order");
     }
     boolean isDrugOrderAndHasADrug=isDrugOrder && ((DrugOrder)order).getDrug() != null;
-    if (!order.getConcept().equals(previousOrder.getConcept())) {
+    if (!OpenmrsUtil.nullSafeEquals(order.getConcept(),previousOrder.getConcept())) {
       throw new APIException("The concept of the previous order and the new one order don't match");
     }
  else     if (isDrugOrderAndHasADrug) {
