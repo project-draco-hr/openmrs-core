@@ -1,0 +1,8 @@
+{
+  Set<Role> childRole=new HashSet<Role>();
+  Role role1=new Role("role_parent");
+  Role role2=new Role("role_child");
+  childRole.add(role1);
+  role2.setChildRoles(childRole);
+  Context.getUserService().purgeRole(role2);
+}
