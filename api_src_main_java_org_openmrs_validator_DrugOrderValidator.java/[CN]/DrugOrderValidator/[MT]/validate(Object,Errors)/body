@@ -6,18 +6,8 @@
   }
  else {
     ValidationUtils.rejectIfEmpty(errors,"concept","error.null");
-    if (order.getDuration() != null) {
-      ValidationUtils.rejectIfEmpty(errors,"durationUnits","DrugOrder.add.error.missingDurationUnits");
-    }
-    if (order.getQuantity() != null) {
-      ValidationUtils.rejectIfEmpty(errors,"quantityUnits","DrugOrder.add.error.missingQuantityUnits");
-    }
-    if (order.getStrength() != null) {
-      ValidationUtils.rejectIfEmpty(errors,"strengthUnits","DrugOrder.add.error.missingStrengthUnits");
-    }
-    if (order.getDose() != null) {
-      ValidationUtils.rejectIfEmpty(errors,"doseUnits","DrugOrder.add.error.missingDoseUnits");
-    }
+    ValidationUtils.rejectIfEmpty(errors,"prn","error.null");
+    ValidationUtils.rejectIfEmpty(errors,"complex","error.null");
     ValidationUtils.rejectIfEmpty(errors,"drug","error.null");
     if (order.getDrug() != null) {
       ValidationUtils.rejectIfEmpty(errors,"drug.concept","error.null");
@@ -27,6 +17,9 @@
         errors.rejectValue("drug","error.general");
         errors.rejectValue("concept","error.concept");
       }
+    }
+    if (order.getDose() != null || order.getEquivalentDailyDose() != null || order.getQuantity() != null) {
+      ValidationUtils.rejectIfEmpty(errors,"units","DrugOrder.error.unitsNotSetWhenDoseOrQuantitySpecified");
     }
   }
 }

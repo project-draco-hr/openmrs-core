@@ -4,5 +4,5 @@
   }
   List<Patient> patients=new ArrayList<Patient>();
   patients.add(patient);
-  return getOrders(Order.class,patients,null,null,null,null,null,null,includeVoided);
+  return getOrders(Order.class,patients,null,includeVoided ? ORDER_STATUS.ANY : ORDER_STATUS.NOTVOIDED,null,null,null);
 }

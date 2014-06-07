@@ -1,0 +1,20 @@
+{
+  log.debug("in discontinueDrugSet() method");
+  Patient p=Context.getPatientService().getPatient(patientId);
+  Date discDate=null;
+  if (discontinueDate != null) {
+    SimpleDateFormat sdf=Context.getDateFormat();
+    try {
+      discDate=sdf.parse(discontinueDate);
+    }
+ catch (    ParseException e) {
+      throw new DWRException(e.getMessage());
+    }
+  }
+  try {
+    Context.getOrderService().discontinueDrugSet(p,drugSetId,Context.getConceptService().getConceptByIdOrName(discontinueReason),discDate);
+  }
+ catch (  APIException e) {
+    throw new DWRException(e.getMessage());
+  }
+}

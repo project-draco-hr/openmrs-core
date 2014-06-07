@@ -1,7 +1,0 @@
-{
-  Order order=Context.getOrderService().getOrder(1);
-  Assert.assertNotNull(order.getOrderNumber());
-  String oldOrderNumber=order.getOrderNumber();
-  new OrderSaveHandler().handle(order,null,null,null);
-  Assert.assertEquals(oldOrderNumber,order.getOrderNumber());
-}

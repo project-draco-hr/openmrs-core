@@ -1,0 +1,3 @@
+{
+  return (OrderType)sessionFactory.getCurrentSession().createQuery("from OrderType ot where ot.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

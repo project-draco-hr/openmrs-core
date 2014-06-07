@@ -1,0 +1,8 @@
+{
+  List<OrderType> orderTypeList=new Vector<OrderType>();
+  if (Context.isAuthenticated()) {
+    OrderService os=Context.getOrderService();
+    orderTypeList=os.getAllOrderTypes();
+  }
+  return orderTypeList;
+}

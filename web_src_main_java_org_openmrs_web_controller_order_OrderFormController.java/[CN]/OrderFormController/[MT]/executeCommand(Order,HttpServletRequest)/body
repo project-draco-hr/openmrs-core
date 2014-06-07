@@ -17,8 +17,12 @@
       request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.unvoidedSuccessfully");
     }
  else     if (request.getParameter("discontinueOrder") != null) {
-      orderService.discontinueOrder(order,null);
+      orderService.discontinueOrder(order,order.getDiscontinuedReason(),order.getDiscontinuedDate());
       request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.discontinuedSuccessfully");
+    }
+ else     if (request.getParameter("undiscontinueOrder") != null) {
+      orderService.undiscontinueOrder(order);
+      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Order.undiscontinuedSuccessfully");
     }
   }
  catch (  APIException ex) {

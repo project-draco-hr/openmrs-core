@@ -1,0 +1,10 @@
+{
+  OrderType orderType=null;
+  if (Context.isAuthenticated()) {
+    OrderService os=Context.getOrderService();
+    String orderTypeId=request.getParameter("orderTypeId");
+    if (orderTypeId != null)     orderType=os.getOrderType(Integer.valueOf(orderTypeId));
+  }
+  if (orderType == null)   orderType=new OrderType();
+  return orderType;
+}

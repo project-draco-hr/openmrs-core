@@ -1,0 +1,16 @@
+{
+  OrderType type=new OrderType();
+  type.setName("restraining");
+  type.setDescription(null);
+  Errors errors=new BindException(type,"type");
+  new OrderTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription("");
+  errors=new BindException(type,"type");
+  new OrderTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription(" ");
+  errors=new BindException(type,"type");
+  new OrderTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

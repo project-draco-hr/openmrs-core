@@ -1,5 +1,6 @@
 {
   orderId=drugOrder.getOrderId();
+  if (drugOrder.getOrderType() != null)   orderTypeId=drugOrder.getOrderType().getOrderTypeId();
   if (drugOrder.getConcept() != null) {
     conceptId=drugOrder.getConcept().getConceptId();
     conceptName=drugOrder.getConcept().getName().getName();
@@ -16,7 +17,7 @@
     encounterId=drugOrder.getEncounter().getEncounterId();
   }
   if (drugOrder.getOrderer() != null) {
-    ordererId=drugOrder.getOrderer().getProviderId();
+    ordererId=drugOrder.getOrderer().getUserId();
   }
   discontinued=drugOrder.getDiscontinued();
   if (drugOrder.getDiscontinuedBy() != null) {
@@ -26,7 +27,7 @@
     discontinuedDate=df.format(drugOrder.getDiscontinuedDate());
   }
   if (drugOrder.getDiscontinuedReason() != null) {
-    discontinueReason=drugOrder.getDiscontinuedReason();
+    discontinueReason=drugOrder.getDiscontinuedReason().getConceptId();
   }
   if (drugOrder.getDrug() != null) {
     drugId=drugOrder.getDrug().getDrugId();
@@ -35,9 +36,10 @@
     drugName=drugOrder.getDrug().getName();
   }
   dose=drugOrder.getDose();
-  doseUnits=drugOrder.getDoseUnits();
+  units=drugOrder.getUnits();
   frequency=drugOrder.getFrequency();
-  asNeeded=drugOrder.getAsNeeded();
+  prn=drugOrder.getPrn();
+  complex=drugOrder.getComplex();
   quantity=drugOrder.getQuantity();
   voided=drugOrder.getVoided();
   if (drugOrder.getVoidedBy() != null) {

@@ -1,22 +1,15 @@
 {
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
-  List<Order> ordersForUnPreferredPatient=Context.getOrderService().getOrdersByPatient(notPreferred);
-  List<Order> undiscontinuedOrders=new ArrayList<Order>();
-  for (  Order or : ordersForUnPreferredPatient) {
-    if (!or.getDiscontinued())     undiscontinuedOrders.add(or);
-  }
-  Assert.assertFalse(undiscontinuedOrders.isEmpty());
+  Order order=Context.getOrderService().getOrdersByPatient(notPreferred).get(0);
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
+  String addedOrderUuid=null;
   List<Order> orders=Context.getOrderService().getOrdersByPatient(preferred);
-  for (  Order or : undiscontinuedOrders) {
-    String addedOrderUuid=null;
-    for (    Order o : orders) {
-      if (o.getOrderNumber().equals(or.getOrderNumber())) {
-        addedOrderUuid=o.getUuid();
-      }
+  for (  Order o : orders) {
+    if (o.getInstructions().equals(order.getInstructions())) {
+      addedOrderUuid=o.getUuid();
     }
-    Assert.assertNotNull("expected new order was not found for the preferred patient after the merge",addedOrderUuid);
-    Assert.assertTrue("order creation not audited",isValueInList(addedOrderUuid,audit.getPersonMergeLogData().getCreatedOrders()));
   }
+  Assert.assertNotNull("expected new order was not found for the preferred patient after the merge",addedOrderUuid);
+  Assert.assertTrue("order creation not audited",isValueInList(addedOrderUuid,audit.getPersonMergeLogData().getCreatedOrders()));
 }
