@@ -28,8 +28,17 @@
     if (orderType == null) {
       orderType=getOrderTypeByConcept(concept);
     }
+    if (orderType == null && order instanceof DrugOrder) {
+      orderType=Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID);
+    }
+    if (orderType == null && order instanceof TestOrder) {
+      orderType=Context.getOrderService().getOrderTypeByUuid(OrderType.TEST_ORDER_TYPE_UUID);
+    }
     if (orderType == null || (previousOrder != null && !orderType.equals(previousOrder.getOrderType()))) {
       throw new APIException("Cannot determine the order type of the order, make sure the concept's class is mapped to an order type");
+    }
+    if (!orderType.getJavaClass().isAssignableFrom(order.getClass())) {
+      throw new APIException("Order type java class does not match the order class " + order.getClass().getName());
     }
     order.setOrderType(orderType);
   }
