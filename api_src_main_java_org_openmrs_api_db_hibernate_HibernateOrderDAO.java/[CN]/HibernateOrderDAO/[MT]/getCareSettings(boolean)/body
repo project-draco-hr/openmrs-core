@@ -1,0 +1,7 @@
+{
+  Criteria c=sessionFactory.getCurrentSession().createCriteria(CareSetting.class);
+  if (!includeRetired) {
+    c.add(Restrictions.eq("retired",false));
+  }
+  return c.list();
+}

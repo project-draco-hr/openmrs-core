@@ -7,6 +7,7 @@
   preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
+  voidOrders(Collections.singleton(notPreferred));
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
   Assert.assertEquals("prior date of birth was not audited",cDate.getTime(),audit.getPersonMergeLogData().getPriorDateOfBirth());
 }

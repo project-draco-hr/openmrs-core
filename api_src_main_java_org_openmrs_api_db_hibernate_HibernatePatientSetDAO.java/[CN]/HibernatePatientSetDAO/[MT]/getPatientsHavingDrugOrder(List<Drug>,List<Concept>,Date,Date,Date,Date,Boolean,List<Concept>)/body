@@ -28,17 +28,16 @@
     sb.append(" and discontinuedReason.id in (:discontinuedReasonIdList) ");
   }
   if (discontinued != null) {
-    sb.append(" and discontinued = :discontinued ");
     if (discontinued == true) {
       if (stopDateFrom != null && stopDateTo != null) {
-        sb.append(" and discontinuedDate between :stopDateFrom and :stopDateTo ");
+        sb.append(" and dateStopped between :stopDateFrom and :stopDateTo ");
       }
  else {
         if (stopDateFrom != null) {
-          sb.append(" and discontinuedDate >= :stopDateFrom ");
+          sb.append(" and dateStopped >= :stopDateFrom ");
         }
         if (stopDateTo != null) {
-          sb.append(" and discontinuedDate <= :stopDateTo ");
+          sb.append(" and dateStopped <= :stopDateTo ");
         }
       }
     }
@@ -58,14 +57,14 @@
   }
  else {
     if (stopDateFrom != null && stopDateTo != null) {
-      sb.append(" and coalesce(discontinuedDate, autoExpireDate) between :stopDateFrom and :stopDateTo ");
+      sb.append(" and coalesce(dateStopped, autoExpireDate) between :stopDateFrom and :stopDateTo ");
     }
  else {
       if (stopDateFrom != null) {
-        sb.append(" and coalesce(discontinuedDate, autoExpireDate) >= :stopDateFrom ");
+        sb.append(" and coalesce(dateStopped, autoExpireDate) >= :stopDateFrom ");
       }
       if (stopDateTo != null) {
-        sb.append(" and coalesce(discontinuedDate, autoExpireDate) <= :stopDateTo ");
+        sb.append(" and coalesce(dateStopped, autoExpireDate) <= :stopDateTo ");
       }
     }
   }

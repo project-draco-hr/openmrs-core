@@ -12,10 +12,8 @@
     Assert.assertNotNull(encounter.getVoidReason());
   }
   OrderService os=Context.getOrderService();
-  List<Patient> patients=new ArrayList<Patient>();
-  patients.add(patient);
-  List<Order> orders=os.getOrders(Order.class,patients,null,ORDER_STATUS.ANY,null,null,null);
-  Assert.assertTrue(CollectionUtils.isNotEmpty(orders));
+  List<Order> orders=os.getAllOrdersByPatient(patient);
+  Assert.assertFalse(orders.isEmpty());
   for (  Order order : orders) {
     Assert.assertTrue(order.isVoided());
     Assert.assertNotNull(order.getDateVoided());

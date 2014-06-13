@@ -23,12 +23,12 @@
  else {
     Context.requirePrivilege(PrivilegeConstants.EDIT_ENCOUNTERS);
   }
+  Patient p=encounter.getPatient();
   if (!isNewEncounter) {
     originalDate=dao.getSavedEncounterDatetime(encounter);
     if (encounter.getLocation() != null) {
       originalLocation=dao.getSavedEncounterLocation(encounter);
     }
-    Patient p=encounter.getPatient();
     for (    Obs obs : encounter.getAllObs(true)) {
       if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
         if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
@@ -44,12 +44,17 @@
         obs.setPerson(p);
       }
     }
-    for (    Order o : encounter.getOrders()) {
-      if (!p.equals(o.getPatient())) {
-        o.setPatient(p);
-      }
+  }
+  for (  Order o : encounter.getOrders()) {
+    if (!p.equals(o.getPatient())) {
+      o.setPatient(p);
     }
   }
   dao.saveEncounter(encounter);
+  for (  Order o : encounter.getOrders()) {
+    if (o.getOrderId() == null) {
+      Context.getOrderService().saveOrder(o,null);
+    }
+  }
   return encounter;
 }

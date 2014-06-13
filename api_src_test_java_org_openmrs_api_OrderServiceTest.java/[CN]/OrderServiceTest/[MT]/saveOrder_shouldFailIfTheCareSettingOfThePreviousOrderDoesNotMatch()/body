@@ -1,0 +1,13 @@
+{
+  Order order=orderService.getOrder(7);
+  assertTrue(OrderUtilTest.isActiveOrder(order,null));
+  Order discontinuationOrder=order.cloneForDiscontinuing();
+  CareSetting careSetting=orderService.getCareSetting(2);
+  assertNotEquals(discontinuationOrder.getCareSetting(),careSetting);
+  discontinuationOrder.setCareSetting(careSetting);
+  discontinuationOrder.setOrderer(Context.getProviderService().getProvider(1));
+  discontinuationOrder.setEncounter(Context.getEncounterService().getEncounter(6));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("The care setting does not match that of the previous order");
+  orderService.saveOrder(discontinuationOrder,null);
+}

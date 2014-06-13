@@ -1,0 +1,19 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(OrderFrequency.class,"orderFreq");
+  criteria.setResultTransformer(DistinctRootEntityResultTransformer.INSTANCE);
+  criteria.createAlias("orderFreq.concept","concept");
+  criteria.createAlias("concept.names","conceptName");
+  criteria.add(Restrictions.ilike("conceptName.name",searchPhrase,MatchMode.ANYWHERE));
+  if (locale != null) {
+    List<Locale> locales=new ArrayList<Locale>(2);
+    locales.add(locale);
+    if (!exactLocale && StringUtils.isNotBlank(locale.getCountry())) {
+      locales.add(new Locale(locale.getLanguage()));
+    }
+    criteria.add(Restrictions.in("conceptName.locale",locales));
+  }
+  if (!includeRetired) {
+    criteria.add(Restrictions.eq("orderFreq.retired",false));
+  }
+  return criteria.list();
+}

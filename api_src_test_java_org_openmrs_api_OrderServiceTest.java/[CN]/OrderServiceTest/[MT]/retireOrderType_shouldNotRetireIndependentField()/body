@@ -1,0 +1,8 @@
+{
+  OrderType orderType=orderService.getOrderType(2);
+  ConceptClass conceptClass=conceptService.getConceptClass(1);
+  Assert.assertFalse(conceptClass.isRetired());
+  orderType.addConceptClass(conceptClass);
+  orderService.retireOrderType(orderType,"test retire reason");
+  Assert.assertFalse(conceptClass.isRetired());
+}

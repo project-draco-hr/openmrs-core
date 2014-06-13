@@ -1,0 +1,3 @@
+{
+  return (CareSetting)sessionFactory.getCurrentSession().createQuery("from CareSetting cs where cs.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

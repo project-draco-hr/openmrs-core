@@ -1,0 +1,12 @@
+{
+  Order order=orderService.getOrder(7).cloneForRevision();
+  order.setStartDate(new Date());
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  CareSetting newCareSetting=orderService.getCareSetting(2);
+  assertFalse(order.getPreviousOrder().getCareSetting().equals(newCareSetting));
+  order.getPreviousOrder().setCareSetting(newCareSetting);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot change the careSetting of an order");
+  orderService.saveOrder(order,null);
+}

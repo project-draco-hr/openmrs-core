@@ -1,0 +1,23 @@
+{
+  Date startDate=order.getStartDate();
+  if (startDate != null) {
+    if (startDate.after(new Date())) {
+      errors.rejectValue("startDate","Order.error.startDateInFuture");
+      return;
+    }
+    Date dateStopped=order.getDateStopped();
+    if (dateStopped != null && startDate.after(dateStopped)) {
+      errors.rejectValue("startDate","Order.error.startDateAfterDiscontinuedDate");
+      errors.rejectValue("dateStopped","Order.error.startDateAfterDiscontinuedDate");
+    }
+    Date autoExpireDate=order.getAutoExpireDate();
+    if (autoExpireDate != null && startDate.after(autoExpireDate)) {
+      errors.rejectValue("startDate","Order.error.startDateAfterAutoExpireDate");
+      errors.rejectValue("autoExpireDate","Order.error.startDateAfterAutoExpireDate");
+    }
+    Encounter encounter=order.getEncounter();
+    if (encounter != null && encounter.getEncounterDatetime() != null && encounter.getEncounterDatetime().after(startDate)) {
+      errors.rejectValue("startDate","Order.error.startDateAfterEncounterDatetime");
+    }
+  }
+}

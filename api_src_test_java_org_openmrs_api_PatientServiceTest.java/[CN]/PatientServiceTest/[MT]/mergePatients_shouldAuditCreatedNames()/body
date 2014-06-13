@@ -1,6 +1,7 @@
 {
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
   PersonName name=new PersonName("first1234","middle","last1234");
   notPreferred.addName(name);
   patientService.savePatient(notPreferred);

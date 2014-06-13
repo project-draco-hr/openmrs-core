@@ -11,6 +11,10 @@
     for (    Obs o : observations) {
       obsService.purgeObs(o);
     }
+    Set<Order> orders=encounter.getOrders();
+    for (    Order o : orders) {
+      Context.getOrderService().purgeOrder(o);
+    }
   }
   Context.getEncounterService().purgeEncounter(encounter);
 }

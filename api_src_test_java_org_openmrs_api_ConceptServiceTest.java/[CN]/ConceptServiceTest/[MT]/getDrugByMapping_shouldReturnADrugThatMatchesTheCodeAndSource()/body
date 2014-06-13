@@ -1,0 +1,6 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  final Integer expectedDrugId=2;
+  Drug drug=conceptService.getDrugByMapping("WGT234",conceptService.getConceptSource(2),null);
+  assertEquals(expectedDrugId,drug.getDrugId());
+}

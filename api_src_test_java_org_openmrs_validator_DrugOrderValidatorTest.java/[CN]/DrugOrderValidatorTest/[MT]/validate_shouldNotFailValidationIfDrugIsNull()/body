@@ -1,0 +1,7 @@
+{
+  DrugOrder order=new DrugOrder();
+  order.setDrug(null);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertFalse(errors.hasFieldErrors("drug"));
+}

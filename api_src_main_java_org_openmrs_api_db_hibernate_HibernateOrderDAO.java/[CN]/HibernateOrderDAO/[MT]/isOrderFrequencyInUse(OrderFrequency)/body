@@ -1,0 +1,25 @@
+{
+  Map<String,ClassMetadata> metadata=sessionFactory.getAllClassMetadata();
+  for (Iterator<ClassMetadata> i=metadata.values().iterator(); i.hasNext(); ) {
+    ClassMetadata classMetadata=i.next();
+    Class<?> entityClass=classMetadata.getMappedClass(EntityMode.POJO);
+    if (Order.class.equals(entityClass)) {
+      continue;
+    }
+    if (!Order.class.isAssignableFrom(entityClass)) {
+      continue;
+    }
+    String[] names=classMetadata.getPropertyNames();
+    for (    String name : names) {
+      if (classMetadata.getPropertyType(name).getReturnedClass().equals(OrderFrequency.class)) {
+        Criteria criteria=sessionFactory.getCurrentSession().createCriteria(entityClass);
+        criteria.add(Restrictions.eq(name,orderFrequency));
+        criteria.setMaxResults(1);
+        if (criteria.list().size() > 0) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}

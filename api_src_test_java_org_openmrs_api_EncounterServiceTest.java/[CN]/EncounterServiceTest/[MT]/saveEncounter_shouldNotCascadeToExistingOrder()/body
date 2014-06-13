@@ -1,0 +1,10 @@
+{
+  EncounterService es=Context.getEncounterService();
+  TestOrder order=(TestOrder)Context.getOrderService().getOrder(7);
+  order.setVoided(true);
+  Encounter encounter=es.getEncounter(6);
+  es.saveEncounter(encounter);
+  String sql="SELECT voided FROM orders WHERE order_id=7";
+  Boolean voided=(Boolean)Context.getAdministrationService().executeSQL(sql,true).get(0).get(0);
+  Assert.assertFalse(voided);
+}

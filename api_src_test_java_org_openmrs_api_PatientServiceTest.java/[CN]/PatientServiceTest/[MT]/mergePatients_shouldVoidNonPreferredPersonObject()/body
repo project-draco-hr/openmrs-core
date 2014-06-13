@@ -1,4 +1,6 @@
 {
-  Context.getPatientService().mergePatients(patientService.getPatient(6),patientService.getPatient(2));
+  Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
+  Context.getPatientService().mergePatients(patientService.getPatient(6),notPreferred);
   Assert.assertTrue(Context.getPersonService().getPerson(2).isVoided());
 }

@@ -1,0 +1,8 @@
+{
+  Patient patient=patientService.getPatient(2);
+  CareSetting careSetting=orderService.getCareSetting(1);
+  List<Order> orders=orderService.getActiveOrders(patient,null,careSetting,null);
+  assertEquals(4,orders.size());
+  Order[] expectedOrders={orderService.getOrder(3),orderService.getOrder(444),orderService.getOrder(5),orderService.getOrder(7)};
+  assertThat(orders,hasItems(expectedOrders));
+}

@@ -1,0 +1,6 @@
+{
+  CareSetting cs=orderService.getCareSettingByName("INPATIENT");
+  assertEquals(2,cs.getId().intValue());
+  cs=orderService.getCareSettingByName("inpatient");
+  assertEquals(2,cs.getId().intValue());
+}

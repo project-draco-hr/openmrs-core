@@ -1,0 +1,8 @@
+{
+  String conceptUuid=Context.getAdministrationService().getGlobalProperty(globalProperty);
+  Concept concept=Context.getConceptService().getConceptByUuid(conceptUuid);
+  if (concept != null && concept.isSet()) {
+    return concept.getSetMembers();
+  }
+  return Collections.emptyList();
+}

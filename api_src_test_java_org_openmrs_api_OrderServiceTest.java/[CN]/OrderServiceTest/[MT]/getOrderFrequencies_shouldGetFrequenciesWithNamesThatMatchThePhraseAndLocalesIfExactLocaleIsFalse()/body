@@ -1,0 +1,8 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-otherOrderFrequencies.xml");
+  List<OrderFrequency> orderFrequencies=orderService.getOrderFrequencies("ce",Locale.US,false,false);
+  assertEquals(3,orderFrequencies.size());
+  assertTrue(containsId(orderFrequencies,100));
+  assertTrue(containsId(orderFrequencies,101));
+  assertTrue(containsId(orderFrequencies,102));
+}

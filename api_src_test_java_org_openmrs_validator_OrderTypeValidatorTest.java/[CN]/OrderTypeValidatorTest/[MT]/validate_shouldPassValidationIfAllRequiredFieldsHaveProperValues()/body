@@ -1,8 +1,0 @@
-{
-  OrderType type=new OrderType();
-  type.setName("restraining");
-  type.setDescription(":(");
-  Errors errors=new BindException(type,"type");
-  new OrderTypeValidator().validate(type,errors);
-  Assert.assertFalse(errors.hasErrors());
-}

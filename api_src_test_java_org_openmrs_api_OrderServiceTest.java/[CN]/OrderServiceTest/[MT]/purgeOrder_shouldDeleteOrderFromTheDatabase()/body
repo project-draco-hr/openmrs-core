@@ -1,0 +1,7 @@
+{
+  final String uuid="9c21e407-697b-11e3-bd76-0800271c1b75";
+  Order order=orderService.getOrderByUuid(uuid);
+  assertNotNull(order);
+  orderService.purgeOrder(order);
+  assertNull(orderService.getOrderByUuid(uuid));
+}
