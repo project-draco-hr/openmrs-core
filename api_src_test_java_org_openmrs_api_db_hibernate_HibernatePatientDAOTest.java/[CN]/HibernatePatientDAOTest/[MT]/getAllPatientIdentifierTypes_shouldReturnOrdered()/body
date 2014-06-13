@@ -1,9 +1,0 @@
-{
-  PatientIdentifierType patientIdentifierType1=dao.getPatientIdentifierType(1);
-  PatientIdentifierType patientIdentifierType2=dao.getPatientIdentifierType(2);
-  patientIdentifierType2.setRequired(true);
-  dao.savePatientIdentifierType(patientIdentifierType2);
-  PatientIdentifierType patientIdentifierType4=dao.getPatientIdentifierType(4);
-  List<PatientIdentifierType> all=dao.getAllPatientIdentifierTypes(true);
-  Assert.assertArrayEquals(new Object[]{patientIdentifierType2,patientIdentifierType1,patientIdentifierType4},all.toArray());
-}

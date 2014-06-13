@@ -11,6 +11,7 @@
   Visit visit4=visitService.getVisit(4);
   Visit visit5=visitService.getVisit(5);
   List<String> encounterUuidsThatShouldBeMoved=new ArrayList<String>();
+  encounterUuidsThatShouldBeMoved.add(Context.getEncounterService().getEncounter(6).getUuid());
   for (  Visit v : Arrays.asList(visit1,visit2,visit3)) {
     for (    Encounter e : v.getEncounters()) {
       encounterUuidsThatShouldBeMoved.add(e.getUuid());

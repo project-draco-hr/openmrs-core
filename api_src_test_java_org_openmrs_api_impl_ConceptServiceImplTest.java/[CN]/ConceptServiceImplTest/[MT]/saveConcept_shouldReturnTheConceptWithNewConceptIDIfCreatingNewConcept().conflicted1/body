@@ -1,8 +1,0 @@
-{
-  Concept c=new Concept();
-  ConceptName fullySpecifiedName=new ConceptName("requires one name min",new Locale("fr","CA"));
-  c.addName(fullySpecifiedName);
-  Concept savedC=Context.getConceptService().saveConcept(c);
-  Assert.assertNotNull(savedC);
-  Assert.assertTrue(savedC.getConceptId() > 0);
-}
