@@ -1,0 +1,10 @@
+{
+  if (persistentObject == null) {
+    return null;
+  }
+  if (persistentObject instanceof HibernateProxy) {
+    Hibernate.initialize(persistentObject);
+    persistentObject=(T)((HibernateProxy)persistentObject).getHibernateLazyInitializer().getImplementation();
+  }
+  return persistentObject;
+}

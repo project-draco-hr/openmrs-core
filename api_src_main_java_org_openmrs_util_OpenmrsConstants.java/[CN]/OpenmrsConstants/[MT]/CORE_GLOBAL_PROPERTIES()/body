@@ -91,7 +91,6 @@
   props.add(new GlobalProperty(GP_SEARCH_DATE_DISPLAY_FORMAT,null,"Date display format to be used to display the date somewhere in the UI i.e the search widgets and autocompletes"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME,"Unknown Location","The name of the location to use as a system default"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_START,"Specifies how patient names are matched while searching patient. Valid values are 'ANYWHERE' or 'START'. Defaults to start if missing or invalid value is present."));
-  props.add(new GlobalProperty(GP_ORDER_ENTRY_ORDER_NUMBER_PREFIX,ORDER_NUMBER_DEFAULT_PREFIX,"Specifies the prefix used when creating order numbers"));
   props.add(new GlobalProperty(GP_ENABLE_CONCEPT_MAP_TYPE_MANAGEMENT,"false","Enables or disables management of concept map types",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ENABLE_VISITS,"true","Set to true to enable the Visits feature. This will replace the 'Encounters' tab with a 'Visits' tab on the dashboard.",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GP_VISIT_ASSIGNMENT_HANDLER,ExistingVisitAssignmentHandler.class.getName(),"Set to the name of the class responsible for assigning encounters to visits."));
@@ -115,6 +114,13 @@
   props.add(new GlobalProperty(GLOBAL_PROPERTY_FORMS_LOCKED,"false","Set to a value of true if you do not want any changes to be made on forms, else set to false."));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_PERSON_ATRIBUTE_TYPES_LOCKED,"false","Set to a value of true if you do not want allow editing person attribute types, else set to false."));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_PATIENT_IDENTIFIER_TYPES_LOCKED,"false","Set to a value of true if you do not want allow editing patient identifier types, else set to false."));
+  props.add(new GlobalProperty(GP_NEXT_ORDER_NUMBER_SEED,"1","The next order number available for assignment"));
+  props.add(new GlobalProperty(GP_ORDER_NUMBER_GENERATOR_BEAN_ID,"","Specifies spring bean id of the order generator to use when assigning order numbers"));
+  props.add(new GlobalProperty(GP_DRUG_ROUTES_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug routes"));
+  props.add(new GlobalProperty(GP_DRUG_DOSING_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug dosing units"));
+  props.add(new GlobalProperty(GP_DRUG_DISPENSING_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug dispensing units"));
+  props.add(new GlobalProperty(GP_DURATION_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible duration units"));
+  props.add(new GlobalProperty(GP_TEST_SPECIMEN_SOURCES_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible test specimen sources"));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }

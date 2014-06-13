@@ -1,0 +1,23 @@
+{
+  if (getAction() == Action.DISCONTINUE) {
+    target.setAction(Action.DISCONTINUE);
+    target.setPreviousOrder(getPreviousOrder());
+    target.setStartDate(getStartDate());
+  }
+ else {
+    target.setAction(Action.REVISE);
+    target.setPreviousOrder(this);
+    target.setAutoExpireDate(getAutoExpireDate());
+  }
+  target.setCareSetting(getCareSetting());
+  target.setConcept(getConcept());
+  target.setPatient(getPatient());
+  target.setOrderType(getOrderType());
+  target.setScheduledDate(getScheduledDate());
+  target.setInstructions(getInstructions());
+  target.setUrgency(getUrgency());
+  target.setCommentToFulfiller(getCommentToFulfiller());
+  target.setOrderReason(getOrderReason());
+  target.setOrderReasonNonCoded(getOrderReasonNonCoded());
+  return target;
+}

@@ -1,0 +1,7 @@
+{
+  OrderFrequency orderFrequency=Context.getOrderService().getOrderFrequency(1);
+  assertNotNull(orderFrequency);
+  Errors errors=new BindException(orderFrequency,"orderFrequency");
+  new OrderFrequencyValidator().validate(orderFrequency,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

@@ -1,0 +1,7 @@
+{
+  OrderType orderType=orderService.getOrderType(1);
+  assertNotNull(orderType);
+  Errors errors=new BindException(orderType,"orderType");
+  new OrderTypeValidator().validate(orderType,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

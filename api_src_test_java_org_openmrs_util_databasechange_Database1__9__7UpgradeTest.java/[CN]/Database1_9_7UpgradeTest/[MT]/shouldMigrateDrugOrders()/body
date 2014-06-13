@@ -1,0 +1,14 @@
+{
+  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
+  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
+  upgradeTestUtil.upgrade();
+  List<Map<String,String>> orderFrequencySelect=upgradeTestUtil.select("order_frequency","order_frequency_id","concept_id");
+  Assert.assertThat(orderFrequencySelect.size(),Matchers.is(2));
+  Map<String,String> conceptsToFrequencies=new HashMap<String,String>();
+  conceptsToFrequencies.put(orderFrequencySelect.get(0).get("concept_id"),orderFrequencySelect.get(0).get("order_frequency_id"));
+  conceptsToFrequencies.put(orderFrequencySelect.get(1).get("concept_id"),orderFrequencySelect.get(1).get("order_frequency_id"));
+  Assert.assertThat(conceptsToFrequencies.keySet(),Matchers.containsInAnyOrder("113","114"));
+  List<Map<String,String>> drugOrderSelect=upgradeTestUtil.select("drug_order","order_id","frequency");
+  Assert.assertThat(drugOrderSelect,Matchers.containsInAnyOrder(row("order_id","1","frequency",conceptsToFrequencies.get("113")),row("order_id","2","frequency",conceptsToFrequencies.get("113")),row("order_id","3","frequency",conceptsToFrequencies.get("114")),row("order_id","4","frequency",conceptsToFrequencies.get("113")),row("order_id","5","frequency",conceptsToFrequencies.get("114"))));
+}

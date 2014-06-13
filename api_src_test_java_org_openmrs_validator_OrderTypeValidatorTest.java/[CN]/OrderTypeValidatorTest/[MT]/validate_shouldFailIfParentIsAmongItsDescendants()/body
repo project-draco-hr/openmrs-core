@@ -1,0 +1,9 @@
+{
+  OrderType orderType=orderService.getOrderType(2);
+  OrderType descendant=orderService.getOrderType(9);
+  Assert.assertTrue(descendant.getParent().getParent().equals(orderType));
+  orderType.setParent(descendant);
+  Errors errors=new BindException(orderType,"orderType");
+  new OrderTypeValidator().validate(orderType,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("parent"));
+}

@@ -1,0 +1,13 @@
+{
+  Order orderToRevise=orderService.getOrder(7);
+  Patient newPatient=patientService.getPatient(7);
+  assertFalse(orderToRevise.getPatient().equals(newPatient));
+  orderToRevise.setPatient(newPatient);
+  Order order=orderToRevise.cloneForRevision();
+  order.setStartDate(new Date());
+  order.setEncounter(encounterService.getEncounter(3));
+  order.setOrderer(providerService.getProvider(1));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot change the patient of an order");
+  orderService.saveOrder(order,null);
+}

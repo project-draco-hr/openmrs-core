@@ -1,0 +1,16 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("new name",Context.getLocale()));
+  concept.setConceptClass(conceptService.getConceptClassByName("Frequency"));
+  concept=conceptService.saveConcept(concept);
+  Integer originalSize=orderService.getOrderFrequencies(true).size();
+  OrderFrequency orderFrequency=new OrderFrequency();
+  orderFrequency.setConcept(concept);
+  orderFrequency.setFrequencyPerDay(2d);
+  orderFrequency=orderService.saveOrderFrequency(orderFrequency);
+  assertNotNull(orderFrequency.getId());
+  assertNotNull(orderFrequency.getUuid());
+  assertNotNull(orderFrequency.getCreator());
+  assertNotNull(orderFrequency.getDateCreated());
+  assertEquals(originalSize + 1,orderService.getOrderFrequencies(true).size());
+}

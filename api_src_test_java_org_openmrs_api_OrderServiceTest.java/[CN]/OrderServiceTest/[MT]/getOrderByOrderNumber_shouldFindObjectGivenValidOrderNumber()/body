@@ -1,5 +1,5 @@
 {
-  Order order=Context.getOrderService().getOrderByOrderNumber("1");
+  Order order=orderService.getOrderByOrderNumber("1");
   Assert.assertNotNull(order);
   Assert.assertEquals(1,(int)order.getOrderId());
 }

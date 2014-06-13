@@ -1,0 +1,9 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  List<ConceptMapType> conceptMapTypeList=new ArrayList<ConceptMapType>();
+  conceptMapTypeList.add(conceptService.getConceptMapType(1));
+  ConceptSource source=conceptService.getConceptSource(1);
+  List<Drug> drugs=conceptService.getDrugsByMapping("WGT234",source,conceptMapTypeList,false);
+  assertEquals(1,drugs.size());
+  assertTrue(containsId(drugs,2));
+}

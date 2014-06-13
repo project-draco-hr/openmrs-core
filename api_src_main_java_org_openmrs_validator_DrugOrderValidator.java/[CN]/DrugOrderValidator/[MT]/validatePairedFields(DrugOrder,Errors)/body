@@ -1,0 +1,11 @@
+{
+  if (order.getDose() != null) {
+    ValidationUtils.rejectIfEmpty(errors,"doseUnits","DrugOrder.error.doseUnitsRequiredWithDose");
+  }
+  if (order.getQuantity() != null) {
+    ValidationUtils.rejectIfEmpty(errors,"quantityUnits","DrugOrder.error.quantityUnitsRequiredWithQuantity");
+  }
+  if (order.getDuration() != null) {
+    ValidationUtils.rejectIfEmpty(errors,"durationUnits","DrugOrder.error.durationUnitsRequiredWithDuration");
+  }
+}

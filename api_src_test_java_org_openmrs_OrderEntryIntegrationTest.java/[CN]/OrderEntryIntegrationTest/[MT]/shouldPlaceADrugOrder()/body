@@ -1,0 +1,28 @@
+{
+  executeDataSet(ORDER_ENTRY_DATASET_XML);
+  Patient patient=patientService.getPatient(7);
+  CareSetting careSetting=orderService.getCareSetting(1);
+  int activeDrugOrderCount=orderService.getActiveOrders(patient,orderService.getOrderTypeByName("Drug order"),careSetting,null).size();
+  DrugOrder order=new DrugOrder();
+  Encounter encounter=encounterService.getEncounter(3);
+  order.setEncounter(encounter);
+  order.setPatient(patient);
+  order.setCareSetting(careSetting);
+  order.setOrderer(Context.getProviderService().getProvider(1));
+  order.setStartDate(encounter.getEncounterDatetime());
+  order.setDrug(conceptService.getDrug(2));
+  order.setDosingType(DrugOrder.DosingType.SIMPLE);
+  order.setDose(300.0);
+  order.setDoseUnits(conceptService.getConcept(50));
+  order.setQuantity(20.0);
+  order.setQuantityUnits(conceptService.getConcept(51));
+  order.setDuration(20.0);
+  order.setDurationUnits(conceptService.getConcept(28));
+  order.setFrequency(orderService.getOrderFrequency(3000));
+  order.setRoute(conceptService.getConcept(22));
+  order.setNumRefills(10);
+  orderService.saveOrder(order,null);
+  List<Order> activeOrders=orderService.getActiveOrders(patient,orderService.getOrderTypeByName("Drug order"),careSetting,null);
+  assertEquals(++activeDrugOrderCount,activeOrders.size());
+  assertTrue(activeOrders.contains(order));
+}

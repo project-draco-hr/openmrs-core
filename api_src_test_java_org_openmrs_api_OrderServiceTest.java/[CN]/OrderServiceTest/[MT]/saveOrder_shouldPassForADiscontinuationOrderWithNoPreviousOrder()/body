@@ -1,0 +1,10 @@
+{
+  Order dcOrder=new Order();
+  dcOrder.setAction(Action.DISCONTINUE);
+  dcOrder.setPatient(patientService.getPatient(2));
+  dcOrder.setCareSetting(orderService.getCareSetting(2));
+  dcOrder.setConcept(conceptService.getConcept(5089));
+  dcOrder.setEncounter(encounterService.getEncounter(6));
+  dcOrder.setOrderer(providerService.getProvider(1));
+  orderService.saveOrder(dcOrder,null);
+}

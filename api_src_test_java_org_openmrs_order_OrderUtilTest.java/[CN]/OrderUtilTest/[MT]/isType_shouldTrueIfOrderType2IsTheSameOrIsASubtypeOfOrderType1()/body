@@ -1,0 +1,10 @@
+{
+  OrderType orderType=new OrderType();
+  OrderType subType1=new OrderType();
+  OrderType subType2=new OrderType();
+  subType2.setParent(subType1);
+  subType1.setParent(orderType);
+  assertTrue(OrderUtil.isType(subType2,subType2));
+  assertTrue(OrderUtil.isType(subType1,subType2));
+  assertTrue(OrderUtil.isType(orderType,subType2));
+}

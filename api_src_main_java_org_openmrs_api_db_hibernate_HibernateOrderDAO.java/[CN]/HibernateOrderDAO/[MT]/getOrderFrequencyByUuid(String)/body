@@ -1,0 +1,3 @@
+{
+  return (OrderFrequency)sessionFactory.getCurrentSession().createQuery("from OrderFrequency o where o.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

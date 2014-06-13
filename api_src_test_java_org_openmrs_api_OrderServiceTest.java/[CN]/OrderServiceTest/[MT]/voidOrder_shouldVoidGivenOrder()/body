@@ -1,9 +1,0 @@
-{
-  OrderService orderService=Context.getOrderService();
-  Order order=orderService.getOrder(2);
-  Assert.assertNotNull(order);
-  String voidReason="test reason";
-  orderService.voidOrder(order,voidReason);
-  Assert.assertTrue(order.isVoided());
-  Assert.assertEquals(voidReason,order.getVoidReason());
-}

@@ -1,6 +1,7 @@
 {
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
   PatientIdentifier patientIdentifier=new PatientIdentifier();
   patientIdentifier.setIdentifier("123-0");
   patientIdentifier.setIdentifierType(patientService.getPatientIdentifierType(5));

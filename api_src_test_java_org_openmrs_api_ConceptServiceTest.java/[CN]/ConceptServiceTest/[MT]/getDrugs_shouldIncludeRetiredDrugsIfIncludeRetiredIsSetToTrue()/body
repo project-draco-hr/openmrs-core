@@ -1,0 +1,8 @@
+{
+  final String searchPhrase="Nyq";
+  List<Drug> drugs=conceptService.getDrugs(searchPhrase,null,false,false);
+  assertEquals(0,drugs.size());
+  drugs=conceptService.getDrugs(searchPhrase,null,false,true);
+  assertEquals(1,drugs.size());
+  assertEquals(11,drugs.get(0).getDrugId().intValue());
+}

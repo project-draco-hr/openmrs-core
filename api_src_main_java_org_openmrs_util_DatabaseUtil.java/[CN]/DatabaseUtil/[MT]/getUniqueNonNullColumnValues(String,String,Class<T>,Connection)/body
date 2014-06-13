@@ -1,0 +1,10 @@
+{
+  Set<T> uniqueValues=new HashSet<T>();
+  final String alias="unique_values";
+  String select="SELECT DISTINCT " + columnName + " AS "+ alias+ " FROM "+ tableName+ " WHERE "+ columnName+ " IS NOT NULL";
+  List<List<Object>> rows=DatabaseUtil.executeSQL(connection,select,true);
+  for (  List<Object> row : rows) {
+    uniqueValues.add((T)row.get(0));
+  }
+  return uniqueValues;
+}

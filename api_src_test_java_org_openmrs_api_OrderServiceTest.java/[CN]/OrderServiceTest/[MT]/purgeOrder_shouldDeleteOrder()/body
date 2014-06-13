@@ -1,7 +1,0 @@
-{
-  Order order=Context.getOrderService().getOrder(1);
-  Assert.assertNotNull(order);
-  Context.getOrderService().purgeOrder(order);
-  order=Context.getOrderService().getOrder(1);
-  Assert.assertNull(order);
-}

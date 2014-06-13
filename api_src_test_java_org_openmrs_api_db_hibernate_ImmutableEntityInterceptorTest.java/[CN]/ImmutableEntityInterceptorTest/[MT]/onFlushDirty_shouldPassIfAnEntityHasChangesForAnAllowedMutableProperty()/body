@@ -1,0 +1,6 @@
+{
+  String[] propertyNames=new String[]{SomeImmutableEntityInterceptor.MUTABLE_FIELD_NAME};
+  String[] previousState=new String[]{"old"};
+  String[] currentState=new String[]{"new"};
+  new SomeImmutableEntityInterceptor().onFlushDirty(new Order(),null,currentState,previousState,propertyNames,null);
+}

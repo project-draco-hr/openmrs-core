@@ -1,0 +1,15 @@
+{
+  if (patient == null) {
+    throw new IllegalArgumentException("Patient is required");
+  }
+  if (careSetting == null) {
+    throw new IllegalArgumentException("CareSetting is required");
+  }
+  List<OrderType> orderTypes=null;
+  if (orderType != null) {
+    orderTypes=new ArrayList<OrderType>();
+    orderTypes.add(orderType);
+    orderTypes.addAll(getSubtypes(orderType,true));
+  }
+  return dao.getOrders(patient,careSetting,orderTypes,includeVoided,false);
+}

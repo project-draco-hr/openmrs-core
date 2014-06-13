@@ -1,0 +1,9 @@
+{
+  OrderService os=Context.getOrderService();
+  for (  Patient p : patientsWithOrders) {
+    List<Order> orders=os.getAllOrdersByPatient(p);
+    for (    Order o : orders) {
+      o.setVoided(true);
+    }
+  }
+}

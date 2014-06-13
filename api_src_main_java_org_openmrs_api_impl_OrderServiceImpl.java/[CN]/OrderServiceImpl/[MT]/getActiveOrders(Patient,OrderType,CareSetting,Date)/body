@@ -1,0 +1,15 @@
+{
+  if (patient == null) {
+    throw new IllegalArgumentException("Patient is required when fetching active orders");
+  }
+  if (asOfDate == null) {
+    asOfDate=new Date();
+  }
+  List<OrderType> orderTypes=null;
+  if (orderType != null) {
+    orderTypes=new ArrayList<OrderType>();
+    orderTypes.add(orderType);
+    orderTypes.addAll(getSubtypes(orderType,true));
+  }
+  return dao.getActiveOrders(patient,orderTypes,careSetting,asOfDate);
+}

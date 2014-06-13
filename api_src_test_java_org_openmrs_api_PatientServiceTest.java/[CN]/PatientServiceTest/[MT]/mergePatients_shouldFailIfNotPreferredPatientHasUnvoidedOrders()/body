@@ -1,0 +1,7 @@
+{
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage(Matchers.is("Cannot merge patients where the not preferred patient has unvoided orders"));
+  Patient preferredPatient=patientService.getPatient(8);
+  Patient notPreferredPatient=patientService.getPatient(7);
+  patientService.mergePatients(preferredPatient,notPreferredPatient);
+}

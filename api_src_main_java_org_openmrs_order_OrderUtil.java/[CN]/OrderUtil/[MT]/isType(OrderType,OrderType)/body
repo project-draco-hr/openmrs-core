@@ -1,0 +1,15 @@
+{
+  if (orderType1 != null && orderType2 != null) {
+    if (orderType2.equals(orderType1)) {
+      return true;
+    }
+    OrderType parentType=orderType2.getParent();
+    while (parentType != null) {
+      if (parentType.equals(orderType1)) {
+        return true;
+      }
+      parentType=parentType.getParent();
+    }
+  }
+  return false;
+}

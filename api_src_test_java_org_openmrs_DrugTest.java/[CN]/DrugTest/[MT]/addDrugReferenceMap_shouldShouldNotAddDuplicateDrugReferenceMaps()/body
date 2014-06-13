@@ -1,0 +1,13 @@
+{
+  Drug drug=new Drug();
+  DrugReferenceMap map1=new DrugReferenceMap();
+  map1.setUuid(UUID_1);
+  DrugReferenceMap map2=new DrugReferenceMap();
+  map2.setUuid(UUID_2);
+  DrugReferenceMap map2Duplicate=new DrugReferenceMap();
+  map2Duplicate.setUuid(UUID_2);
+  drug.addDrugReferenceMap(map1);
+  drug.addDrugReferenceMap(map2);
+  drug.addDrugReferenceMap(map2Duplicate);
+  Assert.assertEquals(2,drug.getDrugReferenceMaps().size());
+}

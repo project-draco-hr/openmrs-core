@@ -1,0 +1,6 @@
+{
+  OrderFrequency orderFrequency=new OrderFrequency();
+  Errors errors=new BindException(orderFrequency,"orderFrequency");
+  new OrderFrequencyValidator().validate(orderFrequency,errors);
+  Assert.assertTrue(errors.hasFieldErrors("concept"));
+}

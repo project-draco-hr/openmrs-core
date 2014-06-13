@@ -1,3 +1,10 @@
 {
-  return dao.saveOrder(order);
+  if (!StringUtils.hasLength(voidReason)) {
+    throw new IllegalArgumentException("voidReason cannot be empty or null");
+  }
+  Order previousOrder=order.getPreviousOrder();
+  if (previousOrder != null && isDiscontinueOrReviseOrder(order)) {
+    setProperty(previousOrder,"dateStopped",null);
+  }
+  return saveOrderInternal(order,null);
 }

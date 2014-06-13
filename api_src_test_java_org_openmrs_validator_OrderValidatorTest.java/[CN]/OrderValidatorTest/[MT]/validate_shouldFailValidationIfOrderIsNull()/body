@@ -2,4 +2,5 @@
   Errors errors=new BindException(new Order(),"order");
   new OrderValidator().validate(null,errors);
   Assert.assertTrue(errors.hasErrors());
+  Assert.assertEquals("error.general",((List<ObjectError>)errors.getAllErrors()).get(0).getCode());
 }

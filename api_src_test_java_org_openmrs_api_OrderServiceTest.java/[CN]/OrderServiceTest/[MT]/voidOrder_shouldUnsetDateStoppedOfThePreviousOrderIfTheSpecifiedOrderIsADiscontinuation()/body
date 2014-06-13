@@ -1,0 +1,11 @@
+{
+  Order order=orderService.getOrder(22);
+  assertEquals(Action.DISCONTINUE,order.getAction());
+  Order previousOrder=order.getPreviousOrder();
+  assertNotNull(previousOrder.getDateStopped());
+  assertFalse(order.getVoided());
+  orderService.voidOrder(order,"None");
+  Context.flushSession();
+  assertTrue(order.getVoided());
+  assertNull(previousOrder.getDateStopped());
+}

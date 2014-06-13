@@ -1,0 +1,21 @@
+{
+  Date scheduledDate=new Date();
+  Order order=new Order();
+  order.setAction(Action.NEW);
+  order.setPatient(Context.getPatientService().getPatient(7));
+  order.setConcept(Context.getConceptService().getConcept(5497));
+  order.setCareSetting(orderService.getCareSetting(1));
+  order.setOrderer(orderService.getOrder(1).getOrderer());
+  order.setEncounter(encounterService.getEncounter(3));
+  order.setStartDate(new Date());
+  order.setScheduledDate(scheduledDate);
+  order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
+  order.setEncounter(encounterService.getEncounter(3));
+  order.setOrderType(orderService.getOrderType(17));
+  order=orderService.saveOrder(order,null);
+  Order newOrder=orderService.getOrder(order.getOrderId());
+  assertNotNull(order);
+  assertEquals(scheduledDate,order.getScheduledDate());
+  assertNotNull(newOrder);
+  assertEquals(scheduledDate,newOrder.getScheduledDate());
+}

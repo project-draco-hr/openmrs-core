@@ -1,0 +1,6 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  List<ConceptMapType> conceptMapTypeList=conceptService.getConceptMapTypes(false,true);
+  List<Drug> drugs=conceptService.getDrugsByMapping("some radom code",conceptService.getConceptSource(2),conceptMapTypeList,false);
+  assertTrue(drugs.isEmpty());
+}

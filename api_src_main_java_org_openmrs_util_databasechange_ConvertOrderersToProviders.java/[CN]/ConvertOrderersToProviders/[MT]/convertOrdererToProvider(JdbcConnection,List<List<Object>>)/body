@@ -1,0 +1,44 @@
+{
+  final int batchSize=1000;
+  int index=0;
+  PreparedStatement updateStatement=null;
+  Boolean autoCommit=null;
+  try {
+    autoCommit=connection.getAutoCommit();
+    connection.setAutoCommit(false);
+    updateStatement=connection.prepareStatement("UPDATE orders SET orderer = ? WHERE orderer = ?");
+    boolean supportsBatchUpdate=connection.getMetaData().supportsBatchUpdates();
+    for (    List<Object> row : usersAndProviders) {
+      updateStatement.setInt(1,(Integer)row.get(1));
+      updateStatement.setInt(2,(Integer)row.get(0));
+      if (supportsBatchUpdate) {
+        updateStatement.addBatch();
+        index++;
+        if (index % batchSize == 0) {
+          updateStatement.executeBatch();
+        }
+      }
+ else {
+        updateStatement.executeUpdate();
+      }
+    }
+    if (supportsBatchUpdate) {
+      updateStatement.executeBatch();
+    }
+    connection.commit();
+  }
+ catch (  DatabaseException e) {
+    handleError(connection,e);
+  }
+catch (  SQLException e) {
+    handleError(connection,e);
+  }
+ finally {
+    if (autoCommit != null) {
+      connection.setAutoCommit(autoCommit);
+    }
+    if (updateStatement != null) {
+      updateStatement.close();
+    }
+  }
+}

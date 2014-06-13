@@ -1,0 +1,43 @@
+{
+  if (methodName == null) {
+    methodName="copy";
+  }
+  List<String> fieldsToExclude=new ArrayList<String>();
+  fieldsToExclude.addAll(Arrays.asList("log","serialVersionUID","orderId","uuid"));
+  if (otherfieldsToExclude != null) {
+    fieldsToExclude.addAll(Arrays.asList(otherfieldsToExclude));
+  }
+  List<Field> fields=Reflect.getAllFields(original.getClass());
+  for (  Field field : fields) {
+    if (fieldsToExclude.contains(field.getName())) {
+      continue;
+    }
+    field.setAccessible(true);
+    Object fieldValue=null;
+    if (field.getType().isEnum()) {
+      fieldValue=field.getType().getEnumConstants()[0];
+    }
+ else     if (field.getType().equals(Boolean.class)) {
+      fieldValue=true;
+    }
+ else     if (field.getType().equals(Integer.class)) {
+      fieldValue=10;
+    }
+ else     if (field.getType().equals(Double.class)) {
+      fieldValue=5.0;
+    }
+ else {
+      fieldValue=field.getType().newInstance();
+    }
+    field.set(original,fieldValue);
+  }
+  Order copy=(Order)MethodUtils.invokeExactMethod(original,methodName,null);
+  for (  Field field : fields) {
+    Object copyValue=field.get(copy);
+    if (fieldsToExclude.contains(field.getName())) {
+      continue;
+    }
+    assertNotNull("Order." + methodName + " should set "+ field.getName()+ " on the new Order",copyValue);
+    assertEquals("Order." + methodName + " should set "+ field.getName()+ " on the new Order",field.get(original),copyValue);
+  }
+}

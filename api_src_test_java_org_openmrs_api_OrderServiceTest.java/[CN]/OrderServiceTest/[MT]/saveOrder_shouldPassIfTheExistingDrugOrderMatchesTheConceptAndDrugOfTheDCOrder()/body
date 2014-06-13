@@ -1,0 +1,25 @@
+{
+  final DrugOrder orderToDiscontinue=(DrugOrder)orderService.getOrder(444);
+  assertTrue(OrderUtilTest.isActiveOrder(orderToDiscontinue,null));
+  DrugOrder order=new DrugOrder();
+  order.setDrug(orderToDiscontinue.getDrug());
+  order.setOrderType(orderService.getOrderTypeByName("Drug order"));
+  order.setAction(Order.Action.DISCONTINUE);
+  order.setOrderReasonNonCoded("Discontinue this");
+  order.setPatient(orderToDiscontinue.getPatient());
+  order.setConcept(orderToDiscontinue.getConcept());
+  order.setOrderer(orderToDiscontinue.getOrderer());
+  order.setCareSetting(orderToDiscontinue.getCareSetting());
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setStartDate(new Date());
+  order.setDosingType(DrugOrder.DosingType.SIMPLE);
+  order.setDose(orderToDiscontinue.getDose());
+  order.setDoseUnits(orderToDiscontinue.getDoseUnits());
+  order.setRoute(orderToDiscontinue.getRoute());
+  order.setFrequency(orderToDiscontinue.getFrequency());
+  order.setQuantity(orderToDiscontinue.getQuantity());
+  order.setQuantityUnits(orderToDiscontinue.getQuantityUnits());
+  order.setNumRefills(orderToDiscontinue.getNumRefills());
+  orderService.saveOrder(order,null);
+  Assert.assertNotNull("previous order should be discontinued",orderToDiscontinue.getDateStopped());
+}

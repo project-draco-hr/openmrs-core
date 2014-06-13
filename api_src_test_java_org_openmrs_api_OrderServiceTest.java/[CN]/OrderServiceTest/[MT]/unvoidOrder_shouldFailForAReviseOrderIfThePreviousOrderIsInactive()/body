@@ -1,0 +1,17 @@
+{
+  Order order=orderService.getOrder(111);
+  assertEquals(Action.REVISE,order.getAction());
+  Order previousOrder=order.getPreviousOrder();
+  assertNotNull(previousOrder.getDateStopped());
+  assertFalse(order.getVoided());
+  orderService.voidOrder(order,"None");
+  assertTrue(order.getVoided());
+  assertNull(previousOrder.getDateStopped());
+  Order revise=previousOrder.cloneForRevision();
+  revise.setOrderer(order.getOrderer());
+  revise.setEncounter(order.getEncounter());
+  orderService.saveOrder(revise,null);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot unvoid a revision order if the previous order is no longer active");
+  orderService.unvoidOrder(order);
+}

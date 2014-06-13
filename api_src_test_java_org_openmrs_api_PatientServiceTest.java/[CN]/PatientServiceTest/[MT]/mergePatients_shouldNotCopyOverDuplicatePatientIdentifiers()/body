@@ -12,6 +12,7 @@
   preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
+  voidOrders(Collections.singleton(notPreferred));
   PatientIdentifier nonPreferredIdentifier=new PatientIdentifier();
   nonPreferredIdentifier.setIdentifier("9999-4");
   nonPreferredIdentifier.setIdentifierType(patientIdentifierType);

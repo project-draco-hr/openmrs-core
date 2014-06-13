@@ -1,0 +1,3 @@
+{
+  return (CareSetting)sessionFactory.getCurrentSession().createCriteria(CareSetting.class).add(Restrictions.ilike("name",name)).uniqueResult();
+}

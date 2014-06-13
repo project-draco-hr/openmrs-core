@@ -1,0 +1,7 @@
+{
+  Drug drug=new Drug();
+  drug.addDrugReferenceMap(new DrugReferenceMap(conceptService.getConceptReferenceTerm(1),conceptService.getConceptMapType(1)));
+  Errors errors=new BindException(drug,"drug");
+  new DrugValidator().validate(drug,errors);
+  Assert.assertFalse(errors.hasFieldErrors());
+}

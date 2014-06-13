@@ -1,0 +1,9 @@
+{
+  if (order.getOrderId() == null) {
+    setProperty(order,"orderNumber",getOrderNumberGenerator().getNewOrderNumber(orderContext));
+    if (DISCONTINUE == order.getAction()) {
+      order.setAutoExpireDate(order.getStartDate());
+    }
+  }
+  return dao.saveOrder(order);
+}

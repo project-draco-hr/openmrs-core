@@ -1,6 +1,7 @@
 {
   Patient preferred=patientService.getPatient(999);
   Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
   PersonAttribute attribute=new PersonAttribute(2);
   attribute.setValue("5089");
   attribute.setAttributeType(personService.getPersonAttributeType(1));

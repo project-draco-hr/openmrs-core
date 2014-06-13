@@ -5,7 +5,7 @@
   }
   this.module=module;
   requiredModules=collectRequiredModuleImports(module);
-  collectAwareOfModuleImports();
+  awareOfModules=collectAwareOfModuleImports(module);
   collectFilters();
   libraryCache=new WeakHashMap<URI,File>();
 }
