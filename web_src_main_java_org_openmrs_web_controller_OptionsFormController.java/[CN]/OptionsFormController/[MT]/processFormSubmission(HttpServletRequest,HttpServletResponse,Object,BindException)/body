@@ -9,7 +9,7 @@
       errors.rejectValue("confirmPassword","error.password.match");
     }
   }
-  if (opts.getSecretQuestionPassword().equals("") && opts.getSecretAnswerNew().isEmpty() && !opts.getSecretQuestionNew().isEmpty()) {
+  if (opts.getSecretQuestionPassword().equals("") && opts.getSecretAnswerNew().isEmpty() && !opts.getSecretQuestionNew().equals(opts.getSecretQuestionCopy())) {
     errors.rejectValue("secretQuestionPassword","error.password.incorrect");
   }
   if (!opts.getSecretQuestionPassword().equals("")) {
