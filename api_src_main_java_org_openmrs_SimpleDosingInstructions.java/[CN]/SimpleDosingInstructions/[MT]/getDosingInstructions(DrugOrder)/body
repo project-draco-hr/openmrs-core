@@ -1,0 +1,16 @@
+{
+  if (this.getType() != order.getDosingType()) {
+    throw new Exception("Dosing type of drug order is mismatched. Expected:" + this.getType() + " but received:"+ order.getDosingType());
+  }
+  SimpleDosingInstructions di=new SimpleDosingInstructions();
+  di.setDose(order.getDose());
+  di.setDoseUnits(order.getDoseUnits());
+  di.setRoute(order.getRoute());
+  di.setFrequency(order.getFrequency());
+  di.setDuration(order.getDuration());
+  di.setDurationUnits(order.getDurationUnits());
+  di.setAsNeeded(order.getAsNeeded());
+  di.setAsNeededCondition(order.getAsNeededCondition());
+  di.setAdministrationInstructions(order.getInstructions());
+  return di;
+}

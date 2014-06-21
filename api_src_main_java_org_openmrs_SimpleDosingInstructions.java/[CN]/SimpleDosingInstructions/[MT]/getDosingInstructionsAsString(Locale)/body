@@ -1,0 +1,29 @@
+{
+  StringBuilder dosingInstructions=new StringBuilder();
+  dosingInstructions.append(this.dose);
+  dosingInstructions.append(" ");
+  dosingInstructions.append(this.doseUnits.getName(locale).getName());
+  dosingInstructions.append(" ");
+  dosingInstructions.append(this.route.getName(locale).getName());
+  dosingInstructions.append(" ");
+  dosingInstructions.append(this.frequency);
+  if (duration != null) {
+    dosingInstructions.append(" ");
+    dosingInstructions.append(this.duration);
+    dosingInstructions.append(" ");
+    dosingInstructions.append(this.durationUnits.getName(locale).getName());
+  }
+  if (this.asNeeded) {
+    dosingInstructions.append(" ");
+    dosingInstructions.append("PRN");
+    if (this.asNeededCondition != null) {
+      dosingInstructions.append(" ");
+      dosingInstructions.append(this.asNeededCondition);
+    }
+  }
+  if (this.administrationInstructions != null) {
+    dosingInstructions.append(" ");
+    dosingInstructions.append(this.administrationInstructions);
+  }
+  return dosingInstructions.toString();
+}
