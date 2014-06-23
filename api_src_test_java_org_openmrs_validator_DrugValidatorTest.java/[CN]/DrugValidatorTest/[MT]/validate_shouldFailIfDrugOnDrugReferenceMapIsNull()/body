@@ -1,0 +1,7 @@
+{
+  Drug drug=new Drug();
+  drug.setDrugReferenceMaps(Collections.singleton(new DrugReferenceMap()));
+  Errors errors=new BindException(drug,"drug");
+  new DrugValidator().validate(drug,errors);
+  Assert.assertTrue(errors.hasFieldErrors("drugReferenceMaps[0].drug"));
+}

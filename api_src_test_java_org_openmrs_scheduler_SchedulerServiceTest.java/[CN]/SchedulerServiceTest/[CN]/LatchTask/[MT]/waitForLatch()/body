@@ -1,0 +1,10 @@
+{
+  try {
+    latch.countDown();
+    if (!latch.await(CONCURRENT_TASK_WAIT_MS,TimeUnit.MILLISECONDS)) {
+      awaitFailed.set(true);
+    }
+  }
+ catch (  InterruptedException ignored) {
+  }
+}

@@ -1,0 +1,6 @@
+{
+  Patient patient=patientService.getPatient(2);
+  CareSetting outPatient=orderService.getCareSetting(1);
+  OrderType testOrderType=orderService.getOrderType(2);
+  assertEquals(4,orderService.getOrders(patient,outPatient,testOrderType,true).size());
+}

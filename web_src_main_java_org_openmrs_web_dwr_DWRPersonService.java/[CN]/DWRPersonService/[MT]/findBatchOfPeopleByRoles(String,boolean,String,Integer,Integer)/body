@@ -1,6 +1,7 @@
 {
   Vector<Object> personList=new Vector<Object>();
   try {
+    Boolean includeVoided=includeRetired;
     if (StringUtils.isNotBlank(roles)) {
       UserService us=Context.getUserService();
       List<Role> roleList=new Vector<Role>();
@@ -15,7 +16,7 @@
     }
  else {
       PersonService ps=Context.getPersonService();
-      for (      Person p : ps.getPeople(searchPhrase,null)) {
+      for (      Person p : ps.getPeople(searchPhrase,null,includeVoided)) {
         personList.add(PersonListItem.createBestMatch(p));
       }
       if (searchPhrase.matches(".*\\d+.*")) {

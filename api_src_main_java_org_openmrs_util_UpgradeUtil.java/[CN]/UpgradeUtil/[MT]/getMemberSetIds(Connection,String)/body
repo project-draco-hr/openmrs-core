@@ -1,0 +1,30 @@
+{
+  Integer conceptSetId=null;
+  PreparedStatement select=connection.prepareStatement("select concept_id from concept where uuid = ?");
+  try {
+    select.setString(1,conceptUuid);
+    ResultSet resultSet=select.executeQuery();
+    if (resultSet.next()) {
+      conceptSetId=resultSet.getInt(1);
+    }
+ else {
+      throw new IllegalArgumentException("Concept not found " + conceptUuid);
+    }
+  }
+  finally {
+    select.close();
+  }
+  List<Integer> conceptIds=new ArrayList<Integer>();
+  PreparedStatement selectConceptIds=connection.prepareStatement("select concept_id from concept_set where concept_set = ?");
+  try {
+    selectConceptIds.setInt(1,conceptSetId);
+    ResultSet resultSet=selectConceptIds.executeQuery();
+    while (resultSet.next()) {
+      conceptIds.add(resultSet.getInt(1));
+    }
+  }
+  finally {
+    selectConceptIds.close();
+  }
+  return conceptIds;
+}

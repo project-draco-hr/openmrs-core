@@ -1,0 +1,39 @@
+{
+  PreparedStatement updateDrugOrderStatement=null;
+  Boolean autoCommit=null;
+  try {
+    autoCommit=connection.getAutoCommit();
+    connection.setAutoCommit(false);
+    updateDrugOrderStatement=connection.prepareStatement("update drug_order set dose_units = ? where units = ?");
+    for (    String unit : uniqueUnits) {
+      Integer conceptIdForUnit=UpgradeUtil.getConceptIdForUnits(unit);
+      if (conceptIdForUnit == null) {
+        throw new CustomChangeException("No concept mapping found for unit: " + unit);
+      }
+      String dosingUnitsConceptSetUuid=UpgradeUtil.getGlobalProperty(connection.getUnderlyingConnection(),OpenmrsConstants.GP_DRUG_DOSING_UNITS_CONCEPT_UUID);
+      List<Integer> dosingUnitsconceptIds=UpgradeUtil.getMemberSetIds(connection.getUnderlyingConnection(),dosingUnitsConceptSetUuid);
+      if (!dosingUnitsconceptIds.contains(conceptIdForUnit)) {
+        throw new CustomChangeException("Dosing unit '" + unit + "' is not among valid concepts defined in global property "+ OpenmrsConstants.GP_DRUG_DOSING_UNITS_CONCEPT_UUID);
+      }
+      updateDrugOrderStatement.setInt(1,conceptIdForUnit);
+      updateDrugOrderStatement.setString(2,unit);
+      updateDrugOrderStatement.executeUpdate();
+      updateDrugOrderStatement.clearParameters();
+    }
+    connection.commit();
+  }
+ catch (  DatabaseException e) {
+    handleError(connection,e);
+  }
+catch (  SQLException e) {
+    handleError(connection,e);
+  }
+ finally {
+    if (autoCommit != null) {
+      connection.setAutoCommit(autoCommit);
+    }
+    if (updateDrugOrderStatement != null) {
+      updateDrugOrderStatement.close();
+    }
+  }
+}

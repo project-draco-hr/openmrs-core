@@ -1,18 +1,26 @@
 {
-  final String NAME="Session Task";
+  final String NAME="StoreExecutionTime Task";
   SchedulerService service=Context.getSchedulerService();
   TaskDefinition td=new TaskDefinition();
   td.setName(NAME);
   td.setStartOnStartup(false);
-  td.setTaskClass(SessionTask.class.getName());
+  td.setTaskClass(StoreExecutionTimeTask.class.getName());
   td.setStartTime(null);
   td.setRepeatInterval(new Long(0));
-synchronized (SAVE_TASK_LOCK) {
-    service.saveTask(td);
+synchronized (TASK_TEST_METHOD_LOCK) {
+    latch=new CountDownLatch(1);
+    service.saveTaskDefinition(td);
     service.scheduleTask(td);
+    assertTrue("task didn't execute",latch.await(CONCURRENT_TASK_WAIT_MS,TimeUnit.MILLISECONDS));
+    for (int x=0; x < 100; x++) {
+      td=service.getTaskByName(NAME);
+      if (td.getLastExecutionTime() != null) {
+        break;
+      }
+      Thread.sleep(200);
+    }
+    assertNotNull("actualExecutionTime is null, so either the SessionTask.execute method hasn't finished or didn't get run",actualExecutionTime);
+    assertNotNull("lastExecutionTime is null, so the SchedulerService didn't save it",td.getLastExecutionTime());
+    assertEquals("Last execution time in seconds is wrong",actualExecutionTime.longValue() / 1000,td.getLastExecutionTime().getTime() / 1000,1);
   }
-  td=service.getTaskByName(NAME);
-  for (int x=0; x < 30 && (actualExecutionTime == null || td.getLastExecutionTime() == null); x++)   Thread.sleep(200);
-  Assert.assertNotNull("The actualExecutionTime variable is null, so either the SessionTask.execute method hasn't finished or didn't get run",actualExecutionTime);
-  assertEquals("Last execution time in seconds is wrong",actualExecutionTime.longValue() / 1000,td.getLastExecutionTime().getTime() / 1000,1);
 }

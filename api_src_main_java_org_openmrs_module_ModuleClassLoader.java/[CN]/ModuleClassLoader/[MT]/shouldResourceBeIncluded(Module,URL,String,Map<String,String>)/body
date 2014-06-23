@@ -1,0 +1,26 @@
+{
+  boolean include=true;
+  for (  ModuleConditionalResource conditionalResource : module.getConditionalResources()) {
+    if (fileUrl.getPath().matches(".*" + conditionalResource.getPath() + "$")) {
+      include=false;
+      if (StringUtils.isNotBlank(conditionalResource.getOpenmrsVersion())) {
+        include=ModuleUtil.matchRequiredVersions(openmrsVersion,conditionalResource.getOpenmrsVersion());
+        if (!include) {
+          return false;
+        }
+      }
+      if (conditionalResource.getModules() != null) {
+        for (        ModuleConditionalResource.ModuleAndVersion conditionalModuleResource : conditionalResource.getModules()) {
+          String moduleVersion=startedRelatedModules.get(conditionalModuleResource.getModuleId());
+          if (moduleVersion != null) {
+            include=ModuleUtil.matchRequiredVersions(moduleVersion,conditionalModuleResource.getVersion());
+            if (!include) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+  }
+  return include;
+}

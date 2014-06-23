@@ -1,0 +1,10 @@
+{
+  TaskDefinition taskDef=new TaskDefinition();
+  taskDef.setTaskClass(taskClassName);
+  taskDef.setStartOnStartup(false);
+  taskDef.setStartTime(null);
+  taskDef.setName("name");
+  taskDef.setRepeatInterval(CONCURRENT_TASK_WAIT_MS * 10);
+  Context.getSchedulerService().saveTaskDefinition(taskDef);
+  return taskDef;
+}

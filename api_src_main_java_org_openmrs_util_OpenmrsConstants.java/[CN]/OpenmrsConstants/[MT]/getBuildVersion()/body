@@ -1,16 +1,3 @@
 {
-  Properties props=new Properties();
-  java.net.URL url=OpenmrsConstants.class.getClassLoader().getResource("META-INF/MANIFEST.MF");
-  if (url == null) {
-    log.error("Unable to find MANIFEST.MF file built by maven");
-    return null;
-  }
-  try {
-    props.load(url.openStream());
-    return props.getProperty("Specification-Vendor");
-  }
- catch (  IOException e) {
-    log.error("Unable to get MANIFEST.MF file into manifest object");
-  }
-  return null;
+  return getOpenmrsProperty("openmrs.version.long");
 }

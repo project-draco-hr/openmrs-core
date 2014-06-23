@@ -1,0 +1,15 @@
+{
+  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
+  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
+  List<List<Object>> discontinuedOrders=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"SELECT count(*) order_id FROM orders WHERE discontinued = true",true);
+  long discontinuedOrdersCount=(Long)discontinuedOrders.get(0).get(0);
+  assertEquals(3,discontinuedOrdersCount);
+  upgradeTestUtil.upgrade();
+  List<List<Object>> discontinuationOrders=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"SELECT count(*) FROM orders WHERE order_action = 'DISCONTINUE'",true);
+  assertEquals(discontinuedOrdersCount,discontinuationOrders.get(0).get(0));
+  List<List<Object>> discontinuationOrdersWithNotStartDate=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"SELECT count(*) FROM orders WHERE order_action = 'DISCONTINUE' AND auto_expire_date IS NULL",true);
+  assertEquals(0L,discontinuationOrdersWithNotStartDate.get(0).get(0));
+  List<List<Object>> newer=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"SELECT count(*) FROM orders WHERE order_action = 'DISCONTINUE' AND " + "(start_date IS NULL OR orderer IS NULL OR encounter_id IS NULL OR previous_order_id IS NULL)",true);
+  assertEquals(0L,newer.get(0).get(0));
+}

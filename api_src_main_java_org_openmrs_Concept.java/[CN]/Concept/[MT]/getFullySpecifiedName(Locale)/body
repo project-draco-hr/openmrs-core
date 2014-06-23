@@ -5,6 +5,17 @@
         return conceptName;
       }
     }
+    ConceptName bestMatch=null;
+    for (    ConceptName conceptName : getPartiallyCompatibleNames(locale)) {
+      if (ObjectUtils.nullSafeEquals(conceptName.isFullySpecifiedName(),true)) {
+        Locale nameLocale=conceptName.getLocale();
+        if (locale.getLanguage().equals(nameLocale.getLanguage())) {
+          return conceptName;
+        }
+        bestMatch=conceptName;
+      }
+    }
+    return bestMatch;
   }
   return null;
 }

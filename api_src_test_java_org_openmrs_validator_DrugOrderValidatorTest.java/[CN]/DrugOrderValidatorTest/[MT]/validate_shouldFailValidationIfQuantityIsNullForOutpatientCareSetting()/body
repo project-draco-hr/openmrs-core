@@ -1,0 +1,14 @@
+{
+  DrugOrder OutpatientOrder=new DrugOrder();
+  OutpatientOrder.setCareSetting(Context.getOrderService().getCareSetting(1));
+  OutpatientOrder.setQuantity(null);
+  Errors OutpatientOrderErrors=new BindException(OutpatientOrder,"order");
+  new DrugOrderValidator().validate(OutpatientOrder,OutpatientOrderErrors);
+  Assert.assertTrue(OutpatientOrderErrors.hasFieldErrors("quantity"));
+  DrugOrder inPatientOrder=new DrugOrder();
+  inPatientOrder.setCareSetting(Context.getOrderService().getCareSetting(2));
+  inPatientOrder.setQuantity(null);
+  Errors InpatientOrderErrors=new BindException(inPatientOrder,"order");
+  new DrugOrderValidator().validate(inPatientOrder,InpatientOrderErrors);
+  Assert.assertFalse(InpatientOrderErrors.hasFieldErrors("quantity"));
+}

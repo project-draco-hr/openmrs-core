@@ -71,7 +71,7 @@
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ENCOUNTER_FORM_OBS_SORT_ORDER,"number","The sort order for the obs listed on the encounter edit form.  'number' sorts on the associated numbering from the form schema.  'weight' sorts on the order displayed in the form schema."));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"en, es, fr, it, pt","Comma delimited list of locales allowed for use on system"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_NEWPATIENTFORM_RELATIONSHIPS,"","Comma separated list of the RelationshipTypes to show on the new/short patient form.  The list is defined like '3a, 4b, 7a'.  The number is the RelationshipTypeId and the 'a' vs 'b' part is which side of the relationship is filled in by the user."));
-  props.add(new GlobalProperty(GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,"3","Number of characters user must input before searching is started."));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,"2","Number of characters user must input before searching is started."));
   props.add(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE_DEFAULT_VALUE,"Specifies the default locale. You can specify both the language code(ISO-639) and the country code(ISO-3166), e.g. 'en_GB' or just country: e.g. 'en'"));
   props.add(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_WEEK_START_DAY,OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_WEEK_START_DAY_DEFAULT_VALUE,"First day of the week in the date picker. Domingo/Dimanche/Sunday:0  Lunes/Lundi/Monday:1"));
   props.add(new GlobalProperty(GP_PASSWORD_CANNOT_MATCH_USERNAME_OR_SYSTEMID,"true","Configure whether passwords must not match user's username or system id",BooleanDatatype.class,null));
@@ -91,7 +91,6 @@
   props.add(new GlobalProperty(GP_SEARCH_DATE_DISPLAY_FORMAT,null,"Date display format to be used to display the date somewhere in the UI i.e the search widgets and autocompletes"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_DEFAULT_LOCATION_NAME,"Unknown Location","The name of the location to use as a system default"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_START,"Specifies how patient names are matched while searching patient. Valid values are 'ANYWHERE' or 'START'. Defaults to start if missing or invalid value is present."));
-  props.add(new GlobalProperty(GP_ORDER_ENTRY_ORDER_NUMBER_PREFIX,ORDER_NUMBER_DEFAULT_PREFIX,"Specifies the prefix used when creating order numbers"));
   props.add(new GlobalProperty(GP_ENABLE_CONCEPT_MAP_TYPE_MANAGEMENT,"false","Enables or disables management of concept map types",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ENABLE_VISITS,"true","Set to true to enable the Visits feature. This will replace the 'Encounters' tab with a 'Visits' tab on the dashboard.",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GP_VISIT_ASSIGNMENT_HANDLER,ExistingVisitAssignmentHandler.class.getName(),"Set to the name of the class responsible for assigning encounters to visits."));
@@ -114,6 +113,15 @@
   props.add(new GlobalProperty(GP_LAST_FULL_INDEX_DATE,"","Indicates the last time the full index was built"));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_ALLOW_OVERLAPPING_VISITS,"true","true/false whether or not to allow visits of a given patient to overlap",BooleanDatatype.class,null));
   props.add(new GlobalProperty(GLOBAL_PROPERTY_FORMS_LOCKED,"false","Set to a value of true if you do not want any changes to be made on forms, else set to false."));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_PERSON_ATRIBUTE_TYPES_LOCKED,"false","Set to a value of true if you do not want allow editing person attribute types, else set to false."));
+  props.add(new GlobalProperty(GLOBAL_PROPERTY_PATIENT_IDENTIFIER_TYPES_LOCKED,"false","Set to a value of true if you do not want allow editing patient identifier types, else set to false."));
+  props.add(new GlobalProperty(GP_NEXT_ORDER_NUMBER_SEED,"1","The next order number available for assignment"));
+  props.add(new GlobalProperty(GP_ORDER_NUMBER_GENERATOR_BEAN_ID,"","Specifies spring bean id of the order generator to use when assigning order numbers"));
+  props.add(new GlobalProperty(GP_DRUG_ROUTES_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug routes"));
+  props.add(new GlobalProperty(GP_DRUG_DOSING_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug dosing units"));
+  props.add(new GlobalProperty(GP_DRUG_DISPENSING_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible drug dispensing units"));
+  props.add(new GlobalProperty(GP_DURATION_UNITS_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible duration units"));
+  props.add(new GlobalProperty(GP_TEST_SPECIMEN_SOURCES_CONCEPT_UUID,"","Specifies the uuid of the concept set where its members represent the possible test specimen sources"));
   for (  GlobalProperty gp : ModuleFactory.getGlobalProperties()) {
     props.add(gp);
   }

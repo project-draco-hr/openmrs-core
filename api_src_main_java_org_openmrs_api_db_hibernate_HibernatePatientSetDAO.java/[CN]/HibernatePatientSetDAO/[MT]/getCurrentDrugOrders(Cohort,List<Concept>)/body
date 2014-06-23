@@ -12,7 +12,7 @@
   }
   criteria.add(Restrictions.eq("voided",false));
   criteria.add(Restrictions.le("startDate",now));
-  criteria.add(Restrictions.or(Restrictions.and(Restrictions.eq("discontinued",false),Restrictions.or(Restrictions.isNull("autoExpireDate"),Restrictions.gt("autoExpireDate",now))),Restrictions.and(Restrictions.eq("discontinued",true),Restrictions.gt("discontinuedDate",now))));
+  criteria.add(Restrictions.and(Restrictions.or(Restrictions.isNull("autoExpireDate"),Restrictions.gt("autoExpireDate",now)),Restrictions.or(Restrictions.isNull("dateStopped"),Restrictions.gt("dateStopped",now))));
   criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
   log.debug("criteria: " + criteria);
   List<DrugOrder> temp=criteria.list();

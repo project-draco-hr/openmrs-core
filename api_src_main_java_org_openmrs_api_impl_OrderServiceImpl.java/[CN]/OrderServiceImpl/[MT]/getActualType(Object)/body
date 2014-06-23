@@ -1,0 +1,7 @@
+{
+  Class<?> type=persistentObject.getClass();
+  if (persistentObject instanceof HibernateProxy) {
+    type=((HibernateProxy)persistentObject).getHibernateLazyInitializer().getPersistentClass();
+  }
+  return type;
+}

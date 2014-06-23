@@ -1,8 +1,0 @@
-{
-  Order order=service.getOrder(12);
-  Assert.assertNotNull(order.getAutoExpireDate());
-  Calendar cal=Calendar.getInstance();
-  cal.setTime(order.getAutoExpireDate());
-  cal.add(Calendar.MINUTE,1);
-  service.discontinueOrder(order,"Testing",null,cal.getTime());
-}

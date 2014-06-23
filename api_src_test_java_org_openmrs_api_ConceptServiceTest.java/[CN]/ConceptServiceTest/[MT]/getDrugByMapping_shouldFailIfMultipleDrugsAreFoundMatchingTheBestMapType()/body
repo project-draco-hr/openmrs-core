@@ -1,0 +1,5 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  ConceptSource source=conceptService.getConceptSource(1);
+  conceptService.getDrugByMapping("CD41003",source,Collections.singleton(conceptService.getConceptMapType(2)));
+}

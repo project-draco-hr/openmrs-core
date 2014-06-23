@@ -1,0 +1,11 @@
+{
+  OrderType orderType=orderService.getOrderType(1);
+  assertNull(orderType.getDateChanged());
+  assertNull(orderType.getChangedBy());
+  final String newDescription="new";
+  orderType.setDescription(newDescription);
+  orderService.saveOrderType(orderType);
+  Context.flushSession();
+  assertNotNull(orderType.getDateChanged());
+  assertNotNull(orderType.getChangedBy());
+}

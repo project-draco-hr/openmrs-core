@@ -1,0 +1,5 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Order.class);
+  criteria.add(Restrictions.eq("orderType",orderType));
+  return criteria.list().size() > 0;
+}

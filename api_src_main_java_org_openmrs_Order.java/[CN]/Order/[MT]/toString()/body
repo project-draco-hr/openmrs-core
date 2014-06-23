@@ -1,3 +1,4 @@
 {
-  return "Order. orderId: " + orderId + " patient: "+ patient+ " orderType: "+ getClass()+ " concept: "+ concept;
+  String prefix=Action.DISCONTINUE == getAction() ? "DC " : "";
+  return prefix + "Order. orderId: " + orderId+ " patient: "+ patient+ " concept: "+ concept+ " care setting: "+ careSetting;
 }

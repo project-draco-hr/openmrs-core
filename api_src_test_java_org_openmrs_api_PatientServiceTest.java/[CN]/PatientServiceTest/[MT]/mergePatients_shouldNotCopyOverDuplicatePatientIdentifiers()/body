@@ -1,20 +1,21 @@
 {
   List<Location> locations=Context.getLocationService().getAllLocations();
   Assert.assertTrue(CollectionUtils.isNotEmpty(locations));
-  List<PatientIdentifierType> patientIdentifierTypes=Context.getPatientService().getAllPatientIdentifierTypes();
-  Assert.assertTrue(CollectionUtils.isNotEmpty(patientIdentifierTypes));
+  PatientIdentifierType patientIdentifierType=Context.getPatientService().getPatientIdentifierType(5);
+  Assert.assertNotNull(patientIdentifierType);
   Patient preferred=patientService.getPatient(999);
   PatientIdentifier preferredIdentifier=new PatientIdentifier();
   preferredIdentifier.setIdentifier("9999-4");
-  preferredIdentifier.setIdentifierType(patientIdentifierTypes.get(0));
+  preferredIdentifier.setIdentifierType(patientIdentifierType);
   preferredIdentifier.setLocation(locations.get(0));
   preferred.addIdentifier(preferredIdentifier);
   preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
+  voidOrders(Collections.singleton(notPreferred));
   PatientIdentifier nonPreferredIdentifier=new PatientIdentifier();
   nonPreferredIdentifier.setIdentifier("9999-4");
-  nonPreferredIdentifier.setIdentifierType(patientIdentifierTypes.get(0));
+  nonPreferredIdentifier.setIdentifierType(patientIdentifierType);
   nonPreferredIdentifier.setLocation(locations.get(0));
   notPreferred.addIdentifier(nonPreferredIdentifier);
   patientService.savePatient(notPreferred);

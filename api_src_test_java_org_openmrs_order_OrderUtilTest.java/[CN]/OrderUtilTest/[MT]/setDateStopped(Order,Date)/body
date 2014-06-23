@@ -1,0 +1,17 @@
+{
+  Field field=null;
+  Boolean isAccessible=null;
+  try {
+    field=Order.class.getDeclaredField("dateStopped");
+    isAccessible=field.isAccessible();
+    if (!isAccessible) {
+      field.setAccessible(true);
+    }
+    field.set(targetOrder,dateStopped);
+  }
+  finally {
+    if (field != null && isAccessible != null) {
+      field.setAccessible(isAccessible);
+    }
+  }
+}

@@ -1,0 +1,4 @@
+{
+  if (voided == null || voided == false)   return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(Restrictions.disjunction().add(Restrictions.ilike("name.givenName",value,MatchMode.START)).add(Restrictions.ilike("name.middleName",value,MatchMode.START)).add(Restrictions.ilike("name.familyName",value,MatchMode.START)).add(Restrictions.ilike("name.familyName2",value,MatchMode.START)));
+ else   return Restrictions.conjunction().add(Restrictions.disjunction().add(Restrictions.ilike("name.givenName",value,MatchMode.START)).add(Restrictions.ilike("name.middleName",value,MatchMode.START)).add(Restrictions.ilike("name.familyName",value,MatchMode.START)).add(Restrictions.ilike("name.familyName2",value,MatchMode.START)));
+}

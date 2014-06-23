@@ -1,0 +1,20 @@
+{
+  NodeList modulesParents=root.getElementsByTagName(elementParentName);
+  Map<String,String> packageNamesToVersion=new HashMap<String,String>();
+  if (modulesParents.getLength() > 0) {
+    Node modulesParent=modulesParents.item(0);
+    NodeList childModules=modulesParent.getChildNodes();
+    int i=0;
+    while (i < childModules.getLength()) {
+      Node n=childModules.item(i);
+      if (n != null && elementName.equals(n.getNodeName())) {
+        NamedNodeMap attributes=n.getAttributes();
+        Node versionNode=attributes.getNamedItem("version");
+        String moduleVersion=versionNode == null ? null : versionNode.getNodeValue();
+        packageNamesToVersion.put(n.getTextContent().trim(),moduleVersion);
+      }
+      i++;
+    }
+  }
+  return packageNamesToVersion;
+}

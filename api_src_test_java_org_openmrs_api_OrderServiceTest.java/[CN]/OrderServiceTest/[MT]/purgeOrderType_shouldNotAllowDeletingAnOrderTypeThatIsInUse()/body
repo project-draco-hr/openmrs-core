@@ -1,0 +1,7 @@
+{
+  OrderType orderType=orderService.getOrderType(1);
+  assertNotNull(orderType);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("This order type cannot be deleted because it is already in use");
+  orderService.purgeOrderType(orderType);
+}

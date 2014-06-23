@@ -1,0 +1,13 @@
+{
+  JdbcConnection connection=(JdbcConnection)database.getConnection();
+  try {
+    List<DiscontinuedOrder> discontinuedOrders=getDiscontinuedOrders(connection);
+    createDiscontinueOrders(connection,discontinuedOrders);
+  }
+ catch (  SQLException e) {
+    throw new CustomChangeException(e);
+  }
+catch (  DatabaseException e) {
+    throw new CustomChangeException(e);
+  }
+}

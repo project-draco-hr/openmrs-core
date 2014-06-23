@@ -1,0 +1,6 @@
+{
+  DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+  DocumentBuilder db=dbf.newDocumentBuilder();
+  Document document=db.parse(new ByteArrayInputStream(xml.getBytes()));
+  return document.getDocumentElement();
+}

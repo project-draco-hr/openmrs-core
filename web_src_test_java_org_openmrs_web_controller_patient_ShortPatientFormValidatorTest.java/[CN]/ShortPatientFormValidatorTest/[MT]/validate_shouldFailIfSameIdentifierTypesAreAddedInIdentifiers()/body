@@ -1,0 +1,20 @@
+{
+  PatientIdentifierType patientIdentifierType=ps.getPatientIdentifierType(5);
+  Patient patient=ps.getPatient(8);
+  PatientIdentifier patientIdentifier1=new PatientIdentifier();
+  patientIdentifier1.setLocation(new Location(1));
+  patientIdentifier1.setIdentifier("012345678");
+  patientIdentifier1.setDateCreated(new Date());
+  patientIdentifier1.setIdentifierType(patientIdentifierType);
+  patient.addIdentifier(patientIdentifier1);
+  PatientIdentifier patientIdentifier2=new PatientIdentifier();
+  patientIdentifier2.setLocation(new Location(2));
+  patientIdentifier2.setIdentifier("0123456789");
+  patientIdentifier2.setDateCreated(new Date());
+  patientIdentifier2.setIdentifierType(patientIdentifierType);
+  patient.addIdentifier(patientIdentifier2);
+  ShortPatientModel model=new ShortPatientModel(patient);
+  Errors errors=new BindException(model,"patientModel");
+  validator.validate(model,errors);
+  Assert.assertEquals(true,errors.hasGlobalErrors());
+}

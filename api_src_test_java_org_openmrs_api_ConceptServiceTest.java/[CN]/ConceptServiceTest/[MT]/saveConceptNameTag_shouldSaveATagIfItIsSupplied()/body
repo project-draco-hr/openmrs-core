@@ -1,0 +1,12 @@
+{
+  ConceptNameTag cnt=new ConceptNameTag();
+  cnt.setTag("abcd");
+  cnt.setDescription("test");
+  ConceptService cs=Context.getConceptService();
+  Integer id=cs.saveConceptNameTag(cnt).getId();
+  Context.flushSession();
+  Context.clearSession();
+  ConceptNameTag savedNameTag=cs.getConceptNameTag(id);
+  assertEquals(savedNameTag.getTag(),"abcd");
+  assertEquals(savedNameTag.getDescription(),"test");
+}

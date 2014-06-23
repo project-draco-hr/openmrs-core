@@ -1,7 +1,7 @@
 {
   initializeInMemoryDatabase();
   executeDataSet(FIND_PATIENTS_XML);
-  assertEquals(0,Context.getPatientService().getPatients("Je").size());
+  assertEquals(0,Context.getPatientService().getPatients("J").size());
   Context.clearSession();
   Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS,"1"));
   assertEquals(1,Context.getPatientService().getPatients("F").size());

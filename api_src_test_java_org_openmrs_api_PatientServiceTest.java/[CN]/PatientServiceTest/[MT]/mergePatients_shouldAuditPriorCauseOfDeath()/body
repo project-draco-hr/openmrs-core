@@ -6,6 +6,7 @@
   preferred.addName(new PersonName("givenName","middleName","familyName"));
   patientService.savePatient(preferred);
   Patient notPreferred=patientService.getPatient(7);
+  voidOrders(Collections.singleton(notPreferred));
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
   Assert.assertEquals("prior cause of death was not audited",Context.getConceptService().getConcept(3).getUuid(),audit.getPersonMergeLogData().getPriorCauseOfDeath());
 }

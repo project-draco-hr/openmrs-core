@@ -1,17 +1,13 @@
 {
-  if (isVoided()) {
-    return false;
-  }
-  if (checkDate == null) {
-    checkDate=new Date();
-  }
-  if (discontinued == null || !discontinued) {
-    return false;
-  }
+  if (isVoided())   return false;
+  if (checkDate == null)   checkDate=new Date();
   if (startDate == null || checkDate.before(startDate)) {
     return false;
   }
-  if (discontinuedDate != null && discontinuedDate.after(checkDate)) {
+  if (dateStopped != null && dateStopped.after(checkDate)) {
+    return false;
+  }
+  if (dateStopped == null) {
     return false;
   }
   return true;

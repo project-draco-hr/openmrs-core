@@ -1,0 +1,8 @@
+{
+  DrugOrder order=new DrugOrder();
+  order.setDosingType(DrugOrder.DosingType.SIMPLE);
+  order.setFrequency(null);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("frequency"));
+}

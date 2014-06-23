@@ -3,6 +3,7 @@
   List<Patient> notPreferred=new ArrayList<Patient>();
   notPreferred.add(patientService.getPatient(7));
   notPreferred.add(patientService.getPatient(8));
+  voidOrders(notPreferred);
   patientService.mergePatients(preferred,notPreferred);
   Assert.assertFalse(patientService.getPatient(6).isVoided());
   Assert.assertTrue(patientService.getPatient(7).isVoided());

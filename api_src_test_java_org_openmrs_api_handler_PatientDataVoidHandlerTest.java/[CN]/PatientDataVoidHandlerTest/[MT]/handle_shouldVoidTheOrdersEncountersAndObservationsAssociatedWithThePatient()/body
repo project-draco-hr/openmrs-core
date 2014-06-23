@@ -3,7 +3,7 @@
   Assert.assertFalse(patient.isVoided());
   List<Encounter> encounters=Context.getEncounterService().getEncountersByPatient(patient);
   List<Obs> observations=Context.getObsService().getObservationsByPerson(patient);
-  List<Order> orders=Context.getOrderService().getOrdersByPatient(patient);
+  List<Order> orders=Context.getOrderService().getAllOrdersByPatient(patient);
   Assert.assertTrue(CollectionUtils.isNotEmpty(encounters));
   Assert.assertTrue(CollectionUtils.isNotEmpty(observations));
   Assert.assertTrue(CollectionUtils.isNotEmpty(orders));
@@ -43,8 +43,6 @@
   }
   encounters=Context.getEncounterService().getEncountersByPatient(patient);
   observations=Context.getObsService().getObservationsByPerson(patient);
-  orders=Context.getOrderService().getOrdersByPatient(patient);
   Assert.assertTrue(CollectionUtils.isEmpty(encounters));
   Assert.assertTrue(CollectionUtils.isEmpty(observations));
-  Assert.assertTrue(CollectionUtils.isEmpty(orders));
 }

@@ -1,0 +1,15 @@
+{
+  Order previousOrder=orderService.getOrder(7);
+  assertTrue(OrderUtilTest.isActiveOrder(previousOrder,null));
+  Order order=previousOrder.cloneForDiscontinuing();
+  order.setStartDate(new Date());
+  order.setOrderReasonNonCoded("Discontinue this");
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  Concept newConcept=conceptService.getConcept(5089);
+  assertFalse(previousOrder.getConcept().equals(newConcept));
+  order.setConcept(newConcept);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("The concept of the previous order and the new one order don't match");
+  orderService.saveOrder(order,null);
+}

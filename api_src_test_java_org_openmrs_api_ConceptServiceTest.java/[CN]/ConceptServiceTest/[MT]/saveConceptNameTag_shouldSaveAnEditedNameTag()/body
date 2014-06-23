@@ -1,0 +1,10 @@
+{
+  ConceptService cs=Context.getConceptService();
+  ConceptNameTag cnt=cs.getConceptNameTag(1);
+  cnt.setTag("dcba");
+  Integer id=cs.saveConceptNameTag(cnt).getId();
+  Context.flushSession();
+  Context.clearSession();
+  ConceptNameTag savedNameTag=cs.getConceptNameTag(id);
+  assertEquals(savedNameTag.getTag(),"dcba");
+}

@@ -1,0 +1,26 @@
+{
+  Criteria criteria=createSearchDrugByMappingCriteria(code,conceptSource,true);
+  if (withAnyOfTheseTypesOrOrderOfPreference.size() > 0) {
+    for (    ConceptMapType conceptMapType : withAnyOfTheseTypesOrOrderOfPreference) {
+      criteria.add(Restrictions.eq("map.conceptMapType",conceptMapType));
+      List<Drug> drugs=criteria.list();
+      if (drugs.size() > 1) {
+        throw new DAOException("There are multiple matches for the highest-priority ConceptMapType");
+      }
+ else       if (drugs.size() == 1) {
+        return drugs.get(0);
+      }
+      criteria=createSearchDrugByMappingCriteria(code,conceptSource,true);
+    }
+  }
+ else {
+    List<Drug> drugs=criteria.list();
+    if (drugs.size() > 1) {
+      throw new DAOException("There are multiple matches for the highest-priority ConceptMapType");
+    }
+ else     if (drugs.size() == 1) {
+      return drugs.get(0);
+    }
+  }
+  return null;
+}

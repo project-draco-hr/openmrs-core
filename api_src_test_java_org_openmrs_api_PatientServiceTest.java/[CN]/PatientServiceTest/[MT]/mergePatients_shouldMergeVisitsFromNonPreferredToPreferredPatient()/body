@@ -2,6 +2,7 @@
   executeDataSet(ENCOUNTERS_FOR_VISITS_XML);
   VisitService visitService=Context.getVisitService();
   Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
   Patient preferred=patientService.getPatient(6);
   Visit visit1=visitService.getVisit(1);
   Visit visit2=visitService.getVisit(2);
@@ -10,6 +11,7 @@
   Visit visit4=visitService.getVisit(4);
   Visit visit5=visitService.getVisit(5);
   List<String> encounterUuidsThatShouldBeMoved=new ArrayList<String>();
+  encounterUuidsThatShouldBeMoved.add(Context.getEncounterService().getEncounter(6).getUuid());
   for (  Visit v : Arrays.asList(visit1,visit2,visit3)) {
     for (    Encounter e : v.getEncounters()) {
       encounterUuidsThatShouldBeMoved.add(e.getUuid());

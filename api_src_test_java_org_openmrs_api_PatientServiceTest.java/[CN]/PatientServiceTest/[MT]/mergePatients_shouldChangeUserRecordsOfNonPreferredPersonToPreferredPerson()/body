@@ -1,6 +1,8 @@
 {
   executeDataSet(USERS_WHO_ARE_PATIENTS_XML);
-  Context.getPatientService().mergePatients(patientService.getPatient(6),patientService.getPatient(2));
+  Patient notPreferred=patientService.getPatient(2);
+  voidOrders(Collections.singleton(notPreferred));
+  Context.getPatientService().mergePatients(patientService.getPatient(6),notPreferred);
   User user=Context.getUserService().getUser(2);
   Assert.assertEquals(6,user.getPerson().getId().intValue());
 }

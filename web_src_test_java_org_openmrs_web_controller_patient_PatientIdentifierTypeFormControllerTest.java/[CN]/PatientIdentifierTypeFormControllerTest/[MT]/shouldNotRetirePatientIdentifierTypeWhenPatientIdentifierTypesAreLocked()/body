@@ -1,0 +1,8 @@
+{
+  request.addParameter("retire","Retire Identifier Type");
+  request.addParameter("retireReason","Same reason");
+  ModelAndView mav=controller.handleRequest(request,response);
+  Assert.assertEquals("The retire attempt should have failed!","index.htm",mav.getViewName());
+  Assert.assertNotEquals("patientIdentifierType.form",mav.getViewName());
+  Assert.assertNotNull(Context.getPersonService().getPersonAttributeType(1));
+}

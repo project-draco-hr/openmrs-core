@@ -1,0 +1,7 @@
+{
+  executeDataSet(GET_DRUG_MAPPINGS);
+  ConceptSource source=conceptService.getConceptSource(1);
+  List<Drug> drugs=conceptService.getDrugsByMapping("WGT234",source,null,false);
+  assertEquals(1,drugs.size());
+  assertTrue(containsId(drugs,2));
+}

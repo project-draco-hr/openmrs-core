@@ -47,12 +47,28 @@
     ModuleUtil.expandJar(module.getFile(),tmpModuleDir,"lib",true);
     File libdir=new File(tmpModuleDir,"lib");
     if (libdir != null && libdir.exists()) {
+      Map<String,String> startedRelatedModules=new HashMap<String,String>();
+      for (      Module requiredModule : collectRequiredModuleImports(module)) {
+        startedRelatedModules.put(requiredModule.getModuleId(),requiredModule.getVersion());
+      }
+      for (      Module awareOfModule : collectAwareOfModuleImports(module)) {
+        startedRelatedModules.put(awareOfModule.getModuleId(),awareOfModule.getVersion());
+      }
       Collection<File> files=(Collection<File>)FileUtils.listFiles(libdir,new String[]{"jar"},true);
       for (      File file : files) {
-        if (log.isDebugEnabled()) {
-          log.debug("Adding file to results: " + file.getAbsolutePath());
+        URL fileUrl=ModuleUtil.file2url(file);
+        boolean include=shouldResourceBeIncluded(module,fileUrl,OpenmrsConstants.OPENMRS_VERSION_SHORT,startedRelatedModules);
+        if (include) {
+          if (log.isDebugEnabled()) {
+            log.debug("Including file in classpath: " + fileUrl);
+          }
+          result.add(fileUrl);
         }
-        result.add(ModuleUtil.file2url(file));
+ else {
+          if (log.isDebugEnabled()) {
+            log.debug("Excluding file from classpath: " + fileUrl);
+          }
+        }
       }
     }
   }

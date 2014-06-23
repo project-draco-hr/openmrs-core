@@ -1,7 +1,7 @@
 {
-  EncounterType type=new EncounterType();
-  type.setName("restraining");
-  Errors errors=new BindException(type,"type");
-  new RequireNameValidator().validate(type,errors);
+  EncounterRole role=new EncounterRole();
+  role.setName("restraining");
+  Errors errors=new BindException(role,"type");
+  new RequireNameValidator().validate(role,errors);
   Assert.assertFalse(errors.hasErrors());
 }

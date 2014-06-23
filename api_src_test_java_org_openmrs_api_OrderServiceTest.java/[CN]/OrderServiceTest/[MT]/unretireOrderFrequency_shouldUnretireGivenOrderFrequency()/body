@@ -1,0 +1,14 @@
+{
+  OrderFrequency orderFrequency=orderService.getOrderFrequency(3);
+  assertNotNull(orderFrequency);
+  assertTrue(orderFrequency.isRetired());
+  assertEquals("Some Retire Reason",orderFrequency.getRetireReason());
+  assertNotNull(orderFrequency.getDateRetired());
+  orderService.unretireOrderFrequency(orderFrequency);
+  orderFrequency=orderService.getOrderFrequency(3);
+  assertNotNull(orderFrequency);
+  assertFalse(orderFrequency.isRetired());
+  assertNull(orderFrequency.getRetireReason());
+  assertNull(orderFrequency.getDateRetired());
+  assertEquals(3,orderService.getOrderFrequencies(true).size());
+}

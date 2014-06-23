@@ -1,0 +1,9 @@
+{
+  if (conceptSource == null) {
+    throw new APIException("ConceptSource is required");
+  }
+  if (withAnyOfTheseTypesOrOrderOfPreference == null) {
+    withAnyOfTheseTypesOrOrderOfPreference=Collections.EMPTY_LIST;
+  }
+  return dao.getDrugByMapping(code,conceptSource,withAnyOfTheseTypesOrOrderOfPreference);
+}

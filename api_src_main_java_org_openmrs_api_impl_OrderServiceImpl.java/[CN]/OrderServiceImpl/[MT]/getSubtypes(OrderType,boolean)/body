@@ -1,0 +1,13 @@
+{
+  List<OrderType> allSubtypes=new ArrayList<OrderType>();
+  List<OrderType> immediateAncestors=dao.getOrderSubtypes(orderType,includeRetired);
+  while (!immediateAncestors.isEmpty()) {
+    List<OrderType> ancestorsAtNextLevel=new ArrayList<OrderType>();
+    for (    OrderType type : immediateAncestors) {
+      allSubtypes.add(type);
+      ancestorsAtNextLevel.addAll(dao.getOrderSubtypes(type,includeRetired));
+    }
+    immediateAncestors=ancestorsAtNextLevel;
+  }
+  return allSubtypes;
+}

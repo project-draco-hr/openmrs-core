@@ -1,5 +1,6 @@
 {
   target.setPatient(getPatient());
+  target.setOrderType(getOrderType());
   target.setConcept(getConcept());
   target.setInstructions(getInstructions());
   target.setStartDate(getStartDate());
@@ -8,18 +9,22 @@
   target.setOrderer(getOrderer());
   target.setCreator(getCreator());
   target.setDateCreated(getDateCreated());
-  target.setDiscontinued(getDiscontinued());
-  target.setDiscontinuedDate(getDiscontinuedDate());
-  target.setDiscontinuedReason(getDiscontinuedReason());
-  target.setDiscontinuedBy(getDiscontinuedBy());
+  target.dateStopped=getDateStopped();
+  target.setOrderReason(getOrderReason());
+  target.setOrderReasonNonCoded(getOrderReasonNonCoded());
   target.setAccessionNumber(getAccessionNumber());
   target.setVoided(isVoided());
   target.setVoidedBy(getVoidedBy());
   target.setDateVoided(getDateVoided());
   target.setVoidReason(getVoidReason());
-  target.setOrderNumber(getOrderNumber());
-  target.setPreviousOrderNumber(getPreviousOrderNumber());
-  target.setOrderAction(getOrderAction());
   target.setUrgency(getUrgency());
+  target.setCommentToFulfiller(getCommentToFulfiller());
+  target.previousOrder=getPreviousOrder();
+  target.action=getAction();
+  target.orderNumber=getOrderNumber();
+  target.setCareSetting(getCareSetting());
+  target.setChangedBy(getChangedBy());
+  target.setDateChanged(getDateChanged());
+  target.setScheduledDate(getScheduledDate());
   return target;
 }

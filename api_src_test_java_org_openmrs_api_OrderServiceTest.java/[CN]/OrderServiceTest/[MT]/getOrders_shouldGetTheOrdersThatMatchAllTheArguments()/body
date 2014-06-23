@@ -1,0 +1,21 @@
+{
+  Patient patient=patientService.getPatient(2);
+  CareSetting outPatient=orderService.getCareSetting(1);
+  OrderType testOrderType=orderService.getOrderType(2);
+  List<Order> testOrders=orderService.getOrders(patient,outPatient,testOrderType,false);
+  assertEquals(3,testOrders.size());
+  TestUtil.containsId(testOrders,6);
+  TestUtil.containsId(testOrders,7);
+  TestUtil.containsId(testOrders,9);
+  OrderType drugOrderType=orderService.getOrderType(1);
+  List<Order> drugOrders=orderService.getOrders(patient,outPatient,drugOrderType,false);
+  assertEquals(5,drugOrders.size());
+  TestUtil.containsId(drugOrders,2);
+  TestUtil.containsId(drugOrders,3);
+  TestUtil.containsId(drugOrders,44);
+  TestUtil.containsId(drugOrders,444);
+  TestUtil.containsId(drugOrders,5);
+  CareSetting inPatient=orderService.getCareSetting(2);
+  List<Order> inPatientDrugOrders=orderService.getOrders(patient,inPatient,drugOrderType,false);
+  assertEquals(222,inPatientDrugOrders.get(0).getOrderId().intValue());
+}

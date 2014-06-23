@@ -1,0 +1,9 @@
+{
+  DrugOrder order=new DrugOrder();
+  order.setDosingType(DrugOrder.DosingType.FREE_TEXT);
+  order.setDuration(20.0);
+  order.setDurationUnits(null);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("durationUnits"));
+}

@@ -1,0 +1,10 @@
+{
+  SomeDrugOrder order=new SomeDrugOrder();
+  order.setConcept(Context.getConceptService().getConcept(88));
+  order.setPatient(Context.getPatientService().getPatient(2));
+  order.setOrderer(Context.getProviderService().getProvider(1));
+  order.setOrderType(Context.getOrderService().getOrderTypeByName("Drug order"));
+  Errors errors=new BindException(order,"order");
+  new OrderValidator().validate(order,errors);
+  Assert.assertFalse(errors.hasFieldErrors("orderType"));
+}
