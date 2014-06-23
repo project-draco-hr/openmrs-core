@@ -1,0 +1,15 @@
+{
+  List<String> words=new ArrayList<String>();
+  words.addAll(Arrays.asList(escapedName.trim().split(" ")));
+  Set<String> stopWords=new HashSet<String>();
+  for (  Locale locale : locales) {
+    stopWords.addAll(Context.getConceptService().getConceptStopWords(locale));
+  }
+  for (Iterator<String> it=words.iterator(); it.hasNext(); ) {
+    String word=it.next();
+    if (stopWords.contains(word.toUpperCase())) {
+      it.remove();
+    }
+  }
+  return words;
+}

@@ -17,7 +17,7 @@
       query.append(search);
     }
   }
-  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.datatype.conceptDatatypeId",transformToIds(datatypes)).include("concept.conceptClass.conceptClassId",transformToIds(classes)).include("concept.retired","false").skipSame("concept.conceptId").list();
+  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.datatype.conceptDatatypeId",transformToIds(datatypes)).include("concept.conceptClass.conceptClassId",transformToIds(classes)).include("concept.retired",false).skipSame("concept.conceptId").list();
   final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }
