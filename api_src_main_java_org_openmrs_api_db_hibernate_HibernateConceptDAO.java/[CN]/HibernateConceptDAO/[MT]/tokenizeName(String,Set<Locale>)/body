@@ -7,7 +7,7 @@
   }
   for (Iterator<String> it=words.iterator(); it.hasNext(); ) {
     String word=it.next();
-    if (stopWords.contains(word.toUpperCase())) {
+    if (stopWords.contains(word.trim().toUpperCase())) {
       it.remove();
     }
   }
