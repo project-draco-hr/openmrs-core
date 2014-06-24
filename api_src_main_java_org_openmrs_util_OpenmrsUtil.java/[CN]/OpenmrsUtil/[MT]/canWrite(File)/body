@@ -1,0 +1,11 @@
+{
+  try {
+    if (!folder.exists()) {
+      folder.mkdirs();
+    }
+    return folder.canWrite();
+  }
+ catch (  SecurityException ex) {
+  }
+  return false;
+}
