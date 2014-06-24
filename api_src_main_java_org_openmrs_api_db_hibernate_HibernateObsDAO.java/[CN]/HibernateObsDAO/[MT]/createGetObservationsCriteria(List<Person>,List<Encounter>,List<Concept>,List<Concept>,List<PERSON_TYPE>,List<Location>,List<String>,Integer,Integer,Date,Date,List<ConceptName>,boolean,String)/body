@@ -51,5 +51,8 @@
   if (!includeVoidedObs) {
     criteria.add(Restrictions.eq("voided",false));
   }
+  if (accessionNumber != null) {
+    criteria.add(Restrictions.eq("accessionNumber",accessionNumber));
+  }
   return criteria;
 }

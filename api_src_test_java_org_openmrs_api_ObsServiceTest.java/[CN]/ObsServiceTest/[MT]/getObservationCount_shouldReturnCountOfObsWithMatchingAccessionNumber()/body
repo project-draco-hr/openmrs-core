@@ -1,0 +1,6 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  Integer count=obsService.getObservationCount(null,null,null,null,null,null,null,null,null,false,"AN1");
+  Assert.assertEquals(2,count.intValue());
+}

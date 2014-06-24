@@ -3,17 +3,17 @@
   List<Obs> obsListActual;
   List<Obs> obsListExpected;
   obsListExpected=session.createCriteria(Obs.class,"obs").addOrder(Order.desc("id")).list();
-  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id"),null,null,null,null,false);
+  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id"),null,null,null,null,false,null);
   Assert.assertArrayEquals(obsListExpected.toArray(),obsListActual.toArray());
-  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id desc"),null,null,null,null,false);
+  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id desc"),null,null,null,null,false,null);
   Assert.assertArrayEquals(obsListExpected.toArray(),obsListActual.toArray());
   obsListExpected=session.createCriteria(Obs.class,"obs").addOrder(Order.asc("id")).list();
-  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id asc"),null,null,null,null,false);
+  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("id asc"),null,null,null,null,false,null);
   Assert.assertArrayEquals(obsListExpected.toArray(),obsListActual.toArray());
   obsListExpected=session.createCriteria(Obs.class,"obs").addOrder(Order.asc("person.id")).addOrder(Order.desc("id")).list();
-  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("person.id asc","id"),null,null,null,null,false);
+  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("person.id asc","id"),null,null,null,null,false,null);
   Assert.assertArrayEquals(obsListExpected.toArray(),obsListActual.toArray());
   obsListExpected=session.createCriteria(Obs.class,"obs").addOrder(Order.asc("person.id")).addOrder(Order.asc("id")).list();
-  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("person.id asc","id asc"),null,null,null,null,false);
+  obsListActual=dao.getObservations(null,null,null,null,null,null,Arrays.asList("person.id asc","id asc"),null,null,null,null,false,null);
   Assert.assertArrayEquals(obsListExpected.toArray(),obsListActual.toArray());
 }

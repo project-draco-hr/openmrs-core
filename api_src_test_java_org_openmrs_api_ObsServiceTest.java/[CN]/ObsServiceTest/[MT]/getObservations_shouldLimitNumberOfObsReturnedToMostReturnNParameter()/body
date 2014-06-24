@@ -1,6 +1,6 @@
 {
   executeDataSet(INITIAL_OBS_XML);
   ObsService obsService=Context.getObsService();
-  List<Obs> count=obsService.getObservations(Collections.singletonList(new Person(8)),null,null,null,null,null,null,1,null,null,null,false);
+  List<Obs> count=obsService.getObservations(Collections.singletonList(new Person(8)),null,null,null,null,null,null,1,null,null,null,false,null);
   Assert.assertEquals(1,count.size());
 }
