@@ -1,0 +1,11 @@
+{
+  List<ConceptClass> mappedClasses=getConceptClassesOfOrderTypes();
+  if (mappedClasses.isEmpty()) {
+    return Collections.EMPTY_LIST;
+  }
+  if (locales == null) {
+    locales=new ArrayList<Locale>();
+    locales.add(Context.getLocale());
+  }
+  return dao.getConcepts(phrase,locales,false,mappedClasses,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,null,start,length);
+}

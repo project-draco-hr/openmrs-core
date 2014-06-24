@@ -1,0 +1,13 @@
+{
+  List<ConceptClass> mappedClasses=new ArrayList<ConceptClass>();
+  AdministrationService administrationService=Context.getAdministrationService();
+  List<List<Object>> result=administrationService.executeSQL("SELECT DISTINCT concept_class_id FROM order_type_class_map",true);
+  for (  List<Object> temp : result) {
+    for (    Object value : temp) {
+      if (value != null) {
+        mappedClasses.add(this.getConceptClass((Integer)value));
+      }
+    }
+  }
+  return mappedClasses;
+}
