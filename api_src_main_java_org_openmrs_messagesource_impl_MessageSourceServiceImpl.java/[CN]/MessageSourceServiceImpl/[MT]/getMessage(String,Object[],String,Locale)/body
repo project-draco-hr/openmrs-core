@@ -1,6 +1,6 @@
 {
-  if (StringUtils.isBlank(code)) {
-    return "";
+  if (StringUtils.isBlank(code) && StringUtils.isBlank(defaultMessage)) {
+    return StringUtils.EMPTY;
   }
   return activeMessageSource.getMessage(code,args,defaultMessage,locale);
 }
