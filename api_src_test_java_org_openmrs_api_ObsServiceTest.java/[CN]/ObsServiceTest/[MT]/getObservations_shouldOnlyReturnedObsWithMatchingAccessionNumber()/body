@@ -1,0 +1,10 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  List<Obs> obss1=obsService.getObservations(null,null,null,null,null,null,null,null,null,null,null,false,"AN1");
+  List<Obs> obss2=obsService.getObservations(Collections.singletonList(new Person(6)),null,null,null,null,null,null,null,null,null,null,false,"AN2");
+  List<Obs> obss3=obsService.getObservations(Collections.singletonList(new Person(8)),null,null,null,null,null,null,null,null,null,null,false,"AN2");
+  Assert.assertEquals(2,obss1.size());
+  Assert.assertEquals(1,obss2.size());
+  Assert.assertEquals(0,obss3.size());
+}
