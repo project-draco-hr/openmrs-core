@@ -1,6 +1,6 @@
 {
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
+  upgradeTestUtil.executeDataset(UPGRADE_TEST_1_9_7_TO_1_10_DATASET);
   List<List<Object>> rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer is null",true);
   Assert.assertEquals(2,rows.size());
   List<Integer> orderIdsWithNoOrderer=Arrays.asList((Integer)rows.get(0).get(0),(Integer)rows.get(1).get(0));

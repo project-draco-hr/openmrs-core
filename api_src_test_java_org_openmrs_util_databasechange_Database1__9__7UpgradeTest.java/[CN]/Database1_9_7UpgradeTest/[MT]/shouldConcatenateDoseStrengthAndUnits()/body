@@ -1,9 +1,9 @@
 {
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
+  upgradeTestUtil.executeDataset(UPGRADE_TEST_1_9_7_TO_1_10_DATASET);
   createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
   upgradeTestUtil.upgrade();
-  List<Map<String,String>> drugs=upgradeTestUtil.select("drug","strength");
+  List<Map<String,String>> drugs=upgradeTestUtil.select("drug",null,"strength");
   Assert.assertThat(drugs.size(),Matchers.is(3));
   Assert.assertTrue(drugs.get(0).containsValue("1.0tab(s)"));
   Assert.assertTrue(drugs.get(1).containsValue("325.0mg"));

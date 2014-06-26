@@ -1,5 +1,5 @@
 {
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
   Set<String> uniqueUnits=DatabaseUtil.getUniqueNonNullColumnValues("units","drug_order",String.class,upgradeTestUtil.getConnection());
   Assert.assertTrue(uniqueUnits.size() > 0);
   createOrderEntryUpgradeFileWithTestData("1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");

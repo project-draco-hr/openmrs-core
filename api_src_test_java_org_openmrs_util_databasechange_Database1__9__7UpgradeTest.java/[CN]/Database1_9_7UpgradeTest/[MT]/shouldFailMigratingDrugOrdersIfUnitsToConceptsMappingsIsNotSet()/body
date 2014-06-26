@@ -1,5 +1,5 @@
 {
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
   createOrderEntryUpgradeFileWithTestData("");
   expectedException.expect(IOException.class);
   String errorMsgSubString1="liquibase.exception.MigrationFailedException: Migration failed for change set liquibase-update-to-latest.xml::201401101647-TRUNK-4187::wyclif";

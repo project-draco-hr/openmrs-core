@@ -1,0 +1,8 @@
+{
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
+  upgradeTestUtil.executeDataset(UPGRADE_TEST_1_9_7_TO_1_10_DATASET);
+  upgradeTestUtil.executeDataset(TEST_DATA_DIR + "UpgradeTest-orderWithBlankUnitsOrFrequency.xml");
+  upgradeTestUtil.upgrade();
+  List<Map<String,String>> drug_orders=upgradeTestUtil.select("drug_order","order_id = 6 or order_id = 7","order_id","dose_units","frequency");
+  assertThat(drug_orders,containsInAnyOrder(row("order_id","6","dose_units",null,"frequency",null),row("order_id","7","dose_units",null,"frequency",null)));
+}
