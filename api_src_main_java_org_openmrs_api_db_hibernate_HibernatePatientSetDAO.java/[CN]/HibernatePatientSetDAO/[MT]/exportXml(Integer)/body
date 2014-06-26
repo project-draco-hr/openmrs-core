@@ -134,7 +134,7 @@
             orderNode.setAttribute("date_stopped",df.format(order.getDateStopped()));
           }
           if (order.getOrderReason() != null) {
-            orderNode.setAttribute("discontinued_reason",order.getOrderReason().getName(locale,false).getName());
+            orderNode.setAttribute("order_reason",order.getOrderReason().getName(locale,false).getName());
           }
           ordersNode.appendChild(orderNode);
         }

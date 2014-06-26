@@ -24,8 +24,8 @@
       sb.append(" and startDate <= :startDateTo ");
     }
   }
-  if (discontinuedReason != null && discontinuedReason.size() > 0) {
-    sb.append(" and discontinuedReason.id in (:discontinuedReasonIdList) ");
+  if (orderReason != null && orderReason.size() > 0) {
+    sb.append(" and orderReason.id in (:orderReasonIdList) ");
   }
   if (discontinued != null) {
     if (discontinued == true) {
@@ -99,12 +99,12 @@
   if (discontinued != null) {
     query.setBoolean("discontinued",discontinued);
   }
-  if (discontinuedReason != null && discontinuedReason.size() > 0) {
+  if (orderReason != null && orderReason.size() > 0) {
     List<Integer> ids=new ArrayList<Integer>();
-    for (    Concept c : discontinuedReason) {
+    for (    Concept c : orderReason) {
       ids.add(c.getConceptId());
     }
-    query.setParameterList("discontinuedReasonIdList",ids);
+    query.setParameterList("orderReasonIdList",ids);
   }
   return new Cohort(query.list());
 }
