@@ -1,0 +1,8 @@
+{
+  ConceptSource conceptSource=new ConceptSource();
+  conceptSource.setName("New name");
+  conceptSource.setDescription("Some description");
+  Errors errors=new BindException(conceptSource,"conceptSource");
+  new ConceptSourceValidator().validate(conceptSource,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
