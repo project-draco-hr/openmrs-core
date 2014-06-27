@@ -1,37 +1,25 @@
 {
   upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
   upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/database1_9To1_10UpgradeTest-dataSet.xml");
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/UpgradeTest-convertOrdererToProvider.xml");
-  Set<Integer> personIdsWithNoProviderAccount=new HashSet<Integer>();
-  List<OrderAndPerson> ordersAndOrderersWithNoProviderAccount=new ArrayList<OrderAndPerson>();
-  List<List<Object>> rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select o.order_id, u.person_id from orders o join users u on o.orderer = u.user_id " + "where u.person_id not in (select distinct person_id from provider)",true);
-  for (  List<Object> row : rows) {
-    ordersAndOrderersWithNoProviderAccount.add(new OrderAndPerson((Integer)row.get(0),(Integer)row.get(1)));
-    personIdsWithNoProviderAccount.add((Integer)row.get(1));
-  }
-  Assert.assertEquals(3,ordersAndOrderersWithNoProviderAccount.size());
-  Assert.assertEquals(2,personIdsWithNoProviderAccount.size());
-  Assert.assertThat(personIdsWithNoProviderAccount,Matchers.hasItems(101,102));
-  rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select o.order_id, o.orderer, u.person_id from orders o join users u on o.orderer = u.user_id " + "where u.person_id in (select distinct person_id from provider)",true);
+  List<List<Object>> rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer is null",true);
+  Assert.assertEquals(2,rows.size());
+  List<Integer> orderIdsWithNoOrderer=Arrays.asList((Integer)rows.get(0).get(0),(Integer)rows.get(1).get(0));
+  rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id, orderer from orders where orderer is not null",true);
   List<OrderAndPerson> ordersAndOrderersWithAProviderAccount=new ArrayList<OrderAndPerson>();
   for (  List<Object> row : rows) {
     ordersAndOrderersWithAProviderAccount.add(new OrderAndPerson((Integer)row.get(0),(Integer)row.get(1)));
   }
-  Assert.assertEquals(9,ordersAndOrderersWithAProviderAccount.size());
+  Assert.assertEquals(3,ordersAndOrderersWithAProviderAccount.size());
   Set<Integer> originalProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
   createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
   upgradeTestUtil.upgrade();
-  Set<Integer> newProviderIds=DatabaseUtil.getUniqueNonNullColumnValues("provider_id","provider",Integer.class,upgradeTestUtil.getConnection());
-  Assert.assertEquals(originalProviderIds.size() + personIdsWithNoProviderAccount.size(),newProviderIds.size());
   for (  OrderAndPerson op : ordersAndOrderersWithAProviderAccount) {
     rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where order_id = " + op.getOrderId(),true);
     Assert.assertEquals(op.getPersonId(),rows.get(0).get(1));
     Assert.assertTrue(originalProviderIds.contains(rows.get(0).get(0)));
   }
-  for (  OrderAndPerson op : ordersAndOrderersWithNoProviderAccount) {
-    rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select p.provider_id, p.person_id from provider p join orders o on p.provider_id = o.orderer where o.order_id = " + op.getOrderId(),true);
-    Assert.assertEquals(1,rows.size());
-    Assert.assertEquals(op.getPersonId(),rows.get(0).get(1));
-    Assert.assertFalse(originalProviderIds.contains(rows.get(0).get(0)));
-  }
+  rows=DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),"select order_id from orders where orderer = (Select provider_id from provider where name ='Unknown Provider')",true);
+  Assert.assertEquals(orderIdsWithNoOrderer.size(),rows.size());
+  Assert.assertTrue(orderIdsWithNoOrderer.contains(rows.get(0).get(0)));
+  Assert.assertTrue(orderIdsWithNoOrderer.contains(rows.get(1).get(0)));
 }
