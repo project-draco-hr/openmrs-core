@@ -1,3 +1,9 @@
 {
   this.drug=drug;
+  if (drug == null) {
+    super.setConcept(null);
+  }
+ else {
+    super.setConcept(drug.getConcept());
+  }
 }

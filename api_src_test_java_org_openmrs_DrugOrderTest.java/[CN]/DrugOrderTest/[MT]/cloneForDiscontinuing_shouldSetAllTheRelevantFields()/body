@@ -2,8 +2,9 @@
   DrugOrder order=new DrugOrder();
   order.setPatient(new Patient());
   order.setCareSetting(new CareSetting());
-  order.setConcept(new Concept());
-  order.setDrug(new Drug());
+  Drug drug=new Drug();
+  drug.setConcept(new Concept());
+  order.setDrug(drug);
   order.setOrderType(new OrderType());
   DrugOrder dcOrder=(DrugOrder)order.cloneForDiscontinuing();
   assertEquals(order.getDrug(),dcOrder.getDrug());

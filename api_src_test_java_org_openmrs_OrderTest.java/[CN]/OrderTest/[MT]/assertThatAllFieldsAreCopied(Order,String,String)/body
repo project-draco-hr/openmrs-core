@@ -13,28 +13,25 @@
       continue;
     }
     field.setAccessible(true);
-    Object fieldValue=null;
-    if (field.getType().isEnum()) {
-      fieldValue=field.getType().getEnumConstants()[0];
-    }
- else     if (field.getType().equals(Boolean.class)) {
-      fieldValue=true;
-    }
- else     if (field.getType().equals(Integer.class)) {
-      fieldValue=10;
-    }
- else     if (field.getType().equals(Double.class)) {
-      fieldValue=5.0;
-    }
+    Object fieldValue=field.get(original);
+    if (fieldValue == null) {
+      if (field.getType().isEnum()) {
+        fieldValue=field.getType().getEnumConstants()[0];
+      }
+ else       if (field.getType().equals(Boolean.class)) {
+        fieldValue=true;
+      }
+ else       if (field.getType().equals(Integer.class)) {
+        fieldValue=10;
+      }
+ else       if (field.getType().equals(Double.class)) {
+        fieldValue=5.0;
+      }
  else {
-      try {
         fieldValue=field.getType().newInstance();
       }
- catch (      InstantiationException e) {
-        fieldValue=null;
-      }
+      field.set(original,fieldValue);
     }
-    field.set(original,fieldValue);
   }
   Order copy=(Order)MethodUtils.invokeExactMethod(original,methodName,null);
   for (  Field field : fields) {
