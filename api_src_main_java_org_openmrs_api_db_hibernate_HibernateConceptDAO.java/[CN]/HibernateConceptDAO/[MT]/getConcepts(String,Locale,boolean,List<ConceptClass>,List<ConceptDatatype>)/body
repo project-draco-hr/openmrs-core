@@ -1,5 +1,4 @@
 {
-  StringBuilder query=new StringBuilder();
   final Locale locale;
   if (loc == null) {
     locale=Context.getLocale();
@@ -7,17 +6,8 @@
  else {
     locale=loc;
   }
-  if (!StringUtils.isBlank(name)) {
-    if (searchOnPhrase) {
-      String search=newNamesQuery(Sets.newHashSet(locale),name,true);
-      query.append(search);
-    }
- else {
-      String search=newNamesQuery(Sets.newHashSet(locale),name,false);
-      query.append(search);
-    }
-  }
-  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.datatype.conceptDatatypeId",transformToIds(datatypes)).include("concept.conceptClass.conceptClassId",transformToIds(classes)).include("concept.retired",false).skipSame("concept.conceptId").list();
+  LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(name,!searchOnPhrase,Arrays.asList(locale),false,false,classes,null,datatypes,null,null);
+  List<ConceptName> names=conceptNameQuery.list();
   final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

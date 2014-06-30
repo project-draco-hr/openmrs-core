@@ -1,0 +1,23 @@
+{
+  final String escapedName=LuceneQuery.escapeQuery(name);
+  final List<String> tokenizedName=tokenizeConceptName(escapedName,locales);
+  final StringBuilder query=newNameQuery(tokenizedName,escapedName,searchKeywords);
+  List<String> localeQueries=new ArrayList<String>();
+  for (  Locale locale : locales) {
+    if (searchExactLocale) {
+      localeQueries.add(locale.toString());
+    }
+ else {
+      String localeQuery=locale.getLanguage() + "* ";
+      if (!StringUtils.isBlank(locale.getCountry())) {
+        localeQuery+=" OR " + locale + "^2 ";
+      }
+      localeQueries.add(localeQuery);
+    }
+  }
+  query.append(" locale:(");
+  query.append(StringUtils.join(localeQueries," OR "));
+  query.append(")");
+  query.append(" voided:false");
+  return query.toString();
+}

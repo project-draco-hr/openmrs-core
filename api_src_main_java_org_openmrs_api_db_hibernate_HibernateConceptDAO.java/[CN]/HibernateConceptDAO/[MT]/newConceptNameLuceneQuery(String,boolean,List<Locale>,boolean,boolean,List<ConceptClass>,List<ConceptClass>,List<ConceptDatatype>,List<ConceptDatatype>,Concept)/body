@@ -8,7 +8,7 @@
  else {
       searchLocales=Sets.newHashSet(locales);
     }
-    query.append(newNamesQuery(searchLocales,phrase,true));
+    query.append(newConceptNameQuery(phrase,searchKeywords,searchLocales,searchExactLocale));
   }
   LuceneQuery<ConceptName> luceneQuery=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.conceptClass.conceptClassId",transformToIds(requireClasses)).exclude("concept.conceptClass.conceptClassId",transformToIds(excludeClasses)).include("concept.datatype.conceptDatatypeId",transformToIds(requireDatatypes)).exclude("concept.datatype.conceptDatatypeId",transformToIds(excludeDatatypes));
   if (answersToConcept != null) {

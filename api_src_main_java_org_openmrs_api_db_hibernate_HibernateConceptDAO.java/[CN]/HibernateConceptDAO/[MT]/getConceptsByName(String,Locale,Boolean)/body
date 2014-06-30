@@ -1,24 +1,14 @@
 {
-  StringBuilder query=new StringBuilder();
-  if (!StringUtils.isBlank(name)) {
-    final String searchPhrase=LuceneQuery.escapeQuery(name);
-    final Locale searchLocale;
-    if (locale == null) {
-      searchLocale=Context.getLocale();
-    }
- else {
-      searchLocale=locale;
-    }
-    if (exactLocale == null || exactLocale) {
-      query.append(" +name:").append("\"").append(searchPhrase).append("\"");
-      query.append(" +locale:").append(searchLocale);
-    }
- else {
-      query.append(newNamesQuery(Sets.newHashSet(searchLocale),searchPhrase,false));
-    }
+  List<Locale> locales=new ArrayList<Locale>();
+  if (locale == null) {
+    locales.add(Context.getLocale());
   }
-  query.append(" +concept.retired:false");
-  final List<ConceptName> names=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).skipSame("concept.conceptId").list();
+ else {
+    locales.add(locale);
+  }
+  boolean searchExactLocale=(exactLocale == null) ? false : exactLocale;
+  LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(name,true,locales,searchExactLocale,false,null,null,null,null,null);
+  List<ConceptName> names=conceptNameQuery.list();
   final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

@@ -1,0 +1,17 @@
+{
+  final StringBuilder query=new StringBuilder();
+  query.append("(");
+  if (searchKeywords) {
+    query.append(" name:(\"" + escapedName + "\")^0.6");
+    if (!tokenizedName.isEmpty()) {
+      query.append(" OR name:(" + StringUtils.join(tokenizedName," ") + ")^0.2");
+      query.append(" OR name:(" + StringUtils.join(tokenizedName,"* ") + "*)^0.1");
+      query.append(" OR name:(" + StringUtils.join(tokenizedName,"~0.8 ") + "~0.8)^0.1");
+    }
+  }
+ else {
+    query.append(" name:\"" + escapedName + "\"");
+  }
+  query.append(")");
+  return query;
+}
