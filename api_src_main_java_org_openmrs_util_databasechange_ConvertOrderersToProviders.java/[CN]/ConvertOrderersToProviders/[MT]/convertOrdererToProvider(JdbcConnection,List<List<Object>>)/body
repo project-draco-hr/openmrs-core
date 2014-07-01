@@ -26,7 +26,7 @@
     if (supportsBatchUpdate) {
       updateStatement.executeBatch();
     }
-    statement.execute("UPDATE orders SET orderer = " + "(SELECT provider_id FROM provider WHERE name ='Unknown Provider') " + "WHERE orderer IS NULL");
+    statement.execute("UPDATE orders SET orderer = " + "(SELECT provider_id FROM provider WHERE uuid =" + "(SELECT property_value FROM global_property WHERE property = '"+ "" + OpenmrsConstants.GP_UNKNOWN_PROVIDER_UUID + "')) "+ "WHERE orderer IS NULL");
     connection.commit();
   }
  catch (  DatabaseException e) {
