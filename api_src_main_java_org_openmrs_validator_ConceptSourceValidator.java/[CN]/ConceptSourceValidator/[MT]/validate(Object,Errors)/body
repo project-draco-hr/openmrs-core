@@ -1,7 +1,6 @@
 {
-  ConceptSource conceptSource=(ConceptSource)obj;
-  if (conceptSource == null) {
-    errors.rejectValue("conceptSource","error.general");
+  if (obj == null || !(obj instanceof ConceptSource)) {
+    throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + ConceptSource.class);
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
