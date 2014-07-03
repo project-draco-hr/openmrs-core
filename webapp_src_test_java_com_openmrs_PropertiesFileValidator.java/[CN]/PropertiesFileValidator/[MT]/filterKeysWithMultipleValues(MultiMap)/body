@@ -1,0 +1,10 @@
+{
+  List<String> result=Lists.newArrayList();
+  for (  Object entryObject : keyValuesMap.entrySet()) {
+    @SuppressWarnings("unchecked") Map.Entry<String,Collection<?>> mapEntry=(Entry<String,Collection<?>>)entryObject;
+    if (mapEntry.getValue().size() > 1) {
+      result.add(mapEntry.getKey());
+    }
+  }
+  return result;
+}
