@@ -34,7 +34,7 @@ catch (    Exception e) {
             try {
               ModuleFactory.stopModule(mod,true,true);
             }
- catch (            Throwable t3) {
+ catch (            Exception t3) {
               log.trace("Unable to shutdown module:" + mod,t3);
             }
           }
@@ -44,7 +44,7 @@ catch (    Exception e) {
  catch (      MandatoryModuleException ex) {
         throw new MandatoryModuleException(ex.getModuleId(),"Got an error while starting a mandatory module: " + e.getMessage() + ". Check the server logs for more information");
       }
-catch (      Throwable t2) {
+catch (      Exception t2) {
         log.warn("caught another error: ",t2);
         throw t2;
       }

@@ -21,7 +21,7 @@ catch (  OpenmrsCoreModuleException coreModEx) {
     Listener.performWebStartOfModules(servletContext);
     SchedulerUtil.startup(getRuntimeProperties());
   }
- catch (  Throwable t) {
+ catch (  Exception t) {
     Context.shutdown();
     WebModuleUtil.shutdownModules(servletContext);
     throw new ServletException(t);
