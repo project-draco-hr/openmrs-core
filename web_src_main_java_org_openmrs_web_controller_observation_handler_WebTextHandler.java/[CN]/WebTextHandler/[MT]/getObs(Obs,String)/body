@@ -6,9 +6,12 @@
     return obs;
   }
   if (ComplexObsHandler.HTML_VIEW.equals(view)) {
-    String imgtag="<img src='" + WebHandlerUtils.getHyperlink(obs,ComplexObsHandler.RAW_VIEW) + "'/>";
+    obs=super.getObs(obs,ComplexObsHandler.TEXT_VIEW);
+    ComplexData cd=obs.getComplexData();
+    Assert.notNull(cd,"TextHandler failed to provide text complex data");
+    Assert.isInstanceOf(String.class,cd.getData(),"TextHandler doesn't provide text as string");
     Locale locale=Context.getLocale();
-    ComplexData cd=new ComplexData(obs.getValueAsString(locale),imgtag);
+    cd=new ComplexData(obs.getValueAsString(locale),"<pre>" + cd.getData() + "</pre>");
     obs.setComplexData(cd);
     return obs;
   }

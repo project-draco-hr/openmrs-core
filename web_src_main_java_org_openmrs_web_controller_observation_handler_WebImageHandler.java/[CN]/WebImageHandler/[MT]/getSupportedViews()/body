@@ -1,0 +1,7 @@
+{
+  List view_list=new ArrayList(Arrays.asList(supportedViews));
+  view_list.addAll(Arrays.asList(super.getSupportedViews()));
+  String[] views=new String[view_list.size()];
+  view_list.toArray(views);
+  return views;
+}

@@ -1,7 +1,7 @@
 {
   String obsId=request.getParameter("obsId");
   String view=request.getParameter("view");
-  String viewType=request.getParameter("viewType");
+  String download=request.getParameter("download");
   HttpSession session=request.getSession();
   if (obsId == null || obsId.length() == 0) {
     session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.null");
@@ -16,9 +16,13 @@
   Obs complexObs=Context.getObsService().getComplexObs(Integer.valueOf(obsId),view);
   ComplexData cd=complexObs.getComplexData();
   Object data=cd.getData();
-  if ("download".equals(viewType)) {
+  if (null != download) {
     response.setHeader("Content-Disposition","attachment; filename=" + cd.getTitle());
     response.setHeader("Pragma","no-cache");
+  }
+  String mimeType=cd.getMIMEType();
+  if (null != mimeType) {
+    response.setHeader("Content-Type",mimeType);
   }
   if (data instanceof byte[]) {
     ByteArrayInputStream stream=new ByteArrayInputStream((byte[])data);
