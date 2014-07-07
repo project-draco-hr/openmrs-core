@@ -7,7 +7,7 @@
   assertTrue(duplicateOrder.isCurrent());
   assertEquals(cd4Count,duplicateOrder.getConcept());
   int initialActiveOrderCount=orderService.getActiveOrders(patient,null,null,null).size();
-  Order order=new Order();
+  TestOrder order=new TestOrder();
   order.setPatient(patient);
   order.setCareSetting(orderService.getCareSetting(2));
   order.setConcept(cd4Count);

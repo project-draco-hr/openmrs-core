@@ -58,6 +58,9 @@
  else   if (DISCONTINUE == order.getAction()) {
     discontinueExistingOrdersIfNecessary(order);
   }
+  if (!order.getOrderType().getJavaClass().isAssignableFrom(order.getClass())) {
+    throw new APIException("Order type class " + order.getOrderType().getJavaClass() + " does not match the order class "+ order.getClass().getName());
+  }
   if (previousOrder != null) {
     String query="SELECT patient_id, care_setting, concept_id FROM orders WHERE order_id = ";
     boolean isPreviousDrugOrder=DrugOrder.class.isAssignableFrom(previousOrder.getClass());
