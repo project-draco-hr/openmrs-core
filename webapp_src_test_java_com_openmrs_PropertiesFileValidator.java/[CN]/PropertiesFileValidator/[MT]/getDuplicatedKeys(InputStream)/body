@@ -1,0 +1,5 @@
+{
+  List<String> fileLines=getLines(inputStream);
+  MultiMap keyValuesMap=getAsPropertiesKeyValueMultiMap(fileLines);
+  return filterKeysWithMultipleValues(keyValuesMap);
+}

@@ -1,0 +1,10 @@
+{
+  MultiMap multiMap=new MultiValueMap();
+  for (  String line : fileLines) {
+    if (isCorectKeyValueLine(line)) {
+      Map.Entry<String,String> tuple=extractKeyValue(line);
+      multiMap.put(tuple.getKey(),tuple.getValue());
+    }
+  }
+  return multiMap;
+}
