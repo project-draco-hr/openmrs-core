@@ -1,0 +1,5 @@
+{
+  Context.getAlertService().notifySuperUsers("Module.startupError.notification.message",new Exception(),"test");
+  Alert lastAlert=Context.getAlertService().getAlertsByUser(null).iterator().next();
+  Assert.assertEquals(Alert.TEXT_MAX_LENGTH,lastAlert.getText().length());
+}
