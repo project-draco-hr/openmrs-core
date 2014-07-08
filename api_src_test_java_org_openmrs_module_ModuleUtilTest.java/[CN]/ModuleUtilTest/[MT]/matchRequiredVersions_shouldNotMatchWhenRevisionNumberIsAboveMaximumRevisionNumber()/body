@@ -1,0 +1,6 @@
+{
+  Long revisionNumber=(long)Integer.MAX_VALUE + 2;
+  String openmrsVersion="1.4." + revisionNumber;
+  String requiredVersion="1.4.*";
+  Assert.assertFalse(ModuleUtil.matchRequiredVersions(openmrsVersion,requiredVersion));
+}

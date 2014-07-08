@@ -1,4 +1,5 @@
 {
+  Integer maxRevisionNumber=Integer.MAX_VALUE;
   if (versionRange != null && !versionRange.equals("")) {
     String[] ranges=versionRange.split(",");
     for (    String range : ranges) {
@@ -16,7 +17,7 @@
         lowerBound=StringUtils.remove(lowerBound,lowerBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
         upperBound=StringUtils.remove(upperBound,upperBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
         if (lowerBound.indexOf("*") > 0)         lowerBound=lowerBound.replaceAll("\\*","0");
-        if (upperBound.indexOf("*") > 0)         upperBound=upperBound.replaceAll("\\*","999");
+        if (upperBound.indexOf("*") > 0)         upperBound=upperBound.replaceAll("\\*",maxRevisionNumber.toString());
         int lowerReturn=compareVersion(version,lowerBound);
         int upperReturn=compareVersion(version,upperBound);
         if (lowerReturn < 0 || upperReturn > 0) {
