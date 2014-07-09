@@ -1,28 +1,3 @@
 {
-  if (patient == null) {
-    throw new APIException("Attempting to convert state of an invalid patient");
-  }
-  if (trigger == null) {
-    throw new APIException("Attempting to convert state for a patient without a valid trigger concept");
-  }
-  if (dateConverted == null) {
-    throw new APIException("Invalid date for converting patient state");
-  }
-  for (  PatientProgram patientProgram : getPatientPrograms(patient,null,null,null,null,null,false)) {
-    if (patientProgram.getDateCompleted() == null) {
-      Set<ProgramWorkflow> workflows=patientProgram.getProgram().getWorkflows();
-      for (      ProgramWorkflow workflow : workflows) {
-        PatientState patientState=patientProgram.getCurrentState(workflow);
-        ProgramWorkflowState currentState=(patientState != null) ? patientState.getState() : null;
-        ProgramWorkflowState transitionState=workflow.getState(trigger);
-        log.debug("Transitioning from current state [" + currentState + "]");
-        log.debug("|---> Transitioning to final state [" + transitionState + "]");
-        if (transitionState != null && workflow.isLegalTransition(currentState,transitionState)) {
-          patientProgram.transitionToState(transitionState,dateConverted);
-          log.debug("State Conversion Triggered: patientProgram=" + patientProgram + " transition from "+ currentState+ " to "+ transitionState+ " on "+ dateConverted);
-        }
-      }
-      Context.getProgramWorkflowService().savePatientProgram(patientProgram);
-    }
-  }
+  throw new APIException("No longer supported, this functionality was moved to the exit from care module");
 }
