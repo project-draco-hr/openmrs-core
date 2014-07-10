@@ -1,0 +1,6 @@
+{
+  Context.getAlertService().notifySuperUsers("Module.startupError.notification.message",null,"test");
+  Alert lastAlert=Context.getAlertService().getAlertsByUser(null).iterator().next();
+  String expectedText=Context.getMessageSourceService().getMessage("Module.startupError.notification.message",new Object[]{"test"},Context.getLocale());
+  Assert.assertEquals(expectedText,lastAlert.getText());
+}
