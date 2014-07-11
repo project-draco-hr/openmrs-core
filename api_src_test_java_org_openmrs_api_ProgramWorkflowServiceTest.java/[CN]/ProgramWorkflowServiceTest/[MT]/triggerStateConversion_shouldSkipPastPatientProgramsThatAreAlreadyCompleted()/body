@@ -1,0 +1,13 @@
+{
+  Integer patientProgramId=1;
+  PatientProgram pp=pws.getPatientProgram(patientProgramId);
+  Date originalDateCompleted=new Date();
+  pp.setDateCompleted(originalDateCompleted);
+  pp=pws.savePatientProgram(pp);
+  Concept diedConcept=cs.getConcept(16);
+  Assert.assertNotNull(pp.getProgram().getWorkflow(1).getState(diedConcept));
+  Thread.sleep(10);
+  pws.triggerStateConversion(pp.getPatient(),diedConcept,new Date());
+  pp=pws.getPatientProgram(patientProgramId);
+  Assert.assertEquals(originalDateCompleted,pp.getDateCompleted());
+}

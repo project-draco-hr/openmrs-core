@@ -1,0 +1,89 @@
+{
+  log.debug("Entering exitfromcare with [" + patientId + "] ["+ exitReasonId+ "] ["+ exitDateStr+ "]");
+  String ret="";
+  PatientService ps=Context.getPatientService();
+  ConceptService cs=Context.getConceptService();
+  Patient patient=null;
+  try {
+    patient=ps.getPatient(patientId);
+  }
+ catch (  Exception e) {
+    patient=null;
+  }
+  if (patient == null) {
+    ret="Unable to find valid patient with the supplied identification information - cannot exit patient from care";
+  }
+  Concept exitReasonConcept=null;
+  try {
+    exitReasonConcept=cs.getConcept(exitReasonId);
+  }
+ catch (  Exception e) {
+    exitReasonConcept=null;
+  }
+  if (exitReasonConcept == null) {
+    ret="Unable to locate reason for exit in dictionary - cannot exit patient from care";
+  }
+  Date exitDate=null;
+  if (exitDateStr != null) {
+    SimpleDateFormat sdf=Context.getDateFormat();
+    try {
+      exitDate=sdf.parse(exitDateStr);
+    }
+ catch (    ParseException e) {
+      exitDate=null;
+    }
+  }
+  if (exitDate == null) {
+    ret="Invalid date supplied - cannot exit patient from care without a valid date.";
+  }
+  if (patient != null && exitReasonConcept != null && exitDate != null) {
+    String patientDiedConceptId=Context.getAdministrationService().getGlobalProperty("concept.patientDied");
+    Concept patientDiedConcept=null;
+    if (patientDiedConceptId != null) {
+      patientDiedConcept=cs.getConcept(patientDiedConceptId);
+    }
+    if (patientDiedConcept != null) {
+      if (exitReasonConcept.equals(patientDiedConcept)) {
+        Concept causeOfDeathConcept=null;
+        try {
+          causeOfDeathConcept=cs.getConcept(causeOfDeathConceptId);
+        }
+ catch (        Exception e) {
+          causeOfDeathConcept=null;
+        }
+        if (causeOfDeathConcept != null) {
+          try {
+            ps.processDeath(patient,exitDate,causeOfDeathConcept,otherReason);
+          }
+ catch (          Exception e) {
+            log.warn("Caught error",e);
+            ret="Internal error while trying to process patient death - unable to proceed. Cause: " + e.getMessage();
+          }
+        }
+ else {
+          ret="Unable to locate cause of death in dictionary - cannot proceed";
+        }
+      }
+ else {
+        try {
+          ps.exitFromCare(patient,exitDate,exitReasonConcept);
+        }
+ catch (        Exception e) {
+          log.warn("Caught error",e);
+          ret="Internal error while trying to exit patient from care - unable to exit patient from care at this time. Cause: " + e.getMessage();
+        }
+      }
+    }
+ else {
+      try {
+        ps.exitFromCare(patient,exitDate,exitReasonConcept);
+      }
+ catch (      Exception e) {
+        log.warn("Caught error",e);
+        ret="Internal error while trying to exit patient from care - unable to exit patient from care at this time. Cause: " + e.getMessage();
+      }
+    }
+    log.debug("Exited from care, it seems");
+  }
+  return ret;
+}
