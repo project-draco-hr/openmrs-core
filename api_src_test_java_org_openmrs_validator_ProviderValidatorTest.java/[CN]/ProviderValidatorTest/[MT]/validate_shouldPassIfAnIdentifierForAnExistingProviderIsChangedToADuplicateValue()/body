@@ -4,5 +4,5 @@
   Provider existingProviderToEdit=providerService.getProvider(1);
   existingProviderToEdit.setIdentifier(duplicateProvider.getIdentifier());
   providerValidator.validate(existingProviderToEdit,errors);
-  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+  Assert.assertFalse(errors.hasErrors());
 }

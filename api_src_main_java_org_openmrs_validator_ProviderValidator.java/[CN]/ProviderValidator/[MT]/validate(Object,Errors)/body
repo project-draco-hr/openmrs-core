@@ -9,10 +9,6 @@
   if (provider.getPerson() == null && StringUtils.isBlank(provider.getName())) {
     errors.rejectValue("name","Provider.error.personOrName.required");
   }
-  boolean isUnique=Context.getProviderService().isProviderIdentifierUnique(provider);
-  if (!isUnique) {
-    errors.rejectValue("identifier","Provider.error.duplicateIdentifier",new Object[]{provider.getIdentifier()},null);
-  }
   if (provider.isRetired() && StringUtils.isEmpty(provider.getRetireReason())) {
     errors.rejectValue("retireReason","Provider.error.retireReason.required");
   }

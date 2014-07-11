@@ -5,5 +5,5 @@
   provider.setIdentifier(duplicateProvider.getIdentifier());
   provider.setName("name");
   providerValidator.validate(provider,errors);
-  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+  Assert.assertFalse(errors.hasFieldErrors("identifier"));
 }
