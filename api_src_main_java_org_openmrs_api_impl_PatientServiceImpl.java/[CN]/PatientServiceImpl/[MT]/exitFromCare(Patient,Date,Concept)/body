@@ -10,5 +10,4 @@
   }
   saveReasonForExitObs(patient,dateExited,reasonForExit);
   Context.getProgramWorkflowService().triggerStateConversion(patient,reasonForExit,dateExited);
-  OrderUtil.discontinueAllOrders(patient,reasonForExit,dateExited);
 }
