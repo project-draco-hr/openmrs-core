@@ -32,6 +32,7 @@
     if (conceptDescription != null) {
       description=WebUtil.escapeHTML(conceptDescription.getDescription());
     }
+    isCodedDatatype=concept.getDatatype().isCoded();
     retired=concept.isRetired();
     hl7Abbreviation=concept.getDatatype().getHl7Abbreviation();
     className=concept.getConceptClass().getName();
