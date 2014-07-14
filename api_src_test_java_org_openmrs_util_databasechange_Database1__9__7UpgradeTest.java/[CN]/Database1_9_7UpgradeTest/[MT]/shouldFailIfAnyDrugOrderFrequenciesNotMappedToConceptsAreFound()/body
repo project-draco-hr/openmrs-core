@@ -1,7 +1,0 @@
-{
-  upgradeTestUtil.executeDataset("/org/openmrs/util/databasechange/standardTest-1.9.7-dataSet.xml");
-  Set<String> uniqueFrequencies=DatabaseUtil.getUniqueNonNullColumnValues("frequency","drug_order",String.class,upgradeTestUtil.getConnection());
-  Assert.assertTrue(uniqueFrequencies.size() > 0);
-  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112");
-  upgradeTestUtil.upgrade();
-}

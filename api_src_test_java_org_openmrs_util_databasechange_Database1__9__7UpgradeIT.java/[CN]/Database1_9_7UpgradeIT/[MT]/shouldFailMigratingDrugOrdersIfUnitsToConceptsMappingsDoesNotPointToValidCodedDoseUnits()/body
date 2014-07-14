@@ -1,0 +1,11 @@
+{
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
+  upgradeTestUtil.executeDataset(UPGRADE_TEST_1_9_7_TO_1_10_DATASET);
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=invalid");
+  expectedException.expect(IOException.class);
+  String errorMsgSubString1="liquibase.exception.MigrationFailedException: Migration failed for change set liquibase-update-to-latest.xml::201401101647-TRUNK-4187::wyclif";
+  expectedException.expectMessage(errorMsgSubString1);
+  expectedException.expectMessage("For input string: \"invalid\"");
+  upgradeTestUtil.upgrade();
+}

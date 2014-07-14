@@ -5,16 +5,25 @@
     autoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
     updateDrugOrderStatement=connection.prepareStatement("update drug_order set frequency = ? where frequency_text = ?");
+    updateDrugOrderStatement.setNull(1,Types.INTEGER);
+    updateDrugOrderStatement.setNull(2,Types.VARCHAR);
+    updateDrugOrderStatement.executeUpdate();
+    updateDrugOrderStatement.clearParameters();
     for (    String frequency : uniqueFrequencies) {
-      Integer conceptIdForFrequency=UpgradeUtil.getConceptIdForUnits(frequency);
-      if (conceptIdForFrequency == null) {
-        throw new CustomChangeException("No concept mapping found for frequency: " + frequency);
+      if (StringUtils.isBlank(frequency)) {
+        updateDrugOrderStatement.setNull(1,Types.INTEGER);
       }
-      Integer orderFrequencyId=UpgradeUtil.getOrderFrequencyIdForConceptId(connection.getUnderlyingConnection(),conceptIdForFrequency);
-      if (orderFrequencyId == null) {
-        throw new CustomChangeException("No order frequency found for concept " + conceptIdForFrequency);
+ else {
+        Integer conceptIdForFrequency=UpgradeUtil.getConceptIdForUnits(frequency);
+        if (conceptIdForFrequency == null) {
+          throw new CustomChangeException("No concept mapping found for frequency: " + frequency);
+        }
+        Integer orderFrequencyId=UpgradeUtil.getOrderFrequencyIdForConceptId(connection.getUnderlyingConnection(),conceptIdForFrequency);
+        if (orderFrequencyId == null) {
+          throw new CustomChangeException("No order frequency found for concept " + conceptIdForFrequency);
+        }
+        updateDrugOrderStatement.setInt(1,orderFrequencyId);
       }
-      updateDrugOrderStatement.setInt(1,orderFrequencyId);
       updateDrugOrderStatement.setString(2,frequency);
       updateDrugOrderStatement.executeUpdate();
       updateDrugOrderStatement.clearParameters();

@@ -1,0 +1,17 @@
+{
+  ConceptSource conceptSource=new ConceptSource();
+  conceptSource.setName("New name");
+  conceptSource.setDescription("Some description");
+  conceptSource.setHl7Code(null);
+  Errors errors=new BindException(conceptSource,"conceptSource");
+  new ConceptSourceValidator().validate(conceptSource,errors);
+  Assert.assertFalse(errors.hasFieldErrors("Hl7Code"));
+  conceptSource.setHl7Code("");
+  errors=new BindException(conceptSource,"conceptSource");
+  new ConceptSourceValidator().validate(conceptSource,errors);
+  Assert.assertFalse(errors.hasFieldErrors("Hl7Code"));
+  conceptSource.setHl7Code("   ");
+  errors=new BindException(conceptSource,"conceptSource");
+  new ConceptSourceValidator().validate(conceptSource,errors);
+  Assert.assertFalse(errors.hasFieldErrors("Hl7Code"));
+}

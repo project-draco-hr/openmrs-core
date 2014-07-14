@@ -1,4 +1,5 @@
 {
+  Context.clearSession();
   Connection connection=getConnection();
   turnOffDBConstraints(connection);
   IDatabaseConnection dbUnitConn=setupDatabaseConnection(connection);
@@ -10,8 +11,6 @@
   }
   DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
   turnOnDBConstraints(connection);
-  Context.clearSession();
-  if (Context.isSessionOpen())   Context.logout();
   connection.commit();
   updateSearchIndex();
   isBaseSetup=false;

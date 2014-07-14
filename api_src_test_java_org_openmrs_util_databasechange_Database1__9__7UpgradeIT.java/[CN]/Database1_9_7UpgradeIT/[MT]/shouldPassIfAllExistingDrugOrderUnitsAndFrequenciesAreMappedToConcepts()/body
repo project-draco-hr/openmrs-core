@@ -1,0 +1,11 @@
+{
+  upgradeTestUtil.executeDataset(STANDARD_TEST_1_9_7_DATASET);
+  Set<String> uniqueUnits=DatabaseUtil.getUniqueNonNullColumnValues("units","drug_order",String.class,upgradeTestUtil.getConnection());
+  Assert.assertTrue(uniqueUnits.size() > 0);
+  Set<String> uniqueFrequencies=DatabaseUtil.getUniqueNonNullColumnValues("frequency","drug_order",String.class,upgradeTestUtil.getConnection());
+  Assert.assertTrue(uniqueFrequencies.size() > 0);
+  upgradeTestUtil.executeDataset(UPGRADE_TEST_1_9_7_TO_1_10_DATASET);
+  createOrderEntryUpgradeFileWithTestData("mg=111\ntab(s)=112\n1/day\\ x\\ 7\\ days/week=113\n2/day\\ x\\ 7\\ days/week=114");
+  upgradeTestUtil.upgrade();
+  upgradeTestUtil.buildSessionFactory();
+}

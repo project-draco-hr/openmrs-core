@@ -2,7 +2,7 @@
   try {
     Daemon.executeScheduledTask(task);
   }
- catch (  Throwable t) {
+ catch (  Exception t) {
     log.error("FATAL ERROR: Task [" + task.getClass() + "] failed due to exception ["+ t.getClass().getName()+ "]",t);
     SchedulerUtil.sendSchedulerError(t);
   }

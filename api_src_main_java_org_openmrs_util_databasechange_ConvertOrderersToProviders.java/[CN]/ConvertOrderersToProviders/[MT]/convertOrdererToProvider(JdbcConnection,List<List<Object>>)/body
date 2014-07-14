@@ -2,6 +2,7 @@
   final int batchSize=1000;
   int index=0;
   PreparedStatement updateStatement=null;
+  Statement statement=connection.createStatement();
   Boolean autoCommit=null;
   try {
     autoCommit=connection.getAutoCommit();
@@ -25,6 +26,7 @@
     if (supportsBatchUpdate) {
       updateStatement.executeBatch();
     }
+    statement.execute("UPDATE orders SET orderer = " + "(SELECT provider_id FROM provider WHERE uuid =" + "(SELECT property_value FROM global_property WHERE property = '"+ "" + OpenmrsConstants.GP_UNKNOWN_PROVIDER_UUID + "')) "+ "WHERE orderer IS NULL");
     connection.commit();
   }
  catch (  DatabaseException e) {
@@ -39,6 +41,9 @@ catch (  SQLException e) {
     }
     if (updateStatement != null) {
       updateStatement.close();
+    }
+    if (statement != null) {
+      statement.close();
     }
   }
 }

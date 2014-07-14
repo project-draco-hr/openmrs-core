@@ -4,8 +4,13 @@
   }
   realServices.clear();
   if (userContextMocked) {
-    Context.setUserContext(realUserContext);
-    realUserContext=null;
+    if (realUserContext != null) {
+      Context.setUserContext(realUserContext);
+      realUserContext=null;
+    }
+ else {
+      Context.clearUserContext();
+    }
     userContextMocked=false;
   }
 }

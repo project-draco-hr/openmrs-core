@@ -1,0 +1,9 @@
+{
+  if (!dictionaryLoaded) {
+    initializeInMemoryDatabase();
+    executeLargeDataSet("org/openmrs/contrib/mvpconceptdictionary/dbunit.xml");
+    getConnection().commit();
+    dictionaryLoaded=true;
+  }
+  authenticate();
+}

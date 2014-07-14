@@ -1,0 +1,8 @@
+{
+  if (this.getType() != order.getDosingType()) {
+    throw new Exception("Dosing type of drug order is mismatched. Expected:" + this.getType() + " but received:"+ order.getDosingType());
+  }
+  FreeTextDosingInstructions ftdi=new FreeTextDosingInstructions();
+  ftdi.setInstructions(order.getDosingInstructions());
+  return ftdi;
+}
