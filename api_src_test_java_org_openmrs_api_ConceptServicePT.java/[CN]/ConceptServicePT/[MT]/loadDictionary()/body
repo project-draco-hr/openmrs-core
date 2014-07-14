@@ -3,6 +3,7 @@
     initializeInMemoryDatabase();
     executeLargeDataSet("org/openmrs/contrib/mvpconceptdictionary/dbunit.xml");
     getConnection().commit();
+    updateSearchIndex();
     dictionaryLoaded=true;
   }
   authenticate();
