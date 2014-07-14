@@ -1,0 +1,7 @@
+{
+  PersonAddress voidedAddress=PersonAddressBuilder.newBuilder().withPreferred(false).withVoided(true).build();
+  PersonAddress notVoidedAddress=PersonAddressBuilder.newBuilder().withPreferred(false).withVoided(false).build();
+  PersonAddress expectedPersonAddress=notVoidedAddress;
+  Set<PersonAddress> personAddresses=Sets.newHashSet(voidedAddress,notVoidedAddress);
+  checkGetPersonAddressResultForVoidedPerson(expectedPersonAddress,personAddresses);
+}

@@ -10,7 +10,9 @@
         return addr;
       }
     }
-    return null;
+    if (isVoided() && !getAddresses().isEmpty()) {
+      return getAddresses().iterator().next();
+    }
   }
   return null;
 }
