@@ -1,0 +1,4 @@
+{
+  List<Concept> concepts=conceptService.getConceptsByName("diabetes mellit",null,false);
+  assertThat(concepts.get(0).getName().getName(),equalToIgnoringCase("diabetes mellitus"));
+}
