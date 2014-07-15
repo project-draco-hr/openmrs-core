@@ -1,0 +1,14 @@
+{
+  Concept hivProgram=conceptService.getConceptByName("hiv program");
+  ConceptName synonym=new ConceptName("synonym",Context.getLocale());
+  hivProgram.addName(synonym);
+  conceptService.saveConcept(hivProgram);
+  Concept mdrTbProgram=conceptService.getConceptByName("mdr-tb program");
+  synonym=new ConceptName("synonym",Context.getLocale());
+  synonym.setLocalePreferred(true);
+  mdrTbProgram.addName(synonym);
+  conceptService.saveConcept(mdrTbProgram);
+  updateSearchIndex();
+  List<ConceptSearchResult> concepts=conceptService.getConcepts("synonym",null,false,null,null,null,null,null,null,null);
+  assertThat(concepts,contains(hasConcept(is(mdrTbProgram)),hasConcept(is(hivProgram))));
+}
