@@ -5,5 +5,5 @@
   Provider provider=providerService.getProvider(1);
   provider.setIdentifier(duplicateRetiredProvider.getIdentifier());
   providerValidator.validate(provider,errors);
-  Assert.assertTrue(errors.hasErrors());
+  Assert.assertFalse(errors.hasErrors());
 }

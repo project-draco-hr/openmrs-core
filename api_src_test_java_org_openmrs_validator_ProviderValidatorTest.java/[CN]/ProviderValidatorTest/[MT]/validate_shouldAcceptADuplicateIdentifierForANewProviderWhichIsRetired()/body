@@ -6,5 +6,5 @@
   Assert.assertTrue(providerToValidate.isRetired());
   providerToValidate.setIdentifier(duplicateProvider.getIdentifier());
   providerValidator.validate(providerToValidate,errors);
-  Assert.assertTrue(errors.hasErrors());
+  Assert.assertFalse(errors.hasErrors());
 }
