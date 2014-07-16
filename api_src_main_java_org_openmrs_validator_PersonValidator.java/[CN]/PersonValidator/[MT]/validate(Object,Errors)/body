@@ -6,7 +6,6 @@
     return;
   }
   Person person=(Person)target;
-  ValidationUtils.rejectIfEmptyOrWhitespace(errors,"gender","Person.gender.required");
   boolean atLeastOneNonVoidPersonNameLeft=false;
   for (  PersonName personName : person.getNames()) {
     personNameValidator.validate(personName,errors);
@@ -28,19 +27,7 @@
       index++;
     }
   }
-  if (person.getBirthdate() != null) {
-    if (person.getBirthdate().after(new Date())) {
-      errors.rejectValue("birthdate","error.date.future");
-    }
- else {
-      Calendar c=Calendar.getInstance();
-      c.setTime(new Date());
-      c.add(Calendar.YEAR,-120);
-      if (person.getBirthdate().before(c.getTime())) {
-        errors.rejectValue("birthdate","error.date.nonsensical");
-      }
-    }
-  }
+  validateBirthDate(errors,person.getBirthdate());
   if (person.isVoided()) {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"voidReason","error.null");
   }
