@@ -1,0 +1,10 @@
+{
+  PersonAddress voidedAddress1=PersonAddressBuilder.newBuilder().withVoided(true).build();
+  PersonAddress voidedAddress2=PersonAddressBuilder.newBuilder().withVoided(true).build();
+  Set<PersonAddress> personAddresses=Sets.newHashSet(voidedAddress1,voidedAddress2);
+  Person person=new Person();
+  person.setVoided(true);
+  person.setAddresses(personAddresses);
+  PersonAddress actualPersonAddress=person.getPersonAddress();
+  assertTrue(actualPersonAddress.isVoided());
+}

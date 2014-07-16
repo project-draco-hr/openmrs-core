@@ -10,7 +10,9 @@
         return name;
       }
     }
-    return null;
+    if (isVoided() && !getNames().isEmpty()) {
+      return getNames().iterator().next();
+    }
   }
   return null;
 }
