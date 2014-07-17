@@ -1,4 +1,5 @@
 {
-  ModuleUtil.shutdown();
-  Context.closeSession();
+  if (Context.isSessionOpen()) {
+    Context.closeSession();
+  }
 }
