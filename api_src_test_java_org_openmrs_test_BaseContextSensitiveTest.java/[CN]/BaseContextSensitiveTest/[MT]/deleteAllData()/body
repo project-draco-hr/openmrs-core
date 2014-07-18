@@ -10,7 +10,8 @@
     dataset.addTable(new DefaultTable(tableName));
   }
   DatabaseOperation.DELETE_ALL.execute(dbUnitConn,dataset);
-  connection.commit();
   turnOnDBConstraints(connection);
+  connection.commit();
+  updateSearchIndex();
   isBaseSetup=false;
 }

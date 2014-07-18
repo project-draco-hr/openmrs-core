@@ -1,0 +1,6 @@
+{
+  applyPartialResults(fullTextQuery,firstResult,maxResults);
+  fullTextQuery.setProjection(fields);
+  @SuppressWarnings("unchecked") List<Object> list=fullTextQuery.list();
+  return ListPart.newListPart(list,firstResult,maxResults,Long.valueOf(fullTextQuery.getResultSize()),!fullTextQuery.hasPartialResults());
+}

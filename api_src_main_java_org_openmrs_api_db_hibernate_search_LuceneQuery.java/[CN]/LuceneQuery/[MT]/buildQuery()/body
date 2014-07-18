@@ -1,0 +1,11 @@
+{
+  Query query;
+  try {
+    query=prepareQuery();
+  }
+ catch (  ParseException e) {
+    throw new IllegalStateException("Invalid query",e);
+  }
+  fullTextQuery=getFullTextSession().createFullTextQuery(query,getType());
+  adjustFullTextQuery(fullTextQuery);
+}

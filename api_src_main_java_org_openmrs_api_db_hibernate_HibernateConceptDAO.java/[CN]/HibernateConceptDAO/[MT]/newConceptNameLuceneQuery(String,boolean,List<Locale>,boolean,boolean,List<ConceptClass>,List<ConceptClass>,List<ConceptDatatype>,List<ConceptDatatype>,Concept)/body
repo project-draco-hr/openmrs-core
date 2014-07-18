@@ -1,0 +1,29 @@
+{
+  final StringBuilder query=new StringBuilder();
+  if (!StringUtils.isBlank(phrase)) {
+    final Set<Locale> searchLocales;
+    if (locales == null) {
+      searchLocales=Sets.newHashSet(Context.getLocale());
+    }
+ else {
+      searchLocales=Sets.newHashSet(locales);
+    }
+    query.append(newConceptNameQuery(phrase,searchKeywords,searchLocales,searchExactLocale));
+  }
+  LuceneQuery<ConceptName> luceneQuery=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.conceptClass.conceptClassId",transformToIds(requireClasses)).exclude("concept.conceptClass.conceptClassId",transformToIds(excludeClasses)).include("concept.datatype.conceptDatatypeId",transformToIds(requireDatatypes)).exclude("concept.datatype.conceptDatatypeId",transformToIds(excludeDatatypes));
+  if (answersToConcept != null) {
+    Collection<ConceptAnswer> answers=answersToConcept.getAnswers(false);
+    if (answers != null && !answers.isEmpty()) {
+      List<Integer> ids=new ArrayList<Integer>();
+      for (      ConceptAnswer conceptAnswer : answersToConcept.getAnswers(false)) {
+        ids.add(conceptAnswer.getAnswerConcept().getId());
+      }
+      luceneQuery.include("concept.conceptId",ids.toArray(new Object[0]));
+    }
+  }
+  if (!includeRetired) {
+    luceneQuery.include("concept.retired",false);
+  }
+  luceneQuery.skipSame("concept.conceptId");
+  return luceneQuery;
+}

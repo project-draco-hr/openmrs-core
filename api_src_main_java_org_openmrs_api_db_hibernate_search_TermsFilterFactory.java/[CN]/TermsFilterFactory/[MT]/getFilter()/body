@@ -1,0 +1,17 @@
+{
+  BooleanQuery query=new BooleanQuery();
+  for (  Set<Term> terms : includeTerms) {
+    BooleanQuery subquery=new BooleanQuery();
+    for (    Term term : terms) {
+      subquery.add(new TermQuery(term),Occur.SHOULD);
+    }
+    query.add(subquery,Occur.MUST);
+  }
+  if (includeTerms.isEmpty()) {
+    query.add(new MatchAllDocsQuery(),Occur.MUST);
+  }
+  for (  Term term : excludeTerms) {
+    query.add(new TermQuery(term),Occur.MUST_NOT);
+  }
+  return new CachingWrapperFilter(new QueryWrapperFilter(query));
+}

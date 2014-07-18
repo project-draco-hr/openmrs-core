@@ -1,10 +1,3 @@
 {
-  checkIfLocked();
-  SchedulerService schedService=Context.getSchedulerService();
-  TaskDefinition conceptIndexUpdateTaskDef=schedService.getTaskByName(CONCEPT_WORD_UPDATE_TASK_NAME);
-  if (conceptIndexUpdateTaskDef == null) {
-    conceptIndexUpdateTaskDef=createConceptIndexUpdateTask();
-    schedService.saveTask(conceptIndexUpdateTaskDef);
-  }
-  schedService.scheduleIfNotRunning(conceptIndexUpdateTaskDef);
+  Context.updateSearchIndexForType(ConceptName.class);
 }

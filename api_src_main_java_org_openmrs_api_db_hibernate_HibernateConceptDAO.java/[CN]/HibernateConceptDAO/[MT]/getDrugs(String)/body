@@ -1,18 +1,17 @@
 {
-  List<String> words=ConceptWord.getUniqueWords(phrase);
-  List<Drug> conceptDrugs=new Vector<Drug>();
-  if (words.size() > 0) {
-    Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
-    Iterator<String> word=words.iterator();
-    searchCriteria.add(Restrictions.like("name",word.next(),MatchMode.ANYWHERE));
-    while (word.hasNext()) {
-      String w=word.next();
-      log.debug(w);
-      searchCriteria.add(Restrictions.like("name",w,MatchMode.ANYWHERE));
-    }
-    searchCriteria.add(Restrictions.eq("drug.retired",false));
-    searchCriteria.addOrder(Order.asc("drug.concept"));
-    conceptDrugs=searchCriteria.list();
+  if (StringUtils.isBlank(phrase)) {
+    return Collections.emptyList();
   }
-  return conceptDrugs;
+  final String escapedPhrase=LuceneQuery.escapeQuery(phrase.trim());
+  List<String> tokenizedPhrase=new ArrayList<String>();
+  String[] words=escapedPhrase.split(" ");
+  for (  String word : words) {
+    word=word.trim();
+    if (!word.isEmpty()) {
+      tokenizedPhrase.add(word);
+    }
+  }
+  StringBuilder query=newNameQuery(tokenizedPhrase,escapedPhrase,true);
+  List<Drug> list=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),Drug.class).exclude("retired",true).list();
+  return list;
 }

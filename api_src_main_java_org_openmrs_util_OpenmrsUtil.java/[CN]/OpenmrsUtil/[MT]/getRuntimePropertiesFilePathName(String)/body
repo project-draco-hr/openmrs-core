@@ -29,9 +29,10 @@
       log.debug("Available environment variables are named: " + System.getenv().keySet());
     }
   }
-  pathName=OpenmrsUtil.getApplicationDataDirectory() + pathName;
+  File file=new File(getApplicationDataDirectory(),pathName);
+  pathName=file.getAbsolutePath();
   log.debug("Attempting to look for property file from: " + pathName);
-  if (new File(pathName).exists()) {
+  if (file.exists()) {
     return pathName;
   }
  else {

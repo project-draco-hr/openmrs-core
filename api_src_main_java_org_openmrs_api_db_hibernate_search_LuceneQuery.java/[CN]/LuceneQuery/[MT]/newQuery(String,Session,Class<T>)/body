@@ -1,0 +1,11 @@
+{
+  return new LuceneQuery<T>(session,type){
+    @Override protected Query prepareQuery() throws ParseException {
+      if (query.isEmpty()) {
+        return new MatchAllDocsQuery();
+      }
+      return newQueryParser().parse(query);
+    }
+  }
+;
+}

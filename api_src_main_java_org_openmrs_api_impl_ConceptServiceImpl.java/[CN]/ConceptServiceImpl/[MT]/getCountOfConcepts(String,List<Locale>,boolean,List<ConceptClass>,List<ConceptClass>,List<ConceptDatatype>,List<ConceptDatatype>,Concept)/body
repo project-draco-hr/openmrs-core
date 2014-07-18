@@ -11,5 +11,5 @@
   if (excludeDatatypes == null) {
     excludeDatatypes=new Vector<ConceptDatatype>();
   }
-  return OpenmrsUtil.convertToInteger(dao.getCountOfConceptWords(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept,true));
+  return dao.getCountOfConcepts(phrase,locales,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
 }

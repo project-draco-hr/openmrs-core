@@ -1,0 +1,10 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-names.xml");
+  List<ConceptClass> classes=new ArrayList<ConceptClass>();
+  classes.add(Context.getConceptService().getConceptClassByName("Finding"));
+  classes.add(Context.getConceptService().getConceptClassByName("LabSet"));
+  List<ConceptClass> excludeClasses=new ArrayList<ConceptClass>();
+  excludeClasses.add(Context.getConceptService().getConceptClassByName("Finding"));
+  List<ConceptSearchResult> searchResults=conceptService.getConcepts(null,null,false,classes,excludeClasses,null,null,null,null,null);
+  Assert.assertEquals(1,searchResults.size());
+}

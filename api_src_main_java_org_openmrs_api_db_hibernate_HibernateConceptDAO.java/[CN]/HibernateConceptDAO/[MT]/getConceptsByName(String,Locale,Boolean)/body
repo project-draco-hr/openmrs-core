@@ -1,43 +1,14 @@
 {
-  if (exactLocale == null) {
-    exactLocale=true;
+  List<Locale> locales=new ArrayList<Locale>();
+  if (locale == null) {
+    locales.add(Context.getLocale());
   }
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptName.class);
-  criteria.add(Restrictions.ilike("name",name));
-  criteria.add(Restrictions.eq("voided",false));
-  if (locale != null) {
-    if (exactLocale) {
-      criteria.add(Restrictions.eq("locale",locale));
-    }
  else {
-      if (!StringUtils.isEmpty(locale.getCountry())) {
-        criteria.add(Restrictions.or(Restrictions.eq("locale",locale),Restrictions.eq("locale",new Locale(locale.getLanguage()))));
-      }
-    }
+    locales.add(locale);
   }
-  criteria.addOrder(Order.asc("concept"));
-  criteria.setProjection(Projections.distinct(Projections.property("concept")));
-  @SuppressWarnings("unchecked") List<Concept> concepts=criteria.list();
-  for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
-    Concept concept=it.next();
-    if (concept.isRetired()) {
-      it.remove();
-    }
-  }
-  if (locale != null && !exactLocale && StringUtils.isEmpty(locale.getCountry())) {
-    for (Iterator<Concept> it=concepts.iterator(); it.hasNext(); ) {
-      Concept concept=it.next();
-      boolean found=false;
-      for (      ConceptName conceptName : concept.getNames()) {
-        if (conceptName.getLocale().getLanguage().equals(locale.getLanguage())) {
-          found=true;
-          break;
-        }
-      }
-      if (!found) {
-        it.remove();
-      }
-    }
-  }
+  boolean searchExactLocale=(exactLocale == null) ? false : exactLocale;
+  LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(name,true,locales,searchExactLocale,false,null,null,null,null,null);
+  List<ConceptName> names=conceptNameQuery.list();
+  final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
   return concepts;
 }

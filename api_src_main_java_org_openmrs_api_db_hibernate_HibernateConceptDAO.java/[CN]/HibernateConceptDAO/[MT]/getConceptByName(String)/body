@@ -1,0 +1,36 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptName.class);
+  Locale locale=Context.getLocale();
+  Locale language=new Locale(locale.getLanguage() + "%");
+  criteria.add(Restrictions.or(Restrictions.eq("locale",locale),Restrictions.like("locale",language)));
+  if (Context.getConceptService().isConceptNameSearchCaseSensitive()) {
+    criteria.add(Restrictions.ilike("name",name));
+  }
+ else {
+    criteria.add(Restrictions.eq("name",name));
+  }
+  criteria.add(Restrictions.eq("voided",false));
+  criteria.createAlias("concept","concept");
+  criteria.add(Restrictions.eq("concept.retired",false));
+  @SuppressWarnings("unchecked") List<ConceptName> list=criteria.list();
+  if (list.size() == 1) {
+    return list.get(0).getConcept();
+  }
+ else {
+    log.warn("Multiple concepts found for '" + name + "'");
+    List<Concept> concepts=Lists.transform(list,transformNameToConcept);
+    for (    Concept concept : concepts) {
+      for (      ConceptName conceptName : concept.getNames(locale)) {
+        if (conceptName.getName().equalsIgnoreCase(name)) {
+          return concept;
+        }
+      }
+      for (      ConceptName indexTerm : concept.getIndexTermsForLocale(locale)) {
+        if (indexTerm.getName().equalsIgnoreCase(name)) {
+          return concept;
+        }
+      }
+    }
+  }
+  return null;
+}

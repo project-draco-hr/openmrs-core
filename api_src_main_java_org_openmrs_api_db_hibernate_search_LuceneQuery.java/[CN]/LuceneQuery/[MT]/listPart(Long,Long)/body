@@ -1,0 +1,5 @@
+{
+  applyPartialResults(fullTextQuery,firstResult,maxResults);
+  @SuppressWarnings("unchecked") List<T> list=fullTextQuery.list();
+  return ListPart.newListPart(list,firstResult,maxResults,Long.valueOf(fullTextQuery.getResultSize()),!fullTextQuery.hasPartialResults());
+}
