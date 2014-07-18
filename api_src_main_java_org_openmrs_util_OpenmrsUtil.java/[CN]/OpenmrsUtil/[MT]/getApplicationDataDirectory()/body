@@ -1,10 +1,14 @@
 {
   String filepath=OpenmrsConstants.APPLICATION_DATA_DIRECTORY;
-  if (filepath == null) {
-    filepath=System.getProperty("OPENMRS_APPLICATION_DATA_DIRECTORY");
+  String systemProperty=System.getProperty("OPENMRS_APPLICATION_DATA_DIRECTORY");
+  if (systemProperty != null) {
+    filepath=systemProperty;
   }
-  if (filepath == null) {
-    filepath=Context.getRuntimeProperties().getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,null);
+ else {
+    String runtimeProperty=Context.getRuntimeProperties().getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,null);
+    if (runtimeProperty != null) {
+      filepath=runtimeProperty;
+    }
   }
   if (filepath == null) {
     if (OpenmrsConstants.UNIX_BASED_OPERATING_SYSTEM) {
@@ -32,10 +36,10 @@
     }
     filepath=filepath + File.separator;
   }
-  OpenmrsConstants.APPLICATION_DATA_DIRECTORY=filepath;
   File folder=new File(filepath);
   if (!folder.exists()) {
     folder.mkdirs();
   }
+  OpenmrsConstants.APPLICATION_DATA_DIRECTORY=filepath;
   return filepath;
 }

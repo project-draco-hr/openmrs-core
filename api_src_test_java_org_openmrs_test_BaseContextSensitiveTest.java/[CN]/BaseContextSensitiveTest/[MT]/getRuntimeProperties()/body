@@ -17,7 +17,7 @@
     tempappdir.mkdir();
     tempappdir.deleteOnExit();
     runtimeProperties.setProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,tempappdir.getAbsolutePath());
-    OpenmrsConstants.APPLICATION_DATA_DIRECTORY=tempappdir.getAbsolutePath();
+    OpenmrsUtil.setApplicationDataDirectory(tempappdir.getAbsolutePath());
   }
  catch (  IOException e) {
     log.error("Unable to create temp dir",e);
