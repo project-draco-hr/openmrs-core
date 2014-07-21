@@ -1,4 +1,8 @@
 {
+  LogManager.getLogger("org.hibernate.SQL").setLevel(Level.DEBUG);
+  LogManager.getLogger("org.openmrs.api").setLevel(Level.DEBUG);
+  LogManager.getLogger("org.openmrs.scheduler").setLevel(Level.DEBUG);
+  log.debug("SchedulerServiceTest setup() start");
   Context.flushSession();
   Collection<TaskDefinition> tasks=Context.getSchedulerService().getRegisteredTasks();
   for (  TaskDefinition task : tasks) {
@@ -7,4 +11,5 @@
   }
   Context.flushSession();
   getConnection().commit();
+  log.debug("SchedulerServiceTest setup() complete");
 }

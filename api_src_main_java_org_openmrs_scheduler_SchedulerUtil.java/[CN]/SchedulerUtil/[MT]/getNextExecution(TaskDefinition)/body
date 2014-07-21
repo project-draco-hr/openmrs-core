@@ -8,6 +8,9 @@
         return firstTime;
       }
       long repeatInterval=taskDefinition.getRepeatInterval().longValue();
+      if (repeatInterval == 0) {
+        return firstTime;
+      }
       long betweenTime=currentTime.getTime() - firstTime.getTime();
       long lastTime=(betweenTime % (repeatInterval * 1000));
       long additional=((repeatInterval * 1000) - lastTime);
@@ -16,7 +19,7 @@
     }
   }
  catch (  Exception e) {
-    log.error("Failed to get next execution time for " + taskDefinition.getName());
+    log.error("Failed to get next execution time for " + taskDefinition.getName(),e);
   }
   return nextTime.getTime();
 }

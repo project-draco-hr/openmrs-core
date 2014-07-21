@@ -13,5 +13,7 @@
   Task clientTask=null;
   TimerSchedulerServiceImpl t=new TimerSchedulerServiceImpl();
   clientTask=t.scheduleTask(taskDefinition);
+  Context.flushSession();
+  getConnection().commit();
   assertNotNull("The clientTask variable is null, so either the TimerSchedulerServiceImpl.scheduleTask method hasn't finished or didn't get run",clientTask);
 }
