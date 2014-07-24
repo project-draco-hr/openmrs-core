@@ -1,0 +1,20 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWitSameConceptAndDifferentFormAndStrength.xml");
+  final Patient patient=patientService.getPatient(2);
+  DrugOrder existingOrder=(DrugOrder)orderService.getOrder(1000);
+  assertTrue(existingOrder.isCurrent());
+  DrugOrder order=new DrugOrder();
+  order.setPatient(patient);
+  order.setDrug(existingOrder.getDrug());
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  order.setCareSetting(existingOrder.getCareSetting());
+  order.setDosingType(DrugOrder.DosingType.FREE_TEXT);
+  order.setDosingInstructions("2 for 5 days");
+  order.setQuantity(10.0);
+  order.setQuantityUnits(conceptService.getConcept(51));
+  order.setNumRefills(2);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
+  Order savedDrugOrder=orderService.saveOrder(order,null);
+}

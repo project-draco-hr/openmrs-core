@@ -1,0 +1,7 @@
+{
+  Order order=new Order();
+  order.setConcept(new Concept(123));
+  Order otherOrder=new Order();
+  otherOrder.setConcept(new Concept(456));
+  assertFalse(order.hasSameOrderableAs(otherOrder));
+}
