@@ -1,0 +1,16 @@
+{
+  DrugOrder order=new DrugOrder();
+  order.setPatient(Context.getPatientService().getPatient(7));
+  order.setCareSetting(Context.getOrderService().getCareSetting(2));
+  order.setEncounter(Context.getEncounterService().getEncounter(3));
+  order.setOrderer(Context.getProviderService().getProvider(1));
+  Drug drug=Context.getConceptService().getDrug(3);
+  order.setDrug(drug);
+  order.setConcept(null);
+  FreeTextDosingInstructions di=new FreeTextDosingInstructions();
+  di.setInstructions("testing");
+  di.setDosingInstructions(order);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertFalse(errors.hasFieldErrors());
+}
