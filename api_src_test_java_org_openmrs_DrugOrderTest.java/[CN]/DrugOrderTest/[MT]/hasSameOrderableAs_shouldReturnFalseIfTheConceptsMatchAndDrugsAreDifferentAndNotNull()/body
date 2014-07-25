@@ -1,0 +1,13 @@
+{
+  DrugOrder order=new DrugOrder();
+  Concept concept=new Concept();
+  Drug drug1=new Drug();
+  drug1.setConcept(concept);
+  order.setDrug(drug1);
+  DrugOrder otherOrder=new DrugOrder();
+  Drug drug2=new Drug();
+  drug2.setConcept(concept);
+  otherOrder.setDrug(drug2);
+  assertTrue(order.getConcept() != null && otherOrder.getConcept() != null);
+  assertFalse(order.hasSameOrderableAs(otherOrder));
+}
