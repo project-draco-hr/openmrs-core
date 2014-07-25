@@ -16,5 +16,5 @@
   order.setNumRefills(2);
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
-  Order savedDrugOrder=orderService.saveOrder(order,null);
+  orderService.saveOrder(order,null);
 }
