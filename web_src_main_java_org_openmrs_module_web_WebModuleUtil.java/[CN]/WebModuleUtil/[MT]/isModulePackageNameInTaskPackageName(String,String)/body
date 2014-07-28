@@ -1,0 +1,14 @@
+{
+  if (modulePackageName.equals("") || taskPackageName.equals(""))   return false;
+  String[] splitModulePackageName=modulePackageName.split("\\.");
+  String[] splitTaskPackageName=taskPackageName.split("\\.");
+  boolean packageNamesMatch=true;
+  for (int i=0; i < splitModulePackageName.length; i++) {
+    if (splitTaskPackageName.length > i && splitModulePackageName[i].equals(splitTaskPackageName[i]))     continue;
+ else {
+      packageNamesMatch=false;
+      break;
+    }
+  }
+  return packageNamesMatch;
+}

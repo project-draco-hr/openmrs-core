@@ -1,0 +1,14 @@
+{
+  SchedulerService schedulerService=Context.getSchedulerService();
+  String modulePackageName=mod.getPackageName();
+  for (  TaskDefinition task : schedulerService.getRegisteredTasks()) {
+    String taskPackageName=task.getTaskClass();
+    boolean PackageNamesMatch=isModulePackageNameInTaskPackageName(modulePackageName,taskPackageName);
+    if (PackageNamesMatch)     try {
+      schedulerService.shutdownTask(task);
+    }
+ catch (    SchedulerException e) {
+      e.printStackTrace();
+    }
+  }
+}
