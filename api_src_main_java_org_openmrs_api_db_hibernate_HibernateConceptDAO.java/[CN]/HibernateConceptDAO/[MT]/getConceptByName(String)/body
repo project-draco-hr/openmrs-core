@@ -18,7 +18,7 @@
   }
  else {
     log.warn("Multiple concepts found for '" + name + "'");
-    List<Concept> concepts=Lists.transform(list,transformNameToConcept);
+    List<Concept> concepts=transformNamesToConcepts(list);
     for (    Concept concept : concepts) {
       for (      ConceptName conceptName : concept.getNames(locale)) {
         if (conceptName.getName().equalsIgnoreCase(name)) {

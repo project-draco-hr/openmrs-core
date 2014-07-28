@@ -3,5 +3,5 @@
   PersonName notVoidedName=PersonNameBuilder.newBuilder().withVoided(false).build();
   PersonName voidedName=PersonNameBuilder.newBuilder().withVoided(true).build();
   PersonName expectedPersonName=preferredNotVoidedName;
-  checkGetPersonNameResultForVoidedPerson(expectedPersonName,Sets.newHashSet(preferredNotVoidedName,notVoidedName,voidedName));
+  checkGetPersonNameResultForVoidedPerson(expectedPersonName,new HashSet<PersonName>(Arrays.asList(preferredNotVoidedName,notVoidedName,voidedName)));
 }

@@ -7,23 +7,18 @@
   visit.setStartDatetime(encounter.getEncounterDatetime());
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
-  try {
-    if (encounterVisitMapping == null) {
-      LoadingCache<EncounterType,VisitType> temp=CacheBuilder.newBuilder().build(new CacheLoader<EncounterType,VisitType>(){
-        public VisitType load(        EncounterType key) throws APIException {
-          return loadVisitType(key);
-        }
-      }
-);
-      setEncounterVisitMapping(temp);
-      Context.getAdministrationService().addGlobalPropertyListener(this);
-    }
-    VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());
-    visit.setVisitType(visitType);
+  if (encounterVisitMapping == null) {
+    encounterVisitMapping=new HashMap<EncounterType,VisitType>();
+    Context.getAdministrationService().addGlobalPropertyListener(this);
   }
- catch (  ExecutionException e) {
-    throw new APIException("Error getting mapping encounter type - visit type from cache",e);
+  VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());
+  if (visitType == null) {
+    visitType=loadVisitType(encounter.getEncounterType());
+    Map<EncounterType,VisitType> newMap=new HashMap<EncounterType,VisitType>(encounterVisitMapping);
+    newMap.put(encounter.getEncounterType(),visitType);
+    encounterVisitMapping=newMap;
   }
+  visit.setVisitType(visitType);
   visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime()));
   encounter.setVisit(visit);
 }

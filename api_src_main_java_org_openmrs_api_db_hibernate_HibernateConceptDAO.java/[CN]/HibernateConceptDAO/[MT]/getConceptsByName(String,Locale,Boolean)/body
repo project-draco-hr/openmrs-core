@@ -9,6 +9,6 @@
   boolean searchExactLocale=(exactLocale == null) ? false : exactLocale;
   LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(name,true,locales,searchExactLocale,false,null,null,null,null,null);
   List<ConceptName> names=conceptNameQuery.list();
-  final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
+  final List<Concept> concepts=transformNamesToConcepts(names);
   return concepts;
 }

@@ -8,6 +8,6 @@
   }
   LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(name,!searchOnPhrase,Arrays.asList(locale),false,false,classes,null,datatypes,null,null);
   List<ConceptName> names=conceptNameQuery.list();
-  final List<Concept> concepts=Lists.transform(names,transformNameToConcept);
+  List<Concept> concepts=transformNamesToConcepts(names);
   return concepts;
 }

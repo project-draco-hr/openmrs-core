@@ -1,7 +1,7 @@
 {
   String idPropertyName=getSession().getSessionFactory().getClassMetadata(getType()).getIdentifierPropertyName();
   List<Object> documents=listProjection(idPropertyName,field);
-  Set<Object> uniqueFieldValues=Sets.newHashSet();
+  Set<Object> uniqueFieldValues=new HashSet<Object>();
   TermsFilter termsFilter=new TermsFilter();
   for (  Object document : documents) {
     Object[] row=(Object[])document;

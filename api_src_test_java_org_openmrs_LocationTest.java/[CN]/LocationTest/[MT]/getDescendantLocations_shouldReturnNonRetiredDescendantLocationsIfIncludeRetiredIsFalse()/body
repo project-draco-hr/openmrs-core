@@ -6,13 +6,13 @@
   Location firstChildOfNonRetiredLocation=new Location();
   Location secondChildOfNonRetiredLocation=new Location();
   Location firstChildOfRetiredLocation=new Location();
-  rootLocation.setChildLocations(Sets.newHashSet(nonRetiredLocation,retiredLocation));
-  nonRetiredLocation.setChildLocations(Sets.newHashSet(firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation));
-  retiredLocation.setChildLocations(Sets.newHashSet(firstChildOfRetiredLocation));
+  rootLocation.setChildLocations(new HashSet<Location>(Arrays.asList(nonRetiredLocation,retiredLocation)));
+  nonRetiredLocation.setChildLocations(new HashSet<Location>(Arrays.asList(firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation)));
+  retiredLocation.setChildLocations(new HashSet<Location>(Arrays.asList(firstChildOfRetiredLocation)));
   firstChildOfNonRetiredLocation.setChildLocations(new HashSet<Location>());
   secondChildOfNonRetiredLocation.setChildLocations(new HashSet<Location>());
   firstChildOfRetiredLocation.setChildLocations(new HashSet<Location>());
   Set<Location> descendantLocations=rootLocation.getDescendantLocations(false);
-  Set<Location> expectedLocations=Sets.newHashSet(nonRetiredLocation,firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation);
+  Set<Location> expectedLocations=new HashSet<Location>(Arrays.asList(nonRetiredLocation,firstChildOfNonRetiredLocation,secondChildOfNonRetiredLocation));
   Assert.assertThat(descendantLocations,equalTo(expectedLocations));
 }

@@ -1,6 +1,6 @@
 {
   if (isSingleResult()) {
-    return Objects.hashCode(datatype);
+    return new HashCodeBuilder().append(datatype).hashCode();
   }
  else {
     return super.hashCode();

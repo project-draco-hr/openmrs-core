@@ -4,12 +4,12 @@
   Location locationTwo=new Location();
   Location childOflocationOne=new Location();
   Location childOnfLocationTwo=new Location();
-  rootLocation.setChildLocations(Sets.newHashSet(locationOne,locationTwo));
-  locationOne.setChildLocations(Sets.newHashSet(childOflocationOne));
-  locationTwo.setChildLocations(Sets.newHashSet(childOnfLocationTwo));
+  rootLocation.setChildLocations(new HashSet<Location>(Arrays.asList(locationOne,locationTwo)));
+  locationOne.setChildLocations(new HashSet<Location>(Arrays.asList(childOflocationOne)));
+  locationTwo.setChildLocations(new HashSet<Location>(Arrays.asList(childOnfLocationTwo)));
   childOflocationOne.setChildLocations(new HashSet<Location>());
   childOnfLocationTwo.setChildLocations(new HashSet<Location>());
   Set<Location> descendantLocations=rootLocation.getDescendantLocations(true);
-  Set<Location> expectedLocations=Sets.newHashSet(locationOne,locationTwo,childOflocationOne,childOnfLocationTwo);
+  Set<Location> expectedLocations=new HashSet<Location>(Arrays.asList(locationOne,locationTwo,childOflocationOne,childOnfLocationTwo));
   Assert.assertThat(descendantLocations,equalTo(expectedLocations));
 }

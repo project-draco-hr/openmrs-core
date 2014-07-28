@@ -1,5 +1,5 @@
 {
   PersonName voidedName=PersonNameBuilder.newBuilder().withVoided(true).build();
   PersonName expectedPersonName=voidedName;
-  checkGetPersonNameResultForVoidedPerson(expectedPersonName,Sets.newHashSet(voidedName));
+  checkGetPersonNameResultForVoidedPerson(expectedPersonName,new HashSet<PersonName>(Arrays.asList(voidedName)));
 }

@@ -1,11 +1,9 @@
 {
   LuceneQuery<ConceptName> query=newConceptNameLuceneQuery(phrase,true,locales,false,includeRetired,requireClasses,excludeClasses,requireDatatypes,excludeDatatypes,answersToConcept);
   ListPart<ConceptName> names=query.listPart(start,size);
-  List<ConceptSearchResult> results=Lists.transform(names.getList(),new Function<ConceptName,ConceptSearchResult>(){
-    @Override public ConceptSearchResult apply(    ConceptName conceptName){
-      return new ConceptSearchResult(phrase,conceptName.getConcept(),conceptName);
-    }
+  List<ConceptSearchResult> results=new ArrayList<ConceptSearchResult>();
+  for (  ConceptName name : names.getList()) {
+    results.add(new ConceptSearchResult(phrase,name.getConcept(),name));
   }
-);
   return results;
 }

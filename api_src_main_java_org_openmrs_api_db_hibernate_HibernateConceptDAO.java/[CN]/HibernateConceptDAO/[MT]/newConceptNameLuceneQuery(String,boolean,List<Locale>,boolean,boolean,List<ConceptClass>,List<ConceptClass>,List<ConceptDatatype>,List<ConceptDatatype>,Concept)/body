@@ -3,10 +3,10 @@
   if (!StringUtils.isBlank(phrase)) {
     final Set<Locale> searchLocales;
     if (locales == null) {
-      searchLocales=Sets.newHashSet(Context.getLocale());
+      searchLocales=new HashSet<Locale>(Arrays.asList(Context.getLocale()));
     }
  else {
-      searchLocales=Sets.newHashSet(locales);
+      searchLocales=new HashSet<Locale>(locales);
     }
     query.append(newConceptNameQuery(phrase,searchKeywords,searchLocales,searchExactLocale));
   }
