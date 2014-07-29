@@ -1,6 +1,7 @@
 {
   ConceptReferenceTerm conceptReferenceTerm=(ConceptReferenceTerm)target;
-  if (conceptReferenceTerm.getConceptSource().getId() == null) {
+  ConceptSource conceptSource=conceptReferenceTerm.getConceptSource();
+  if (conceptSource != null && conceptSource.getId() == null) {
     errors.rejectValue("conceptSource","ConceptReferenceTerm.source.notInDatabase","Only existing concept reference sources can be used");
   }
   if (conceptReferenceTerm.getConceptReferenceTermMaps() != null) {
