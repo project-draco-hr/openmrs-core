@@ -8,7 +8,7 @@
   visit.setLocation(encounter.getLocation());
   visit.setPatient(encounter.getPatient());
   if (encounterVisitMapping == null) {
-    encounterVisitMapping=new HashMap<EncounterType,VisitType>();
+    setEncounterVisitMapping(new HashMap<EncounterType,VisitType>());
     Context.getAdministrationService().addGlobalPropertyListener(this);
   }
   VisitType visitType=encounterVisitMapping.get(encounter.getEncounterType());
@@ -16,7 +16,7 @@
     visitType=loadVisitType(encounter.getEncounterType());
     Map<EncounterType,VisitType> newMap=new HashMap<EncounterType,VisitType>(encounterVisitMapping);
     newMap.put(encounter.getEncounterType(),visitType);
-    encounterVisitMapping=newMap;
+    setEncounterVisitMapping(newMap);
   }
   visit.setVisitType(visitType);
   visit.setStopDatetime(OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime()));
