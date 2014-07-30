@@ -7,7 +7,7 @@
   cn.setDatatype(cdt);
   obs.setConcept(cn);
   Date utilDate=new Date();
-  DateFormat dateFormat=DateFormat.getDateInstance(DateFormat.SHORT,Locale.US);
+  DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
   String dateString=dateFormat.format(utilDate);
   Assert.assertEquals(dateString,obs.getValueAsString(Locale.US));
 }
