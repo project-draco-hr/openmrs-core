@@ -1,0 +1,8 @@
+{
+  PersonName firstVoidedName=PersonNameBuilder.newBuilder().withVoided(true).build();
+  PersonName secondVoidedName=PersonNameBuilder.newBuilder().withVoided(true).build();
+  Person notVoidedPerson=new Person();
+  notVoidedPerson.addName(firstVoidedName);
+  notVoidedPerson.addName(secondVoidedName);
+  Assert.assertNull(notVoidedPerson.getPersonName());
+}

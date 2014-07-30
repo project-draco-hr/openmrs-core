@@ -1,0 +1,8 @@
+{
+  PersonAddress firstPersonAddress=PersonAddressBuilder.newBuilder().withVoided(true).build();
+  PersonAddress secondPersonAddress=PersonAddressBuilder.newBuilder().withVoided(true).build();
+  Person notVoidedPerson=new Person();
+  notVoidedPerson.addAddress(firstPersonAddress);
+  notVoidedPerson.addAddress(secondPersonAddress);
+  Assert.assertNull(notVoidedPerson.getPersonAddress());
+}
