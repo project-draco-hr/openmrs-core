@@ -1,0 +1,8 @@
+{
+  DrugOrder order=new DrugOrder();
+  order.setDosingType(SimpleDosingInstructions.class);
+  order.setDose(null);
+  Errors errors=new BindException(order,"order");
+  new DrugOrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("dose"));
+}

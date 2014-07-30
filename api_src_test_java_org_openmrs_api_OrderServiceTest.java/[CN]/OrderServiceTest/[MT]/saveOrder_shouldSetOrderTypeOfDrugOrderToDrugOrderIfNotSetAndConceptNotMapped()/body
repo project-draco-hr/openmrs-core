@@ -11,7 +11,7 @@
   drugOrder.setOrderer(Context.getProviderService().getProvider(1));
   drugOrder.setDateActivated(encounter.getEncounterDatetime());
   drugOrder.setDrug(drug);
-  drugOrder.setDosingType(DrugOrder.DosingType.SIMPLE);
+  drugOrder.setDosingType(SimpleDosingInstructions.class);
   drugOrder.setDose(300.0);
   drugOrder.setDoseUnits(conceptService.getConcept(50));
   drugOrder.setQuantity(20.0);

@@ -1,0 +1,9 @@
+{
+  DrugOrder drugOrder=new DrugOrder();
+  assertEquals(SimpleDosingInstructions.class,drugOrder.getDosingType());
+  CustomDosingInstructions customDosingInstructions=new CustomDosingInstructions();
+  drugOrder.setDosingType(customDosingInstructions.getClass());
+  DosingInstructions dosingInstructionsObject=drugOrder.getDosingInstructionsInstance();
+  assertEquals(customDosingInstructions.getClass(),dosingInstructionsObject.getClass());
+  assertEquals(customDosingInstructions.getClass(),drugOrder.getDosingType());
+}

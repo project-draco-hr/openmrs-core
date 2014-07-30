@@ -1,9 +1,8 @@
 {
   DrugOrder order=new DrugOrder();
   order.setDosingType(FreeTextDosingInstructions.class);
-  order.setDose(20.0);
-  order.setDoseUnits(null);
+  order.setDosingInstructions(null);
   Errors errors=new BindException(order,"order");
   new DrugOrderValidator().validate(order,errors);
-  Assert.assertTrue(errors.hasFieldErrors("doseUnits"));
+  Assert.assertTrue(errors.hasFieldErrors("dosingInstructions"));
 }

@@ -2,7 +2,7 @@
   Concept concept=Context.getConceptService().getConcept(3);
   assertThat(concept,not(isIn(Context.getOrderService().getDurationUnits())));
   DrugOrder order=new DrugOrder();
-  order.setDosingType(DrugOrder.DosingType.FREE_TEXT);
+  order.setDosingType(FreeTextDosingInstructions.class);
   order.setDuration(5.0);
   order.setDurationUnits(concept);
   order.setDose(1.0);

@@ -11,7 +11,7 @@
   order.setOrderer(Context.getProviderService().getProvider(1));
   order.setDateActivated(encounter.getEncounterDatetime());
   order.setOrderType(orderType);
-  order.setDosingType(DrugOrder.DosingType.FREE_TEXT);
+  order.setDosingType(FreeTextDosingInstructions.class);
   order.setInstructions("None");
   order.setDosingInstructions("Test Instruction");
   orderService.saveOrder(order,null);

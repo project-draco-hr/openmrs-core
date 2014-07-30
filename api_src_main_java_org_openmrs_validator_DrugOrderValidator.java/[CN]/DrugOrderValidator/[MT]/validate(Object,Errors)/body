@@ -19,15 +19,8 @@
       }
     }
     if (order.getAction() != Order.Action.DISCONTINUE && order.getDosingType() != null) {
-      if (order.getDosingType().equals(DrugOrder.DosingType.SIMPLE)) {
-        ValidationUtils.rejectIfEmpty(errors,"dose","DrugOrder.error.doseIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors,"doseUnits","DrugOrder.error.doseUnitsIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors,"route","DrugOrder.error.routeIsNullForDosingTypeSimple");
-        ValidationUtils.rejectIfEmpty(errors,"frequency","DrugOrder.error.frequencyIsNullForDosingTypeSimple");
-      }
- else {
-        ValidationUtils.rejectIfEmpty(errors,"dosingInstructions","DrugOrder.error.dosingInstructionsIsNullForDosingTypeOther");
-      }
+      DosingInstructions dosingInstructions=order.getDosingInstructionsInstance();
+      dosingInstructions.validate(order,errors);
     }
     validateFieldsForOutpatientCareSettingType(order,errors);
     validatePairedFields(order,errors);
