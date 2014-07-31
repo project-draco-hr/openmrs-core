@@ -1,0 +1,55 @@
+{
+  Log log=LogFactory.getLog(Listener.class);
+  boolean someModuleNeedsARefresh=false;
+  for (  Module mod : startedModules) {
+    try {
+      boolean thisModuleCausesRefresh=WebModuleUtil.startModule(mod,servletContext,true);
+      someModuleNeedsARefresh=someModuleNeedsARefresh || thisModuleCausesRefresh;
+    }
+ catch (    Exception e) {
+      mod.setStartupErrorMessage("Unable to start module",e);
+    }
+  }
+  if (someModuleNeedsARefresh) {
+    try {
+      WebModuleUtil.refreshWAC(servletContext,true,null);
+    }
+ catch (    ModuleMustStartException ex) {
+      throw ex;
+    }
+catch (    Exception e) {
+      Throwable rootCause=getActualRootCause(e,true);
+      if (rootCause != null) {
+        log.fatal("Unable to refresh the spring application context.  Root Cause was:",rootCause);
+      }
+ else {
+        log.fatal("Unable to refresh the spring application context. Unloading all modules,  Error was:",e);
+      }
+      try {
+        WebModuleUtil.shutdownModules(servletContext);
+        for (        Module mod : ModuleFactory.getLoadedModules()) {
+          if (!mod.isCoreModule() && !mod.isMandatory()) {
+            try {
+              ModuleFactory.stopModule(mod,true,true);
+            }
+ catch (            Exception t3) {
+              log.trace("Unable to shutdown module:" + mod,t3);
+            }
+          }
+        }
+        WebModuleUtil.refreshWAC(servletContext,true,null);
+      }
+ catch (      MandatoryModuleException ex) {
+        throw new MandatoryModuleException(ex.getModuleId(),"Got an error while starting a mandatory module: " + e.getMessage() + ". Check the server logs for more information");
+      }
+catch (      Exception t2) {
+        log.warn("caught another error: ",t2);
+        throw t2;
+      }
+    }
+  }
+  for (  Module mod : ModuleFactory.getStartedModules()) {
+    WebModuleUtil.loadServlets(mod,servletContext);
+    WebModuleUtil.loadFilters(mod,servletContext);
+  }
+}
