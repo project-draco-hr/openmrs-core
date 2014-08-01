@@ -1,0 +1,40 @@
+{
+  List<String> moduleOrder=new ArrayList<String>();
+  Collection<Module> modules=ModuleFactory.getLoadedModules();
+  for (  Module module : modules) {
+    int moduleIndex=moduleOrder.indexOf(module.getPackageName());
+    if (moduleIndex == -1) {
+      moduleOrder.add(module.getPackageName());
+      moduleIndex=moduleOrder.indexOf(module.getPackageName());
+    }
+    List<String> moduleIds=module.getRequiredModules();
+    for (    String pkg : moduleIds) {
+      int index=moduleOrder.indexOf(pkg);
+      if (index == -1) {
+        moduleOrder.add(moduleIndex,pkg);
+        moduleIndex=moduleOrder.indexOf(module.getPackageName());
+      }
+ else       if (index > moduleIndex) {
+        moduleOrder.remove(pkg);
+        moduleOrder.add(moduleIndex,pkg);
+        moduleIndex=moduleOrder.indexOf(module.getPackageName());
+      }
+    }
+    moduleIds=module.getStartBeforeModules();
+    for (    String pkg : moduleIds) {
+      int index=moduleOrder.indexOf(pkg);
+      if (index == -1) {
+        moduleOrder.add(moduleIndex + 1,pkg);
+      }
+ else       if (index < moduleIndex) {
+        moduleOrder.remove(pkg);
+        moduleOrder.add(moduleIndex + 1,pkg);
+      }
+    }
+  }
+  Collection<Module> modulesInOrder=new ArrayList<Module>();
+  for (  String pkg : moduleOrder) {
+    modulesInOrder.add(ModuleFactory.getModuleByPackage(pkg));
+  }
+  return modulesInOrder;
+}
