@@ -2,7 +2,7 @@
   Order previousOrder=orderService.getOrder(7);
   assertTrue(OrderUtilTest.isActiveOrder(previousOrder,null));
   Order order=previousOrder.cloneForDiscontinuing();
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setOrderReasonNonCoded("Discontinue this");
   order.setEncounter(encounterService.getEncounter(6));
   order.setOrderer(providerService.getProvider(1));

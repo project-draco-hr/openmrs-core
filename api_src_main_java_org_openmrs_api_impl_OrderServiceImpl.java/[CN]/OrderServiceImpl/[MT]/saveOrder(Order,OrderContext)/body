@@ -2,8 +2,8 @@
   if (order.getOrderId() != null) {
     throw new APIException("Cannot edit an existing order, you need to revise it instead");
   }
-  if (order.getStartDate() == null) {
-    order.setStartDate(new Date());
+  if (order.getDateActivated() == null) {
+    order.setDateActivated(new Date());
   }
   boolean isDrugOrder=DrugOrder.class.isAssignableFrom(getActualType(order));
   Concept concept=order.getConcept();
@@ -62,7 +62,7 @@
     if (previousOrder == null) {
       throw new APIException("Previous Order is required for a revised order");
     }
-    stopOrder(previousOrder,order.getStartDate());
+    stopOrder(previousOrder,order.getDateActivated());
   }
  else   if (DISCONTINUE == order.getAction()) {
     discontinueExistingOrdersIfNecessary(order);

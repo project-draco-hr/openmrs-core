@@ -5,10 +5,10 @@
   order.setOrderer(Context.getProviderService().getProvider(1));
   Calendar cal=Calendar.getInstance();
   cal.set(Calendar.DAY_OF_MONTH,cal.get(Calendar.DAY_OF_MONTH) - 1);
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   OrderUtilTest.setDateStopped(order,cal.getTime());
   Errors errors=new BindException(order,"order");
   new OrderValidator().validate(order,errors);
-  Assert.assertTrue(errors.hasFieldErrors("startDate"));
+  Assert.assertTrue(errors.hasFieldErrors("dateActivated"));
   Assert.assertTrue(errors.hasFieldErrors("dateStopped"));
 }

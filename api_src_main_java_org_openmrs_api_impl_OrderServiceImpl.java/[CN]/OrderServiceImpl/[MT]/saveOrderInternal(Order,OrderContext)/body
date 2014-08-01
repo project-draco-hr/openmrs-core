@@ -2,7 +2,7 @@
   if (order.getOrderId() == null) {
     setProperty(order,"orderNumber",getOrderNumberGenerator().getNewOrderNumber(orderContext));
     if (DISCONTINUE == order.getAction()) {
-      order.setAutoExpireDate(order.getStartDate());
+      order.setAutoExpireDate(order.getDateActivated());
     }
   }
   return dao.saveOrder(order);

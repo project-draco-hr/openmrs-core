@@ -2,7 +2,7 @@
   DateFormat ymd=new SimpleDateFormat("yyyy-MM-dd");
   Order o=new Order();
   assertFalse("order without dates shouldn't be discontinued",o.isDiscontinued(ymd.parse("2007-10-26")));
-  o.setStartDate(ymd.parse("2007-01-01"));
+  o.setDateActivated(ymd.parse("2007-01-01"));
   assertFalse("shouldn't be discontinued before start date",o.isDiscontinued(ymd.parse("2006-10-26")));
   assertFalse("order without no end dates shouldn't be discontinued",o.isDiscontinued(ymd.parse("2007-10-26")));
   o.setAutoExpireDate(ymd.parse("2007-12-31"));

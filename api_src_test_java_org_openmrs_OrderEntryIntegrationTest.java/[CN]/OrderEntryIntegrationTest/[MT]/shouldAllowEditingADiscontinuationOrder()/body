@@ -8,7 +8,7 @@
   Order newDcOrder=originalDCOrder.cloneForRevision();
   newDcOrder.setEncounter(originalDCOrder.getEncounter());
   newDcOrder.setOrderer(originalDCOrder.getOrderer());
-  newDcOrder.setStartDate(newStartDate);
+  newDcOrder.setDateActivated(newStartDate);
   orderService.voidOrder(originalDCOrder,"To be replace with a new one");
   assertNull(originalDCOrder.getDateStopped());
   orderService.saveOrder(newDcOrder,null);

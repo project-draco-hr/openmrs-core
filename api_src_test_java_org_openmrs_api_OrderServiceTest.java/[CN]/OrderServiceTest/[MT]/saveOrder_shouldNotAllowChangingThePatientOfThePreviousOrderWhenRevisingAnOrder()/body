@@ -4,7 +4,7 @@
   assertFalse(orderToRevise.getPatient().equals(newPatient));
   orderToRevise.setPatient(newPatient);
   Order order=orderToRevise.cloneForRevision();
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderer(providerService.getProvider(1));
   expectedException.expect(APIException.class);

@@ -3,11 +3,11 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (startDate != null && checkDate.before(startDate)) {
+  if (dateActivated != null && checkDate.before(dateActivated)) {
     return false;
   }
   if (isDiscontinuedRightNow()) {
-    if (dateStopped == null)     return checkDate.equals(startDate);
+    if (dateStopped == null)     return checkDate.equals(dateActivated);
  else     return checkDate.before(dateStopped);
   }
  else {

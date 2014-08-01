@@ -9,9 +9,9 @@
   order.setCareSetting(orderService.getCareSetting(1));
   Calendar cal=Calendar.getInstance();
   cal.add(Calendar.HOUR_OF_DAY,1);
-  order.setStartDate(cal.getTime());
+  order.setDateActivated(cal.getTime());
   Errors errors=new BindException(order,"order");
   new OrderValidator().validate(order,errors);
-  Assert.assertTrue(errors.hasFieldErrors("startDate"));
-  Assert.assertEquals("Order.error.startDateInFuture",errors.getFieldError("startDate").getCode());
+  Assert.assertTrue(errors.hasFieldErrors("dateActivated"));
+  Assert.assertEquals("Order.error.dateActivatedInFuture",errors.getFieldError("dateActivated").getCode());
 }

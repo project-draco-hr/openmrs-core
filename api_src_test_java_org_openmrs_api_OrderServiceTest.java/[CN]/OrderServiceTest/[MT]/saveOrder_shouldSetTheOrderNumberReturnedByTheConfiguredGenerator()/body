@@ -8,7 +8,7 @@
   order.setCareSetting(orderService.getCareSetting(1));
   order.setOrderType(orderService.getOrderType(2));
   order.setEncounter(encounterService.getEncounter(3));
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order=orderService.saveOrder(order,null);
   assertTrue(order.getOrderNumber().startsWith(TimestampOrderNumberGenerator.ORDER_NUMBER_PREFIX));
 }

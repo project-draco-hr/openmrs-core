@@ -9,7 +9,7 @@
   order.setCareSetting(orderService.getCareSetting(1));
   order.setOrderType(orderService.getOrderType(2));
   order.setEncounter(encounterService.getEncounter(3));
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   OrderContext orderCtxt=new OrderContext();
   final String expectedOrderNumber="Testing";
   orderCtxt.setAttribute(TimestampOrderNumberGenerator.NEXT_ORDER_NUMBER,expectedOrderNumber);

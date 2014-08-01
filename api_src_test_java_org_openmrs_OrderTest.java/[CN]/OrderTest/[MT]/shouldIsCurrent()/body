@@ -2,7 +2,7 @@
   DateFormat ymd=new SimpleDateFormat("yyyy-MM-dd");
   Order o=new Order();
   assertTrue("startDate==null && no end date should always be current",o.isCurrent(ymd.parse("2007-10-26")));
-  o.setStartDate(ymd.parse("2007-01-01"));
+  o.setDateActivated(ymd.parse("2007-01-01"));
   assertFalse("shouldn't be current before startDate",o.isCurrent(ymd.parse("2006-10-26")));
   assertTrue("should be current after startDate",o.isCurrent(ymd.parse("2007-10-26")));
   o.setAutoExpireDate(ymd.parse("2007-12-31"));

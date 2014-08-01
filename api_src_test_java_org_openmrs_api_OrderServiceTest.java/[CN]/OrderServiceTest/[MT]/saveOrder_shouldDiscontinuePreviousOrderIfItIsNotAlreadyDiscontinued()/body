@@ -9,7 +9,7 @@
   order.setCareSetting(orderService.getCareSetting(1));
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderType(orderService.getOrderType(1));
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setDosingType(DrugOrder.DosingType.SIMPLE);
   order.setDose(500.0);
   order.setDoseUnits(conceptService.getConcept(50));
@@ -22,6 +22,6 @@
   assertTrue(OrderUtilTest.isActiveOrder(previousOrder,null));
   order.setPreviousOrder(previousOrder);
   orderService.saveOrder(order,null);
-  Assert.assertEquals(order.getStartDate(),order.getAutoExpireDate());
+  Assert.assertEquals(order.getDateActivated(),order.getAutoExpireDate());
   Assert.assertNotNull("previous order should be discontinued",previousOrder.getDateStopped());
 }

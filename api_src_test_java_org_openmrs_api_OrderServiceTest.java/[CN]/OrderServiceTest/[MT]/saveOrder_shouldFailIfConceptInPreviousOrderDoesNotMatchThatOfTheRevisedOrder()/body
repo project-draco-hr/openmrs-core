@@ -1,7 +1,7 @@
 {
   Order previousOrder=orderService.getOrder(7);
   Order order=previousOrder.cloneForRevision();
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setOrderer(providerService.getProvider(1));
   order.setEncounter(encounterService.getEncounter(6));
   Concept newConcept=conceptService.getConcept(5089);

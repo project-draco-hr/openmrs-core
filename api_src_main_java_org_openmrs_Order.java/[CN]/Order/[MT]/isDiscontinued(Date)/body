@@ -1,7 +1,7 @@
 {
   if (isVoided())   return false;
   if (checkDate == null)   checkDate=new Date();
-  if (startDate == null || checkDate.before(startDate)) {
+  if (dateActivated == null || checkDate.before(dateActivated)) {
     return false;
   }
   if (dateStopped != null && dateStopped.after(checkDate)) {

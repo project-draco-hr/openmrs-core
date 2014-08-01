@@ -5,7 +5,7 @@
       final String action=DISCONTINUE == order.getAction() ? "discontinuation" : "revision";
       throw new APIException("Cannot unvoid a " + action + " order if the previous order is no longer active");
     }
-    stopOrder(previousOrder,order.getStartDate());
+    stopOrder(previousOrder,order.getDateActivated());
   }
   return saveOrderInternal(order,null);
 }

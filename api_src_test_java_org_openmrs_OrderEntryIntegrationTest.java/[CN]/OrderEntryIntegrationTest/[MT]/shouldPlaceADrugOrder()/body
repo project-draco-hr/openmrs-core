@@ -9,7 +9,7 @@
   order.setPatient(patient);
   order.setCareSetting(careSetting);
   order.setOrderer(Context.getProviderService().getProvider(1));
-  order.setStartDate(encounter.getEncounterDatetime());
+  order.setDateActivated(encounter.getEncounterDatetime());
   order.setDrug(conceptService.getDrug(2));
   order.setDosingType(DrugOrder.DosingType.SIMPLE);
   order.setDose(300.0);

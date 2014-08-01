@@ -7,7 +7,7 @@
   assertTrue(originalActiveOrders.contains(originalOrder));
   Order revisedOrder=originalOrder.cloneForRevision();
   revisedOrder.setInstructions("Take after a meal");
-  revisedOrder.setStartDate(new Date());
+  revisedOrder.setDateActivated(new Date());
   revisedOrder.setOrderer(providerService.getProvider(1));
   revisedOrder.setEncounter(encounterService.getEncounter(3));
   orderService.saveOrder(revisedOrder,null);

@@ -6,7 +6,7 @@
   assertNotEquals(discontinuationOrderDrug,orderToDiscontinue.getDrug());
   assertNotNull(orderToDiscontinue.getDrug());
   DrugOrder order=orderToDiscontinue.cloneForRevision();
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setOrderer(providerService.getProvider(1));
   order.setEncounter(encounterService.getEncounter(6));
   order.setDrug(discontinuationOrderDrug);

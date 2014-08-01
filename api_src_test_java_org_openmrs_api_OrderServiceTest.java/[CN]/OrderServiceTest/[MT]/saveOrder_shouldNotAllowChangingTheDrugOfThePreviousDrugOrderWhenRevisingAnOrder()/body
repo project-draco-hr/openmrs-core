@@ -1,6 +1,6 @@
 {
   DrugOrder order=(DrugOrder)orderService.getOrder(111).cloneForRevision();
-  order.setStartDate(new Date());
+  order.setDateActivated(new Date());
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderer(providerService.getProvider(1));
   Drug newDrug=conceptService.getDrug(2);
