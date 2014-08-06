@@ -3,14 +3,14 @@
   Order o=new Order();
   assertFalse("order without dates shouldn't be discontinued",o.isDiscontinued(ymd.parse("2007-10-26")));
   o.setDateActivated(ymd.parse("2007-01-01"));
-  assertFalse("shouldn't be discontinued before start date",o.isDiscontinued(ymd.parse("2006-10-26")));
+  assertFalse("shouldn't be discontinued before date activated",o.isDiscontinued(ymd.parse("2006-10-26")));
   assertFalse("order without no end dates shouldn't be discontinued",o.isDiscontinued(ymd.parse("2007-10-26")));
   o.setAutoExpireDate(ymd.parse("2007-12-31"));
-  assertFalse("shouldn't be discontinued before start date",o.isDiscontinued(ymd.parse("2006-10-26")));
+  assertFalse("shouldn't be discontinued before date activated",o.isDiscontinued(ymd.parse("2006-10-26")));
   assertFalse("shouldn't be discontinued before autoExpireDate",o.isDiscontinued(ymd.parse("2007-10-26")));
   assertFalse("shouldn't be discontinued after autoExpireDate",o.isDiscontinued(ymd.parse("2008-10-26")));
   OrderUtilTest.setDateStopped(o,ymd.parse("2007-11-01"));
-  assertFalse("shouldn't be discontinued before start date",o.isDiscontinued(ymd.parse("2006-10-26")));
+  assertFalse("shouldn't be discontinued before date activated",o.isDiscontinued(ymd.parse("2006-10-26")));
   assertFalse("shouldn't be discontinued before dateStopped",o.isDiscontinued(ymd.parse("2007-10-26")));
   assertTrue("should be discontinued after dateStopped",o.isDiscontinued(ymd.parse("2007-11-26")));
 }
