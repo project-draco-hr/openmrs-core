@@ -13,7 +13,7 @@
     criteria.add(Restrictions.in("concept",drugConcepts));
   }
   criteria.add(Restrictions.eq("voided",false));
-  criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
+  criteria.addOrder(org.hibernate.criterion.Order.asc("dateActivated"));
   log.debug("criteria: " + criteria);
   List<DrugOrder> temp=criteria.list();
   for (  DrugOrder regimen : temp) {

@@ -14,14 +14,14 @@
     sb.append(" and concept.id in (:drugConceptIdList) ");
   }
   if (startDateFrom != null && startDateTo != null) {
-    sb.append(" and startDate between :startDateFrom and :startDateTo ");
+    sb.append(" and dateActivated between :startDateFrom and :startDateTo ");
   }
  else {
     if (startDateFrom != null) {
-      sb.append(" and startDate >= :startDateFrom ");
+      sb.append(" and dateActivated >= :startDateFrom ");
     }
     if (startDateTo != null) {
-      sb.append(" and startDate <= :startDateTo ");
+      sb.append(" and dateActivated <= :startDateTo ");
     }
   }
   if (orderReason != null && orderReason.size() > 0) {

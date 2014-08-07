@@ -11,9 +11,9 @@
     criteria.add(Restrictions.in("concept",drugConcepts));
   }
   criteria.add(Restrictions.eq("voided",false));
-  criteria.add(Restrictions.le("startDate",now));
+  criteria.add(Restrictions.le("dateActivated",now));
   criteria.add(Restrictions.and(Restrictions.or(Restrictions.isNull("autoExpireDate"),Restrictions.gt("autoExpireDate",now)),Restrictions.or(Restrictions.isNull("dateStopped"),Restrictions.gt("dateStopped",now))));
-  criteria.addOrder(org.hibernate.criterion.Order.asc("startDate"));
+  criteria.addOrder(org.hibernate.criterion.Order.asc("dateActivated"));
   log.debug("criteria: " + criteria);
   List<DrugOrder> temp=criteria.list();
   for (  DrugOrder regimen : temp) {
