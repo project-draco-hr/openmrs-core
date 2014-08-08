@@ -1,0 +1,12 @@
+{
+  Date date=new Date();
+  Order order1=new Order();
+  order1.setDateActivated(date);
+  order1.setAutoExpireDate(DateUtils.addDays(date,5));
+  Order order2=new Order();
+  order2.setDateActivated(date);
+  order2.setScheduledDate(DateUtils.addDays(date,4));
+  order2.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
+  assertTrue(OrderUtil.checkScheduleOverlap(order1,order2));
+  assertTrue(OrderUtil.checkScheduleOverlap(order2,order1));
+}

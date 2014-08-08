@@ -1,0 +1,8 @@
+{
+  Order order=new Order();
+  Date date=DateUtils.addDays(new Date(),2);
+  order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
+  order.setScheduledDate(date);
+  order.setDateActivated(new Date());
+  assertEquals(date,order.getEffectiveStartDate());
+}

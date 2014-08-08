@@ -20,8 +20,8 @@
   if (!isDiscontinueOrReviseOrder(order)) {
     List<Order> activeOrders=getActiveOrders(order.getPatient(),null,order.getCareSetting(),null);
     for (    Order activeOrder : activeOrders) {
-      if (order.hasSameOrderableAs(activeOrder)) {
-        throw new APIException("Cannot have more than one active order for the same orderable and care setting");
+      if (order.hasSameOrderableAs(activeOrder) && OrderUtil.checkScheduleOverlap(order,activeOrder)) {
+        throw new APIException("Cannot have more than one active order for the same orderable and care setting at same time");
       }
     }
   }
