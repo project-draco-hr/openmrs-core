@@ -1,0 +1,7 @@
+{
+  FormService fs=Context.getFormService();
+  createFormsLockedGPAndSetValue("false");
+  Form form=fs.getForm(1);
+  Form duplicateForm=fs.duplicateForm(form);
+  assertEquals(form,duplicateForm);
+}
