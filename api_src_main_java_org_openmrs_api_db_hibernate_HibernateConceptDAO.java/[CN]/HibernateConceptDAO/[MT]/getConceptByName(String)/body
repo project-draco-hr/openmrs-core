@@ -3,7 +3,7 @@
   Locale locale=Context.getLocale();
   Locale language=new Locale(locale.getLanguage() + "%");
   criteria.add(Restrictions.or(Restrictions.eq("locale",locale),Restrictions.like("locale",language)));
-  if (Context.getConceptService().isConceptNameSearchCaseSensitive()) {
+  if (Context.getConceptService().isConceptNameTableCaseSensitive()) {
     criteria.add(Restrictions.ilike("name",name));
   }
  else {
