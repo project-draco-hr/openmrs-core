@@ -1,0 +1,20 @@
+{
+  Order order=new TestOrder();
+  order.setPatient(patientService.getPatient(2));
+  order.setCareSetting(orderService.getCareSetting(2));
+  order.setConcept(conceptService.getConcept(5089));
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  order.setDateActivated(new Date());
+  Calendar cal=Calendar.getInstance();
+  cal.setTime(order.getDateActivated());
+  cal.add(Calendar.DAY_OF_WEEK,4);
+  Date autoExpireDate=DateUtils.truncate(cal.getTime(),Calendar.DATE);
+  order.setAutoExpireDate(autoExpireDate);
+  orderService.saveOrder(order,null);
+  cal.set(Calendar.HOUR_OF_DAY,23);
+  cal.set(Calendar.MINUTE,59);
+  cal.set(Calendar.SECOND,59);
+  cal.set(Calendar.MILLISECOND,999);
+  assertEquals(cal.getTime(),order.getAutoExpireDate());
+}
