@@ -1,0 +1,6 @@
+{
+  boolean requireDrug=Context.getAdministrationService().getGlobalPropertyValue(OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG,false);
+  if (requireDrug) {
+    ValidationUtils.rejectIfEmpty(errors,"drug","DrugOrder.error.drugIsRequired");
+  }
+}
