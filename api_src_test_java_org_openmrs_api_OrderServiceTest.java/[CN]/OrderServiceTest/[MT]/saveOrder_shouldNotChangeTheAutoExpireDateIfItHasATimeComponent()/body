@@ -6,11 +6,9 @@
   order.setEncounter(encounterService.getEncounter(6));
   order.setOrderer(providerService.getProvider(1));
   order.setDateActivated(new Date());
-  Calendar cal=Calendar.getInstance();
-  cal.setTime(order.getDateActivated());
-  cal.add(Calendar.DAY_OF_WEEK,4);
-  cal.set(Calendar.HOUR_OF_DAY,11);
-  Date autoExpireDate=cal.getTime();
+  DateFormat dateformat=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+  order.setDateActivated(dateformat.parse("14/08/2014 10:00:00"));
+  Date autoExpireDate=dateformat.parse("18/08/2014 10:00:00");
   order.setAutoExpireDate(autoExpireDate);
   orderService.saveOrder(order,null);
   assertEquals(autoExpireDate,order.getAutoExpireDate());
