@@ -9,7 +9,7 @@
   order.setEncounter(encounterService.getEncounter(6));
   order.setOrderer(providerService.getProvider(1));
   order.setCareSetting(existingOrder.getCareSetting());
-  order.setDosingType(DrugOrder.DosingType.FREE_TEXT);
+  order.setDosingType(FreeTextDosingInstructions.class);
   order.setDosingInstructions("2 for 10 days");
   order.setQuantity(10.0);
   order.setQuantityUnits(conceptService.getConcept(51));

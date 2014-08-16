@@ -1,0 +1,7 @@
+{
+  Order order=new Order();
+  Date dateStopped=DateUtils.addDays(new Date(),4);
+  OrderUtilTest.setDateStopped(order,dateStopped);
+  order.setAutoExpireDate(new Date());
+  assertEquals(dateStopped,order.getEffectiveStopDate());
+}

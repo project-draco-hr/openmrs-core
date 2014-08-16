@@ -1,0 +1,11 @@
+{
+  DateFormat df=new SimpleDateFormat("dd/MM/yyy");
+  Order order1=new Order();
+  order1.setDateActivated(df.parse("05/08/2014"));
+  order1.setAutoExpireDate(df.parse("13/08/2014"));
+  Order order2=new Order();
+  order2.setDateActivated(order1.getDateActivated());
+  order2.setDateActivated(order1.getAutoExpireDate());
+  assertTrue(OrderUtil.checkScheduleOverlap(order1,order2));
+  assertTrue(OrderUtil.checkScheduleOverlap(order2,order1));
+}
