@@ -1,0 +1,5 @@
+{
+  ISO8601Duration duration=new ISO8601Duration(3,ISO8601Duration.MONTHS_CODE);
+  Date autoExpireDate=duration.addToDate(createDateTime("2014-07-01 10-00-00"),null);
+  assertEquals(createDateTime("2014-10-01 10-00-00"),autoExpireDate);
+}

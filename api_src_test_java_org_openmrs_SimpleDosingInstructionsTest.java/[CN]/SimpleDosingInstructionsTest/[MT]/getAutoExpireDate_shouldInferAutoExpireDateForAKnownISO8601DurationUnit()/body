@@ -1,0 +1,8 @@
+{
+  DrugOrder drugOrder=new DrugOrder();
+  drugOrder.setDateActivated(createDateTime("2014-07-01 10-00-00"));
+  drugOrder.setDuration(30);
+  drugOrder.setDurationUnits(createUnits(ISO8601Duration.SECONDS_CODE));
+  Date autoExpireDate=new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
+  assertEquals(createDateTime("2014-07-01 10-00-30"),autoExpireDate);
+}

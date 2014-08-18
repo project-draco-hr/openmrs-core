@@ -1,0 +1,6 @@
+{
+  ISO8601Duration duration=new ISO8601Duration(3,"J");
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage(Matchers.is("Unknown code 'J' for ISO8601 duration units"));
+  duration.addToDate(createDateTime("2014-07-01 10-00-00"),null);
+}

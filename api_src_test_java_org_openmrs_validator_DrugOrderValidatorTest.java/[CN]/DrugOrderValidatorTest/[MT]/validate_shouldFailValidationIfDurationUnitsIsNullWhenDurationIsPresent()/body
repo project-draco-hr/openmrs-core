@@ -1,7 +1,7 @@
 {
   DrugOrder order=new DrugOrder();
   order.setDosingType(FreeTextDosingInstructions.class);
-  order.setDuration(20.0);
+  order.setDuration(20);
   order.setDurationUnits(null);
   Errors errors=new BindException(order,"order");
   new DrugOrderValidator().validate(order,errors);

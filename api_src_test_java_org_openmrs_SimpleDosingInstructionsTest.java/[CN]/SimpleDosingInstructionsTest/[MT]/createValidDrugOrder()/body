@@ -1,0 +1,10 @@
+{
+  DrugOrder drugOrder=new DrugOrder();
+  drugOrder.setDose(10.0);
+  drugOrder.setDoseUnits(createConceptWithName("ml"));
+  drugOrder.setRoute(createConceptWithName("IV"));
+  OrderFrequency frequency=new OrderFrequency();
+  frequency.setConcept(createConceptWithName("Twice a day"));
+  drugOrder.setFrequency(frequency);
+  return drugOrder;
+}

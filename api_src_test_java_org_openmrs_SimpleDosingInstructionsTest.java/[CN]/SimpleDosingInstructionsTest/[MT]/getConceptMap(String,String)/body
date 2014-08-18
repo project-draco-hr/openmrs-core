@@ -1,0 +1,12 @@
+{
+  ConceptMap conceptMap=new ConceptMap();
+  ConceptReferenceTerm conceptReferenceTerm=new ConceptReferenceTerm();
+  ConceptSource conceptSource=new ConceptSource();
+  conceptSource.setUuid(sourceUuuid);
+  conceptReferenceTerm.setConceptSource(conceptSource);
+  conceptReferenceTerm.setCode(code);
+  conceptMap.setConceptReferenceTerm(conceptReferenceTerm);
+  ConceptMapType conceptMapType=new ConceptMapType();
+  conceptMap.setConceptMapType(conceptMapType);
+  return conceptMap;
+}

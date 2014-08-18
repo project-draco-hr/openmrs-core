@@ -1,0 +1,8 @@
+{
+  DrugOrder drugOrder=createValidDrugOrder();
+  drugOrder.setDurationUnits(null);
+  drugOrder.setAutoExpireDate(null);
+  Errors errors=new BindException(drugOrder,"drugOrder");
+  new SimpleDosingInstructions().validate(drugOrder,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

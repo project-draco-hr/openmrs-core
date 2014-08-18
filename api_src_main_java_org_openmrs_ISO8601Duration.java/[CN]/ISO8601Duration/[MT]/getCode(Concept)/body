@@ -1,0 +1,9 @@
+{
+  for (  ConceptMap conceptMapping : durationUnits.getConceptMappings()) {
+    ConceptReferenceTerm conceptReferenceTerm=conceptMapping.getConceptReferenceTerm();
+    if (ISO8601Duration.CONCEPT_SOURCE_UUID.equals(conceptReferenceTerm.getConceptSource().getUuid())) {
+      return conceptReferenceTerm.getCode();
+    }
+  }
+  return null;
+}

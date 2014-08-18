@@ -1,0 +1,11 @@
+{
+  DrugOrder drugOrder=createValidDrugOrder();
+  drugOrder.setDuration(30);
+  Concept unMappedDurationUnits=new Concept();
+  drugOrder.setDurationUnits(unMappedDurationUnits);
+  drugOrder.setAutoExpireDate(null);
+  Errors errors=new BindException(drugOrder,"drugOrder");
+  new SimpleDosingInstructions().validate(drugOrder,errors);
+  Assert.assertTrue(errors.hasFieldErrors("durationUnits"));
+  Assert.assertEquals("DrugOrder.error.durationUnitsNotMappedToISO8601DurationCode",errors.getFieldError("durationUnits").getCode());
+}

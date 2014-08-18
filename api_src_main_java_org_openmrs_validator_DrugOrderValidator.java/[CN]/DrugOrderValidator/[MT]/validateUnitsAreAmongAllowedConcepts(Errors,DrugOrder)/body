@@ -17,6 +17,9 @@
     if (!drugDurationUnits.contains(order.getDurationUnits())) {
       errors.rejectValue("durationUnits","DrugOrder.error.notAmongAllowedConcepts");
     }
+    if (ISO8601Duration.getCode(order.getDurationUnits()) == null) {
+      errors.rejectValue("durationUnits","DrugOrder.error.durationUnitsNotMappedToISO8601DurationCode");
+    }
   }
   if (order.getRoute() != null) {
     List<Concept> routes=orderService.getDrugRoutes();
