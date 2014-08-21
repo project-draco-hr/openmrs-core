@@ -1,5 +1,5 @@
 {
-  executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWitSameConceptAndDifferentFormAndStrength.xml");
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWithSameConceptAndDifferentFormAndStrength.xml");
   final Patient patient=patientService.getPatient(2);
   DrugOrder existingOrder=(DrugOrder)orderService.getOrder(1000);
   assertTrue(existingOrder.isCurrent());
