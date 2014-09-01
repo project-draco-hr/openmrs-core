@@ -1,17 +1,7 @@
 {
-  if (StringUtils.isBlank(phrase)) {
+  LuceneQuery<Drug> drugQuery=newDrugQuery(phrase,true,false,Context.getLocale(),false,null,false);
+  if (drugQuery == null) {
     return Collections.emptyList();
   }
-  final String escapedPhrase=LuceneQuery.escapeQuery(phrase.trim());
-  List<String> tokenizedPhrase=new ArrayList<String>();
-  String[] words=escapedPhrase.split(" ");
-  for (  String word : words) {
-    word=word.trim();
-    if (!word.isEmpty()) {
-      tokenizedPhrase.add(word);
-    }
-  }
-  StringBuilder query=newNameQuery(tokenizedPhrase,escapedPhrase,true);
-  List<Drug> list=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),Drug.class).exclude("retired",true).list();
-  return list;
+  return drugQuery.list();
 }

@@ -13,8 +13,8 @@
   Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptName.class);
   criteria.add(Restrictions.eq("voided",false));
   criteria.add(Restrictions.or(Restrictions.eq("locale",name.getLocale()),Restrictions.eq("locale",new Locale(name.getLocale().getLanguage()))));
-  if (Context.getConceptService().isConceptNameTableCaseSensitive()) {
-    criteria.add(Restrictions.ilike("name",name.getName()));
+  if (Context.getAdministrationService().isDatabaseStringComparisonCaseSensitive()) {
+    criteria.add(Restrictions.eq("name",name.getName()).ignoreCase());
   }
  else {
     criteria.add(Restrictions.eq("name",name.getName()));

@@ -10,7 +10,7 @@
     }
     query.append(newConceptNameQuery(phrase,searchKeywords,searchLocales,searchExactLocale));
   }
-  LuceneQuery<ConceptName> luceneQuery=LuceneQuery.newQuery(query.toString(),sessionFactory.getCurrentSession(),ConceptName.class).include("concept.conceptClass.conceptClassId",transformToIds(requireClasses)).exclude("concept.conceptClass.conceptClassId",transformToIds(excludeClasses)).include("concept.datatype.conceptDatatypeId",transformToIds(requireDatatypes)).exclude("concept.datatype.conceptDatatypeId",transformToIds(excludeDatatypes));
+  LuceneQuery<ConceptName> luceneQuery=LuceneQuery.newQuery(ConceptName.class,sessionFactory.getCurrentSession(),query.toString()).include("concept.conceptClass.conceptClassId",transformToIds(requireClasses)).exclude("concept.conceptClass.conceptClassId",transformToIds(excludeClasses)).include("concept.datatype.conceptDatatypeId",transformToIds(requireDatatypes)).exclude("concept.datatype.conceptDatatypeId",transformToIds(excludeDatatypes));
   if (answersToConcept != null) {
     Collection<ConceptAnswer> answers=answersToConcept.getAnswers(false);
     if (answers != null && !answers.isEmpty()) {

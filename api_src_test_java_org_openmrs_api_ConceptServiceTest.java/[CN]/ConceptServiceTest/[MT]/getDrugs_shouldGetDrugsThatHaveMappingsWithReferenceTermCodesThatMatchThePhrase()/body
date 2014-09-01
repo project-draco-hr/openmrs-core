@@ -1,9 +1,5 @@
 {
   executeDataSet("org/openmrs/api/include/ConceptServiceTest-drugSearch.xml");
-  List<Drug> drugs=conceptService.getDrugs("XXXZZ",null,true,true);
-  assertEquals(1,drugs.size());
-  assertEquals(11,drugs.get(0).getDrugId().intValue());
-  drugs=conceptService.getDrugs("XZZZ",null,true,true);
-  assertEquals(1,drugs.size());
-  assertEquals(11,drugs.get(0).getDrugId().intValue());
+  List<Drug> drugs=conceptService.getDrugs("XXX",null,true,true);
+  assertThat(drugs,contains(hasId(11),hasId(444)));
 }

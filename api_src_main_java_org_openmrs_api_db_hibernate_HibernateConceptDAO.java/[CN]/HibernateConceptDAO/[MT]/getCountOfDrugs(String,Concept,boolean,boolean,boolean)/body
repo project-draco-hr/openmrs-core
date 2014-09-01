@@ -1,25 +1,7 @@
 {
-  Criteria searchCriteria=sessionFactory.getCurrentSession().createCriteria(Drug.class,"drug");
-  if (StringUtils.isBlank(drugName) && concept == null) {
+  LuceneQuery<Drug> drugsQuery=newDrugQuery(drugName,searchKeywords,searchDrugConceptNames,Context.getLocale(),false,concept,includeRetired);
+  if (drugsQuery == null) {
     return 0L;
   }
-  if (!includeRetired) {
-    searchCriteria.add(Restrictions.eq("drug.retired",false));
-  }
-  if (concept != null) {
-    searchCriteria.add(Restrictions.eq("drug.concept",concept));
-  }
-  MatchMode matchMode=MatchMode.START;
-  if (searchOnPhrase) {
-    matchMode=MatchMode.ANYWHERE;
-  }
-  if (!StringUtils.isBlank(drugName)) {
-    searchCriteria.add(Restrictions.ilike("drug.name",drugName,matchMode));
-    if (searchDrugConceptNames) {
-      searchCriteria.createCriteria("concept","concept").createAlias("concept.names","names");
-      searchCriteria.add(Restrictions.ilike("names.name",drugName,matchMode));
-    }
-  }
-  searchCriteria.setProjection(Projections.countDistinct("drug.drugId"));
-  return (Long)searchCriteria.uniqueResult();
+  return drugsQuery.resultSize();
 }
