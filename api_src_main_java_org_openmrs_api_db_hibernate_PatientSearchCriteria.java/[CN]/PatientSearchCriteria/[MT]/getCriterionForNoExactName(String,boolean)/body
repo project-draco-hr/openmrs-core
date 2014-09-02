@@ -1,0 +1,8 @@
+{
+  MatchMode matchMode=getMatchMode();
+  Criterion criterion=Restrictions.conjunction().add(Restrictions.disjunction().add(Restrictions.conjunction().add(Restrictions.isNotNull("name.givenName")).add(Restrictions.like("name.givenName",name,matchMode))).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.middleName")).add(Restrictions.like("name.middleName",name,matchMode))).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.familyName")).add(Restrictions.like("name.familyName",name,matchMode))).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.familyName2")).add(Restrictions.like("name.familyName2",name,matchMode)))).add(Restrictions.disjunction().add(Restrictions.isNull("name.givenName")).add(Restrictions.ne("name.givenName",name))).add(Restrictions.disjunction().add(Restrictions.isNull("name.middleName")).add(Restrictions.ne("name.middleName",name))).add(Restrictions.disjunction().add(Restrictions.isNull("name.familyName")).add(Restrictions.ne("name.familyName",name))).add(Restrictions.disjunction().add(Restrictions.isNull("name.familyName2")).add(Restrictions.ne("name.familyName2",name)));
+  if (!includeVoided) {
+    return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(criterion);
+  }
+  return criterion;
+}

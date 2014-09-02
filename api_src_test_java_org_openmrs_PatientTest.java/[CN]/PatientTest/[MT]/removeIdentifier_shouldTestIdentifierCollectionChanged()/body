@@ -27,9 +27,11 @@
   PatientIdentifier[] pis=new PatientIdentifier[]{};
   pis=p.getIdentifiers().toArray(pis);
   assertTrue(p.getIdentifiers().contains(pa3));
+  p.removeIdentifier((pa3));
   pa3.setVoided(true);
+  p.addIdentifier((pa3));
   pis=p.getIdentifiers().toArray(pis);
-  assertTrue(p.getIdentifiers().contains(pa3));
+  assertThat(p.getIdentifiers(),contains(pa1,pa2,pa4,pa3));
   pa3.setVoided(false);
   p.removeIdentifier(pa3);
   pis=p.getIdentifiers().toArray(pis);

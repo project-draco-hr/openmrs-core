@@ -1,0 +1,23 @@
+{
+  name=HibernateUtil.escapeSqlWildcards(name,sessionFactory);
+  Conjunction conjunction=Restrictions.conjunction();
+  String[] nameParts=getQueryParts(name);
+  if (nameParts.length > 0) {
+    StringBuilder multiName=new StringBuilder(nameParts[0]);
+    for (int i=0; i < nameParts.length; i++) {
+      String singleName=nameParts[i];
+      if (singleName != null && singleName.length() > 0) {
+        Criterion singleNameCriterion=getCriterionForName(singleName,matchExactly,includeVoided);
+        Criterion criterion=singleNameCriterion;
+        if (i > 0) {
+          multiName.append(" ");
+          multiName.append(singleName);
+          Criterion multiNameCriterion=getCriterionForName(multiName.toString(),matchExactly,includeVoided);
+          criterion=Restrictions.or(singleNameCriterion,multiNameCriterion);
+        }
+        conjunction.add(criterion);
+      }
+    }
+  }
+  return conjunction;
+}
