@@ -12,7 +12,7 @@
         return showForm(request,response,errors);
       }
       updatePersonNames(request,patient);
-      updatePersonAddresses(request,patient);
+      updatePersonAddresses(request,patient,errors);
       updatePersonAttributes(request,errors,patient);
       objs=patient.getIdentifiers().toArray();
       for (int i=0; i < objs.length; i++) {
