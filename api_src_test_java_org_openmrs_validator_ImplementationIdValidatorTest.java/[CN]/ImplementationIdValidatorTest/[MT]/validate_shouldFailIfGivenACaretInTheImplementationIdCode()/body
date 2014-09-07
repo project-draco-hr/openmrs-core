@@ -1,0 +1,11 @@
+{
+  ImplementationId invalidId=new ImplementationId();
+  invalidId.setImplementationId("caret^caret");
+  invalidId.setName("an invalid impl id for a unit test");
+  invalidId.setPassphrase("some valid passphrase");
+  invalidId.setDescription("Some valid description");
+  Errors errors=new BindException(invalidId,"implementationId");
+  new ImplementationIdValidator().validate(invalidId,errors);
+  Assert.assertTrue(errors.hasFieldErrors("implementationId"));
+  Assert.assertEquals("ImplementationId.implementationId.invalidcharacter",errors.getFieldError("implementationId").getCode());
+}
