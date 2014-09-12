@@ -1,0 +1,10 @@
+{
+  Program program=Context.getProgramWorkflowService().getProgram(3);
+  program.setDescription("Edited description");
+  Errors errors=new BindException(program,"program");
+  programValidator.validate(program,errors);
+  Assert.assertFalse(errors.hasErrors());
+  Context.getProgramWorkflowService().saveProgram(program);
+  program=Context.getProgramWorkflowService().getProgram(3);
+  Assert.assertTrue(program.getDescription().equals("Edited description"));
+}
