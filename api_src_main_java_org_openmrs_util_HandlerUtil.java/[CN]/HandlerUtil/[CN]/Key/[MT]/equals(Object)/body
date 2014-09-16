@@ -1,0 +1,15 @@
+{
+  if (this == obj)   return true;
+  if (obj == null)   return false;
+  if (getClass() != obj.getClass())   return false;
+  Key other=(Key)obj;
+  if (handlerType == null) {
+    if (other.handlerType != null)     return false;
+  }
+ else   if (!handlerType.equals(other.handlerType))   return false;
+  if (type == null) {
+    if (other.type != null)     return false;
+  }
+ else   if (!type.equals(other.type))   return false;
+  return true;
+}

@@ -1,4 +1,8 @@
 {
+  List<?> list=cachedHandlers.get(new Key(handlerType,type));
+  if (list != null) {
+    return (List<H>)list;
+  }
   List<H> handlers=new ArrayList<H>();
   log.debug("Getting handlers of type " + handlerType + (type == null ? "" : " for class " + type.getName()));
   for (  H handler : Context.getRegisteredComponents(handlerType)) {
@@ -25,5 +29,8 @@
     }
   }
 );
+  Map<Key,List<?>> newCachedHandlers=new WeakHashMap<Key,List<?>>(cachedHandlers);
+  newCachedHandlers.put(new Key(handlerType,type),handlers);
+  cachedHandlers=newCachedHandlers;
   return handlers;
 }

@@ -12,5 +12,14 @@
       Context.clearUserContext();
     }
     userContextMocked=false;
+    userContext=null;
+  }
+  if (applicationContextMocked) {
+    if (realApplicationContext != null) {
+      Context.getServiceContext().setApplicationContext(realApplicationContext);
+      realApplicationContext=null;
+    }
+    applicationContextMocked=false;
+    applicationContext=null;
   }
 }

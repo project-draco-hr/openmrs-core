@@ -1,0 +1,8 @@
+{
+  if (!applicationContextMocked) {
+    realApplicationContext=Context.getServiceContext().getApplicationContext();
+    applicationContextMocked=true;
+  }
+  Context.getServiceContext().setApplicationContext(context);
+  this.applicationContext=context;
+}

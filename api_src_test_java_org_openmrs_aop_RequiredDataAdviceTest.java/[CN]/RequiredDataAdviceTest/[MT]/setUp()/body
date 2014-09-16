@@ -1,10 +1,9 @@
 {
-  this.requiredDataAdvice=new RequiredDataAdvice();
-  PowerMockito.mockStatic(Context.class);
-  saveHandler=mock(OpenmrsObjectSaveHandler.class);
-  voidHandler=mock(BaseVoidHandler.class);
-  when(Context.getRegisteredComponents(SaveHandler.class)).thenReturn(Arrays.asList(saveHandler));
-  when(Context.getRegisteredComponents(VoidHandler.class)).thenReturn(Arrays.asList(voidHandler));
-  AdministrationService administrationService=mock(AdministrationService.class);
-  when(Context.getAdministrationService()).thenReturn(administrationService);
+  Map<String,SaveHandler> saveHandlers=new HashMap<String,SaveHandler>();
+  saveHandlers.put("saveHandler",saveHandler);
+  when(context.getBeansOfType(SaveHandler.class)).thenReturn(saveHandlers);
+  Map<String,VoidHandler> voidHandlers=new HashMap<String,VoidHandler>();
+  voidHandlers.put("voidHandler",voidHandler);
+  when(context.getBeansOfType(VoidHandler.class)).thenReturn(voidHandlers);
+  HandlerUtil.clearCachedHandlers();
 }
