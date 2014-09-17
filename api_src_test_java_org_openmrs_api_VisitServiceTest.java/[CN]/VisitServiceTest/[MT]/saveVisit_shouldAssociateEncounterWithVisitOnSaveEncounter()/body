@@ -5,6 +5,7 @@
   encounter.setEncounterDatetime(new Date());
   encounter.setPatient(visit.getPatient());
   encounter.setLocation(visit.getLocation());
+  encounter.setEncounterType(encounterService.getEncounterType(1));
   visit.addEncounter(encounter);
   Context.getEncounterService().saveEncounter(encounter);
   Integer encounterId=encounter.getEncounterId();
