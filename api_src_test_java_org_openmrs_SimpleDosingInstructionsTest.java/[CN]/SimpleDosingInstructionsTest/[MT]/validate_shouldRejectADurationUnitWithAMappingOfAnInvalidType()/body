@@ -1,0 +1,9 @@
+{
+  DrugOrder drugOrder=createValidDrugOrder();
+  drugOrder.setDuration(30);
+  Concept durationUnitWithInvalidMapType=createUnits("SCT",Duration.SNOMED_CT_DAYS_CODE,"Some-uuid");
+  drugOrder.setDurationUnits(durationUnitWithInvalidMapType);
+  Errors errors=new BindException(drugOrder,"drugOrder");
+  new SimpleDosingInstructions().validate(drugOrder,errors);
+  assertEquals(true,errors.hasErrors());
+}

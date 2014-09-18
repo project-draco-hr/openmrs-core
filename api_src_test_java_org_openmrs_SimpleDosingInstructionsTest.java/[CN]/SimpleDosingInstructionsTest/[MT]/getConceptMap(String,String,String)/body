@@ -1,0 +1,18 @@
+{
+  ConceptMap conceptMap=new ConceptMap();
+  ConceptReferenceTerm conceptReferenceTerm=new ConceptReferenceTerm();
+  ConceptSource conceptSource=new ConceptSource();
+  conceptSource.setHl7Code(sourceHl7Code);
+  conceptReferenceTerm.setConceptSource(conceptSource);
+  conceptReferenceTerm.setCode(code);
+  conceptMap.setConceptReferenceTerm(conceptReferenceTerm);
+  ConceptMapType conceptMapType=new ConceptMapType();
+  if (mapTypeUuid != null) {
+    conceptMapType.setUuid(mapTypeUuid);
+  }
+ else {
+    conceptMapType.setUuid(ConceptMapType.SAME_AS_MAP_TYPE_UUID);
+  }
+  conceptMap.setConceptMapType(conceptMapType);
+  return conceptMap;
+}
