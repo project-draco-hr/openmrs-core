@@ -1,0 +1,19 @@
+{
+  String className="openmrs.module.reporting.ui.Report";
+  Collection<ModuleClassLoader> moduleClassLoaders=new ArrayList<ModuleClassLoader>();
+  ModuleClassLoader moduleClassLoader=Mockito.mock(ModuleClassLoader.class);
+  Mockito.when(moduleClassLoader.getModule()).thenReturn(new Module("reporting","","openmrs.module.reporting","","",""));
+  Mockito.when(moduleClassLoader.getAdditionalPackages()).thenReturn(new HashSet<String>());
+  Mockito.when(moduleClassLoader.loadClass(className)).thenReturn(null);
+  ModuleClassLoader moduleClassLoader2=Mockito.mock(ModuleClassLoader.class);
+  Mockito.when(moduleClassLoader2.getModule()).thenReturn(new Module("reporting.ui","","openmrs.module.reporting.ui","","",""));
+  Mockito.when(moduleClassLoader2.getAdditionalPackages()).thenReturn(new HashSet<String>());
+  Mockito.when(moduleClassLoader2.loadClass(className)).thenReturn(null);
+  moduleClassLoaders.add(moduleClassLoader);
+  moduleClassLoaders.add(moduleClassLoader2);
+  OpenmrsClassLoader classLoader=new OpenmrsClassLoader();
+  classLoader.loadModuleClass(className,moduleClassLoaders);
+  InOrder inOrder=Mockito.inOrder(moduleClassLoader,moduleClassLoader2);
+  inOrder.verify(moduleClassLoader2,Mockito.atLeastOnce()).loadClass(className);
+  inOrder.verify(moduleClassLoader,Mockito.never()).loadClass(className);
+}
