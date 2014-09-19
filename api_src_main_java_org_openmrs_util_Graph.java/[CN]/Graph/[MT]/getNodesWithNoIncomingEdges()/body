@@ -1,0 +1,12 @@
+{
+  Set<T> nodesWithIncomingEdges=new HashSet<T>();
+  Set<T> nodesWithoutIncomingEdges=new HashSet<T>();
+  for (  Edge edge : edges) {
+    nodesWithIncomingEdges.add(edge.getToNode());
+  }
+  nodesWithoutIncomingEdges.addAll(nodes);
+  for (  T node : nodesWithIncomingEdges) {
+    nodesWithoutIncomingEdges.remove(node);
+  }
+  return nodesWithoutIncomingEdges;
+}

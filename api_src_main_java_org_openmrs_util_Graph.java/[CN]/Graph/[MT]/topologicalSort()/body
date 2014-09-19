@@ -1,0 +1,23 @@
+{
+  Set<T> queue=getNodesWithNoIncomingEdges();
+  List<T> result=new ArrayList<T>();
+  List<Edge> initialEdges=new ArrayList<Edge>();
+  initialEdges.addAll(edges);
+  while (!queue.isEmpty()) {
+    T node=queue.iterator().next();
+    queue.remove(node);
+    result.add(node);
+    Set<Edge> edgesStarting=getEdgesStartingWith(node);
+    for (    Edge edge : edgesStarting) {
+      edges.remove(edge);
+      if (!hasIncomingEdges(edge.getToNode())) {
+        queue.add(edge.getToNode());
+      }
+    }
+  }
+  if (!edges.isEmpty()) {
+    throw new CycleException();
+  }
+  edges.addAll(initialEdges);
+  return result;
+}

@@ -42,7 +42,7 @@
       log.debug("Mod was in classloader map.  Removing advice and extensions.");
       try {
         for (        AdvicePoint advice : mod.getAdvicePoints()) {
-          Class cls=null;
+          Class<?> cls=null;
           try {
             cls=Context.loadClass(advice.getPoint());
             Object aopObject=advice.getClassInstance();
