@@ -20,10 +20,12 @@
  else     if (action.equals(msa.getMessage("Patient.void"))) {
       String voidReason=request.getParameter("voidReason");
       if (StringUtils.isBlank(voidReason)) {
-        voidReason=msa.getMessage("PatientForm.default.voidReason",null,"Voided from patient form",Context.getLocale());
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Patient.error.void.reasonEmpty");
       }
-      ps.voidPatient(patient,voidReason);
-      httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.voided");
+ else {
+        ps.voidPatient(patient,voidReason);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Patient.voided");
+      }
       return new ModelAndView(new RedirectView(getSuccessView() + "?patientId=" + patient.getPatientId()));
     }
  else     if (action.equals(msa.getMessage("Patient.unvoid"))) {
