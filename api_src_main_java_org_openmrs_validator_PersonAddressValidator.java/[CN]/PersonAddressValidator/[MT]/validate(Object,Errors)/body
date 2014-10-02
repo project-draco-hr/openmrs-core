@@ -25,4 +25,27 @@
   if (personAddress.getStartDate() != null && OpenmrsUtil.compareWithNullAsLatest(personAddress.getStartDate(),personAddress.getEndDate()) > 0) {
     errors.rejectValue("endDate","PersonAddress.error.endDateBeforeStartDate",new Object[]{"'" + addressString + "'"},"The End Date for address '" + addressString + "' shouldn't be earlier than the Start Date");
   }
+  String xml=Context.getLocationService().getAddressTemplate();
+  List<String> requiredElements;
+  try {
+    AddressTemplate addressTemplate=Context.getSerializationService().getDefaultSerializer().deserialize(xml,AddressTemplate.class);
+    requiredElements=addressTemplate.getRequiredElements();
+  }
+ catch (  Exception e) {
+    errors.reject(Context.getMessageSourceService().getMessage("AddressTemplate.error"));
+    return;
+  }
+  if (requiredElements != null) {
+    for (    String fieldName : requiredElements) {
+      try {
+        Object value=PropertyUtils.getProperty(personAddress,fieldName);
+        if (StringUtils.isBlank((String)value)) {
+          errors.reject(Context.getMessageSourceService().getMessage("AddressTemplate.error.requiredAddressFieldIsBlank",new Object[]{fieldName},Context.getLocale()));
+        }
+      }
+ catch (      Exception e) {
+        errors.reject(Context.getMessageSourceService().getMessage("AddressTemplate.error.fieldNotDeclaredInTemplate",new Object[]{fieldName},Context.getLocale()));
+      }
+    }
+  }
 }

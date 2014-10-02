@@ -9,7 +9,7 @@
   MessageSourceAccessor msa=getMessageSourceAccessor();
   String action=request.getParameter("action");
   if (action.equals(msa.getMessage("Person.save"))) {
-    updatePersonAddresses(request,person);
+    updatePersonAddresses(request,person,errors);
     updatePersonNames(request,person);
     updatePersonAttributes(request,errors,person);
   }

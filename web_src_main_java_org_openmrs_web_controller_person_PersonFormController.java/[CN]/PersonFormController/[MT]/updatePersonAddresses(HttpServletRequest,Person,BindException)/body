@@ -143,6 +143,10 @@
       if (endDates.length >= i + 1 && StringUtils.isNotBlank(endDates[i])) {
         pa.setEndDate(Context.getDateFormat().parse(endDates[i]));
       }
+      new PersonAddressValidator().validate(pa,errors);
+      if (errors.hasErrors()) {
+        return;
+      }
       person.addAddress(pa);
     }
     Iterator<PersonAddress> addresses=person.getAddresses().iterator();
@@ -150,6 +154,10 @@
     PersonAddress preferredAddress=null;
     while (addresses.hasNext()) {
       currentAddress=addresses.next();
+      new PersonAddressValidator().validate(currentAddress,errors);
+      if (errors.hasErrors()) {
+        return;
+      }
       if (currentAddress.isPreferred()) {
         if (preferredAddress != null) {
           preferredAddress.setPreferred(false);

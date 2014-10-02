@@ -10,6 +10,7 @@
   patientModel.setIdentifiers(identifiers);
   patientModel.getPatient().setBirthdate(new Date());
   patientModel.getPatient().setGender("M");
+  patientModel.setPersonAddress(new PersonAddress());
   WebRequest mockWebRequest=new ServletWebRequest(new MockHttpServletRequest());
   BindException errors=new BindException(patientModel,"patientModel");
   ShortPatientFormController controller=(ShortPatientFormController)applicationContext.getBean("shortPatientFormController");
