@@ -1,0 +1,38 @@
+{
+  if (StringUtils.isBlank(drugName) && concept == null) {
+    return null;
+  }
+  if (locale == null) {
+    locale=Context.getLocale();
+  }
+  StringBuilder query=new StringBuilder();
+  if (!StringUtils.isBlank(drugName)) {
+    List<String> tokenizedName=Arrays.asList(drugName.trim().split("\\+"));
+    String escapedName=LuceneQuery.escapeQuery(drugName);
+    query.append("(");
+    query.append(newNameQuery(tokenizedName,escapedName,searchKeywords));
+    query.append(")^0.3 OR drugReferenceMaps.conceptReferenceTerm.code:(\"").append(escapedName).append("\")^0.6");
+  }
+  if (concept != null) {
+    query.append(" OR concept.conceptId:(").append(concept.getConceptId()).append(")^0.1");
+  }
+ else   if (searchDrugConceptNames) {
+    LuceneQuery<ConceptName> conceptNameQuery=newConceptNameLuceneQuery(drugName,searchKeywords,Arrays.asList(locale),exactLocale,includeRetired,null,null,null,null,null);
+    List<Object> conceptIds=conceptNameQuery.listProjection("concept.conceptId");
+    if (!conceptIds.isEmpty()) {
+      CollectionUtils.transform(conceptIds,new Transformer(){
+        @Override public Object transform(        Object input){
+          return ((Object[])input)[0].toString();
+        }
+      }
+);
+      int maxSize=(conceptIds.size() < 512) ? conceptIds.size() : 512;
+      query.append(" OR concept.conceptId:(").append(StringUtils.join(conceptIds.subList(0,maxSize)," OR ")).append(")^0.1");
+    }
+  }
+  LuceneQuery<Drug> drugsQuery=LuceneQuery.newQuery(Drug.class,sessionFactory.getCurrentSession(),query.toString());
+  if (!includeRetired) {
+    drugsQuery.include("retired",false);
+  }
+  return drugsQuery;
+}

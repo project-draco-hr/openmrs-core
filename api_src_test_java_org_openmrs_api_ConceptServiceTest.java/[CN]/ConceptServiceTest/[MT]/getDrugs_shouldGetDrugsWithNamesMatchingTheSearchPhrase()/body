@@ -1,8 +1,4 @@
 {
   List<Drug> drugs=conceptService.getDrugs("tri",null,false,false);
-  assertEquals(1,drugs.size());
-  assertEquals(2,drugs.get(0).getDrugId().intValue());
-  drugs=conceptService.getDrugs("ri",null,false,false);
-  assertEquals(2,drugs.size());
-  assertThat(drugs,hasItems(conceptService.getDrug(2),conceptService.getDrug(3)));
+  assertThat(drugs,contains(conceptService.getDrug(2)));
 }

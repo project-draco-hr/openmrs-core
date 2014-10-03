@@ -7,7 +7,11 @@
     searchCriteria.add(Restrictions.eq("drug.concept",concept));
   }
   if (drugName != null) {
-    searchCriteria.add(Restrictions.eq("drug.name",drugName).ignoreCase());
+    SimpleExpression eq=Restrictions.eq("drug.name",drugName);
+    if (Context.getAdministrationService().isDatabaseStringComparisonCaseSensitive()) {
+      eq=eq.ignoreCase();
+    }
+    searchCriteria.add(eq);
   }
   return (List<Drug>)searchCriteria.list();
 }

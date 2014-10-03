@@ -1,5 +1,5 @@
 {
-  return new LuceneQuery<T>(session,type){
+  return new LuceneQuery<T>(type,session){
     @Override protected Query prepareQuery() throws ParseException {
       if (query.isEmpty()) {
         return new MatchAllDocsQuery();

@@ -2,8 +2,7 @@
   executeDataSet("org/openmrs/api/include/ConceptServiceTest-drugSearch.xml");
   final String searchPhrase="another";
   List<Drug> drugs=conceptService.getDrugs(searchPhrase,Locale.CANADA_FRENCH,true,false);
-  assertEquals(0,drugs.size());
+  assertThat(drugs,is(empty()));
   drugs=conceptService.getDrugs(searchPhrase,Locale.CANADA_FRENCH,false,false);
-  assertEquals(1,drugs.size());
-  assertEquals(3,drugs.get(0).getDrugId().intValue());
+  assertThat(drugs,contains(hasId(3)));
 }
