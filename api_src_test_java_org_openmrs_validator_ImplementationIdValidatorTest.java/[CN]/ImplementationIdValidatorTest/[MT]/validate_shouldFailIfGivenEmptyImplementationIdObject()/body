@@ -1,0 +1,8 @@
+{
+  ImplementationId implementationId=new ImplementationId();
+  Errors errors=new BindException(implementationId,"implementationId");
+  new ImplementationIdValidator().validate(implementationId,errors);
+  Assert.assertTrue(errors.hasFieldErrors("passphrase"));
+  Assert.assertTrue(errors.hasFieldErrors("implementationId"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

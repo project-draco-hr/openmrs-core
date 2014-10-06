@@ -1,0 +1,11 @@
+{
+  ImplementationId invalidId2=new ImplementationId();
+  invalidId2.setImplementationId("pipe|pipe");
+  invalidId2.setName("an invalid impl id for a unit test");
+  invalidId2.setPassphrase("some valid passphrase");
+  invalidId2.setDescription("Some valid description");
+  Errors errors=new BindException(invalidId2,"implementationId");
+  new ImplementationIdValidator().validate(invalidId2,errors);
+  Assert.assertTrue(errors.hasFieldErrors("implementationId"));
+  Assert.assertEquals("ImplementationId.implementationId.invalidcharacter",errors.getFieldError("implementationId").getCode());
+}
