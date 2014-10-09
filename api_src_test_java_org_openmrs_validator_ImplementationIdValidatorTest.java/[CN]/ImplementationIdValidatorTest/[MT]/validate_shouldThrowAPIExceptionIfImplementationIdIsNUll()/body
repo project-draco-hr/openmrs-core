@@ -1,0 +1,9 @@
+{
+  try {
+    new ImplementationIdValidator().validate(null,null);
+    Assert.fail();
+  }
+ catch (  APIException e) {
+    Assert.assertEquals(e.getMessage(),Context.getMessageSourceService().getMessage("ImplementationId.null"));
+  }
+}

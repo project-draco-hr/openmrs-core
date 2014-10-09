@@ -7,5 +7,5 @@
   Errors errors=new BindException(invalidId2,"implementationId");
   new ImplementationIdValidator().validate(invalidId2,errors);
   Assert.assertTrue(errors.hasFieldErrors("implementationId"));
-  Assert.assertEquals("ImplementationId.implementationId.invalidcharacter",errors.getFieldError("implementationId").getCode());
+  Assert.assertEquals("ImplementationId.implementationId.invalidCharacter",errors.getFieldError("implementationId").getCode());
 }
