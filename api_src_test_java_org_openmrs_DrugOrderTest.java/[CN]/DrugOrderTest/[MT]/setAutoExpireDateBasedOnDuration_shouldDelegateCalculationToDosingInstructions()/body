@@ -1,0 +1,10 @@
+{
+  DrugOrder drugOrder=spy(new DrugOrder());
+  drugOrder.setAutoExpireDate(null);
+  DosingInstructions dosingInstructions=mock(DosingInstructions.class);
+  when(drugOrder.getDosingInstructionsInstance()).thenReturn(dosingInstructions);
+  Date expectedAutoExpireDate=new Date();
+  when(dosingInstructions.getAutoExpireDate(drugOrder)).thenReturn(expectedAutoExpireDate);
+  drugOrder.setAutoExpireDateBasedOnDuration();
+  assertEquals(expectedAutoExpireDate,drugOrder.getAutoExpireDate());
+}

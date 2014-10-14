@@ -1,0 +1,7 @@
+{
+  DrugOrder drugOrder=new DrugOrder();
+  Date expectedAutoExpireDate=new Date();
+  drugOrder.setAutoExpireDate(expectedAutoExpireDate);
+  drugOrder.setAutoExpireDateBasedOnDuration();
+  assertEquals(expectedAutoExpireDate,drugOrder.getAutoExpireDate());
+}
