@@ -1,0 +1,13 @@
+{
+  String matchMode=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PROVIDER_SEARCH_MATCH_MODE);
+  if (MatchMode.START.toString().equalsIgnoreCase(matchMode)) {
+    return MatchMode.START;
+  }
+  if (MatchMode.ANYWHERE.toString().equalsIgnoreCase(matchMode)) {
+    return MatchMode.ANYWHERE;
+  }
+  if (MatchMode.END.toString().equalsIgnoreCase(matchMode)) {
+    return MatchMode.END;
+  }
+  return MatchMode.EXACT;
+}

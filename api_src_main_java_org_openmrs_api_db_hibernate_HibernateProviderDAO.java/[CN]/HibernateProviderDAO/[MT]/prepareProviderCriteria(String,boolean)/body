@@ -9,7 +9,7 @@
   criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
   criteria.createAlias("p.names","personName",Criteria.LEFT_JOIN);
   Disjunction or=Restrictions.disjunction();
-  or.add(Restrictions.ilike("identifier",name,MatchMode.ANYWHERE));
+  or.add(Restrictions.ilike("identifier",name,getMatchMode()));
   or.add(Restrictions.ilike("name",name,MatchMode.ANYWHERE));
   Conjunction and=Restrictions.conjunction();
   or.add(and);
