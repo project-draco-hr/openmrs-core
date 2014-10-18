@@ -8,9 +8,6 @@
   super.validate(obj,errors);
   Patient patient=(Patient)obj;
   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"gender","Person.gender.required");
-  if (PatientIdentifierValidator.hasMoreThanOneIdentifierForSameIdentifierType(patient.getActiveIdentifiers())) {
-    errors.reject("error.duplicateIdentifierTypes");
-  }
   Boolean preferredIdentifierChosen=false;
   Collection<PatientIdentifier> identifiers=patient.isVoided() ? patient.getIdentifiers() : patient.getActiveIdentifiers();
   for (  PatientIdentifier pi : identifiers) {
