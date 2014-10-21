@@ -1,6 +1,6 @@
 {
   Duration duration=new Duration(3,Duration.SNOMED_CT_RECURRING_INTERVAL_CODE);
-  Date startDate=createDateTime("2014-07-01 10-00-00");
+  Date startDate=createDateTime("2014-07-01 10:00:00");
   OrderFrequency onceAWeek=createFrequency(1 / 7.0);
-  assertEquals(createDateTime("2014-07-22 10-00-00"),duration.addToDate(startDate,onceAWeek));
+  assertEquals(createDateTime("2014-07-22 10:00:00"),duration.addToDate(startDate,onceAWeek));
 }

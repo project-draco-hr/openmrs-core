@@ -17,10 +17,10 @@
   drugOrder.setRoute(conceptService.getConcept(22));
   drugOrder.setNumRefills(0);
   drugOrder.setOrderType(null);
-  drugOrder.setDateActivated(createDate("2014-08-03"));
+  drugOrder.setDateActivated(TestUtil.createDateTime("2014-08-03"));
   drugOrder.setDuration(20);
   drugOrder.setDurationUnits(conceptService.getConcept(1001));
   Order savedOrder=orderService.saveOrder(drugOrder,null);
   Order loadedOrder=orderService.getOrder(savedOrder.getId());
-  Assert.assertEquals(createDate("2014-08-23"),loadedOrder.getAutoExpireDate());
+  Assert.assertEquals(TestUtil.createDateTime("2014-08-22 23:59:59.999"),loadedOrder.getAutoExpireDate());
 }

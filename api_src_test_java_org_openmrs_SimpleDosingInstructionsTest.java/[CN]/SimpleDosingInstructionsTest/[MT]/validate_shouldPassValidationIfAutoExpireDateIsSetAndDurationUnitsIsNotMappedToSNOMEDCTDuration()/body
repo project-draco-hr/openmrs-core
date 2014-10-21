@@ -3,7 +3,7 @@
   drugOrder.setDuration(30);
   Concept unMappedDurationUnits=new Concept();
   drugOrder.setDurationUnits(unMappedDurationUnits);
-  drugOrder.setAutoExpireDate(createDateTime("2014-07-01 10-00-00"));
+  drugOrder.setAutoExpireDate(createDateTime("2014-07-01 10:00:00"));
   Errors errors=new BindException(drugOrder,"drugOrder");
   new SimpleDosingInstructions().validate(drugOrder,errors);
   Assert.assertFalse(errors.hasErrors());

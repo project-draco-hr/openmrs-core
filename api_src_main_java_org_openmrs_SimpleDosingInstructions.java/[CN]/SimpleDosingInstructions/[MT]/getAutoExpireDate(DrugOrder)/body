@@ -10,5 +10,5 @@
     return null;
   }
   Duration duration=new Duration(drugOrder.getDuration(),durationCode);
-  return duration.addToDate(drugOrder.getEffectiveStartDate(),drugOrder.getFrequency());
+  return aMomentBefore(duration.addToDate(drugOrder.getEffectiveStartDate(),drugOrder.getFrequency()));
 }
