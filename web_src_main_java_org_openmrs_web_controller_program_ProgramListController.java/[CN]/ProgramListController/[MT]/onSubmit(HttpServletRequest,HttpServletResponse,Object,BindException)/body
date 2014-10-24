@@ -26,7 +26,7 @@
         }
  catch (        APIException e) {
           log.warn("Error deleting program",e);
-          if (!error.equals("")) {
+          if (!error.toString().equals("")) {
             error.append("<br/>");
           }
           error.append(textProgram).append(" ").append(p).append(" ").append(notDeleted);
@@ -40,7 +40,7 @@
     if (!success.toString().equals("")) {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
     }
-    if (!error.equals("")) {
+    if (!error.toString().equals("")) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
     }
   }
