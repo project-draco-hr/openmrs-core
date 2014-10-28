@@ -1,5 +1,6 @@
 {
   Vector<Object> objectList=new Vector<Object>();
+  phrase=HtmlUtils.htmlEscape(phrase);
   Locale defaultLocale=Context.getLocale();
   List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   if (log.isDebugEnabled()) {
