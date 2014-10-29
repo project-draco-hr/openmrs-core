@@ -3,17 +3,23 @@
   log.debug("value complex: " + obs.getValueComplex());
   log.debug("file path: " + file.getAbsolutePath());
   ComplexData complexData=null;
-  String[] names=obs.getValueComplex().split("\\|");
-  String originalFilename=names[0];
-  if ("download".equals(view)) {
+  if (ComplexObsHandler.RAW_VIEW.equals(view)) {
+    String[] names=obs.getValueComplex().split("\\|");
+    String originalFilename=names[0];
     originalFilename=originalFilename.replaceAll(",","").replaceAll(" ","").replaceAll("file$","");
+    try {
+      complexData=new ComplexData(originalFilename,OpenmrsUtil.getFileAsBytes(file));
+    }
+ catch (    IOException e) {
+      log.error("Trying to read file: " + file.getAbsolutePath(),e);
+    }
+    obs.setComplexData(complexData);
   }
-  try {
-    complexData=new ComplexData(originalFilename,OpenmrsUtil.getFileAsBytes(file));
+ else {
+    return null;
   }
- catch (  IOException e) {
-    log.error("Trying to read file: " + file.getAbsolutePath(),e);
-  }
+  Assert.notNull(complexData,"Complex data must not be null");
+  complexData.setMIMEType("application/octet-stream");
   obs.setComplexData(complexData);
   return obs;
 }

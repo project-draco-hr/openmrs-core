@@ -10,12 +10,19 @@
       ObsService os=Context.getObsService();
       Integer obsId=obs.getObsId();
       if (obsId != null && obs.getConcept().isComplex()) {
-        Obs complexObs=os.getComplexObs(Integer.valueOf(obsId),WebConstants.HTML_VIEW);
-        ComplexData complexData=complexObs.getComplexData();
-        map.put("htmlView",complexData.getData());
-        Obs complexObs2=os.getComplexObs(Integer.valueOf(obsId),WebConstants.HYPERLINK_VIEW);
-        ComplexData complexData2=complexObs2.getComplexData();
-        map.put("hyperlinkView",complexData2.getData());
+        ComplexObsHandler handler=os.getHandler(obs);
+        if (handler.supportsView(ComplexObsHandler.HTML_VIEW)) {
+          Obs complexObs_html=handler.getObs(obs,ComplexObsHandler.HTML_VIEW);
+          Assert.notNull(complexObs_html,"Handler declares HTML view support but fails to deliver");
+          ComplexData complexData=complexObs_html.getComplexData();
+          map.put("htmlView",complexData.getData());
+        }
+        if (handler.supportsView(ComplexObsHandler.URI_VIEW)) {
+          Obs complexObs_uri=handler.getObs(obs,ComplexObsHandler.URI_VIEW);
+          Assert.notNull(complexObs_uri,"Handler declares URL view support but fails to deliver");
+          ComplexData complexData=complexObs_uri.getComplexData();
+          map.put("hyperlinkView",complexData.getData());
+        }
       }
     }
     defaultVerbose=Context.getAuthenticatedUser().getUserProperty(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE);

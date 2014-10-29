@@ -1,21 +1,28 @@
 {
-  try {
-    File file=getComplexDataFile(obs);
-    String[] names=obs.getValueComplex().split("\\|");
-    String originalFilename=names[0];
-    if ("download".equals(view)) {
+  ComplexData complexData=null;
+  if (ComplexObsHandler.RAW_VIEW.equals(view)) {
+    try {
+      File file=getComplexDataFile(obs);
+      String[] names=obs.getValueComplex().split("\\|");
+      String originalFilename=names[0];
       originalFilename=originalFilename.replace(",","").replace(" ","");
-    }
-    if (file.exists()) {
-      FileInputStream fileInputStream=new FileInputStream(file);
-      obs.setComplexData(new ComplexData(originalFilename,fileInputStream));
-    }
+      if (file.exists()) {
+        FileInputStream fileInputStream=new FileInputStream(file);
+        complexData=new ComplexData(originalFilename,fileInputStream);
+      }
  else {
-      log.error("Unable to find file associated with complex obs " + obs.getId());
+        log.error("Unable to find file associated with complex obs " + obs.getId());
+      }
+    }
+ catch (    Exception e) {
+      throw new APIException("An error occurred while trying to get binary complex obs.",e);
     }
   }
- catch (  Exception e) {
-    throw new APIException("An error occurred while trying to get binary complex obs.",e);
+ else {
+    return null;
   }
+  Assert.notNull(complexData,"Complex data must not be null");
+  complexData.setMIMEType("application/octet-stream");
+  obs.setComplexData(complexData);
   return obs;
 }
