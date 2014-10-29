@@ -1,6 +1,6 @@
 {
   Map<String,String> corePrivileges=new HashMap<String,String>();
-  List<Class<?>> classes=OpenmrsClassScanner.getInstance().getClassesWithAnnotation(HasAddOnStartupPrivileges.class);
+  Set<Class<?>> classes=OpenmrsClassScanner.getInstance().getClassesWithAnnotation(HasAddOnStartupPrivileges.class);
   for (  Class cls : classes) {
     Field flds[]=cls.getDeclaredFields();
     for (    Field fld : flds) {

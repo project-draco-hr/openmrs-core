@@ -5,9 +5,9 @@
     }
   }
  else {
-    annotationToClassMap=new HashMap<Class<?>,List<Class<?>>>();
+    annotationToClassMap=new HashMap<Class<?>,Set<Class<?>>>();
   }
-  List<Class<?>> types=new ArrayList<Class<?>>();
+  Set<Class<?>> types=new HashSet<Class<?>>();
   String pattern="classpath*:org/openmrs/**/*.class";
   try {
     Resource[] resources=resourceResolver.getResources(pattern);
