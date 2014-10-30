@@ -1,5 +1,5 @@
 {
-  for (  GlobalPropertyListener listener : eventListeners.getGlobalPropertyListeners()) {
+  for (  GlobalPropertyListener listener : getGlobalPropertyListeners()) {
     if (listener.supportsPropertyName(propertyName)) {
       listener.globalPropertyDeleted(propertyName);
     }
