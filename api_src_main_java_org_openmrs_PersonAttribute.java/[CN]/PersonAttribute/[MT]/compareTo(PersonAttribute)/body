@@ -1,26 +1,16 @@
 {
-  int retValue=0;
-  retValue=isVoided().compareTo(other.isVoided());
-  if (retValue == 0) {
-    retValue=OpenmrsUtil.compareWithNullAsLatest(getDateCreated(),other.getDateCreated());
+  int retValue;
+  if ((retValue=OpenmrsUtil.compareWithNullAsGreatest(getAttributeType(),other.getAttributeType())) != 0) {
+    return retValue;
   }
-  if (getAttributeType() == null && other.getAttributeType() == null) {
-    return 0;
+  if ((retValue=isVoided().compareTo(other.isVoided())) != 0) {
+    return retValue;
   }
-  if (getAttributeType() == null && other.getAttributeType() != null) {
-    retValue=1;
+  if ((retValue=OpenmrsUtil.compareWithNullAsLatest(getDateCreated(),other.getDateCreated())) != 0) {
+    return retValue;
   }
-  if (other.getAttributeType() == null && getAttributeType() != null) {
-    retValue=-1;
+  if ((retValue=OpenmrsUtil.compareWithNullAsGreatest(getValue(),other.getValue())) != 0) {
+    return retValue;
   }
-  if (retValue == 0) {
-    retValue=OpenmrsUtil.compareWithNullAsGreatest(getAttributeType().getPersonAttributeTypeId(),other.getAttributeType().getPersonAttributeTypeId());
-  }
-  if (retValue == 0) {
-    retValue=OpenmrsUtil.compareWithNullAsGreatest(getValue(),other.getValue());
-  }
-  if (retValue == 0) {
-    retValue=OpenmrsUtil.compareWithNullAsGreatest(getPersonAttributeId(),other.getPersonAttributeId());
-  }
-  return retValue;
+  return OpenmrsUtil.compareWithNullAsGreatest(getPersonAttributeId(),other.getPersonAttributeId());
 }
