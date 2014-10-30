@@ -1,4 +1,5 @@
 {
+  globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PERSON_ATTRIBUTE_SEARCH_MATCH_MODE,OpenmrsConstants.GLOBAL_PROPERTY_PERSON_ATTRIBUTE_SEARCH_MATCH_ANYWHERE);
   Assert.assertTrue(personAttributeHelper.personAttributeExists("Senior ring bearer"));
   List<Patient> patients=dao.getPatients("Senior ring bearer",0,11);
   Assert.assertEquals(2,patients.size());
