@@ -1,4 +1,5 @@
 {
+  globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PERSON_ATTRIBUTE_SEARCH_MATCH_MODE,OpenmrsConstants.GLOBAL_PROPERTY_PERSON_ATTRIBUTE_SEARCH_MATCH_ANYWHERE);
   Assert.assertTrue(personAttributeHelper.personAttributeExists("Senior ring bearer"));
   Assert.assertTrue(personAttributeHelper.personAttributeExists("Story teller"));
   List<Person> people=hibernatePersonDAO.getPeople("Story Bearer",false);

@@ -1,0 +1,4 @@
+{
+  if (voided == null || voided == false)   return Restrictions.conjunction().add(Restrictions.eq("attributeType.searchable",true)).add(Restrictions.eq("attribute.voided",false)).add(Restrictions.ilike("attribute.value",value,matchMode));
+ else   return Restrictions.conjunction().add(Restrictions.eq("attributeType.searchable",true)).add(Restrictions.ilike("attribute.value",value,matchMode));
+}

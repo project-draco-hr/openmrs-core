@@ -3,4 +3,5 @@
   hibernatePersonDAO=(HibernatePersonDAO)applicationContext.getBean("personDAO");
   sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
   personAttributeHelper=new PersonAttributeHelper(sessionFactory);
+  globalPropertiesTestHelper=new GlobalPropertiesTestHelper(Context.getAdministrationService());
 }
