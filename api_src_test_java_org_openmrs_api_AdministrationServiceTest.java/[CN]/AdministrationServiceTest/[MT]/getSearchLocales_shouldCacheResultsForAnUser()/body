@@ -1,0 +1,11 @@
+{
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"en_GB, en_US, pl"));
+  User user=Context.getAuthenticatedUser();
+  user.setUserProperty(OpenmrsConstants.USER_PROPERTY_PROFICIENT_LOCALES,"en_GB, en_US");
+  Context.getUserService().saveUser(user,null);
+  Context.getAdministrationService().getSearchLocales();
+  List<Locale> cachedSearchLocales=getCachedSearchLocalesForCurrentUser();
+  Assert.assertTrue("en_GB",cachedSearchLocales.contains(new Locale("en","GB")));
+  Assert.assertTrue("en_US",cachedSearchLocales.contains(new Locale("en","US")));
+  Assert.assertFalse("pl",cachedSearchLocales.contains(new Locale("pl")));
+}

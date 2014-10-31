@@ -1,0 +1,5 @@
+{
+  Object[] params={Context.getLocale(),Context.getAuthenticatedUser()};
+  Object key=(new DefaultKeyGenerator()).generate(null,null,params);
+  return (List<Locale>)cacheManager.getCache("userSearchLocales").get(key).get();
+}
