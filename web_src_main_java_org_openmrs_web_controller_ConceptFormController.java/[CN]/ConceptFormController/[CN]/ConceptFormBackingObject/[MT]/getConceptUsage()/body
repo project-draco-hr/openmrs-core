@@ -11,21 +11,26 @@
   for (  Drug drug : Context.getConceptService().getDrugsByConcept(concept)) {
     drugs.add(new Link(drug.getName(),"/admin/concepts/conceptDrug.form?drugId=" + drug.getId()));
   }
-  togo.add(new ConceptUsageExtension("dictionary.drugs",drugs,PrivilegeConstants.VIEW_CONCEPTS));
+  togo.add(new ConceptUsageExtension("dictionary.drugs",drugs,PrivilegeConstants.GET_CONCEPTS));
   List<Link> programs=new ArrayList<Link>();
   for (  Program program : Context.getProgramWorkflowService().getProgramsByConcept(concept)) {
     programs.add(new Link(program.getName(),"/admin/programs/program.form?programId=" + program.getId()));
   }
-  togo.add(new ConceptUsageExtension("dictionary.programs",programs,PrivilegeConstants.VIEW_PROGRAMS));
+  togo.add(new ConceptUsageExtension("dictionary.programs",programs,PrivilegeConstants.GET_PROGRAMS));
   List<Link> programWorkflows=new ArrayList<Link>();
   for (  ProgramWorkflow programWorkflow : Context.getProgramWorkflowService().getProgramWorkflowsByConcept(concept)) {
     programWorkflows.add(new Link(programWorkflow.getProgram().getName(),"/admin/programs/workflow.form?programWorkflowId=" + programWorkflow.getId()));
   }
-  togo.add(new ConceptUsageExtension("dictionary.programworkflows",programWorkflows,PrivilegeConstants.VIEW_PROGRAMS));
+  togo.add(new ConceptUsageExtension("dictionary.programworkflows",programWorkflows,PrivilegeConstants.GET_PROGRAMS));
   List<Link> programWorkflowStates=new ArrayList<Link>();
   for (  ProgramWorkflowState programWorkflowState : Context.getProgramWorkflowService().getProgramWorkflowStatesByConcept(concept)) {
     programWorkflowStates.add(new Link(programWorkflowState.getProgramWorkflow().getProgram().getName(),""));
   }
-  togo.add(new ConceptUsageExtension("dictionary.programworkflowstates",programWorkflowStates,PrivilegeConstants.VIEW_PROGRAMS));
+  togo.add(new ConceptUsageExtension("dictionary.programworkflowstates",programWorkflowStates,PrivilegeConstants.GET_PROGRAMS));
+  List<Link> personAttributeTypes=new ArrayList<Link>();
+  for (  PersonAttributeType pat : Context.getPersonService().getPersonAttributeTypes(null,Concept.class.getName(),concept.getId(),null)) {
+    personAttributeTypes.add(new Link(pat.getName(),"/admin/person/personAttributeType.form?personAttributeTypeId=" + pat.getId()));
+  }
+  togo.add(new ConceptUsageExtension("dictionary.personattributetypes",personAttributeTypes,PrivilegeConstants.GET_PERSON_ATTRIBUTE_TYPES));
   return togo;
 }
