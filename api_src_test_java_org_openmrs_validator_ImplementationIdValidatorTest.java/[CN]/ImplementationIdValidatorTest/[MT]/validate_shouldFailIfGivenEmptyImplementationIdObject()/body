@@ -4,5 +4,5 @@
   new ImplementationIdValidator().validate(implementationId,errors);
   Assert.assertTrue(errors.hasFieldErrors("passphrase"));
   Assert.assertTrue(errors.hasFieldErrors("implementationId"));
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
 }
