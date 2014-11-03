@@ -2,5 +2,8 @@
   if (cascade && !program.getAllWorkflows().isEmpty()) {
     throw new APIException("Cascade purging of Programs is not implemented yet");
   }
+  for (  PatientProgram patientProgram : Context.getProgramWorkflowService().getPatientPrograms(null,program,null,null,null,null,true)) {
+    purgePatientProgram(patientProgram);
+  }
   dao.deleteProgram(program);
 }
