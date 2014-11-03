@@ -4,7 +4,7 @@
   implementationId.setPassphrase("PASSPHRASE");
   Errors errors=new BindException(implementationId,"implementationId");
   new ImplementationIdValidator().validate(implementationId,errors);
-  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertFalse(errors.hasFieldErrors("description"));
   Assert.assertFalse(errors.hasFieldErrors("implementationId"));
   Assert.assertFalse(errors.hasFieldErrors("passphrase"));
 }
