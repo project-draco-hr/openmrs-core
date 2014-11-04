@@ -4,7 +4,9 @@
   Statement stmt=null;
   PreparedStatement pStmt=null;
   ResultSet rs=null;
+  Boolean initialAutoCommit=null;
   try {
+    initialAutoCommit=connection.getAutoCommit();
     connection.setAutoCommit(false);
     stmt=connection.createStatement();
     rs=stmt.executeQuery("SELECT * FROM encounter_role INNER JOIN (SELECT name FROM encounter_role GROUP BY name HAVING count(name) > 1) dup ON encounter_role.name = dup.name");
@@ -27,9 +29,9 @@
     while (it2.hasNext()) {
       Map.Entry pairs=(Map.Entry)it2.next();
       HashSet values=(HashSet)pairs.getValue();
-      List<Integer> editableNames=new ArrayList<Integer>(values);
+      List<Integer> ids=new ArrayList<Integer>(values);
       int duplicateNameId=1;
-      for (int i=1; i < editableNames.size(); i++) {
+      for (int i=1; i < ids.size(); i++) {
         String newName=pairs.getKey() + "_" + duplicateNameId;
         List<List<Object>> duplicateResult=null;
         boolean duplicateName=false;
@@ -56,7 +58,7 @@
         Calendar cal=Calendar.getInstance();
         Date date=new Date(cal.getTimeInMillis());
         pStmt.setDate(3,date);
-        pStmt.setInt(4,editableNames.get(i));
+        pStmt.setInt(4,ids.get(i));
         duplicateNameId+=1;
         pStmt.executeUpdate();
       }
@@ -73,25 +75,18 @@
     }
     throw new CustomChangeException("Failed to update one or more duplicate EncounterRole names",e);
   }
-catch (  DatabaseException e) {
-    throw new CustomChangeException("Error while updating duplicate EncounterRole object names",e);
-  }
-catch (  SQLException e) {
-    throw new CustomChangeException("Error while updating duplicate EncounterRole object names",e);
-  }
-catch (  DAOException e) {
-    throw new CustomChangeException("Error accessing database connection",e);
-  }
 catch (  Exception e) {
-    throw new CustomChangeException("Error accessing database connection",e);
+    throw new CustomChangeException(e);
   }
  finally {
     try {
       connection.commit();
-      connection.setAutoCommit(true);
+      if (initialAutoCommit != null) {
+        connection.setAutoCommit(initialAutoCommit);
+      }
     }
  catch (    DatabaseException e) {
-      log.warn("Failed to reset auto commit back to true",e);
+      log.warn("Failed to set auto commit to ids initial state",e);
     }
     if (rs != null) {
       try {

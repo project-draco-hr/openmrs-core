@@ -1,0 +1,11 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  boolean foundRetired=false;
+  for (  EncounterType encType : encounterService.getAllEncounterTypes(true)) {
+    if (encType.getName().equals("Test Enc Type C") && encType.isRetired()) {
+      foundRetired=true;
+    }
+  }
+  assertTrue(foundRetired);
+  assertNull(encounterService.getEncounterType("Test Enc Type C"));
+}
