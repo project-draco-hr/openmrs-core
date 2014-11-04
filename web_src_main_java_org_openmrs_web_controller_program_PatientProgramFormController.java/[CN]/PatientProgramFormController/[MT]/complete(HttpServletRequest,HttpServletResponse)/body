@@ -11,8 +11,13 @@
   PatientProgram p=Context.getProgramWorkflowService().getPatientProgram(Integer.valueOf(patientProgramIdStr));
   p.setDateCompleted(dateCompleted);
   try {
-    ValidateUtil.validate(p);
-    Context.getProgramWorkflowService().savePatientProgram(p);
+    String message=validateWithErrorCodes(p);
+    if (message != null) {
+      request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,message);
+    }
+ else {
+      Context.getProgramWorkflowService().savePatientProgram(p);
+    }
   }
  catch (  APIException e) {
     request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());

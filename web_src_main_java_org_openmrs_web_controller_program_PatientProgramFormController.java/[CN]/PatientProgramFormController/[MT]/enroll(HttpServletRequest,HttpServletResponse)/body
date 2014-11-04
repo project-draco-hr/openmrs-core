@@ -54,8 +54,13 @@
       }
     }
     try {
-      ValidateUtil.validate(pp);
-      Context.getProgramWorkflowService().savePatientProgram(pp);
+      String message=validateWithErrorCodes(pp);
+      if (message != null) {
+        request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,message);
+      }
+ else {
+        Context.getProgramWorkflowService().savePatientProgram(pp);
+      }
     }
  catch (    APIException e) {
       request.getSession().setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
