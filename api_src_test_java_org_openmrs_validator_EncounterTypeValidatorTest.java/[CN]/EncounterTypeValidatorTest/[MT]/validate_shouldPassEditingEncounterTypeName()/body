@@ -1,7 +1,0 @@
-{
-  EncounterType et=Context.getEncounterService().getEncounterType("Scheduled");
-  Assert.assertNotNull(et);
-  Errors errors=new BindException(et,"encounterType");
-  new EncounterTypeValidator().validate(et,errors);
-  Assert.assertFalse(errors.hasErrors());
-}
