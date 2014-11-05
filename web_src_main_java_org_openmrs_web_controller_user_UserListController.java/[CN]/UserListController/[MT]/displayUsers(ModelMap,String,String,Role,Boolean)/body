@@ -2,21 +2,44 @@
   if (Context.isAuthenticated()) {
     List<User> users=getUsers(action,name,role,includeDisabled);
     Map<User,Set<Role>> userRolesMap=new HashMap<User,Set<Role>>(users.size());
+    Map<User,Set<Role>> userInheritanceLineMap=new HashMap<User,Set<Role>>(users.size());
+    Set<Role> inheritanceLineRoles=new LinkedHashSet<Role>();
+    List<Role> helpList=new ArrayList<Role>();
     for (    User user : users) {
-      Set<Role> roles=null;
+      Set<Role> roles=new LinkedHashSet<Role>();
       if (role != null && !user.getRoles().contains(role)) {
-        roles=new LinkedHashSet<Role>();
+        inheritanceLineRoles.add(role);
+        for (        Role r : user.getRoles()) {
+          if (r.getAllParentRoles().contains(role)) {
+            roles.add(r);
+            helpList.addAll(role.getChildRoles());
+            Role r2;
+            for (int i=0; i < helpList.size(); i++) {
+              r2=helpList.get(i);
+              if (r2.getAllChildRoles().contains(r)) {
+                inheritanceLineRoles.add(r2);
+                helpList.clear();
+                helpList.addAll(r2.getAllChildRoles());
+                i=-1;
+              }
+ else               if (r2.equals(r)) {
+                inheritanceLineRoles.add(r2);
+                break;
+              }
+            }
+          }
+        }
+        userInheritanceLineMap.put(user,inheritanceLineRoles);
+      }
+ else       if (role != null && user.getRoles().contains(role)) {
         roles.add(role);
-        roles.addAll(user.getAllRoles());
       }
- else {
-        roles=new HashSet<Role>(user.getAllRoles());
-        roles.remove(role);
-      }
+      roles.addAll(user.getRoles());
       userRolesMap.put(user,roles);
     }
     model.put("users",users);
     model.put("role",role);
+    model.put("userInheritanceLineMap",userInheritanceLineMap);
     model.put("userRolesMap",userRolesMap);
   }
 }
