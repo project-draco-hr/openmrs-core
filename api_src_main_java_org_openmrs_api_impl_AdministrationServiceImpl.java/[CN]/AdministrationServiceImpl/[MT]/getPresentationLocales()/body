@@ -3,15 +3,32 @@
     presentationLocales=new HashSet<Locale>();
     Collection<Locale> messageLocales=Context.getMessageSourceService().getLocales();
     List<Locale> allowedLocales=getAllowedLocales();
-    for (    Locale possibleLocale : messageLocales) {
-      if (allowedLocales.contains(possibleLocale)) {
-        presentationLocales.add(possibleLocale);
+    for (    Locale locale : allowedLocales) {
+      if (StringUtils.isEmpty(locale.getCountry())) {
+        List<Locale> localsWithSameLanguage=new ArrayList<Locale>();
+        for (        Locale possibleLocale : messageLocales) {
+          if (locale.getLanguage().equals(possibleLocale.getLanguage()) && !StringUtils.isEmpty(possibleLocale.getCountry())) {
+            localsWithSameLanguage.add(possibleLocale);
+          }
+        }
+        if (!localsWithSameLanguage.isEmpty()) {
+          presentationLocales.addAll(localsWithSameLanguage);
+        }
+ else {
+          if (messageLocales.contains(locale)) {
+            presentationLocales.add(locale);
+          }
+        }
       }
  else {
-        for (        Locale allowedLocale : allowedLocales) {
-          if (("".equals(allowedLocale.getCountry()) || "".equals(possibleLocale.getCountry())) && (allowedLocale.getLanguage().equals(possibleLocale.getLanguage()))) {
-            presentationLocales.add(possibleLocale);
-            break;
+        if (messageLocales.contains(locale)) {
+          presentationLocales.add(locale);
+        }
+ else {
+          for (          Locale possibleLocale : messageLocales) {
+            if (locale.getLanguage().equals(possibleLocale.getLanguage()) && StringUtils.isEmpty(possibleLocale.getCountry())) {
+              presentationLocales.add(possibleLocale);
+            }
           }
         }
       }
