@@ -4,14 +4,6 @@
     if (!ModuleFactory.isModuleStarted(mod)) {
       return dependentModulesStopped;
     }
-    try {
-      if (mod.getModuleActivator() != null) {
-        mod.getModuleActivator().willStop();
-      }
-    }
- catch (    Exception e) {
-      log.warn("Unable to call module's Activator.willStop() method",e);
-    }
     String moduleId=mod.getModuleId();
     if (!isFailedStartup && mod.isMandatory()) {
       throw new MandatoryModuleException(moduleId);
@@ -27,6 +19,14 @@
         dependentModulesStopped.add(dependentModule);
         dependentModulesStopped.addAll(stopModule(dependentModule,skipOverStartedProperty,isFailedStartup));
       }
+    }
+    try {
+      if (mod.getModuleActivator() != null) {
+        mod.getModuleActivator().willStop();
+      }
+    }
+ catch (    Exception e) {
+      log.warn("Unable to call module's Activator.willStop() method",e);
     }
     getStartedModulesMap().remove(moduleId);
     if (actualStartupOrder != null) {
