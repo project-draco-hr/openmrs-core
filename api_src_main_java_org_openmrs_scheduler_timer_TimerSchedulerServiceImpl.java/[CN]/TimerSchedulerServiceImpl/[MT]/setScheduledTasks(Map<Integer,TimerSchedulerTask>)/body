@@ -1,3 +1,8 @@
 {
-  TimerSchedulerServiceImpl.scheduledTasks=scheduledTasks;
+  if (scheduledTasks != null) {
+    TimerSchedulerServiceImpl.scheduledTasks=scheduledTasks;
+  }
+ else {
+    TimerSchedulerServiceImpl.scheduledTasks=new WeakHashMap<Integer,TimerSchedulerTask>();
+  }
 }
