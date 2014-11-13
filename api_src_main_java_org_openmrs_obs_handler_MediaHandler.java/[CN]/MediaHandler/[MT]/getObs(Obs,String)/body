@@ -1,0 +1,22 @@
+{
+  File file=getComplexDataFile(obs);
+  if (ComplexObsHandler.RAW_VIEW.equals(view)) {
+    try {
+      String[] names=obs.getValueComplex().split("\\|");
+      String originalFilename=names[0];
+      originalFilename=originalFilename.replace(",","").replace(" ","");
+      FileInputStream mediaStream=new FileInputStream(file);
+      ComplexData complexData=new ComplexData(originalFilename,mediaStream);
+      complexData.setMIMEType(OpenmrsUtil.getFileMimeType(file));
+      complexData.setLength(file.length());
+      obs.setComplexData(complexData);
+    }
+ catch (    FileNotFoundException e) {
+      log.error("Trying to create media file stream from " + file.getAbsolutePath(),e);
+    }
+  }
+ else {
+    return null;
+  }
+  return obs;
+}
