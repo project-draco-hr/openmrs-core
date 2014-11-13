@@ -1,0 +1,7 @@
+{
+  Order order=new Order();
+  order.setDateActivated(DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT));
+  OrderUtilTest.setDateStopped(order,DateUtils.parseDate("2014-11-01 11:11:12",DATE_FORMAT));
+  assertNull(order.getAutoExpireDate());
+  assertFalse(order.isDiscontinued(DateUtils.parseDate("2014-11-01 11:11:11",DATE_FORMAT)));
+}

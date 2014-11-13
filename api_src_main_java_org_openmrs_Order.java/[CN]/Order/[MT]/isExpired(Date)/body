@@ -8,8 +8,11 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (dateActivated == null || isFuture(checkDate) || dateStopped == null) {
+  if (dateActivated == null || isFuture(checkDate)) {
     return false;
   }
-  return checkDate.after(dateStopped);
+  if (isDiscontinued(checkDate) || autoExpireDate == null) {
+    return false;
+  }
+  return checkDate.after(autoExpireDate);
 }

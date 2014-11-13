@@ -3,15 +3,5 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (dateActivated != null && checkDate.before(dateActivated)) {
-    return false;
-  }
-  if (isDiscontinuedRightNow()) {
-    if (dateStopped == null)     return checkDate.equals(dateActivated);
- else     return checkDate.before(dateStopped);
-  }
- else {
-    if (autoExpireDate == null)     return true;
- else     return checkDate.before(autoExpireDate);
-  }
+  return !isFuture(checkDate) && !isDiscontinued(checkDate) && !isExpired(checkDate);
 }

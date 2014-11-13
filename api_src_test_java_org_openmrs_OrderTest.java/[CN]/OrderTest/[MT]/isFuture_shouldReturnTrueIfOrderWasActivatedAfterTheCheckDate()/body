@@ -1,0 +1,5 @@
+{
+  Order order=new Order();
+  order.setDateActivated(DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT));
+  assertTrue(order.isFuture(DateUtils.parseDate("2014-11-01 11:11:09",DATE_FORMAT)));
+}
