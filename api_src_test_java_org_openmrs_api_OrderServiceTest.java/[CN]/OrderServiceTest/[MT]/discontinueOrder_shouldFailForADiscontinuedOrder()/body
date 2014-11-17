@@ -1,6 +1,6 @@
 {
   Order discontinuationOrder=orderService.getOrder(2);
-  assertFalse(discontinuationOrder.isCurrent());
+  assertFalse(discontinuationOrder.isActive());
   assertNotNull(discontinuationOrder.getDateStopped());
   Encounter encounter=encounterService.getEncounter(3);
   expectedException.expect(APIException.class);

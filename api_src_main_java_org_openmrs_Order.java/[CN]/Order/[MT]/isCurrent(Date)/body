@@ -1,7 +1,3 @@
 {
-  if (isVoided())   return false;
-  if (checkDate == null) {
-    checkDate=new Date();
-  }
-  return !isFuture(checkDate) && !isDiscontinued(checkDate) && !isExpired(checkDate);
+  return isActive(checkDate);
 }

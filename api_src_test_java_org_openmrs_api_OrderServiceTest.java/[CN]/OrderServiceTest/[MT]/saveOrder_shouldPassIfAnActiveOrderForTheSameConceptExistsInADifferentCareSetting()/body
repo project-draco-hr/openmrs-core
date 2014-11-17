@@ -4,7 +4,7 @@
   TestOrder duplicateOrder=(TestOrder)orderService.getOrder(7);
   final CareSetting inpatient=orderService.getCareSetting(2);
   assertNotEquals(inpatient,duplicateOrder.getCareSetting());
-  assertTrue(duplicateOrder.isCurrent());
+  assertTrue(duplicateOrder.isActive());
   assertEquals(cd4Count,duplicateOrder.getConcept());
   int initialActiveOrderCount=orderService.getActiveOrders(patient,null,null,null).size();
   TestOrder order=new TestOrder();

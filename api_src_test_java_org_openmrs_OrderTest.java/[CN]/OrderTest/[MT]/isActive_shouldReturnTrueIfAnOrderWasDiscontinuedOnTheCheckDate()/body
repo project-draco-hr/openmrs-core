@@ -3,5 +3,5 @@
   order.setDateActivated(DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT));
   Date dateStopped=DateUtils.parseDate("2014-11-01 11:11:11",DATE_FORMAT);
   OrderUtilTest.setDateStopped(order,dateStopped);
-  assertTrue(order.isCurrent(dateStopped));
+  assertTrue(order.isActive(dateStopped));
 }

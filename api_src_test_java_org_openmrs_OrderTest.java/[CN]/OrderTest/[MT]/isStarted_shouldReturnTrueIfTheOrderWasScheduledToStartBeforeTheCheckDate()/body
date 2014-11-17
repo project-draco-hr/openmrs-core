@@ -1,0 +1,7 @@
+{
+  Order order=new Order();
+  order.setDateActivated(DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT));
+  order.setUrgency(Order.Urgency.ON_SCHEDULED_DATE);
+  order.setScheduledDate(DateUtils.parseDate("2014-11-01 11:11:11",DATE_FORMAT));
+  assertTrue(order.isStarted(DateUtils.parseDate("2014-11-01 11:11:12",DATE_FORMAT)));
+}

@@ -2,7 +2,7 @@
   final Patient patient=patientService.getPatient(2);
   final Concept cd4Count=conceptService.getConcept(5497);
   TestOrder duplicateOrder=(TestOrder)orderService.getOrder(7);
-  assertTrue(duplicateOrder.isCurrent());
+  assertTrue(duplicateOrder.isActive());
   assertEquals(cd4Count,duplicateOrder.getConcept());
   Order order=new TestOrder();
   order.setPatient(patient);

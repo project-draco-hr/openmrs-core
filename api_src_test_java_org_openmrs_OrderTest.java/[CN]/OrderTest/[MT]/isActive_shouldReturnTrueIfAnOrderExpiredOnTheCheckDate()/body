@@ -4,5 +4,5 @@
   Date checkDate=DateUtils.parseDate("2014-11-01 11:11:11",DATE_FORMAT);
   order.setAutoExpireDate(checkDate);
   assertNull(order.getDateStopped());
-  assertTrue(order.isCurrent(checkDate));
+  assertTrue(order.isActive(checkDate));
 }

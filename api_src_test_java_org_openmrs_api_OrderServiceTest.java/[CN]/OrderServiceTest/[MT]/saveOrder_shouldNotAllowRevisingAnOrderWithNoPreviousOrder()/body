@@ -1,6 +1,6 @@
 {
   Order originalOrder=orderService.getOrder(111);
-  assertTrue(originalOrder.isCurrent());
+  assertTrue(originalOrder.isActive());
   Order revisedOrder=originalOrder.cloneForRevision();
   revisedOrder.setEncounter(encounterService.getEncounter(5));
   revisedOrder.setInstructions("Take after a meal");

@@ -1,7 +1,7 @@
 {
   executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrderAutoExpireDate.xml");
   DrugOrder originalOrder=(DrugOrder)orderService.getOrder(111);
-  assertTrue(originalOrder.isCurrent());
+  assertTrue(originalOrder.isActive());
   DrugOrder revisedOrder=originalOrder.cloneForRevision();
   revisedOrder.setOrderer(originalOrder.getOrderer());
   revisedOrder.setEncounter(originalOrder.getEncounter());

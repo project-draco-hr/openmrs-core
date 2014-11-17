@@ -2,7 +2,7 @@
   executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWithSameConceptAndDifferentFormAndStrength.xml");
   final Patient patient=patientService.getPatient(2);
   DrugOrder existingOrder=(DrugOrder)orderService.getOrder(1000);
-  assertTrue(existingOrder.isCurrent());
+  assertTrue(existingOrder.isActive());
   DrugOrder order=new DrugOrder();
   order.setPatient(patient);
   order.setDrug(existingOrder.getDrug());
