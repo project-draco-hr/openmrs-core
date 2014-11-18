@@ -40,6 +40,8 @@
       }
       Context.authenticate(username,password);
       if (Context.isAuthenticated()) {
+        regenerateSession(request);
+        httpSession=request.getSession();
         httpSession.setAttribute("loginAttempts",0);
         User user=Context.getAuthenticatedUser();
         if (user.getUserProperties() != null) {
