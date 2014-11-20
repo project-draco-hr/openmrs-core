@@ -1,0 +1,14 @@
+{
+  RelationshipType type=new RelationshipType();
+  Errors errors=new BindException(type,"type");
+  new RelationshipTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription("");
+  errors=new BindException(type,"type");
+  new RelationshipTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  type.setDescription(" ");
+  errors=new BindException(type,"type");
+  new RelationshipTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}
