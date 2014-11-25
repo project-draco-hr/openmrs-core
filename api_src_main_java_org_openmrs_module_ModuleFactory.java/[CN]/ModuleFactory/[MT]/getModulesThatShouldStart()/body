@@ -1,0 +1,14 @@
+{
+  List<Module> modules=new ArrayList<Module>();
+  AdministrationService adminService=Context.getAdministrationService();
+  for (  Module mod : getLoadedModulesCoreFirst()) {
+    String key=mod.getModuleId() + ".started";
+    String startedProp=adminService.getGlobalProperty(key,null);
+    String mandatoryProp=adminService.getGlobalProperty(mod.getModuleId() + ".mandatory",null);
+    boolean isCoreToOpenmrs=mod.isCore() && !ModuleUtil.ignoreCoreModules();
+    if (startedProp == null || startedProp.equals("true") || "true".equalsIgnoreCase(mandatoryProp) || mod.isMandatory() || isCoreToOpenmrs) {
+      modules.add(mod);
+    }
+  }
+  return modules;
+}
