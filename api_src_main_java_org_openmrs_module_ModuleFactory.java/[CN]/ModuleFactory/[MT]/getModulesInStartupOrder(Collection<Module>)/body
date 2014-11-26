@@ -9,7 +9,9 @@
       if (fromNode == null) {
         fromNode=module;
       }
-      graph.addEdge(graph.new Edge(fromNode,toNode));
+      if (fromNode != null) {
+        graph.addEdge(graph.new Edge(fromNode,toNode));
+      }
     }
     for (    String key : mod.getAwareOfModules()) {
       Module module=getModuleByPackage(key);
@@ -17,7 +19,9 @@
       if (fromNode == null) {
         fromNode=module;
       }
-      graph.addEdge(graph.new Edge(fromNode,toNode));
+      if (fromNode != null) {
+        graph.addEdge(graph.new Edge(fromNode,toNode));
+      }
     }
   }
   return graph.topologicalSort();
