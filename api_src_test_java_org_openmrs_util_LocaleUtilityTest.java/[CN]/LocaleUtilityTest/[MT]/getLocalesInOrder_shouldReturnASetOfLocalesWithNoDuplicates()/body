@@ -1,9 +1,10 @@
 {
-  GlobalProperty gp=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"lu_UG, lu, sw_KE, en_US, en, en, sw_KE","Test Allowed list of locales");
+  GlobalProperty gp=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"lu_UG, lu, sw_KE, en_US, en, en, en_GB, sw_KE","Test Allowed list of locales");
   Context.getAdministrationService().saveGlobalProperty(gp);
   GlobalProperty defaultLocale=new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,"lu","Test Allowed list of locales");
   Context.getAdministrationService().saveGlobalProperty(defaultLocale);
   Locale lu_UG=new Locale("lu","UG");
   Context.setLocale(lu_UG);
   Assert.assertEquals(6,LocaleUtility.getLocalesInOrder().size());
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_DEFAULT_LOCALE,""));
 }

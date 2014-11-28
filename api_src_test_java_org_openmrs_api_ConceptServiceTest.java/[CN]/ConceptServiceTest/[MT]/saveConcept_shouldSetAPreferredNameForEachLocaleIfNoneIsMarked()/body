@@ -1,6 +1,6 @@
 {
   GlobalProperty gp=Context.getAdministrationService().getGlobalPropertyObject(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST);
-  gp.setPropertyValue(gp.getPropertyValue().concat(",fr,ja"));
+  gp.setPropertyValue(gp.getPropertyValue().concat(",fr,ja,en_GB"));
   Context.getAdministrationService().saveGlobalProperty(gp);
   Concept concept=new Concept();
   concept.addName(new ConceptName("name1",Locale.ENGLISH));
