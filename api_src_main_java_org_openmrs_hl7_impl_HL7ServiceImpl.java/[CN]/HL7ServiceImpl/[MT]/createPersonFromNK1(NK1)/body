@@ -15,7 +15,7 @@
       try {
         PatientIdentifierType pit=Context.getPatientService().getPatientIdentifierTypeByName(assigningAuthority);
         if (pit == null) {
-          if (!assigningAuthority.equals("UUID")) {
+          if (!"UUID".equals(assigningAuthority)) {
             log.warn("Can't find PatientIdentifierType named '" + assigningAuthority + "'");
           }
           continue;
@@ -77,7 +77,7 @@
   if (precisionTemp != null && precisionTemp.getValue() != null) {
     String precision=precisionTemp.getValue().toUpperCase();
     log.debug("The birthdate is estimated: " + precision);
-    if (precision.equals("Y") || precision.equals("L")) {
+    if ("Y".equals(precision) || "L".equals(precision)) {
       person.setBirthdateEstimated(true);
     }
   }

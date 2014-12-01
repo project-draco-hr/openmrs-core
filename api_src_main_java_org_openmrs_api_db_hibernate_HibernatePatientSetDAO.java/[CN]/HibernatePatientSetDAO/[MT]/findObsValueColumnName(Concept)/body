@@ -1,20 +1,20 @@
 {
   String abbrev=c.getDatatype().getHl7Abbreviation();
   List<String> columns=new Vector<String>();
-  if (abbrev.equals("BIT")) {
+  if ("BIT".equals(abbrev)) {
     columns.add("valueCoded");
   }
- else   if (abbrev.equals("CWE")) {
+ else   if ("CWE".equals(abbrev)) {
     columns.add("valueDrug");
     columns.add("valueCoded");
   }
- else   if (abbrev.equals("NM") || abbrev.equals("SN")) {
+ else   if ("NM".equals(abbrev) || "SN".equals(abbrev)) {
     columns.add("valueNumeric");
   }
- else   if (abbrev.equals("DT") || abbrev.equals("TM") || abbrev.equals("TS")) {
+ else   if ("DT".equals(abbrev) || "TM".equals(abbrev) || "TS".equals(abbrev)) {
     columns.add("valueDatetime");
   }
- else   if (abbrev.equals("ST")) {
+ else   if ("ST".equals(abbrev)) {
     columns.add("valueText");
   }
   return columns;

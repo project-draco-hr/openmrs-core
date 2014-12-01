@@ -53,7 +53,7 @@
       log.warn("Not creating null valued obs for concept " + concept);
       return null;
     }
- else     if (value.equals("0") || value.equals("1")) {
+ else     if ("0".equals(value) || "1".equals(value)) {
       concept=concept.hydrate(concept.getConceptId().toString());
       obs.setConcept(concept);
       if (concept.getDatatype().isBoolean()) {
@@ -68,7 +68,7 @@
         }
       }
  else       if (concept.getDatatype().isCoded()) {
-        Concept answer=value.equals("1") ? Context.getConceptService().getTrueConcept() : Context.getConceptService().getFalseConcept();
+        Concept answer="1".equals(value) ? Context.getConceptService().getTrueConcept() : Context.getConceptService().getFalseConcept();
         boolean isValidAnswer=false;
         Collection<ConceptAnswer> conceptAnswers=concept.getAnswers();
         if (conceptAnswers != null && conceptAnswers.size() > 0) {
@@ -117,7 +117,7 @@
         obs.setValueCoded(valueConcept);
         if (HL7Constants.HL7_LOCAL_DRUG.equals(value.getNameOfAlternateCodingSystem().getValue())) {
           Drug valueDrug=new Drug();
-          valueDrug.setDrugId(new Integer(value.getAlternateIdentifier().getValue()));
+          valueDrug.setDrugId(Integer.valueOf(value.getAlternateIdentifier().getValue()));
           obs.setValueDrug(valueDrug);
         }
  else {

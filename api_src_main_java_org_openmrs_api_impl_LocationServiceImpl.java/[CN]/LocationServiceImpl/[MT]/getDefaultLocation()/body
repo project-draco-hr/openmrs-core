@@ -4,10 +4,10 @@
   if (StringUtils.hasText(locationGP)) {
     location=Context.getLocationService().getLocation(locationGP);
   }
-  if (location == null && (!StringUtils.hasText(locationGP) || !locationGP.equalsIgnoreCase("Unknown Location"))) {
+  if (location == null && (!StringUtils.hasText(locationGP) || !"Unknown Location".equalsIgnoreCase(locationGP))) {
     location=Context.getLocationService().getLocation("Unknown Location");
   }
-  if (location == null && (!StringUtils.hasText(locationGP) || !locationGP.equalsIgnoreCase("Unknown"))) {
+  if (location == null && (!StringUtils.hasText(locationGP) || !"Unknown".equalsIgnoreCase(locationGP))) {
     location=Context.getLocationService().getLocation("Unknown");
   }
   if (location == null) {

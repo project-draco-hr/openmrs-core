@@ -25,7 +25,7 @@
     log.debug("Unable to process hl7inqueue: " + hl7InQueue.getHL7InQueueId(),e);
     log.debug("Hl7inqueue source: " + hl7InQueue.getHL7Source());
     log.debug("hl7_processor.ignore_missing_patient_non_local? " + Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false"));
-    if (e.getCause() != null && e.getCause().getMessage().equals("Could not resolve patient") && !hl7InQueue.getHL7Source().getName().equals("local") && Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false").equals("true")) {
+    if (e.getCause() != null && e.getCause().getMessage().equals("Could not resolve patient") && !"local".equals(hl7InQueue.getHL7Source().getName()) && "true".equals(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IGNORE_MISSING_NONLOCAL_PATIENTS,"false"))) {
       skipError=true;
     }
     if (!skipError) {

@@ -10,7 +10,7 @@
     }
   }
   result=super.findResource(name);
-  if (result != null && result.getProtocol().equals("jar") && name.contains("openmrs")) {
+  if (result != null && "jar".equals(result.getProtocol()) && name.contains("openmrs")) {
     result=expandURL(result,getLibCacheFolder());
   }
   return result;

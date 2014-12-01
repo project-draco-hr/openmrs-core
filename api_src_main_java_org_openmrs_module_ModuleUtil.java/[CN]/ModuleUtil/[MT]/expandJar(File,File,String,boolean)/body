@@ -19,7 +19,7 @@
           parent.mkdirs();
           log.debug("Creating parent dirs: " + parent.getAbsolutePath());
         }
-        if (entryName.endsWith("/") || entryName.equals("")) {
+        if (entryName.endsWith("/") || "".equals(entryName)) {
           continue;
         }
         input=jarFile.getInputStream(jarEntry);
