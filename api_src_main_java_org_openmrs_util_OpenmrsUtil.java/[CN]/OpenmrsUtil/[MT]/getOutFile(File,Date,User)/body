@@ -1,4 +1,5 @@
 {
+  Random gen=new Random();
   File outFile;
   do {
     DateFormat dateFormat=new SimpleDateFormat("yyyy.MM.dd-HHmm-ssSSS");
@@ -12,7 +13,7 @@
       filename.append(user.getUserId());
       filename.append("-");
     }
-    filename.append((int)(Math.random() * 10000));
+    filename.append(gen.nextInt() * 10000);
     filename.append(".xml");
     outFile=new File(dir,filename.toString());
     date=null;
