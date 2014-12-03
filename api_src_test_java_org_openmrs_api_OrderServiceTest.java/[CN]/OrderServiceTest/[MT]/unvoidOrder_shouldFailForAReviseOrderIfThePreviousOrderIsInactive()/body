@@ -11,6 +11,7 @@
   revise.setOrderer(order.getOrderer());
   revise.setEncounter(order.getEncounter());
   orderService.saveOrder(revise,null);
+  Thread.sleep(10);
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Cannot unvoid a revision order if the previous order is no longer active");
   orderService.unvoidOrder(order);

@@ -8,6 +8,7 @@
   assertTrue(order.getVoided());
   assertNull(previousOrder.getDateStopped());
   orderService.discontinueOrder(previousOrder,"Testing",null,previousOrder.getOrderer(),previousOrder.getEncounter());
+  Thread.sleep(10);
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Cannot unvoid a discontinuation order if the previous order is no longer active");
   orderService.unvoidOrder(order);
