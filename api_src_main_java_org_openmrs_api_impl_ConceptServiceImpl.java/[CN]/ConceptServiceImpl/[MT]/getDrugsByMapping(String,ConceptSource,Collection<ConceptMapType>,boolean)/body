@@ -3,7 +3,7 @@
     throw new APIException("ConceptSource is required");
   }
   if (withAnyOfTheseTypes == null) {
-    withAnyOfTheseTypes=Collections.EMPTY_LIST;
+    withAnyOfTheseTypes=Collections.emptyList();
   }
   return dao.getDrugsByMapping(code,conceptSource,withAnyOfTheseTypes,includeRetired);
 }
