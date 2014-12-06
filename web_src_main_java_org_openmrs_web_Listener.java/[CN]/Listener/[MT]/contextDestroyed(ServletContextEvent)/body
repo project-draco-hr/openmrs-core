@@ -1,5 +1,4 @@
 {
-  Log log=LogFactory.getLog(Listener.class);
   try {
     Context.openSession();
     Context.shutdown();
@@ -37,4 +36,6 @@
   MemoryLeakUtil.shutdownKeepAliveTimer();
   OpenmrsClassLoader.onShutdown();
   LogManager.shutdown();
+  System.gc();
+  System.gc();
 }

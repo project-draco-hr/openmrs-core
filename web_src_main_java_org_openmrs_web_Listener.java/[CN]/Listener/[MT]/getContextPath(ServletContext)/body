@@ -11,11 +11,11 @@
       contextPath=contextPath.substring(contextPath.lastIndexOf("/"));
     }
  catch (    Exception e) {
-      log.warn("Cannot find the contextPath of current webapp.",e);
+      log.error("Cannot find the contextPath of current webapp.",e);
     }
   }
 catch (  Exception e) {
-    log.warn("ContextPath not defined",e);
+    log.error("ContextPath not defined",e);
   }
   if (contextPath.indexOf("/") != -1) {
     contextPath=contextPath.substring(1);
