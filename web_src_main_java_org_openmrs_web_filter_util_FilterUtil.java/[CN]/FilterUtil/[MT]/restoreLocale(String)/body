@@ -16,6 +16,7 @@
             currentLocale=results.getString(1);
           }
         }
+        statement.close();
       }
       if (currentLocale == null) {
         currentLocale=readSystemDefaultLocale(connection);
