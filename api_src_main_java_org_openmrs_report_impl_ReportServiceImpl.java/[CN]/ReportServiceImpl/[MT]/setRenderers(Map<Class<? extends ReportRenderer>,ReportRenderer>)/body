@@ -1,4 +1,8 @@
 {
+  if (newRenderers == null) {
+    renderers=null;
+    return;
+  }
   for (  Map.Entry<Class<? extends ReportRenderer>,ReportRenderer> entry : newRenderers.entrySet()) {
     registerRenderer(entry.getKey(),entry.getValue());
   }
