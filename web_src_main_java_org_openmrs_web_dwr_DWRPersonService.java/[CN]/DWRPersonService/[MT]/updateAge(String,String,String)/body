@@ -20,6 +20,7 @@
       cal.add(Calendar.YEAR,-(Integer.parseInt(age)));
     }
  catch (    NumberFormatException nfe) {
+      log.error("Error during adding date into calendar",nfe);
     }
     return cal.getTime();
   }
