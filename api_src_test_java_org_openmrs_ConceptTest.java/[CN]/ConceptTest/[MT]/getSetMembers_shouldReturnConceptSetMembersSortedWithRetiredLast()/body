@@ -23,10 +23,10 @@
   sets.add(set5);
   c.setConceptSets(sets);
   List<Concept> setMembers=c.getSetMembers();
-  Assert.assertEquals(set4.getConcept().getConceptId(),setMembers.get(0).getConceptId());
-  Assert.assertEquals(set2.getConcept().getConceptId(),setMembers.get(1).getConceptId());
-  Assert.assertEquals(set1.getConcept().getConceptId(),setMembers.get(2).getConceptId());
-  Assert.assertEquals(set5.getConcept().getConceptId(),setMembers.get(3).getConceptId());
-  Assert.assertEquals(set3.getConcept().getConceptId(),setMembers.get(4).getConceptId());
-  Assert.assertEquals(set0.getConcept().getConceptId(),setMembers.get(5).getConceptId());
+  Assert.assertEquals(set4.getConcept(),setMembers.get(0));
+  Assert.assertEquals(set2.getConcept(),setMembers.get(1));
+  Assert.assertEquals(set1.getConcept(),setMembers.get(2));
+  Assert.assertEquals(set5.getConcept(),setMembers.get(3));
+  Assert.assertEquals(set3.getConcept(),setMembers.get(4));
+  Assert.assertEquals(set0.getConcept(),setMembers.get(5));
 }
