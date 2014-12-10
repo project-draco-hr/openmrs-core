@@ -130,10 +130,8 @@
     String folderPath=realPath + "/WEB-INF/view/module/" + mod.getModuleIdAsPath();
     File outFile=new File(folderPath.replace("/",File.separator));
     outFile.deleteOnExit();
-    if (moduleNeedsContextRefresh == false) {
-      if (mod.getAdvicePoints() != null && mod.getAdvicePoints().size() > 0) {
-        moduleNeedsContextRefresh=true;
-      }
+    if (moduleNeedsContextRefresh == false && mod.getAdvicePoints() != null && mod.getAdvicePoints().size() > 0) {
+      moduleNeedsContextRefresh=true;
     }
     if (moduleNeedsContextRefresh && delayContextRefresh == false) {
       if (log.isDebugEnabled()) {
@@ -162,12 +160,10 @@
         notifySuperUsersAboutModuleFailure(mod);
       }
     }
-    if (!delayContextRefresh) {
-      if (ModuleFactory.isModuleStarted(mod)) {
-        log.debug("Loading servlets and filters for module: " + mod);
-        loadServlets(mod,servletContext);
-        loadFilters(mod,servletContext);
-      }
+    if (!delayContextRefresh && ModuleFactory.isModuleStarted(mod)) {
+      log.debug("Loading servlets and filters for module: " + mod);
+      loadServlets(mod,servletContext);
+      loadFilters(mod,servletContext);
     }
     return (moduleNeedsContextRefresh && delayContextRefresh == true);
   }

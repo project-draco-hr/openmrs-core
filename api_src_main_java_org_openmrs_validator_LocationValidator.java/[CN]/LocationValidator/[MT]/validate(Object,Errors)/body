@@ -5,11 +5,9 @@
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
-    if (location.isRetired()) {
-      if (!StringUtils.hasLength(location.getRetireReason())) {
-        location.setRetired(false);
-        errors.rejectValue("retireReason","error.null");
-      }
+    if (location.isRetired() && !StringUtils.hasLength(location.getRetireReason())) {
+      location.setRetired(false);
+      errors.rejectValue("retireReason","error.null");
     }
     Location exist=Context.getLocationService().getLocation(location.getName());
     if (exist != null && !exist.isRetired() && !OpenmrsUtil.nullSafeEquals(location.getUuid(),exist.getUuid())) {

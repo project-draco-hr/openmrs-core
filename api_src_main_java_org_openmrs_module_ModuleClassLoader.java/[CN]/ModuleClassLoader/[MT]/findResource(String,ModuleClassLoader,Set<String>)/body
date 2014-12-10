@@ -1,13 +1,11 @@
 {
-  if (log.isTraceEnabled()) {
-    if (name != null && name.contains("starter")) {
-      if (seenModules != null) {
-        log.trace("seenModules.size: " + seenModules.size());
-      }
-      log.trace("name: " + name);
-      for (      URL url : getURLs()) {
-        log.trace("url: " + url);
-      }
+  if (log.isTraceEnabled() && name != null && name.contains("starter")) {
+    if (seenModules != null) {
+      log.trace("seenModules.size: " + seenModules.size());
+    }
+    log.trace("name: " + name);
+    for (    URL url : getURLs()) {
+      log.trace("url: " + url);
     }
   }
   if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {

@@ -2,10 +2,8 @@
   if (lhs.equals(rhs)) {
     return true;
   }
- else   if (("".equals(lhs.getCountry())) || ("".equals(rhs.getCountry()))) {
-    if (lhs.getLanguage().equals(rhs.getLanguage())) {
-      return true;
-    }
+ else   if ((("".equals(lhs.getCountry())) || ("".equals(rhs.getCountry()))) && lhs.getLanguage().equals(rhs.getLanguage())) {
+    return true;
   }
   return false;
 }

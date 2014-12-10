@@ -1,10 +1,8 @@
 {
-  if (retireableObject.isRetired()) {
-    if (origParentRetiredDate == null || origParentRetiredDate.equals(retireableObject.getDateRetired())) {
-      retireableObject.setRetired(false);
-      retireableObject.setRetiredBy(null);
-      retireableObject.setDateRetired(null);
-      retireableObject.setRetireReason(null);
-    }
+  if (retireableObject.isRetired() && (origParentRetiredDate == null || origParentRetiredDate.equals(retireableObject.getDateRetired()))) {
+    retireableObject.setRetired(false);
+    retireableObject.setRetiredBy(null);
+    retireableObject.setDateRetired(null);
+    retireableObject.setRetireReason(null);
   }
 }

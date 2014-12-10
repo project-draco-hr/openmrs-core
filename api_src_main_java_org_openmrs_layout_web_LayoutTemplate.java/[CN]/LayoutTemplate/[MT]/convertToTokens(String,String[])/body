@@ -52,23 +52,21 @@
       }
     }
   }
- else   if (line != null) {
-    if (line.length() > 0) {
-      if (ret == null) {
-        ret=new Vector<Map<String,String>>();
-      }
-      Map<String,String> currToken=new HashMap<String,String>();
-      Map<String,String> currNonToken=new HashMap<String,String>();
-      currNonToken.put("isToken",getNonLayoutToken());
-      currNonToken.put("displayText","");
-      ret.add(currNonToken);
-      currToken.put("isToken",getLayoutToken());
-      String realToken=line;
-      currToken.put("displayText",this.getNameMappings().get(realToken));
-      currToken.put("displaySize",this.getSizeMappings().get(realToken));
-      currToken.put("codeName",realToken);
-      ret.add(currToken);
+ else   if (line != null && line.length() > 0) {
+    if (ret == null) {
+      ret=new Vector<Map<String,String>>();
     }
+    Map<String,String> currToken=new HashMap<String,String>();
+    Map<String,String> currNonToken=new HashMap<String,String>();
+    currNonToken.put("isToken",getNonLayoutToken());
+    currNonToken.put("displayText","");
+    ret.add(currNonToken);
+    currToken.put("isToken",getLayoutToken());
+    String realToken=line;
+    currToken.put("displayText",this.getNameMappings().get(realToken));
+    currToken.put("displaySize",this.getSizeMappings().get(realToken));
+    currToken.put("codeName",realToken);
+    ret.add(currToken);
   }
   if (ret != null && this.maxTokens < ret.size()) {
     this.maxTokens=ret.size();

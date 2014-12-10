@@ -75,16 +75,14 @@
             reportUpdatedName(nameInLocale,"The name '" + nameInLocale.getName() + "' in locale '"+ conceptNameLocale.getDisplayName()+ "' has been converted from a short name to a synonym");
           }
         }
-        if (nameInLocale.isFullySpecifiedName() || nameInLocale.isPreferred()) {
-          if (!isNameUniqueInLocale(connection,nameInLocale,conceptId)) {
-            if (localeDuplicateNamesMap == null) {
-              localeDuplicateNamesMap=new HashMap<Locale,Set<String>>();
-            }
-            if (!localeDuplicateNamesMap.containsKey(conceptNameLocale)) {
-              localeDuplicateNamesMap.put(conceptNameLocale,new HashSet<String>());
-            }
-            localeDuplicateNamesMap.get(conceptNameLocale).add(nameInLocale.getName());
+        if ((nameInLocale.isFullySpecifiedName() || nameInLocale.isPreferred()) && !isNameUniqueInLocale(connection,nameInLocale,conceptId)) {
+          if (localeDuplicateNamesMap == null) {
+            localeDuplicateNamesMap=new HashMap<Locale,Set<String>>();
           }
+          if (!localeDuplicateNamesMap.containsKey(conceptNameLocale)) {
+            localeDuplicateNamesMap.put(conceptNameLocale,new HashSet<String>());
+          }
+          localeDuplicateNamesMap.get(conceptNameLocale).add(nameInLocale.getName());
         }
         String name=nameInLocale.getName().toLowerCase();
         if (!nameDuplicateConceptNamesMap.containsKey(name)) {

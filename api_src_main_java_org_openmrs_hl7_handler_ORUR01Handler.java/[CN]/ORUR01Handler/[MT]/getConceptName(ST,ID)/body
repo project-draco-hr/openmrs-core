@@ -1,9 +1,7 @@
 {
-  if (altIdentifier != null) {
-    if (HL7Constants.HL7_LOCAL_CONCEPT_NAME.equals(altCodingSystem.getValue())) {
-      String hl7ConceptNameId=altIdentifier.getValue();
-      return getConceptName(hl7ConceptNameId);
-    }
+  if (altIdentifier != null && HL7Constants.HL7_LOCAL_CONCEPT_NAME.equals(altCodingSystem.getValue())) {
+    String hl7ConceptNameId=altIdentifier.getValue();
+    return getConceptName(hl7ConceptNameId);
   }
   return null;
 }

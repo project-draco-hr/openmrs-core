@@ -1,9 +1,7 @@
 {
   Object openmrsVersion=openmrsProfile.get("openmrsVersion");
-  if (StringUtils.isNotBlank((String)openmrsVersion)) {
-    if (!ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,(String)openmrsVersion)) {
-      return false;
-    }
+  if (StringUtils.isNotBlank((String)openmrsVersion) && !ModuleUtil.matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,(String)openmrsVersion)) {
+    return false;
   }
   String[] modules=(String[])openmrsProfile.get("modules");
   for (  String moduleAndVersion : modules) {
@@ -12,11 +10,9 @@
     String moduleVersion=splitModuleAndVersion[1];
     boolean moduleMatched=false;
     for (    Module module : ModuleFactory.getStartedModules()) {
-      if (module.getModuleId().equals(moduleId)) {
-        if (ModuleUtil.matchRequiredVersions(module.getVersion(),moduleVersion)) {
-          moduleMatched=true;
-          break;
-        }
+      if (module.getModuleId().equals(moduleId) && ModuleUtil.matchRequiredVersions(module.getVersion(),moduleVersion)) {
+        moduleMatched=true;
+        break;
       }
     }
     if (!moduleMatched) {
