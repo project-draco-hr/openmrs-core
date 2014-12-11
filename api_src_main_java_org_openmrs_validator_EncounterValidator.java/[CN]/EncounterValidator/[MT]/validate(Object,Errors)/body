@@ -6,6 +6,7 @@
     throw new IllegalArgumentException("The parameter obj should not be null and must be of type " + Encounter.class);
   }
   Encounter encounter=(Encounter)obj;
+  ValidationUtils.rejectIfEmpty(errors,"encounterType","Encounter.error.encounterType.required","Encounter type is Required");
   ValidationUtils.rejectIfEmpty(errors,"patient","Encounter.error.patient.required","Patient is required");
   ValidationUtils.rejectIfEmptyOrWhitespace(errors,"encounterDatetime","Encounter.datetime.required");
   if (encounter.getVisit() != null && !ObjectUtils.equals(encounter.getVisit().getPatient(),encounter.getPatient())) {
