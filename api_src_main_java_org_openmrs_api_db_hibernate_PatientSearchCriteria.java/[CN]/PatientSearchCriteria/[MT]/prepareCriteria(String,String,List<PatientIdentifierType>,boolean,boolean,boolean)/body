@@ -22,6 +22,8 @@ addAliasForIdentifiers(criteria);
 criteria.add(prepareCriterionForName(name));
 criteria.add(prepareCriterionForIdentifier(identifier,identifierTypes,matchIdentifierExactly));
 break;
+default :
+break;
 }
 criteria.add(Restrictions.eq("voided",false));
 criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
