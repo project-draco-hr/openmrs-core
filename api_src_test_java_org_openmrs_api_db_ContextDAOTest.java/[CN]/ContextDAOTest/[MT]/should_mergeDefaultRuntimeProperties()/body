@@ -1,0 +1,6 @@
+{
+  Properties properties=new Properties();
+  properties.setProperty("key","value");
+  dao.mergeDefaultRuntimeProperties(properties);
+  Assert.assertNotNull(properties.getProperty("hibernate.key"));
+}
