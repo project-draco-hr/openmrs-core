@@ -2,14 +2,14 @@
   ImplementationId implId=(ImplementationId)obj;
   char[] illegalChars={'^','|'};
   if (implId == null) {
-    errors.rejectValue("implementationId","error.general");
+    throw new APIException(Context.getMessageSourceService().getMessage("ImplementationId.null"));
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","ImplementationId.name.empty");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"implementationId","ImplementationId.implementationId.empty");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"passphrase","ImplementationId.passphrase.empty");
     if (implId.getImplementationId() != null && StringUtils.containsAny(implId.getImplementationId(),illegalChars)) {
-      errors.rejectValue("implementationId","ImplementationId.implementationId.invalidcharacter");
+      errors.rejectValue("implementationId","ImplementationId.implementationId.invalidCharacter");
     }
   }
 }
