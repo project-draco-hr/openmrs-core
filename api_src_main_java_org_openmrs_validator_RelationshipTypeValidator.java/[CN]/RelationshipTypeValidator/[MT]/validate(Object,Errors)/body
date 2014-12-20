@@ -11,5 +11,6 @@
     if (exist != null && !exist.isRetired() && !OpenmrsUtil.nullSafeEquals(relationshipType.getUuid(),exist.getUuid())) {
       errors.reject("duplicate.relationshipType");
     }
+    ValidateUtil.validateFieldLengths(errors,obj.getClass(),"aIsToB","bIsToA","description","retireReason");
   }
 }

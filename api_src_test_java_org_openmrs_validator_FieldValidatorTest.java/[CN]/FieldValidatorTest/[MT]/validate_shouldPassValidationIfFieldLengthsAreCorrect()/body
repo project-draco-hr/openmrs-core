@@ -1,0 +1,17 @@
+{
+  Field ff=new Field();
+  FieldType ft=new FieldType();
+  Boolean retired=new Boolean(false);
+  ft.setId(0xdeadcafe);
+  ff.setFieldType(ft);
+  ff.setName("name");
+  ff.setRetired(retired);
+  Boolean multiple=new Boolean(false);
+  ff.setSelectMultiple(multiple);
+  ff.setTableName("tableName");
+  ff.setAttributeName("attributeName");
+  ff.setRetireReason("retireReason");
+  Errors errors=new BindException(ff,"field");
+  new FieldValidator().validate(ff,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

@@ -1,0 +1,10 @@
+{
+  PatientIdentifier pi=new PatientIdentifier("too long text too long text too long text too long text",new PatientIdentifierType(1),null);
+  PatientIdentifierType idType=pi.getIdentifierType();
+  idType.setLocationBehavior(PatientIdentifierType.LocationBehavior.NOT_USED);
+  pi.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(pi,"pi");
+  new PatientIdentifierValidator().validate(pi,errors);
+  Assert.assertTrue(errors.hasFieldErrors("identifier"));
+  Assert.assertTrue(errors.hasFieldErrors("voidReason"));
+}

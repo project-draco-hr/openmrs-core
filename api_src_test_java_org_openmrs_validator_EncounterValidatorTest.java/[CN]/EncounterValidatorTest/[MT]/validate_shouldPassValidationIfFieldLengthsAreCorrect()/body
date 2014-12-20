@@ -1,0 +1,10 @@
+{
+  Encounter encounter=new Encounter();
+  encounter.setEncounterType(new EncounterType());
+  encounter.setPatient(new Patient());
+  encounter.setEncounterDatetime(new Date());
+  encounter.setVoidReason("voidReason");
+  Errors errors=new BindException(encounter,"encounter");
+  new EncounterValidator().validate(encounter,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

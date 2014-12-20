@@ -1,0 +1,9 @@
+{
+  PersonAttributeType type=new PersonAttributeType();
+  type.setName("name");
+  type.setFormat("java.lang.String");
+  type.setRetireReason("retireReason");
+  Errors errors=new BindException(type,"patObj");
+  new PersonAttributeTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

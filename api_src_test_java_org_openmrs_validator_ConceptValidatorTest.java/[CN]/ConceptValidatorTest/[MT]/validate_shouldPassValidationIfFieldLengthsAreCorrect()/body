@@ -1,0 +1,9 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("CD4",Context.getLocale()));
+  concept.setVersion("version");
+  concept.setRetireReason("retireReason");
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

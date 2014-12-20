@@ -1,0 +1,13 @@
+{
+  ConceptDatatype cd=new ConceptDatatype();
+  cd.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  cd.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  cd.setHl7Abbreviation("hl7Abbreviation");
+  cd.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(cd,"cd");
+  new ConceptDatatypeValidator().validate(cd,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertTrue(errors.hasFieldErrors("hl7Abbreviation"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

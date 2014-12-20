@@ -21,6 +21,7 @@
       }
     }
   }
+  ValidateUtil.validateFieldLengths(errors,target.getClass(),"voidReason");
   super.validateAttributes(visit,errors,Context.getVisitService().getAllVisitAttributeTypes());
   if (disallowOverlappingVisits()) {
     List<Visit> otherVisitList=Context.getVisitService().getVisitsByPatient(visit.getPatient());

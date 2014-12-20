@@ -1,0 +1,7 @@
+{
+  HL7Source hl7Source=new HL7Source();
+  hl7Source.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(hl7Source,"hl7Source");
+  new HL7SourceValidator().validate(hl7Source,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}

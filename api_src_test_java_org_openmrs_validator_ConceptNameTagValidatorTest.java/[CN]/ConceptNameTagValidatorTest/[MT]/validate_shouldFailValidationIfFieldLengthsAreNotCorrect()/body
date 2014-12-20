@@ -1,0 +1,9 @@
+{
+  ConceptNameTag cnt=new ConceptNameTag();
+  cnt.setTag("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  cnt.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(cnt,"cnt");
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("tag"));
+  Assert.assertEquals(true,errors.hasFieldErrors("voidReason"));
+}

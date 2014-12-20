@@ -71,7 +71,9 @@ catch (      Exception e) {
         concept.getCreator().getPersonName();
       }
       try {
+        errors.pushNestedPath("concept");
         ValidateUtil.validate(concept,errors);
+        errors.popNestedPath();
         validateConceptUsesPersistedObjects(concept,errors);
         if (!errors.hasErrors()) {
           if (action.equals(msa.getMessage("Concept.cancel"))) {

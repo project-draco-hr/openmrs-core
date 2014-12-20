@@ -1,0 +1,8 @@
+{
+  Role role=new Role();
+  role.setRole("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  role.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(role,"type");
+  new RoleValidator().validate(role,errors);
+  Assert.assertTrue(errors.hasFieldErrors("role"));
+}

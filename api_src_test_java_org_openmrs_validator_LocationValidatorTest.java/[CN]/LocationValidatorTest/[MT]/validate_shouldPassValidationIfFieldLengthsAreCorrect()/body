@@ -1,0 +1,22 @@
+{
+  Location location=new Location();
+  location.setName("name");
+  location.setDescription("description");
+  location.setAddress1("address1");
+  location.setAddress2("address2");
+  location.setAddress3("address3");
+  location.setAddress4("address4");
+  location.setAddress5("address5");
+  location.setAddress6("address6");
+  location.setCityVillage("cityVillage");
+  location.setStateProvince("stateProvince");
+  location.setCountry("country");
+  location.setPostalCode("postalCode");
+  location.setLatitude("latitude");
+  location.setLongitude("longitude");
+  location.setCountyDistrict("countyDistrict");
+  location.setRetireReason("retireReason");
+  Errors errors=new BindException(location,"location");
+  new LocationValidator().validate(location,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

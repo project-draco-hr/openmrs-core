@@ -1,0 +1,10 @@
+{
+  Drug drug=new Drug();
+  drug.addDrugReferenceMap(new DrugReferenceMap(conceptService.getConceptReferenceTerm(1),conceptService.getConceptMapType(1)));
+  drug.setName("name");
+  drug.setStrength("strength");
+  drug.setRetireReason("retireReason");
+  Errors errors=new BindException(drug,"drug");
+  new DrugValidator().validate(drug,errors);
+  Assert.assertFalse(errors.hasFieldErrors());
+}

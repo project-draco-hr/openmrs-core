@@ -1,0 +1,9 @@
+{
+  ConceptMapType mapType=new ConceptMapType();
+  mapType.setName("unique-name");
+  mapType.setDescription("Description");
+  mapType.setRetireReason("RetireReason");
+  Errors errors=new BindException(mapType,"mapType");
+  new ConceptMapTypeValidator().validate(mapType,errors);
+  Assert.assertEquals(false,errors.hasErrors());
+}

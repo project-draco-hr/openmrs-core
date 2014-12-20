@@ -1,0 +1,11 @@
+{
+  EncounterRole encounterRole=new EncounterRole();
+  encounterRole.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  encounterRole.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  encounterRole.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(encounterRole,"encounterRole");
+  new EncounterRoleValidator().validate(encounterRole,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

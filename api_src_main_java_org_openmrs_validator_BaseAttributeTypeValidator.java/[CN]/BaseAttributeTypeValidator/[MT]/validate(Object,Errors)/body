@@ -47,5 +47,6 @@
         errors.rejectValue("handlerConfig","AttributeType.handlerConfig.invalid",new Object[]{ex.getMessage()},"Invalid");
       }
     }
+    ValidateUtil.validateFieldLengths(errors,target.getClass(),"datatypeConfig","handlerConfig");
   }
 }

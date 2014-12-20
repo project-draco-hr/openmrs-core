@@ -1,0 +1,8 @@
+{
+  ConceptNameTag cnt=new ConceptNameTag();
+  cnt.setTag("tag");
+  cnt.setVoidReason("VoidReason");
+  Errors errors=new BindException(cnt,"cnt");
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

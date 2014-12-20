@@ -8,5 +8,6 @@
         errors.rejectValue("name","encounterRole.duplicate.name","Specified Encounter Role name already exists, please specify another ");
       }
     }
+    ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","description","retireReason");
   }
 }

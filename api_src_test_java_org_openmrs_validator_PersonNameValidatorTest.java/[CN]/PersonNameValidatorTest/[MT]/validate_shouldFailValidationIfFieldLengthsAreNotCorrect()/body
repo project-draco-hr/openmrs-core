@@ -1,0 +1,24 @@
+{
+  PersonName personName=new PersonName();
+  personName.setPrefix("too long text too long text too long text too long text");
+  personName.setGivenName("too long text too long text too long text too long text");
+  personName.setMiddleName("too long text too long text too long text too long text");
+  personName.setFamilyName("too long text too long text too long text too long text");
+  personName.setFamilyNamePrefix("too long text too long text too long text too long text");
+  personName.setFamilyName("too long text too long text too long text too long text");
+  personName.setFamilyName2("too long text too long text too long text too long text");
+  personName.setFamilyNameSuffix("too long text too long text too long text too long text");
+  personName.setDegree("too long text too long text too long text too long text");
+  personName.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(personName,"personName");
+  new PersonNameValidator().validate(personName,errors);
+  Assert.assertTrue(errors.hasFieldErrors("prefix"));
+  Assert.assertTrue(errors.hasFieldErrors("givenName"));
+  Assert.assertTrue(errors.hasFieldErrors("familyNamePrefix"));
+  Assert.assertTrue(errors.hasFieldErrors("familyName"));
+  Assert.assertTrue(errors.hasFieldErrors("familyName2"));
+  Assert.assertTrue(errors.hasFieldErrors("familyNameSuffix"));
+  Assert.assertTrue(errors.hasFieldErrors("degree"));
+  Assert.assertTrue(errors.hasFieldErrors("middleName"));
+  Assert.assertTrue(errors.hasFieldErrors("voidReason"));
+}

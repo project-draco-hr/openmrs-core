@@ -1,0 +1,21 @@
+{
+  PersonAddress personAddress=new PersonAddress();
+  personAddress.setStartDate(null);
+  personAddress.setEndDate(null);
+  personAddress.setAddress1("address1");
+  personAddress.setAddress2("address2");
+  personAddress.setCityVillage("cityVillage");
+  personAddress.setStateProvince("stateProvince");
+  personAddress.setPostalCode("postalCode");
+  personAddress.setCountry("country");
+  personAddress.setLatitude("latitude");
+  personAddress.setLongitude("longitude");
+  personAddress.setVoidReason("voidReason");
+  personAddress.setCountyDistrict("countyDistrict");
+  personAddress.setAddress3("address3");
+  personAddress.setAddress4("address4");
+  personAddress.setAddress5("address5");
+  Errors errors=new BindException(personAddress,"personAddress");
+  validator.validate(personAddress,errors);
+  Assert.assertEquals(false,errors.hasErrors());
+}

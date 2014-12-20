@@ -1,0 +1,13 @@
+{
+  RelationshipType type=new RelationshipType();
+  type.setaIsToB("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  type.setbIsToA("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  type.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  type.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(type,"type");
+  new RelationshipTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("aIsToB"));
+  Assert.assertTrue(errors.hasFieldErrors("bIsToA"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

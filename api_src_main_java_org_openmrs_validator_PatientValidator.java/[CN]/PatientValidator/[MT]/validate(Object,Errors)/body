@@ -18,11 +18,16 @@
   if (!preferredIdentifierChosen && identifiers.size() != 1) {
     errors.reject("error.preferredIdentifier");
   }
+  int index=0;
   if (!errors.hasErrors()) {
     if (patient.getIdentifiers() != null) {
       for (      PatientIdentifier identifier : patient.getIdentifiers()) {
+        errors.pushNestedPath("identifiers[" + index + "]");
         patientIdentifierValidator.validate(identifier,errors);
+        errors.popNestedPath();
+        index++;
       }
     }
   }
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"voidReason");
 }

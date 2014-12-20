@@ -1,0 +1,9 @@
+{
+  Privilege priv=new Privilege();
+  priv.setPrivilege("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  priv.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(priv,"priv");
+  new PrivilegeValidator().validate(priv,errors);
+  Assert.assertTrue(errors.hasFieldErrors("privilege"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+}

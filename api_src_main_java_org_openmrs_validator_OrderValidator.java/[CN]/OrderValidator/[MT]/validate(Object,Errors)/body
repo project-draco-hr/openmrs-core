@@ -17,5 +17,6 @@
     validateOrderTypeClass(order,errors);
     validateDateActivated(order,errors);
     validateScheduledDate(order,errors);
+    ValidateUtil.validateFieldLengths(errors,obj.getClass(),"orderReasonNonCoded","accessionNumber","commentToFulfiller","voidReason");
   }
 }

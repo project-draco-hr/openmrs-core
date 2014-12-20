@@ -1,0 +1,15 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(5089));
+  obs.setObsDatetime(new Date());
+  obs.setValueNumeric(1.0);
+  obs.setAccessionNumber("AccessionNumber");
+  obs.setValueModifier("m");
+  obs.setValueComplex("ValueComplex");
+  obs.setVoidReason("VoidReason");
+  obs.setComment("comment");
+  Errors errors=new BindException(obs,"obs");
+  new ObsValidator().validate(obs,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
