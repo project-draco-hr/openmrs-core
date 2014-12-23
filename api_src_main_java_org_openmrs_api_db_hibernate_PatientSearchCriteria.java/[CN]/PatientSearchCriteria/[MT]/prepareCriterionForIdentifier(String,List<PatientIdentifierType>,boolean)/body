@@ -4,7 +4,11 @@
   conjunction.add(Restrictions.eq("ids.voided",false));
   if (identifier != null) {
     if (matchIdentifierExactly) {
-      conjunction.add(Restrictions.eq("ids.identifier",identifier).ignoreCase());
+      SimpleExpression matchIdentifier=Restrictions.eq("ids.identifier",identifier);
+      if (Context.getAdministrationService().isDatabaseStringComparisonCaseSensitive()) {
+        matchIdentifier.ignoreCase();
+      }
+      conjunction.add(matchIdentifier);
     }
  else {
       AdministrationService adminService=Context.getAdministrationService();
