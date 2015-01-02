@@ -1,9 +1,19 @@
 {
-  if (this == o)   return true;
-  if (o == null || getClass() != o.getClass())   return false;
+  if (this == o) {
+    return true;
+  }
+  if (o == null || getClass() != o.getClass()) {
+    return false;
+  }
   ModuleConditionalResource that=(ModuleConditionalResource)o;
-  if (modules != null ? !modules.equals(that.modules) : that.modules != null)   return false;
-  if (openmrsVersion != null ? !openmrsVersion.equals(that.openmrsVersion) : that.openmrsVersion != null)   return false;
-  if (path != null ? !path.equals(that.path) : that.path != null)   return false;
+  if (modules != null ? !modules.equals(that.modules) : that.modules != null) {
+    return false;
+  }
+  if (openmrsVersion != null ? !openmrsVersion.equals(that.openmrsVersion) : that.openmrsVersion != null) {
+    return false;
+  }
+  if (path != null ? !path.equals(that.path) : that.path != null) {
+    return false;
+  }
   return true;
 }
