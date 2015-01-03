@@ -6,7 +6,7 @@
   }
   Class cls=null;
   try {
-    if (useSystemClassLoader == false) {
+    if (!useSystemClassLoader) {
       cls=OpenmrsClassLoader.getInstance().loadClass(classString);
       if (cls != null && log.isDebugEnabled()) {
         try {
@@ -16,7 +16,7 @@
         }
       }
     }
- else     if (useSystemClassLoader == true) {
+ else     if (useSystemClassLoader) {
       try {
         cls=Class.forName(classString);
         if (log.isDebugEnabled()) {

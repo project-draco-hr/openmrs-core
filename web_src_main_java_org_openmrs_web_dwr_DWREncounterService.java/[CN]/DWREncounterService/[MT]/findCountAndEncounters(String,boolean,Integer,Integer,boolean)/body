@@ -9,7 +9,7 @@
       if (phrase.matches("\\d+")) {
         Encounter e=es.getEncounter(Integer.valueOf(phrase));
         if (e != null) {
-          if (!e.isVoided() || includeVoided == true) {
+          if (!e.isVoided() || includeVoided) {
             encounterCount++;
           }
         }

@@ -40,7 +40,7 @@
   allObs=os.getObservations(null,null,null,null,null,null,null,null,null,start,end,true);
   List<Obs> obs=new Vector<Obs>();
   for (  Obs o : allObs) {
-    if (o.getVoided() == true) {
+    if (o.getVoided()) {
       obs.add(o);
     }
   }
