@@ -32,7 +32,7 @@
       log.debug("Object at pageContext." + HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY + " is "+ pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,PageContext.SESSION_SCOPE)+ "");
     }
     if (!isAlreadyUsed(file,initialRequestId)) {
-      StringBuffer output=new StringBuffer();
+      StringBuilder output=new StringBuilder();
       String prefix="";
       try {
         prefix=request.getContextPath();

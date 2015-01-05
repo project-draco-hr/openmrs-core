@@ -1,7 +1,7 @@
 {
   String message=Context.getMessageSourceService().getMessage(messageCode,messageArguments,Context.getLocale());
   if (cause != null) {
-    StringBuffer stackTrace=new StringBuffer();
+    StringBuilder stackTrace=new StringBuilder();
     for (    StackTraceElement traceElement : cause.getStackTrace()) {
       stackTrace.append(traceElement);
       stackTrace.append("\n");
