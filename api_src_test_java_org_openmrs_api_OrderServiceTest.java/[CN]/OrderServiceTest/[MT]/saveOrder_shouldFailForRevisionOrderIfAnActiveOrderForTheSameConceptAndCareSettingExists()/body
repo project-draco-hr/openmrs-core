@@ -25,6 +25,6 @@
   revision.setEncounter(encounterService.getEncounter(6));
   revision.setOrderer(providerService.getProvider(1));
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
+  expectedException.expectMessage("Order.cannot.have.more.than.one");
   orderService.saveOrder(revision,null);
 }

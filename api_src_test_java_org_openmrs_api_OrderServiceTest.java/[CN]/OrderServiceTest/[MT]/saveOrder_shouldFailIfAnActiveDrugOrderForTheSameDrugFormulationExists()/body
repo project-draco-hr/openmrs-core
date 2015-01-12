@@ -15,6 +15,6 @@
   order.setQuantityUnits(conceptService.getConcept(51));
   order.setNumRefills(2);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
+  expectedException.expectMessage("Order.cannot.have.more.than.one");
   orderService.saveOrder(order,null);
 }

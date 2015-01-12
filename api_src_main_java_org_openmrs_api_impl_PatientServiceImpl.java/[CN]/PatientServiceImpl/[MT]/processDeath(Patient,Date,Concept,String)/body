@@ -14,13 +14,13 @@
   }
  else {
     if (patient == null) {
-      throw new APIException("Attempting to set an invalid patient's status to 'dead'");
+      throw new APIException("Patient.invalid.dead",(Object[])null);
     }
     if (dateDied == null) {
-      throw new APIException("Must supply a valid dateDied when indicating that a patient has died");
+      throw new APIException("Patient.no.valid.dateDied",(Object[])null);
     }
     if (causeOfDeath == null) {
-      throw new APIException("Must supply a valid causeOfDeath (even if 'Unknown') when indicating that a patient has died");
+      throw new APIException("Patient.no.valid.causeOfDeath",(Object[])null);
     }
   }
 }

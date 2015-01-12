@@ -4,7 +4,7 @@
     kgen=KeyGenerator.getInstance(OpenmrsConstants.ENCRYPTION_KEY_SPEC);
   }
  catch (  NoSuchAlgorithmException e) {
-    throw new APIException("Could not generate cipher key",e);
+    throw new APIException("could.not.generate.cipher.key",null,e);
   }
   kgen.init(128);
   SecretKey skey=kgen.generateKey();

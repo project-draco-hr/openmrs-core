@@ -2,7 +2,7 @@
   ImplementationId implId=(ImplementationId)obj;
   char[] illegalChars={'^','|'};
   if (implId == null) {
-    throw new APIException(Context.getMessageSourceService().getMessage("ImplementationId.null"));
+    throw new APIException("ImplementationId.null",(Object[])null);
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","ImplementationId.name.empty");

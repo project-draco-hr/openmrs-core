@@ -8,7 +8,7 @@
   UserContext userContext=Context.getUserContext();
   if (userContext == null && privilege != null) {
     log.error("userContext is null. Did this pass through a filter?");
-    throw new APIException("The context is currently null.  Please try reloading the site.");
+    throw new APIException("context.is.null",(Object[])null);
   }
   String[] allPrivilegesArray=StringUtils.commaDelimitedListToStringArray(allPrivileges);
   String[] anyPrivilegeArray=StringUtils.commaDelimitedListToStringArray(anyPrivilege);

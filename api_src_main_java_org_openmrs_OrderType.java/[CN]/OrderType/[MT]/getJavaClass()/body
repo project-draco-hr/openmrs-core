@@ -3,6 +3,6 @@
     return Context.loadClass(javaClassName);
   }
  catch (  ClassNotFoundException e) {
-    throw new APIException("Failed to load class:" + javaClassName,e);
+    throw new APIException("OrderType.failed.load.class",new Object[]{javaClassName},e);
   }
 }

@@ -8,6 +8,6 @@
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderer(providerService.getProvider(1));
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot change the patient of an order");
+  expectedException.expectMessage("Order.cannot.change.patient");
   orderService.saveOrder(order,null);
 }

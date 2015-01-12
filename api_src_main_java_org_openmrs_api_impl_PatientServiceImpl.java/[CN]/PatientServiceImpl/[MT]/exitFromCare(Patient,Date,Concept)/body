@@ -1,12 +1,12 @@
 {
   if (patient == null) {
-    throw new APIException("Attempting to exit from care an invalid patient. Cannot proceed");
+    throw new APIException("Patient.invalid.care",(Object[])null);
   }
   if (dateExited == null) {
-    throw new APIException("Must supply a valid dateExited when indicating that a patient has left care");
+    throw new APIException("Patient.no.valid.dateExited",(Object[])null);
   }
   if (reasonForExit == null) {
-    throw new APIException("Must supply a valid reasonForExit (even if 'Unknown') when indicating that a patient has left care");
+    throw new APIException("Patient.no.valid.reasonForExit",(Object[])null);
   }
   saveReasonForExitObs(patient,dateExited,reasonForExit);
   Context.getProgramWorkflowService().triggerStateConversion(patient,reasonForExit,dateExited);

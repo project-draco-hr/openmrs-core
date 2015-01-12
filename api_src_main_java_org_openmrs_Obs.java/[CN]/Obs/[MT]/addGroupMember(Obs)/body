@@ -6,7 +6,7 @@
     groupMembers=new HashSet<Obs>();
   }
   if (member.equals(this)) {
-    throw new APIException("An obsGroup cannot have itself as a mentor. obsGroup: " + this + " obsMember attempting to add: "+ member);
+    throw new APIException("Obs.error.groupCannotHaveItselfAsAMentor",new Object[]{this,member});
   }
   member.setObsGroup(this);
   groupMembers.add(member);

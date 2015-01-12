@@ -15,13 +15,13 @@
       instance=OpenmrsClassLoader.getInstance().loadClass(handlerGlobalValue).newInstance();
     }
  catch (    Exception ex) {
-      throw new APIException("Failed to instantiate assignment handler object for class class: " + handlerGlobalValue,ex);
+      throw new APIException("failed.instantiate.assignment.handler",new Object[]{handlerGlobalValue},ex);
     }
     if (instance instanceof EncounterVisitHandler) {
       handler=(EncounterVisitHandler)instance;
     }
  else {
-      throw new APIException("The registered visit assignment handler should implement the EncounterVisitHandler interface");
+      throw new APIException("assignment.handler.should.implement.EncounterVisitHandler",(Object[])null);
     }
   }
   return handler;

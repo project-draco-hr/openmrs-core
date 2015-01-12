@@ -3,6 +3,6 @@
   assertNotNull(orderFrequency);
   orderFrequency.setFrequencyPerDay(4d);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("This order frequency cannot be edited because it is already in use");
+  expectedException.expectMessage("Order.frequency.cannot.edit");
   orderService.saveOrderFrequency(orderFrequency);
 }

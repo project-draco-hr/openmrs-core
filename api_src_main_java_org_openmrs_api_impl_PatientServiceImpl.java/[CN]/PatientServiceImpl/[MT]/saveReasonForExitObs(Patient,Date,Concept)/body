@@ -1,12 +1,12 @@
 {
   if (patient == null) {
-    throw new APIException("Patient supplied to method is null");
+    throw new APIException("Patient.null",(Object[])null);
   }
   if (exitDate == null) {
-    throw new APIException("Exit date supplied to method is null");
+    throw new APIException("Patient.exit.date.null",(Object[])null);
   }
   if (cause == null) {
-    throw new APIException("Cause supplied to method is null");
+    throw new APIException("Patient.cause.null",(Object[])null);
   }
   log.debug("Patient is exiting, so let's make sure there's an Obs for it");
   String codProp=Context.getAdministrationService().getGlobalProperty("concept.reasonExitedCare");

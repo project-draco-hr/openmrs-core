@@ -1,7 +1,7 @@
 {
   checkIfPatientIdentifierTypesAreLocked();
   if (reason == null || reason.length() < 1) {
-    throw new APIException("A reason is required when retiring an identifier type");
+    throw new APIException("Patient.identifier.retire.reason",(Object[])null);
   }
   patientIdentifierType.setRetired(true);
   patientIdentifierType.setRetiredBy(Context.getAuthenticatedUser());

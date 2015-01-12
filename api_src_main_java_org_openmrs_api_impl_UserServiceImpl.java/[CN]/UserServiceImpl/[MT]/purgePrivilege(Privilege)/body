@@ -1,6 +1,6 @@
 {
   if (OpenmrsUtil.getCorePrivileges().keySet().contains(privilege.getPrivilege())) {
-    throw new APIException("Cannot delete a core privilege");
+    throw new APIException("Privilege.cannot.delete.core",(Object[])null);
   }
   dao.deletePrivilege(privilege);
 }

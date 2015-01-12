@@ -8,6 +8,6 @@
   assertFalse(previousOrder.getConcept().equals(newConcept));
   order.setConcept(newConcept);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("The concept of the previous order and the new one order don't match");
+  expectedException.expectMessage("Order.previous.concept");
   orderService.saveOrder(order,null);
 }

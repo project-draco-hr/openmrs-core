@@ -13,6 +13,6 @@
   orderService.saveOrder(revise,null);
   Thread.sleep(10);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot unvoid a revision order if the previous order is no longer active");
+  expectedException.expectMessage("Order.action.cannot.unvoid");
   orderService.unvoidOrder(order);
 }

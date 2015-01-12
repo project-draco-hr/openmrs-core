@@ -7,6 +7,6 @@
     return encounter;
   }
  else {
-    throw new APIException(String.format("Privilege %s required to view encounters of this type",encounter.getEncounterType().getViewPrivilege()));
+    throw new APIException("Encounter.error.privilege.required.view",new Object[]{encounter.getEncounterType().getViewPrivilege()});
   }
 }

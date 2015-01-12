@@ -1,7 +1,7 @@
 {
   checkIfPersonAttributeTypesAreLocked();
   if (retiredReason == null || retiredReason.length() < 1) {
-    throw new APIException("A reason is required when retiring a person attribute type");
+    throw new APIException("Person.retiring.reason.required",(Object[])null);
   }
   type.setRetired(true);
   type.setRetiredBy(Context.getAuthenticatedUser());

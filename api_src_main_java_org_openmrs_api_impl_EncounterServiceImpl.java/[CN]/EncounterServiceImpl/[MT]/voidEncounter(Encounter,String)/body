@@ -1,6 +1,6 @@
 {
   if (!canEditEncounter(encounter,null)) {
-    throw new APIException(String.format("Privilege %s required to void encounters of this type",encounter.getEncounterType().getEditPrivilege()));
+    throw new APIException("Encounter.error.privilege.required.void",new Object[]{encounter.getEncounterType().getEditPrivilege()});
   }
   if (reason == null) {
     throw new IllegalArgumentException("The argument 'reason' is required and so cannot be null");

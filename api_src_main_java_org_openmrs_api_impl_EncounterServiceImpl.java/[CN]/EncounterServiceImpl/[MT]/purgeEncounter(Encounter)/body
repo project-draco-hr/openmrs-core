@@ -1,6 +1,6 @@
 {
   if (!canEditEncounter(encounter,null)) {
-    throw new APIException(String.format("Privilege %s required to purge encounters of this type",encounter.getEncounterType().getEditPrivilege()));
+    throw new APIException("Encounter.error.privilege.required.purge",new Object[]{encounter.getEncounterType().getEditPrivilege()});
   }
   dao.deleteEncounter(encounter);
 }

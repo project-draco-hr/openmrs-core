@@ -2,6 +2,6 @@
   OrderFrequency orderFrequency=orderService.getOrderFrequency(1);
   assertNotNull(orderFrequency);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("This order frequency cannot be deleted because it is already in use");
+  expectedException.expectMessage("Order.frequency.cannot.delete");
   orderService.purgeOrderFrequency(orderFrequency);
 }

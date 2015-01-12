@@ -2,12 +2,12 @@
   log.debug("Merging patients: (preferred)" + preferred.getPatientId() + ", (notPreferred) "+ notPreferred.getPatientId());
   if (preferred.getPatientId().equals(notPreferred.getPatientId())) {
     log.debug("Merge operation cancelled: Cannot merge user" + preferred.getPatientId() + " to self");
-    throw new APIException("Merge operation cancelled: Cannot merge user " + preferred.getPatientId() + " to self");
+    throw new APIException("Patient.merge.cancelled",new Object[]{preferred.getPatientId()});
   }
   List<Order> orders=Context.getOrderService().getAllOrdersByPatient(notPreferred);
   for (  Order order : orders) {
     if (!order.isVoided()) {
-      throw new APIException("Cannot merge patients where the not preferred patient has unvoided orders");
+      throw new APIException("Patient.cannot.merge",(Object[])null);
     }
   }
   PersonMergeLogData mergedData=new PersonMergeLogData();

@@ -1,9 +1,9 @@
 {
   if (purgeComplexData(obs) == false) {
-    throw new APIException("Unable to purge complex data for obs: " + obs);
+    throw new APIException("Obs.error.unable.purge.complex.data",new Object[]{obs});
   }
   if (cascade) {
-    throw new APIException("Cascading purge of obs not yet implemented");
+    throw new APIException("Obs.error.cascading.purge.not.implemented",(Object[])null);
   }
   dao.deleteObs(obs);
 }

@@ -1,7 +1,7 @@
 {
   if (conceptToChange != null) {
     if (!conceptToChange.getDatatype().isBoolean()) {
-      throw new APIException("Invalid datatype of the concept to convert, should be Boolean");
+      throw new APIException("Concept.datatype.invalid",(Object[])null);
     }
     conceptToChange.setDatatype(getConceptDatatypeByName("Coded"));
     conceptToChange.addAnswer(new ConceptAnswer(getTrueConcept()));

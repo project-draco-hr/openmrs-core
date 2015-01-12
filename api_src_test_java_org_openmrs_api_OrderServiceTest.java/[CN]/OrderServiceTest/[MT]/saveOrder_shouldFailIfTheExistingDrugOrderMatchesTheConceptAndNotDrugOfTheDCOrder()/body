@@ -13,6 +13,6 @@
   order.setDrug(discontinuationOrderDrug);
   order.setOrderReasonNonCoded("Discontinue this");
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("The drug of the previous order and the new one order don't match");
+  expectedException.expectMessage("Order.previous.drug");
   orderService.saveOrder(order,null);
 }

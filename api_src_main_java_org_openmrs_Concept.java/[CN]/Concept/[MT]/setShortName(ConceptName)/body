@@ -1,7 +1,7 @@
 {
   if (shortName != null) {
     if (shortName.getLocale() == null) {
-      throw new APIException("The locale for a concept name cannot be null");
+      throw new APIException("Concept.name.locale.null",(Object[])null);
     }
     ConceptName oldShortName=getShortNameInLocale(shortName.getLocale());
     if (oldShortName != null) {
@@ -15,6 +15,6 @@
     }
   }
  else {
-    throw new APIException("Short name cannot be null");
+    throw new APIException("Concept.error.shortName.null",(Object[])null);
   }
 }

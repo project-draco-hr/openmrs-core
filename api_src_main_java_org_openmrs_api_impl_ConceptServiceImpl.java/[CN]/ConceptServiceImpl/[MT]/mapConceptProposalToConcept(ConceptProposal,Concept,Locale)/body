@@ -5,7 +5,7 @@
     return null;
   }
   if (mappedConcept == null) {
-    throw new APIException("Illegal Mapped Concept");
+    throw new APIException("Concept.mapped.illegal",(Object[])null);
   }
   ConceptName conceptName=null;
   if (cp.getState().equals(OpenmrsConstants.CONCEPT_PROPOSAL_CONCEPT) || !StringUtils.hasText(cp.getFinalText())) {
