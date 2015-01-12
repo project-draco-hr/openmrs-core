@@ -1,7 +1,7 @@
 {
   User user=Context.getAuthenticatedUser();
   if (user == null) {
-    throw new APIException("No Authenticated user found");
+    throw new APIException("no.authenticated.user.found",(Object[])null);
   }
   user.setUserProperty(key,value);
   return dao.saveUser(user,null);

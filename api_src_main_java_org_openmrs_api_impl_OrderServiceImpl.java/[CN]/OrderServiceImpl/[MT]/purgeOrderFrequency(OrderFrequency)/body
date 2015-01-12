@@ -1,6 +1,6 @@
 {
   if (dao.isOrderFrequencyInUse(orderFrequency)) {
-    throw new APIException("This order frequency cannot be deleted because it is already in use");
+    throw new APIException("Order.frequency.cannot.delete",(Object[])null);
   }
   dao.purgeOrderFrequency(orderFrequency);
 }

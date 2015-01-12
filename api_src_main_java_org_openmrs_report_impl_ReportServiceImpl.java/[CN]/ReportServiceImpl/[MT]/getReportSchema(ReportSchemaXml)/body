@@ -1,7 +1,7 @@
 {
   ReportSchema reportSchema=null;
   if (reportSchemaXml == null || reportSchemaXml.getXml() == null || reportSchemaXml.getXml().length() == 0) {
-    throw new APIException("The current serialized ReportSchema string named 'xml' is null or empty");
+    throw new APIException("ReportSchema.null.or.empty",(Object[])null);
   }
   Serializer deserializer=OpenmrsUtil.getSerializer();
   String expandedXml=applyReportXmlMacros(reportSchemaXml.getXml());

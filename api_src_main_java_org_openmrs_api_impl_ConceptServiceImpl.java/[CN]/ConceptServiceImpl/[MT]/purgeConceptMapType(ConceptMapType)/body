@@ -1,6 +1,6 @@
 {
   if (dao.isConceptMapTypeInUse(conceptMapType)) {
-    throw new APIException(Context.getMessageSourceService().getMessage("ConceptMapType.inUse"));
+    throw new APIException("ConceptMapType.inUse",(Object[])null);
   }
   dao.deleteConceptMapType(conceptMapType);
 }

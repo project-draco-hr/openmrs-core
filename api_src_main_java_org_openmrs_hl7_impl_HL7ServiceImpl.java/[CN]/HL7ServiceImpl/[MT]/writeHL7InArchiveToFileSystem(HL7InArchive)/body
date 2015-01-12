@@ -22,13 +22,13 @@
     writer.write(hl7InArchive.getHL7Data());
     if (writer.checkError()) {
       log.warn("An Error occured while writing hl7 archive with id '" + hl7InArchive.getHL7InArchiveId() + "' to the file system");
-      throw new APIException("could not write HL7 archive to the filesystem (no error provided)");
+      throw new APIException("Hl7Service.write.no.error",(Object[])null);
     }
     return fileToWriteTo.toURI();
   }
  catch (  FileNotFoundException e) {
     log.warn("Failed to write hl7 archive with id '" + hl7InArchive.getHL7InArchiveId() + "' to the file system ",e);
-    throw new APIException("could not write HL7 archive to the filesystem",e);
+    throw new APIException("Hl7Service.write.error",null,e);
   }
  finally {
     if (writer != null) {

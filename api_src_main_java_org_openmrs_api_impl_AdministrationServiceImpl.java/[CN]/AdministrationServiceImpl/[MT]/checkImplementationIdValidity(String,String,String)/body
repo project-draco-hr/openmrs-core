@@ -1,12 +1,12 @@
 {
   if (!StringUtils.hasLength(implementationId)) {
-    throw new APIException("The implementationid cannot be empty");
+    throw new APIException("cannot.be.empty",new Object[]{"implementationid"});
   }
   if (!StringUtils.hasLength(description)) {
-    throw new APIException("The description cannot be empty");
+    throw new APIException("cannot.be.empty",new Object[]{"description"});
   }
   if (!StringUtils.hasLength(passphrase)) {
-    throw new APIException("The passphrase cannot be empty");
+    throw new APIException("cannot.be.empty",new Object[]{"passphrase"});
   }
   Map<String,String> data=new HashMap<String,String>();
   data.put("implementationId",implementationId);

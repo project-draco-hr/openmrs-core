@@ -1,6 +1,6 @@
 {
   if (StringUtils.isBlank(relationshipType.getDescription())) {
-    throw new APIException(Context.getMessageSourceService().getMessage("error.required",new Object[]{Context.getMessageSourceService().getMessage("general.description")},Context.getLocale()));
+    throw new APIException("error.required",new Object[]{Context.getMessageSourceService().getMessage("general.description")});
   }
   return dao.saveRelationshipType(relationshipType);
 }

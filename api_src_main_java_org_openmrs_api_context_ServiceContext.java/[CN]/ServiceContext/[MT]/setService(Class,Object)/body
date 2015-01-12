@@ -25,7 +25,7 @@
       log.debug("Service: " + cls + " set successfully");
     }
  catch (    Exception e) {
-      throw new APIException("Unable to create proxy factory for: " + classInstance.getClass().getName(),e);
+      throw new APIException("service.unable.create.proxy.factory",new Object[]{classInstance.getClass().getName()},e);
     }
   }
 }

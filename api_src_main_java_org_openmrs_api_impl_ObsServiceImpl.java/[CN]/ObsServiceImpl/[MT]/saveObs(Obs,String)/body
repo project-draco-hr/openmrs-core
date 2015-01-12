@@ -5,7 +5,7 @@
       handler.saveObs(obs);
     }
  else {
-      throw new APIException("Unknown handler for " + obs.getConcept());
+      throw new APIException("unknown.handler",new Object[]{obs.getConcept()});
     }
   }
   if (obs != null && obs.getObsId() == null) {
@@ -15,7 +15,7 @@
  else {
     Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
     if (changeMessage == null) {
-      throw new APIException("ChangeMessage is required when updating an obs in the database");
+      throw new APIException("Obs.error.ChangeMessage.required",(Object[])null);
     }
     Encounter encounter=obs.getEncounter();
     if (encounter != null) {

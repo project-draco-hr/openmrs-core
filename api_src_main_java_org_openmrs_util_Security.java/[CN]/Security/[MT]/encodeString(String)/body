@@ -8,10 +8,10 @@
   }
  catch (  NoSuchAlgorithmException e) {
     log.error("Can't encode password because the given algorithm: " + algorithm + "was not found! (fail)",e);
-    throw new APIException("System cannot find password encryption algorithm",e);
+    throw new APIException("system.cannot.find.password.encryption.algorithm",null,e);
   }
 catch (  UnsupportedEncodingException e) {
-    throw new APIException("System cannot find " + encoding + " encoding",e);
+    throw new APIException("system.cannot.find.encoding",new Object[]{encoding},e);
   }
   return hexString(md.digest(input));
 }

@@ -1,16 +1,16 @@
 {
   if (patientProgram.getPatient() == null || patientProgram.getProgram() == null) {
-    throw new APIException("PatientProgram requires a Patient and a Program");
+    throw new APIException("PatientProgram.requires",(Object[])null);
   }
   for (  PatientState state : patientProgram.getStates()) {
     if (state.getState() == null) {
-      throw new APIException("PatientState requires a State");
+      throw new APIException("PatientState.requires",(Object[])null);
     }
     if (state.getPatientProgram() == null) {
       state.setPatientProgram(patientProgram);
     }
  else     if (!state.getPatientProgram().equals(patientProgram)) {
-      throw new APIException("This PatientProgram contains a ProgramWorkflowState whose parent is already assigned to " + state.getPatientProgram());
+      throw new APIException("PatientProgram.already.assigned",new Object[]{state.getPatientProgram()});
     }
     if (patientProgram.getVoided() || state.getVoided()) {
       state.setVoided(true);

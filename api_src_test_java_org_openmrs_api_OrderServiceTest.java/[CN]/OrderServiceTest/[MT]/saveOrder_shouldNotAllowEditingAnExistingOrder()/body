@@ -1,6 +1,6 @@
 {
   final DrugOrder order=(DrugOrder)orderService.getOrder(5);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot edit an existing order, you need to revise it instead");
+  expectedException.expectMessage("Order.cannot.edit.existing");
   orderService.saveOrder(order,null);
 }

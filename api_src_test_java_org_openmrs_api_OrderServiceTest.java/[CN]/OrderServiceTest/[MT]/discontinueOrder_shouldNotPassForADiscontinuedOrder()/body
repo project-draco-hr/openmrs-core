@@ -4,6 +4,6 @@
   assertNotNull(discontinuationOrder.getDateStopped());
   Encounter encounter=encounterService.getEncounter(3);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot discontinue an order that is already stopped, expired or voided");
+  expectedException.expectMessage("Order.stopped.cannot.discontinued");
   orderService.discontinueOrder(discontinuationOrder,(Concept)null,null,null,encounter);
 }

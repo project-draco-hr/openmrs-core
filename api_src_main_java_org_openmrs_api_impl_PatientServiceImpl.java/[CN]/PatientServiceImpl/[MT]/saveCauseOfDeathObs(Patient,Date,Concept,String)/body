@@ -1,12 +1,12 @@
 {
   if (patient == null) {
-    throw new APIException("Patient supplied to method is null");
+    throw new APIException("Patient.null",(Object[])null);
   }
   if (deathDate == null) {
-    throw new APIException("Death date supplied to method is null");
+    throw new APIException("Patient.death.date.null",(Object[])null);
   }
   if (cause == null) {
-    throw new APIException("Cause supplied to method is null");
+    throw new APIException("Patient.cause.null",(Object[])null);
   }
   if (!patient.getDead()) {
     patient.setDead(true);

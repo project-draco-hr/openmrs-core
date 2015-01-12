@@ -6,10 +6,10 @@
     throw new IllegalArgumentException("Discontinue date cannot be in the future");
   }
   if (DISCONTINUE == orderToStop.getAction()) {
-    throw new APIException("An order with action " + DISCONTINUE + " cannot be discontinued.");
+    throw new APIException("Order.action.cannot.discontinued",new Object[]{DISCONTINUE});
   }
   if (!orderToStop.isActive()) {
-    throw new APIException("Cannot discontinue an order that is already stopped, expired or voided");
+    throw new APIException("Order.stopped.cannot.discontinued",(Object[])null);
   }
   setProperty(orderToStop,"dateStopped",discontinueDate);
   saveOrderInternal(orderToStop,null);

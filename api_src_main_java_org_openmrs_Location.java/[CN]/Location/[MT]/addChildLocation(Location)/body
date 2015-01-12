@@ -6,14 +6,14 @@
     childLocations=new HashSet<Location>();
   }
   if (child.equals(this)) {
-    throw new APIException("A location cannot be its own child!");
+    throw new APIException("Location.cannot.be.its.own.child",(Object[])null);
   }
   Location root=this;
   while (root.getParentLocation() != null) {
     root=root.getParentLocation();
   }
   if (isInHierarchy(child,root)) {
-    throw new APIException("Location hierarchy loop detected! You cannot add: '" + child + "' to the parent: '"+ this+ "' because it is in the parent hierarchy somewhere already and a location cannot be its own parent.");
+    throw new APIException("Location.hierarchy.loop",new Object[]{child,this});
   }
   child.setParentLocation(this);
   childLocations.add(child);

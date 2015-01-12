@@ -7,7 +7,7 @@
     field.set(order,value);
   }
  catch (  Exception e) {
-    throw new APIException("Failed to set " + propertyName + " for order:"+ order,e);
+    throw new APIException("Order.failed.set.property",new Object[]{propertyName,order},e);
   }
  finally {
     if (field != null && isAccessible != null) {

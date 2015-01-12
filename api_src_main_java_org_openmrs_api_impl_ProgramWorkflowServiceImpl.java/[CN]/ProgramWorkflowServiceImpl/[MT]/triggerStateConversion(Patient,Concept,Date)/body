@@ -1,12 +1,12 @@
 {
   if (patient == null) {
-    throw new APIException("Attempting to convert state of an invalid patient");
+    throw new APIException("convert.state.invalid.patient",(Object[])null);
   }
   if (trigger == null) {
-    throw new APIException("Attempting to convert state for a patient without a valid trigger concept");
+    throw new APIException("convert.state.patient.without.valid.trigger",(Object[])null);
   }
   if (dateConverted == null) {
-    throw new APIException("Invalid date for converting patient state");
+    throw new APIException("convert.state.invalid.date",(Object[])null);
   }
   for (  PatientProgram patientProgram : getPatientPrograms(patient,null,null,null,null,null,false)) {
     if (patientProgram.getDateCompleted() == null) {

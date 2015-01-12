@@ -9,6 +9,6 @@
   discontinuationOrder.setOrderer(Context.getProviderService().getProvider(1));
   discontinuationOrder.setEncounter(Context.getEncounterService().getEncounter(6));
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("The order type does not match that of the previous order");
+  expectedException.expectMessage("Order.type.does.not.match");
   orderService.saveOrder(discontinuationOrder,null);
 }

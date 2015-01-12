@@ -3,7 +3,7 @@
     return;
   }
   if (OpenmrsUtil.getCoreRoles().keySet().contains(role.getRole())) {
-    throw new APIException("Cannot delete a core role");
+    throw new APIException("Role.cannot.delete.core",(Object[])null);
   }
   if (role.hasChildRoles()) {
     throw new CannotDeleteRoleWithChildrenException();

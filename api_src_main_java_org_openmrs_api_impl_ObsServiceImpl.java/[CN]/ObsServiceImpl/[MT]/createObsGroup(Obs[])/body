@@ -9,7 +9,7 @@
   Integer conceptId=Integer.valueOf(conceptIdStr);
   Concept defaultObsGroupConcept=Context.getConceptService().getConcept(conceptId);
   if (defaultObsGroupConcept == null) {
-    throw new APIException("There is no concept defined with concept id: " + conceptIdStr + "You should correctly define the default obs group concept id with the global propery"+ OpenmrsConstants.GLOBAL_PROPERTY_MEDICAL_RECORD_OBSERVATIONS);
+    throw new APIException("no.concept.defined.with.id",new Object[]{conceptIdStr,OpenmrsConstants.GLOBAL_PROPERTY_MEDICAL_RECORD_OBSERVATIONS});
   }
   Obs obsGroup=new Obs();
   obsGroup.setConcept(defaultObsGroupConcept);

@@ -7,6 +7,6 @@
   order.setEncounter(encounterService.getEncounter(3));
   order.setDateActivated(new Date());
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot determine the order type of the order");
+  expectedException.expectMessage("Order.type.cannot.determine");
   orderService.saveOrder(order,null);
 }

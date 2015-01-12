@@ -7,7 +7,7 @@
   }
   checkPrivileges(user);
   if (user.getUserId() == null && (password == null || password.length() < 1)) {
-    throw new APIException("A password is required when creating a user");
+    throw new APIException("User.creating.password.required",(Object[])null);
   }
   if (hasDuplicateUsername(user)) {
     throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");

@@ -1,9 +1,9 @@
 {
   if (preferredName == null || preferredName.isVoided() || preferredName.isIndexTerm()) {
-    throw new APIException("Preferred name cannot be null, voided or an index term");
+    throw new APIException("Concept.error.preferredName.null",(Object[])null);
   }
  else   if (preferredName.getLocale() == null) {
-    throw new APIException("The locale for a concept name cannot be null");
+    throw new APIException("Concept.name.locale.null",(Object[])null);
   }
   ConceptName oldPreferredName=getPreferredName(preferredName.getLocale());
   if (oldPreferredName != null) {

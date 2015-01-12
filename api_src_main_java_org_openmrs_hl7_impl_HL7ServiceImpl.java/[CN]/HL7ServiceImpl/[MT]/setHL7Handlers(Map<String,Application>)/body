@@ -2,7 +2,7 @@
   for (  Map.Entry<String,Application> entry : handlers.entrySet()) {
     String messageName=entry.getKey();
     if (!messageName.contains("_")) {
-      throw new APIException("Invalid messageName.  The format must be messageType_triggerEvent, e.g: ORU_R01");
+      throw new APIException("Hl7Service.invalid.messageName",(Object[])null);
     }
     String messageType=messageName.split("_")[0];
     String triggerEvent=messageName.split("_")[1];

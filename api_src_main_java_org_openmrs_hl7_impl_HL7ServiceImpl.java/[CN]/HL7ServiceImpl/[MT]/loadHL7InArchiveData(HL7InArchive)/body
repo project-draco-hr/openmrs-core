@@ -10,9 +10,9 @@
     archive.setLoaded(true);
   }
  catch (  URISyntaxException e) {
-    throw new APIException("malformed HL7 archive location: " + archive.getHL7Data(),e);
+    throw new APIException("Hl7Service.malformed.archive.location",new Object[]{archive.getHL7Data()},e);
   }
 catch (  IOException e) {
-    throw new APIException("unable to convert HL7 archive file to a string: " + archive.getHL7Data(),e);
+    throw new APIException("Hl7Service.unable.convert.archive",new Object[]{archive.getHL7Data()},e);
   }
 }

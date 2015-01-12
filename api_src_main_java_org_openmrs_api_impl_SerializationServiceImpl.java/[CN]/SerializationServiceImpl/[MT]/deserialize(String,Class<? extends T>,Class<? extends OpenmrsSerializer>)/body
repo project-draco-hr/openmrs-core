@@ -1,7 +1,7 @@
 {
   OpenmrsSerializer serializer=getSerializer(serializerClass);
   if (serializer == null) {
-    throw new APIException("OpenmrsSerializer of class <" + serializerClass + "> not found.");
+    throw new APIException("serializer.not.found",new Object[]{serializerClass});
   }
   try {
     return (T)serializer.deserialize(serializedObject,objectClass);

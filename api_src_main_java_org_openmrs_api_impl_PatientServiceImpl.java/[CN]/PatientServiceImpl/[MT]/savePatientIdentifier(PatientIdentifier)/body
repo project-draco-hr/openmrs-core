@@ -4,7 +4,7 @@
     locationBehavior=patientIdentifier.getIdentifierType().getLocationBehavior();
   }
   if (patientIdentifier == null || patientIdentifier.getPatient() == null || patientIdentifier.getIdentifierType() == null || StringUtils.isBlank(patientIdentifier.getIdentifier()) || (locationBehavior == PatientIdentifierType.LocationBehavior.REQUIRED && patientIdentifier.getLocation() == null)) {
-    throw new APIException("PatientIdentifier argument or one of its required fields is null or invalid");
+    throw new APIException("Patient.identifier.null",(Object[])null);
   }
   if (patientIdentifier.getPatientIdentifierId() == null) {
     Context.requirePrivilege(PrivilegeConstants.ADD_PATIENT_IDENTIFIERS);

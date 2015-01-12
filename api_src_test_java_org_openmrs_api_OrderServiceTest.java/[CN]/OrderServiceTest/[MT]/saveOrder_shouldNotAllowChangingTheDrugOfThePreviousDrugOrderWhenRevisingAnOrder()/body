@@ -8,6 +8,6 @@
   assertFalse(previousOrder.getDrug().equals(newDrug));
   previousOrder.setDrug(newDrug);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Cannot change the drug of a drug order");
+  expectedException.expectMessage("Order.cannot.change.drug");
   orderService.saveOrder(order,null);
 }

@@ -1,26 +1,26 @@
 {
   if (program.getConcept() == null) {
-    throw new APIException("Program concept is required");
+    throw new APIException("Program.concept.required",(Object[])null);
   }
   for (  ProgramWorkflow workflow : program.getAllWorkflows()) {
     if (workflow.getConcept() == null) {
-      throw new APIException("ProgramWorkflow concept is required");
+      throw new APIException("ProgramWorkflow.concept.required",(Object[])null);
     }
     if (workflow.getProgram() == null) {
       workflow.setProgram(program);
     }
  else     if (!workflow.getProgram().equals(program)) {
-      throw new APIException("This Program contains a ProgramWorkflow whose parent Program is already assigned to " + workflow.getProgram());
+      throw new APIException("Program.error.contains.ProgramWorkflow",new Object[]{workflow.getProgram()});
     }
     for (    ProgramWorkflowState state : workflow.getStates()) {
       if (state.getConcept() == null || state.getInitial() == null || state.getTerminal() == null) {
-        throw new APIException("ProgramWorkflowState concept, initial, terminal are required");
+        throw new APIException("ProgramWorkflowState.requires",(Object[])null);
       }
       if (state.getProgramWorkflow() == null) {
         state.setProgramWorkflow(workflow);
       }
  else       if (!state.getProgramWorkflow().equals(workflow)) {
-        throw new APIException("This ProgramWorkflow contains a State whose parent ProgramWorkflow is already assigned to " + workflow.getProgram());
+        throw new APIException("ProgramWorkflow.error.contains.state",new Object[]{workflow.getProgram()});
       }
     }
   }

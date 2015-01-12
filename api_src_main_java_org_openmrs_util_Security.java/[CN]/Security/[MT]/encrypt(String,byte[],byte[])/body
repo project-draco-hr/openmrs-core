@@ -8,10 +8,10 @@
     encrypted=cipher.doFinal(text.getBytes(encoding));
   }
  catch (  GeneralSecurityException e) {
-    throw new APIException("could not encrypt text",e);
+    throw new APIException("could.not.encrypt.text",null,e);
   }
 catch (  UnsupportedEncodingException e) {
-    throw new APIException("System cannot find " + encoding + " encoding",e);
+    throw new APIException("system.cannot.find.encoding",new Object[]{encoding},e);
   }
   return Base64.encode(encrypted);
 }

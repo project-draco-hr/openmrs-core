@@ -2,7 +2,7 @@
   String classString=(String)params.get(0);
   Object classInstance=params.get(1);
   if (classString == null || classInstance == null) {
-    throw new APIException("Unable to find classString or classInstance in params");
+    throw new APIException("service.unable.find",(Object[])null);
   }
   Class cls=null;
   try {
@@ -29,7 +29,7 @@
     }
   }
  catch (  ClassNotFoundException e) {
-    throw new APIException("Unable to set module service: " + classString,e);
+    throw new APIException("service.unable.set",new Object[]{classString},e);
   }
   setService(cls,classInstance);
   if (OpenmrsService.class.isAssignableFrom(classInstance.getClass())) {

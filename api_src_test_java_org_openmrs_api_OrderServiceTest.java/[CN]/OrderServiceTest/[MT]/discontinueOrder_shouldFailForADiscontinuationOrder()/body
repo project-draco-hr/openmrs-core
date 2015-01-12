@@ -4,6 +4,6 @@
   assertEquals(Action.DISCONTINUE,discontinuationOrder.getAction());
   Encounter encounter=encounterService.getEncounter(3);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("An order with action " + Order.Action.DISCONTINUE + " cannot be discontinued.");
+  expectedException.expectMessage("Order.action.cannot.discontinued");
   orderService.discontinueOrder(discontinuationOrder,"Test if I can discontinue this",null,null,encounter);
 }
