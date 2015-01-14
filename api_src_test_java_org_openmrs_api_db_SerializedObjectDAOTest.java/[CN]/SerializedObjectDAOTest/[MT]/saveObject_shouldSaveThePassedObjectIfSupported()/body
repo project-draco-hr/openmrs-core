@@ -1,11 +1,11 @@
 {
-  ReportSchema data=new ReportSchema();
-  data.setName("NewReport");
-  data.setDescription("This is to test saving a report");
+  Program data=new Program();
+  data.setName("NewProgram");
+  data.setDescription("This is to test saving a Program");
   data.setCreator(new User(1));
   data.setDateCreated(new Date());
   data=dao.saveObject(data);
   Assert.assertNotNull(data.getId());
-  ReportSchema newData=dao.getObject(ReportSchema.class,data.getId());
-  assertEquals("NewReport",newData.getName());
+  Program newData=dao.getObject(Program.class,data.getId());
+  assertEquals("NewProgram",newData.getName());
 }
