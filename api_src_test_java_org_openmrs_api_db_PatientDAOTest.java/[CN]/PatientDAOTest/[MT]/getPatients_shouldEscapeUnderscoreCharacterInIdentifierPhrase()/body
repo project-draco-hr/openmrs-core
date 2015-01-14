@@ -1,4 +1,6 @@
 {
+  deleteAllData();
+  baseSetupWithStandardDataAndAuthentication();
   Patient patient2=pService.getPatient(2);
   PatientIdentifier patientIdentifier=new PatientIdentifier("_567",pService.getPatientIdentifierType(5),Context.getLocationService().getLocation(1));
   patient2.addIdentifier(patientIdentifier);

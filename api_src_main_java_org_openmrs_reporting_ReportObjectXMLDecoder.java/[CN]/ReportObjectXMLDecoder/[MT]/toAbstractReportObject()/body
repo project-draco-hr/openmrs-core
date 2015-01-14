@@ -1,7 +1,0 @@
-{
-  ExceptionListener exListener=new ReportObjectWrapperExceptionListener();
-  XMLDecoder dec=new XMLDecoder(new BufferedInputStream(new ByteArrayInputStream(xmlToDecode.getBytes())),null,exListener);
-  AbstractReportObject o=(AbstractReportObject)dec.readObject();
-  dec.close();
-  return o;
-}
