@@ -13,5 +13,6 @@
     if (existingProgram != null && existingProgram.getUuid().equals(p.getUuid())) {
       Context.evictFromSession(existingProgram);
     }
+    ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name");
   }
 }

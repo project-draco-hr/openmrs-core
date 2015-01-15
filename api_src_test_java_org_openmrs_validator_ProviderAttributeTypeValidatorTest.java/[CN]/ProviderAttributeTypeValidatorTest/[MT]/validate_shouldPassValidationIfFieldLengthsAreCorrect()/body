@@ -1,0 +1,10 @@
+{
+  ProviderAttributeType type=new ProviderAttributeType();
+  type.setName("name");
+  type.setDatatypeClassname("org.openmrs.customdatatype.datatype.FreeTextDatatype");
+  type.setDescription("description");
+  type.setRetireReason("retireReason");
+  Errors errors=new BindException(type,"type");
+  new ProviderAttributeTypeValidator().validate(type,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

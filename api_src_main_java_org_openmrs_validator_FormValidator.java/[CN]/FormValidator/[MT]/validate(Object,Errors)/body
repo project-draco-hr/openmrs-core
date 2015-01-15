@@ -12,5 +12,6 @@
     if (form.isRetired()) {
       ValidationUtils.rejectIfEmptyOrWhitespace(errors,"retireReason","general.retiredReason.empty");
     }
+    ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","version","description","retireReason");
   }
 }

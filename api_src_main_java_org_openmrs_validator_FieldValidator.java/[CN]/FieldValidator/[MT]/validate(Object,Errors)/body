@@ -13,4 +13,5 @@
   if (field.getRetired() == null) {
     errors.rejectValue("retired","error.general");
   }
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","tableName","attributeName","retireReason");
 }

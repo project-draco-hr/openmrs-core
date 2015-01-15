@@ -1,0 +1,16 @@
+{
+  OrderType orderType=new OrderType();
+  orderType.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  orderType.setJavaClassName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Collection<ConceptClass> col=new HashSet<ConceptClass>();
+  col.add(Context.getConceptService().getConceptClass(2));
+  orderType.setConceptClasses(col);
+  orderType.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  orderType.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(orderType,"orderType");
+  new OrderTypeValidator().validate(orderType,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("name"));
+  Assert.assertEquals(true,errors.hasFieldErrors("javaClassName"));
+  Assert.assertEquals(true,errors.hasFieldErrors("description"));
+  Assert.assertEquals(true,errors.hasFieldErrors("retireReason"));
+}

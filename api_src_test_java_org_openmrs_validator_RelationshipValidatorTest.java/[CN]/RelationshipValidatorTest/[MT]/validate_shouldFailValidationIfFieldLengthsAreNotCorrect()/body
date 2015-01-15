@@ -1,0 +1,7 @@
+{
+  Relationship relationship=new Relationship(1);
+  relationship.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(relationship,"relationship");
+  new RelationshipValidator().validate(relationship,errors);
+  Assert.assertEquals(true,errors.hasFieldErrors("voidReason"));
+}

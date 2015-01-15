@@ -1,0 +1,17 @@
+{
+  VisitAttributeType visitAttributeType=new VisitAttributeType();
+  visitAttributeType.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  visitAttributeType.setMinOccurs(1);
+  visitAttributeType.setDatatypeConfig("[a-z]+");
+  visitAttributeType.setDatatypeClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  visitAttributeType.setDescription(new String(new char[66000]));
+  visitAttributeType.setPreferredHandlerClassname("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  visitAttributeType.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(visitAttributeType,"visitAttributeType");
+  new VisitAttributeTypeValidator().validate(visitAttributeType,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertTrue(errors.hasFieldErrors("datatypeClassname"));
+  Assert.assertTrue(errors.hasFieldErrors("preferredHandlerClassname"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

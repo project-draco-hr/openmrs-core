@@ -1,0 +1,7 @@
+{
+  Visit visit=makeVisit(42);
+  visit.setVoidReason("voidReason");
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  assertEquals(false,errors.hasFieldErrors("voidReason"));
+}

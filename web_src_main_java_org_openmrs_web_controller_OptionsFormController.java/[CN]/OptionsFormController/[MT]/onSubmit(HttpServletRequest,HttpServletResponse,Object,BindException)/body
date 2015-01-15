@@ -106,7 +106,13 @@
         newPersonName.setPreferred(true);
         user.addName(newPersonName);
       }
-      ValidateUtil.validate(user,errors);
+      Errors userErrors=new BindException(user,"user");
+      ValidateUtil.validate(user,userErrors);
+      if (userErrors.hasErrors()) {
+        for (        ObjectError error : userErrors.getAllErrors()) {
+          errors.reject(error.getCode(),error.getArguments(),"");
+        }
+      }
       if (errors.hasErrors()) {
         return super.processFormSubmission(request,response,opts,errors);
       }

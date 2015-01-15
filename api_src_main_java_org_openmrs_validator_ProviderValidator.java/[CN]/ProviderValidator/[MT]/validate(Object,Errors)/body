@@ -12,5 +12,6 @@
   if (provider.isRetired() && StringUtils.isEmpty(provider.getRetireReason())) {
     errors.rejectValue("retireReason","Provider.error.retireReason.required");
   }
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","identifier","retireReason");
   super.validateAttributes(provider,errors,Context.getProviderService().getAllProviderAttributeTypes());
 }

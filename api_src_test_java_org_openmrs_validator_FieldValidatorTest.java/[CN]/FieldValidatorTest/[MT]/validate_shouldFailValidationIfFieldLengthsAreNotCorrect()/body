@@ -1,0 +1,20 @@
+{
+  Field ff=new Field();
+  FieldType ft=new FieldType();
+  Boolean retired=new Boolean(false);
+  ft.setId(0xdeadcafe);
+  ff.setFieldType(ft);
+  ff.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  ff.setRetired(retired);
+  Boolean multiple=new Boolean(false);
+  ff.setSelectMultiple(multiple);
+  ff.setTableName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  ff.setAttributeName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  ff.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(ff,"field");
+  new FieldValidator().validate(ff,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("tableName"));
+  Assert.assertTrue(errors.hasFieldErrors("attributeName"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

@@ -2,4 +2,5 @@
   Obs obs=(Obs)obj;
   List<Obs> ancestors=new ArrayList<Obs>();
   validateHelper(obs,errors,ancestors,true);
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"accessionNumber","valueModifier","valueComplex","comment","voidReason");
 }

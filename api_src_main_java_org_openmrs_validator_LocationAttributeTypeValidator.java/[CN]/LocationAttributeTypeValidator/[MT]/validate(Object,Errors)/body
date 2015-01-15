@@ -11,4 +11,5 @@
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","LocationAttributeType.error.nameEmpty");
   }
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","description","datatypeClassname","preferredHandlerClassname","retireReason");
 }

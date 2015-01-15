@@ -1,0 +1,7 @@
+{
+  Visit visit=makeVisit(42);
+  visit.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(visit,"visit");
+  new VisitValidator().validate(visit,errors);
+  assertEquals(true,errors.hasFieldErrors("voidReason"));
+}

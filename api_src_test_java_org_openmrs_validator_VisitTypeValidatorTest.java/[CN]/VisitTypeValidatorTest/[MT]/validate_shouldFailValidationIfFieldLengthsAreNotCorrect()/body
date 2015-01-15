@@ -1,0 +1,11 @@
+{
+  VisitType visitType=new VisitType();
+  visitType.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  visitType.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  visitType.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(visitType,"visitType");
+  new VisitTypeValidator().validate(visitType,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+  Assert.assertTrue(errors.hasFieldErrors("description"));
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}

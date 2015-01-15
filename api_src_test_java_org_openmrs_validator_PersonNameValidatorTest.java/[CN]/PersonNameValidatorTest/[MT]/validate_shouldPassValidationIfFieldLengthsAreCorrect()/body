@@ -1,0 +1,15 @@
+{
+  PersonName personName=new PersonName();
+  personName.setPrefix("prefix");
+  personName.setGivenName("givenName");
+  personName.setMiddleName("middleName");
+  personName.setFamilyNamePrefix("familyNamePrefix");
+  personName.setFamilyName("familyName");
+  personName.setFamilyName2("familyName");
+  personName.setFamilyNameSuffix("familyNameSuffix");
+  personName.setDegree("degree");
+  personName.setVoidReason("voidReason");
+  Errors errors=new BindException(personName,"personName");
+  new PersonNameValidator().validate(personName,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

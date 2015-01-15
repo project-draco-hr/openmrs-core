@@ -1,0 +1,9 @@
+{
+  attributeType.setName("name");
+  attributeType.setMinOccurs(1);
+  attributeType.setDatatypeClassname(RegexValidatedTextDatatype.class.getName());
+  attributeType.setDatatypeConfig("[a-z]+");
+  attributeType.setHandlerConfig("HandlerConfig");
+  validator.validate(attributeType,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
