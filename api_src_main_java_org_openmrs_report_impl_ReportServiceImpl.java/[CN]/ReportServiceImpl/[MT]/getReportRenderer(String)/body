@@ -1,9 +1,0 @@
-{
-  try {
-    return renderers.get(OpenmrsClassLoader.getInstance().loadClass(className));
-  }
- catch (  Exception ex) {
-    log.error("Failed to get report renderer for " + className,ex);
-    return null;
-  }
-}
