@@ -1,0 +1,13 @@
+{
+  if (allAttributeMap != null) {
+    return allAttributeMap;
+  }
+  if (log.isDebugEnabled()) {
+    log.debug("Current Person Attributes: \n" + printAttributes());
+  }
+  allAttributeMap=new HashMap<String,PersonAttribute>();
+  for (  PersonAttribute attribute : getAttributes()) {
+    allAttributeMap.put(attribute.getAttributeType().getName(),attribute);
+  }
+  return allAttributeMap;
+}
