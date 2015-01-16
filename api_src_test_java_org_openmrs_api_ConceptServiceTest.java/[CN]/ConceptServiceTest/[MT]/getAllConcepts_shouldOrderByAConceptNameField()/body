@@ -1,10 +1,10 @@
 {
   List<Concept> allConcepts=conceptService.getAllConcepts("name",true,false);
-  assertEquals(33,allConcepts.size());
+  assertEquals(34,allConcepts.size());
   assertEquals("ANTIRETROVIRAL TREATMENT GROUP",allConcepts.get(0).getName().getName());
   assertEquals("tab (s)",allConcepts.get(allConcepts.size() - 1).getName().getName());
   allConcepts=conceptService.getAllConcepts("name",false,false);
-  assertEquals(33,allConcepts.size());
+  assertEquals(34,allConcepts.size());
   assertEquals("tab (s)",allConcepts.get(0).getName().getName());
   assertEquals("ANTIRETROVIRAL TREATMENT GROUP",allConcepts.get(allConcepts.size() - 1).getName().getName());
 }
