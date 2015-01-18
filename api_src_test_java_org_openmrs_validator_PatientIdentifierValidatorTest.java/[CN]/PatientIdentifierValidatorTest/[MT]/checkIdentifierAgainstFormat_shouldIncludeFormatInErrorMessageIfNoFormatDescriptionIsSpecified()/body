@@ -1,0 +1,9 @@
+{
+  String format="\\d+";
+  String formatDescription=null;
+  String expectedErrorMessage="Identifier \"abc\" does not match : \"\\d+\"";
+  Mockito.when(messageSourceService.getMessage(eq("PatientIdentifier.error.invalidFormat"),aryEq(new String[]{"abc",format}),isA(Locale.class))).thenReturn(expectedErrorMessage);
+  expectedException.expect(InvalidIdentifierFormatException.class);
+  expectedException.expectMessage(expectedErrorMessage);
+  PatientIdentifierValidator.checkIdentifierAgainstFormat("abc",format,formatDescription);
+}
