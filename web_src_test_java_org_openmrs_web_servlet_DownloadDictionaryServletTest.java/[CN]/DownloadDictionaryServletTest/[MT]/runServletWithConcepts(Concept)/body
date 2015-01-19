@@ -1,0 +1,10 @@
+{
+  DownloadDictionaryServlet downloadServlet=new DownloadDictionaryServlet();
+  MockHttpServletRequest request=new MockHttpServletRequest("GET","/downloadDictionary.csv");
+  request.setContextPath("/somecontextpath");
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  List<Concept> conceptList=Arrays.asList(concepts);
+  Mockito.when(conceptService.conceptIterator()).thenReturn(conceptList.iterator());
+  downloadServlet.service(request,response);
+  return response.getContentAsString();
+}

@@ -1,0 +1,5 @@
+{
+  String actualContent=runServletWithConcepts(conceptDAO.getConcept(4));
+  String expectedContent=EXPECTED_HEADER + "4,\"CIVIL STATUS\",\"What is the person's marital state\",\"CIVIL STATUS\",\"" + "SINGLE\nMARRIED\","+ "\"\",\"ConvSet\",\"Coded\",\"Super User\",\"Super User\"\n";
+  Assert.assertEquals(expectedContent,actualContent);
+}
