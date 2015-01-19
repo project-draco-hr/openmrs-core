@@ -1,0 +1,16 @@
+{
+  Context.setLocale(new Locale("en","GB"));
+  List<Concept> concepts=Context.getConceptService().getConceptsByName("HSM");
+  Assert.assertEquals(1,concepts.size());
+  Assert.assertEquals(true,concepts.get(0).getShortNameInLocale(Context.getLocale()).getName().equalsIgnoreCase("HSM"));
+  Concept concept=new Concept();
+  ConceptName conceptFullySpecifiedName=new ConceptName("holosystolic murmur",Context.getLocale());
+  conceptFullySpecifiedName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
+  ConceptName conceptShortName=new ConceptName("HSM",Context.getLocale());
+  conceptShortName.setConceptNameType(ConceptNameType.SHORT);
+  concept.addName(conceptFullySpecifiedName);
+  concept.addName(conceptShortName);
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertEquals(false,errors.hasErrors());
+}
