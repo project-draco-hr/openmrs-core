@@ -1,0 +1,16 @@
+{
+  Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"en_GB, es_CL"));
+  List<Locale> locales=new ArrayList<Locale>();
+  locales.add(new Locale("pl","PL"));
+  locales.add(new Locale("en"));
+  locales.add(new Locale("es"));
+  MutableResourceBundleMessageSource mutableResourceBundleMessageSource=Mockito.mock(MutableResourceBundleMessageSource.class);
+  Mockito.when(mutableResourceBundleMessageSource.getLocales()).thenReturn(locales);
+  MutableMessageSource mutableMessageSource=Context.getMessageSourceService().getActiveMessageSource();
+  Context.getMessageSourceService().setActiveMessageSource(mutableResourceBundleMessageSource);
+  Set<Locale> presentationLocales=Context.getAdministrationService().getPresentationLocales();
+  Context.getMessageSourceService().setActiveMessageSource(mutableMessageSource);
+  Assert.assertEquals(2,presentationLocales.size());
+  Assert.assertTrue("en",presentationLocales.contains(new Locale("en")));
+  Assert.assertTrue("es",presentationLocales.contains(new Locale("es")));
+}
