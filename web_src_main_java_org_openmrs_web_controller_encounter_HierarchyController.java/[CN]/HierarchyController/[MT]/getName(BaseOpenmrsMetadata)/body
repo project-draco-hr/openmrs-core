@@ -1,3 +1,5 @@
 {
-  return element.isRetired() ? "<strike>" + element + "</strike>" : element.getName();
+  String name=StringEscapeUtils.escapeHtml(element.getName());
+  name=StringEscapeUtils.escapeJavaScript(name);
+  return element.isRetired() ? "<strike>" + name + "</strike>" : name;
 }
