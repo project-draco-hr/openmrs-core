@@ -11,8 +11,8 @@
   revisedOrder.setOrderer(providerService.getProvider(1));
   revisedOrder.setEncounter(encounterService.getEncounter(3));
   orderService.saveOrder(revisedOrder,null);
-  Thread.sleep(1);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(originalOrderCount,activeOrders.size());
+  assertEquals(revisedOrder.getDateActivated(),DateUtils.addSeconds(originalOrder.getDateStopped(),1));
   assertFalse(OrderUtilTest.isActiveOrder(originalOrder,null));
 }

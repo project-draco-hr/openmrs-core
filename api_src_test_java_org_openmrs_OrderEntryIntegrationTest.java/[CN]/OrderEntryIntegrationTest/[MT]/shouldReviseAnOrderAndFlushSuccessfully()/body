@@ -12,7 +12,6 @@
   revisedOrder.setEncounter(encounterService.getEncounter(3));
   orderService.saveOrder(revisedOrder,null);
   Context.flushSession();
-  Thread.sleep(1);
   List<Order> activeOrders=orderService.getActiveOrders(patient,null,null,null);
   assertEquals(originalOrderCount,activeOrders.size());
   assertFalse(OrderUtilTest.isActiveOrder(originalOrder,null));

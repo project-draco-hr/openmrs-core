@@ -57,7 +57,7 @@
     if (previousOrder == null) {
       throw new APIException("Order.previous.required",(Object[])null);
     }
-    stopOrder(previousOrder,order.getDateActivated());
+    stopOrder(previousOrder,aMomentBefore(order.getDateActivated()));
   }
  else   if (DISCONTINUE == order.getAction()) {
     discontinueExistingOrdersIfNecessary(order);
