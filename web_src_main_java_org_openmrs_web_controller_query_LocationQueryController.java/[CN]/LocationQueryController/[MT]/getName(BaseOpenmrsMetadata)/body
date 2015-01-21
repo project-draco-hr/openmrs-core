@@ -1,3 +1,5 @@
 {
-  return metadata.isRetired() ? "<strike>" + metadata.getName() + "</strike>" : metadata.getName();
+  String name=StringEscapeUtils.escapeHtml(metadata.getName());
+  name=StringEscapeUtils.escapeJavaScript(name);
+  return metadata.isRetired() ? "<strike>" + name + "</strike>" : name;
 }
