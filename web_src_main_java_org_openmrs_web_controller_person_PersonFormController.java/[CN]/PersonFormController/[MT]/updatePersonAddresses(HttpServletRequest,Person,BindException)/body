@@ -143,7 +143,13 @@
       if (endDates.length >= i + 1 && StringUtils.isNotBlank(endDates[i])) {
         pa.setEndDate(Context.getDateFormat().parse(endDates[i]));
       }
-      new PersonAddressValidator().validate(pa,errors);
+      Errors addressErrors=new BindException(pa,"personAddress");
+      new PersonAddressValidator().validate(pa,addressErrors);
+      if (addressErrors.hasErrors()) {
+        for (        ObjectError error : addressErrors.getAllErrors()) {
+          errors.reject(error.getCode(),error.getArguments(),"");
+        }
+      }
       if (errors.hasErrors()) {
         return;
       }
@@ -154,7 +160,13 @@
     PersonAddress preferredAddress=null;
     while (addresses.hasNext()) {
       currentAddress=addresses.next();
-      new PersonAddressValidator().validate(currentAddress,errors);
+      Errors addressErrors=new BindException(currentAddress,"personAddress");
+      new PersonAddressValidator().validate(currentAddress,addressErrors);
+      if (addressErrors.hasErrors()) {
+        for (        ObjectError error : addressErrors.getAllErrors()) {
+          errors.reject(error.getCode(),error.getArguments(),"");
+        }
+      }
       if (errors.hasErrors()) {
         return;
       }
