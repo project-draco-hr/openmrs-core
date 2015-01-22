@@ -12,12 +12,12 @@
   log.debug("Found list of size: " + personList.size());
   if (personList.size() < 1 && Context.isAuthenticated()) {
     HashMap<String,String> person=getParametersFromRequest(request);
-    String name=person.get("name");
-    String birthdate=person.get("birthdate");
-    String age=person.get("age");
-    String gender=person.get("gender");
-    String viewType=person.get("viewType");
-    String personType=person.get("personType");
+    String name=person.get(NAME);
+    String birthdate=person.get(BIRTHDATE);
+    String age=person.get(AGE);
+    String gender=person.get(GENDER);
+    String viewType=person.get(VIEWTYPE);
+    String personType=person.get(PERSONTYPE);
     if (viewType == null) {
       viewType="edit";
     }
