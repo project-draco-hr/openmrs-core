@@ -6,5 +6,5 @@
   drugOrder.setDuration(10);
   drugOrder.setDurationUnits(createUnits(Duration.SNOMED_CT_DAYS_CODE));
   Date autoExpireDate=new SimpleDosingInstructions().getAutoExpireDate(drugOrder);
-  assertEquals(createDateTime("2014-07-14 23:59:59.999"),autoExpireDate);
+  assertEquals(createDateTime("2014-07-14 23:59:59"),autoExpireDate);
 }
