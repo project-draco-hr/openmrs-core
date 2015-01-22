@@ -1,16 +1,16 @@
 {
-  if ("".equals(person.get("personId"))) {
-    return "?addName=" + URLEncoder.encode(person.get("name"),"UTF-8") + "&addBirthdate="+ person.get("birthdate")+ "&addAge="+ person.get("age")+ "&addGender="+ person.get("gender");
+  if ("".equals(person.get(PERSONID))) {
+    return "?addName=" + URLEncoder.encode(person.get(NAME),"UTF-8") + "&addBirthdate="+ person.get(BIRTHDATE)+ "&addAge="+ person.get(AGE)+ "&addGender="+ person.get(GENDER);
   }
  else {
-    if ("patient".equals(person.get("personType"))) {
-      return "?patientId=" + person.get("personId");
+    if ("patient".equals(person.get(PERSONTYPE))) {
+      return "?patientId=" + person.get(PERSONID);
     }
- else     if ("user".equals(person.get("personType"))) {
-      return "?userId=" + person.get("personId");
+ else     if ("user".equals(person.get(PERSONTYPE))) {
+      return "?userId=" + person.get(PERSONID);
     }
  else {
-      return "?personId=" + person.get("personId");
+      return "?personId=" + person.get(PERSONID);
     }
   }
 }

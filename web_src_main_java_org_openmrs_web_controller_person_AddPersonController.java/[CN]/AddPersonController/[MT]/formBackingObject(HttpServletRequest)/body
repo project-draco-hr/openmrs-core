@@ -6,10 +6,10 @@
     Integer userId=Context.getAuthenticatedUser().getUserId();
     invalidAgeFormat=false;
     HashMap<String,String> person=getParametersFromRequest(request);
-    String gender=person.get("gender");
-    String name=person.get("name");
-    String birthdate=person.get("birthdate");
-    String age=person.get("age");
+    String gender=person.get(GENDER);
+    String name=person.get(NAME);
+    String birthdate=person.get(BIRTHDATE);
+    String age=person.get(AGE);
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
     if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
