@@ -1,0 +1,11 @@
+{
+  List<Encounter> encounterList=new ArrayList<Encounter>();
+  if (encounters != null) {
+    for (    Encounter encounter : encounters) {
+      if (!encounter.isVoided()) {
+        encounterList.add(encounter);
+      }
+    }
+  }
+  return encounterList;
+}
