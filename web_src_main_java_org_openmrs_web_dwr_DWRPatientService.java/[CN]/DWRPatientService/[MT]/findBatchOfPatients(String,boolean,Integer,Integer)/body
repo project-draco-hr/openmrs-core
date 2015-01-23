@@ -9,7 +9,7 @@
   PatientService ps=Context.getPatientService();
   Collection<Patient> patients;
   try {
-    patients=ps.getPatients(searchValue,start,length);
+    patients=ps.getPatients(searchValue,includeVoided,start,length);
   }
  catch (  APIAuthenticationException e) {
     patientList.add(Context.getMessageSourceService().getMessage("Patient.search.error") + " - " + e.getMessage());

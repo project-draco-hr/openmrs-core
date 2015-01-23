@@ -1,0 +1,7 @@
+{
+  Criterion criterion=Restrictions.disjunction().add(Restrictions.eq("name.givenName",name).ignoreCase()).add(Restrictions.eq("name.middleName",name).ignoreCase()).add(Restrictions.eq("name.familyName",name).ignoreCase()).add(Restrictions.eq("name.familyName2",name).ignoreCase());
+  if (!includeVoided) {
+    return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(criterion);
+  }
+  return criterion;
+}

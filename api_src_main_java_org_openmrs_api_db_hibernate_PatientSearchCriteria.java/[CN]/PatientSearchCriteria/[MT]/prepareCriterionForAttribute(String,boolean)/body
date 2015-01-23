@@ -4,7 +4,7 @@
   MatchMode matchMode=personSearchCriteria.getAttributeMatchMode();
   String[] queryParts=getQueryParts(query);
   for (  String queryPart : queryParts) {
-    conjunction.add(personSearchCriteria.prepareCriterionForAttribute(queryPart,matchMode));
+    conjunction.add(personSearchCriteria.prepareCriterionForAttribute(queryPart,includeVoided,matchMode));
   }
   return conjunction;
 }

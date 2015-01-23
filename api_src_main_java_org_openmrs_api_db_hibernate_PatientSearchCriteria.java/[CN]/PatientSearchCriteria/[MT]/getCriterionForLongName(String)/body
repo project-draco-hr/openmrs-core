@@ -1,4 +1,0 @@
-{
-  MatchMode matchMode=getMatchMode();
-  return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(Restrictions.disjunction().add(Restrictions.like("name.givenName",name,matchMode)).add(Restrictions.like("name.middleName",name,matchMode)).add(Restrictions.like("name.familyName",name,matchMode)).add(Restrictions.like("name.familyName2",name,matchMode)));
-}

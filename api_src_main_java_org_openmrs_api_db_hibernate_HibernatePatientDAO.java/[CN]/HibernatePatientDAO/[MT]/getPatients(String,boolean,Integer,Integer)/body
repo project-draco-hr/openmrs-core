@@ -1,0 +1,9 @@
+{
+  if (StringUtils.isBlank(query) || (length != null && length < 1)) {
+    return Collections.emptyList();
+  }
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
+  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(query,includeVoided);
+  setFirstAndMaxResult(criteria,start,length);
+  return criteria.list();
+}

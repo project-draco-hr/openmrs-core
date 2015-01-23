@@ -1,0 +1,8 @@
+{
+  MatchMode matchMode=getMatchMode();
+  Criterion criterion=Restrictions.disjunction().add(Restrictions.like("name.givenName",name,matchMode)).add(Restrictions.like("name.middleName",name,matchMode)).add(Restrictions.like("name.familyName",name,matchMode)).add(Restrictions.like("name.familyName2",name,matchMode));
+  if (!includeVoided) {
+    return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(criterion);
+  }
+  return criterion;
+}

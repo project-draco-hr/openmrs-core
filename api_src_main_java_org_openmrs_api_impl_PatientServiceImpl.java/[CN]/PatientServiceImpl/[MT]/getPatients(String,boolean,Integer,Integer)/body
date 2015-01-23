@@ -1,0 +1,6 @@
+{
+  if (StringUtils.isBlank(query)) {
+    return Collections.emptyList();
+  }
+  return dao.getPatients(query,includeVoided,start,length);
+}

@@ -1,0 +1,12 @@
+{
+  addAliasForName(criteria,true);
+  personSearchCriteria.addAliasForAttribute(criteria);
+  addAliasForIdentifiers(criteria);
+  criteria.add(Restrictions.disjunction().add(prepareCriterionForName(query,includeVoided)).add(prepareCriterionForAttribute(query,includeVoided)).add(prepareCriterionForIdentifier(query,new ArrayList<PatientIdentifierType>(),false,includeVoided)));
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",false));
+  }
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  log.debug(criteria.toString());
+  return criteria;
+}

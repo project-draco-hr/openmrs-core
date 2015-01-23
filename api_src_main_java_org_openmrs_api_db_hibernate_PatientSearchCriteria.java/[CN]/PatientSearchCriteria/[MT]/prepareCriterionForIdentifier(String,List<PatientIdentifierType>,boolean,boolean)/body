@@ -1,0 +1,38 @@
+{
+  identifier=HibernateUtil.escapeSqlWildcards(identifier,sessionFactory);
+  Conjunction conjunction=Restrictions.conjunction();
+  if (!includeVoided) {
+    conjunction.add(Restrictions.eq("ids.voided",false));
+  }
+  if (identifier != null) {
+    if (matchIdentifierExactly) {
+      SimpleExpression matchIdentifier=Restrictions.eq("ids.identifier",identifier);
+      if (Context.getAdministrationService().isDatabaseStringComparisonCaseSensitive()) {
+        matchIdentifier.ignoreCase();
+      }
+      conjunction.add(matchIdentifier);
+    }
+ else {
+      AdministrationService adminService=Context.getAdministrationService();
+      String regex=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_REGEX,"");
+      String patternSearch=adminService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_IDENTIFIER_SEARCH_PATTERN,"");
+      if (Pattern.matches("^\\^.{1}\\*.*$",regex)) {
+        identifier=removePadding(identifier,regex);
+      }
+      if (org.springframework.util.StringUtils.hasLength(patternSearch)) {
+        conjunction.add(splitAndGetSearchPattern(identifier,patternSearch));
+      }
+ else       if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+        conjunction.add(getCriterionForSimpleSearch(identifier,adminService));
+      }
+ else {
+        regex=replaceSearchString(regex,identifier);
+        conjunction.add(Restrictions.sqlRestriction("identifier regexp ?",regex,Hibernate.STRING));
+      }
+    }
+  }
+  if (!CollectionUtils.isEmpty(identifierTypes)) {
+    criteria.add(Restrictions.in("ids.identifierType",identifierTypes));
+  }
+  return conjunction;
+}
