@@ -1,0 +1,5 @@
+{
+  String actualContent=runServletWithConcepts(conceptDAO.getConcept(23));
+  String expectedContent=EXPECTED_HEADER + "23,\"FOOD CONSTRUCT\",\"Holder for all things edible\",\"FOOD CONSTRUCT\",\"\"," + "\"FOOD ASSISTANCE\nDATE OF FOOD ASSISTANCE\nFAVORITE FOOD, NON-CODED\","+ "\"ConvSet\",\"N/A\",\"\",\"Super User\"\n";
+  Assert.assertEquals(expectedContent,actualContent);
+}

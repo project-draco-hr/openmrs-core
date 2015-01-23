@@ -1,0 +1,5 @@
+{
+  String actualContent=runServletWithConcepts(conceptDAO.getConcept(792));
+  String expectedContent=EXPECTED_HEADER + "792,\"STAVUDINE LAMIVUDINE AND NEVIRAPINE\",\"Combination antiretroviral drug.\"," + "\"STAVUDINE LAMIVUDINE AND NEVIRAPINE\nD4T+3TC+NVP\nTRIOMUNE-30\nD4T+3TC+NVP\","+ "\"\",\"\",\"Drug\",\"N/A\",\"Super User\",\"Super User\"\n";
+  Assert.assertEquals(expectedContent,actualContent);
+}

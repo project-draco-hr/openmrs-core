@@ -5,13 +5,13 @@
     String s=new SimpleDateFormat("dMy_Hm").format(new Date());
     response.setHeader("Content-Type","text/csv;charset=UTF-8");
     response.setHeader("Content-Disposition","attachment; filename=conceptDictionary" + s + ".csv");
-    StringBuilder line=new StringBuilder("Concept Id,Name,Description,Synonyms,Answers,Set Members,Class,Datatype,Changed By,Creator\n");
-    response.getWriter().write(line.toString());
-    int listIndex=0;
+    String headerLine="Concept Id,Name,Description,Synonyms,Answers,Set Members,Class,Datatype,Changed By,Creator\n";
+    response.getWriter().write(headerLine);
     Iterator<Concept> conceptIterator=cs.conceptIterator();
     while (conceptIterator.hasNext()) {
       Concept c=conceptIterator.next();
       if (!c.isRetired()) {
+        StringBuilder line=new StringBuilder("");
         line.append(c.getConceptId());
         line.append(",");
         String name, description;
