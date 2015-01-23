@@ -4,7 +4,7 @@
     if (Context.isAuthenticated()) {
       Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);
       Context.addProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
-      if (StringUtils.hasText(request.getParameter("patientId"))) {
+      if (encounter.getEncounterId() == null && StringUtils.hasText(request.getParameter("patientId"))) {
         encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
       }
       if (encounter.isVoided()) {

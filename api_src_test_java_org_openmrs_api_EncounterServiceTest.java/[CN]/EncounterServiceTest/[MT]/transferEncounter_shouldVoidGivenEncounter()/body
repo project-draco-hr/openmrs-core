@@ -1,0 +1,8 @@
+{
+  executeDataSet(TRANSFER_ENC_DATA_XML);
+  Patient anyPatient=new Patient(2);
+  Encounter sourceEncounter=Context.getEncounterService().getEncounter(200);
+  Context.getEncounterService().transferEncounter(sourceEncounter,anyPatient);
+  Encounter sourceEncounterAfterTransfer=Context.getEncounterService().getEncounter(sourceEncounter.getId());
+  Assert.assertTrue(sourceEncounterAfterTransfer.isVoided());
+}
