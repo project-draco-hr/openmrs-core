@@ -1,0 +1,8 @@
+{
+  User notExistingUser=new User();
+  final UserService userService=Context.getUserService();
+  String anyString="anyString";
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("user.must.exist");
+  userService.changePassword(notExistingUser,anyString,anyString);
+}
