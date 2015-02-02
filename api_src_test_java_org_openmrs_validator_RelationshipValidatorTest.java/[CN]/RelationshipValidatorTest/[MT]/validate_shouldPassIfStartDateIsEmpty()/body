@@ -1,0 +1,8 @@
+{
+  Map<String,String> map=new HashMap<String,String>();
+  MapBindingResult errors=new MapBindingResult(map,Relationship.class.getName());
+  Relationship relationship=new Relationship(1);
+  relationship.setStartDate(null);
+  new RelationshipValidator().validate(relationship,errors);
+  Assert.assertFalse(errors.hasErrors());
+}
