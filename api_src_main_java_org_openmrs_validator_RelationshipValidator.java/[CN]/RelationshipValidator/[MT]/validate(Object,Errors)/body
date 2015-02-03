@@ -9,5 +9,11 @@
       }
     }
     ValidateUtil.validateFieldLengths(errors,target.getClass(),"voidReason");
+    if (startDate != null) {
+      Date currentDate=new Date();
+      if (startDate.after(currentDate)) {
+        errors.reject("error.date.future");
+      }
+    }
   }
 }

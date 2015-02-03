@@ -1,0 +1,11 @@
+{
+  Relationship relationship=new Relationship(1);
+  Map<String,String> map=new HashMap<String,String>();
+  MapBindingResult errors=new MapBindingResult(map,Relationship.class.getName());
+  Calendar cal=Calendar.getInstance();
+  cal.add(Calendar.YEAR,-1);
+  Date lastYear=cal.getTime();
+  relationship.setStartDate(lastYear);
+  new RelationshipValidator().validate(relationship,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

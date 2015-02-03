@@ -10,5 +10,15 @@
   if (StringUtils.isNotBlank(startDateStr)) {
     rel.setStartDate(Context.getDateFormat().parse(startDateStr));
   }
-  ps.saveRelationship(rel);
+  Map<String,String> map=new HashMap<String,String>();
+  MapBindingResult errors=new MapBindingResult(map,Relationship.class.getName());
+  new RelationshipValidator().validate(rel,errors);
+  String errmsgs[];
+  if (!errors.hasErrors()) {
+    ps.saveRelationship(rel);
+    errmsgs=null;
+    return errmsgs;
+  }
+  errmsgs=errors.getGlobalError().getCodes();
+  return errmsgs;
 }
