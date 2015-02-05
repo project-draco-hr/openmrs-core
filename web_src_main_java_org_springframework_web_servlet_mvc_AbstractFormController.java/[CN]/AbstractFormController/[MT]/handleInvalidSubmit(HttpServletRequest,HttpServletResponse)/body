@@ -1,0 +1,6 @@
+{
+  Object command=formBackingObject(request);
+  ServletRequestDataBinder binder=bindAndValidate(request,command);
+  BindException errors=new BindException(binder.getBindingResult());
+  return processFormSubmission(request,response,command,errors);
+}

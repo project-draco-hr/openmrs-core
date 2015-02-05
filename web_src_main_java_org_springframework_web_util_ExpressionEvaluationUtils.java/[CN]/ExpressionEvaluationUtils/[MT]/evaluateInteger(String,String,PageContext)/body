@@ -1,0 +1,8 @@
+{
+  if (isSpringJspExpressionSupportActive(pageContext) && isExpressionLanguage(attrValue)) {
+    return (Integer)doEvaluate(attrName,attrValue,Integer.class,pageContext);
+  }
+ else {
+    return Integer.parseInt(attrValue);
+  }
+}

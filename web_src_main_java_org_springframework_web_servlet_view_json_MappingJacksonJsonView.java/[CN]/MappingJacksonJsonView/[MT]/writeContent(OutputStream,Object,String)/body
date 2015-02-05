@@ -1,0 +1,10 @@
+{
+  JsonGenerator generator=this.objectMapper.getJsonFactory().createJsonGenerator(stream,this.encoding);
+  if (this.objectMapper.getSerializationConfig().isEnabled(SerializationConfig.Feature.INDENT_OUTPUT)) {
+    generator.useDefaultPrettyPrinter();
+  }
+  if (jsonPrefix != null) {
+    generator.writeRaw(jsonPrefix);
+  }
+  this.objectMapper.writeValue(generator,value);
+}

@@ -1,0 +1,40 @@
+{
+  int currentPage=getCurrentPage(request);
+  String pageAttrName=getPageSessionAttributeName(request);
+  if (isSessionForm()) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Removing page session attribute [" + pageAttrName + "]");
+    }
+    request.getSession().removeAttribute(pageAttrName);
+  }
+  request.setAttribute(pageAttrName,new Integer(currentPage));
+  if (isCancelRequest(request)) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Cancelling wizard for form bean '" + getCommandName() + "'");
+    }
+    return processCancel(request,response,command,errors);
+  }
+  if (isFinishRequest(request)) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Finishing wizard for form bean '" + getCommandName() + "'");
+    }
+    return validatePagesAndFinish(request,response,command,errors,currentPage);
+  }
+  if (!suppressValidation(request,command,errors)) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Validating wizard page " + currentPage + " for form bean '"+ getCommandName()+ "'");
+    }
+    validatePage(command,errors,currentPage,false);
+  }
+  postProcessPage(request,command,errors,currentPage);
+  int targetPage=getTargetPage(request,command,errors,currentPage);
+  if (logger.isDebugEnabled()) {
+    logger.debug("Target page " + targetPage + " requested");
+  }
+  if (targetPage != currentPage) {
+    if (!errors.hasErrors() || (this.allowDirtyBack && targetPage < currentPage) || (this.allowDirtyForward && targetPage > currentPage)) {
+      return showPage(request,errors,targetPage);
+    }
+  }
+  return showPage(request,errors,currentPage);
+}

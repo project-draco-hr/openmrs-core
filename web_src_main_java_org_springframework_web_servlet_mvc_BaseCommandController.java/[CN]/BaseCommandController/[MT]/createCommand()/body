@@ -1,0 +1,9 @@
+{
+  if (this.commandClass == null) {
+    throw new IllegalStateException("Cannot create command without commandClass being set - " + "either set commandClass or (in a form controller) override formBackingObject");
+  }
+  if (logger.isDebugEnabled()) {
+    logger.debug("Creating new command of class [" + this.commandClass.getName() + "]");
+  }
+  return BeanUtils.instantiateClass(this.commandClass);
+}

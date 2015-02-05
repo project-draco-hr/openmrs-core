@@ -1,0 +1,15 @@
+{
+  ServletRequestDataBinder binder=createBinder(request,command);
+  BindException errors=new BindException(binder.getBindingResult());
+  if (!suppressBinding(request)) {
+    binder.bind(request);
+    onBind(request,command,errors);
+    if (this.validators != null && isValidateOnBinding() && !suppressValidation(request,command,errors)) {
+      for (int i=0; i < this.validators.length; i++) {
+        ValidationUtils.invokeValidator(this.validators[i],command,errors);
+      }
+    }
+    onBindAndValidate(request,command,errors);
+  }
+  return binder;
+}
