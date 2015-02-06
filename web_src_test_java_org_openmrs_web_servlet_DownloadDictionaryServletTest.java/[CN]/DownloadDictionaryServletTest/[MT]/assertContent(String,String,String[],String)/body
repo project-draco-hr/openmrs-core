@@ -1,0 +1,13 @@
+{
+  Assert.assertTrue(actualContent.startsWith(expectedStart));
+  Assert.assertTrue(actualContent.endsWith(expectedEnd));
+  String lineBreakContent=actualContent.substring(expectedStart.length(),actualContent.length() - expectedEnd.length());
+  Assert.assertTrue(lineBreakContent.startsWith("\""));
+  Assert.assertTrue(lineBreakContent.endsWith("\""));
+  lineBreakContent=lineBreakContent.replace("\"","");
+  List<String> actualLineBreakSections=Arrays.asList(lineBreakContent.split("\n"));
+  Assert.assertEquals(expectedLineSections.length,actualLineBreakSections.size());
+  for (  String expectedSection : expectedLineSections) {
+    Assert.assertTrue(actualLineBreakSections.contains(expectedSection));
+  }
+}
