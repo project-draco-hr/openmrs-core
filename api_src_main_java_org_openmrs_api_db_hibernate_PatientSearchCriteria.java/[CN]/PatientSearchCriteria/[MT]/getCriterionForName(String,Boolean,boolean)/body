@@ -1,0 +1,14 @@
+{
+  if (isShortName(name)) {
+    return getCriterionForShortName(name,includeVoided);
+  }
+ else {
+    if (matchExactly != null) {
+      if (matchExactly) {
+        return getCriterionForShortName(name,includeVoided);
+      }
+      return getCriterionForNoExactName(name,includeVoided);
+    }
+    return getCriterionForLongName(name,includeVoided);
+  }
+}

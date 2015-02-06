@@ -1,0 +1,20 @@
+{
+  addAliasForName(criteria,orderByNames);
+  if (matchExactly == null) {
+    criteria.add(Restrictions.conjunction().add(prepareCriterionForName(query,null,includeVoided)).add(Restrictions.not(prepareCriterionForName(query,true,includeVoided))).add(Restrictions.not(prepareCriterionForName(query,false,includeVoided))));
+  }
+ else   if (!matchExactly) {
+    criteria.add(prepareCriterionForName(query,false,includeVoided));
+  }
+ else {
+    personSearchCriteria.addAliasForAttribute(criteria);
+    addAliasForIdentifiers(criteria);
+    criteria.add(Restrictions.disjunction().add(prepareCriterionForName(query,true,includeVoided)).add(prepareCriterionForAttribute(query,includeVoided)).add(prepareCriterionForIdentifier(query,new ArrayList<PatientIdentifierType>(),false,includeVoided)));
+  }
+  if (!includeVoided) {
+    criteria.add(Restrictions.eq("voided",false));
+  }
+  criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+  log.debug(criteria.toString());
+  return criteria;
+}

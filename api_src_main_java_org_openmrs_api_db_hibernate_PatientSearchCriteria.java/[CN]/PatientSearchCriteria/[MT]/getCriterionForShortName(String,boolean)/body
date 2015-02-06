@@ -1,5 +1,5 @@
 {
-  Criterion criterion=Restrictions.disjunction().add(Restrictions.eq("name.givenName",name).ignoreCase()).add(Restrictions.eq("name.middleName",name).ignoreCase()).add(Restrictions.eq("name.familyName",name).ignoreCase()).add(Restrictions.eq("name.familyName2",name).ignoreCase());
+  Criterion criterion=Restrictions.disjunction().add(Restrictions.conjunction().add(Restrictions.isNotNull("name.givenName")).add(Restrictions.eq("name.givenName",name).ignoreCase())).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.middleName")).add(Restrictions.eq("name.middleName",name).ignoreCase())).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.familyName")).add(Restrictions.eq("name.familyName",name).ignoreCase())).add(Restrictions.conjunction().add(Restrictions.isNotNull("name.familyName2")).add(Restrictions.eq("name.familyName2",name).ignoreCase()));
   if (!includeVoided) {
     return Restrictions.conjunction().add(Restrictions.eq("name.voided",false)).add(criterion);
   }
