@@ -73,6 +73,11 @@
   if (!concept.getDatatype().isCoded() && concept.getAnswers(true) != null) {
     concept.getAnswers(true).clear();
   }
+ else {
+    for (    ConceptAnswer ca : concept.getAnswers(true)) {
+      ca.setConcept(concept);
+    }
+  }
   if (concept.getDatatype().getName().equals("Numeric")) {
     ConceptNumeric cn;
     if (concept instanceof ConceptNumeric) {
