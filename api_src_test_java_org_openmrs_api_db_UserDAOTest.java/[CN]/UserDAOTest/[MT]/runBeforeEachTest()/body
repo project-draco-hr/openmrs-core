@@ -12,4 +12,5 @@
   userJoe.setUsername("juser");
   userJoe.setDateCreated(new Date());
   if (dao == null)   dao=(UserDAO)applicationContext.getBean("userDAO");
+  dao.saveUser(userJoe,null);
 }

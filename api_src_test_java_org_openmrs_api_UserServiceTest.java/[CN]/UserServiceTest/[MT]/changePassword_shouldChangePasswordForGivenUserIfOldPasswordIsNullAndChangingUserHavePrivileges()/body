@@ -1,0 +1,9 @@
+{
+  executeDataSet(XML_FILENAME_WITH_DATA_FOR_CHANGE_PASSWORD_ACTION);
+  final UserService userService=Context.getUserService();
+  User user6001=userService.getUser(6001);
+  String oldPassword=null;
+  String newPassword="newPasswordString123";
+  userService.changePassword(user6001,oldPassword,newPassword);
+  Context.authenticate(user6001.getUsername(),newPassword);
+}

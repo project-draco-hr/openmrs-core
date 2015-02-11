@@ -1,0 +1,11 @@
+{
+  executeDataSet(XML_FILENAME_WITH_DATA_FOR_CHANGE_PASSWORD_ACTION);
+  final UserService userService=Context.getUserService();
+  User user6001=userService.getUser(6001);
+  String wrongPassword="wrong password!";
+  String newPassword="newPasswordString";
+  Context.authenticate(user6001.getUsername(),"userServiceTest");
+  expectedException.expect(APIAuthenticationException.class);
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.privilegesRequired"));
+  userService.changePassword(user6001,wrongPassword,newPassword);
+}
