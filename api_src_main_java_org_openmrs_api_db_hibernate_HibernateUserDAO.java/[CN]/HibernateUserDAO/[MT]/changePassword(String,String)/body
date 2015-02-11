@@ -6,7 +6,7 @@
     throw new DAOException("Passwords don't match");
   }
   log.info("updating password for " + u.getUsername());
-  String salt=Security.getRandomToken();
+  String salt=getLoginCredential(u).getSalt();
   String newHashedPassword=Security.encodeString(pw2 + salt);
   updateUserPassword(newHashedPassword,salt,u.getUserId(),new Date(),u.getUserId());
 }

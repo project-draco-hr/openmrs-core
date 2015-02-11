@@ -2,6 +2,8 @@
   if (answer == null || answer.equals("")) {
     return false;
   }
-  String answerOnRecord=getLoginCredential(u).getSecretAnswer();
-  return (answer.equals(answerOnRecord));
+  LoginCredential credentials=getLoginCredential(u);
+  String answerOnRecord=credentials.getSecretAnswer();
+  String hashedAnswer=Security.encodeString(answer.toLowerCase() + credentials.getSalt());
+  return (hashedAnswer.equals(answerOnRecord));
 }
