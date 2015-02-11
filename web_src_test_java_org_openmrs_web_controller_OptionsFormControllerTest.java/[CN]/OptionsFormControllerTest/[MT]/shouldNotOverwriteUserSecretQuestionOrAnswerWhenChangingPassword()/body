@@ -8,7 +8,8 @@
   request.setParameter("secretAnswerConfirm","easy answer");
   controller.handleRequest(request,response);
   Assert.assertEquals("easy question",loginCredential.getSecretQuestion());
-  Assert.assertEquals("easy answer",loginCredential.getSecretAnswer());
+  String hashedAnswer=Security.encodeString("easy answer" + loginCredential.getSalt());
+  Assert.assertEquals(hashedAnswer,loginCredential.getSecretAnswer());
   String oldPassword=loginCredential.getHashedPassword();
   request.removeAllParameters();
   request.addParameter("secretQuestionNew","easy question");
@@ -20,6 +21,6 @@
     request.setParameter("secretQuestionNew","");
     mav=controller.handleRequest(request,response);
   }
-  Assert.assertEquals("easy answer",loginCredential.getSecretAnswer());
+  Assert.assertEquals(hashedAnswer,loginCredential.getSecretAnswer());
   Assert.assertEquals("easy question",loginCredential.getSecretQuestion());
 }

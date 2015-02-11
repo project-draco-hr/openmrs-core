@@ -2,7 +2,8 @@
   log.info("Updating secret question and answer for " + u.getUsername());
   LoginCredential credentials=getLoginCredential(u);
   credentials.setSecretQuestion(question);
-  credentials.setSecretAnswer(answer);
+  String hashedAnswer=Security.encodeString(answer.toLowerCase() + credentials.getSalt());
+  credentials.setSecretAnswer(hashedAnswer);
   credentials.setDateChanged(new Date());
   credentials.setChangedBy(u);
   updateLoginCredential(credentials);

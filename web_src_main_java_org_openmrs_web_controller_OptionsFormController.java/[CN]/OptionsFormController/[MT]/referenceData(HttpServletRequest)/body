@@ -6,14 +6,14 @@
     map.put("locations",ls.getAllLocations());
     AdministrationService as=Context.getAdministrationService();
     map.put("languages",as.getPresentationLocales());
-    String resetPassword=(String)httpSession.getAttribute("resetPassword");
-    if (resetPassword == null) {
-      resetPassword="";
+    Object resetPasswordAttribute=httpSession.getAttribute("resetPassword");
+    if (resetPasswordAttribute == null) {
+      resetPasswordAttribute="";
     }
  else {
       httpSession.removeAttribute("resetPassword");
     }
-    map.put("resetPassword",resetPassword);
+    map.put("resetPassword",resetPasswordAttribute);
     ArrayList<String> hints=new ArrayList<String>(5);
     int minChar=1;
     MessageSourceService mss=Context.getMessageSourceService();

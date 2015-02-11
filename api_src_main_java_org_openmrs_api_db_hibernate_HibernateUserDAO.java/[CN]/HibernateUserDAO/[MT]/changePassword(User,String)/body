@@ -4,7 +4,7 @@
     authUser=u;
   }
   log.debug("updating password");
-  String salt=Security.getRandomToken();
+  String salt=getLoginCredential(u).getSalt();
   String newHashedPassword=Security.encodeString(pw + salt);
   updateUserPassword(newHashedPassword,salt,authUser.getUserId(),new Date(),u.getUserId());
 }
