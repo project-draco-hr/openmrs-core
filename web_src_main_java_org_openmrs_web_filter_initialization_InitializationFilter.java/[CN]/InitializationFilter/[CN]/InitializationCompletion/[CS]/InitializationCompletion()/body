@@ -269,7 +269,7 @@ catch (        OpenmrsCoreModuleException coreModEx) {
           return;
         }
         Context.openSession();
-        if (!wizardModel.implementationId.equals("")) {
+        if (!"".equals(wizardModel.implementationId)) {
           try {
             Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
             Context.addProxyPrivilege(PrivilegeConstants.MANAGE_CONCEPT_SOURCES);

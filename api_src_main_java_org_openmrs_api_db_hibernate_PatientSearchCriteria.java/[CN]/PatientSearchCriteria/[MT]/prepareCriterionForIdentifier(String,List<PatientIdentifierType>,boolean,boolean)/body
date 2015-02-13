@@ -22,7 +22,7 @@
       if (org.springframework.util.StringUtils.hasLength(patternSearch)) {
         conjunction.add(splitAndGetSearchPattern(identifier,patternSearch));
       }
- else       if (regex.equals("") || HibernateUtil.isHSQLDialect(sessionFactory)) {
+ else       if ("".equals(regex) || HibernateUtil.isHSQLDialect(sessionFactory)) {
         conjunction.add(getCriterionForSimpleSearch(identifier,adminService));
       }
  else {

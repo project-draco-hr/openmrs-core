@@ -24,7 +24,7 @@
     properties.put(OpenmrsConstants.USER_PROPERTY_SHOW_VERBOSE,opts.getVerbose().toString());
     properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION,opts.getNotification() == null ? "" : opts.getNotification().toString());
     properties.put(OpenmrsConstants.USER_PROPERTY_NOTIFICATION_ADDRESS,opts.getNotificationAddress() == null ? "" : opts.getNotificationAddress().toString());
-    if (!opts.getOldPassword().equals("")) {
+    if (!"".equals(opts.getOldPassword())) {
       try {
         String password=opts.getNewPassword();
         if (password.length() > 0) {
@@ -52,11 +52,11 @@
       }
     }
  else {
-      if (!opts.getNewPassword().equals("")) {
+      if (!"".equals(opts.getNewPassword())) {
         errors.rejectValue("oldPassword","error.password.incorrect");
       }
     }
-    if (!opts.getSecretQuestionPassword().equals("")) {
+    if (!"".equals(opts.getSecretQuestionPassword())) {
       if (!errors.hasErrors()) {
         try {
           user.setSecretQuestion(opts.getSecretQuestionNew());
@@ -67,7 +67,7 @@
         }
       }
     }
- else     if (!opts.getSecretAnswerNew().equals("")) {
+ else     if (!"".equals(opts.getSecretAnswerNew())) {
       errors.rejectValue("secretQuestionPassword","error.password.incorrect");
     }
     String notifyType=opts.getNotification();
