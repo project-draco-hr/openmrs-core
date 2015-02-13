@@ -8,7 +8,7 @@
  else {
     patientIdSet.addAll(patientIds);
   }
-  if (location != null && !location.toString().equals("")) {
+  if (location != null && !location.equals("")) {
     patientIdSet.retainAll(pss.getPatientsHavingLocation(getLocation()).getMemberIds());
   }
   if (cohortId != null) {
