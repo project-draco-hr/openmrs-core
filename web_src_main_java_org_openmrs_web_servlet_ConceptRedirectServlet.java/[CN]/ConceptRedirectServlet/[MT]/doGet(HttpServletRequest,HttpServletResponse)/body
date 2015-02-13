@@ -10,7 +10,7 @@
     }
     log.debug("new concept id: " + path);
     try {
-      Integer i=new Integer(path);
+      Integer i=Integer.valueOf(path);
       response.sendRedirect(contextPath + "/dictionary/concept.htm?conceptId=" + i);
       return;
     }
