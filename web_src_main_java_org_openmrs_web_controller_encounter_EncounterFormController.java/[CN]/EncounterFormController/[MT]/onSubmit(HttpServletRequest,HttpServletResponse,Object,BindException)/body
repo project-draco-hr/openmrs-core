@@ -6,8 +6,21 @@
     Context.addProxyPrivilege(PrivilegeConstants.VIEW_PATIENTS);
     if (Context.isAuthenticated()) {
       Encounter encounter=(Encounter)obj;
+      Integer patientId=null;
       if (request.getParameter("patientId") != null) {
-        encounter.setPatient(Context.getPatientService().getPatient(Integer.valueOf(request.getParameter("patientId"))));
+        patientId=Integer.valueOf(request.getParameter("patientId"));
+      }
+      if (encounter.getEncounterId() == null) {
+        if (patientId != null) {
+          encounter.setPatient(Context.getPatientService().getPatient(patientId));
+        }
+      }
+ else {
+        Patient oldPatient=encounter.getPatient();
+        Patient newPatient=Context.getPatientService().getPatient(patientId);
+        if (newPatient != null && oldPatient != null && !newPatient.equals(oldPatient)) {
+          encounter=Context.getEncounterService().transferEncounter(encounter,newPatient);
+        }
       }
       if (encounter.isVoided() && encounter.getVoidedBy() == null) {
         Context.getEncounterService().voidEncounter(encounter,encounter.getVoidReason());

@@ -1,0 +1,24 @@
+{
+  EncounterProvider encounterProvider=new EncounterProvider();
+  encounterProvider.setCreator(new User());
+  encounterProvider.setDateCreated(new Date());
+  encounterProvider.setChangedBy(new User());
+  encounterProvider.setDateChanged(new Date());
+  encounterProvider.setVoidReason("void");
+  encounterProvider.setDateVoided(new Date());
+  encounterProvider.setEncounter(new Encounter());
+  encounterProvider.setEncounterRole(new EncounterRole());
+  encounterProvider.setProvider(new Provider());
+  EncounterProvider encounterProviderCopy=encounterProvider.copy();
+  Assert.assertNotEquals(encounterProvider,encounterProviderCopy);
+  Assert.assertEquals(encounterProvider.getCreator(),encounterProviderCopy.getCreator());
+  Assert.assertEquals(encounterProvider.getDateCreated(),encounterProviderCopy.getDateCreated());
+  Assert.assertEquals(encounterProvider.getChangedBy(),encounterProviderCopy.getChangedBy());
+  Assert.assertEquals(encounterProvider.getDateChanged(),encounterProviderCopy.getDateChanged());
+  Assert.assertEquals(encounterProvider.getVoided(),encounterProviderCopy.getVoided());
+  Assert.assertEquals(encounterProvider.getVoidReason(),encounterProviderCopy.getVoidReason());
+  Assert.assertEquals(encounterProvider.getDateVoided(),encounterProviderCopy.getDateVoided());
+  Assert.assertEquals(encounterProvider.getEncounter(),encounterProviderCopy.getEncounter());
+  Assert.assertEquals(encounterProvider.getEncounterRole(),encounterProviderCopy.getEncounterRole());
+  Assert.assertEquals(encounterProvider.getProvider(),encounterProviderCopy.getProvider());
+}
