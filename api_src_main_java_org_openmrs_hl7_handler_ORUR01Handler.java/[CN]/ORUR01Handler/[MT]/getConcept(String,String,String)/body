@@ -1,7 +1,7 @@
 {
   if (codingSystem == null || HL7Constants.HL7_LOCAL_CONCEPT.equals(codingSystem)) {
     try {
-      Integer conceptId=new Integer(hl7ConceptId);
+      Integer conceptId=Integer.valueOf(hl7ConceptId);
       return Context.getConceptService().getConcept(conceptId);
     }
  catch (    NumberFormatException e) {

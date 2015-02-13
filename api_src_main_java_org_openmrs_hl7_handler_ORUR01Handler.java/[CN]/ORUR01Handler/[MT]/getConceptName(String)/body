@@ -2,7 +2,7 @@
   ConceptName specifiedConceptName=null;
   if (hl7ConceptNameId != null) {
     try {
-      Integer conceptNameId=new Integer(hl7ConceptNameId);
+      Integer conceptNameId=Integer.valueOf(hl7ConceptNameId);
       specifiedConceptName=new ConceptName();
       specifiedConceptName.setConceptNameId(conceptNameId);
     }

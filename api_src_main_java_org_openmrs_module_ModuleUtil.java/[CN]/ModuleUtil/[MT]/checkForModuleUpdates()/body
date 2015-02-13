@@ -2,7 +2,7 @@
   Boolean updateFound=false;
   for (  Module mod : ModuleFactory.getLoadedModules()) {
     String updateURL=mod.getUpdateURL();
-    if (updateURL != null && !updateURL.equals("")) {
+    if (updateURL != null && !"".equals(updateURL)) {
       try {
         URL url=new URL(updateURL);
         if (!url.toString().endsWith(ModuleConstants.UPDATE_FILE_NAME)) {
@@ -10,7 +10,7 @@
           continue;
         }
         String content=getURL(url);
-        if (content.equals("")) {
+        if ("".equals(content)) {
           continue;
         }
         UpdateFileParser parser=new UpdateFileParser(content);

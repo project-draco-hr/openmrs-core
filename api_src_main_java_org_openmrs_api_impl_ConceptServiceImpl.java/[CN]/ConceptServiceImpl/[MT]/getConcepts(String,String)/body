@@ -1,4 +1,4 @@
 {
-  boolean asc=true ? dir.equals("asc") : !dir.equals("asc");
+  boolean asc=true ? "asc".equals(dir) : !"asc".equals(dir);
   return Context.getConceptService().getAllConcepts(sortBy,asc,true);
 }

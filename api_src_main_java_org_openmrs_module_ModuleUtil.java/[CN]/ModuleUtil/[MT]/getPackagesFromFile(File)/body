@@ -18,7 +18,7 @@
         continue;
       }
       String packageName=name.substring(0,indexOfLastSlash);
-      if (packageName.equals("lib") || packageName.equals("META-INF") || packageName.startsWith("web/module")) {
+      if ("lib".equals(packageName) || "META-INF".equals(packageName) || packageName.startsWith("web/module")) {
         continue;
       }
       packageName=packageName.replaceAll("/",".");

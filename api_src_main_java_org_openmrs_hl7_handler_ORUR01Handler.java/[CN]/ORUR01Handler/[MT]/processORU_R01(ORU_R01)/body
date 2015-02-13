@@ -106,7 +106,7 @@
  catch (      ProposingConceptException proposingException) {
         Concept questionConcept=proposingException.getConcept();
         String value=proposingException.getValueName();
-        if (value != null && !value.equals("")) {
+        if (value != null && !"".equals(value)) {
           conceptProposals.add(createConceptProposal(encounter,questionConcept,value));
         }
  else {

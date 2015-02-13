@@ -2,10 +2,10 @@
   Map<Integer,Object> ret=new HashMap<Integer,Object>();
   className="org.openmrs." + className;
   Criteria criteria=null;
-  if (className.equals("org.openmrs.Patient")) {
+  if ("org.openmrs.Patient".equals(className)) {
     criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Patient","patient");
   }
- else   if (className.equals("org.openmrs.Person")) {
+ else   if ("org.openmrs.Person".equals(className)) {
     criteria=sessionFactory.getCurrentSession().createCriteria("org.openmrs.Person","person");
   }
  else {
@@ -19,7 +19,7 @@
     if (patients != null) {
       criteria.add(Restrictions.in("person.personId",patients.getMemberIds()));
     }
-    if (className.equals("org.openmrs.Person")) {
+    if ("org.openmrs.Person".equals(className)) {
       criteria.add(Restrictions.eq("personVoided",false));
     }
  else {
@@ -38,7 +38,7 @@
   try {
     boolean hasPreferred=false;
     for (    Field f : Class.forName(className).getDeclaredFields()) {
-      if (f.getName().equals("preferred")) {
+      if ("preferred".equals(f.getName())) {
         hasPreferred=true;
       }
     }

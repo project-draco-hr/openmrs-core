@@ -1,6 +1,6 @@
 {
   String locked=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_CONCEPTS_LOCKED,"false");
-  if (locked.toLowerCase().equals("true")) {
+  if ("true".equalsIgnoreCase(locked)) {
     throw new ConceptsLockedException();
   }
 }
