@@ -4,7 +4,7 @@
   String givenName=xcn.getGivenName().getValue();
   if (idNumber != null && idNumber.length() > 0) {
     try {
-      Person person=Context.getPersonService().getPerson(new Integer(idNumber));
+      Person person=Context.getPersonService().getPerson(Integer.valueOf(idNumber));
       return person.getPersonId();
     }
  catch (    Exception e) {

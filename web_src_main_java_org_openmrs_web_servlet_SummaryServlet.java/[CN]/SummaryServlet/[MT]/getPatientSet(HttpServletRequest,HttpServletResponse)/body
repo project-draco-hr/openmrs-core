@@ -6,7 +6,7 @@
   String identifierStrings=ServletRequestUtils.getStringParameter(request,"patientIdentifiers","");
   Cohort ps=new Cohort();
   if ((startDateString.length() != 0) || (endDateString.length() != 0)) {
-    Concept c=Context.getConceptService().getConcept(new Integer("5096"));
+    Concept c=Context.getConceptService().getConcept(Integer.valueOf("5096"));
     Calendar cal=Calendar.getInstance();
     Date startDate;
     Date endDate;
