@@ -23,7 +23,7 @@ case ID:
           _t=_t.getFirstChild();
           a=ift.getText();
           System.err.println("text = " + a);
-          if (instr.equals("")) {
+          if ("".equals(instr)) {
             obj.AddToEvaluateList(section,a);
             s=a;
           }
@@ -195,7 +195,7 @@ case TERM_LITERAL:
 termlit=(AST)_t;
 match(_t,TERM_LITERAL);
 _t=_t.getNextSibling();
-if (instr.equals("")) {
+if ("".equals(instr)) {
 b=termlit.getText();
 s=obj.SetAnswerList(section,b,instr);
 }

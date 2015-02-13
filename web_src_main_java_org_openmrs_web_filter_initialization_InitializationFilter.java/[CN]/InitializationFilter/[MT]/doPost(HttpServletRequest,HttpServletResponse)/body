@@ -200,7 +200,7 @@
       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;
     }
-    if (wizardModel.adminUserPassword.equals("")) {
+    if ("".equals(wizardModel.adminUserPassword)) {
       errors.put(ErrorMessageConstants.ERROR_DB_ADM_PSDW_EMPTY,null);
       renderTemplate(ADMIN_USER_SETUP,referenceMap,httpResponse);
       return;

@@ -15,14 +15,14 @@
       for (      String p : formList) {
         try {
           fs.purgeForm(fs.getForm(Integer.valueOf(p)));
-          if (!success.equals("")) {
+          if (!"".equals(success)) {
             success.append("<br/>");
           }
           success.append(textForm).append(" ").append(p).append(" ").append(deleted);
         }
  catch (        APIException e) {
           log.warn("Error deleting form",e);
-          if (!error.equals("")) {
+          if (!"".equals(error)) {
             error.append("<br/>");
           }
           error.append(textForm).append(" ").append(p).append(" ").append(notDeleted);
@@ -33,10 +33,10 @@
       success.append(noneDeleted);
     }
     view=getSuccessView();
-    if (!success.equals("")) {
+    if (!"".equals(success)) {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
     }
-    if (!error.equals("")) {
+    if (!"".equals(error)) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error.toString());
     }
   }

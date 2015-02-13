@@ -11,7 +11,7 @@
     String birthdate=person.get(BIRTHDATE);
     String age=person.get(AGE);
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
-    if (!name.equals("") || !birthdate.equals("") || !age.equals("")|| !gender.equals("")) {
+    if (!"".equals(name) || !"".equals(birthdate) || !"".equals(age)|| !"".equals(gender)) {
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
       Integer d=null;
       birthdate=birthdate.trim();

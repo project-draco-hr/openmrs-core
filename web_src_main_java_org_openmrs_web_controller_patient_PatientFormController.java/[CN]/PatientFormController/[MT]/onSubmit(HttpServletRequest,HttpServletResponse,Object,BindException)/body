@@ -128,7 +128,7 @@ catch (      PatientIdentifierException pie) {
                     obsDeath.setValueText(otherInfo);
                   }
  else {
-                    deathReasonChanged=!otherInfo.equals("");
+                    deathReasonChanged=!"".equals(otherInfo);
                     log.debug("New concept is NOT the OTHER concept, so setting to blank");
                     obsDeath.setValueText("");
                   }

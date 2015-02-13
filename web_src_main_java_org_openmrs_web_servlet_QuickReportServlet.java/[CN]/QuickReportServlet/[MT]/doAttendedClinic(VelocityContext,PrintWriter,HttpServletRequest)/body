@@ -20,7 +20,7 @@
  else {
     cal.setTime(new Date());
   }
-  if (endDate == null || endDate.equals("")) {
+  if (endDate == null || "".equals(endDate)) {
     while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
       cal.add(Calendar.DAY_OF_MONTH,-1);
     }
@@ -39,7 +39,7 @@
     end=cal.getTime();
   }
   Collection<Encounter> encounters=null;
-  if (location == null || location.equals("")) {
+  if (location == null || "".equals(location)) {
     encounters=es.getEncounters(null,null,start,end,null,null,null,true);
   }
  else {

@@ -27,7 +27,7 @@
       if (ids != null) {
         for (int i=0; i < ids.length; i++) {
           String id=ids[i].trim();
-          if (!id.equals("") && !idTypes[i].equals("")) {
+          if (!"".equals(id) && !"".equals(idTypes[i])) {
             PatientIdentifier pi=new PatientIdentifier();
             pi.setIdentifier(id);
             pi.setIdentifierType(ps.getPatientIdentifierType(Integer.valueOf(idTypes[i])));

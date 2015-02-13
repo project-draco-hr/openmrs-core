@@ -1,7 +1,7 @@
 {
   OptionsForm opts=(OptionsForm)object;
-  if (!opts.getOldPassword().equals("")) {
-    if (opts.getNewPassword().equals("")) {
+  if (!"".equals(opts.getOldPassword())) {
+    if ("".equals(opts.getNewPassword())) {
       errors.rejectValue("newPassword","error.password.weak");
     }
  else     if (!opts.getNewPassword().equals(opts.getConfirmPassword())) {
@@ -9,10 +9,10 @@
       errors.rejectValue("confirmPassword","error.password.match");
     }
   }
-  if (opts.getSecretQuestionPassword().equals("") && opts.getSecretAnswerNew().isEmpty() && !opts.getSecretQuestionNew().equals(opts.getSecretQuestionCopy())) {
+  if ("".equals(opts.getSecretQuestionPassword()) && opts.getSecretAnswerNew().isEmpty() && !opts.getSecretQuestionNew().equals(opts.getSecretQuestionCopy())) {
     errors.rejectValue("secretQuestionPassword","error.password.incorrect");
   }
-  if (!opts.getSecretQuestionPassword().equals("")) {
+  if (!"".equals(opts.getSecretQuestionPassword())) {
     if (!opts.getSecretAnswerConfirm().equals(opts.getSecretAnswerNew())) {
       errors.rejectValue("secretAnswerNew","error.options.secretAnswer.match");
       errors.rejectValue("secretAnswerConfirm","error.options.secretAnswer.match");

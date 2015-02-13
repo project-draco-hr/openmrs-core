@@ -3,7 +3,7 @@
   person.setGender(gender);
   Date birthdate=null;
   boolean birthdateEstimated=false;
-  if (date != null && !date.equals("")) {
+  if (date != null && !"".equals(date)) {
     try {
       if (date.length() < 5) {
         Calendar c=Calendar.getInstance();
@@ -22,7 +22,7 @@
       log.debug("Error getting date from birthdate",e);
     }
   }
- else   if (age != null && !age.equals("")) {
+ else   if (age != null && !"".equals(age)) {
     Calendar c=Calendar.getInstance();
     c.setTime(new Date());
     Integer d=c.get(Calendar.YEAR);

@@ -62,7 +62,7 @@
   log.debug("session ip addr: " + session_ip_addr);
   if (errorOccurred) {
     String url="";
-    if (redirect != null && !redirect.equals("")) {
+    if (redirect != null && !"".equals(redirect)) {
       url=request.getContextPath() + redirect;
     }
  else {

@@ -2,7 +2,7 @@
   String value=defaultValue;
   if (Context.isAuthenticated()) {
     String prop=Context.getAuthenticatedUser().getUserProperty(key);
-    if (prop != null && !prop.equals("")) {
+    if (prop != null && !"".equals(prop)) {
       value=prop;
     }
   }

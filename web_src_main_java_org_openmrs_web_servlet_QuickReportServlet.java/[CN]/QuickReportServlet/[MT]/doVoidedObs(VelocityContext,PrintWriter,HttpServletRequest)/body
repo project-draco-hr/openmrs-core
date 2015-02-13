@@ -18,7 +18,7 @@
  else {
     cal.setTime(new Date());
   }
-  if (endDate == null || endDate.equals("")) {
+  if (endDate == null || "".equals(endDate)) {
     while (cal.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
       cal.add(Calendar.DAY_OF_MONTH,-1);
     }

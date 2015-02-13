@@ -13,7 +13,7 @@
       for (      String cc : conceptClassList) {
         try {
           cs.purgeConceptClass(cs.getConceptClass(Integer.valueOf(cc)));
-          if (!success.equals("")) {
+          if (!"".equals(success)) {
             success.append("<br/>");
           }
           success.append(cc).append(" ").append(deleted);
@@ -30,10 +30,10 @@ catch (        APIException e) {
       error=msa.getMessage("ConceptClass.select");
     }
     view=getSuccessView();
-    if (!success.equals("")) {
+    if (!"".equals(success)) {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
     }
-    if (!error.equals("")) {
+    if (!"".equals(error)) {
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,error);
     }
   }
