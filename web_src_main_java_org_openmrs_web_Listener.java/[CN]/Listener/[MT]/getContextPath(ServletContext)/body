@@ -1,4 +1,5 @@
 {
+  Log log=LogFactory.getLog(Listener.class);
   String contextPath="";
   try {
     contextPath=servletContext.getContextPath();
@@ -10,11 +11,11 @@
       contextPath=contextPath.substring(contextPath.lastIndexOf("/"));
     }
  catch (    Exception e) {
-      e.printStackTrace();
+      log.error("Cannot find the contextPath of current webapp.",e);
     }
   }
 catch (  Exception e) {
-    e.printStackTrace();
+    log.error("ContextPath not defined",e);
   }
   if (contextPath.indexOf("/") != -1) {
     contextPath=contextPath.substring(1);
