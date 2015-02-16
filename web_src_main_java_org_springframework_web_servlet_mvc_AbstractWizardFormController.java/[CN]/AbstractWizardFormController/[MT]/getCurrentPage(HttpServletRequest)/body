@@ -1,0 +1,18 @@
+{
+  String pageAttrName=getPageSessionAttributeName(request);
+  Integer pageAttr=(Integer)request.getAttribute(pageAttrName);
+  if (pageAttr != null) {
+    return pageAttr.intValue();
+  }
+  String pageParam=request.getParameter(PARAM_PAGE);
+  if (pageParam != null) {
+    return Integer.parseInt(pageParam);
+  }
+  if (isSessionForm()) {
+    pageAttr=(Integer)request.getSession().getAttribute(pageAttrName);
+    if (pageAttr != null) {
+      return pageAttr.intValue();
+    }
+  }
+  throw new IllegalStateException("Page attribute [" + pageAttrName + "] neither found in session nor in request");
+}

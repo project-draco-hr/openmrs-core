@@ -1,0 +1,18 @@
+{
+  if (isSessionForm()) {
+    String formAttrName=getFormSessionAttributeName(request);
+    if (logger.isDebugEnabled()) {
+      logger.debug("Setting form session attribute [" + formAttrName + "] to: "+ errors.getTarget());
+    }
+    request.getSession().setAttribute(formAttrName,errors.getTarget());
+  }
+  Map model=errors.getModel();
+  Map referenceData=referenceData(request,errors.getTarget(),errors);
+  if (referenceData != null) {
+    model.putAll(referenceData);
+  }
+  if (controlModel != null) {
+    model.putAll(controlModel);
+  }
+  return new ModelAndView(viewName,model);
+}

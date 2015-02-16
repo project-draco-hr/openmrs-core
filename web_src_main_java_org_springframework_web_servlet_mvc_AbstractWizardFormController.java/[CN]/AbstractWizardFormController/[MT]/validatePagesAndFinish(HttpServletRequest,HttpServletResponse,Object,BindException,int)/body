@@ -1,0 +1,14 @@
+{
+  if (errors.hasErrors()) {
+    return showPage(request,errors,currentPage);
+  }
+  if (!suppressValidation(request,command,errors)) {
+    for (int page=0; page < getPageCount(request,command); page++) {
+      validatePage(command,errors,page,true);
+      if (errors.hasErrors()) {
+        return showPage(request,errors,page);
+      }
+    }
+  }
+  return processFinish(request,response,command,errors);
+}

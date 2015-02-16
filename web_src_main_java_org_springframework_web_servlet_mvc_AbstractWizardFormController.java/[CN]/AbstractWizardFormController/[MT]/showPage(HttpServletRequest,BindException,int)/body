@@ -1,0 +1,25 @@
+{
+  if (page >= 0 && page < getPageCount(request,errors.getTarget())) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Showing wizard page " + page + " for form bean '"+ getCommandName()+ "'");
+    }
+    Integer pageInteger=new Integer(page);
+    String pageAttrName=getPageSessionAttributeName(request);
+    if (isSessionForm()) {
+      if (logger.isDebugEnabled()) {
+        logger.debug("Setting page session attribute [" + pageAttrName + "] to: "+ pageInteger);
+      }
+      request.getSession().setAttribute(pageAttrName,pageInteger);
+    }
+    request.setAttribute(pageAttrName,pageInteger);
+    Map controlModel=new HashMap();
+    if (this.pageAttribute != null) {
+      controlModel.put(this.pageAttribute,new Integer(page));
+    }
+    String viewName=getViewName(request,errors.getTarget(),page);
+    return showForm(request,errors,viewName,controlModel);
+  }
+ else {
+    throw new ServletException("Invalid wizard page number: " + page);
+  }
+}

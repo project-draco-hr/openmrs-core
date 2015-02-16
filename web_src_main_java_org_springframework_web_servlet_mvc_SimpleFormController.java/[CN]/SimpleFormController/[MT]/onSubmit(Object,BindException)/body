@@ -1,0 +1,12 @@
+{
+  ModelAndView mv=onSubmit(command);
+  if (mv != null) {
+    return mv;
+  }
+ else {
+    if (getSuccessView() == null) {
+      throw new ServletException("successView isn't set");
+    }
+    return new ModelAndView(getSuccessView(),errors.getModel());
+  }
+}

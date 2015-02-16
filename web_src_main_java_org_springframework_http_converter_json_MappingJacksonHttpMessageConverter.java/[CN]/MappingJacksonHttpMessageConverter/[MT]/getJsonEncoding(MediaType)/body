@@ -1,0 +1,11 @@
+{
+  if (contentType != null && contentType.getCharSet() != null) {
+    Charset charset=contentType.getCharSet();
+    for (    JsonEncoding encoding : JsonEncoding.values()) {
+      if (charset.name().equals(encoding.getJavaName())) {
+        return encoding;
+      }
+    }
+  }
+  return JsonEncoding.UTF8;
+}

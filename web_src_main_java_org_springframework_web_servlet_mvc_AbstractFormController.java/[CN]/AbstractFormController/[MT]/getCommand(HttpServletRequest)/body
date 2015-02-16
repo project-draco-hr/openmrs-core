@@ -1,0 +1,19 @@
+{
+  if (!isSessionForm()) {
+    return formBackingObject(request);
+  }
+  HttpSession session=request.getSession(false);
+  if (session == null) {
+    throw new HttpSessionRequiredException("Must have session when trying to bind (in session-form mode)");
+  }
+  String formAttrName=getFormSessionAttributeName(request);
+  Object sessionFormObject=session.getAttribute(formAttrName);
+  if (sessionFormObject == null) {
+    throw new HttpSessionRequiredException("Form object not found in session (in session-form mode)");
+  }
+  if (logger.isDebugEnabled()) {
+    logger.debug("Removing form session attribute [" + formAttrName + "]");
+  }
+  session.removeAttribute(formAttrName);
+  return currentFormObject(request,sessionFormObject);
+}

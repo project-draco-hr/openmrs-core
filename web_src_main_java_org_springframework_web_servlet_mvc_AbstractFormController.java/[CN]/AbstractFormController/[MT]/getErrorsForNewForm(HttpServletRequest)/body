@@ -1,0 +1,17 @@
+{
+  Object command=formBackingObject(request);
+  if (command == null) {
+    throw new ServletException("Form object returned by formBackingObject() must not be null");
+  }
+  if (!checkCommand(command)) {
+    throw new ServletException("Form object returned by formBackingObject() must match commandClass");
+  }
+  ServletRequestDataBinder binder=createBinder(request,command);
+  BindException errors=new BindException(binder.getBindingResult());
+  if (isBindOnNewForm()) {
+    logger.debug("Binding to new form");
+    binder.bind(request);
+    onBindOnNewForm(request,command,errors);
+  }
+  return errors;
+}

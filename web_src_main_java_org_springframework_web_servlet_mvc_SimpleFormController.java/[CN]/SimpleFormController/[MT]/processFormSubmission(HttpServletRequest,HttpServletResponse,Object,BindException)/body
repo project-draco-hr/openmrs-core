@@ -1,0 +1,17 @@
+{
+  if (errors.hasErrors()) {
+    if (logger.isDebugEnabled()) {
+      logger.debug("Data binding errors: " + errors.getErrorCount());
+    }
+    return showForm(request,response,errors);
+  }
+ else   if (isFormChangeRequest(request,command)) {
+    logger.debug("Detected form change request -> routing request to onFormChange");
+    onFormChange(request,response,command,errors);
+    return showForm(request,response,errors);
+  }
+ else {
+    logger.debug("No errors -> processing submit");
+    return onSubmit(request,response,command,errors);
+  }
+}
