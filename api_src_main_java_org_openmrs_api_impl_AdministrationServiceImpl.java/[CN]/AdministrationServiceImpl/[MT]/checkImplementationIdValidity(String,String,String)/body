@@ -1,11 +1,11 @@
 {
-  if (!StringUtils.hasLength(implementationId)) {
+  if (StringUtils.isEmpty(implementationId)) {
     throw new APIException("cannot.be.empty",new Object[]{"implementationid"});
   }
-  if (!StringUtils.hasLength(description)) {
+  if (StringUtils.isEmpty(description)) {
     throw new APIException("cannot.be.empty",new Object[]{"description"});
   }
-  if (!StringUtils.hasLength(passphrase)) {
+  if (StringUtils.isEmpty(passphrase)) {
     throw new APIException("cannot.be.empty",new Object[]{"passphrase"});
   }
   Map<String,String> data=new HashMap<String,String>();

@@ -30,10 +30,16 @@
     session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"GlobalProperty.not.saved");
   }
  else {
-    for (    GlobalProperty gp : toSave) {
-      getService().saveGlobalProperty(gp);
+    try {
+      for (      GlobalProperty gp : toSave) {
+        getService().saveGlobalProperty(gp);
+      }
+      session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
     }
-    session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"GlobalProperty.saved");
+ catch (    APIException e) {
+      errors.reject("GlobalProperty.not.saved");
+      session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,e.getMessage());
+    }
     OpenmrsUtil.applyLogLevels();
     OpenmrsUtil.setupLogAppenders();
   }
