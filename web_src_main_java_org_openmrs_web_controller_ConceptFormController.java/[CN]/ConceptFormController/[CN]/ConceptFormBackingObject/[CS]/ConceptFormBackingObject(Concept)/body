@@ -23,7 +23,7 @@
     indexTermsByLocale.put(locale,ListUtils.lazyList(indexTermsByLocale.get(locale),FactoryUtils.instantiateFactory(ConceptName.class)));
   }
   conceptMappings=ListUtils.lazyList(new ArrayList<ConceptMap>(concept.getConceptMappings()),FactoryUtils.instantiateFactory(ConceptMap.class));
-  if (concept.isNumeric()) {
+  if (concept instanceof ConceptNumeric) {
     ConceptNumeric cn=(ConceptNumeric)concept;
     this.hiAbsolute=cn.getHiAbsolute();
     this.lowAbsolute=cn.getLowAbsolute();
@@ -35,7 +35,7 @@
     this.displayPrecision=cn.getDisplayPrecision();
     this.units=cn.getUnits();
   }
- else   if (concept.isComplex()) {
+ else   if (concept instanceof ConceptComplex) {
     ConceptComplex complex=(ConceptComplex)concept;
     this.handlerKey=complex.getHandler();
   }
