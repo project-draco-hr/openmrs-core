@@ -21,6 +21,7 @@
       if (statement.executeUpdate() != 1) {
         log.warn("Unable to set system default locale property.");
       }
+      statement.close();
     }
  catch (    Exception e) {
       log.warn("Locale " + locale + " could not be set for user with id "+ userId+ " .",e);
