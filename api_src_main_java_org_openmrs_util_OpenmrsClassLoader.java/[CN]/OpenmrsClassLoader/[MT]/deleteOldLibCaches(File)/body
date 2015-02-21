@@ -15,14 +15,12 @@
   File[] listFiles=tempLocation.listFiles(cacheDirFilter);
   if (listFiles != null) {
     for (    File cacheDir : listFiles) {
-      if (cacheDir.isDirectory() && !cacheDir.equals(libCacheFolder)) {
-        if (cacheDir.list(lockFilter).length == 0) {
-          try {
-            OpenmrsUtil.deleteDirectory(cacheDir);
-          }
- catch (          IOException io) {
-            log.warn("Unable to delete: " + cacheDir.getName());
-          }
+      if (cacheDir.isDirectory() && !cacheDir.equals(libCacheFolder) && cacheDir.list(lockFilter).length == 0) {
+        try {
+          OpenmrsUtil.deleteDirectory(cacheDir);
+        }
+ catch (        IOException io) {
+          log.warn("Unable to delete: " + cacheDir.getName());
         }
       }
     }

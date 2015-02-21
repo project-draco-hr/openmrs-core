@@ -44,14 +44,12 @@
         httpSession=request.getSession();
         httpSession.setAttribute("loginAttempts",0);
         User user=Context.getAuthenticatedUser();
-        if (user.getUserProperties() != null) {
-          if (user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
-            String localeString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
-            Locale locale=WebUtil.normalizeLocale(localeString);
-            if (locale != null) {
-              OpenmrsCookieLocaleResolver oclr=new OpenmrsCookieLocaleResolver();
-              oclr.setLocale(request,response,locale);
-            }
+        if (user.getUserProperties() != null && user.getUserProperties().containsKey(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE)) {
+          String localeString=user.getUserProperty(OpenmrsConstants.USER_PROPERTY_DEFAULT_LOCALE);
+          Locale locale=WebUtil.normalizeLocale(localeString);
+          if (locale != null) {
+            OpenmrsCookieLocaleResolver oclr=new OpenmrsCookieLocaleResolver();
+            oclr.setLocale(request,response,locale);
           }
         }
         if (new UserProperties(user.getUserProperties()).isSupposedToChangePassword()) {

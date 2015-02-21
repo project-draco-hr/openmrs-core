@@ -64,15 +64,11 @@
       concept.addConceptMapping(map);
     }
   }
-  if (!concept.isSet()) {
-    if (concept.getConceptSets() != null) {
-      concept.getConceptSets().clear();
-    }
+  if (!concept.isSet() && concept.getConceptSets() != null) {
+    concept.getConceptSets().clear();
   }
-  if (!concept.getDatatype().isCoded()) {
-    if (concept.getAnswers(true) != null) {
-      concept.getAnswers(true).clear();
-    }
+  if (!concept.getDatatype().isCoded() && concept.getAnswers(true) != null) {
+    concept.getAnswers(true).clear();
   }
   if (concept.getDatatype().getName().equals("Numeric")) {
     ConceptNumeric cn;

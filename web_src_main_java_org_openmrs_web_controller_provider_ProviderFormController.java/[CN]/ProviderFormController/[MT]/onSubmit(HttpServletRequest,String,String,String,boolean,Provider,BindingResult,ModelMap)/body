@@ -12,24 +12,22 @@
   List<ProviderAttributeType> attributeTypes=(List<ProviderAttributeType>)model.get("providerAttributeTypes");
   WebAttributeUtil.handleSubmittedAttributesForType(provider,errors,ProviderAttribute.class,request,attributeTypes);
   new ProviderValidator().validate(provider,errors);
-  if (!errors.hasErrors()) {
-    if (Context.isAuthenticated()) {
-      ProviderService service=Context.getProviderService();
-      String message="Provider.saved";
-      if (saveProviderButton != null) {
-        service.saveProvider(provider);
-      }
- else       if (retireProviderButton != null) {
-        service.retireProvider(provider,provider.getRetireReason());
-        message="Provider.retired";
-      }
- else       if (unretireProviderButton != null) {
-        service.unretireProvider(provider);
-        message="Provider.unretired";
-      }
-      request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,message);
-      return "redirect:index.htm";
+  if (!errors.hasErrors() && Context.isAuthenticated()) {
+    ProviderService service=Context.getProviderService();
+    String message="Provider.saved";
+    if (saveProviderButton != null) {
+      service.saveProvider(provider);
     }
+ else     if (retireProviderButton != null) {
+      service.retireProvider(provider,provider.getRetireReason());
+      message="Provider.retired";
+    }
+ else     if (unretireProviderButton != null) {
+      service.unretireProvider(provider);
+      message="Provider.unretired";
+    }
+    request.getSession().setAttribute(WebConstants.OPENMRS_MSG_ATTR,message);
+    return "redirect:index.htm";
   }
   return showForm();
 }

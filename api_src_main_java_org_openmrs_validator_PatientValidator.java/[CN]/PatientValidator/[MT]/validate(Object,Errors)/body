@@ -18,11 +18,9 @@
   if (!preferredIdentifierChosen && identifiers.size() != 1) {
     errors.reject("error.preferredIdentifier");
   }
-  if (!errors.hasErrors()) {
-    if (patient.getIdentifiers() != null) {
-      for (      PatientIdentifier identifier : patient.getIdentifiers()) {
-        patientIdentifierValidator.validate(identifier,errors);
-      }
+  if (!errors.hasErrors() && patient.getIdentifiers() != null) {
+    for (    PatientIdentifier identifier : patient.getIdentifiers()) {
+      patientIdentifierValidator.validate(identifier,errors);
     }
   }
 }
