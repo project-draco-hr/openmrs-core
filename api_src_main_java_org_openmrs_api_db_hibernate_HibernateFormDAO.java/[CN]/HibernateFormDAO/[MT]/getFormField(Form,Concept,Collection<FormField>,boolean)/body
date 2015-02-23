@@ -13,7 +13,7 @@
   FormField backupPlan=formFields.get(0);
   formFields.removeAll(ignoreFormFields);
   if (formFields.size() < 1) {
-    if (force == false) {
+    if (!force) {
       return backupPlan;
     }
  else {

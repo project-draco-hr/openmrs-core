@@ -31,11 +31,13 @@
         }
       }
     }
-    if (requireAll == false) {
+    if (!requireAll) {
       throwUnauthorized(user,method,privileges);
     }
   }
  else   if (attributes.hasAuthorizedAnnotation(method) && Context.isAuthenticated() == false) {
-    throwUnauthorized(user,method);
+    if (!Context.isAuthenticated()) {
+      throwUnauthorized(user,method);
+    }
   }
 }

@@ -5,12 +5,12 @@
   if (extensions == null) {
     extensions=new ArrayList<Extension>();
   }
-  if (pointId.contains(Extension.extensionIdSeparator) == false) {
+  if (!pointId.contains(Extension.extensionIdSeparator)) {
     for (    MEDIA_TYPE mediaType : Extension.MEDIA_TYPE.values()) {
       List<Extension> tmpExtensions=extensionMap.get(Extension.toExtensionId(pointId,mediaType));
       if (tmpExtensions != null) {
         for (        Extension ext : tmpExtensions) {
-          if (extensions.contains(ext) == false) {
+          if (!extensions.contains(ext)) {
             extensions.add(ext);
           }
         }

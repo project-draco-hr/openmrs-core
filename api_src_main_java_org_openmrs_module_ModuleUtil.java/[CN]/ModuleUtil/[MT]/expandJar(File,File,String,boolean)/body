@@ -10,7 +10,7 @@
       JarEntry jarEntry=jarEntries.nextElement();
       if (name == null || jarEntry.getName().startsWith(name)) {
         String entryName=jarEntry.getName();
-        if (keepFullPath == false && name != null) {
+        if (!keepFullPath && name != null) {
           entryName=entryName.replaceFirst(name,"");
         }
         int last=entryName.lastIndexOf('/');

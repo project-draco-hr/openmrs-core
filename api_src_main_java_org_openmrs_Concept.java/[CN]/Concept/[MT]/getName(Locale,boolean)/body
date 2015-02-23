@@ -12,7 +12,7 @@
   if (exactName != null) {
     return exactName;
   }
-  if (exact == false) {
+  if (!exact) {
     Locale broaderLocale=new Locale(locale.getLanguage());
     ConceptName name=getNameInLocale(broaderLocale);
     return name;
