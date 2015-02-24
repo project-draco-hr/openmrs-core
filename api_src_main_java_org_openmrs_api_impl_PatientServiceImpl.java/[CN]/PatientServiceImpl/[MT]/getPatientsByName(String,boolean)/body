@@ -1,5 +1,5 @@
 {
-  if (includeVoided == true) {
+  if (includeVoided) {
     throw new APIException("Searching on voided patients is no longer allowed");
   }
   return Context.getPatientService().getPatients(name,(String)null,null);

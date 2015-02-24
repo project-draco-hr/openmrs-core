@@ -1,9 +1,9 @@
 {
-  log.debug("checking for updates");
+  LOGGER.debug("checking for updates");
   List<OpenMRSChangeSet> changesets=getUnrunDatabaseChanges();
   if (isLocked() && changesets.size() == 0) {
     DatabaseUpdater.releaseDatabaseLock();
-    log.debug("db lock found and released automatically");
+    LOGGER.debug("db lock found and released automatically");
     return false;
   }
   return changesets.size() > 0;

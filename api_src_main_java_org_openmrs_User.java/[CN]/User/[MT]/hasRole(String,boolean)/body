@@ -1,6 +1,8 @@
 {
-  if (ignoreSuperUser == false && isSuperUser()) {
-    return true;
+  if (!ignoreSuperUser) {
+    if (isSuperUser()) {
+      return true;
+    }
   }
   if (roles == null) {
     return false;

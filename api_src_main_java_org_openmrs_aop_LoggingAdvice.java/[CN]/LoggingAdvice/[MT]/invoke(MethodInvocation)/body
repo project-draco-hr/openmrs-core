@@ -16,7 +16,7 @@
   if (logGetter || logSetter) {
     StringBuilder output=new StringBuilder();
     output.append("In method ").append(method.getDeclaringClass().getSimpleName()).append(".").append(name);
-    if (loggingAnnotation == null || loggingAnnotation.ignoreAllArgumentValues() == false) {
+    if (loggingAnnotation == null || !loggingAnnotation.ignoreAllArgumentValues()) {
       int x;
       Class<?>[] types=method.getParameterTypes();
       Object[] values=invocation.getArguments();

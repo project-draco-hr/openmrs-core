@@ -3,7 +3,7 @@
   if (getIdentifiers() != null) {
     List<PatientIdentifier> nonPreferred=new LinkedList<PatientIdentifier>();
     for (    PatientIdentifier pi : getIdentifiers()) {
-      if (pi.isVoided() == false) {
+      if (!pi.isVoided()) {
         if (pi.isPreferred()) {
           ids.add(pi);
         }

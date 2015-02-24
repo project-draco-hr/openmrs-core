@@ -10,22 +10,24 @@
     }
     if (phrase.matches("\\d+")) {
       Encounter e=es.getEncounter(Integer.valueOf(phrase));
-      if ((e != null && (patientId == null || patientId.equals(e.getPatient().getPatientId()))) && (!e.isVoided() || includeVoided == true)) {
-        encs.add(e);
+      if (e != null && (patientId == null || patientId.equals(e.getPatient().getPatientId()))) {
+        if (!e.isVoided() || includeVoided) {
+          encs.add(e);
+        }
       }
-    }
-    if (phrase.equals("")) {
-    }
+      if (phrase.equals("")) {
+      }
  else {
-      encs.addAll(es.getEncounters(phrase,patientId,start,length,includeVoided));
-    }
-    if (encs.size() == 0) {
-      objectList.add(mss.getMessage("Encounter.noMatchesFound",new Object[]{phrase},Context.getLocale()));
-    }
+        encs.addAll(es.getEncounters(phrase,patientId,start,length,includeVoided));
+      }
+      if (encs.size() == 0) {
+        objectList.add(mss.getMessage("Encounter.noMatchesFound",new Object[]{phrase},Context.getLocale()));
+      }
  else {
-      objectList=new Vector<Object>(encs.size());
-      for (      Encounter e : encs) {
-        objectList.add(new EncounterListItem(e));
+        objectList=new Vector<Object>(encs.size());
+        for (        Encounter enc : encs) {
+          objectList.add(new EncounterListItem(enc));
+        }
       }
     }
   }

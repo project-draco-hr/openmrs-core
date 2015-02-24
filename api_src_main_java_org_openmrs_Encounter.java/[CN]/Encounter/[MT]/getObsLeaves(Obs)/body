@@ -2,8 +2,8 @@
   List<Obs> leaves=new ArrayList<Obs>();
   if (obsParent.hasGroupMembers()) {
     for (    Obs child : obsParent.getGroupMembers()) {
-      if (child.isVoided() == false) {
-        if (child.isObsGrouping() == false) {
+      if (!child.isVoided()) {
+        if (!child.isObsGrouping()) {
           leaves.add(child);
         }
  else {
@@ -12,7 +12,7 @@
       }
     }
   }
- else   if (obsParent.isVoided() == false) {
+ else   if (!obsParent.isVoided()) {
     leaves.add(obsParent);
   }
   return leaves;

@@ -9,19 +9,19 @@
         Obs obsDeath=obssDeath.iterator().next();
         causeOfDeathOther=obsDeath.getValueText();
         if (causeOfDeathOther == null) {
-          log.debug("cod is null, so setting to empty string");
+          LOGGER.debug("cod is null, so setting to empty string");
           causeOfDeathOther="";
         }
  else {
-          log.debug("cod is valid: " + causeOfDeathOther);
+          LOGGER.debug("cod is valid: " + causeOfDeathOther);
         }
       }
  else {
-        log.debug("obssDeath is wrong size: " + obssDeath.size());
+        LOGGER.debug("obssDeath is wrong size: " + obssDeath.size());
       }
     }
  else {
-      log.warn("No concept death cause found");
+      LOGGER.warn("No concept death cause found");
     }
   }
   map.put("causeOfDeathOther",causeOfDeathOther);
