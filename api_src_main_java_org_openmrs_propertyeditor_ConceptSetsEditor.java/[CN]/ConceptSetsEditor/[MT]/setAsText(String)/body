@@ -6,7 +6,7 @@
     List<Integer> requestConceptIds=new Vector<Integer>();
     for (    String id : conceptIds) {
       id=id.trim();
-      if (!"".equals(id) && !requestConceptIds.contains(Integer.valueOf(id))) {
+      if (!id.equals("") && !requestConceptIds.contains(Integer.valueOf(id))) {
         requestConceptIds.add(Integer.valueOf(id));
       }
     }

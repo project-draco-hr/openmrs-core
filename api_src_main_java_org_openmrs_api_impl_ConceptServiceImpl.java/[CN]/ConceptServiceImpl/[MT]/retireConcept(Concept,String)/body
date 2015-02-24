@@ -2,7 +2,7 @@
   if (!StringUtils.hasText(reason)) {
     throw new IllegalArgumentException(Context.getMessageSourceService().getMessage("general.voidReason.empty"));
   }
-  if (concept.isRetired() == false) {
+  if (!concept.isRetired()) {
     checkIfLocked();
     concept.setRetired(true);
     concept.setRetireReason(reason);

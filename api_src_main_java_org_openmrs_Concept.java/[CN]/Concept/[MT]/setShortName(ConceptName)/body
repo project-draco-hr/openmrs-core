@@ -8,10 +8,8 @@
       oldShortName.setConceptNameType(null);
     }
     shortName.setConceptNameType(ConceptNameType.SHORT);
-    if (StringUtils.isNotBlank(shortName.getName())) {
-      if (shortName.getConceptNameId() == null || !getNames().contains(shortName)) {
-        addName(shortName);
-      }
+    if (StringUtils.isNotBlank(shortName.getName()) && (shortName.getConceptNameId() == null || !getNames().contains(shortName))) {
+      addName(shortName);
     }
   }
  else {

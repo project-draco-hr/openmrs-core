@@ -15,15 +15,15 @@
     writer.write(lineSeparator);
     writer.write(lineSeparator);
     if (writer.checkError()) {
-      log.warn("An Error occured while writing warnings to the database update log file'");
+      LOGGER.warn("An Error occured while writing warnings to the database update log file'");
     }
     writer.close();
   }
  catch (  FileNotFoundException e) {
-    log.warn("Failed to find the database update log file",e);
+    LOGGER.warn("Failed to find the database update log file",e);
   }
 catch (  IOException e) {
-    log.warn("Failed to write to the database update log file",e);
+    LOGGER.warn("Failed to write to the database update log file",e);
   }
  finally {
     IOUtils.closeQuietly(writer);

@@ -4,7 +4,6 @@
   List<Patient> patients=Context.getPatientService().getPatients(null,identifier,types,true);
   while (patients.remove(ignorePatient)) {
   }
-  ;
   if (patients.size() > 0) {
     return patients.get(0);
   }

@@ -19,7 +19,7 @@
       }
     }
  catch (    ParseException e) {
-      log.debug("Error getting date from birthdate",e);
+      LOGGER.debug("Error getting date from birthdate",e);
     }
   }
  else   if (age != null && !"".equals(age)) {
@@ -32,7 +32,7 @@
       birthdateEstimated=true;
     }
  catch (    ParseException e) {
-      log.debug("Error getting date from age",e);
+      LOGGER.debug("Error getting date from age",e);
     }
   }
   if (birthdate != null) {

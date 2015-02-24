@@ -9,7 +9,7 @@
       if (currentAttribute.getValue() != null && currentAttribute.getValue().equals(newAttribute.getValue())) {
         return;
       }
-      if (newAttribute.isVoided() == false || newIsNull) {
+      if (!newAttribute.isVoided() || newIsNull) {
         if (currentAttribute.getCreator() != null) {
           currentAttribute.voidAttribute("New value: " + newAttribute.getValue());
         }
