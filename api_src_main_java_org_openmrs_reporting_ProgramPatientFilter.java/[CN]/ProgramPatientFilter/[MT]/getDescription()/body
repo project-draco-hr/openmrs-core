@@ -1,6 +1,8 @@
 {
   MessageSourceService mss=Context.getMessageSourceService();
-  if (!isReadyToRun())   return "";
+  if (!isReadyToRun()) {
+    return "";
+  }
   Locale locale=Context.getLocale();
   DateFormat df=DateFormat.getDateInstance(DateFormat.SHORT,locale);
   StringBuilder ret=new StringBuilder();

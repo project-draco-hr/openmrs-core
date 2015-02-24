@@ -1,7 +1,9 @@
 {
   ArrayList<ModuleClassLoader> moduleClassLoaders=new ArrayList<ModuleClassLoader>(ModuleFactory.getModuleClassLoaders());
   Class<?> c=loadModuleClass(name,moduleClassLoaders);
-  if (c != null)   return c;
+  if (c != null) {
+    return c;
+  }
   ClassNotFoundException ex=null;
   try {
     c=getParent().loadClass(name);
