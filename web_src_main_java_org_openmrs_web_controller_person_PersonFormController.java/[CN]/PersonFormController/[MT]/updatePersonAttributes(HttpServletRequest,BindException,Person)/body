@@ -18,13 +18,13 @@
       }
  catch (      APIException e) {
         errors.rejectValue("attributes","Invalid value for " + type.getName() + ": '"+ value+ "'");
-        log.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
+        LOGGER.warn("Got an invalid value: " + value + " while setting personAttributeType id #"+ paramName,e);
         attribute.setValue("");
       }
       person.addAttribute(attribute);
     }
   }
-  if (log.isDebugEnabled()) {
-    log.debug("Person Attributes: \n" + person.printAttributes());
+  if (LOGGER.isDebugEnabled()) {
+    LOGGER.debug("Person Attributes: \n" + person.printAttributes());
   }
 }
