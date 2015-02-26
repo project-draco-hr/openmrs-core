@@ -1,5 +1,5 @@
 {
-  for (  GlobalPropertyListener listener : getGlobalPropertyListeners()) {
+  for (  GlobalPropertyListener listener : eventListeners.getGlobalPropertyListeners()) {
     if (listener.supportsPropertyName(gp.getProperty())) {
       listener.globalPropertyChanged(gp);
     }

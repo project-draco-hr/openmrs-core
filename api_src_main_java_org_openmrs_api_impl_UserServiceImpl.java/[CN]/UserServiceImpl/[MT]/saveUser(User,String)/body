@@ -15,8 +15,5 @@
   if (user.getUserId() == null && password != null) {
     OpenmrsUtil.validatePassword(user.getUsername(),password,user.getSystemId());
   }
-  Object[] params={Context.getLocale(),Context.getAuthenticatedUser()};
-  Object key=(new DefaultKeyGenerator()).generate(null,null,params);
-  cacheManager.getCache("userSearchLocales").evict(key);
   return dao.saveUser(user,password);
 }
