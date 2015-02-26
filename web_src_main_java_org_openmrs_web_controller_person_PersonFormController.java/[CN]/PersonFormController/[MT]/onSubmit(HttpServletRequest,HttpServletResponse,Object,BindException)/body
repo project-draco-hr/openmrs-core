@@ -46,7 +46,7 @@
       }
     }
  catch (    DataIntegrityViolationException e) {
-      LOGGER.error("Unable to delete person because of database FK errors: " + person,e);
+      log.error("Unable to delete person because of database FK errors: " + person,e);
       httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Person.cannot.delete");
       return new ModelAndView(new RedirectView(getSuccessView() + "?personId=" + person.getPersonId().toString()));
     }
@@ -73,23 +73,23 @@
  else {
     ps.savePerson(person);
     if (person.getDead()) {
-      LOGGER.debug("Person is dead, so let's make sure there's an Obs for it");
+      log.debug("Person is dead, so let's make sure there's an Obs for it");
       String causeOfDeathConceptId=Context.getAdministrationService().getGlobalProperty("concept.causeOfDeath");
       Concept causeOfDeath=Context.getConceptService().getConcept(causeOfDeathConceptId);
       if (causeOfDeath != null) {
         List<Obs> obssDeath=Context.getObsService().getObservationsByPersonAndConcept(person,causeOfDeath);
         if (obssDeath != null) {
           if (obssDeath.size() > 1) {
-            LOGGER.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
+            log.error("Multiple causes of death (" + obssDeath.size() + ")?  Shouldn't be...");
           }
  else {
             Obs obsDeath=null;
             if (obssDeath.size() == 1) {
-              LOGGER.debug("Already has a cause of death, so changing it");
+              log.debug("Already has a cause of death, so changing it");
               obsDeath=obssDeath.iterator().next();
             }
  else {
-              LOGGER.debug("No cause of death yet, let's create one.");
+              log.debug("No cause of death yet, let's create one.");
               obsDeath=new Obs();
               obsDeath.setPerson(person);
               obsDeath.setConcept(causeOfDeath);
@@ -98,17 +98,17 @@
                 obsDeath.setLocation(location);
               }
  else {
-                LOGGER.error("Could not find a suitable location for which to create this new Obs");
+                log.error("Could not find a suitable location for which to create this new Obs");
               }
             }
             Concept currCause=person.getCauseOfDeath();
             if (currCause == null) {
-              LOGGER.debug("Current cause is null, attempting to set to NONE");
+              log.debug("Current cause is null, attempting to set to NONE");
               String noneConcept=Context.getAdministrationService().getGlobalProperty("concept.none");
               currCause=Context.getConceptService().getConcept(noneConcept);
             }
             if (currCause != null) {
-              LOGGER.debug("Current cause is not null, setting to value_coded");
+              log.debug("Current cause is not null, setting to value_coded");
               obsDeath.setValueCoded(currCause);
               obsDeath.setValueCodedName(currCause.getName());
               Date dateDeath=person.getDeathDate();
@@ -123,17 +123,17 @@
                 String otherInfo=ServletRequestUtils.getStringParameter(request,"causeOfDeath_other","");
                 if (conceptOther.equals(currCause)) {
                   deathReasonChanged=!otherInfo.equals(obsDeath.getValueText());
-                  LOGGER.debug("Setting value_text as " + otherInfo);
+                  log.debug("Setting value_text as " + otherInfo);
                   obsDeath.setValueText(otherInfo);
                 }
  else {
                   deathReasonChanged=!otherInfo.equals("");
-                  LOGGER.debug("New concept is NOT the OTHER concept, so setting to blank");
+                  log.debug("New concept is NOT the OTHER concept, so setting to blank");
                   obsDeath.setValueText("");
                 }
               }
  else {
-                LOGGER.debug("Don't seem to know about an OTHER concept, so deleting value_text");
+                log.debug("Don't seem to know about an OTHER concept, so deleting value_text");
                 obsDeath.setValueText("");
               }
               boolean shouldSaveObs=(null == obsDeath.getId()) || deathReasonChanged;
@@ -145,13 +145,13 @@
               }
             }
  else {
-              LOGGER.debug("Current cause is still null - aborting mission");
+              log.debug("Current cause is still null - aborting mission");
             }
           }
         }
       }
  else {
-        LOGGER.debug("Cause of death is null - should not have gotten here without throwing an error on the form.");
+        log.debug("Cause of death is null - should not have gotten here without throwing an error on the form.");
       }
     }
     String view=getSuccessView();

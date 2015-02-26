@@ -3,7 +3,7 @@
   String view=getFormView();
   TaskDefinition task=(TaskDefinition)command;
   task.setStartTimePattern(DEFAULT_DATE_PATTERN);
-  LOGGER.info("task started? " + task.getStarted());
+  log.info("task started? " + task.getStarted());
   if (task.getStarted() && OpenmrsUtil.compareWithNullAsEarliest(task.getStartTime(),new Date()) > 0 && (task.getTaskInstance() == null || !task.getTaskInstance().isExecuting())) {
     Context.getSchedulerService().rescheduleTask(task);
   }

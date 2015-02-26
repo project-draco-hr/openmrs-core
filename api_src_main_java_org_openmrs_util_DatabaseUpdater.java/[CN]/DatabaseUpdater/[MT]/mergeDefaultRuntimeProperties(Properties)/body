@@ -4,7 +4,7 @@
   for (  Object key : runtimePropertyKeys) {
     String prop=(String)key;
     String value=(String)runtimeProperties.get(key);
-    LOGGER.trace("Setting property: " + prop + ":"+ value);
+    log.trace("Setting property: " + prop + ":"+ value);
     if (!prop.startsWith("hibernate") && !runtimeProperties.containsKey("hibernate." + prop)) {
       runtimeProperties.setProperty("hibernate." + prop,value);
     }

@@ -17,7 +17,7 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
   if (cl == null) {
     cl=OpenmrsClassLoader.getInstance();
   }
-  LOGGER.debug("Setting up liquibase object to run changelog: " + changeLogFile);
+  log.debug("Setting up liquibase object to run changelog: " + changeLogFile);
   Liquibase liquibase=getLiquibase(changeLogFile,cl);
   int numChangeSetsToRun=liquibase.listUnrunChangeSets(contexts).size();
   Database database=null;
@@ -43,7 +43,7 @@ final class OpenmrsUpdateVisitor extends UpdateVisitor {
       lockHandler.releaseLock();
     }
  catch (    Exception e) {
-      LOGGER.error("Could not release lock",e);
+      log.error("Could not release lock",e);
     }
     try {
       database.getConnection().close();
