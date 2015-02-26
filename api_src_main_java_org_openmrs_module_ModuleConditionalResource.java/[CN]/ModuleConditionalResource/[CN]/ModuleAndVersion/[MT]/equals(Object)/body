@@ -1,8 +1,16 @@
 {
-  if (this == o)   return true;
-  if (o == null || getClass() != o.getClass())   return false;
+  if (this == o) {
+    return true;
+  }
+  if (o == null || getClass() != o.getClass()) {
+    return false;
+  }
   ModuleAndVersion that=(ModuleAndVersion)o;
-  if (moduleId != null ? !moduleId.equals(that.moduleId) : that.moduleId != null)   return false;
-  if (version != null ? !version.equals(that.version) : that.version != null)   return false;
+  if (moduleId != null ? !moduleId.equals(that.moduleId) : that.moduleId != null) {
+    return false;
+  }
+  if (version != null ? !version.equals(that.version) : that.version != null) {
+    return false;
+  }
   return true;
 }

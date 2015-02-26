@@ -1,5 +1,5 @@
 {
-  if (purgeComplexData(obs) == false) {
+  if (!purgeComplexData(obs)) {
     throw new APIException("Obs.error.unable.purge.complex.data",new Object[]{obs});
   }
   if (cascade) {

@@ -16,7 +16,7 @@
   String tmp=null;
   while (obs.getObsId() == null && outputfile.exists() && i < 100) {
     tmp=null;
-    tmp=new String(outputfile.getAbsolutePath().replace("." + extension,""));
+    tmp=String.valueOf(outputfile.getAbsolutePath().replace("." + extension,""));
     outputfile=null;
     String filename=(i < 1) ? tmp + "_" + nf.format(Integer.valueOf(++i)) : tmp.replace(nf.format(Integer.valueOf(i)),nf.format(Integer.valueOf(++i)));
     outputfile=new File(filename + "." + extension);

@@ -1,8 +1,6 @@
 {
-  if (!StringUtils.isBlank(country) && this.locale != null) {
-    if (isShort() && this.locale.getCountry().equals(country)) {
-      return true;
-    }
+  if (!StringUtils.isBlank(country) && this.locale != null && isShort() && this.locale.getCountry().equals(country)) {
+    return true;
   }
   return false;
 }

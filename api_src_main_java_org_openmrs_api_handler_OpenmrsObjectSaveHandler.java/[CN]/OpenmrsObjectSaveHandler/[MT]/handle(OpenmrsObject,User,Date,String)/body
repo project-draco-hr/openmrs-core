@@ -31,10 +31,8 @@
       if (property.getWriteMethod().getAnnotation(AllowEmptyStrings.class) != null) {
         continue;
       }
-      if ("".equals(value)) {
-        if (!(openmrsObject instanceof Voidable && ((Voidable)openmrsObject).isVoided())) {
-          PropertyUtils.setProperty(openmrsObject,property.getName(),null);
-        }
+      if ("".equals(value) && !(openmrsObject instanceof Voidable && ((Voidable)openmrsObject).isVoided())) {
+        PropertyUtils.setProperty(openmrsObject,property.getName(),null);
       }
     }
  catch (    UnsupportedOperationException ex) {

@@ -13,6 +13,7 @@
       dateObject=format.parse(birthdate);
     }
  catch (    Exception e) {
+      log.error("Error during parse birthdate",e);
     }
     if (dateObject != null) {
       Calendar c=Calendar.getInstance();

@@ -1,9 +1,7 @@
 {
-  if (isAuthenticated()) {
-    if (getAuthenticatedUser().hasPrivilege(privilege) || getAuthenticatedRole().hasPrivilege(privilege)) {
-      Context.getUserService().notifyPrivilegeListeners(getAuthenticatedUser(),privilege,true);
-      return true;
-    }
+  if (isAuthenticated() && (getAuthenticatedUser().hasPrivilege(privilege) || getAuthenticatedRole().hasPrivilege(privilege))) {
+    Context.getUserService().notifyPrivilegeListeners(getAuthenticatedUser(),privilege,true);
+    return true;
   }
   if (log.isDebugEnabled()) {
     log.debug("Checking '" + privilege + "' against proxies: "+ proxies);

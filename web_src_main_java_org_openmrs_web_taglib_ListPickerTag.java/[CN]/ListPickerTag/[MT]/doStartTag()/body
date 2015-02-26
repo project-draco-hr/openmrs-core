@@ -1,6 +1,7 @@
 {
+  Random gen=new Random();
   if (name == null) {
-    name="list" + (int)(Math.random() * 100);
+    name="list" + (gen.nextInt() * 100);
   }
   if (currentItems == null) {
     currentItems=new Vector<Object>();

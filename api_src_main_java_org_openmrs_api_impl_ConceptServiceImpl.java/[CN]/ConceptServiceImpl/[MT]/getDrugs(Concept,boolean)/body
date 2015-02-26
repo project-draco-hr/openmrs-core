@@ -1,5 +1,5 @@
 {
-  if (includeRetired == true) {
+  if (includeRetired) {
     throw new APIException("ConceptDrug.retired.getting",(Object[])null);
   }
   return Context.getConceptService().getDrugsByConcept(concept);
