@@ -1,5 +1,5 @@
 {
-  Context.setLocale(new Locale("en"));
+  Context.setLocale(new Locale("en","GB"));
   Concept concept=Context.getConceptService().getConcept(5497);
   String duplicateName=concept.getFullySpecifiedName(Context.getLocale()).getName();
   ConceptName newName=new ConceptName(duplicateName,Context.getLocale());

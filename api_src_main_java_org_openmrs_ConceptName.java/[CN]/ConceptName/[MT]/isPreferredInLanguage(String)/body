@@ -1,8 +1,6 @@
 {
-  if (!StringUtils.isBlank(language) && this.locale != null) {
-    if (isPreferred() && this.locale.getLanguage().equals(language)) {
-      return true;
-    }
+  if (!StringUtils.isBlank(language) && this.locale != null && isPreferred() && this.locale.getLanguage().equals(language)) {
+    return true;
   }
   return false;
 }

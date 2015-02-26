@@ -2,7 +2,7 @@
   Alert alert=(Alert)obj;
   new AlertValidator().validate(obj,errors);
   try {
-    if (Context.hasPrivilege(PrivilegeConstants.MANAGE_ALERTS) == false) {
+    if (!Context.hasPrivilege(PrivilegeConstants.MANAGE_ALERTS)) {
       throw new APIAuthenticationException("Must be logged in as user with alerts privileges");
     }
     Context.addProxyPrivilege(PrivilegeConstants.VIEW_USERS);

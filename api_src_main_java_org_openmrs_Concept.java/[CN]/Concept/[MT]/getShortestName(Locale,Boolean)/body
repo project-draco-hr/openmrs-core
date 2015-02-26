@@ -10,10 +10,8 @@
   ConceptName shortestNameForConcept=null;
   if (locale != null) {
     for (    ConceptName possibleName : getNames()) {
-      if (possibleName.getLocale().equals(locale)) {
-        if ((shortestNameForLocale == null) || (possibleName.getName().length() < shortestNameForLocale.getName().length())) {
-          shortestNameForLocale=possibleName;
-        }
+      if (possibleName.getLocale().equals(locale) && ((shortestNameForLocale == null) || (possibleName.getName().length() < shortestNameForLocale.getName().length()))) {
+        shortestNameForLocale=possibleName;
       }
       if ((shortestNameForConcept == null) || (possibleName.getName().length() < shortestNameForConcept.getName().length())) {
         shortestNameForConcept=possibleName;

@@ -13,12 +13,12 @@
   MockHttpServletResponse response=new MockHttpServletResponse();
   mockRequest.setMethod("POST");
   mockRequest.setParameter("action","");
-  mockRequest.setParameter("synonymsByLocale[en][0].name",EXPECTED_SYNONYM_A);
-  mockRequest.setParameter("synonymsByLocale[en][1].name",EXPECTED_SYNONYM_B);
-  mockRequest.setParameter("synonymsByLocale[en][2].name",EXPECTED_SYNONYM_C);
-  mockRequest.setParameter("shortNamesByLocale[en].name",EXPECTED_SHORT_NAME);
-  mockRequest.setParameter("descriptionsByLocale[en].description",EXPECTED_DESCRIPTION);
-  mockRequest.setParameter("namesByLocale[en].name",EXPECTED_PREFERRED_NAME);
+  mockRequest.setParameter("synonymsByLocale[en_GB][0].name",EXPECTED_SYNONYM_A);
+  mockRequest.setParameter("synonymsByLocale[en_GB][1].name",EXPECTED_SYNONYM_B);
+  mockRequest.setParameter("synonymsByLocale[en_GB][2].name",EXPECTED_SYNONYM_C);
+  mockRequest.setParameter("shortNamesByLocale[en_GB].name",EXPECTED_SHORT_NAME);
+  mockRequest.setParameter("descriptionsByLocale[en_GB].description",EXPECTED_DESCRIPTION);
+  mockRequest.setParameter("namesByLocale[en_GB].name",EXPECTED_PREFERRED_NAME);
   mockRequest.setParameter("concept.datatype","1");
   ModelAndView mav=conceptFormController.handleRequest(mockRequest,response);
   assertNotNull(mav);
@@ -27,7 +27,7 @@
   assertNotNull(actualConcept);
   Collection<ConceptName> actualNames=actualConcept.getNames();
   assertEquals(4,actualNames.size());
-  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getFullySpecifiedName(Locale.ENGLISH).getName());
-  assertNotNull(actualConcept.getShortNameInLocale(Locale.ENGLISH));
-  assertEquals(EXPECTED_SHORT_NAME,actualConcept.getShortNameInLocale(Locale.ENGLISH).getName());
+  assertEquals(EXPECTED_PREFERRED_NAME,actualConcept.getFullySpecifiedName(new Locale("en","GB")).getName());
+  assertNotNull(actualConcept.getShortNameInLocale(new Locale("en","GB")));
+  assertEquals(EXPECTED_SHORT_NAME,actualConcept.getShortNameInLocale(new Locale("en","GB")).getName());
 }

@@ -3,7 +3,7 @@
     throw new IllegalArgumentException("The defaultValue argument cannot be null");
   }
   String propVal=Context.getAdministrationService().getGlobalProperty(propertyName);
-  if (!StringUtils.hasLength(propVal)) {
+  if (StringUtils.isEmpty(propVal)) {
     return defaultValue;
   }
   try {

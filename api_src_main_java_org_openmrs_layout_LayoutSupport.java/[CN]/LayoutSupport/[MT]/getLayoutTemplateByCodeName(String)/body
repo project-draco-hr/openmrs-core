@@ -2,11 +2,9 @@
   if (this.layoutTemplates != null && templateName != null) {
     T ret=null;
     for (    T at : this.layoutTemplates) {
-      if (at != null) {
-        if (templateName.equalsIgnoreCase(at.getCodeName())) {
-          ret=at;
-          log.debug("Found Layout Template named " + at.getDisplayName());
-        }
+      if (at != null && templateName.equalsIgnoreCase(at.getCodeName())) {
+        ret=at;
+        log.debug("Found Layout Template named " + at.getDisplayName());
       }
     }
     return ret;

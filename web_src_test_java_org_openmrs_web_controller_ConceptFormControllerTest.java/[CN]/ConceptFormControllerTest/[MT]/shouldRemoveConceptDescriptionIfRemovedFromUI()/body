@@ -9,7 +9,7 @@
   mockRequest.setMethod("POST");
   mockRequest.setParameter("action","");
   mockRequest.setParameter("conceptId",concept.getConceptId().toString());
-  mockRequest.setParameter("descriptionsByLocale[en].description","");
+  mockRequest.setParameter("descriptionsByLocale[en_GB].description","");
   ModelAndView mav=conceptFormController.handleRequest(mockRequest,response);
   assertNotNull(mav);
   assertTrue(mav.getModel().isEmpty());

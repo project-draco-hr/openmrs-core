@@ -30,15 +30,11 @@
       originalLocation=dao.getSavedEncounterLocation(encounter);
     }
     for (    Obs obs : encounter.getAllObs(true)) {
-      if (OpenmrsUtil.compare(originalDate,newDate) != 0) {
-        if (OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
-          obs.setObsDatetime(newDate);
-        }
+      if (OpenmrsUtil.compare(originalDate,newDate) != 0 && OpenmrsUtil.compare(obs.getObsDatetime(),originalDate) == 0) {
+        obs.setObsDatetime(newDate);
       }
-      if (!OpenmrsUtil.nullSafeEquals(newLocation,originalLocation)) {
-        if (obs.getLocation().equals(originalLocation)) {
-          obs.setLocation(newLocation);
-        }
+      if (!OpenmrsUtil.nullSafeEquals(newLocation,originalLocation) && obs.getLocation().equals(originalLocation)) {
+        obs.setLocation(newLocation);
       }
       if (!obs.getPerson().getPersonId().equals(p.getPatientId())) {
         obs.setPerson(p);

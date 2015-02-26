@@ -1,6 +1,6 @@
 {
   Map<String,String> roles=new HashMap<String,String>();
-  Field flds[]=RoleConstants.class.getDeclaredFields();
+  Field[] flds=RoleConstants.class.getDeclaredFields();
   for (  Field fld : flds) {
     String fieldValue=null;
     AddOnStartup roleAnnotation=fld.getAnnotation(AddOnStartup.class);

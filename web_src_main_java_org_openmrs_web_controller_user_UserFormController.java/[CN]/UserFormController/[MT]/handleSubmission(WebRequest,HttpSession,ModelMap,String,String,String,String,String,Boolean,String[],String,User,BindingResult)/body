@@ -94,8 +94,12 @@
         user.setUserProperty(key,val);
       }
     }
-    if (StringUtils.hasLength(secretQuestion) && !StringUtils.hasLength(secretAnswer))     errors.reject("error.User.secretAnswer.empty");
- else     if (!StringUtils.hasLength(secretQuestion) && StringUtils.hasLength(secretAnswer))     errors.reject("error.User.secretQuestion.empty");
+    if (StringUtils.hasLength(secretQuestion) && !StringUtils.hasLength(secretAnswer)) {
+      errors.reject("error.User.secretAnswer.empty");
+    }
+ else     if (!StringUtils.hasLength(secretQuestion) && StringUtils.hasLength(secretAnswer)) {
+      errors.reject("error.User.secretQuestion.empty");
+    }
     new UserProperties(user.getUserProperties()).setSupposedToChangePassword(forcePassword);
     UserValidator uv=new UserValidator();
     uv.validate(user,errors);

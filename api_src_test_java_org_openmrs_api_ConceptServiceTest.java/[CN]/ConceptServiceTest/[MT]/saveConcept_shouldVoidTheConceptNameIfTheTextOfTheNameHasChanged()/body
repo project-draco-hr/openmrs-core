@@ -4,7 +4,7 @@
   for (  ConceptName cn : concept.getNames()) {
     if (cn.getConceptNameId().equals(1847))     cn.setName("new name");
   }
-  Assert.assertEquals(true,concept.hasName("new name",new Locale("en")));
+  Assert.assertEquals(true,concept.hasName("new name",new Locale("en","GB")));
   conceptService.saveConcept(concept);
   Assert.assertEquals(true,conceptService.getConceptName(1847).isVoided().booleanValue());
 }

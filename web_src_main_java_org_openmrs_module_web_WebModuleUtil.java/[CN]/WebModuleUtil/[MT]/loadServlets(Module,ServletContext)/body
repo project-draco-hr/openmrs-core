@@ -12,10 +12,8 @@
           name=childNode.getTextContent().trim();
         }
       }
- else       if ("servlet-class".equals(childNode.getNodeName())) {
-        if (childNode.getTextContent() != null) {
-          className=childNode.getTextContent().trim();
-        }
+ else       if ("servlet-class".equals(childNode.getNodeName()) && childNode.getTextContent() != null) {
+        className=childNode.getTextContent().trim();
       }
     }
     if (name.length() == 0 || className.length() == 0) {

@@ -9,7 +9,7 @@
       if (requiredElements != null) {
         for (        String fieldName : requiredElements) {
           try {
-            Object value=PropertyUtils.getProperty(new PersonAddress(),fieldName);
+            PropertyUtils.getProperty(new PersonAddress(),fieldName);
           }
  catch (          Exception e) {
             request.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,Context.getMessageSourceService().getMessage("AddressTemplate.error.fieldNotDeclaredInTemplate",new Object[]{fieldName},Context.getLocale()),WebRequest.SCOPE_SESSION);

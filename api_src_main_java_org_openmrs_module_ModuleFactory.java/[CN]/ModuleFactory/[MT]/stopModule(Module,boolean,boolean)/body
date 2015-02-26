@@ -35,7 +35,7 @@
         actualStartupOrder.remove(depModule.getModuleId());
       }
     }
-    if (skipOverStartedProperty == false && !Context.isRefreshingContext()) {
+    if (!skipOverStartedProperty && !Context.isRefreshingContext()) {
       saveGlobalProperty(moduleId + ".started","false",getGlobalPropertyStartedDescription(moduleId));
     }
     if (getModuleClassLoaderMap().containsKey(mod)) {

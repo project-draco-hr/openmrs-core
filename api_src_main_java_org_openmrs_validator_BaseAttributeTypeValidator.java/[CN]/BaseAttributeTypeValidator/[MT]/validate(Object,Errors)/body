@@ -8,10 +8,8 @@
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"minOccurs","error.null");
     Integer minOccurs=attributeType.getMinOccurs();
     Integer maxOccurs=attributeType.getMaxOccurs();
-    if (minOccurs != null) {
-      if (minOccurs < 0) {
-        errors.rejectValue("minOccurs","AttributeType.minOccursShouldNotBeLessThanZero");
-      }
+    if (minOccurs != null && minOccurs < 0) {
+      errors.rejectValue("minOccurs","AttributeType.minOccursShouldNotBeLessThanZero");
     }
     if (maxOccurs != null) {
       if (maxOccurs < 1) {

@@ -1,7 +1,7 @@
 {
   ConceptService cs=Context.getConceptService();
   Concept concept=cs.getConcept(5497);
-  ConceptName preferredName=new ConceptName("pref name",Locale.ENGLISH);
+  ConceptName preferredName=new ConceptName("pref name",new Locale("en","GB"));
   preferredName.setLocalePreferred(true);
   concept.addName(preferredName);
   cs.saveConcept(concept);
@@ -10,7 +10,7 @@
   mockRequest.setMethod("POST");
   mockRequest.setParameter("action","");
   mockRequest.setParameter("conceptId","5497");
-  mockRequest.setParameter("synonymsByLocale[en][0].voided","true");
+  mockRequest.setParameter("synonymsByLocale[en_GB][0].voided","true");
   ModelAndView mav=conceptFormController.handleRequest(mockRequest,new MockHttpServletResponse());
   assertNotNull(mav);
   assertTrue(mav.getModel().isEmpty());

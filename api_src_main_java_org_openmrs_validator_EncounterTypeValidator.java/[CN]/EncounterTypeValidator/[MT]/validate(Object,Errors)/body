@@ -7,10 +7,8 @@
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
     if (!errors.hasErrors()) {
       EncounterType duplicate=Context.getEncounterService().getEncounterType(encounterType.getName().trim());
-      if (duplicate != null) {
-        if (!OpenmrsUtil.nullSafeEquals(encounterType.getUuid(),duplicate.getUuid()) && !duplicate.isRetired()) {
-          errors.rejectValue("name","EncounterType.error.duplicateEncounterTypeNameSpecified","Specified Encounter Type name already exists, please specify another ");
-        }
+      if (duplicate != null && !OpenmrsUtil.nullSafeEquals(encounterType.getUuid(),duplicate.getUuid()) && !duplicate.isRetired()) {
+        errors.rejectValue("name","EncounterType.error.duplicateEncounterTypeNameSpecified","Specified Encounter Type name already exists, please specify another ");
       }
     }
     ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","retireReason");

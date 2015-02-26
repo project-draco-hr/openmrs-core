@@ -5,7 +5,7 @@
   cp.setFinalText(cp.getOriginalText());
   cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM);
   Concept mappedConcept=cs.getConcept(5);
-  Locale locale=Locale.ENGLISH;
+  Locale locale=new Locale("en","GB");
   Assert.assertTrue(mappedConcept.hasName(cp.getFinalText(),locale));
   cs.mapConceptProposalToConcept(cp,mappedConcept,locale);
 }

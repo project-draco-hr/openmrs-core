@@ -21,7 +21,9 @@
       replacedSql=replacedSql.replaceFirst("\\?",arg);
     }
     Statement statement=connection.createStatement();
-    return statement.executeUpdate(replacedSql);
+    int updateDelta=statement.executeUpdate(replacedSql);
+    statement.close();
+    return updateDelta;
   }
  catch (  SQLException sqlex) {
     if (!silent) {
