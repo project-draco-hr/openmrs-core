@@ -1,0 +1,25 @@
+{
+  ConceptService cs=Context.getConceptService();
+  int conceptId=21;
+  Concept concept=cs.getConcept(conceptId);
+  assertNotNull(concept);
+  int initialCount=concept.getAnswers().size();
+  ConceptFormController conceptFormController=(ConceptFormController)applicationContext.getBean("conceptForm");
+  MockHttpServletRequest mockRequest=new MockHttpServletRequest();
+  MockHttpServletResponse response=new MockHttpServletResponse();
+  mockRequest.setMethod("POST");
+  mockRequest.setParameter("action","Save Concept");
+  mockRequest.setParameter("conceptId","21");
+  mockRequest.setParameter("namesByLocale[en].name",concept.getName().getName());
+  mockRequest.setParameter("concept.datatype","2");
+  mockRequest.setParameter("concept.answers","7 8 22 5089");
+  ConceptFormBackingObject cb=conceptFormController.formBackingObject(mockRequest);
+  ServletRequestDataBinder srdb=new ServletRequestDataBinder(cb);
+  conceptFormController.initBinder(mockRequest,srdb);
+  srdb.bind(mockRequest);
+  Concept parsedConcept=cb.getConceptFromFormData();
+  assertEquals(initialCount + 1,parsedConcept.getAnswers().size());
+  for (  ConceptAnswer ca : parsedConcept.getAnswers()) {
+    assertNotNull(ca.getConcept());
+  }
+}
