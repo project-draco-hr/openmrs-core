@@ -1,0 +1,16 @@
+{
+  JsonEncoding encoding=getJsonEncoding(outputMessage.getHeaders().getContentType());
+  JsonGenerator jsonGenerator=this.objectMapper.getJsonFactory().createJsonGenerator(outputMessage.getBody(),encoding);
+  if (this.objectMapper.getSerializationConfig().isEnabled(SerializationConfig.Feature.INDENT_OUTPUT)) {
+    jsonGenerator.useDefaultPrettyPrinter();
+  }
+  try {
+    if (this.jsonPrefix != null) {
+      jsonGenerator.writeRaw(this.jsonPrefix);
+    }
+    this.objectMapper.writeValue(jsonGenerator,object);
+  }
+ catch (  JsonProcessingException ex) {
+    throw new HttpMessageNotWritableException("Could not write JSON: " + ex.getMessage(),ex);
+  }
+}

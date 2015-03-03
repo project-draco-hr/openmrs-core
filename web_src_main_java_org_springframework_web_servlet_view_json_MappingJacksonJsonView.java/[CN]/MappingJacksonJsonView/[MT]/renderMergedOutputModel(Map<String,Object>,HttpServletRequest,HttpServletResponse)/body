@@ -1,0 +1,8 @@
+{
+  OutputStream stream=(this.updateContentLength ? createTemporaryOutputStream() : response.getOutputStream());
+  Object value=filterModel(model);
+  writeContent(stream,value,this.jsonPrefix);
+  if (this.updateContentLength) {
+    writeToResponse(response,(ByteArrayOutputStream)stream);
+  }
+}

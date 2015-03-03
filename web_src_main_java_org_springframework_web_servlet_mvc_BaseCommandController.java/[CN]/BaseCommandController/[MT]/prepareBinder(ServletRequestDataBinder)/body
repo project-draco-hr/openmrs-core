@@ -1,0 +1,16 @@
+{
+  if (useDirectFieldAccess()) {
+    binder.initDirectFieldAccess();
+  }
+  if (this.messageCodesResolver != null) {
+    binder.setMessageCodesResolver(this.messageCodesResolver);
+  }
+  if (this.bindingErrorProcessor != null) {
+    binder.setBindingErrorProcessor(this.bindingErrorProcessor);
+  }
+  if (this.propertyEditorRegistrars != null) {
+    for (int i=0; i < this.propertyEditorRegistrars.length; i++) {
+      this.propertyEditorRegistrars[i].registerCustomEditors(binder);
+    }
+  }
+}

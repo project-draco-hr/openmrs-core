@@ -1,0 +1,19 @@
+{
+  if (isFormSubmission(request)) {
+    try {
+      Object command=getCommand(request);
+      ServletRequestDataBinder binder=bindAndValidate(request,command);
+      BindException errors=new BindException(binder.getBindingResult());
+      return processFormSubmission(request,response,command,errors);
+    }
+ catch (    HttpSessionRequiredException ex) {
+      if (logger.isDebugEnabled()) {
+        logger.debug("Invalid submit detected: " + ex.getMessage());
+      }
+      return handleInvalidSubmit(request,response);
+    }
+  }
+ else {
+    return showNewForm(request,response);
+  }
+}
