@@ -9,13 +9,7 @@
   if (staticDispatcherServlet != null) {
     staticDispatcherServlet.stopAndCloseApplicationContext();
   }
-  if (OpenmrsJspServlet.jspServlet != null) {
-    OpenmrsJspServlet.jspServlet.stop();
-  }
   XmlWebApplicationContext newAppContext=(XmlWebApplicationContext)ModuleUtil.refreshApplicationContext(wac,isOpenmrsStartup,startedModule);
-  if (OpenmrsJspServlet.jspServlet != null) {
-    OpenmrsJspServlet.jspServlet.refresh();
-  }
   try {
     if (dispatcherServlet != null) {
       dispatcherServlet.reInitFrameworkServlet();
