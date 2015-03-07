@@ -1,5 +1,5 @@
 {
-  if (user.getSystemId() == null || "".equals(user.getSystemId())) {
+  if (StringUtils.isEmpty(user.getSystemId())) {
     user.setSystemId(Context.getUserService().generateSystemId());
   }
   if (user.getPerson() != null) {

@@ -1,7 +1,7 @@
 {
   ConceptNameTag preferredCountryTag=null;
   String country=locale.getCountry();
-  if (!"".equals(country)) {
+  if (StringUtils.isNotEmpty(country)) {
     preferredCountryTag=preferredCountryTagFor(locale.getCountry());
   }
   return preferredCountryTag;

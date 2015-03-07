@@ -14,7 +14,7 @@
       }
     }
   }
-  if (redirect == null || "".equals(redirect)) {
+  if (StringUtils.isEmpty(redirect)) {
     redirect=request.getContextPath();
   }
  else   if (redirect.contains("login.")) {

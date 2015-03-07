@@ -1,6 +1,6 @@
 {
   String retVal="";
-  if (readType != null && !"".equals(readType) && !readType.equalsIgnoreCase("exist")) {
+  if (StringUtils.isNotEmpty(readType) && !readType.equalsIgnoreCase("exist")) {
     retVal="." + readType;
   }
  else {

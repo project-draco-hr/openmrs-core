@@ -10,7 +10,7 @@
           Locale proficientLocale=LocaleUtility.fromSpecification(proficientLocaleSpec);
           if (!proficientLocales.contains(proficientLocale)) {
             proficientLocales.add(proficientLocale);
-            if (!"".equals(proficientLocale.getCountry())) {
+            if (StringUtils.isNotEmpty(proficientLocale.getCountry())) {
               Locale languageOnlyLocale=LocaleUtility.fromSpecification(proficientLocale.getLanguage());
               if (!proficientLocales.contains(languageOnlyLocale)) {
                 proficientLocales.add(LocaleUtility.fromSpecification(proficientLocale.getLanguage()));

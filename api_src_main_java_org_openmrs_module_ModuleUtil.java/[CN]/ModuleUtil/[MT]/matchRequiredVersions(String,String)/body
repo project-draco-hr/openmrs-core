@@ -1,5 +1,5 @@
 {
-  if (versionRange != null && !"".equals(versionRange)) {
+  if (StringUtils.isNotEmpty(versionRange)) {
     String[] ranges=versionRange.split(",");
     for (    String range : ranges) {
       String separator="-";
