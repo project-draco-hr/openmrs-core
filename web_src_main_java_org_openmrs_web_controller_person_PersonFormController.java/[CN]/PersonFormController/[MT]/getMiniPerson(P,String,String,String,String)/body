@@ -3,7 +3,7 @@
   person.setGender(gender);
   Date birthdate=null;
   boolean birthdateEstimated=false;
-  if (date != null && !"".equals(date)) {
+  if (StringUtils.isNotEmpty(date)) {
     try {
       if (date.length() < 5) {
         Calendar c=Calendar.getInstance();

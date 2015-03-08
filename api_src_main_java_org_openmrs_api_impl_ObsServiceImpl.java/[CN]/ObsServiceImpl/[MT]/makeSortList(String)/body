@@ -1,6 +1,6 @@
 {
   List<String> sortList=new Vector<String>();
-  if (sort != null && !"".equals(sort)) {
+  if (StringUtils.isNotEmpty(sort)) {
     for (    String sortPart : sort.split(",")) {
       sortPart=sortPart.trim();
       if (sortPart.contains(" ")) {

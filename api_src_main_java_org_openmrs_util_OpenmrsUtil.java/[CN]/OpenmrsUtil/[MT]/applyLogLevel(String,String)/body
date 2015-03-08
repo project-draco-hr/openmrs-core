@@ -1,6 +1,6 @@
 {
   if (logLevel != null) {
-    if (logClass == null || "".equals(logClass)) {
+    if (StringUtils.isEmpty(logClass)) {
       logClass=OpenmrsConstants.LOG_CLASS_DEFAULT;
     }
     Logger logger=Logger.getLogger(logClass);

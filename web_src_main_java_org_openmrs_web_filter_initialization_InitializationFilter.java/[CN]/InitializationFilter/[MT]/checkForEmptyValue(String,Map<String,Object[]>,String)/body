@@ -1,5 +1,5 @@
 {
-  if (value != null && !"".equals(value)) {
+  if (!StringUtils.isEmpty(value)) {
     return true;
   }
   errors.put(errorMessageCode,null);

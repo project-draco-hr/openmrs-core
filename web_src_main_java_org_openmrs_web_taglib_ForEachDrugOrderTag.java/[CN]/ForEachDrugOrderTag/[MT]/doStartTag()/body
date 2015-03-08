@@ -11,7 +11,7 @@
     }
   }
   log.debug("ForEachDrugOrderTag found " + matchingDrugOrders.size() + " drug orders");
-  if (sortBy == null || "".equals(sortBy)) {
+  if (StringUtils.isEmpty(sortBy)) {
     sortBy=defaultSortBy;
   }
   Comparator comp=new BeanComparator(sortBy,(descending ? new ReverseComparator(new ComparableComparator()) : new ComparableComparator()));

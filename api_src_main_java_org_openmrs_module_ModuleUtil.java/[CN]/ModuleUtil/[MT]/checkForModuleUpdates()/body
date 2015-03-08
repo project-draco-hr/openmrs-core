@@ -2,7 +2,7 @@
   Boolean updateFound=false;
   for (  Module mod : ModuleFactory.getLoadedModules()) {
     String updateURL=mod.getUpdateURL();
-    if (updateURL != null && !"".equals(updateURL)) {
+    if (StringUtils.isNotEmpty(updateURL)) {
       try {
         URL url=new URL(updateURL);
         if (!url.toString().endsWith(ModuleConstants.UPDATE_FILE_NAME)) {
