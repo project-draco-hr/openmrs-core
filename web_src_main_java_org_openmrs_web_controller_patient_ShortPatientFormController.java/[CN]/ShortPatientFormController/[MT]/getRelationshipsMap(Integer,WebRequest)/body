@@ -25,7 +25,7 @@
       showRelationId=showRelationId.replace("b","");
       RelationshipType relationshipType=Context.getPersonService().getRelationshipType(Integer.valueOf(showRelationId));
       boolean relationshipFound=false;
-      if (person != null && person.getPersonId() != null) {
+      if (person.getPersonId() != null) {
         if (aIsToB) {
           List<Relationship> relationships=Context.getPersonService().getRelationships(null,person,relationshipType);
           if (relationships.size() > 0) {
