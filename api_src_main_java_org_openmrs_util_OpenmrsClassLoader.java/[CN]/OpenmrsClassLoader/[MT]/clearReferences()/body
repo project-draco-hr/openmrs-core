@@ -11,7 +11,11 @@
       }
     }
   }
-  for (  Class<?> clazz : getInstance().loadedClasses) {
+  for (  WeakReference<Class<?>> refClazz : getInstance().cachedClasses.values()) {
+    if (refClazz == null) {
+      continue;
+    }
+    Class<?> clazz=refClazz.get();
     if (clazz != null && clazz.getName().contains("openmrs")) {
       try {
         Field[] fields=clazz.getDeclaredFields();
@@ -39,21 +43,21 @@
                 }
               }
             }
- catch (            Exception e) {
+ catch (            Throwable t) {
               if (log.isDebugEnabled()) {
-                log.debug("Could not set field " + field.getName() + " to null in class "+ clazz.getName(),e);
+                log.debug("Could not set field " + field.getName() + " to null in class "+ clazz.getName(),t);
               }
             }
           }
         }
       }
- catch (      Exception e) {
+ catch (      Throwable t) {
         if (log.isDebugEnabled()) {
-          log.debug("Could not clean fields for class " + clazz.getName(),e);
+          log.debug("Could not clean fields for class " + clazz.getName(),t);
         }
       }
     }
   }
   OpenmrsClassLoader.log=null;
-  getInstance().loadedClasses.clear();
+  getInstance().cachedClasses.clear();
 }

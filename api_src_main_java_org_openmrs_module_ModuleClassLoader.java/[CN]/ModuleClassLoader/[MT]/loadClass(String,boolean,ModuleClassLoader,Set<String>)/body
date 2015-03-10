@@ -1,74 +1,58 @@
 {
   if (log.isTraceEnabled()) {
-    log.trace("loading " + name + " "+ getModule()+ " seenModules: "+ seenModules+ " requestor: "+ requestor+ " resolve? "+ resolve);
+    log.trace("Loading " + name + " "+ getModule()+ ", seenModules: "+ seenModules+ ", requestor: "+ requestor+ ", resolve? "+ resolve);
     StringBuilder output=new StringBuilder();
     for (    StackTraceElement element : Thread.currentThread().getStackTrace()) {
-      if (element.getClassName().contains("openmrs")) {
-        output.append("+ ");
-      }
+      if (element.getClassName().contains("openmrs"))       output.append("+ ");
       output.append(element);
       output.append("\n");
     }
-    log.trace("stacktrace: " + output.toString());
+    log.trace("Stacktrace: " + output.toString());
   }
   if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
-    return null;
+    throw new ClassNotFoundException("Can't load class " + name + " from module "+ getModule().getModuleId()+ ". It has been tried before.");
   }
   if ((this != requestor) && !ModuleFactory.isModuleStarted(getModule())) {
-    String msg="can't load class " + name + ", module "+ getModule()+ " is not started yet";
+    String msg="Can't load class " + name + ", because module "+ getModule().getModuleId()+ " is not yet started.";
     log.warn(msg);
     throw new ClassNotFoundException(msg);
   }
-  Class<?> result=null;
-  result=findLoadedClass(name);
-  if (result != null) {
-    checkClassVisibility(result,requestor);
-    return result;
-  }
-  try {
-    result=findClass(name);
-  }
- catch (  LinkageError le) {
-    throw le;
-  }
-catch (  ClassNotFoundException cnfe) {
-  }
-  if (result != null) {
-    checkClassVisibility(result,requestor);
-    if (resolve) {
-      resolveClass(result);
+  Class<?> result=findLoadedClass(name);
+  if (result == null) {
+    try {
+      result=findClass(name);
     }
+ catch (    ClassNotFoundException e) {
+    }
+  }
+  if (result != null) {
+    checkClassVisibility(result,requestor);
     return result;
   }
   if (seenModules == null) {
     seenModules=new HashSet<String>();
   }
   seenModules.add(getModule().getModuleId());
+  List<Module> importedModules=new ArrayList<Module>();
   if (requiredModules != null) {
-    for (    Module publicImport : requiredModules) {
-      if (seenModules.contains(publicImport.getModuleId())) {
-        continue;
-      }
-      ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-      if (mcl != null) {
-        result=mcl.loadClass(name,resolve,requestor,seenModules);
-      }
-      if (result != null) {
-        return result;
-      }
-    }
+    Collections.addAll(importedModules,requiredModules);
   }
-  for (  Module publicImport : awareOfModules) {
-    if (seenModules.contains(publicImport.getModuleId())) {
+  if (awareOfModules != null) {
+    Collections.addAll(importedModules,awareOfModules);
+  }
+  for (  Module importedModule : importedModules) {
+    if (seenModules.contains(importedModule.getModuleId())) {
       continue;
     }
-    ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-    if (mcl != null) {
-      result=mcl.loadClass(name,resolve,requestor,seenModules);
-    }
-    if (result != null) {
-      return result;
+    ModuleClassLoader moduleClassLoader=ModuleFactory.getModuleClassLoader(importedModule);
+    if (moduleClassLoader != null) {
+      try {
+        result=moduleClassLoader.loadClass(name,resolve,requestor,seenModules);
+        return result;
+      }
+ catch (      ClassNotFoundException e) {
+      }
     }
   }
-  return result;
+  throw new ClassNotFoundException(name);
 }

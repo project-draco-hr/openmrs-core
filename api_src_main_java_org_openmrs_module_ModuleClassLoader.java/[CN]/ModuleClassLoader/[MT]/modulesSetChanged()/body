@@ -15,7 +15,6 @@
   }
   requiredModules=collectRequiredModuleImports(getModule());
   awareOfModules=collectAwareOfModuleImports(getModule());
-  collectFilters();
   for (Iterator<Map.Entry<URI,File>> it=libraryCache.entrySet().iterator(); it.hasNext(); ) {
     if (it.next().getValue() == null) {
       it.remove();

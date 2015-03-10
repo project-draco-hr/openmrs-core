@@ -9,6 +9,7 @@
       }
       ModuleClassLoader moduleClassLoader=new ModuleClassLoader(module,ModuleFactory.class.getClassLoader());
       getModuleClassLoaderMap().put(module,moduleClassLoader);
+      registerProvidedPackages(moduleClassLoader);
       Map<String,List<Extension>> moduleExtensionMap=new HashMap<String,List<Extension>>();
       for (      Extension ext : module.getExtensions()) {
         String extId=ext.getExtensionId();

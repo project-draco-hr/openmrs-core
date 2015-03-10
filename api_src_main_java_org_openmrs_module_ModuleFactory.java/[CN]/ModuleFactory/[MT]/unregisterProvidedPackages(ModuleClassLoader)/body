@@ -1,0 +1,11 @@
+{
+  for (  String providedPackage : moduleClassLoader.getProvidedPackages()) {
+    Set<ModuleClassLoader> newSet=new HashSet<ModuleClassLoader>();
+    Set<ModuleClassLoader> set=providedPackages.get(providedPackage);
+    if (set != null) {
+      newSet.addAll(set);
+    }
+    newSet.remove(moduleClassLoader);
+    providedPackages.put(providedPackage,newSet);
+  }
+}

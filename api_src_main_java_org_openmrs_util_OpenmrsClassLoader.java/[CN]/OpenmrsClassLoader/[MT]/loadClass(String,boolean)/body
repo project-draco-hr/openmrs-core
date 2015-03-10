@@ -1,24 +1,30 @@
 {
-  ArrayList<ModuleClassLoader> moduleClassLoaders=new ArrayList<ModuleClassLoader>(ModuleFactory.getModuleClassLoaders());
-  Class<?> c=loadModuleClass(name,moduleClassLoaders);
-  if (c != null) {
-    return c;
+  Class<?> c=getCachedClass(name);
+  if (c == null) {
+    try {
+      c=getParent().loadClass(name);
+    }
+ catch (    ClassNotFoundException e) {
+    }
+    if (c == null) {
+      String packageName=StringUtils.substringBeforeLast(name,".");
+      Set<ModuleClassLoader> moduleClassLoaders=ModuleFactory.getModuleClassLoadersForPackage(packageName);
+      for (      ModuleClassLoader moduleClassLoader : moduleClassLoaders) {
+        try {
+          c=moduleClassLoader.loadClass(name);
+          break;
+        }
+ catch (        ClassNotFoundException e) {
+        }
+      }
+    }
+    if (c == null) {
+      throw new ClassNotFoundException(name);
+    }
+    cacheClass(name,c);
   }
-  ClassNotFoundException ex=null;
-  try {
-    c=getParent().loadClass(name);
-    loadedClasses.add(c);
-    return c;
+  if (resolve) {
+    resolveClass(c);
   }
- catch (  ClassNotFoundException e) {
-    ex=e;
-  }
-  try {
-    c=this.findClass(name);
-    return c;
-  }
- catch (  ClassNotFoundException e) {
-    ex=e;
-  }
-  throw ex;
+  return c;
 }

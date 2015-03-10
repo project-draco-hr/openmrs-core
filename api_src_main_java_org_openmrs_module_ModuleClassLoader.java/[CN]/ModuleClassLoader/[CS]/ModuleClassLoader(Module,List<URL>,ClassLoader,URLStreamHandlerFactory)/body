@@ -1,11 +1,14 @@
 {
   super(urls.toArray(new URL[urls.size()]),parent,factory);
-  if (log.isDebugEnabled()) {
-    log.debug("URLs length: " + urls.size());
+  if (parent instanceof OpenmrsClassLoader) {
+    throw new IllegalArgumentException("Parent must not be OpenmrsClassLoader nor null");
   }
+ else   if (parent instanceof ModuleClassLoader) {
+    throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
+  }
+  if (log.isDebugEnabled())   log.debug("URLs length: " + urls.size());
   this.module=module;
   requiredModules=collectRequiredModuleImports(module);
   awareOfModules=collectAwareOfModuleImports(module);
-  collectFilters();
   libraryCache=new WeakHashMap<URI,File>();
 }

@@ -8,9 +8,7 @@
       log.trace("url: " + url);
     }
   }
-  if ((seenModules != null) && seenModules.contains(getModule().getModuleId())) {
-    return null;
-  }
+  if ((seenModules != null) && seenModules.contains(getModule().getModuleId()))   return null;
   URL result=super.findResource(name);
   if (result != null) {
     if (isResourceVisible(name,result,requestor)) {
@@ -19,35 +17,22 @@
     log.debug("Resource is not visible");
     return null;
   }
-  if (seenModules == null) {
-    seenModules=new HashSet<String>();
-  }
+  if (seenModules == null)   seenModules=new HashSet<String>();
   seenModules.add(getModule().getModuleId());
   if (requiredModules != null) {
     for (    Module publicImport : requiredModules) {
-      if (seenModules.contains(publicImport.getModuleId())) {
-        continue;
-      }
+      if (seenModules.contains(publicImport.getModuleId()))       continue;
       ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-      if (mcl != null) {
-        result=mcl.findResource(name,requestor,seenModules);
-      }
+      if (mcl != null)       result=mcl.findResource(name,requestor,seenModules);
       if (result != null) {
         return result;
       }
     }
   }
- else {
-    result=result;
-  }
   for (  Module publicImport : awareOfModules) {
-    if (seenModules.contains(publicImport.getModuleId())) {
-      continue;
-    }
+    if (seenModules.contains(publicImport.getModuleId()))     continue;
     ModuleClassLoader mcl=ModuleFactory.getModuleClassLoader(publicImport);
-    if (mcl != null) {
-      result=mcl.findResource(name,requestor,seenModules);
-    }
+    if (mcl != null)     result=mcl.findResource(name,requestor,seenModules);
     if (result != null) {
       return result;
     }

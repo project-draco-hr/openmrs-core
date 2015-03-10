@@ -1,46 +1,31 @@
 {
-  Class<?> result=null;
-  Collection<ModuleClassLoader> classLoaders=ModuleFactory.getModuleClassLoaders();
-  for (  ModuleClassLoader classLoader : classLoaders) {
-    if (classLoader == this) {
-      continue;
-    }
-    result=classLoader.getClassIfLoaded(name);
-    if (result != null) {
-      return result;
-    }
-  }
-  if (probeParentLoaderLast) {
-    try {
-      result=loadClass(name,resolve,this,null);
-    }
- catch (    ClassNotFoundException cnfe) {
-      if (getParent() != null) {
+  Class<?> result=findLoadedClass(name);
+  if (result == null) {
+    if (probeParentLoaderLast) {
+      try {
+        result=loadClass(name,resolve,this,null);
+      }
+ catch (      ClassNotFoundException cnfe) {
+      }
+      if (result == null && getParent() != null) {
         result=getParent().loadClass(name);
       }
     }
-catch (    NullPointerException e) {
-      log.debug("Error while attempting to load class: " + name + " from: "+ this.toString());
-    }
-    if (result == null && getParent() != null) {
-      result=getParent().loadClass(name);
-    }
-  }
  else {
-    try {
-      if (getParent() != null) {
-        result=getParent().loadClass(name);
+      try {
+        if (getParent() != null) {
+          result=getParent().loadClass(name);
+        }
+      }
+ catch (      ClassNotFoundException cnfe) {
+      }
+      if (result == null) {
+        result=loadClass(name,resolve,this,null);
       }
     }
- catch (    ClassNotFoundException cnfe) {
-      result=loadClass(name,resolve,this,null);
-    }
   }
-  if (result != null) {
-    if (result.getClassLoader() == this) {
-      loadedClasses.put(name,result);
-    }
-    return result;
+  if (resolve) {
+    resolveClass(result);
   }
-  throw new ClassNotFoundException(name);
+  return result;
 }

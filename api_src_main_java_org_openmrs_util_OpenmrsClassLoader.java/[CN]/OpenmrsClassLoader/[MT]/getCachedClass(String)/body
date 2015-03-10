@@ -1,0 +1,19 @@
+{
+  WeakReference<Class<?>> ref=cachedClasses.get(name);
+  if (ref != null) {
+    Class<?> loadedClass=ref.get();
+    if (loadedClass == null || loadedClass.getClassLoader() == null) {
+      cachedClasses.remove(name);
+      loadedClass=null;
+    }
+ else     if (loadedClass.getClassLoader() instanceof ModuleClassLoader) {
+      ModuleClassLoader moduleClassLoader=(ModuleClassLoader)loadedClass.getClassLoader();
+      if (moduleClassLoader.isDisposed()) {
+        cachedClasses.remove(name);
+        loadedClass=null;
+      }
+    }
+    return loadedClass;
+  }
+  return null;
+}

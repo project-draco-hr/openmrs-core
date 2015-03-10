@@ -13,22 +13,25 @@
         continue;
       }
       String name=jarEntry.getName();
+      if (name.startsWith("lib") || name.startsWith("META-INF") || name.startsWith("web/module")) {
+        continue;
+      }
       Integer indexOfLastSlash=name.lastIndexOf("/");
       if (indexOfLastSlash <= 0) {
         continue;
       }
       String packageName=name.substring(0,indexOfLastSlash);
-      if ("lib".equals(packageName) || "META-INF".equals(packageName) || packageName.startsWith("web/module")) {
-        continue;
-      }
       packageName=packageName.replaceAll("/",".");
       if (packagesProvided.add(packageName)) {
-        log.trace("Adding module's jarentry with package: " + packageName);
+        if (log.isTraceEnabled()) {
+          log.trace("Adding module's jarentry with package: " + packageName);
+        }
       }
     }
+    jar.close();
   }
  catch (  IOException e) {
-    log.error("Unable to open jar from file: " + file.getAbsolutePath(),e);
+    log.error("Error while reading file: " + file.getAbsolutePath(),e);
   }
  finally {
     if (jar != null) {
@@ -36,16 +39,6 @@
         jar.close();
       }
  catch (      IOException e) {
-      }
-    }
-  }
-  Set<String> packagesProvidedCopy=new HashSet<String>();
-  packagesProvidedCopy.addAll(packagesProvided);
-  for (  String packageNameOuter : packagesProvidedCopy) {
-    packageNameOuter+=".";
-    for (    String packageNameInner : packagesProvidedCopy) {
-      if (packageNameInner.contains(packageNameOuter)) {
-        packagesProvided.remove(packageNameInner);
       }
     }
   }
