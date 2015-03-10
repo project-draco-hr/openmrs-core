@@ -1,6 +1,6 @@
 {
   if (identifierValidators == null) {
-    PatientServiceImpl.identifierValidators=null;
+    PatientServiceImpl.setStaticIdentifierValidators(null);
     return;
   }
   for (  Map.Entry<Class<? extends IdentifierValidator>,IdentifierValidator> entry : identifierValidators.entrySet()) {
