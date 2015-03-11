@@ -1,25 +1,18 @@
 {
   Class<?> c=getCachedClass(name);
   if (c == null) {
-    try {
-      c=getParent().loadClass(name);
-    }
- catch (    ClassNotFoundException e) {
-    }
-    if (c == null) {
-      String packageName=StringUtils.substringBeforeLast(name,".");
-      Set<ModuleClassLoader> moduleClassLoaders=ModuleFactory.getModuleClassLoadersForPackage(packageName);
-      for (      ModuleClassLoader moduleClassLoader : moduleClassLoaders) {
-        try {
-          c=moduleClassLoader.loadClass(name);
-          break;
-        }
- catch (        ClassNotFoundException e) {
-        }
+    String packageName=StringUtils.substringBeforeLast(name,".");
+    Set<ModuleClassLoader> moduleClassLoaders=ModuleFactory.getModuleClassLoadersForPackage(packageName);
+    for (    ModuleClassLoader moduleClassLoader : moduleClassLoaders) {
+      try {
+        c=moduleClassLoader.loadClass(name);
+        break;
+      }
+ catch (      ClassNotFoundException e) {
       }
     }
     if (c == null) {
-      throw new ClassNotFoundException(name);
+      c=getParent().loadClass(name);
     }
     cacheClass(name,c);
   }
