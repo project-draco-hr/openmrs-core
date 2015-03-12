@@ -1,0 +1,30 @@
+{
+  List<String> personNameLines=new ArrayList<String>();
+  List<List<Map<String,String>>> lines=getLines();
+  String layoutToken=getLayoutToken();
+  try {
+    for (    List<Map<String,String>> line : lines) {
+      String nameLine="";
+      Boolean hasToken=false;
+      for (      Map<String,String> lineToken : line) {
+        if (lineToken.get("isToken").equals(layoutToken)) {
+          String tokenValue=BeanUtils.getProperty(personName,lineToken.get("codeName"));
+          if (StringUtils.isNotBlank(tokenValue)) {
+            hasToken=true;
+            nameLine+=tokenValue;
+          }
+        }
+ else {
+          nameLine+=lineToken.get("displayText");
+        }
+      }
+      if (StringUtils.isNotBlank(nameLine) && hasToken) {
+        personNameLines.add(nameLine);
+      }
+    }
+    return StringUtils.join(personNameLines," ");
+  }
+ catch (  Exception e) {
+    throw new APIException("Unable to format personName " + personName.getId() + " using name template",e);
+  }
+}
