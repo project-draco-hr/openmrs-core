@@ -1,0 +1,16 @@
+{
+  int retValue;
+  if ((retValue=OpenmrsUtil.compareWithNullAsGreatest(pa1.getAttributeType(),pa2.getAttributeType())) != 0) {
+    return retValue;
+  }
+  if ((retValue=pa1.isVoided().compareTo(pa2.isVoided())) != 0) {
+    return retValue;
+  }
+  if ((retValue=OpenmrsUtil.compareWithNullAsLatest(pa1.getDateCreated(),pa2.getDateCreated())) != 0) {
+    return retValue;
+  }
+  if ((retValue=OpenmrsUtil.compareWithNullAsGreatest(pa1.getValue(),pa2.getValue())) != 0) {
+    return retValue;
+  }
+  return OpenmrsUtil.compareWithNullAsGreatest(pa1.getPersonAttributeId(),pa2.getPersonAttributeId());
+}
