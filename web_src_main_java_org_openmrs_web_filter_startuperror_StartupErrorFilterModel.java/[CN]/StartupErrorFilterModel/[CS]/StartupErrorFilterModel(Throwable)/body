@@ -1,7 +1,6 @@
 {
   errorAtStartup=t;
   StringWriter sw=new StringWriter();
-  PrintWriter pw=new PrintWriter(sw);
-  t.printStackTrace(pw);
+  log.error(t);
   stacktrace=sw.toString();
 }

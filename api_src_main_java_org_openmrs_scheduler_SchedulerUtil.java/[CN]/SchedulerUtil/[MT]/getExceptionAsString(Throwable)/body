@@ -1,7 +1,7 @@
 {
   StringWriter stringWriter=new StringWriter();
   PrintWriter printWriter=new PrintWriter(stringWriter,true);
-  t.printStackTrace(printWriter);
+  log.error(t);
   printWriter.flush();
   stringWriter.flush();
   return stringWriter.toString();

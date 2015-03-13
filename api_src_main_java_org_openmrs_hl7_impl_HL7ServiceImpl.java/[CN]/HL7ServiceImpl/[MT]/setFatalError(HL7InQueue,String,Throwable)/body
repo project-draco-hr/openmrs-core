@@ -6,9 +6,7 @@
   }
  else {
     StringWriter sw=new StringWriter();
-    PrintWriter pw=new PrintWriter(sw,true);
-    cause.printStackTrace(pw);
-    pw.flush();
+    log.error(cause);
     sw.flush();
     hl7InError.setErrorDetails(OpenmrsUtil.shortenedStackTrace(sw.toString()));
   }

@@ -9,7 +9,7 @@
   }
  catch (  Exception e) {
     factory=null;
-    e.printStackTrace();
+    log.error(e);
   }
   if (factory != null) {
     handlerClassName=factory.getHandlerByClassName(className);

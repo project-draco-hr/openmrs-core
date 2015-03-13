@@ -20,7 +20,7 @@
     onStartupThread.join();
   }
  catch (  InterruptedException e) {
-    e.printStackTrace();
+    log.error(e);
   }
   if (onStartupThread.exceptionThrown != null) {
     if (onStartupThread.exceptionThrown instanceof ModuleException) {
