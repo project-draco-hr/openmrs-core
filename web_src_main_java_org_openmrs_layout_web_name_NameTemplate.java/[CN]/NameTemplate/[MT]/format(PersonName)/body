@@ -4,22 +4,23 @@
   String layoutToken=getLayoutToken();
   try {
     for (    List<Map<String,String>> line : lines) {
-      String nameLine="";
+      StringBuilder nameLine=new StringBuilder();
       Boolean hasToken=false;
       for (      Map<String,String> lineToken : line) {
         if (lineToken.get("isToken").equals(layoutToken)) {
           String tokenValue=BeanUtils.getProperty(personName,lineToken.get("codeName"));
           if (StringUtils.isNotBlank(tokenValue)) {
             hasToken=true;
-            nameLine+=tokenValue;
+            nameLine.append(tokenValue);
           }
         }
  else {
-          nameLine+=lineToken.get("displayText");
+          nameLine.append(lineToken.get("displayText"));
         }
       }
-      if (StringUtils.isNotBlank(nameLine) && hasToken) {
-        personNameLines.add(nameLine);
+      String nameLineString=nameLine.toString();
+      if (StringUtils.isNotBlank(nameLineString) && hasToken) {
+        personNameLines.add(nameLineString);
       }
     }
     return StringUtils.join(personNameLines," ");
