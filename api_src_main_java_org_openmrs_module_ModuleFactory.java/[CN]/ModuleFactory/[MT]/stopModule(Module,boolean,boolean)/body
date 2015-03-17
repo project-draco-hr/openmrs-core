@@ -7,7 +7,7 @@
     try {
       if (mod.getModuleActivator() != null)       mod.getModuleActivator().willStop();
     }
- catch (    Throwable t) {
+ catch (    Exception t) {
       log.warn("Unable to call module's Activator.willStop() method",t);
     }
     String moduleId=mod.getModuleId();
@@ -55,12 +55,12 @@
               Context.removeAdvice(cls,(Advice)aopObject);
             }
           }
- catch (          Throwable t) {
+ catch (          Exception t) {
             log.warn("Could not remove advice point: " + advice.getPoint(),t);
           }
         }
       }
- catch (      Throwable t) {
+ catch (      Exception t) {
         log.warn("Error while getting advicePoints from module: " + moduleId,t);
       }
       try {
@@ -77,7 +77,7 @@
           }
         }
       }
- catch (      Throwable t) {
+ catch (      Exception t) {
         log.warn("Error while getting extensions from module: " + moduleId,t);
       }
     }
@@ -91,7 +91,7 @@
       if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
  else       mod.getActivator().shutdown();
     }
- catch (    Throwable t) {
+ catch (    Exception t) {
       log.warn("Unable to call module's Activator.shutdown() method",t);
     }
     mod.getExtensions().clear();
