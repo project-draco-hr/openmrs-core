@@ -7,7 +7,7 @@
       isDaemonThread.set(true);
       try {
         Context.openSession();
-        new Thread(runnable).start();
+        runnable.run();
       }
   finally {
         Context.closeSession();
