@@ -5,12 +5,8 @@
     hl7InError.setErrorDetails("");
   }
  else {
-    StringWriter sw=new StringWriter();
-    PrintWriter pw=new PrintWriter(sw,true);
-    cause.printStackTrace(pw);
-    pw.flush();
-    sw.flush();
-    hl7InError.setErrorDetails(OpenmrsUtil.shortenedStackTrace(sw.toString()));
+    log.error(cause);
+    hl7InError.setErrorDetails(ExceptionUtils.getStackTrace(cause));
   }
   Context.getHL7Service().saveHL7InError(hl7InError);
   Context.getHL7Service().purgeHL7InQueue(hl7InQueue);

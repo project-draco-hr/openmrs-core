@@ -10,11 +10,11 @@
       contextPath=contextPath.substring(contextPath.lastIndexOf("/"));
     }
  catch (    Exception e) {
-      e.printStackTrace();
+      log.error(e);
     }
   }
 catch (  Exception e) {
-    e.printStackTrace();
+    log.error(e);
   }
   if (contextPath.indexOf("/") != -1) {
     contextPath=contextPath.substring(1);
