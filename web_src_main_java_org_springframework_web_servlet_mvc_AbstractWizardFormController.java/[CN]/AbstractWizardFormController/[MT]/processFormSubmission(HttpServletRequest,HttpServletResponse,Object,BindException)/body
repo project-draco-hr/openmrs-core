@@ -7,7 +7,7 @@
     }
     request.getSession().removeAttribute(pageAttrName);
   }
-  request.setAttribute(pageAttrName,new Integer(currentPage));
+  request.setAttribute(pageAttrName,Integer.valueOf(currentPage));
   if (isCancelRequest(request)) {
     if (logger.isDebugEnabled()) {
       logger.debug("Cancelling wizard for form bean '" + getCommandName() + "'");
