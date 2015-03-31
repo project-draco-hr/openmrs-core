@@ -1,0 +1,11 @@
+{
+  Integer numberOfExpectedForms=new Integer(2);
+  executeDataSet(INITIAL_FIELDS_XML);
+  executeDataSet(MULTIPLE_FORMS_FORM_FIELDS_XML);
+  FormService formService=Context.getFormService();
+  Collection<FormField> containingAnyFormField=makeFormFieldCollectionSample(formService);
+  List<Form> formsReturned=formService.getForms(null,null,null,null,containingAnyFormField,null,null);
+  Integer currentNumberOfForms=new Integer(formsReturned.size());
+  assertEquals(numberOfExpectedForms,currentNumberOfForms);
+  assertTrue(wasFormsSuccessfullyFilteredByMatchingFormFieldsInContainingAnyFormField(containingAnyFormField,formsReturned));
+}
