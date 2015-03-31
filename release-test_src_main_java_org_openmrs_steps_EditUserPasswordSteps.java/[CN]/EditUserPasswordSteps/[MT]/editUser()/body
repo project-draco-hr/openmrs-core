@@ -1,7 +1,7 @@
 {
   WebElement openmrsSearchTable=driver.findElement(By.className("openmrsSearchTable"));
   List<WebElement> trList=openmrsSearchTable.findElements(By.tagName("tr"));
-  if (trList.size() > 0) {
-    trList.get(1).findElement(By.tagName("td")).findElement(By.tagName("a")).click();
+  for (int i=0; i < trList.size(); i++) {
+    trList.get(i).findElement(By.tagName("td")).findElement(By.tagName("a")).click();
   }
 }
