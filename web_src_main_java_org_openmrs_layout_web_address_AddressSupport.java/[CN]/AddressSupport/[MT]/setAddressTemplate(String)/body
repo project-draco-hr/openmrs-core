@@ -1,6 +1,7 @@
 {
   AddressTemplate addressTemplate;
   try {
+    xml=xml.replace(NEW_ADDRESS_TEMPLATE_CLASSNAME,AddressTemplate.class.getName());
     addressTemplate=Context.getSerializationService().getDefaultSerializer().deserialize(xml,AddressTemplate.class);
   }
  catch (  SerializationException e) {
