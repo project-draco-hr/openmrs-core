@@ -1,0 +1,31 @@
+{
+  int retValue=0;
+  if (pi2 != null) {
+    retValue=pi1.isVoided().compareTo(pi2.isVoided());
+    if (retValue == 0) {
+      retValue=pi1.isPreferred().compareTo(pi2.isPreferred());
+    }
+    if (retValue == 0) {
+      retValue=OpenmrsUtil.compareWithNullAsLatest(pi1.getDateCreated(),pi2.getDateCreated());
+    }
+    if (pi1.getIdentifierType() == null && pi2.getIdentifierType() == null) {
+      return 0;
+    }
+    if (pi1.getIdentifierType() == null && pi2.getIdentifierType() != null) {
+      retValue=1;
+    }
+    if (pi1.getIdentifierType() == null && pi2.getIdentifierType() != null) {
+      retValue=-1;
+    }
+    if (retValue == 0) {
+      retValue=OpenmrsUtil.compareWithNullAsGreatest(pi1.getIdentifierType().getPatientIdentifierTypeId(),pi2.getIdentifierType().getPatientIdentifierTypeId());
+    }
+    if (retValue == 0) {
+      retValue=OpenmrsUtil.compareWithNullAsGreatest(pi1.getIdentifier(),pi2.getIdentifier());
+    }
+    if (retValue == 0 && !pi1.equalsContent(pi2)) {
+      retValue=1;
+    }
+  }
+  return retValue;
+}
