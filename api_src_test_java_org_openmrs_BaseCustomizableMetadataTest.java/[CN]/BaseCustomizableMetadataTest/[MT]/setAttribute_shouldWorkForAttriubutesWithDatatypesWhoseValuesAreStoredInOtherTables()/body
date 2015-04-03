@@ -1,7 +1,7 @@
 {
   Provider provider=new Provider();
   provider.setIdentifier("test");
-  provider.setName("test provider");
+  provider.setPerson(newPerson("name"));
   ProviderAttributeType cv=service.getProviderAttributeType(4);
   provider.setAttribute(buildProviderAttribute(cv,"Worked lots of places..."));
   service.saveProvider(provider);

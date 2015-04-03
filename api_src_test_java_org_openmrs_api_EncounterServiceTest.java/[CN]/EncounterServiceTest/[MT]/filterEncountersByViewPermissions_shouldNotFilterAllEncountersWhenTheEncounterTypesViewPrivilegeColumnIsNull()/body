@@ -11,8 +11,8 @@
   role.setName("role");
   role=encounterService.saveEncounterRole(role);
   Provider provider=new Provider();
-  provider.setName("provider");
   provider.setIdentifier("id1");
+  provider.setPerson(newPerson("name"));
   provider=Context.getProviderService().saveProvider(provider);
   encounter.addProvider(role,provider);
   encounterService.saveEncounter(encounter);

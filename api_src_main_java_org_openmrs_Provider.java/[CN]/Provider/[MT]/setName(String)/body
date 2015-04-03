@@ -1,6 +1,3 @@
 {
-  super.setName(name);
-  if (getPerson() != null && !StringUtils.isBlank(super.getName())) {
-    log.trace("Setting name for a provider who is already attached to a person");
-  }
+  throw new APIException("We no longer support providers who are not linked to person. Set the name on the linked person");
 }
