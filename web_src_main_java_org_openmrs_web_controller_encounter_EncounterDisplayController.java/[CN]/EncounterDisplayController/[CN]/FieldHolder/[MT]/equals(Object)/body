@@ -1,0 +1,10 @@
+{
+  if (this == obj) {
+    return true;
+  }
+  if (!(obj instanceof FieldHolder)) {
+    return false;
+  }
+  FieldHolder other=(FieldHolder)obj;
+  return compareTo(other) == 0;
+}
