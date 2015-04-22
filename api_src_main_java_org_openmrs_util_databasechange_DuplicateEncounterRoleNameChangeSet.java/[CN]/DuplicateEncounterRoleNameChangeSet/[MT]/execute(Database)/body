@@ -38,7 +38,7 @@
         Connection con=DatabaseUpdater.getConnection();
         do {
           String sqlValidatorString="select * from encounter_role where name = '" + newName + "'";
-          duplicateResult=DatabaseUtil.executeSQL(con,sqlValidatorString,true);
+          duplicateResult=DatabaseUtil.executeSQLWithConnection(con,sqlValidatorString,true);
           if (!duplicateResult.isEmpty()) {
             duplicateNameId+=1;
             newName=pairs.getKey() + "_" + duplicateNameId;
