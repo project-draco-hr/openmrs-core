@@ -5,6 +5,7 @@
     query.setInteger("conceptId",concept.getConceptId());
     if (query.uniqueResult() == null) {
       sessionFactory.getCurrentSession().clear();
+      deleteSubclassConcept("concept_complex",concept.getConceptId());
       String insert="INSERT INTO concept_numeric (concept_id, precise) VALUES (:conceptId, false)";
       query=sessionFactory.getCurrentSession().createSQLQuery(insert);
       query.setInteger("conceptId",concept.getConceptId());
@@ -12,10 +13,7 @@
     }
  else {
       if (!concept.isNumeric()) {
-        String delete="DELETE FROM concept_numeric WHERE concept_id = :conceptId";
-        query=sessionFactory.getCurrentSession().createSQLQuery(delete);
-        query.setInteger("conceptId",concept.getConceptId());
-        query.executeUpdate();
+        deleteSubclassConcept("concept_numeric",concept.getConceptId());
       }
  else {
       }
@@ -27,6 +25,7 @@
     query.setInteger("conceptId",concept.getConceptId());
     if (query.uniqueResult() == null) {
       sessionFactory.getCurrentSession().clear();
+      deleteSubclassConcept("concept_numeric",concept.getConceptId());
       String insert="INSERT INTO concept_complex (concept_id) VALUES (:conceptId)";
       query=sessionFactory.getCurrentSession().createSQLQuery(insert);
       query.setInteger("conceptId",concept.getConceptId());
@@ -34,10 +33,7 @@
     }
  else {
       if (!concept.isComplex()) {
-        String delete="DELETE FROM concept_complex WHERE concept_id = :conceptId";
-        query=sessionFactory.getCurrentSession().createSQLQuery(delete);
-        query.setInteger("conceptId",concept.getConceptId());
-        query.executeUpdate();
+        deleteSubclassConcept("concept_complex",concept.getConceptId());
       }
  else {
       }

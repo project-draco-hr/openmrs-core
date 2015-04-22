@@ -1,0 +1,6 @@
+{
+  String delete="DELETE FROM " + tableName + " WHERE concept_id = :conceptId";
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(delete);
+  query.setInteger("conceptId",conceptId);
+  query.executeUpdate();
+}
