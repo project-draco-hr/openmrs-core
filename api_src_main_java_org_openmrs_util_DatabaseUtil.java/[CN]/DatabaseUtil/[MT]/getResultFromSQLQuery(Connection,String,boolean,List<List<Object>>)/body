@@ -1,20 +1,10 @@
 {
-  sql=sql.trim();
-  boolean dataManipulation=false;
-  String sqlLower=sql.toLowerCase();
-  if (sqlLower.startsWith("insert") || sqlLower.startsWith("update") || sqlLower.startsWith("delete")|| sqlLower.startsWith("alter")|| sqlLower.startsWith("drop")|| sqlLower.startsWith("create")|| sqlLower.startsWith("rename")) {
-    dataManipulation=true;
-  }
-  if (selectOnly && dataManipulation) {
-    throw new IllegalArgumentException("Illegal command(s) found in query string");
-  }
   PreparedStatement ps=null;
-  List<List<Object>> results=new Vector<List<Object>>();
   try {
     ps=conn.prepareStatement(sql);
     if (dataManipulation) {
       Integer i=ps.executeUpdate();
-      List<Object> row=new Vector<Object>();
+      List<Object> row=new ArrayList<Object>();
       row.add(i);
       results.add(row);
     }
@@ -23,7 +13,7 @@
       ResultSetMetaData rmd=resultSet.getMetaData();
       int columnCount=rmd.getColumnCount();
       while (resultSet.next()) {
-        List<Object> rowObjects=new Vector<Object>();
+        List<Object> rowObjects=new ArrayList<Object>();
         for (int x=1; x <= columnCount; x++) {
           rowObjects.add(resultSet.getObject(x));
         }
@@ -45,5 +35,4 @@
       }
     }
   }
-  return results;
 }

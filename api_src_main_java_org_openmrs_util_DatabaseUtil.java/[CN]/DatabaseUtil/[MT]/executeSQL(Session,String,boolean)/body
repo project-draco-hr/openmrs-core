@@ -1,0 +1,14 @@
+{
+  sql=sql.trim();
+  boolean dataManipulation=checkQueryForManipulationCommands(sql,selectOnly);
+  final List<List<Object>> result=new ArrayList<List<Object>>();
+  final String query=sql;
+  final boolean sessionDataManipulation=dataManipulation;
+  session.doWork(new Work(){
+    @Override public void execute(    Connection conn){
+      getResultFromSQLQuery(conn,query,sessionDataManipulation,result);
+    }
+  }
+);
+  return result;
+}
