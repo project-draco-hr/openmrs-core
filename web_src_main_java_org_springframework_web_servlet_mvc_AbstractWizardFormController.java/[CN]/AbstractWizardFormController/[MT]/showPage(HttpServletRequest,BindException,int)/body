@@ -3,7 +3,7 @@
     if (logger.isDebugEnabled()) {
       logger.debug("Showing wizard page " + page + " for form bean '"+ getCommandName()+ "'");
     }
-    Integer pageInteger=new Integer(page);
+    Integer pageInteger=Integer.valueOf(page);
     String pageAttrName=getPageSessionAttributeName(request);
     if (isSessionForm()) {
       if (logger.isDebugEnabled()) {

@@ -1,0 +1,11 @@
+{
+  final String locationUuid="some uuid";
+  final String formFieldName="uuid";
+  MockHttpServletRequest request=new MockHttpServletRequest();
+  request.setParameter(formFieldName,locationUuid);
+  Location expectedLocation=mock(Location.class);
+  MockLocationDatatype datatype=mock(MockLocationDatatype.class);
+  when(datatype.deserialize(eq(locationUuid))).thenReturn(expectedLocation);
+  SerializingFieldGenDatatypeHandler handler=new MockLocationFieldGenDatatypeHandler();
+  Assert.assertEquals(expectedLocation,handler.getValue(datatype,request,formFieldName));
+}

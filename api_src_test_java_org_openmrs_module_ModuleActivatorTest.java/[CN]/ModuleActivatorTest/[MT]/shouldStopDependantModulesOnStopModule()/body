@@ -6,8 +6,8 @@
   assertTrue(moduleTestData.getStoppedCallCount(MODULE1_ID) == 1);
   assertTrue(moduleTestData.getStoppedCallCount(MODULE2_ID) == 1);
   assertTrue(moduleTestData.getStoppedCallCount(MODULE3_ID) == 1);
-  assertTrue(moduleTestData.getWillStopCallTime(MODULE3_ID) <= moduleTestData.getWillStopCallTime(MODULE2_ID));
-  assertTrue(moduleTestData.getWillStopCallTime(MODULE2_ID) <= moduleTestData.getWillStopCallTime(MODULE1_ID));
-  assertTrue(moduleTestData.getStoppedCallTime(MODULE3_ID) <= moduleTestData.getStoppedCallTime(MODULE2_ID));
-  assertTrue(moduleTestData.getStoppedCallTime(MODULE2_ID) <= moduleTestData.getStoppedCallTime(MODULE1_ID));
+  assertThat(moduleTestData.getWillStopCallTime(MODULE3_ID),lessThanOrEqualTo(moduleTestData.getWillStopCallTime(MODULE2_ID)));
+  assertThat(moduleTestData.getWillStopCallTime(MODULE2_ID),lessThanOrEqualTo(moduleTestData.getWillStopCallTime(MODULE1_ID)));
+  assertThat(moduleTestData.getStoppedCallTime(MODULE3_ID),lessThanOrEqualTo(moduleTestData.getStoppedCallTime(MODULE2_ID)));
+  assertThat(moduleTestData.getStoppedCallTime(MODULE2_ID),lessThanOrEqualTo(moduleTestData.getStoppedCallTime(MODULE1_ID)));
 }

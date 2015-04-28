@@ -1,5 +1,6 @@
 {
   Connection connection=null;
+  Statement statement=null;
   try {
     String replacedSql=sql;
     if (wizardModel.databaseConnection.contains("mysql")) {
@@ -20,7 +21,7 @@
       arg=arg.replace(";","&#094");
       replacedSql=replacedSql.replaceFirst("\\?",arg);
     }
-    Statement statement=connection.createStatement();
+    statement=connection.createStatement();
     int updateDelta=statement.executeUpdate(replacedSql);
     statement.close();
     return updateDelta;
@@ -41,6 +42,14 @@ catch (  ClassNotFoundException e) {
     log.error("Error generated",e);
   }
  finally {
+    try {
+      if (statement != null && !statement.isClosed()) {
+        statement.close();
+      }
+    }
+ catch (    SQLException e) {
+      log.warn("Error while closing statement");
+    }
     try {
       if (connection != null) {
         connection.close();

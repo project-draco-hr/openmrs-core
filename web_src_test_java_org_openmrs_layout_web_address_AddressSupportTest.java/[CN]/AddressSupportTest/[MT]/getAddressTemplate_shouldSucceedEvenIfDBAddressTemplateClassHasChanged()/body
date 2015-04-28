@@ -1,0 +1,10 @@
+{
+  executeDataSet(PERSON_ADDRESS_VALIDATOR_DATASET_PACKAGE_PATH);
+  String newAddressTemplateClass="org.openmrs.layout.address.AddressTemplate";
+  String xml=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_ADDRESS_TEMPLATE);
+  Assert.assertTrue(StringUtils.contains(xml,newAddressTemplateClass));
+  Assert.assertNotEquals(newAddressTemplateClass,AddressTemplate.class.getName());
+  AddressSupport addressSupport=AddressSupport.getInstance();
+  List<AddressTemplate> addressTemplates=addressSupport.getAddressTemplate();
+  Assert.assertNotNull(addressTemplates.get(0));
+}

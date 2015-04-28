@@ -1,3 +1,4 @@
 {
-  return OpenmrsUtil.compareWithNullAsGreatest(getPersonAttributeTypeId(),other.getPersonAttributeTypeId());
+  DefaultComparator patDefaultComparator=new DefaultComparator();
+  return patDefaultComparator.compare(this,other);
 }

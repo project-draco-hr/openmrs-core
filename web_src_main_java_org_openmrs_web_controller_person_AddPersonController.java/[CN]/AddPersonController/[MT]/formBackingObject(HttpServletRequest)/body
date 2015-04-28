@@ -8,10 +8,10 @@
     HashMap<String,String> person=getParametersFromRequest(request);
     String gender=person.get(GENDER);
     String name=person.get(NAME);
-    String birthdate=person.get(BIRTHDATE);
+    String birthdate=person.get(BIRTH_DATE);
     String age=person.get(AGE);
     log.debug("name: " + name + " birthdate: "+ birthdate+ " age: "+ age+ " gender: "+ gender);
-    if (!"".equals(name) || !"".equals(birthdate) || !"".equals(age)|| !"".equals(gender)) {
+    if (StringUtils.isNotEmpty(name) || StringUtils.isNotEmpty(birthdate) || StringUtils.isNotEmpty(age)|| StringUtils.isNotEmpty(gender)) {
       log.info(userId + "|" + name+ "|"+ birthdate+ "|"+ age+ "|"+ gender);
       Integer d=null;
       birthdate=birthdate.trim();
@@ -19,7 +19,7 @@
       int birthyear=-1;
       try {
         if (birthdate.length() > 0) {
-          Date birthdateFormatted=(Date)Context.getDateFormat().parse(birthdate);
+          Date birthdateFormatted=Context.getDateFormat().parse(birthdate);
           Calendar calender=Calendar.getInstance();
           calender.setTime(birthdateFormatted);
           birthyear=calender.get(Calendar.YEAR);
@@ -32,7 +32,7 @@
         invalidAgeFormat=true;
       }
       if (birthyear != -1) {
-        d=Integer.valueOf(birthyear);
+        d=birthyear;
       }
  else       if (age.length() > 0) {
         Calendar c=Calendar.getInstance();

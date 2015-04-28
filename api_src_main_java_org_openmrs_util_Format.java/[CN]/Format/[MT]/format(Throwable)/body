@@ -1,6 +1,3 @@
 {
-  StringWriter sw=new StringWriter();
-  PrintWriter pw=new PrintWriter(sw);
-  t.printStackTrace(pw);
-  return t + "\n" + sw.toString();
+  return t + "\n" + ExceptionUtils.getStackTrace(t);
 }

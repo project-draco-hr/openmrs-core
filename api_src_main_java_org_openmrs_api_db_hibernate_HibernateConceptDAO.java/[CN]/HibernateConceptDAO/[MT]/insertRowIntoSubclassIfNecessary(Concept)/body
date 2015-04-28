@@ -1,92 +1,41 @@
 {
-  Connection connection=sessionFactory.getCurrentSession().connection();
-  PreparedStatement ps=null;
-  PreparedStatement ps2=null;
   if (concept instanceof ConceptNumeric) {
-    try {
-      ps=connection.prepareStatement("SELECT * FROM concept WHERE concept_id = ? and not exists (select * from concept_numeric WHERE concept_id = ?)");
-      ps.setInt(1,concept.getConceptId());
-      ps.setInt(2,concept.getConceptId());
-      ps.execute();
-      if (ps.getResultSet().next()) {
-        sessionFactory.getCurrentSession().clear();
-        ps2=connection.prepareStatement("INSERT INTO concept_numeric (concept_id, precise) VALUES (?, false)");
-        ps2.setInt(1,concept.getConceptId());
-        ps2.executeUpdate();
+    String select="SELECT 1 from concept_numeric WHERE concept_id = :conceptId";
+    Query query=sessionFactory.getCurrentSession().createSQLQuery(select);
+    query.setInteger("conceptId",concept.getConceptId());
+    if (query.uniqueResult() == null) {
+      sessionFactory.getCurrentSession().clear();
+      deleteSubclassConcept("concept_complex",concept.getConceptId());
+      String insert="INSERT INTO concept_numeric (concept_id, precise) VALUES (:conceptId, false)";
+      query=sessionFactory.getCurrentSession().createSQLQuery(insert);
+      query.setInteger("conceptId",concept.getConceptId());
+      query.executeUpdate();
+    }
+ else {
+      if (!concept.isNumeric()) {
+        deleteSubclassConcept("concept_numeric",concept.getConceptId());
       }
  else {
-        if (!concept.isNumeric()) {
-          ps2=connection.prepareStatement("DELETE FROM concept_numeric WHERE concept_id = ?");
-          ps2.setInt(1,concept.getConceptId());
-          ps2.executeUpdate();
-        }
- else {
-        }
-      }
-    }
- catch (    SQLException e) {
-      log.error("Error while trying to see if this ConceptNumeric is in the concept_numeric table already",e);
-    }
- finally {
-      if (ps != null) {
-        try {
-          ps.close();
-        }
- catch (        SQLException e) {
-          log.error("Error generated while closing statement",e);
-        }
-      }
-      if (ps2 != null) {
-        try {
-          ps2.close();
-        }
- catch (        SQLException e) {
-          log.error("Error generated while closing statement",e);
-        }
       }
     }
   }
  else   if (concept instanceof ConceptComplex) {
-    try {
-      ps=connection.prepareStatement("SELECT * FROM concept WHERE concept_id = ? and not exists (select * from concept_complex WHERE concept_id = ?)");
-      ps.setInt(1,concept.getConceptId());
-      ps.setInt(2,concept.getConceptId());
-      ps.execute();
-      if (ps.getResultSet().next()) {
-        sessionFactory.getCurrentSession().clear();
-        ps2=connection.prepareStatement("INSERT INTO concept_complex (concept_id) VALUES (?)");
-        ps2.setInt(1,concept.getConceptId());
-        ps2.executeUpdate();
+    String select="SELECT 1 FROM concept_complex WHERE concept_id = :conceptId";
+    Query query=sessionFactory.getCurrentSession().createSQLQuery(select);
+    query.setInteger("conceptId",concept.getConceptId());
+    if (query.uniqueResult() == null) {
+      sessionFactory.getCurrentSession().clear();
+      deleteSubclassConcept("concept_numeric",concept.getConceptId());
+      String insert="INSERT INTO concept_complex (concept_id) VALUES (:conceptId)";
+      query=sessionFactory.getCurrentSession().createSQLQuery(insert);
+      query.setInteger("conceptId",concept.getConceptId());
+      query.executeUpdate();
+    }
+ else {
+      if (!concept.isComplex()) {
+        deleteSubclassConcept("concept_complex",concept.getConceptId());
       }
  else {
-        if (!concept.isComplex()) {
-          ps2=connection.prepareStatement("DELETE FROM concept_complex WHERE concept_id = ?");
-          ps2.setInt(1,concept.getConceptId());
-          ps2.executeUpdate();
-        }
- else {
-        }
-      }
-    }
- catch (    SQLException e) {
-      log.error("Error while trying to see if this ConceptComplex is in the concept_complex table already",e);
-    }
- finally {
-      if (ps != null) {
-        try {
-          ps.close();
-        }
- catch (        SQLException e) {
-          log.error("Error generated while closing statement",e);
-        }
-      }
-      if (ps2 != null) {
-        try {
-          ps2.close();
-        }
- catch (        SQLException e) {
-          log.error("Error generated while closing statement",e);
-        }
       }
     }
   }
