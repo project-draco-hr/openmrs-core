@@ -1,6 +1,12 @@
 {
   provider.setIdentifier(null);
-  provider.setName("bcj");
+  Person person=new Person();
+  Set<PersonName> personNames=new HashSet<PersonName>(1);
+  PersonName personName=new PersonName();
+  personName.setFamilyName("name");
+  personNames.add(personName);
+  person.setNames(personNames);
+  provider.setPerson(person);
   providerValidator.validate(provider,errors);
   Assert.assertFalse(errors.hasErrors());
 }

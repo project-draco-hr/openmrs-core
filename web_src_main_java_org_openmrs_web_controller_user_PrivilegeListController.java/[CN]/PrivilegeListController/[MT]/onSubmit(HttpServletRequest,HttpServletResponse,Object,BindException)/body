@@ -13,7 +13,7 @@
       for (      String p : privilegeList) {
         try {
           us.purgePrivilege(us.getPrivilege(p));
-          if (!"".equals(success)) {
+          if (!"".equals(success.toString())) {
             success.append("<br/>");
           }
           success.append(p).append(" ").append(deleted);
@@ -30,7 +30,7 @@ catch (        APIException e) {
       error=msa.getMessage("Privilege.select");
     }
     view=getSuccessView();
-    if (!"".equals(success)) {
+    if (!"".equals(success.toString())) {
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,success.toString());
     }
     if (!"".equals(error)) {

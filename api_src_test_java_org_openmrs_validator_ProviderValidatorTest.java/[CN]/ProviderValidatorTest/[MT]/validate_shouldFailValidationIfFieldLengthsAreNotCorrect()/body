@@ -1,11 +1,9 @@
 {
   Provider provider=new Provider();
   provider.setIdentifier("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
-  provider.setName("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
   provider.setRetireReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
   Errors errors=new BindException(provider,"type");
   providerValidator.validate(provider,errors);
   Assert.assertTrue(errors.hasFieldErrors("identifier"));
-  Assert.assertTrue(errors.hasFieldErrors("name"));
   Assert.assertTrue(errors.hasFieldErrors("retireReason"));
 }

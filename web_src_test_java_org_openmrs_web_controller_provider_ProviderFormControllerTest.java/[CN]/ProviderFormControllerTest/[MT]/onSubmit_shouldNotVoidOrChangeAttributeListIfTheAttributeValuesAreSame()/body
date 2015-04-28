@@ -7,7 +7,7 @@
   mockHttpServletRequest.setParameter("attribute." + providerAttributeType.getId(),"2011-04-25");
   BindException errors=new BindException(provider,"provider");
   ProviderFormController providerFormController=(ProviderFormController)applicationContext.getBean("providerFormController");
-  providerFormController.onSubmit(mockHttpServletRequest,"save",null,null,null,true,provider,errors,createModelMap(providerAttributeType));
+  providerFormController.onSubmit(mockHttpServletRequest,"save",null,null,null,provider,errors,createModelMap(providerAttributeType));
   Assert.assertFalse(((ProviderAttribute)(provider.getAttributes().toArray()[0])).getVoided());
   Assert.assertEquals(1,provider.getAttributes().size());
 }

@@ -1,7 +1,7 @@
 {
   if (unknownConcept == null) {
     try {
-      ConceptServiceImpl.unknownConcept=Context.getConceptService().getConcept(Integer.parseInt(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_UNKNOWN_CONCEPT)));
+      ConceptServiceImpl.setStaticUnknownConcept(Context.getConceptService().getConcept(Integer.parseInt(Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_UNKNOWN_CONCEPT))));
     }
  catch (    NumberFormatException e) {
       log.warn("Concept id for unknown concept should be a number");

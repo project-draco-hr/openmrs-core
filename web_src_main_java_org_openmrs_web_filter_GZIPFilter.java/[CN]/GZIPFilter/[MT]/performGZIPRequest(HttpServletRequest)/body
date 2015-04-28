@@ -1,0 +1,25 @@
+{
+  String contentEncoding=req.getHeader("Content-encoding");
+  if (contentEncoding != null && contentEncoding.contains("gzip")) {
+    if (!isCompressedRequestForPathAccepted(req.getRequestURI())) {
+      throw new APIException("Unsupported Media Type");
+    }
+    if (log.isDebugEnabled()) {
+      log.debug("GZIP request supported");
+    }
+    try {
+      GZIPRequestWrapper wrapperRequest=new GZIPRequestWrapper(req);
+      if (log.isDebugEnabled()) {
+        log.debug("GZIP request wrapped successfully");
+      }
+      return wrapperRequest;
+    }
+ catch (    IOException e) {
+      log.error("Error during wrapping GZIP request " + e);
+      return req;
+    }
+  }
+ else {
+    return req;
+  }
+}

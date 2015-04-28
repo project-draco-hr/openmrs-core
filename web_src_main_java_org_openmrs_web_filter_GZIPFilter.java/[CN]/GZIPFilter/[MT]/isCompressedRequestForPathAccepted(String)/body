@@ -1,0 +1,17 @@
+{
+  try {
+    if (cachedGZipCompressedRequestForPathAccepted == null) {
+      cachedGZipCompressedRequestForPathAccepted=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS,"");
+    }
+    for (    String acceptPath : cachedGZipCompressedRequestForPathAccepted.split(",")) {
+      if (path.matches(acceptPath)) {
+        return true;
+      }
+    }
+    return false;
+  }
+ catch (  Exception e) {
+    log.warn("Unable to process the global property: " + OpenmrsConstants.GLOBAL_PROPERTY_GZIP_ACCEPT_COMPRESSED_REQUESTS_FOR_PATHS,e);
+    return false;
+  }
+}

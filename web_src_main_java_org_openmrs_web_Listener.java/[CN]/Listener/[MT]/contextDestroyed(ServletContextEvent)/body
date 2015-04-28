@@ -7,7 +7,7 @@
  catch (  Exception e) {
     if (!"contextDAO is null".equals(e.getMessage())) {
       System.out.println("Listener.contextDestroyed: Error while shutting down openmrs: ");
-      e.printStackTrace();
+      log.error(e);
     }
   }
  finally {
@@ -32,7 +32,7 @@
   }
  catch (  Exception e) {
     System.err.println("Listener.contextDestroyed: Failed to cleanup drivers in webapp");
-    e.printStackTrace();
+    log.error(e);
   }
   MemoryLeakUtil.shutdownMysqlCancellationTimer();
   MemoryLeakUtil.shutdownKeepAliveTimer();
