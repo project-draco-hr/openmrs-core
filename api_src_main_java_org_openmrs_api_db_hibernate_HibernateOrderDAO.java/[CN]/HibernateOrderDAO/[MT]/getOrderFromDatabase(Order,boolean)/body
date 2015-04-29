@@ -5,5 +5,6 @@
   }
   Query query=sessionFactory.getCurrentSession().createSQLQuery(sql);
   query.setParameter("orderId",order.getOrderId());
+  query.setFlushMode(FlushMode.MANUAL);
   return query.list();
 }
