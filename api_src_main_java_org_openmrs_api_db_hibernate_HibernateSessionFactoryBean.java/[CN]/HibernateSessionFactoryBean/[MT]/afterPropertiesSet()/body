@@ -1,6 +1,57 @@
 {
-  super.setMappingResources(getModuleMappingResources().toArray(new String[]{}));
-  packagesToScan.addAll(getModulePackagesWithMappedClasses());
-  super.setPackagesToScan(packagesToScan.toArray(new String[0]));
+  log.debug("Configuring hibernate sessionFactory properties");
+  Properties config=getHibernateProperties();
+  Properties moduleProperties=Context.getConfigProperties();
+  for (  Map.Entry<Object,Object> entry : moduleProperties.entrySet()) {
+    Object key=entry.getKey();
+    String prop=(String)key;
+    String value=(String)entry.getValue();
+    log.trace("Setting module property: " + prop + ":"+ value);
+    config.setProperty(prop,value);
+    if (!prop.startsWith("hibernate")) {
+      config.setProperty("hibernate." + prop,value);
+    }
+  }
+  Properties properties=Context.getRuntimeProperties();
+  for (  Map.Entry<Object,Object> entry : properties.entrySet()) {
+    Object key=entry.getKey();
+    String prop=(String)key;
+    String value=(String)entry.getValue();
+    log.trace("Setting property: " + prop + ":"+ value);
+    config.setProperty(prop,value);
+    if (!prop.startsWith("hibernate")) {
+      config.setProperty("hibernate." + prop,value);
+    }
+  }
+  try {
+    InputStream propertyStream=getClass().getResourceAsStream("/hibernate.default.properties");
+    Properties props=new Properties();
+    OpenmrsUtil.loadProperties(props,propertyStream);
+    propertyStream.close();
+    for (    Entry<Object,Object> prop : props.entrySet()) {
+      if (!config.containsKey(prop.getKey())) {
+        config.put(prop.getKey(),prop.getValue());
+      }
+    }
+  }
+ catch (  IOException e) {
+    log.fatal("Unable to load default hibernate properties",e);
+  }
+  log.debug("Replacing variables in hibernate properties");
+  final String applicationDataDirectory=OpenmrsUtil.getApplicationDataDirectory();
+  for (  Entry<Object,Object> entry : config.entrySet()) {
+    String value=(String)entry.getValue();
+    value=value.replace("%APPLICATION_DATA_DIRECTORY%",applicationDataDirectory);
+    entry.setValue(value);
+  }
+  log.debug("Setting global Hibernate Session Interceptor for SessionFactory, Interceptor: " + chainingInterceptor);
+  List<String> keys=new ArrayList<String>(interceptors.keySet());
+  Collections.sort(keys);
+  for (  String key : keys) {
+    chainingInterceptor.addInterceptor(interceptors.get(key));
+  }
+  setEntityInterceptor(chainingInterceptor);
+  setMappingResources(getModuleMappingResources().toArray(new String[0]));
+  setPackagesToScan(getModulePackagesWithMappedClasses().toArray(new String[0]));
   super.afterPropertiesSet();
 }

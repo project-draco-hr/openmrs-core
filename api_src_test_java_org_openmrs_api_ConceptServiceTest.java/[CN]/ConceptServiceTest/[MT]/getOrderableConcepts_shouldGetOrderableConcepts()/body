@@ -16,6 +16,7 @@
   c2.setConceptClass(cc3);
   c2.setDatatype(dt);
   cs.saveConcept(c2);
+  updateSearchIndex();
   List<ConceptSearchResult> conceptSearchResultList=Context.getConceptService().getOrderableConcepts("one",Collections.singletonList(locale),true,null,null);
   assertEquals(2,conceptSearchResultList.size());
 }

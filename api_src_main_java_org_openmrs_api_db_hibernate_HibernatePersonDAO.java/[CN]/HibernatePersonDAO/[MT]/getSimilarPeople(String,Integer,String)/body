@@ -46,7 +46,7 @@
  else   if (gender != null) {
     q.append(" and " + genderMatch);
   }
-  q.append(" order by pname.givenName asc,").append(" pname.middleName asc,").append(" pname.familyName asc").append(" pname.familyName2 asc");
+  q.append(" order by pname.givenName asc,").append(" pname.middleName asc,").append(" pname.familyName asc,").append(" pname.familyName2 asc");
   String qStr=q.toString();
   Query query=sessionFactory.getCurrentSession().createQuery(qStr);
   for (int nameIndex=0; nameIndex < names.length; nameIndex++) {

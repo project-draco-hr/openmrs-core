@@ -10,7 +10,7 @@
     if (log.isDebugEnabled()) {
       log.debug("Registering session with synchronization manager (" + sessionFactory.hashCode() + ")");
     }
-    Session session=SessionFactoryUtils.getSession(sessionFactory,true);
+    Session session=sessionFactory.openSession();
     session.setFlushMode(FlushMode.MANUAL);
     TransactionSynchronizationManager.bindResource(sessionFactory,new SessionHolder(session));
   }
