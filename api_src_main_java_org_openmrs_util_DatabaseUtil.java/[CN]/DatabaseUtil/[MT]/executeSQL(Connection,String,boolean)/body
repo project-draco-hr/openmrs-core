@@ -2,6 +2,6 @@
   sql=sql.trim();
   boolean dataManipulation=checkQueryForManipulationCommands(sql,selectOnly);
   List<List<Object>> result=new ArrayList<List<Object>>();
-  getResultFromSQLQuery(conn,sql,dataManipulation,result);
+  populateResultsFromSQLQuery(conn,sql,dataManipulation,result);
   return result;
 }

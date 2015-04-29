@@ -6,7 +6,7 @@
   final boolean sessionDataManipulation=dataManipulation;
   session.doWork(new Work(){
     @Override public void execute(    Connection conn){
-      getResultFromSQLQuery(conn,query,sessionDataManipulation,result);
+      populateResultsFromSQLQuery(conn,query,sessionDataManipulation,result);
     }
   }
 );
