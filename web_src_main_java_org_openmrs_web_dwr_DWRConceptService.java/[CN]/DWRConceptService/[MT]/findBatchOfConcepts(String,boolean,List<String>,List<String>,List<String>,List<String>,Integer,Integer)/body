@@ -1,5 +1,5 @@
 {
-  Vector<Object> objectList=new Vector<Object>();
+  List<Object> objectList=new ArrayList<Object>();
   Locale defaultLocale=Context.getLocale();
   List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   if (log.isDebugEnabled()) {
@@ -10,20 +10,20 @@
     log.debug("searching locales: " + searchLocalesString);
   }
   if (includeClassNames == null) {
-    includeClassNames=new Vector<String>();
+    includeClassNames=new ArrayList<String>();
   }
   if (excludeClassNames == null) {
-    excludeClassNames=new Vector<String>();
+    excludeClassNames=new ArrayList<String>();
   }
   if (includeDatatypeNames == null) {
-    includeDatatypeNames=new Vector<String>();
+    includeDatatypeNames=new ArrayList<String>();
   }
   if (excludeDatatypeNames == null) {
-    excludeDatatypeNames=new Vector<String>();
+    excludeDatatypeNames=new ArrayList<String>();
   }
   try {
     ConceptService cs=Context.getConceptService();
-    List<ConceptSearchResult> searchResults=new Vector<ConceptSearchResult>();
+    List<ConceptSearchResult> searchResults=new ArrayList<ConceptSearchResult>();
     if (phrase.matches("\\d+")) {
       Concept c=cs.getConcept(Integer.valueOf(phrase));
       if (c != null && (!c.isRetired() || includeRetired)) {
@@ -43,25 +43,25 @@
       }
     }
     if (!StringUtils.isBlank(phrase)) {
-      List<ConceptClass> includeClasses=new Vector<ConceptClass>();
+      List<ConceptClass> includeClasses=new ArrayList<ConceptClass>();
       for (      String name : includeClassNames) {
         if (!"".equals(name)) {
           includeClasses.add(cs.getConceptClassByName(name));
         }
       }
-      List<ConceptClass> excludeClasses=new Vector<ConceptClass>();
+      List<ConceptClass> excludeClasses=new ArrayList<ConceptClass>();
       for (      String name : excludeClassNames) {
         if (!"".equals(name)) {
           excludeClasses.add(cs.getConceptClassByName(name));
         }
       }
-      List<ConceptDatatype> includeDatatypes=new Vector<ConceptDatatype>();
+      List<ConceptDatatype> includeDatatypes=new ArrayList<ConceptDatatype>();
       for (      String name : includeDatatypeNames) {
         if (!"".equals(name)) {
           includeDatatypes.add(cs.getConceptDatatypeByName(name));
         }
       }
-      List<ConceptDatatype> excludeDatatypes=new Vector<ConceptDatatype>();
+      List<ConceptDatatype> excludeDatatypes=new ArrayList<ConceptDatatype>();
       for (      String name : excludeDatatypeNames) {
         if (!"".equals(name)) {
           excludeDatatypes.add(cs.getConceptDatatypeByName(name));
