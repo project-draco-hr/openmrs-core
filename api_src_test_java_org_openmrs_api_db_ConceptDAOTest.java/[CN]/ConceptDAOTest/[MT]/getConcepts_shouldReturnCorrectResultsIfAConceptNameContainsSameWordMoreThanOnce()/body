@@ -22,6 +22,7 @@
   c2.setConceptClass(cc);
   c2.setDatatype(dt);
   cs.saveConcept(c2);
+  updateSearchIndex();
   List<ConceptSearchResult> searchResults1=dao.getConcepts("one",Collections.singletonList(locale),false,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,null,null,null);
   Assert.assertEquals(2,searchResults1.size());
   Assert.assertEquals(c1,searchResults1.get(0).getConcept());

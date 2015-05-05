@@ -1,6 +1,6 @@
 {
   Analyzer analyzer=getFullTextSession().getSearchFactory().getAnalyzer(getType());
-  QueryParser queryParser=new QueryParser(Version.LUCENE_31,null,analyzer);
+  QueryParser queryParser=new QueryParser(null,analyzer);
   queryParser.setDefaultOperator(Operator.AND);
   return queryParser;
 }

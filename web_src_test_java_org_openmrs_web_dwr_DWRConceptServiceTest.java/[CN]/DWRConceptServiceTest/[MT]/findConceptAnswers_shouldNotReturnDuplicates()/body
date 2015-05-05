@@ -9,6 +9,7 @@
   Concept answer2=Context.getConceptService().getConcept(7);
   answer2.addName(new ConceptName("True",new Locale("en")));
   Context.getConceptService().saveConcept(answer2);
+  updateSearchIndex();
   List<Object> findConceptAnswers=dwrConceptService.findConceptAnswers("T",21,false,true);
   Assert.assertEquals(1,findConceptAnswers.size());
   for (  Object findConceptAnswer : findConceptAnswers) {

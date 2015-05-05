@@ -1,6 +1,6 @@
 {
   Concept concept=dao.getConcept(7);
-  Context.getConceptService().updateConceptIndex(concept);
+  updateSearchIndex();
   List<Concept> concepts=dao.getConcepts("VOIDED",null,false,new ArrayList<ConceptClass>(),new ArrayList<ConceptDatatype>());
   Assert.assertEquals(0,concepts.size());
 }
