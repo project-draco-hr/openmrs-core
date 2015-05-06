@@ -5,7 +5,6 @@
   order.setOrderer(providerService.getProvider(1));
   Concept newConcept=conceptService.getConcept(5089);
   assertFalse(order.getPreviousOrder().getConcept().equals(newConcept));
-  Locale locale=Context.getLocale();
   order.getPreviousOrder().setConcept(newConcept);
   expectedException.expect(APIException.class);
   expectedException.expectMessage("Order.cannot.change.concept");
