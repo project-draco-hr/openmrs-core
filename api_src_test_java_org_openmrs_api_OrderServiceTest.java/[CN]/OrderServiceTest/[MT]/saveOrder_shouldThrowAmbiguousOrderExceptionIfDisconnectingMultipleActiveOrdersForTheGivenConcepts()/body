@@ -1,0 +1,12 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-discontinueAmbiguousOrderByConcept.xml");
+  DrugOrder order=new DrugOrder();
+  order.setAction(Order.Action.DISCONTINUE);
+  order.setOrderReasonNonCoded("Discontinue this");
+  order.setConcept(conceptService.getConcept(88));
+  order.setEncounter(encounterService.getEncounter(7));
+  order.setPatient(patientService.getPatient(9));
+  order.setOrderer(providerService.getProvider(1));
+  order.setCareSetting(orderService.getCareSetting(1));
+  order=(DrugOrder)orderService.saveOrder(order,null);
+}
