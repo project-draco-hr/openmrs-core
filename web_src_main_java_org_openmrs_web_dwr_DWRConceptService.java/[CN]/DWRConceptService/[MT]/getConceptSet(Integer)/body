@@ -3,7 +3,7 @@
   ConceptService cs=Context.getConceptService();
   FormService fs=Context.getFormService();
   Concept concept=cs.getConcept(conceptId);
-  List<Object> returnList=new Vector<Object>();
+  List<Object> returnList=new ArrayList<Object>();
   if (concept.isSet()) {
     for (    ConceptSet set : concept.getConceptSets()) {
       Field field=null;

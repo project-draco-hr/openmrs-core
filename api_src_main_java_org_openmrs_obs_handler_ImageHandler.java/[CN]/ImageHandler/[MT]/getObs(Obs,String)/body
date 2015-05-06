@@ -14,14 +14,14 @@
       Iterator<ImageReader> imgReader=ImageIO.getImageReaders(imgStream);
       imgStream.close();
       if (imgReader.hasNext()) {
-        complexData.setMIMEType("image/" + imgReader.next().getFormatName().toLowerCase());
+        complexData.setMimeType("image/" + imgReader.next().getFormatName().toLowerCase());
       }
  else {
         log.warn("MIME type of " + file.getAbsolutePath() + " is not known");
       }
     }
  catch (    FileNotFoundException e) {
-      log.error("Trying to create image file stream from " + file.getAbsolutePath(),e);
+      log.error("Image " + file.getAbsolutePath() + " was not found",e);
     }
 catch (    IOException e) {
       log.error("Trying to determine MIME type of " + file.getAbsolutePath(),e);

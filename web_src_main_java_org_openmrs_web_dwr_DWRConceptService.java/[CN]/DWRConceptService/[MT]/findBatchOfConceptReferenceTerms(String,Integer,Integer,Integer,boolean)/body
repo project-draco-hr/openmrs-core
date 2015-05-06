@@ -1,9 +1,9 @@
 {
-  Vector<Object> objectList=new Vector<Object>();
+  List<Object> objectList=new ArrayList<Object>();
   MessageSourceService mss=Context.getMessageSourceService();
   try {
     ConceptService cs=Context.getConceptService();
-    List<ConceptReferenceTerm> terms=new Vector<ConceptReferenceTerm>();
+    List<ConceptReferenceTerm> terms=new ArrayList<ConceptReferenceTerm>();
     if (StringUtils.isEmpty(phrase)) {
       objectList.add(mss.getMessage("searchWidget.searchPhraseCannotBeNull"));
       return objectList;
@@ -17,7 +17,7 @@
       objectList.add(mss.getMessage("general.noMatchesFound",new Object[]{"'" + phrase + "'"},Context.getLocale()));
     }
  else {
-      objectList=new Vector<Object>(terms.size());
+      objectList=new ArrayList<Object>(terms.size());
       for (      ConceptReferenceTerm term : terms) {
         objectList.add(new ConceptReferenceTermListItem(term));
       }

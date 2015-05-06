@@ -7,7 +7,7 @@
       originalFilename=originalFilename.replace(",","").replace(" ","");
       FileInputStream mediaStream=new FileInputStream(file);
       ComplexData complexData=new ComplexData(originalFilename,mediaStream);
-      complexData.setMIMEType(OpenmrsUtil.getFileMimeType(file));
+      complexData.setMimeType(OpenmrsUtil.getFileMimeType(file));
       complexData.setLength(file.length());
       obs.setComplexData(complexData);
     }

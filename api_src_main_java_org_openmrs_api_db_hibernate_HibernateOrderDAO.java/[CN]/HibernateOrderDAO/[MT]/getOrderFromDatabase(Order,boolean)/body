@@ -1,8 +1,10 @@
 {
-  String query="SELECT patient_id, care_setting, concept_id FROM orders WHERE order_id =";
+  String sql="SELECT patient_id, care_setting, concept_id FROM orders WHERE order_id = :orderId";
   if (isOrderADrugOrder) {
-    query="SELECT o.patient_id, o.care_setting, o.concept_id, d.drug_inventory_id " + "FROM orders o, drug_order d WHERE o.order_id = d.order_id AND o.order_id =";
+    sql=" SELECT o.patient_id, o.care_setting, o.concept_id, d.drug_inventory_id " + " FROM orders o, drug_order d WHERE o.order_id = d.order_id AND o.order_id = :orderId";
   }
-  List<List<Object>> lists=DatabaseUtil.executeSQL(sessionFactory.getCurrentSession(),query + order.getOrderId(),true);
-  return lists;
+  Query query=sessionFactory.getCurrentSession().createSQLQuery(sql);
+  query.setParameter("orderId",order.getOrderId());
+  query.setFlushMode(FlushMode.MANUAL);
+  return query.list();
 }

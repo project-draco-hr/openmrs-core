@@ -15,13 +15,13 @@
       searchResults.addAll(results);
     }
   }
-  List<Drug> drugAnswers=new Vector<Drug>();
+  List<Drug> drugAnswers=new ArrayList<Drug>();
   for (  ConceptAnswer conceptAnswer : concept.getAnswers(false)) {
     if (conceptAnswer.getAnswerDrug() != null) {
       drugAnswers.add(conceptAnswer.getAnswerDrug());
     }
   }
-  List<Object> items=new Vector<Object>();
+  List<Object> items=new ArrayList<Object>();
   Set<Integer> uniqueItems=new HashSet<Integer>();
   for (  ConceptSearchResult searchResult : searchResults) {
     if (!uniqueItems.add(searchResult.getConcept().getConceptId())) {
