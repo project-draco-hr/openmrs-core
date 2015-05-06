@@ -1,6 +1,6 @@
 {
   if (configuration == null) {
-    LocalSessionFactoryBean sessionFactoryBean=(LocalSessionFactoryBean)applicationContext.getBean("&sessionFactory");
+    HibernateSessionFactoryBean sessionFactoryBean=(HibernateSessionFactoryBean)applicationContext.getBean("&sessionFactory");
     configuration=sessionFactoryBean.getConfiguration();
   }
   PersistentClass persistentClass=configuration.getClassMapping(aClass.getName().split("_")[0]);

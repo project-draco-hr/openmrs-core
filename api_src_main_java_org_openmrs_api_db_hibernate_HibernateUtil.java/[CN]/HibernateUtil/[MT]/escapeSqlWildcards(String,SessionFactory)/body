@@ -1,3 +1,8 @@
 {
-  return escapeSqlWildcards(oldString,sessionFactory.getCurrentSession().connection());
+  return sessionFactory.getCurrentSession().doReturningWork(new ReturningWork<String>(){
+    @Override public String execute(    Connection connection) throws SQLException {
+      return escapeSqlWildcards(oldString,connection);
+    }
+  }
+);
 }

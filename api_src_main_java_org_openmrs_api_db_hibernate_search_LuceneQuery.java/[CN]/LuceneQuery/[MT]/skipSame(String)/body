@@ -1,15 +1,21 @@
 {
   String idPropertyName=getSession().getSessionFactory().getClassMetadata(getType()).getIdentifierPropertyName();
   List<Object> documents=listProjection(idPropertyName,field);
-  Set<Object> uniqueFieldValues=new HashSet<Object>();
-  TermsFilter termsFilter=new TermsFilter();
-  for (  Object document : documents) {
-    Object[] row=(Object[])document;
-    if (uniqueFieldValues.add(row[1])) {
-      termsFilter.addTerm(new Term(idPropertyName,row[0].toString()));
+  TermsFilter termsFilter=null;
+  if (!documents.isEmpty()) {
+    Set<Object> uniqueFieldValues=new HashSet<Object>();
+    List<Term> terms=new ArrayList<Term>();
+    for (    Object document : documents) {
+      Object[] row=(Object[])document;
+      if (uniqueFieldValues.add(row[1])) {
+        terms.add(new Term(idPropertyName,row[0].toString()));
+      }
     }
+    termsFilter=new TermsFilter(terms);
   }
   buildQuery();
-  fullTextQuery.setFilter(termsFilter);
+  if (termsFilter != null) {
+    fullTextQuery.setFilter(termsFilter);
+  }
   return this;
 }
