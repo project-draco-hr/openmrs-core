@@ -1,0 +1,3 @@
+{
+  return firstOrder.hasSameOrderableAs(secondOrder) && !OpenmrsUtil.nullSafeEquals(firstOrder.getPreviousOrder(),secondOrder) && OrderUtil.checkScheduleOverlap(firstOrder,secondOrder)&& firstOrder.getOrderType().equals(Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID));
+}

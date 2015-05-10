@@ -1,0 +1,25 @@
+{
+  final Patient patient=patientService.getPatient(2);
+  final Concept triomuneThirty=conceptService.getConcept(792);
+  DrugOrder duplicateOrder=(DrugOrder)orderService.getOrder(3);
+  assertTrue(duplicateOrder.isActive());
+  assertEquals(triomuneThirty,duplicateOrder.getConcept());
+  DrugOrder drugOrder=new DrugOrder();
+  drugOrder.setPatient(patient);
+  drugOrder.setCareSetting(orderService.getCareSetting(1));
+  drugOrder.setConcept(triomuneThirty);
+  drugOrder.setEncounter(encounterService.getEncounter(6));
+  drugOrder.setOrderer(providerService.getProvider(1));
+  drugOrder.setCareSetting(duplicateOrder.getCareSetting());
+  drugOrder.setDrug(duplicateOrder.getDrug());
+  drugOrder.setDose(duplicateOrder.getDose());
+  drugOrder.setDoseUnits(duplicateOrder.getDoseUnits());
+  drugOrder.setRoute(duplicateOrder.getRoute());
+  drugOrder.setFrequency(duplicateOrder.getFrequency());
+  drugOrder.setQuantity(duplicateOrder.getQuantity());
+  drugOrder.setQuantityUnits(duplicateOrder.getQuantityUnits());
+  drugOrder.setNumRefills(duplicateOrder.getNumRefills());
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Order.cannot.have.more.than.one");
+  orderService.saveOrder(drugOrder,null);
+}
