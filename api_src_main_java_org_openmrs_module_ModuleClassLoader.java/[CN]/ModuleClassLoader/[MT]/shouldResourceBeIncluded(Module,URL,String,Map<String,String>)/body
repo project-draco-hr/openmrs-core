@@ -3,8 +3,8 @@
   for (  ModuleConditionalResource conditionalResource : module.getConditionalResources()) {
     if (fileUrl.getPath().matches(".*" + conditionalResource.getPath() + "$")) {
       include=false;
-      if (StringUtils.isNotBlank(conditionalResource.getOpenmrsVersion())) {
-        include=ModuleUtil.matchRequiredVersions(openmrsVersion,conditionalResource.getOpenmrsVersion());
+      if (StringUtils.isNotBlank(conditionalResource.getOpenmrsPlatformVersion())) {
+        include=ModuleUtil.matchRequiredVersions(openmrsVersion,conditionalResource.getOpenmrsPlatformVersion());
         if (!include) {
           return false;
         }
