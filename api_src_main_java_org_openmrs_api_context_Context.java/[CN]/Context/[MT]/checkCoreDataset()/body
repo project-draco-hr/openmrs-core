@@ -90,4 +90,7 @@
     Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
     Context.removeProxyPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES);
   }
+  AdministrationService as=Context.getAdministrationService();
+  Boolean disableValidation=Boolean.valueOf(as.getGlobalProperty(OpenmrsConstants.GP_DISABLE_VALIDATION,"false"));
+  ValidateUtil.setDisableValidation(disableValidation);
 }

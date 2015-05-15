@@ -1,4 +1,7 @@
 {
+  if (disableValidation) {
+    return;
+  }
   Errors errors=new BindException(obj,"");
   Context.getAdministrationService().validate(obj,errors);
   if (errors.hasErrors()) {
