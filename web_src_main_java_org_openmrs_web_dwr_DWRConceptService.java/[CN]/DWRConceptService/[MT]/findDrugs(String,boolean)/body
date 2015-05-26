@@ -4,7 +4,7 @@
   }
   Locale locale=Context.getLocale();
   ConceptService cs=Context.getConceptService();
-  List<Object> items=new Vector<Object>();
+  List<Object> items=new ArrayList<Object>();
   Set<Drug> drugs=new HashSet<Drug>();
   drugs.addAll(cs.getDrugs(phrase));
   for (  Drug drug : drugs) {

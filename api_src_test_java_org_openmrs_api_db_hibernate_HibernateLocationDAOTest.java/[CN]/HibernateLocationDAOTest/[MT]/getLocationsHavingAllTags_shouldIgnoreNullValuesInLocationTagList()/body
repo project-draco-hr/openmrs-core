@@ -1,0 +1,7 @@
+{
+  List<LocationTag> list1=new ArrayList<LocationTag>();
+  list1.add(dao.getLocationTag(1));
+  list1.add(dao.getLocationTag(2));
+  list1.add(null);
+  assertEquals(1,dao.getLocationsHavingAllTags(list1).size());
+}

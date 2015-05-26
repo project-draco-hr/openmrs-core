@@ -1,0 +1,38 @@
+{
+  PreparedStatement ps=null;
+  try {
+    ps=conn.prepareStatement(sql);
+    if (dataManipulation) {
+      Integer i=ps.executeUpdate();
+      List<Object> row=new ArrayList<Object>();
+      row.add(i);
+      results.add(row);
+    }
+ else {
+      ResultSet resultSet=ps.executeQuery();
+      ResultSetMetaData rmd=resultSet.getMetaData();
+      int columnCount=rmd.getColumnCount();
+      while (resultSet.next()) {
+        List<Object> rowObjects=new ArrayList<Object>();
+        for (int x=1; x <= columnCount; x++) {
+          rowObjects.add(resultSet.getObject(x));
+        }
+        results.add(rowObjects);
+      }
+    }
+  }
+ catch (  Exception e) {
+    log.debug("Error while running sql: " + sql,e);
+    throw new DAOException("Error while running sql: " + sql + " . Message: "+ e.getMessage(),e);
+  }
+ finally {
+    if (ps != null) {
+      try {
+        ps.close();
+      }
+ catch (      SQLException e) {
+        log.error("Error generated while closing statement",e);
+      }
+    }
+  }
+}

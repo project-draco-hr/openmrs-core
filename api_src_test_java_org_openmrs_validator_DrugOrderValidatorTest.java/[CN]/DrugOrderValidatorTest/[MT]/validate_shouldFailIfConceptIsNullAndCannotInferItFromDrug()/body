@@ -4,6 +4,6 @@
   drug.setConcept(null);
   order.setDrug(drug);
   Errors errors=new BindException(order,"order");
-  new DrugOrderValidator().validate(order,errors);
+  adminService.validate(order,errors);
   Assert.assertTrue(errors.hasFieldErrors("concept"));
 }

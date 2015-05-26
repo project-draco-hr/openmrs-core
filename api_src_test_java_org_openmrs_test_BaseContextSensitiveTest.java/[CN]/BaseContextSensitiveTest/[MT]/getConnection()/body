@@ -1,4 +1,9 @@
 {
   SessionFactory sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
-  return sessionFactory.getCurrentSession().connection();
+  return sessionFactory.getCurrentSession().doReturningWork(new ReturningWork<Connection>(){
+    @Override public Connection execute(    Connection connection) throws SQLException {
+      return connection;
+    }
+  }
+);
 }

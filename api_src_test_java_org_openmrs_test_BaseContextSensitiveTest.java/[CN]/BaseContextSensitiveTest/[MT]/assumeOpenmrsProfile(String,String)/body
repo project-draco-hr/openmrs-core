@@ -1,13 +1,13 @@
 {
   OpenmrsProfileExcludeFilter filter=new OpenmrsProfileExcludeFilter();
   Map<String,Object> profile=new HashMap<String,Object>();
-  profile.put("openmrsVersion",openmrsVersion);
+  profile.put("openmrsPlatformVersion",openmrsPlatformVersion);
   if (modules != null) {
     profile.put("modules",modules);
   }
  else {
     profile.put("modules",new String[0]);
   }
-  String errorMessage="Ignored. Expected profile: {openmrsVersion=" + openmrsVersion + ", modules=["+ StringUtils.join((String[])profile.get("modules"),", ")+ "]}";
+  String errorMessage="Ignored. Expected profile: {openmrsPlatformVersion=" + openmrsPlatformVersion + ", modules=["+ StringUtils.join((String[])profile.get("modules"),", ")+ "]}";
   Assume.assumeTrue(errorMessage,filter.matchOpenmrsProfileAttributes(profile));
 }
