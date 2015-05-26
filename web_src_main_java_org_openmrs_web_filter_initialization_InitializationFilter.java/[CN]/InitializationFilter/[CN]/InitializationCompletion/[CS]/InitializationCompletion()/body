@@ -56,7 +56,7 @@
           }
           connectionPassword.append(randomStr);
           String host="'%'";
-          if (wizardModel.databaseConnection.contains("localhost")) {
+          if (wizardModel.databaseConnection.contains("localhost") || wizardModel.databaseConnection.contains("127.0.0.1")) {
             host="'localhost'";
           }
           String sql="drop user '?'@" + host;
