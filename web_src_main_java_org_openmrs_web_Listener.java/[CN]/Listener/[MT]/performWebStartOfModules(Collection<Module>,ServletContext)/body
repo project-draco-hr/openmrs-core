@@ -17,6 +17,9 @@
  catch (    ModuleMustStartException ex) {
       throw ex;
     }
+catch (    BeanCreationException ex) {
+      throw ex;
+    }
 catch (    Exception e) {
       Throwable rootCause=getActualRootCause(e,true);
       if (rootCause != null) {
