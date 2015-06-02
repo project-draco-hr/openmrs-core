@@ -1,0 +1,13 @@
+{
+  Boolean prevVal=ValidateUtil.getDisableValidation();
+  ValidateUtil.setDisableValidation(true);
+  try {
+    ValidateUtil.validate(new Patient());
+  }
+ catch (  Exception e) {
+    ValidateUtil.setDisableValidation(prevVal);
+    e.printStackTrace();
+    fail("An unexpected exception occurred");
+  }
+  ValidateUtil.setDisableValidation(prevVal);
+}

@@ -1,4 +1,7 @@
 {
+  if (disableValidation) {
+    return;
+  }
   Assert.notNull(errors,"Errors object must not be null");
   for (  String field : fields) {
     Object value=errors.getFieldValue(field);
