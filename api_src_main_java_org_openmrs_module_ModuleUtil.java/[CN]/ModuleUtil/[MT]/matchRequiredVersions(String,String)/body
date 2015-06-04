@@ -10,13 +10,19 @@
         while (indexOfSeparator > 0) {
           lowerBound=range.substring(0,indexOfSeparator);
           upperBound=range.substring(indexOfSeparator + 1);
-          if (upperBound.matches("^\\s?\\d+.*"))           break;
+          if (upperBound.matches("^\\s?\\d+.*")) {
+            break;
+          }
           indexOfSeparator=range.indexOf(separator,indexOfSeparator + 1);
         }
         lowerBound=StringUtils.remove(lowerBound,lowerBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
         upperBound=StringUtils.remove(upperBound,upperBound.replaceAll("^\\s?\\d+[\\.\\d+\\*?|\\.\\*]+",""));
-        if (lowerBound.indexOf("*") > 0)         lowerBound=lowerBound.replaceAll("\\*","0");
-        if (upperBound.indexOf("*") > 0)         upperBound=upperBound.replaceAll("\\*",Integer.toString(Integer.MAX_VALUE));
+        if (lowerBound.indexOf("*") > 0) {
+          lowerBound=lowerBound.replaceAll("\\*","0");
+        }
+        if (upperBound.indexOf("*") > 0) {
+          upperBound=upperBound.replaceAll("\\*",Integer.toString(Integer.MAX_VALUE));
+        }
         int lowerReturn=compareVersion(version,lowerBound);
         int upperReturn=compareVersion(version,upperBound);
         if (lowerReturn < 0 || upperReturn > 0) {

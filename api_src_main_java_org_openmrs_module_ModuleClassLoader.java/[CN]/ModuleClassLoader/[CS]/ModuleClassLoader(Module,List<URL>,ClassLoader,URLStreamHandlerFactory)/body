@@ -6,7 +6,9 @@
  else   if (parent instanceof ModuleClassLoader) {
     throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
   }
-  if (log.isDebugEnabled())   log.debug("URLs length: " + urls.size());
+  if (log.isDebugEnabled()) {
+    log.debug("URLs length: " + urls.size());
+  }
   this.module=module;
   requiredModules=collectRequiredModuleImports(module);
   awareOfModules=collectAwareOfModuleImports(module);

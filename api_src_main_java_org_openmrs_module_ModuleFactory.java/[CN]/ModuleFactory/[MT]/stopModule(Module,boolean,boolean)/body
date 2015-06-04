@@ -5,7 +5,9 @@
       return dependentModulesStopped;
     }
     try {
-      if (mod.getModuleActivator() != null)       mod.getModuleActivator().willStop();
+      if (mod.getModuleActivator() != null) {
+        mod.getModuleActivator().willStop();
+      }
     }
  catch (    Exception t) {
       log.warn("Unable to call module's Activator.willStop() method",t);
@@ -70,7 +72,9 @@
           String extId=ext.getExtensionId();
           try {
             List<Extension> tmpExtensions=getExtensions(extId);
-            if (tmpExtensions == null)             tmpExtensions=new Vector<Extension>();
+            if (tmpExtensions == null) {
+              tmpExtensions=new Vector<Extension>();
+            }
             tmpExtensions.remove(ext);
             getExtensionMap().put(extId,tmpExtensions);
           }
@@ -90,8 +94,12 @@
       }
     }
     try {
-      if (mod.getModuleActivator() != null)       mod.getModuleActivator().stopped();
- else       mod.getActivator().shutdown();
+      if (mod.getModuleActivator() != null) {
+        mod.getModuleActivator().stopped();
+      }
+ else {
+        mod.getActivator().shutdown();
+      }
     }
  catch (    Exception t) {
       log.warn("Unable to call module's Activator.shutdown() method",t);

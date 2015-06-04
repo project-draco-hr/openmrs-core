@@ -7,7 +7,9 @@
     throw new IllegalArgumentException("Parent must not be ModuleClassLoader");
   }
   OpenmrsClassLoaderHolder.INSTANCE=this;
-  if (log.isDebugEnabled())   log.debug("Creating new OpenmrsClassLoader instance with parent: " + parent);
+  if (log.isDebugEnabled()) {
+    log.debug("Creating new OpenmrsClassLoader instance with parent: " + parent);
+  }
   URLConnection urlConnection=new OpenmrsURLConnection();
   urlConnection.setDefaultUseCaches(false);
 }

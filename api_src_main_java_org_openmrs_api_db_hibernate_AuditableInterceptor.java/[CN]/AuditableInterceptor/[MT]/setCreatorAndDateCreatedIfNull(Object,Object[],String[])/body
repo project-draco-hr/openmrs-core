@@ -4,7 +4,7 @@
     if (log.isDebugEnabled()) {
       log.debug("Setting creator and dateCreated on " + entity);
     }
-    HashMap<String,Object> propertyValues=getPropertyValuesToSave();
+    Map<String,Object> propertyValues=getPropertyValuesToSave();
     objectWasChanged=changeProperties(currentState,propertyNames,objectWasChanged,propertyValues,true);
   }
   return objectWasChanged;

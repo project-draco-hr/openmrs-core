@@ -1,5 +1,5 @@
 {
-  HashMap<String,String> person=getParametersFromRequest(request);
+  Map<String,String> person=getParametersFromRequest(request);
   if ("patient".equals(personType)) {
     if ("edit".equals(viewType)) {
       return request.getContextPath() + PATIENT_EDIT_URL + getParametersForURL(person);

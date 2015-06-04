@@ -3,7 +3,9 @@
     log.trace("Loading " + name + " "+ getModule()+ ", seenModules: "+ seenModules+ ", requestor: "+ requestor+ ", resolve? "+ resolve);
     StringBuilder output=new StringBuilder();
     for (    StackTraceElement element : Thread.currentThread().getStackTrace()) {
-      if (element.getClassName().contains("openmrs"))       output.append("+ ");
+      if (element.getClassName().contains("openmrs")) {
+        output.append("+ ");
+      }
       output.append(element);
       output.append("\n");
     }

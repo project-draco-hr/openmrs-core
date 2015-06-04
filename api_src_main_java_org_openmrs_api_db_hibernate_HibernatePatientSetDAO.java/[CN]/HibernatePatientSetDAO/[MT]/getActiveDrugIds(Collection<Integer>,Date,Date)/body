@@ -1,5 +1,5 @@
 {
-  HashSet<Integer> idsLookup=patientIds == null ? null : (patientIds instanceof HashSet ? (HashSet<Integer>)patientIds : new HashSet<Integer>(patientIds));
+  Set<Integer> idsLookup=patientIds == null ? null : (patientIds instanceof HashSet ? (HashSet<Integer>)patientIds : new HashSet<Integer>(patientIds));
   Map<Integer,Collection<Integer>> ret=new HashMap<Integer,Collection<Integer>>();
   List<String> whereClauses=new ArrayList<String>();
   whereClauses.add("o.voided = false");

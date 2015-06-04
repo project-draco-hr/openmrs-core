@@ -28,7 +28,9 @@
       log.warn("Could not delete temporary jarfile: " + tempFile);
     }
     try {
-      if (innerJarFile != null)       innerJarFile.close();
+      if (innerJarFile != null) {
+        innerJarFile.close();
+      }
     }
  catch (    IOException e) {
       log.warn("Unable to close inner jarfile: " + innerJarFile,e);

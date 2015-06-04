@@ -3,7 +3,7 @@
   if (fileName != null) {
     log.debug("initialRequestId: " + initialRequestId);
     String lastRequestId=(String)pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_REQUEST_ID_KEY,PageContext.SESSION_SCOPE);
-    HashMap<String,String> hmIncludeMap=(HashMap<String,String>)pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,PageContext.SESSION_SCOPE);
+    Map<String,String> hmIncludeMap=(Map<String,String>)pageContext.getAttribute(HtmlIncludeTag.OPENMRS_HTML_INCLUDE_MAP_KEY,PageContext.SESSION_SCOPE);
     if (hmIncludeMap == null || !initialRequestId.equals(lastRequestId)) {
       log.debug("Creating new hmIncludeMap");
       hmIncludeMap=new HashMap<String,String>();

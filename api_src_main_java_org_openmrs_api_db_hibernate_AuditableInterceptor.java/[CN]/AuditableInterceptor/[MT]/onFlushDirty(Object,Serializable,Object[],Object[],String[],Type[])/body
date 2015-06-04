@@ -5,7 +5,7 @@
     if (log.isDebugEnabled()) {
       log.debug("Setting changed by fields on " + entity.getClass());
     }
-    HashMap<String,Object> propertyValues=getPropertyValuesToUpdate();
+    Map<String,Object> propertyValues=getPropertyValuesToUpdate();
     objectWasChanged=changeProperties(currentState,propertyNames,objectWasChanged,propertyValues,false);
   }
   return objectWasChanged;

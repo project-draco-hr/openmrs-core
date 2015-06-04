@@ -11,7 +11,7 @@
   List personList=(List)o;
   log.debug("Found list of size: " + personList.size());
   if (personList.size() < 1 && Context.isAuthenticated()) {
-    HashMap<String,String> person=getParametersFromRequest(request);
+    Map<String,String> person=getParametersFromRequest(request);
     String name=person.get(NAME);
     String birthdate=person.get(BIRTH_DATE);
     String age=person.get(AGE);
