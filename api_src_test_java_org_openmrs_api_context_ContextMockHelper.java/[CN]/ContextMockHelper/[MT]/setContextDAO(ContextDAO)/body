@@ -1,0 +1,12 @@
+{
+  if (!contextDAOMocked) {
+    try {
+      realContextDAO=Context.getContextDAO();
+    }
+ catch (    Exception e) {
+    }
+    contextDAOMocked=true;
+  }
+  Context.setDAO(contextDAO);
+  this.contextDAO=contextDAO;
+}
