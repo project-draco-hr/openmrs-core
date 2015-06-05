@@ -1,0 +1,13 @@
+{
+  boolean success=true;
+  Map<String,Object> results=new HashMap<String,Object>();
+  log.debug("rebuilding search index");
+  try {
+    Context.updateSearchIndex();
+  }
+ catch (  RuntimeException e) {
+    success=false;
+  }
+  results.put("success",success);
+  return results;
+}
