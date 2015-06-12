@@ -1,4 +1,7 @@
 {
+  if (getMessageSourceAccessor().getMessage("Concept.cancel").equals(request.getParameter("action"))) {
+    return new ModelAndView(new RedirectView("index.htm"));
+  }
   Concept concept=((ConceptFormBackingObject)object).getConcept();
   ConceptService cs=Context.getConceptService();
   String jumpAction=request.getParameter("jumpAction");
