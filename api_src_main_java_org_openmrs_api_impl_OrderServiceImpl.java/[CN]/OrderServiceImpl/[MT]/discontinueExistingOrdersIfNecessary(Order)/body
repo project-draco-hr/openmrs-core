@@ -15,11 +15,14 @@
       continue;
     }
     if (isDrugOrderAndHasADrug) {
-      if (orderToBeDiscontinued == null) {
-        orderToBeDiscontinued=checkDrugOrdersForDiscontinuing((DrugOrder)order,(DrugOrder)activeOrder);
-      }
+      Order existing=checkDrugOrdersForDiscontinuing((DrugOrder)order,(DrugOrder)activeOrder);
+      if (existing != null) {
+        if (orderToBeDiscontinued == null) {
+          orderToBeDiscontinued=existing;
+        }
  else {
-        throw new AmbiguousOrderException("Order.discontinuing.ambiguous.orders");
+          throw new AmbiguousOrderException("Order.discontinuing.ambiguous.orders");
+        }
       }
     }
  else     if (activeOrder.getConcept().equals(order.getConcept())) {
