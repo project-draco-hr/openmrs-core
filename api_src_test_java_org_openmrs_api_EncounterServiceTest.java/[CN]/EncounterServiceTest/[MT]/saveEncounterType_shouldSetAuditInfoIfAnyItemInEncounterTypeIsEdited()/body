@@ -1,0 +1,17 @@
+{
+  EncounterService es=Context.getEncounterService();
+  EncounterType encounterType=es.saveEncounterType(new EncounterType("testing","desc"));
+  User creator=encounterType.getCreator();
+  Date dateCreated=encounterType.getDateCreated();
+  assertNotNull("creator should be set after saving",creator);
+  assertNotNull("date creates should be set after saving",dateCreated);
+  assertNull("changed by should not be set after creation",encounterType.getChangedBy());
+  assertNull("date changed should not be set after creation",encounterType.getDateChanged());
+  encounterType.setDescription("This has been a test!");
+  EncounterType editedEt=es.saveEncounterType(encounterType);
+  Context.flushSession();
+  assertTrue("creator should not change during edit",creator.equals(editedEt.getCreator()));
+  assertTrue("date created should not changed during edit",dateCreated.equals(editedEt.getDateCreated()));
+  assertNotNull("changed by should be set after edit",editedEt.getChangedBy());
+  assertNotNull("date changed should be set after edit",editedEt.getDateChanged());
+}
