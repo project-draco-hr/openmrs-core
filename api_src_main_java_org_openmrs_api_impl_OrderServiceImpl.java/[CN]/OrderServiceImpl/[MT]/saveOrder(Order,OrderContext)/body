@@ -107,9 +107,13 @@
   }
   if (DISCONTINUE != order.getAction()) {
     List<Order> activeOrders=getActiveOrders(order.getPatient(),null,order.getCareSetting(),null);
+    List<String> parallelOrders=Collections.emptyList();
+    if (orderContext != null && orderContext.getAttribute(PARALLEL_ORDERS) != null) {
+      parallelOrders=Arrays.asList((String[])orderContext.getAttribute(PARALLEL_ORDERS));
+    }
     for (    Order activeOrder : activeOrders) {
-      if (areDrugOrdersOfSameOrderableAndOverlappingSchedule(order,activeOrder)) {
-        throw new APIException("Order.cannot.have.more.than.one",(Object[])null);
+      if (!parallelOrders.contains(activeOrder.getUuid()) && areDrugOrdersOfSameOrderableAndOverlappingSchedule(order,activeOrder)) {
+        throw new AmbiguousOrderException("Order.cannot.have.more.than.one",(Object[])null);
       }
     }
   }
