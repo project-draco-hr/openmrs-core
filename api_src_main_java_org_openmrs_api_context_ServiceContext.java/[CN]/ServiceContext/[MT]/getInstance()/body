@@ -1,6 +1,6 @@
 {
-  if (instance == null) {
-    instance=new ServiceContext();
+  if (ServiceContextHolder.instance == null) {
+    ServiceContextHolder.instance=new ServiceContext();
   }
-  return instance;
+  return ServiceContextHolder.instance;
 }
