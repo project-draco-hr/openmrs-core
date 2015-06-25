@@ -1,44 +1,58 @@
 {
   List<URL> result=new LinkedList<URL>();
+  File devDir=ModuleUtil.getDevelopmentDirectory(module.getModuleId());
+  try {
+    if (devDir != null) {
+      File dir=new File(devDir,"omod" + File.separator + "target"+ File.separator+ "classes"+ File.separator);
+      result.add(dir.toURI().toURL());
+      dir=new File(devDir,"api" + File.separator + "target"+ File.separator+ "classes"+ File.separator);
+      result.add(dir.toURI().toURL());
+    }
+  }
+ catch (  MalformedURLException ex) {
+    log.error("Failed to add development folder to the classpath",ex);
+  }
   File tmpModuleDir=getLibCacheFolderForModule(module);
-  File tmpModuleJar=new File(tmpModuleDir,module.getModuleId() + ".jar");
-  if (!tmpModuleJar.exists()) {
+  if (devDir == null) {
+    File tmpModuleJar=new File(tmpModuleDir,module.getModuleId() + ".jar");
+    if (!tmpModuleJar.exists()) {
+      try {
+        tmpModuleJar.createNewFile();
+      }
+ catch (      IOException io) {
+        log.warn("Unable to create tmpModuleFile",io);
+      }
+    }
+    FileInputStream in=null;
+    FileOutputStream out=null;
     try {
-      tmpModuleJar.createNewFile();
+      in=new FileInputStream(module.getFile());
+      out=new FileOutputStream(tmpModuleJar);
+      OpenmrsUtil.copyFile(in,out);
     }
  catch (    IOException io) {
-      log.warn("Unable to create tmpModuleFile",io);
+      log.warn("Unable to copy tmpModuleFile",io);
     }
-  }
-  FileInputStream in=null;
-  FileOutputStream out=null;
-  try {
-    in=new FileInputStream(module.getFile());
-    out=new FileOutputStream(tmpModuleJar);
-    OpenmrsUtil.copyFile(in,out);
-  }
- catch (  IOException io) {
-    log.warn("Unable to copy tmpModuleFile",io);
-  }
  finally {
+      try {
+        in.close();
+      }
+ catch (      Exception e) {
+      }
+      try {
+        out.close();
+      }
+ catch (      Exception e) {
+      }
+    }
+    URL moduleFileURL=null;
     try {
-      in.close();
+      moduleFileURL=ModuleUtil.file2url(tmpModuleJar);
+      result.add(moduleFileURL);
     }
- catch (    Exception e) {
+ catch (    MalformedURLException e) {
+      log.warn("Unable to add files from module to URL list: " + module.getModuleId(),e);
     }
-    try {
-      out.close();
-    }
- catch (    Exception e) {
-    }
-  }
-  URL moduleFileURL=null;
-  try {
-    moduleFileURL=ModuleUtil.file2url(tmpModuleJar);
-    result.add(moduleFileURL);
-  }
- catch (  MalformedURLException e) {
-    log.warn("Unable to add files from module to URL list: " + module.getModuleId(),e);
   }
   try {
     if (log.isDebugEnabled()) {
@@ -56,6 +70,11 @@
       }
       Collection<File> files=(Collection<File>)FileUtils.listFiles(libdir,new String[]{"jar"},true);
       for (      File file : files) {
+        if (devDir != null) {
+          if (file.getName().equals(module.getModuleId() + "-api-" + module.getVersion()+ ".jar")) {
+            continue;
+          }
+        }
         URL fileUrl=ModuleUtil.file2url(file);
         boolean include=shouldResourceBeIncluded(module,fileUrl,OpenmrsConstants.OPENMRS_VERSION_SHORT,startedRelatedModules);
         if (include) {

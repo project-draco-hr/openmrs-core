@@ -1,6 +1,17 @@
 {
   this(module,urls,parent,null);
-  for (  URL url : urls) {
-    providedPackages.addAll(ModuleUtil.getPackagesFromFile(OpenmrsUtil.url2file(url)));
+  File devDir=ModuleUtil.getDevelopmentDirectory(module.getModuleId());
+  if (devDir != null) {
+    File dir=new File(devDir,"api" + File.separator + "target"+ File.separator+ "classes"+ File.separator);
+    Collection<File> files=FileUtils.listFiles(dir,new String[]{"class"},true);
+    addClassFilePackages(files,dir.getAbsolutePath().length() + 1);
+    dir=new File(devDir,"omod" + File.separator + "target"+ File.separator+ "classes"+ File.separator);
+    files=FileUtils.listFiles(dir,new String[]{"class"},true);
+    addClassFilePackages(files,dir.getAbsolutePath().length() + 1);
+  }
+ else {
+    for (    URL url : urls) {
+      providedPackages.addAll(ModuleUtil.getPackagesFromFile(OpenmrsUtil.url2file(url)));
+    }
   }
 }

@@ -1,0 +1,11 @@
+{
+  for (  File file : files) {
+    String name=file.getAbsolutePath().substring(dirLength);
+    Integer indexOfLastSlash=name.lastIndexOf("/");
+    if (indexOfLastSlash > 0) {
+      String packageName=name.substring(0,indexOfLastSlash);
+      packageName=packageName.replaceAll("/",".");
+      providedPackages.add(packageName);
+    }
+  }
+}

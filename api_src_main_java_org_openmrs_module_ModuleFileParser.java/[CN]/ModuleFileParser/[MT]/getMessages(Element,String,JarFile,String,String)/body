@@ -23,7 +23,14 @@
       if (lang.length() > 0 && file.length() > 0) {
         InputStream inStream=null;
         try {
-          inStream=ModuleUtil.getResourceFromApi(jarfile,moduleId,version,file);
+          File devDir=ModuleUtil.getDevelopmentDirectory(moduleId);
+          if (devDir != null) {
+            File pathName=new File(devDir,"api" + File.separator + "target"+ File.separator+ "classes"+ File.separator+ file);
+            inStream=new FileInputStream(pathName);
+          }
+ else {
+            inStream=ModuleUtil.getResourceFromApi(jarfile,moduleId,version,file);
+          }
           if (inStream == null) {
             ZipEntry entry=jarfile.getEntry(file);
             if (entry == null) {
