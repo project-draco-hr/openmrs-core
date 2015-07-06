@@ -1,0 +1,40 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(Encounter.class);
+  if (searchCriteria.getPatient() != null && searchCriteria.getPatient().getPatientId() != null) {
+    crit.add(Restrictions.eq("patient",searchCriteria.getPatient()));
+  }
+  if (searchCriteria.getLocation() != null && searchCriteria.getLocation().getLocationId() != null) {
+    crit.add(Restrictions.eq("location",searchCriteria.getLocation()));
+  }
+  if (searchCriteria.getFromDate() != null) {
+    crit.add(Restrictions.ge("encounterDatetime",searchCriteria.getFromDate()));
+  }
+  if (searchCriteria.getToDate() != null) {
+    crit.add(Restrictions.le("encounterDatetime",searchCriteria.getToDate()));
+  }
+  if (searchCriteria.getDateChanged() != null) {
+    crit.add(Restrictions.or(Restrictions.and(Restrictions.isNull("dateChanged"),Restrictions.ge("dateCreated",searchCriteria.getDateChanged())),Restrictions.ge("dateChanged",searchCriteria.getDateChanged())));
+  }
+  if (searchCriteria.getEnteredViaForms() != null && searchCriteria.getEnteredViaForms().size() > 0) {
+    crit.add(Restrictions.in("form",searchCriteria.getEnteredViaForms()));
+  }
+  if (searchCriteria.getEncounterTypes() != null && searchCriteria.getEncounterTypes().size() > 0) {
+    crit.add(Restrictions.in("encounterType",searchCriteria.getEncounterTypes()));
+  }
+  if (searchCriteria.getProviders() != null && searchCriteria.getProviders().size() > 0) {
+    crit.createAlias("encounterProviders","ep");
+    crit.add(Restrictions.in("ep.provider",searchCriteria.getProviders()));
+  }
+  if (searchCriteria.getVisitTypes() != null && searchCriteria.getVisitTypes().size() > 0) {
+    crit.createAlias("visit","v");
+    crit.add(Restrictions.in("v.visitType",searchCriteria.getVisitTypes()));
+  }
+  if (searchCriteria.getVisits() != null && searchCriteria.getVisits().size() > 0) {
+    crit.add(Restrictions.in("visit",searchCriteria.getVisits()));
+  }
+  if (!searchCriteria.getIncludeVoided()) {
+    crit.add(Restrictions.eq("voided",false));
+  }
+  crit.addOrder(Order.asc("encounterDatetime"));
+  return crit.list();
+}
