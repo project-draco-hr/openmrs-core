@@ -9,7 +9,7 @@
     throw new APIException("Order.action.cannot.discontinued",new Object[]{DISCONTINUE});
   }
   if (!orderToStop.isActive()) {
-    throw new APIException("Order.stopped.cannot.discontinued",(Object[])null);
+    throw new APIException("Order.stopped.cannot.discontinued");
   }
   setProperty(orderToStop,"dateStopped",discontinueDate);
   saveOrderInternal(orderToStop,null);
