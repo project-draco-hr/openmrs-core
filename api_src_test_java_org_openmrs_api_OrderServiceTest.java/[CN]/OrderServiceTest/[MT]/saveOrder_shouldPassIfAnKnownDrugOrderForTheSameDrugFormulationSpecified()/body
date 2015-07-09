@@ -1,0 +1,21 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-drugOrdersWithSameConceptAndDifferentFormAndStrength.xml");
+  final Patient patient=patientService.getPatient(2);
+  DrugOrder existingOrder=(DrugOrder)orderService.getOrder(1000);
+  assertTrue(existingOrder.isActive());
+  DrugOrder order=new DrugOrder();
+  order.setPatient(patient);
+  order.setDrug(existingOrder.getDrug());
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setOrderer(providerService.getProvider(1));
+  order.setCareSetting(existingOrder.getCareSetting());
+  order.setDosingType(FreeTextDosingInstructions.class);
+  order.setDosingInstructions("2 for 5 days");
+  order.setQuantity(10.0);
+  order.setQuantityUnits(conceptService.getConcept(51));
+  order.setNumRefills(2);
+  OrderContext orderContext=new OrderContext();
+  orderContext.setAttribute(OrderService.PARALLEL_ORDERS,new String[]{existingOrder.getUuid()});
+  orderService.saveOrder(order,orderContext);
+  assertNotNull(orderService.getOrder(order.getOrderId()));
+}
