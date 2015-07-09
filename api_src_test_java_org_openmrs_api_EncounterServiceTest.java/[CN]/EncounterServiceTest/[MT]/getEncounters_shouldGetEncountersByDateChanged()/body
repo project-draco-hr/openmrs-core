@@ -1,0 +1,6 @@
+{
+  EncounterService encounterService=Context.getEncounterService();
+  Assert.assertEquals(7,encounterService.getEncounters(encounterSearchForVoidedWithDateChanged("2006-01-01")).size());
+  Assert.assertEquals(5,encounterService.getEncounters(encounterSearchForVoidedWithDateChanged("2008-06-01")).size());
+  Assert.assertEquals(1,encounterService.getEncounters(encounterSearchForVoidedWithDateChanged("2010-01-01")).size());
+}
