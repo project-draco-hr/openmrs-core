@@ -17,6 +17,15 @@
       conceptService.unretireDrug(drug);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.unretiredSuccessfully");
     }
+ else     if (request.getParameter("purgeDrug") != null) {
+      try {
+        conceptService.purgeDrug(drug);
+        httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.purgedSuccessfully");
+      }
+ catch (      DataIntegrityViolationException e) {
+        httpSession.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.object.inuse.cannot.purge");
+      }
+    }
  else {
       conceptService.saveDrug(drug);
       httpSession.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"ConceptDrug.saved");
