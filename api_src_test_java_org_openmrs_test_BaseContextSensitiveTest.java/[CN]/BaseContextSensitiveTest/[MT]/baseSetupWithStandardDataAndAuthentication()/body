@@ -4,22 +4,18 @@
   }
   if (useInMemoryDatabase()) {
     if (!skipBaseSetup) {
-synchronized (isBaseSetupLock) {
-        if (!isBaseSetup) {
-          initializeInMemoryDatabase();
-          executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
-          getConnection().commit();
-          updateSearchIndex();
-          isBaseSetup=true;
-        }
+      if (!isBaseSetup) {
+        initializeInMemoryDatabase();
+        executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
+        getConnection().commit();
+        updateSearchIndex();
+        isBaseSetup=true;
       }
       authenticate();
     }
  else {
-synchronized (isBaseSetupLock) {
-        if (isBaseSetup) {
-          deleteAllData();
-        }
+      if (isBaseSetup) {
+        deleteAllData();
       }
     }
   }
