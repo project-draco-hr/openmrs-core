@@ -49,6 +49,7 @@
       }
     }
  else     if ("DT".equals(abbrev)) {
+      DateFormat dateFormat=new SimpleDateFormat(DATE_PATTERN);
       return (getValueDatetime() == null ? "" : dateFormat.format(getValueDatetime()));
     }
  else     if ("TM".equals(abbrev)) {

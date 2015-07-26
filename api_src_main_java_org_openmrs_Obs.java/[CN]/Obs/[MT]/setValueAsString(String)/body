@@ -14,12 +14,15 @@
       setValueNumeric(Double.valueOf(s));
     }
  else     if ("DT".equals(abbrev)) {
+      DateFormat dateFormat=new SimpleDateFormat(DATE_PATTERN);
       setValueDatetime(dateFormat.parse(s));
     }
  else     if ("TM".equals(abbrev)) {
+      DateFormat timeFormat=new SimpleDateFormat(TIME_PATTERN);
       setValueDatetime(timeFormat.parse(s));
     }
  else     if ("TS".equals(abbrev)) {
+      DateFormat datetimeFormat=new SimpleDateFormat(DATE_TIME_PATTERN);
       setValueDatetime(datetimeFormat.parse(s));
     }
  else     if ("ST".equals(abbrev)) {
