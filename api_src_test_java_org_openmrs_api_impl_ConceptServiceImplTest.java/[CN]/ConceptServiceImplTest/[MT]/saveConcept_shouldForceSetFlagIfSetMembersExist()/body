@@ -1,0 +1,11 @@
+{
+  Concept concept=new Concept();
+  concept.addName(new ConceptName("Concept",new Locale("en","US")));
+  Concept conceptSetMember=new Concept();
+  conceptSetMember.addName(new ConceptName("Set Member",new Locale("en","US")));
+  Context.getConceptService().saveConcept(conceptSetMember);
+  concept.addSetMember(conceptSetMember);
+  concept.setSet(false);
+  Context.getConceptService().saveConcept(concept);
+  assertTrue(concept.getSet());
+}
