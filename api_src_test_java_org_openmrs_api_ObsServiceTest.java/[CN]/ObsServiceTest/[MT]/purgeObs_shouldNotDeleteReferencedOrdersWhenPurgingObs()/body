@@ -1,0 +1,12 @@
+{
+  executeDataSet(INITIAL_OBS_XML);
+  ObsService obsService=Context.getObsService();
+  final OrderService orderService=Context.getOrderService();
+  final int orderReferencingObsId=4;
+  final Obs obs=obsService.getObs(orderReferencingObsId);
+  final Order order=obs.getOrder();
+  final Integer referencedOrderId=order.getOrderId();
+  Context.getObsService().purgeObs(obs,false);
+  Assert.assertNull(obsService.getObs(orderReferencingObsId));
+  Assert.assertNotNull(orderService.getOrder(referencedOrderId));
+}
