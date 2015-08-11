@@ -9,16 +9,16 @@
   }
  else   if (this.message != null) {
     String expr=this.message.toString();
-    resolvedMessage=(MessageSourceResolvable)ExpressionEvaluationUtils.evaluate("message",expr,MessageSourceResolvable.class,pageContext);
+    throw new JspException("Attribute value \"" + expr + "\" is neither a JSP EL expression nor "+ "assignable to result class ["+ MessageSourceResolvable.class.getName()+ "]");
   }
   if (resolvedMessage != null) {
     return messageSource.getMessage(resolvedMessage,getRequestContext().getLocale());
   }
-  String resolvedCode=ExpressionEvaluationUtils.evaluateString("code",this.code,pageContext);
+  String resolvedCode=this.code;
   String bodyText=null;
   String resolvedText=null;
   if (OpenmrsUtil.nullSafeEquals(this.locale,Context.getLocale().getLanguage())) {
-    resolvedText=ExpressionEvaluationUtils.evaluateString("text",this.text,pageContext);
+    resolvedText=this.text;
     if (getBodyContent() != null) {
       bodyText=getBodyContent().getString();
     }

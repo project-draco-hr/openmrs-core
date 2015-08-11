@@ -2,7 +2,7 @@
   RequestContext requestContext=(RequestContext)this.pageContext.getAttribute(RequestContextAwareTag.REQUEST_CONTEXT_PAGE_ATTRIBUTE);
   if (date == null && getPath() != null) {
     try {
-      String resolvedPath=ExpressionEvaluationUtils.evaluateString("path",getPath(),pageContext);
+      String resolvedPath=getPath();
       String nestedPath=(String)pageContext.getAttribute(NestedPathTag.NESTED_PATH_VARIABLE_NAME,PageContext.REQUEST_SCOPE);
       if (nestedPath != null) {
         resolvedPath=nestedPath + resolvedPath;
