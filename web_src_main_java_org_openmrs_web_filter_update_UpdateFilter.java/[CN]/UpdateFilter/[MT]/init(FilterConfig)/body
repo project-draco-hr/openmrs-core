@@ -1,7 +1,7 @@
 {
   super.init(filterConfig);
   log.debug("Initializing the UpdateFilter");
-  if (!InitializationFilter.initializationRequired()) {
+  if (!InitializationFilter.initializationRequired() || Listener.isSetupNeeded()) {
     model=new UpdateFilterModel();
     try {
       if (model.updateRequired) {
