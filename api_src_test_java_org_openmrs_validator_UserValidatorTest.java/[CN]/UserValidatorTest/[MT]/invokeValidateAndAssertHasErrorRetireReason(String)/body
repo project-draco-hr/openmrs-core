@@ -1,0 +1,9 @@
+{
+  User user=new User();
+  user.setUsername("test");
+  user.setRetireReason(invalidRetireReason);
+  user.setRetired(true);
+  Errors errors=new BindException(user,"user");
+  validator.validate(user,errors);
+  Assert.assertTrue(errors.hasFieldErrors("retireReason"));
+}
