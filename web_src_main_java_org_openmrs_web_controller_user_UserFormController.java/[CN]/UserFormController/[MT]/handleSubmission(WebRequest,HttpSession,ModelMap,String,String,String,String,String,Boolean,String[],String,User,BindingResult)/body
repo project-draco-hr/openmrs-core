@@ -101,8 +101,7 @@
       errors.reject("error.User.secretQuestion.empty");
     }
     new UserProperties(user.getUserProperties()).setSupposedToChangePassword(forcePassword);
-    UserValidator uv=new UserValidator();
-    uv.validate(user,errors);
+    userValidator.validate(user,errors);
     if (errors.hasErrors()) {
       return showForm(user.getUserId(),createNewPerson,user,model);
     }
