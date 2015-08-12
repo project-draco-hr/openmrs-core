@@ -1,5 +1,7 @@
 {
-  if (singleton == null) {
-    singleton=this;
+synchronized (NameSupport.class) {
+    if (singleton == null) {
+      singleton=this;
+    }
   }
 }
