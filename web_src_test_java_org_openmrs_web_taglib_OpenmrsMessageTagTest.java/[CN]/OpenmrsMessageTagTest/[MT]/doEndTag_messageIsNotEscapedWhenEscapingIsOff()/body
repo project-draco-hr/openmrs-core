@@ -1,0 +1,7 @@
+{
+  final String unescapedText="'Eensy Weensy' spider";
+  openmrsMessageTag.setJavaScriptEscape("false");
+  final DefaultMessageSourceResolvable message=new DefaultMessageSourceResolvable(new String[]{"test"},unescapedText);
+  openmrsMessageTag.setMessage(message);
+  checkDoEndTagEvaluation(unescapedText);
+}
