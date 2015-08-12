@@ -1,6 +1,7 @@
 {
   EncounterType type=new EncounterType();
   type.setName("name");
+  type.setDescription("some descriptin not exceeding the limit");
   type.setRetireReason("retireReason");
   Errors errors=new BindException(type,"type");
   new EncounterTypeValidator().validate(type,errors);
