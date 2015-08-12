@@ -1,30 +1,28 @@
 {
-synchronized (BaseContextSensitiveTest.class) {
-    IDataSet xmlDataSetToRun=cachedDatasets.get(datasetFilename);
-    if (xmlDataSetToRun == null) {
-      File file=new File(datasetFilename);
-      InputStream fileInInputStreamFormat=null;
-      Reader reader=null;
-      try {
-        if (file.exists()) {
-          fileInInputStreamFormat=new FileInputStream(datasetFilename);
-        }
+  IDataSet xmlDataSetToRun=cachedDatasets.get(datasetFilename);
+  if (xmlDataSetToRun == null) {
+    File file=new File(datasetFilename);
+    InputStream fileInInputStreamFormat=null;
+    Reader reader=null;
+    try {
+      if (file.exists()) {
+        fileInInputStreamFormat=new FileInputStream(datasetFilename);
+      }
  else {
-          fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
-          if (fileInInputStreamFormat == null)           throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
-        }
-        reader=new InputStreamReader(fileInInputStreamFormat);
-        ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(reader,false,true,false));
-        replacementDataSet.addReplacementObject("[NULL]",null);
-        xmlDataSetToRun=replacementDataSet;
-        reader.close();
+        fileInInputStreamFormat=getClass().getClassLoader().getResourceAsStream(datasetFilename);
+        if (fileInInputStreamFormat == null)         throw new FileNotFoundException("Unable to find '" + datasetFilename + "' in the classpath");
       }
-  finally {
-        IOUtils.closeQuietly(fileInInputStreamFormat);
-        IOUtils.closeQuietly(reader);
-      }
-      cachedDatasets.put(datasetFilename,xmlDataSetToRun);
+      reader=new InputStreamReader(fileInInputStreamFormat);
+      ReplacementDataSet replacementDataSet=new ReplacementDataSet(new FlatXmlDataSet(reader,false,true,false));
+      replacementDataSet.addReplacementObject("[NULL]",null);
+      xmlDataSetToRun=replacementDataSet;
+      reader.close();
     }
-    executeDataSet(xmlDataSetToRun);
+  finally {
+      IOUtils.closeQuietly(fileInInputStreamFormat);
+      IOUtils.closeQuietly(reader);
+    }
+    cachedDatasets.put(datasetFilename,xmlDataSetToRun);
   }
+  executeDataSet(xmlDataSetToRun);
 }
