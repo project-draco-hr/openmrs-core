@@ -1,4 +1,5 @@
 {
+  HttpSession session=request.getSession();
   try {
     Object value=WebAttributeUtil.getValue(request,resource,"resourceValue");
     resource.setValue(value);
@@ -10,7 +11,14 @@
     throw new RuntimeException("Error handling not yet implemented");
   }
  else {
-    Context.getFormService().saveFormResource(resource);
+    try {
+      Context.getFormService().saveFormResource(resource);
+    }
+ catch (    InvalidFileTypeException ex) {
+      log.error(ex.getMessage(),ex);
+      session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"error.file.upload.expected.text.file");
+      return "redirect:addFormResource.form?formId=" + resource.getForm().getId() + "&datatype="+ resource.getDatatypeClassname()+ "&handler="+ resource.getPreferredHandlerClassname();
+    }
     return "redirect:formResources.form?formId=" + resource.getForm().getId();
   }
 }
