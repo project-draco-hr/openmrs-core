@@ -3,19 +3,21 @@
     Context.openSession();
   }
   if (useInMemoryDatabase()) {
-    if (!skipBaseSetup) {
-      if (!isBaseSetup) {
-        initializeInMemoryDatabase();
-        executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
-        getConnection().commit();
-        updateSearchIndex();
-        isBaseSetup=true;
+synchronized (BaseContextSensitiveTest.class) {
+      if (!skipBaseSetup) {
+        if (!isBaseSetup) {
+          initializeInMemoryDatabase();
+          executeDataSet(EXAMPLE_XML_DATASET_PACKAGE_PATH);
+          getConnection().commit();
+          updateSearchIndex();
+          isBaseSetup=true;
+        }
+        authenticate();
       }
-      authenticate();
-    }
  else {
-      if (isBaseSetup) {
-        deleteAllData();
+        if (isBaseSetup) {
+          deleteAllData();
+        }
       }
     }
   }

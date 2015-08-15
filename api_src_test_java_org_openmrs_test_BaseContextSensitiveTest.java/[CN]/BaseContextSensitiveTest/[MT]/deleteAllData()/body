@@ -13,5 +13,7 @@
   turnOnDBConstraints(connection);
   connection.commit();
   updateSearchIndex();
-  isBaseSetup=false;
+synchronized (BaseContextSensitiveTest.class) {
+    isBaseSetup=false;
+  }
 }
