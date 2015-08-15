@@ -3,5 +3,4 @@
   TaskDefinition task=taskHelper.getScheduledTaskDefinition(time);
   taskHelper.waitUntilTaskIsExecuting(task,MAX_WAIT_TIME_IN_MILLISECONDS);
   Assert.assertTrue(task.getTaskInstance().isExecuting());
-  deleteAllData();
 }
