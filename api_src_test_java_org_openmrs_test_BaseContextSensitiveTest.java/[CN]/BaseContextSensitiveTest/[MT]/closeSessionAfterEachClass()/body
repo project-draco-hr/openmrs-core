@@ -1,4 +1,11 @@
 {
+  if (instance != null) {
+    try {
+      instance.deleteAllData();
+    }
+ catch (    Exception ex) {
+    }
+  }
   if (Context.isSessionOpen()) {
     Context.closeSession();
   }
