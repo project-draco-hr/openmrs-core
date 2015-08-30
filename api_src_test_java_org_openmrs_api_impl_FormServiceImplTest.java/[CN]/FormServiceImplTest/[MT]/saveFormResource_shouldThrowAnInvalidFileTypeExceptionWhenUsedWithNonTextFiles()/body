@@ -1,6 +1,0 @@
-{
-  FormResource formResource=mock(FormResource.class);
-  when(formResource.getName()).thenReturn("some resource");
-  when(formResource.isDirty()).thenThrow(new ConstraintViolationException("some message",null,"for testing"));
-  Context.getFormService().saveFormResource(formResource);
-}
