@@ -12,6 +12,11 @@
     original.setPreferredHandlerClassname(formResource.getPreferredHandlerClassname());
     toPersist=original;
   }
-  CustomDatatypeUtil.saveIfDirty(toPersist);
+  try {
+    CustomDatatypeUtil.saveIfDirty(toPersist);
+  }
+ catch (  ConstraintViolationException ex) {
+    throw new InvalidFileTypeException(ex.getMessage(),ex);
+  }
   return dao.saveFormResource(toPersist);
 }
