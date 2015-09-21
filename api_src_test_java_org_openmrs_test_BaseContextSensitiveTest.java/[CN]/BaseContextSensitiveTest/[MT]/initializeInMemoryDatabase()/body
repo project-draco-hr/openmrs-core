@@ -1,7 +1,5 @@
 {
-  if (!useInMemoryDatabase()) {
-    return;
-  }
+  if (!useInMemoryDatabase())   throw new Exception("You shouldn't be initializing a NON in-memory database. Consider unoverriding useInMemoryDatabase");
   List<String> tables=Arrays.asList("concept","active_list");
   for (  String table : tables) {
     getConnection().prepareStatement("ALTER TABLE " + table + " ALTER COLUMN "+ table+ "_id INT AUTO_INCREMENT").execute();
