@@ -24,9 +24,6 @@
  finally {
     IOUtils.closeQuietly(tempOut);
     IOUtils.closeQuietly(innerInputStream);
-    if (tempFile != null && !tempFile.delete()) {
-      log.warn("Could not delete temporary jarfile: " + tempFile);
-    }
     try {
       if (innerJarFile != null) {
         innerJarFile.close();
@@ -34,6 +31,9 @@
     }
  catch (    IOException e) {
       log.warn("Unable to close inner jarfile: " + innerJarFile,e);
+    }
+    if (tempFile != null && !tempFile.delete()) {
+      log.warn("Could not delete temporary jarfile: " + tempFile);
     }
   }
   return null;
