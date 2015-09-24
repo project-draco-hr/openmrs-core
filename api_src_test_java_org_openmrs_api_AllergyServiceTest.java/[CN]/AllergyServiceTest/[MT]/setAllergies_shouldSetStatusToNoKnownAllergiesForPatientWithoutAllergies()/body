@@ -1,0 +1,12 @@
+{
+  Patient patient=allergyService.getPatient(7);
+  Allergies allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.UNKNOWN,allergies.getAllergyStatus());
+  Assert.assertEquals(0,allergies.size());
+  allergies=new Allergies();
+  allergies.confirmNoKnownAllergies();
+  allergyService.setAllergies(patient,allergies);
+  allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.NO_KNOWN_ALLERGIES,allergies.getAllergyStatus());
+  Assert.assertEquals(0,allergies.size());
+}

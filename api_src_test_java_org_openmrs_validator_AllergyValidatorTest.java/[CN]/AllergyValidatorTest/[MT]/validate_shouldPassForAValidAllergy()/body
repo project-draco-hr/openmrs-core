@@ -1,0 +1,13 @@
+{
+  Allergies allergies=new Allergies();
+  Concept aspirin=new Concept();
+  Allergen allergen1=new Allergen(AllergenType.DRUG,aspirin,null);
+  allergies.add(new Allergy(null,allergen1,null,null,null));
+  when(ps.getAllergies(any(Patient.class))).thenReturn(allergies);
+  Allergen anotherAllergen=new Allergen(AllergenType.DRUG,new Concept(),null);
+  Allergy allergy=new Allergy(mock(Patient.class),anotherAllergen,null,null,null);
+  Errors errors=new BindException(allergy,"allergy");
+  validator.validate(allergy,errors);
+  validator.validate(allergy,errors);
+  assertFalse(errors.hasErrors());
+}

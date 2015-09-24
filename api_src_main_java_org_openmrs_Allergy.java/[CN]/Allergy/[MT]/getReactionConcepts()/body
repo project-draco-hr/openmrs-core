@@ -1,0 +1,7 @@
+{
+  List<Concept> reactionConcepts=new ArrayList<Concept>(getReactions().size());
+  for (  AllergyReaction ar : getReactions()) {
+    reactionConcepts.add(ar.getReaction());
+  }
+  return reactionConcepts;
+}

@@ -1,0 +1,32 @@
+{
+  List<Allergy> dbAllergyList=getAllergies(patient);
+  for (  Allergy originalAllergy : dbAllergyList) {
+    if (allergies.contains(originalAllergy)) {
+      Allergy potentiallyEditedAllergy=allergies.getAllergy(originalAllergy.getAllergyId());
+      if (!potentiallyEditedAllergy.hasSameValues(originalAllergy)) {
+        Allergy newAllergy=new Allergy();
+        try {
+          allergies.remove(potentiallyEditedAllergy);
+          newAllergy.copy(potentiallyEditedAllergy);
+          allergies.add(newAllergy);
+          voidAllergy(originalAllergy);
+        }
+ catch (        Exception ex) {
+          throw new APIException("Failed to copy edited values",ex);
+        }
+      }
+      continue;
+    }
+    voidAllergy(originalAllergy);
+  }
+  for (  Allergy allergy : allergies) {
+    if (allergy.getAllergyId() == null && allergy.getAllergen().getCodedAllergen() == null && StringUtils.isNotBlank(allergy.getAllergen().getNonCodedAllergen())) {
+      Concept otherNonCoded=Context.getConceptService().getConceptByUuid(Allergen.OTHER_NON_CODED_UUID);
+      if (otherNonCoded == null) {
+        throw new APIException("Can't find concept with uuid:" + Allergen.OTHER_NON_CODED_UUID);
+      }
+      allergy.getAllergen().setCodedAllergen(otherNonCoded);
+    }
+  }
+  return dao.saveAllergies(patient,allergies);
+}

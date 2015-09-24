@@ -1,0 +1,14 @@
+{
+  Patient patient=allergyService.getPatient(2);
+  Allergies allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.SEE_LIST,allergies.getAllergyStatus());
+  Assert.assertEquals(4,allergies.size());
+  Assert.assertEquals(2,allergies.get(0).getReactions().size());
+  Assert.assertEquals(2,allergies.get(1).getReactions().size());
+  Assert.assertEquals(0,allergies.get(2).getReactions().size());
+  Assert.assertEquals(0,allergies.get(3).getReactions().size());
+  patient=allergyService.getPatient(6);
+  allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.UNKNOWN,allergies.getAllergyStatus());
+  Assert.assertEquals(0,allergies.size());
+}

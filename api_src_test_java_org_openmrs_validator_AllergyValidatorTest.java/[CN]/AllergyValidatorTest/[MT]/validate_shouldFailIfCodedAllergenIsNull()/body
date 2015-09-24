@@ -1,0 +1,7 @@
+{
+  Allergy allergy=new Allergy();
+  allergy.setAllergen(new Allergen(null,createMockConcept(null),null));
+  Errors errors=new BindException(allergy,"allergy");
+  validator.validate(allergy,errors);
+  assertTrue(errors.hasFieldErrors("allergen"));
+}

@@ -1,0 +1,14 @@
+{
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.UNKNOWN);
+  Allergy allergy1=new Allergy();
+  Allergy allergy2=new Allergy();
+  allergies.add(allergy1);
+  allergies.add(0,allergy2);
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.SEE_LIST);
+  Assert.assertFalse(allergies.remove(new Allergy()));
+  Assert.assertEquals(allergies.remove(0),allergy2);
+  Assert.assertEquals(allergies.size(),1);
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.SEE_LIST);
+  Assert.assertTrue(allergies.remove(allergy1));
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.UNKNOWN);
+}

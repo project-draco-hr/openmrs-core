@@ -1,0 +1,8 @@
+{
+  expectedException.expect(IllegalArgumentException.class);
+  expectedException.expectMessage("Allergy should not be null");
+  Allergy allergy=new Allergy();
+  Errors errors=new BindException(allergy,"allergy");
+  allergy=null;
+  validator.validate(allergy,errors);
+}

@@ -1,0 +1,5 @@
+{
+  Concept concept=new Concept();
+  concept.setUuid(Allergen.OTHER_NON_CODED_UUID);
+  Assert.assertFalse(new Allergen(null,concept,"OTHER VALUE1").isSameAllergen(new Allergen(null,concept,"OTHER VALUE2")));
+}

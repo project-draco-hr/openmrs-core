@@ -1,0 +1,45 @@
+{
+  if (!OpenmrsUtil.nullSafeEquals(getAllergyId(),allergy.getAllergyId())) {
+    return false;
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getPatient(),allergy.getPatient())) {
+    if (getPatient() != null && allergy.getPatient() != null) {
+      if (!OpenmrsUtil.nullSafeEquals(getPatient().getPatientId(),allergy.getPatient().getPatientId())) {
+        return false;
+      }
+    }
+ else {
+      return false;
+    }
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getAllergen().getCodedAllergen(),allergy.getAllergen().getCodedAllergen())) {
+    if (getAllergen().getCodedAllergen() != null && allergy.getAllergen().getCodedAllergen() != null) {
+      if (!OpenmrsUtil.nullSafeEquals(getAllergen().getCodedAllergen().getConceptId(),allergy.getAllergen().getCodedAllergen().getConceptId())) {
+        return false;
+      }
+    }
+ else {
+      return false;
+    }
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getAllergen().getNonCodedAllergen(),allergy.getAllergen().getNonCodedAllergen())) {
+    return false;
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getSeverity(),allergy.getSeverity())) {
+    if (getSeverity() != null && allergy.getSeverity() != null) {
+      if (!OpenmrsUtil.nullSafeEquals(getSeverity().getConceptId(),allergy.getSeverity().getConceptId())) {
+        return false;
+      }
+    }
+ else {
+      return false;
+    }
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getComment(),allergy.getComment())) {
+    return false;
+  }
+  if (!hasSameReactions(allergy)) {
+    return false;
+  }
+  return true;
+}

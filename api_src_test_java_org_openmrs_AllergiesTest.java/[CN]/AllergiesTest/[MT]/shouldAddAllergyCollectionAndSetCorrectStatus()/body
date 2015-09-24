@@ -1,0 +1,18 @@
+{
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.UNKNOWN);
+  List<Allergy> allergyList=new ArrayList<Allergy>();
+  for (int i=0; i < 5; i++) {
+    allergyList.add(new Allergy());
+  }
+  Assert.assertTrue(allergies.addAll(allergyList));
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.SEE_LIST);
+  Allergy allergy=new Allergy();
+  allergyList.clear();
+  for (int i=0; i < 5; i++) {
+    allergyList.add(new Allergy());
+  }
+  allergyList.set(1,allergy);
+  Assert.assertTrue(allergies.addAll(2,allergyList));
+  Assert.assertEquals(allergies.get(3),allergy);
+  Assert.assertEquals(allergies.getAllergyStatus(),Allergies.SEE_LIST);
+}

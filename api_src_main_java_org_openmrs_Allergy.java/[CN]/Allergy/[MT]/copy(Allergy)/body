@@ -1,0 +1,14 @@
+{
+  setAllergyId(null);
+  setUuid(UUID.randomUUID().toString());
+  setPatient(allergy.getPatient());
+  setAllergen(allergy.getAllergen());
+  setSeverity(allergy.getSeverity());
+  setComment(allergy.getComment());
+  setReactions(new ArrayList<AllergyReaction>());
+  for (  AllergyReaction reaction : allergy.getReactions()) {
+    reactions.add(reaction);
+    reaction.setAllergyReactionId(null);
+    reaction.setUuid(UUID.randomUUID().toString());
+  }
+}

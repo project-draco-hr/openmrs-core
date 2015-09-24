@@ -1,0 +1,3 @@
+{
+  return (Allergy)sessionFactory.getCurrentSession().createQuery("from Allergy a where a.allergyId = :allergyId").setInteger("allergyId",allergyId).uniqueResult();
+}

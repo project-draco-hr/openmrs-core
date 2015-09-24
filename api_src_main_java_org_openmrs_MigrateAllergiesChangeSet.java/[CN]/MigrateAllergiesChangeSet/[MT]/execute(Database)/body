@@ -1,0 +1,61 @@
+{
+  try {
+    loadSeverityConcepts();
+    JdbcConnection connection=(JdbcConnection)database.getConnection();
+    String sql="select active_list_type_id from active_list_type where name = 'Allergy'";
+    Statement selectStatement=connection.createStatement();
+    ResultSet rs=selectStatement.executeQuery(sql);
+    if (!rs.next()) {
+      throw new CustomChangeException("Failed to find row with name 'Allergy' in the active_list_type");
+    }
+    int allergyTypeId=rs.getInt(1);
+    sql="insert into allergy (patient_id, coded_allergen, severity_concept_id, creator, date_created, uuid, comment, allergen_type) " + "values(?,?,?,?,?,?,?,?)";
+    PreparedStatement allergyInsertStatement=connection.prepareStatement(sql);
+    sql="insert into allergy_reaction (allergy_id, reaction_concept_id, uuid) " + "values (?,?,?)";
+    PreparedStatement reactionInsertStatement=connection.prepareStatement(sql);
+    sql="select allergy_id from allergy where uuid = ?";
+    PreparedStatement allergySelectStatement=connection.prepareStatement(sql);
+    sql="select person_id, concept_id, comments, creator, date_created, uuid, reaction_concept_id, severity, allergy_type " + "from active_list al inner join active_list_allergy ala on al.active_list_id=ala.active_list_id " + "where voided = 0 and active_list_type_id = "+ allergyTypeId;
+    selectStatement=connection.createStatement();
+    rs=selectStatement.executeQuery(sql);
+    while (rs.next()) {
+      String uuid=rs.getString("uuid");
+      allergyInsertStatement.setInt(1,rs.getInt("person_id"));
+      allergyInsertStatement.setInt(2,rs.getInt("concept_id"));
+      Concept severityConcept=null;
+      String severity=rs.getString("severity");
+      if (AllergySeverity.MILD.name().equals(severity)) {
+        severityConcept=mildConcept;
+      }
+ else       if (AllergySeverity.MODERATE.name().equals(severity)) {
+        severityConcept=moderateConcept;
+      }
+ else       if (AllergySeverity.SEVERE.name().equals(severity)) {
+        severityConcept=severeConcept;
+      }
+      if (severityConcept != null) {
+        allergyInsertStatement.setInt(3,severityConcept.getConceptId());
+      }
+      allergyInsertStatement.setInt(4,rs.getInt("creator"));
+      allergyInsertStatement.setDate(5,rs.getDate("date_created"));
+      allergyInsertStatement.setString(6,uuid);
+      allergyInsertStatement.setString(7,rs.getString("comments"));
+      String allergyType=rs.getString("allergy_type");
+      if (allergyType == null) {
+        allergyType="DRUG";
+      }
+      allergyInsertStatement.setString(8,allergyType);
+      allergyInsertStatement.execute();
+      allergySelectStatement.setString(1,uuid);
+      ResultSet rs2=allergySelectStatement.executeQuery();
+      rs2.next();
+      reactionInsertStatement.setInt(1,rs2.getInt(1));
+      reactionInsertStatement.setInt(2,rs.getInt("reaction_concept_id"));
+      reactionInsertStatement.setString(3,UUID.randomUUID().toString());
+      reactionInsertStatement.execute();
+    }
+  }
+ catch (  Exception ex) {
+    throw new CustomChangeException(ex);
+  }
+}

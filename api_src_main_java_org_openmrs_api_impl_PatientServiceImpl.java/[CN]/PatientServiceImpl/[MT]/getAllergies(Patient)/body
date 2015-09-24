@@ -1,0 +1,17 @@
+{
+  if (patient == null) {
+    throw new IllegalArgumentException("An existing (NOT NULL) patient is required to get allergies");
+  }
+  Allergies allergies=new Allergies();
+  List<Allergy> allergyList=dao.getAllergies(patient);
+  if (allergyList.size() > 0) {
+    allergies.addAll(allergyList);
+  }
+ else {
+    String status=dao.getAllergyStatus(patient);
+    if (Allergies.NO_KNOWN_ALLERGIES.equals(status)) {
+      allergies.confirmNoKnownAllergies();
+    }
+  }
+  return allergies;
+}

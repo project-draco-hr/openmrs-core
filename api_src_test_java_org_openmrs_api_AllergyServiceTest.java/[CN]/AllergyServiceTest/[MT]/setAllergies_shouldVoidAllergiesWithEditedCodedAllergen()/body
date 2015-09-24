@@ -1,0 +1,15 @@
+{
+  Patient patient=allergyService.getPatient(2);
+  Allergies allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.SEE_LIST,allergies.getAllergyStatus());
+  Assert.assertEquals(4,allergies.size());
+  Allergy editedAllergy=allergies.get(0);
+  Context.evictFromSession(editedAllergy);
+  editedAllergy.getAllergen().setCodedAllergen(new Concept(24));
+  Assert.assertTrue(allergies.contains(editedAllergy));
+  allergyService.setAllergies(patient,allergies);
+  allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.SEE_LIST,allergies.getAllergyStatus());
+  Assert.assertEquals(4,allergies.size());
+  Assert.assertFalse(allergies.contains(editedAllergy));
+}

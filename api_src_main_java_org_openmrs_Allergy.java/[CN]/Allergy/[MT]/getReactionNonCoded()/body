@@ -1,0 +1,8 @@
+{
+  for (  AllergyReaction reaction : reactions) {
+    if (StringUtils.isNotBlank(reaction.getReactionNonCoded())) {
+      return reaction.getReactionNonCoded();
+    }
+  }
+  return null;
+}

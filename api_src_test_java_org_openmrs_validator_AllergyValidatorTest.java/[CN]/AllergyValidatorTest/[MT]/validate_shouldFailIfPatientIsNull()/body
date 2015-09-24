@@ -1,0 +1,6 @@
+{
+  Allergy allergy=new Allergy();
+  Errors errors=new BindException(allergy,"allergy");
+  validator.validate(allergy,errors);
+  assertTrue(errors.hasFieldErrors("patient"));
+}

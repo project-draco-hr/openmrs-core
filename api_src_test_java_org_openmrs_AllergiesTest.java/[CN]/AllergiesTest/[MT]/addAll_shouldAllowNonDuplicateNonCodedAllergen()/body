@@ -1,0 +1,12 @@
+{
+  Concept concept=new Concept();
+  concept.setUuid(Allergen.OTHER_NON_CODED_UUID);
+  Allergy allergy1=new Allergy();
+  allergy1.setAllergen(new Allergen(null,concept,"OTHER VALUE1"));
+  Allergy allergy2=new Allergy();
+  allergy2.setAllergen(new Allergen(null,concept,"OTHER VALUE2"));
+  Allergies allergies=new Allergies();
+  allergies.add(allergy1);
+  allergies.add(allergy2);
+  allergies.addAll(allergies);
+}

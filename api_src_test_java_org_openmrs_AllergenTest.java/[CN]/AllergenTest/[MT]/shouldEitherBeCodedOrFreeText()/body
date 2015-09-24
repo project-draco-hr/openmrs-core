@@ -1,0 +1,10 @@
+{
+  allergen=new Allergen(AllergenType.DRUG,new Concept(3),null);
+  assertCoded();
+  allergen.setNonCodedAllergen("Non coded allergen");
+  assertNonCoded();
+  allergen.setCodedAllergen(new Concept(3));
+  assertCoded();
+  allergen=new Allergen(AllergenType.DRUG,null,"Non coded allergen");
+  assertNonCoded();
+}

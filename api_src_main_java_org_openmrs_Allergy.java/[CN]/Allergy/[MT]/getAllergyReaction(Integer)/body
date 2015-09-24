@@ -1,0 +1,8 @@
+{
+  for (  AllergyReaction reaction : reactions) {
+    if (OpenmrsUtil.nullSafeEquals(reaction.getAllergyReactionId(),allergyReactionId)) {
+      return reaction;
+    }
+  }
+  return null;
+}

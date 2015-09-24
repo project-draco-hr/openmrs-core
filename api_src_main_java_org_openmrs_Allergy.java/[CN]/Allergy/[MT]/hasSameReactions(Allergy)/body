@@ -1,0 +1,12 @@
+{
+  if (getReactions().size() != allergy.getReactions().size()) {
+    return false;
+  }
+  for (  AllergyReaction reaction : getReactions()) {
+    AllergyReaction rc=allergy.getAllergyReaction(reaction.getAllergyReactionId());
+    if (!reaction.hasSameValues(rc)) {
+      return false;
+    }
+  }
+  return true;
+}
