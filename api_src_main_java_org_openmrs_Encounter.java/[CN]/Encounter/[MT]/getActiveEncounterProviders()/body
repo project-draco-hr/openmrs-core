@@ -1,0 +1,12 @@
+{
+  Set<EncounterProvider> activeEncounterProviders=new LinkedHashSet<EncounterProvider>();
+  Set<EncounterProvider> providers=getEncounterProviders();
+  if (providers != null && providers.size() > 0) {
+    for (    EncounterProvider provider : providers) {
+      if (provider.isVoided() == false) {
+        activeEncounterProviders.add(provider);
+      }
+    }
+  }
+  return activeEncounterProviders;
+}
