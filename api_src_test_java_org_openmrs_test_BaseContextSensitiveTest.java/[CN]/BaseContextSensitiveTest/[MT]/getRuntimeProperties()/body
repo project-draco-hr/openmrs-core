@@ -12,6 +12,20 @@
     runtimeProperties.setProperty("connection.url",url);
     runtimeProperties.setProperty(Environment.HBM2DDL_AUTO,"create-drop");
   }
+ else {
+    String url=System.getProperty("databaseUrl");
+    String username=System.getProperty("databaseUsername");
+    String password=System.getProperty("databasePassword");
+    runtimeProperties.setProperty(Environment.URL,url);
+    runtimeProperties.setProperty(Environment.DRIVER,System.getProperty("databaseDriver"));
+    runtimeProperties.setProperty(Environment.USER,username);
+    runtimeProperties.setProperty(Environment.PASS,password);
+    runtimeProperties.setProperty(Environment.DIALECT,System.getProperty("databaseDialect"));
+    runtimeProperties.setProperty("connection.username",username);
+    runtimeProperties.setProperty("connection.password",password);
+    runtimeProperties.setProperty("connection.url",url);
+    runtimeProperties.setProperty(Environment.HBM2DDL_AUTO,"update");
+  }
   runtimeProperties.setProperty(ModuleConstants.IGNORE_CORE_MODULES_PROPERTY,"true");
   try {
     File tempappdir=File.createTempFile("appdir-for-unit-tests-","");
