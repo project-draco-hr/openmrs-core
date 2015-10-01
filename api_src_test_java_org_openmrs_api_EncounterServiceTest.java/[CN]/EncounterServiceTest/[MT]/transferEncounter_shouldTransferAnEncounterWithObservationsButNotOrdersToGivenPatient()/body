@@ -2,21 +2,18 @@
   executeDataSet(TRANSFER_ENC_DATA_XML);
   Patient targetPatient=Context.getPatientService().getPatient(201);
   Encounter sourceEncounter=Context.getEncounterService().getEncounter(201);
-  Assert.assertEquals(1,sourceEncounter.getOrders().size());
+  Assert.assertEquals(2,sourceEncounter.getOrders().size());
   Assert.assertEquals(2,sourceEncounter.getObs().size());
   Encounter transferredEncounter=Context.getEncounterService().transferEncounter(sourceEncounter,targetPatient);
   List<Order> transferredOrders=new ArrayList<Order>(transferredEncounter.getOrders());
   List<Obs> transferredObservations=new ArrayList<Obs>(transferredEncounter.getObs());
   Assert.assertNotEquals(sourceEncounter.getId(),transferredEncounter.getId());
   Assert.assertEquals(targetPatient,transferredEncounter.getPatient());
-  Assert.assertEquals(1,transferredOrders.size());
-  Order transferredOrder=transferredOrders.get(0);
-  Assert.assertEquals(targetPatient,transferredOrder.getPatient());
+  Assert.assertEquals(0,transferredOrders.size());
   Assert.assertEquals(2,transferredObservations.size());
   Assert.assertEquals(targetPatient,transferredObservations.get(0).getPerson());
   Assert.assertEquals(targetPatient,transferredObservations.get(1).getPerson());
-  Assert.assertEquals(transferredOrder,transferredObservations.get(0).getOrder());
-  Assert.assertEquals(transferredOrder,transferredObservations.get(1).getOrder());
-  Assert.assertSame(transferredObservations.get(0).getOrder(),transferredObservations.get(1).getOrder());
+  Assert.assertNull(transferredObservations.get(0).getOrder());
+  Assert.assertNull(transferredObservations.get(1).getOrder());
   Assert.assertNotNull(transferredEncounter.getForm());
 }
