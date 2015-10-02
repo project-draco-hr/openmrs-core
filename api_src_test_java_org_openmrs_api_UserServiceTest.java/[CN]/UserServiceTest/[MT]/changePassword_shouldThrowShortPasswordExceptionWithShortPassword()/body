@@ -1,0 +1,5 @@
+{
+  expectedException.expect(ShortPasswordException.class);
+  expectedException.expectMessage("error.password.length");
+  Context.getUserService().changePassword("test","");
+}
