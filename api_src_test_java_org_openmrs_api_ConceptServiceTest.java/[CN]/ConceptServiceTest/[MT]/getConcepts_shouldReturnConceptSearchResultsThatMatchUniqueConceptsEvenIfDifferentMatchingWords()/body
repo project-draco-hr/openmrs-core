@@ -1,0 +1,6 @@
+{
+  executeDataSet("org/openmrs/api/include/ConceptServiceTest-names.xml");
+  List<ConceptSearchResult> searchResults=conceptService.getConcepts("now",Collections.singletonList(Locale.ENGLISH),false,null,null,null,null,null,null,null);
+  Assert.assertEquals(1,searchResults.size());
+  Assert.assertEquals(new Integer(4000),searchResults.get(0).getConcept().getId());
+}
