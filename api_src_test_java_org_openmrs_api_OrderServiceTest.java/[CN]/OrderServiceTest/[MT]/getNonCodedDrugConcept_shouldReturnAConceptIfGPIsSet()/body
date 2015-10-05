@@ -1,0 +1,7 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-nonCodedDrugs.xml");
+  Concept nonCodedDrugConcept=orderService.getNonCodedDrugConcept();
+  assertNotNull(nonCodedDrugConcept);
+  assertThat(nonCodedDrugConcept.getConceptId(),is(5584));
+  assertEquals(nonCodedDrugConcept.getName().getName(),"DRUG OTHER");
+}

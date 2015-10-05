@@ -84,16 +84,8 @@
         throw new APIException("Order.cannot.change.drug");
       }
     }
-    boolean isDrugOrderAndHasADrug=isDrugOrder && ((DrugOrder)order).getDrug() != null;
-    if (!OpenmrsUtil.nullSafeEquals(order.getConcept(),previousOrder.getConcept())) {
-      throw new APIException("Order.previous.concept");
-    }
- else     if (isDrugOrderAndHasADrug) {
-      DrugOrder drugOrder1=(DrugOrder)order;
-      DrugOrder drugOrder2=(DrugOrder)previousOrder;
-      if (!OpenmrsUtil.nullSafeEquals(drugOrder1.getDrug(),drugOrder2.getDrug())) {
-        throw new APIException("Order.previous.drug");
-      }
+    if (!order.hasSameOrderableAs(previousOrder)) {
+      throw new APIException("The orderable of the previous order and the new one order don't match");
     }
  else     if (!order.getOrderType().equals(previousOrder.getOrderType())) {
       throw new APIException("Order.type.does.not.match");

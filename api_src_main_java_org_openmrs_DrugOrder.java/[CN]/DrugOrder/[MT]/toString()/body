@@ -1,4 +1,4 @@
 {
   String prefix=DISCONTINUE == getAction() ? "DC " : "";
-  return prefix + "DrugOrder(" + getDose()+ getDoseUnits()+ " of "+ (getDrug() != null ? getDrug().getName() : "[no drug]")+ " from "+ getDateActivated()+ " to "+ (isDiscontinuedRightNow() ? getDateStopped() : getAutoExpireDate())+ ")";
+  return prefix + "DrugOrder(" + getDose()+ getDoseUnits()+ " of "+ (isNonCodedDrug() ? getDrugNonCoded() : (getDrug() != null ? getDrug().getName() : "[no drug]"))+ " from "+ getDateActivated()+ " to "+ (isDiscontinuedRightNow() ? getDateStopped() : getAutoExpireDate())+ ")";
 }

@@ -1,0 +1,22 @@
+{
+  boolean requireDrug=Context.getAdministrationService().getGlobalPropertyValue(OpenmrsConstants.GLOBAL_PROPERTY_DRUG_ORDER_REQUIRE_DRUG,false);
+  OrderService orderService=Context.getOrderService();
+  if (requireDrug) {
+    if (order.getConcept() != null && OpenmrsUtil.nullSafeEquals(orderService.getNonCodedDrugConcept(),order.getConcept())) {
+      if (order.getDrug() == null && !order.isNonCodedDrug()) {
+        errors.rejectValue("drugNonCoded","DrugOrder.error.drugNonCodedIsRequired");
+      }
+ else       if (order.getDrug() != null) {
+        errors.rejectValue("concept","DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
+      }
+    }
+ else {
+      if (order.getDrug() == null && !order.isNonCodedDrug()) {
+        errors.rejectValue("drug","DrugOrder.error.drugIsRequired");
+      }
+ else       if (order.getDrug() != null && order.isNonCodedDrug()) {
+        errors.rejectValue("concept","DrugOrder.error.onlyOneOfDrugOrNonCodedShouldBeSet");
+      }
+    }
+  }
+}

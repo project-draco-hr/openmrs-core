@@ -23,7 +23,7 @@
     validateFieldsForOutpatientCareSettingType(order,errors);
     validatePairedFields(order,errors);
     validateUnitsAreAmongAllowedConcepts(errors,order);
-    validateForRequireDrug(errors);
+    validateForRequireDrug(errors,order);
     ValidateUtil.validateFieldLengths(errors,obj.getClass(),"asNeededCondition","brandName");
   }
 }

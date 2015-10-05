@@ -1,0 +1,9 @@
+{
+  DrugOrder order=new DrugOrder();
+  Concept concept=new Concept();
+  order.setConcept(concept);
+  order.setDrugNonCoded("Chrocine");
+  DrugOrder otherOrder=new DrugOrder();
+  otherOrder.setConcept(concept);
+  assertFalse(order.hasSameOrderableAs(otherOrder));
+}

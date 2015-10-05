@@ -1,0 +1,13 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-nonCodedDrugs.xml");
+  DrugOrder previousOrder=(DrugOrder)orderService.getOrder(584);
+  DrugOrder drugOrder=previousOrder.cloneForDiscontinuing();
+  drugOrder.setDrugNonCoded("non coded drug citrigine");
+  drugOrder.setPreviousOrder(previousOrder);
+  drugOrder.setDateActivated(new Date());
+  drugOrder.setOrderer(providerService.getProvider(1));
+  drugOrder.setEncounter(encounterService.getEncounter(6));
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("The orderable of the previous order and the new one order don't match");
+  orderService.saveOrder(drugOrder,null);
+}

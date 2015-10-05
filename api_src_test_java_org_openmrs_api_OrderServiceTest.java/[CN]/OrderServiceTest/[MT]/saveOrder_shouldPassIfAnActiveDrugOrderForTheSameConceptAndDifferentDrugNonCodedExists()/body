@@ -1,0 +1,11 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-nonCodedDrugs.xml");
+  final Concept nonCodedConcept=orderService.getNonCodedDrugConcept();
+  DrugOrder duplicateOrder=(DrugOrder)orderService.getOrder(584);
+  assertTrue(duplicateOrder.isActive());
+  assertEquals(nonCodedConcept,duplicateOrder.getConcept());
+  DrugOrder drugOrder=duplicateOrder.copy();
+  drugOrder.setDrugNonCoded("non coded drug paracetemol");
+  Order savedOrder=orderService.saveOrder(drugOrder,null);
+  assertNotNull(orderService.getOrder(savedOrder.getOrderId()));
+}

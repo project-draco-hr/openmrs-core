@@ -1,0 +1,7 @@
+{
+  String conceptUuid=Context.getAdministrationService().getGlobalProperty(OpenmrsConstants.GP_DRUG_ORDER_DRUG_OTHER);
+  if (org.apache.commons.lang.StringUtils.isNotBlank(conceptUuid)) {
+    return Context.getConceptService().getConceptByUuid(conceptUuid);
+  }
+  return null;
+}

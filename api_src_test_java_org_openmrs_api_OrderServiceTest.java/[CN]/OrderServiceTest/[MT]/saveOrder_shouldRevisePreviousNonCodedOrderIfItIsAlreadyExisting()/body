@@ -1,0 +1,13 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-nonCodedDrugs.xml");
+  DrugOrder previousOrder=(DrugOrder)orderService.getOrder(584);
+  DrugOrder order=previousOrder.cloneForRevision();
+  order.setDateActivated(new Date());
+  order.setOrderer(providerService.getProvider(1));
+  order.setEncounter(encounterService.getEncounter(6));
+  order.setAsNeeded(true);
+  order.setPreviousOrder(previousOrder);
+  DrugOrder saveOrder=(DrugOrder)orderService.saveOrder(order,null);
+  Assert.assertTrue(saveOrder.getAsNeeded());
+  assertNotNull(orderService.getOrder(saveOrder.getOrderId()));
+}

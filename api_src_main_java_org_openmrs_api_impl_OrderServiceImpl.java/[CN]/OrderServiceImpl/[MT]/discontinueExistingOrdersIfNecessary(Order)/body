@@ -8,14 +8,14 @@
     return;
   }
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
-  boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(getActualType(order)) && ((DrugOrder)order).getDrug() != null;
+  boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(getActualType(order)) && (((DrugOrder)order).getDrug() != null || ((DrugOrder)order).isNonCodedDrug());
   Order orderToBeDiscontinued=null;
   for (  Order activeOrder : orders) {
     if (!getActualType(order).equals(getActualType(activeOrder))) {
       continue;
     }
     if (isDrugOrderAndHasADrug) {
-      Order existing=checkDrugOrdersForDiscontinuing((DrugOrder)order,(DrugOrder)activeOrder);
+      Order existing=order.hasSameOrderableAs(activeOrder) ? activeOrder : null;
       if (existing != null) {
         if (orderToBeDiscontinued == null) {
           orderToBeDiscontinued=existing;
