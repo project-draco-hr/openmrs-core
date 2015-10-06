@@ -1,5 +1,10 @@
 {
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
-  GlobalProperty gp=(GlobalProperty)criteria.add(Restrictions.eq("property",propertyName).ignoreCase()).uniqueResult();
-  return gp;
+  if (isDatabaseStringComparisonCaseSensitive()) {
+    Criteria criteria=sessionFactory.getCurrentSession().createCriteria(GlobalProperty.class);
+    GlobalProperty gp=(GlobalProperty)criteria.add(Restrictions.eq("property",propertyName).ignoreCase()).uniqueResult();
+    return gp;
+  }
+ else {
+    return (GlobalProperty)sessionFactory.getCurrentSession().get(GlobalProperty.class,propertyName);
+  }
 }
