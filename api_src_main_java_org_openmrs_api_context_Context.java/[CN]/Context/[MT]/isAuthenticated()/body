@@ -1,3 +1,8 @@
 {
-  return getAuthenticatedUser() != null;
+  if (Daemon.isDaemonThread()) {
+    return true;
+  }
+ else {
+    return getAuthenticatedUser() != null;
+  }
 }
