@@ -1,0 +1,19 @@
+{
+  if (!OpenmrsUtil.nullSafeEquals(getAllergyReactionId(),reaction.getAllergyReactionId())) {
+    return false;
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getReaction(),reaction.getReaction())) {
+    if (getReaction() != null && reaction.getReaction() != null) {
+      if (!OpenmrsUtil.nullSafeEquals(getReaction().getConceptId(),reaction.getReaction().getConceptId())) {
+        return false;
+      }
+    }
+ else {
+      return false;
+    }
+  }
+  if (!OpenmrsUtil.nullSafeEquals(getReactionNonCoded(),reaction.getReactionNonCoded())) {
+    return false;
+  }
+  return true;
+}

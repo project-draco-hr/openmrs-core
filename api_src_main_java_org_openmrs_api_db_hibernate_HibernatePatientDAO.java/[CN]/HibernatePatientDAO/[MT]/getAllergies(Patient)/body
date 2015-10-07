@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Allergy.class);
+  criteria.add(Restrictions.eq("patient",patient));
+  criteria.add(Restrictions.eq("voided",false));
+  return criteria.list();
+}

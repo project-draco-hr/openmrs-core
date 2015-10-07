@@ -1,0 +1,18 @@
+{
+  Patient patient=allergyService.getPatient(7);
+  Allergies allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.UNKNOWN,allergies.getAllergyStatus());
+  Assert.assertEquals(0,allergies.size());
+  Allergen allergen=new Allergen(AllergenType.DRUG,new Concept(3),null);
+  Concept severity=new Concept(4);
+  Allergy allergy=new Allergy(patient,allergen,severity,"some comment",new ArrayList<AllergyReaction>());
+  AllergyReaction reaction=new AllergyReaction(allergy,new Concept(21),null);
+  allergy.addReaction(reaction);
+  allergies=new Allergies();
+  allergies.add(allergy);
+  allergyService.setAllergies(patient,allergies);
+  allergies=allergyService.getAllergies(patient);
+  Assert.assertEquals(Allergies.SEE_LIST,allergies.getAllergyStatus());
+  Assert.assertEquals(1,allergies.size());
+  Assert.assertEquals(1,allergies.get(0).getReactions().size());
+}

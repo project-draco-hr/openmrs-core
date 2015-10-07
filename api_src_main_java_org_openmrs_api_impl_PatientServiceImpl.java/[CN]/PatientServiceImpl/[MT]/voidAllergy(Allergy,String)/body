@@ -1,3 +1,7 @@
 {
-  Context.getActiveListService().voidActiveListItem(allergy,reason);
+  allergy.setVoided(true);
+  allergy.setVoidedBy(Context.getAuthenticatedUser());
+  allergy.setDateVoided(new Date());
+  allergy.setVoidReason(reason);
+  dao.saveAllergy(allergy);
 }

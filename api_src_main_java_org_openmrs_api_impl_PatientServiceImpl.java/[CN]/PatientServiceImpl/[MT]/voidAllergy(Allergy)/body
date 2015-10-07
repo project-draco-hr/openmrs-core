@@ -1,0 +1,7 @@
+{
+  allergy.setVoided(true);
+  allergy.setVoidedBy(Context.getAuthenticatedUser());
+  allergy.setDateVoided(new Date());
+  allergy.setVoidReason("Voided by API");
+  dao.saveAllergy(allergy);
+}

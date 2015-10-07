@@ -1,0 +1,6 @@
+{
+  Concept concept=mock(Concept.class);
+  when(concept.getUuid()).thenReturn(uuid != null ? uuid : "some uuid");
+  when(concept.getName()).thenReturn(new ConceptName());
+  return concept;
+}
