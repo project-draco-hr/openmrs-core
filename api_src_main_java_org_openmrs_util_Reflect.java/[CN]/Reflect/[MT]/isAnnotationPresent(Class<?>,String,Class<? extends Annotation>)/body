@@ -1,0 +1,9 @@
+{
+  ClassFields<?> classFields=ClassDataCacher.getInstance().getClassFields(fieldClass);
+  try {
+    return classFields.getFieldAnnotation(annotation,fieldName) != null;
+  }
+ catch (  FieldnameNotFoundException e) {
+    return false;
+  }
+}

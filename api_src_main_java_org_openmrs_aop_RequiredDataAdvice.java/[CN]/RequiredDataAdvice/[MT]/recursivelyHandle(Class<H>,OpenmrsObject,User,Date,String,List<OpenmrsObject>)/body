@@ -14,7 +14,7 @@
   Reflect reflect=new Reflect(OpenmrsObject.class);
   List<Field> allInheritedFields=reflect.getInheritedFields(openmrsObjectClass);
   for (  Field field : allInheritedFields) {
-    if (field.isAnnotationPresent(Independent.class)) {
+    if (Reflect.isAnnotationPresent(openmrsObjectClass,field.getName(),Independent.class)) {
       continue;
     }
     if (reflect.isCollectionField(field) && !isHandlerMarkedAsDisabled(handlerType,field)) {

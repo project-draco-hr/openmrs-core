@@ -1,3 +1,4 @@
 {
-  return new ClassData(fieldClass).getFields();
+  List<Field> fields=ClassDataCacher.getInstance().getClassData(fieldClass).getFields();
+  return new ArrayList<Field>(fields);
 }
