@@ -2,8 +2,8 @@
   if (log.isDebugEnabled()) {
     log.debug("Calling authorization advice before " + method.getName());
   }
-  User user=Context.getAuthenticatedUser();
   if (log.isDebugEnabled()) {
+    User user=Context.getAuthenticatedUser();
     log.debug("User " + user);
     if (user != null) {
       log.debug("has roles " + user.getAllRoles());
@@ -27,15 +27,15 @@
       }
  else {
         if (requireAll) {
-          throwUnauthorized(user,method,privilege);
+          throwUnauthorized(Context.getAuthenticatedUser(),method,privilege);
         }
       }
     }
     if (!requireAll) {
-      throwUnauthorized(user,method,privileges);
+      throwUnauthorized(Context.getAuthenticatedUser(),method,privileges);
     }
   }
  else   if (attributes.hasAuthorizedAnnotation(method) && !Context.isAuthenticated()) {
-    throwUnauthorized(user,method);
+    throwUnauthorized(Context.getAuthenticatedUser(),method);
   }
 }
