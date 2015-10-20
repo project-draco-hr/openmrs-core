@@ -4,7 +4,7 @@
     return null;
   }
   try {
-    ImplementationId implId=OpenmrsUtil.getSerializer().read(ImplementationId.class,property);
+    ImplementationId implId=Context.getSerializationService().getDefaultSerializer().deserialize(property,ImplementationId.class);
     return implId;
   }
  catch (  Exception e) {

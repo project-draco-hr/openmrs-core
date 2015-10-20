@@ -15,7 +15,7 @@
       continue;
     }
     try {
-      checkPatientIdentifier(pi);
+      PatientIdentifierValidator.validateIdentifier(pi);
     }
  catch (    BlankIdentifierException bie) {
       patient.removeIdentifier(pi);

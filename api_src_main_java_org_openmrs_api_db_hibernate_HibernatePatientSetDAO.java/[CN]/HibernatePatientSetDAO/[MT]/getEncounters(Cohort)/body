@@ -10,7 +10,7 @@
   criteria.addOrder(org.hibernate.criterion.Order.desc("encounterDatetime"));
   List<Encounter> encounters=criteria.list();
   for (  Encounter enc : encounters) {
-    Integer ptId=enc.getPatientId();
+    Integer ptId=enc.getPatient().getPatientId();
     if (!ret.containsKey(ptId)) {
       ret.put(ptId,enc);
     }

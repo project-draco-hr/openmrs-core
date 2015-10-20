@@ -97,15 +97,11 @@
       if (mod.getModuleActivator() != null) {
         mod.getModuleActivator().stopped();
       }
- else {
-        mod.getActivator().shutdown();
-      }
     }
  catch (    Exception t) {
       log.warn("Unable to call module's Activator.shutdown() method",t);
     }
     mod.getExtensions().clear();
-    mod.setActivator(null);
     mod.setModuleActivator(null);
     mod.disposeAdvicePointsClassInstance();
     ModuleClassLoader cl=removeClassLoader(mod);

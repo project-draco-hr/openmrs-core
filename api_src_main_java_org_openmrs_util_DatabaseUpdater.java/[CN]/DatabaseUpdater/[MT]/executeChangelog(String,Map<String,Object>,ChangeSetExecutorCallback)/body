@@ -4,7 +4,7 @@
     changelog=CHANGE_LOG_FILE;
   }
   try {
-    return executeChangelog(changelog,CONTEXT,userInput,callback);
+    return executeChangelog(changelog,CONTEXT,userInput,callback,null);
   }
  catch (  Exception e) {
     throw new DatabaseUpdateException("There was an error while updating the database to the latest. file: " + changelog + ". Error: "+ e.getMessage(),e);

@@ -1,8 +1,5 @@
 {
   try {
-    if (!Context.isAuthenticated()) {
-      authenticate();
-    }
     Collection<Alert> alerts=Context.getAlertService().getAllAlerts(false);
     sendAlertNotifications(alerts);
   }

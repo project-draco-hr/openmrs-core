@@ -1,6 +1,5 @@
 {
-  List<PatientIdentifierType> identifierTypes=Collections.emptyList();
-  List<Patient> patients=dao.getPatients("Oloo",null,identifierTypes,false,0,11,false);
+  List<Patient> patients=dao.getPatients("Oloo",0,11);
   Assert.assertEquals(1,patients.size());
   Patient patient=patients.get(0);
   Set<PersonName> names=patient.getNames();
@@ -8,6 +7,6 @@
     name.setVoided(true);
   }
   dao.savePatient(patient);
-  patients=dao.getPatients("Oloo",null,identifierTypes,false,0,11,false);
+  patients=dao.getPatients("Oloo",0,11);
   Assert.assertEquals(0,patients.size());
 }

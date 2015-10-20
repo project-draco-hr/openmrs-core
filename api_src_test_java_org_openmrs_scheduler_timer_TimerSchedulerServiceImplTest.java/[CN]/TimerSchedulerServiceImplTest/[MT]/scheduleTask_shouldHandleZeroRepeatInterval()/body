@@ -11,8 +11,7 @@
   taskDefinition.setRepeatInterval(repeatInterval);
   taskDefinition.setStartOnStartup(startOnStartup);
   Task clientTask=null;
-  TimerSchedulerServiceImpl t=new TimerSchedulerServiceImpl();
-  clientTask=t.scheduleTask(taskDefinition);
+  clientTask=Context.getSchedulerService().scheduleTask(taskDefinition);
   Context.flushSession();
   assertNotNull("The clientTask variable is null, so either the TimerSchedulerServiceImpl.scheduleTask method hasn't finished or didn't get run",clientTask);
 }

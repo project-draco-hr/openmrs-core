@@ -7,7 +7,6 @@
   Concept diedConcept=cs.getConcept(16);
   Assert.assertNotNull(pp.getProgram().getWorkflow(1).getState(diedConcept));
   Thread.sleep(10);
-  pws.triggerStateConversion(pp.getPatient(),diedConcept,new Date());
   pp=pws.getPatientProgram(patientProgramId);
   Assert.assertEquals(originalDateCompleted,pp.getDateCompleted());
 }

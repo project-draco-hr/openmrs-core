@@ -1,6 +1,7 @@
 {
   List<Form> forms=new Vector<Form>();
   forms.add(new Form(1));
-  List<Encounter> encounters=Context.getEncounterService().getEncounters(null,null,null,null,forms,null,null,true);
+  EncounterSearchCriteria encounterSearchCriteria=new EncounterSearchCriteriaBuilder().setEnteredViaForms(forms).setIncludeVoided(true).createEncounterSearchCriteria();
+  List<Encounter> encounters=Context.getEncounterService().getEncounters(encounterSearchCriteria);
   assertEquals(8,encounters.size());
 }

@@ -6,9 +6,6 @@
   }
  catch (  IOException ioe) {
     try {
-      if (!Context.isAuthenticated()) {
-        authenticate();
-      }
       String text="At " + new Date() + " there was an error reported connecting to the internet address "+ url+ ": "+ ioe;
       Role role=Context.getUserService().getRole("System Developer");
       Collection<User> users=Context.getUserService().getUsersByRole(role);

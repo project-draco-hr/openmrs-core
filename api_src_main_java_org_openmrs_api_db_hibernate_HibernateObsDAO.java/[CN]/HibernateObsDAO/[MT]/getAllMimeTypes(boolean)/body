@@ -1,7 +1,0 @@
-{
-  Criteria crit=sessionFactory.getCurrentSession().createCriteria(MimeType.class);
-  if (!includeRetired) {
-    crit.add(Restrictions.eq("retired",Boolean.FALSE));
-  }
-  return crit.list();
-}

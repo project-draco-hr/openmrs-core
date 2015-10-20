@@ -1,6 +1,6 @@
 {
   PatientService ps=Context.getPatientService();
-  List<Patient> patients=ps.getPatients(null,searchString,null,false);
+  List<Patient> patients=ps.getPatients(searchString);
   List<Person> persons=new Vector<Person>();
   persons.addAll(patients);
   EncounterService es=Context.getEncounterService();

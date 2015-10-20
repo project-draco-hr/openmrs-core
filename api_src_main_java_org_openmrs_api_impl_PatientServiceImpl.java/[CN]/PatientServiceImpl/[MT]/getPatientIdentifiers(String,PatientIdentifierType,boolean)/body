@@ -1,8 +1,0 @@
-{
-  if (includeVoided) {
-    throw new APIException("Patient.identifiers.search.voided",(Object[])null);
-  }
-  List<PatientIdentifierType> types=new Vector<PatientIdentifierType>();
-  types.add(patientIdentifierType);
-  return Context.getPatientService().getPatientIdentifiers(identifier,types,null,null,null);
-}

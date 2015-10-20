@@ -1,6 +1,6 @@
 {
   assertThat(ModuleFactory.getStartedModules(),empty());
   GlobalProperty gp1=new GlobalProperty("module1.mandatory","true");
-  when(administrationService.getGlobalPropertiesBySuffix(".mandatory")).thenReturn(Arrays.asList(gp1));
+  Context.getAdministrationService().saveGlobalProperty(gp1);
   ModuleUtil.checkMandatoryModulesStarted();
 }

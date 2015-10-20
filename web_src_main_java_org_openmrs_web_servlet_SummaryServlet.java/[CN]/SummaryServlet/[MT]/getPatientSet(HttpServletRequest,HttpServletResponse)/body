@@ -56,17 +56,6 @@
     }
   }
   if (identifiers.size() > 0) {
-    for (int x=0; x < identifiers.size(); x++) {
-      String id=identifiers.get(x);
-      try {
-        if (!OpenmrsUtil.isValidCheckDigit(id)) {
-          log.warn("Invalid check digit: '" + id + "' at location "+ x);
-        }
-      }
- catch (      Exception e) {
-        log.warn("Invalid check digit: '" + id + "' at location "+ x,e);
-      }
-    }
     ps=Cohort.union(ps,Context.getPatientSetService().convertPatientIdentifier(identifiers));
   }
   return ps;

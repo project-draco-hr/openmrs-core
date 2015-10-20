@@ -1,14 +1,14 @@
 {
   ConceptNameSaveHandler handler=new ConceptNameSaveHandler();
   ConceptName name=new ConceptName();
-  name.addTag(ConceptNameTag.PREFERRED);
-  name.addTag(ConceptNameTag.SHORT);
+  name.addTag("preferred");
+  name.addTag("short");
   handler.handle(name,null,null,null);
   for (  ConceptNameTag tag : name.getTags()) {
-    if (tag.getTag().equals(ConceptNameTag.PREFERRED)) {
+    if (tag.getTag().equals("preferred")) {
       Assert.assertEquals(4,tag.getConceptNameTagId().intValue());
     }
- else     if (tag.getTag().equals(ConceptNameTag.SHORT)) {
+ else     if (tag.getTag().equals("short")) {
       Assert.assertEquals(2,tag.getConceptNameTagId().intValue());
     }
   }

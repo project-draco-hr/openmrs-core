@@ -1,7 +1,8 @@
 {
   if (patient.getId() != null) {
     EncounterService es=Context.getEncounterService();
-    List<Encounter> encounters=es.getEncounters(patient,null,null,null,null,null,null,true);
+    EncounterSearchCriteria encounterSearchCriteria=new EncounterSearchCriteriaBuilder().setPatient(patient).setIncludeVoided(true).createEncounterSearchCriteria();
+    List<Encounter> encounters=es.getEncounters(encounterSearchCriteria);
     if (CollectionUtils.isNotEmpty(encounters)) {
       for (      Encounter encounter : encounters) {
         if (encounter.isVoided() && encounter.getDateVoided().equals(origParentVoidedDate) && encounter.getVoidedBy().equals(originalVoidingUser)) {

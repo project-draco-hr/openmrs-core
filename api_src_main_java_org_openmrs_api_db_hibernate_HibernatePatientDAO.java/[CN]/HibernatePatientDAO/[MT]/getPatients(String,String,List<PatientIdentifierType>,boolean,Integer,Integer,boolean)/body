@@ -1,9 +1,0 @@
-{
-  if (StringUtils.isBlank(name) && StringUtils.isBlank(identifier) && (identifierTypes == null || identifierTypes.isEmpty())) {
-    return Collections.emptyList();
-  }
-  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(Patient.class);
-  criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,identifierTypes,matchIdentifierExactly,true,searchOnNamesOrIdentifiers);
-  setFirstAndMaxResult(criteria,start,length);
-  return criteria.list();
-}

@@ -1,5 +1,5 @@
 {
-  String filepath=OpenmrsConstants.APPLICATION_DATA_DIRECTORY;
+  String filepath=null;
   String systemProperty=System.getProperty("OPENMRS_APPLICATION_DATA_DIRECTORY");
   if (systemProperty != null) {
     filepath=systemProperty;
@@ -40,6 +40,5 @@
   if (!folder.exists()) {
     folder.mkdirs();
   }
-  OpenmrsConstants.APPLICATION_DATA_DIRECTORY=filepath;
   return filepath;
 }

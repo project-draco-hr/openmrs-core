@@ -1,8 +1,0 @@
-{
-  PatientIdentifierType nonRetiredHasNoDigit1=dao.getPatientIdentifierType(2);
-  PatientIdentifierType nonRetiredHasNoDigit2=dao.getPatientIdentifierType(5);
-  List<PatientIdentifierType> patientIdentifierTypes=dao.getPatientIdentifierTypes(null,null,null,false);
-  Assert.assertEquals(patientIdentifierTypes.size(),2);
-  Assert.assertTrue(patientIdentifierTypes.contains(nonRetiredHasNoDigit1));
-  Assert.assertTrue(patientIdentifierTypes.contains(nonRetiredHasNoDigit2));
-}

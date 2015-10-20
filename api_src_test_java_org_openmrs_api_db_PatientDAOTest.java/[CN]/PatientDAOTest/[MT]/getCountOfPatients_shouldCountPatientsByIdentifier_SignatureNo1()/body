@@ -1,5 +1,4 @@
 {
-  List<PatientIdentifierType> identifierTypes=Collections.emptyList();
-  long patientCount=dao.getCountOfPatients(null,"42-42-42",identifierTypes,false,false);
+  long patientCount=dao.getCountOfPatients("42-42-42");
   Assert.assertEquals(1,patientCount);
 }

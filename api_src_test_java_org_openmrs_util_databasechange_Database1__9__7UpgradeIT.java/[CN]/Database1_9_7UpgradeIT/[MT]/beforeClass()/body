@@ -3,5 +3,5 @@
   testAppDataDir.delete();
   testAppDataDir.mkdir();
   System.setProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,testAppDataDir.getAbsolutePath());
-  OpenmrsConstants.APPLICATION_DATA_DIRECTORY=testAppDataDir.getAbsolutePath();
+  OpenmrsUtil.setApplicationDataDirectory(testAppDataDir.getAbsolutePath());
 }

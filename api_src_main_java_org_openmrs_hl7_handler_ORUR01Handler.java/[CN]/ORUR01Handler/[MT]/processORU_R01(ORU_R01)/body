@@ -130,7 +130,6 @@ catch (      HL7Exception e) {
     log.debug("Creating the encounter object");
   }
   Context.getEncounterService().saveEncounter(encounter);
-  hl7Service.encounterCreated(encounter);
   for (  ConceptProposal proposal : conceptProposals) {
     Context.getConceptService().saveConceptProposal(proposal);
   }

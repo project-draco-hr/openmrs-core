@@ -1,8 +1,0 @@
-{
-  PersonAttribute pa=new PersonAttribute();
-  pa.setAttributeType(new PersonAttributeType(1));
-  pa.setDateCreated(new Date());
-  PersonAttribute other=new PersonAttribute();
-  pa.setDateCreated(new Date(pa.getDateCreated().getTime() - 1000));
-  Assert.assertTrue(pa.compareTo(other) < 0);
-}
