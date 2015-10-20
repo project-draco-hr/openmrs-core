@@ -16,8 +16,8 @@
   Set<Privilege> privileges2=new HashSet<Privilege>();
   privileges2.add(p2);
   role2.setPrivileges(privileges2);
-  us.saveUser(u.addRole(role1),null);
-  us.saveUser(u.addRole(role2),null);
+  us.saveUser(u.addRole(role1));
+  us.saveUser(u.addRole(role2));
   Context.evictFromSession(u);
   us.getUser(u.getUserId()).hasRole("test1");
   us.getUser(u.getUserId()).hasRole("test2");

@@ -1,3 +1,15 @@
 {
-  return Context.getUserService().saveUser(user,password);
+  if (user.getUserId() != null) {
+    throw new APIException("This method can be used for only creating new users");
+  }
+  Context.requirePrivilege(PrivilegeConstants.ADD_USERS);
+  checkPrivileges(user);
+  if (password == null || password.length() < 1) {
+    throw new APIException("User.creating.password.required",(Object[])null);
+  }
+  if (hasDuplicateUsername(user)) {
+    throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
+  }
+  OpenmrsUtil.validatePassword(user.getUsername(),password,user.getSystemId());
+  return dao.saveUser(user,password);
 }

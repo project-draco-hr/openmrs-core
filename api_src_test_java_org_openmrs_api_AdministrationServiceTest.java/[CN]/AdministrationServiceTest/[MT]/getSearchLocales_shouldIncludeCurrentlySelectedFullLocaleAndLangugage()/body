@@ -2,7 +2,7 @@
   Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_LOCALE_ALLOWED_LIST,"en_GB"));
   User user=Context.getAuthenticatedUser();
   user.setUserProperty(OpenmrsConstants.USER_PROPERTY_PROFICIENT_LOCALES,"");
-  Context.getUserService().saveUser(user,null);
+  Context.getUserService().saveUser(user);
   Context.setLocale(new Locale("en","GB"));
   List<Locale> searchLocales=Context.getAdministrationService().getSearchLocales();
   Assert.assertEquals(Context.getLocale(),searchLocales.get(0));

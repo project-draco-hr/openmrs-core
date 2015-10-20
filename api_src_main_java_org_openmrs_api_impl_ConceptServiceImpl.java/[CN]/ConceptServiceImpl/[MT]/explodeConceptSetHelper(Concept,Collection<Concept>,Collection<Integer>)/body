@@ -3,7 +3,7 @@
     return;
   }
   alreadySeen.add(concept.getConceptId());
-  List<ConceptSet> cs=getConceptSets(concept);
+  List<ConceptSet> cs=getConceptSetsByConcept(concept);
   for (  ConceptSet set : cs) {
     Concept c=set.getConcept();
     if (c.isSet()) {

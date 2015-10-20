@@ -14,7 +14,7 @@
     }
     Connection connection=null;
     try {
-      DatabaseUtil.loadDatabaseDriver(databaseConnectionFinalUrl);
+      DatabaseUtil.loadDatabaseDriver(databaseConnectionFinalUrl,null);
       connection=DriverManager.getConnection(databaseConnectionFinalUrl,connectionUsername,connectionPassword);
       DatabaseMetaData dbMetaData=(DatabaseMetaData)connection.getMetaData();
       String[] types={"TABLE"};

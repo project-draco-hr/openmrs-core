@@ -7,7 +7,7 @@
     description=checkImplementationIdValidity(implementationId.getImplementationId(),description,implementationId.getPassphrase());
     implementationId.setDescription(description);
     boolean foundMatchingSource=false;
-    List<ConceptSource> sources=Context.getConceptService().getAllConceptSources();
+    List<ConceptSource> sources=Context.getConceptService().getAllConceptSources(false);
     if (sources != null) {
       for (      ConceptSource source : sources) {
         if (implementationId.getImplementationId().equals(source.getHl7Code())) {
@@ -25,9 +25,8 @@
       }
       Context.getConceptService().saveConceptSource(newConceptSource);
     }
-    StringWriter stringWriter=new StringWriter();
-    OpenmrsUtil.getSerializer().write(implementationId,stringWriter);
-    Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID,stringWriter.toString()));
+    String value=Context.getSerializationService().getDefaultSerializer().serialize(implementationId);
+    Context.getAdministrationService().saveGlobalProperty(new GlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_IMPLEMENTATION_ID,value));
   }
  catch (  APIException e) {
     throw e;

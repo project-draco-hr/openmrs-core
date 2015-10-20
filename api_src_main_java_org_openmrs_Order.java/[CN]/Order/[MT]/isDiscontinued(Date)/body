@@ -8,7 +8,7 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (dateActivated == null || isFuture(checkDate) || dateStopped == null) {
+  if (dateActivated == null || !isStarted(checkDate) || dateStopped == null) {
     return false;
   }
   return checkDate.after(dateStopped);

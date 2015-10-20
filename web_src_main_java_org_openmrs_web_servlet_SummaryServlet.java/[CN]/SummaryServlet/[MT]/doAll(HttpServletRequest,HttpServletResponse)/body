@@ -1,8 +1,8 @@
 {
   response.setContentType("text/html");
   HttpSession session=request.getSession();
-  if (!Context.hasPrivilege(PrivilegeConstants.VIEW_PATIENTS)) {
-    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Privilege required: " + PrivilegeConstants.VIEW_PATIENTS);
+  if (!Context.hasPrivilege(PrivilegeConstants.GET_PATIENTS)) {
+    session.setAttribute(WebConstants.OPENMRS_ERROR_ATTR,"Privilege required: " + PrivilegeConstants.GET_PATIENTS);
     response.sendRedirect(request.getContextPath() + "/login.htm");
     return;
   }
@@ -13,7 +13,7 @@
   summary.write("<clinicalSummaryList>\n");
   for (  Integer patientId : patientSet.getMemberIds()) {
     try {
-      Result xml=logic.eval(patientService.getPatient(patientId),"CLINICAL SUMMARY");
+      Result xml=logic.eval(patientService.getPatient(patientId).getPatientId(),"CLINICAL SUMMARY");
       String s=xml.toString();
       summary.write(s);
       String[] lines=s.split("\n");

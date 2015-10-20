@@ -6,7 +6,7 @@
     user.removeUserProperty(key);
     try {
       Context.addProxyPrivilege(PrivilegeConstants.EDIT_USERS);
-      Context.getUserService().saveUser(user,null);
+      Context.getUserService().saveUser(user);
     }
   finally {
       Context.removeProxyPrivilege(PrivilegeConstants.EDIT_USERS);

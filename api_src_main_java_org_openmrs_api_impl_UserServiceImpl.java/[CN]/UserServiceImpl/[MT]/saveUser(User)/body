@@ -1,0 +1,11 @@
+{
+  if (user.getUserId() == null) {
+    throw new APIException("This method can be called only to update existing users");
+  }
+  Context.requirePrivilege(PrivilegeConstants.EDIT_USERS);
+  checkPrivileges(user);
+  if (hasDuplicateUsername(user)) {
+    throw new DAOException("Username " + user.getUsername() + " or system id "+ user.getSystemId()+ " is already in use.");
+  }
+  return dao.saveUser(user,null);
+}

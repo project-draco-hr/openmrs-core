@@ -5,5 +5,5 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  return !isFuture(checkDate) && !isDiscontinued(checkDate) && !isExpired(checkDate);
+  return isStarted(checkDate) && !isDiscontinued(checkDate) && !isExpired(checkDate);
 }

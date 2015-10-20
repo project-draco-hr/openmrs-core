@@ -4,6 +4,7 @@
   encounter.setDateCreated(new Date());
   encounter.setChangedBy(new User());
   encounter.setDateChanged(new Date());
+  encounter.setVoided(true);
   encounter.setVoidReason("void");
   encounter.setDateVoided(new Date());
   encounter.setEncounterDatetime(new Date());
@@ -16,7 +17,7 @@
   EncounterRole encounterRole=new EncounterRole();
   encounter.addProvider(encounterRole,new Provider());
   encounter.setVisit(new Visit());
-  Patient patient=new Patient(1234);
+  Patient patient=new Patient(7);
   Encounter encounterCopy=encounter.copyAndAssignToAnotherPatient(patient);
   Assert.assertNotEquals(encounter,encounterCopy);
   Assert.assertEquals(encounter.getCreator(),encounterCopy.getCreator());

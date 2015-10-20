@@ -5,8 +5,4 @@
     log.info("Throwing a runtime exception in an attempt to break the scheduler");
     throw new RuntimeException();
   }
-  if (!Context.isAuthenticated()) {
-    log.info("Authenticating ...");
-    authenticate();
-  }
 }

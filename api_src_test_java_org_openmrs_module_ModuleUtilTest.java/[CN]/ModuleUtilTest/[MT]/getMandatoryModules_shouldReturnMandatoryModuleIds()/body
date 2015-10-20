@@ -1,6 +1,7 @@
 {
   GlobalProperty gp1=new GlobalProperty("firstmodule.mandatory","true");
   GlobalProperty gp2=new GlobalProperty("secondmodule.mandatory","false");
-  when(administrationService.getGlobalPropertiesBySuffix(".mandatory")).thenReturn(Arrays.asList(gp1,gp2));
+  Context.getAdministrationService().saveGlobalProperty(gp1);
+  Context.getAdministrationService().saveGlobalProperty(gp2);
   assertThat(ModuleUtil.getMandatoryModules(),contains("firstmodule"));
 }

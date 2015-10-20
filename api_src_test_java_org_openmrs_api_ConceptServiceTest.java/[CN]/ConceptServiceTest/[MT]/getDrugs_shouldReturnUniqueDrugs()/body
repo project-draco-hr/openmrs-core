@@ -1,5 +1,5 @@
 {
-  Drug drug=conceptService.getDrugByNameOrId("ASPIRIN");
+  Drug drug=conceptService.getDrug("ASPIRIN");
   assertEquals(drug.getName().toLowerCase(),drug.getConcept().getName().getName().toLowerCase());
   List<Drug> drugs=conceptService.getDrugs("Asp",null,false,false);
   assertEquals(1,drugs.size());

@@ -40,12 +40,21 @@
     end=cal.getTime();
   }
   List<Obs> allObs=null;
+  List<String> sort=new ArrayList<String>();
+  sort.add("location.locationId asc");
+  sort.add("obs.valueDatetime asc");
+  List<Concept> questions=new ArrayList<Concept>();
+  questions.add(c);
+  List<OpenmrsConstants.PERSON_TYPE> personTypes=new ArrayList<OpenmrsConstants.PERSON_TYPE>();
+  personTypes.add(OpenmrsConstants.PERSON_TYPE.PATIENT);
   if (location == null || "".equals(location)) {
-    allObs=os.getObservations(c,"location.locationId asc, obs.valueDatetime asc",ObsService.PATIENT,true);
+    allObs=os.getObservations(null,null,questions,null,personTypes,null,sort,null,null,null,null,true);
   }
  else {
-    Location locationObj=es.getLocation(Integer.valueOf(location));
-    allObs=os.getObservations(c,locationObj,"location.locationId asc, obs.valueDatetime asc",ObsService.PATIENT,true);
+    Location locationObj=Context.getLocationService().getLocation(Integer.valueOf(location));
+    List<Location> locations=new ArrayList<Location>();
+    locations.add(locationObj);
+    allObs=os.getObservations(null,null,questions,null,personTypes,locations,sort,null,null,null,null,true);
   }
   List<Obs> obs=new Vector<Obs>();
   for (  Obs o : allObs) {

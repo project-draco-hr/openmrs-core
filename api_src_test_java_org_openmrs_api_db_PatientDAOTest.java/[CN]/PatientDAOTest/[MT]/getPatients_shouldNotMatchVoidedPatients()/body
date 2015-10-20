@@ -1,10 +1,9 @@
 {
-  List<PatientIdentifierType> identifierTypes=Collections.emptyList();
-  List<Patient> patients=dao.getPatients("Hornblower3",null,identifierTypes,false,0,11,false);
+  List<Patient> patients=dao.getPatients("Hornblower3",0,11);
   Assert.assertEquals(1,patients.size());
   Patient patient=patients.get(0);
   patient.setVoided(true);
   dao.savePatient(patient);
-  patients=dao.getPatients("Hornblower3",null,identifierTypes,false,0,11,false);
+  patients=dao.getPatients("Hornblower3",0,11);
   Assert.assertEquals(0,patients.size());
 }

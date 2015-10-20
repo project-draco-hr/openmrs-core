@@ -4,7 +4,7 @@
   voidOrders(Collections.singleton(notPreferred));
   User user=Context.getUserService().getUser(501);
   user.setPerson(notPreferred);
-  Context.getUserService().saveUser(user,null);
+  Context.getUserService().saveUser(user);
   PersonMergeLog audit=mergeAndRetrieveAudit(preferred,notPreferred);
   Assert.assertTrue("user association change not audited",isValueInList(Context.getUserService().getUser(501).getUuid(),audit.getPersonMergeLogData().getMovedUsers()));
 }

@@ -1,6 +1,0 @@
-{
-  MockHttpServletRequest post=testHelper.newPOST("/options.form");
-  post.addParameter("username","ab");
-  testHelper.handle(post);
-  Assert.assertThat("ab",is(Context.getAuthenticatedUser().getUsername()));
-}

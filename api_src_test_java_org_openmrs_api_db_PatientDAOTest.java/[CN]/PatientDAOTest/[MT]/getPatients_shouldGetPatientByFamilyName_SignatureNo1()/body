@@ -1,5 +1,5 @@
 {
-  List<Patient> patients=dao.getPatients("Baggins",null,null,false,0,11,false);
+  List<Patient> patients=dao.getPatients("Baggins",0,11);
   Assert.assertEquals(2,patients.size());
   Assert.assertEquals("Baggins",patients.get(0).getFamilyName());
   Assert.assertEquals("Baggins",patients.get(1).getFamilyName());

@@ -3,7 +3,7 @@
     patient.setDead(true);
     patient.setDeathDate(dateDied);
     patient.setCauseOfDeath(causeOfDeath);
-    this.updatePatient(patient);
+    this.savePatient(patient);
     saveCauseOfDeathObs(patient,dateDied,causeOfDeath,otherReason);
     String strPatientDied=Context.getAdministrationService().getGlobalProperty("concept.patientDied");
     Concept conceptPatientDied=Context.getConceptService().getConcept(strPatientDied);

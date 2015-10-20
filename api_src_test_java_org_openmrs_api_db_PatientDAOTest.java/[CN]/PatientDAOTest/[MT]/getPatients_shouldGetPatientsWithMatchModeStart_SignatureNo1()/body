@@ -1,6 +1,6 @@
 {
   String oldPropertyValue=globalPropertiesTestHelper.setGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_MODE,OpenmrsConstants.GLOBAL_PROPERTY_PATIENT_SEARCH_MATCH_START);
-  List<Patient> patients=dao.getPatients("Bagg",null,null,false,0,11,false);
+  List<Patient> patients=dao.getPatients("Bagg",0,11);
   Assert.assertEquals(2,patients.size());
   Assert.assertEquals("Baggins",patients.get(0).getFamilyName());
   Assert.assertEquals("Baggins",patients.get(1).getFamilyName());

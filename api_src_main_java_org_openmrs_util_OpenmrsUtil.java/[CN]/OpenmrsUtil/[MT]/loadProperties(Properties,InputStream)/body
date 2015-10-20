@@ -1,13 +1,26 @@
 {
+  InputStreamReader reader=null;
   try {
-    InputStreamReader reader=new InputStreamReader(input,"UTF-8");
+    reader=new InputStreamReader(inputStream,"UTF-8");
     props.load(reader);
-    reader.close();
   }
- catch (  UnsupportedEncodingException uee) {
-    log.error("Unsupported encoding used in properties file " + uee);
+ catch (  FileNotFoundException fnfe) {
+    log.error("Unable to find properties file" + fnfe);
+  }
+catch (  UnsupportedEncodingException uee) {
+    log.error("Unsupported encoding used in properties file" + uee);
   }
 catch (  IOException ioe) {
-    log.error("Unable to read properties from properties file " + ioe);
+    log.error("Unable to read properties from properties file" + ioe);
+  }
+ finally {
+    try {
+      if (reader != null) {
+        reader.close();
+      }
+    }
+ catch (    IOException ioe) {
+      log.error("Unable to close properties file " + ioe);
+    }
   }
 }

@@ -3,7 +3,7 @@
   if (delimitedString != null) {
     String[] tokens=delimitedString.split(delimiter);
     for (    String token : tokens) {
-      Concept c=OpenmrsUtil.getConceptByIdOrName(token);
+      Concept c=Context.getConceptService().getConcept(token);
       if (c != null) {
         if (ret == null) {
           ret=new HashMap<String,Concept>();

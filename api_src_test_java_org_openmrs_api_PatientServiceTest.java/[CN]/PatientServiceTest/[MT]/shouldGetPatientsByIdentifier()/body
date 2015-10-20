@@ -6,6 +6,6 @@
   Patient firstJohnPatient=johnPatients.iterator().next();
   String identifier=firstJohnPatient.getPatientIdentifier().getIdentifier();
   assertNotNull("Uh oh, the patient doesn't have an identifier",identifier);
-  List<Patient> patients=patientService.getPatients(null,identifier,null,false);
+  List<Patient> patients=patientService.getPatients(identifier,null,null,false);
   assertTrue("Odd. The firstJohnPatient isn't in the list of patients for this identifier",patients.contains(firstJohnPatient));
 }

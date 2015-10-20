@@ -64,26 +64,7 @@
           ret="Unable to locate cause of death in dictionary - cannot proceed";
         }
       }
- else {
-        try {
-          ps.exitFromCare(patient,exitDate,exitReasonConcept);
-        }
- catch (        Exception e) {
-          log.warn("Caught error",e);
-          ret="Internal error while trying to exit patient from care - unable to exit patient from care at this time. Cause: " + e.getMessage();
-        }
-      }
     }
- else {
-      try {
-        ps.exitFromCare(patient,exitDate,exitReasonConcept);
-      }
- catch (      Exception e) {
-        log.warn("Caught error",e);
-        ret="Internal error while trying to exit patient from care - unable to exit patient from care at this time. Cause: " + e.getMessage();
-      }
-    }
-    log.debug("Exited from care, it seems");
   }
   return ret;
 }

@@ -1,7 +1,0 @@
-{
-  Cohort nobody=new Cohort();
-  ProgramWorkflowService pws=Context.getProgramWorkflowService();
-  ProgramWorkflow one=pws.getWorkflow(1);
-  Map<Integer,PatientState> results=Context.getPatientSetService().getCurrentStates(nobody,one);
-  Assert.assertEquals(results.size(),0);
-}

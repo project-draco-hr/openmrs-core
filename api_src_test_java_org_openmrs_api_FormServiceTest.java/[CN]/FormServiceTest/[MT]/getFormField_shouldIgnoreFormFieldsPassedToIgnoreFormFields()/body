@@ -1,7 +1,7 @@
 {
   executeDataSet(INITIAL_FIELDS_XML);
   executeDataSet("org/openmrs/api/include/FormServiceTest-formFields.xml");
-  FormField ff=Context.getFormService().getFormField(new Form(1),new Concept(1));
+  FormField ff=Context.getFormService().getFormField(new Form(1),new Concept(1),null,false);
   assertNotNull(ff);
   List<FormField> ignoreFormFields=new Vector<FormField>();
   ignoreFormFields.add(ff);

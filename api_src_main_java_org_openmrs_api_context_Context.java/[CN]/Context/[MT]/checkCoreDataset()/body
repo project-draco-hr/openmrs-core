@@ -47,7 +47,7 @@
   }
   try {
     Context.addProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
-    Context.addProxyPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES);
+    Context.addProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
     Set<String> currentPropNames=new HashSet<String>();
     Map<String,GlobalProperty> propsMissingDescription=new HashMap<String,GlobalProperty>();
     Map<String,GlobalProperty> propsMissingDatatype=new HashMap<String,GlobalProperty>();
@@ -88,7 +88,7 @@
   }
  finally {
     Context.removeProxyPrivilege(PrivilegeConstants.MANAGE_GLOBAL_PROPERTIES);
-    Context.removeProxyPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES);
+    Context.removeProxyPrivilege(PrivilegeConstants.GET_GLOBAL_PROPERTIES);
   }
   AdministrationService as=Context.getAdministrationService();
   Boolean disableValidation=Boolean.valueOf(as.getGlobalProperty(OpenmrsConstants.GP_DISABLE_VALIDATION,"false"));

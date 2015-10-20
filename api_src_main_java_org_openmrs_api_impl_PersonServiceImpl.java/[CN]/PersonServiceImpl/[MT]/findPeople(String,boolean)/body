@@ -1,8 +1,0 @@
-{
-  if (includeVoided) {
-    throw new APIException("Person.should.consider.voided",(Object[])null);
-  }
-  Set<Person> matchingPersons=new LinkedHashSet<Person>();
-  matchingPersons.addAll(Context.getPersonService().getPeople(searchPhrase,null));
-  return matchingPersons;
-}

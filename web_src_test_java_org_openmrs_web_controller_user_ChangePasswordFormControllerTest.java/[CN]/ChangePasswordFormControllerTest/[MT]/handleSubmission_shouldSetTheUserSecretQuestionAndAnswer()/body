@@ -2,10 +2,10 @@
   User user=Context.getAuthenticatedUser();
   new UserProperties(user.getUserProperties()).setSupposedToChangePassword(true);
   UserService us=Context.getUserService();
-  us.saveUser(user,"Openmr5xy");
+  us.saveUser(user);
   ChangePasswordFormController controller=new ChangePasswordFormController();
   BindException errors=new BindException(controller.formBackingObject(),"user");
-  controller.handleSubmission(new MockHttpSession(),"Passw0rd","Passw0rd","test_question","test_answer","test_answer",Context.getAuthenticatedUser(),errors);
+  controller.handleSubmission(new MockHttpSession(),null,"Passw0rd","Passw0rd","test_question","test_answer","test_answer",Context.getAuthenticatedUser(),errors);
   User modifiedUser=us.getUser(user.getId());
   assertTrue(us.isSecretAnswer(modifiedUser,"test_answer"));
 }

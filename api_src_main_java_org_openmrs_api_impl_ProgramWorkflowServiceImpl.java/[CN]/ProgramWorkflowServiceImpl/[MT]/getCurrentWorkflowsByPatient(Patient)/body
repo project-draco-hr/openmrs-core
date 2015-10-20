@@ -1,7 +1,0 @@
-{
-  Set<ProgramWorkflow> ret=new HashSet<ProgramWorkflow>();
-  for (  PatientProgram patientProgram : Context.getProgramWorkflowService().getPatientPrograms(patient)) {
-    ret.addAll(Context.getProgramWorkflowService().getCurrentWorkflowsByPatientProgram(patientProgram));
-  }
-  return ret;
-}

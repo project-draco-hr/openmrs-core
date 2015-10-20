@@ -12,7 +12,7 @@
     message=message + ":" + stackTrace;
     message=message.substring(0,Math.min(message.length(),Alert.TEXT_MAX_LENGTH));
   }
-  Alert alert=new Alert(message,Context.getUserService().getUsersByRole(new Role(OpenmrsConstants.SUPERUSER_ROLE)));
+  Alert alert=new Alert(message,Context.getUserService().getUsersByRole(new Role(RoleConstants.SUPERUSER)));
   alert.setSatisfiedByAny(true);
   if (alert.getCreator() == null) {
     alert.setCreator(new User(1));
