@@ -1,6 +1,6 @@
 {
   try {
-    Class loadedClass=OpenmrsClassLoader.getInstance().loadClass(handlerClass);
+    Class<?> loadedClass=OpenmrsClassLoader.getInstance().loadClass(handlerClass);
     registerHandler(key,(ComplexObsHandler)loadedClass.newInstance());
   }
  catch (  Exception e) {
