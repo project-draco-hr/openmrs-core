@@ -2,7 +2,15 @@
   attrTypes=null;
   try {
     PersonService ps=Context.getPersonService();
-    List<PersonAttributeType> types=ps.getPersonAttributeTypes(PERSON_TYPE.valueOf(getPersonType()),ATTR_VIEW_TYPE.valueOf(getDisplayType()));
+    PERSON_TYPE personType=null;
+    if (StringUtils.isNotBlank(getPersonType())) {
+      personType=PERSON_TYPE.valueOf(getPersonType());
+    }
+    ATTR_VIEW_TYPE viewType=null;
+    if (StringUtils.isNotBlank(getDisplayType())) {
+      viewType=ATTR_VIEW_TYPE.valueOf(getDisplayType());
+    }
+    List<PersonAttributeType> types=ps.getPersonAttributeTypes(personType,viewType);
     attrTypes=types.iterator();
     setVarStatus("varStatus");
   }
