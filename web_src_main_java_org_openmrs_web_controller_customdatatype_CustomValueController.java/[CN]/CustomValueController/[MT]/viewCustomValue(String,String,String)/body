@@ -1,9 +1,0 @@
-{
-  CustomDatatype<?> datatype=CustomDatatypeUtil.getDatatype(datatypeClassname,null);
-  HtmlDisplayableDatatypeHandler handler=(HtmlDisplayableDatatypeHandler)CustomDatatypeUtil.getHandler(datatype,handlerClassname,null);
-  if (datatype == null || StringUtils.isBlank(valueReference)) {
-    throw new IOException("datatype and value are required parameters");
-  }
-  String html=handler.toHtml(datatype,valueReference);
-  return HTML_START + html + HTML_END;
-}

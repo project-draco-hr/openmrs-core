@@ -1,7 +1,0 @@
-{
-  visit.setStopDatetime(new Date());
-  Context.getVisitService().saveVisit(visit);
-  session.setAttribute(WebConstants.OPENMRS_MSG_ATTR,"Visit.ended");
-  session.setAttribute(WebConstants.OPENMRS_MSG_ARGS,new String[]{visit.getVisitType().getName()});
-  return "redirect:" + "/patientDashboard.form?patientId=" + visit.getPatient().getPatientId();
-}

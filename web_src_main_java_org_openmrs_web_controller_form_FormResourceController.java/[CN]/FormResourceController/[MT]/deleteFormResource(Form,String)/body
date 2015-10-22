@@ -1,7 +1,0 @@
-{
-  FormResource resource=Context.getFormService().getFormResource(form,name);
-  if (resource != null) {
-    Context.getFormService().purgeFormResource(resource);
-  }
-  return "redirect:formResources.form?formId=" + form.getFormId();
-}

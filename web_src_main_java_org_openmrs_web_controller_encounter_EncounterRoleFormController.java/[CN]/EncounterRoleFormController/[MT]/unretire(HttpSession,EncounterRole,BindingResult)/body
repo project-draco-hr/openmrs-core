@@ -1,9 +1,0 @@
-{
-  new EncounterRoleValidator().validate(encounterRole,errors);
-  if (!errors.hasErrors() && Context.isAuthenticated()) {
-    EncounterService service=Context.getEncounterService();
-    unRetireEncounterRole(encounterRole,service,session);
-    return showEncounterList();
-  }
-  return showForm();
-}

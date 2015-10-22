@@ -1,9 +1,0 @@
-{
-  if (ComplexObsHandler.URI_VIEW.equals(view)) {
-    Locale locale=Context.getLocale();
-    ComplexData cd=new ComplexData(obs.getValueAsString(locale),WebHandlerUtils.getHyperlink(obs,ComplexObsHandler.RAW_VIEW));
-    obs.setComplexData(cd);
-    return obs;
-  }
-  return super.getObs(obs,view);
-}

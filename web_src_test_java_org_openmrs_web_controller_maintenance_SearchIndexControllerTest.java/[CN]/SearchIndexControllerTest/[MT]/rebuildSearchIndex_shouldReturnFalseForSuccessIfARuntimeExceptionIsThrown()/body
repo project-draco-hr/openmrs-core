@@ -1,5 +1,0 @@
-{
-  Mockito.doThrow(new RuntimeException("boom")).when(contextDao).updateSearchIndex();
-  Map<String,Object> response=controller.rebuildSearchIndex();
-  assertEquals(false,response.get("success"));
-}
