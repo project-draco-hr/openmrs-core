@@ -1,8 +1,0 @@
-{
-  List<FormListItem> formListItems=new Vector<FormListItem>();
-  List<Form> forms=includeUnpublished ? Context.getFormService().getAllForms(false) : Context.getFormService().getPublishedForms();
-  for (  Form form : forms) {
-    formListItems.add(new FormListItem(form));
-  }
-  return formListItems;
-}
