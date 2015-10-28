@@ -1,7 +1,0 @@
-{
-  String actualContent=runServletWithConcepts(conceptDAO.getConcept(4));
-  String expectedStart=EXPECTED_HEADER + "4,\"CIVIL STATUS\",\"What is the person's marital state\",\"CIVIL STATUS\",";
-  String expectedEnd=",\"\",\"ConvSet\",\"Coded\",\"Super User\",\"Super User\"\n";
-  String[] expectedLineBreakSections={"SINGLE","MARRIED"};
-  assertContent(expectedStart,expectedEnd,expectedLineBreakSections,actualContent);
-}
