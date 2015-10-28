@@ -1,6 +1,0 @@
-{
-  MockHttpServletRequest post=webTestHelper.newPOST("/admin/forms/fieldType.list");
-  post.addParameter("fieldTypeId","1");
-  Response response=webTestHelper.handle(post);
-  Assert.assertNotNull(response.session.getAttribute(WebConstants.OPENMRS_ERROR_ATTR));
-}
