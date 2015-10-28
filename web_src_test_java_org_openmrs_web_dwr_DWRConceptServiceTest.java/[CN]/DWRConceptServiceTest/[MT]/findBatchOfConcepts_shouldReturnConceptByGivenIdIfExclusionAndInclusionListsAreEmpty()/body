@@ -1,7 +1,0 @@
-{
-  String phrase="1000";
-  Concept expected=Context.getConceptService().getConcept(phrase);
-  List<Object> result=dwrConceptService.findBatchOfConcepts(phrase,Boolean.FALSE,null,null,null,null,null,null);
-  Assert.assertNotNull(result);
-  Assert.assertTrue(isConceptFound(expected,result));
-}
