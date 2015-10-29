@@ -1,9 +1,0 @@
-{
-  StringBuilder sb=new StringBuilder();
-  sb.append("<input type=\"file\" id=\"" + widgetId + "\" name=\""+ formFieldName+ "\"/>\n");
-  sb.append("<script>\n");
-  sb.append("jQuery('#" + widgetId + "').closest('form')");
-  sb.append("    .attr('method', 'post').attr('enctype', 'multipart/form-data');\n");
-  sb.append("</script>");
-  return sb.toString();
-}
