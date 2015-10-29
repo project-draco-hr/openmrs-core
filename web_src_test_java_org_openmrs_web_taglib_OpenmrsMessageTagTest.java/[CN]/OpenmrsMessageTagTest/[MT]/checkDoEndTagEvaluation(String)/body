@@ -1,6 +1,0 @@
-{
-  int tagReturnValue=openmrsMessageTag.doEndTag();
-  String output=((MockHttpServletResponse)mockPageContext.getResponse()).getContentAsString();
-  Assert.assertEquals("Tag should return 'EVAL_PAGE'",TagSupport.EVAL_PAGE,tagReturnValue);
-  Assert.assertEquals(String.format("Output should be '%s'",expectedOutput),expectedOutput,output);
-}

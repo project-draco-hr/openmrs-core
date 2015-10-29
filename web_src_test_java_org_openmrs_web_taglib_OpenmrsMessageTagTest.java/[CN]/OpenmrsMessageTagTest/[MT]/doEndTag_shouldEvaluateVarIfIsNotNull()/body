@@ -1,9 +1,0 @@
-{
-  final String varName="Mary";
-  final String expectedOutput="had a little lamb";
-  openmrsMessageTag.setVar(varName);
-  DefaultMessageSourceResolvable message=new DefaultMessageSourceResolvable(new String[]{"test"},expectedOutput);
-  openmrsMessageTag.setMessage(message);
-  openmrsMessageTag.setScope(TagUtils.SCOPE_PAGE);
-  checkDoEndTagEvaluationOfVar(varName,PageContext.PAGE_SCOPE,expectedOutput);
-}
