@@ -1,0 +1,7 @@
+{
+  User user=Context.getAuthenticatedUser();
+  if (!isSecretAnswer(user,secretAnswer)) {
+    throw new APIException("secret.answer.not.correct",(Object[])null);
+  }
+  updatePassword(user,pw);
+}

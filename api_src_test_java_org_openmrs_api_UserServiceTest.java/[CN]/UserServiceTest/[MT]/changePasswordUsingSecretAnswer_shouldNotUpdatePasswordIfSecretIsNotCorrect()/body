@@ -1,0 +1,10 @@
+{
+  executeDataSet(XML_FILENAME_WITH_DATA_FOR_CHANGE_PASSWORD_ACTION);
+  UserService userService=Context.getUserService();
+  User user=userService.getUser(6001);
+  assertFalse(user.hasPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS));
+  Context.authenticate(user.getUsername(),"userServiceTest");
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("secret.answer.not.correct");
+  userService.changePasswordUsingSecretAnswer("wrong answer","userServiceTest2");
+}
