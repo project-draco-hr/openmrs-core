@@ -1,5 +1,11 @@
 {
+  String path=request.getPathInfo();
   log.debug("In service method for module servlet: " + request.getPathInfo());
+  if (path.endsWith("openmrsmessages.js") || path.endsWith(("drugOrder.js"))) {
+    RequestDispatcher rd=request.getRequestDispatcher(getPathWithJstl(path));
+    rd.forward(request,response);
+    return;
+  }
   File f=getFile(request);
   if (f == null) {
     response.setStatus(HttpServletResponse.SC_NOT_FOUND);
