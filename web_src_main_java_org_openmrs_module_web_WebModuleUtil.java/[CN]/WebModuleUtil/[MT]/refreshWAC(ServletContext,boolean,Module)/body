@@ -21,13 +21,5 @@
  catch (  ServletException se) {
     log.warn("Caught a servlet exception while refreshing the dispatcher servlet",se);
   }
-  try {
-    if (dwrServlet != null) {
-      dwrServlet.reInitServlet();
-    }
-  }
- catch (  ServletException se) {
-    log.warn("Cause a servlet exception while refreshing the dwr servlet",se);
-  }
   return newAppContext;
 }
