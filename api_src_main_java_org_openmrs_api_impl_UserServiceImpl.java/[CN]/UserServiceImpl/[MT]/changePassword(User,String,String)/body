@@ -10,6 +10,5 @@
  else   if (!dao.getLoginCredential(user).checkPassword(oldPassword)) {
     throw new APIException("old.password.not.correct",(Object[])null);
   }
-  OpenmrsUtil.validatePassword(user.getUsername(),newPassword,user.getSystemId());
-  dao.changePassword(user,newPassword);
+  updatePassword(user,newPassword);
 }
