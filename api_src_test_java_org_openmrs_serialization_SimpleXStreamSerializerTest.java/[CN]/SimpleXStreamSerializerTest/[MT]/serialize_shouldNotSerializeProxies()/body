@@ -1,0 +1,6 @@
+{
+  EventHandler h=new EventHandler(new ProcessBuilder("someApp"),"start",null,null);
+  Object proxy=Proxy.newProxyInstance(this.getClass().getClassLoader(),new Class[]{OpenmrsObject.class},h);
+  expectedException.expect(XStreamException.class);
+  new SimpleXStreamSerializer().serialize(proxy);
+}

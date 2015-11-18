@@ -1,0 +1,5 @@
+{
+  String xml="<!DOCTYPE ZSL [<!ENTITY xxe1 \"some attribute value\" >]>" + "<org.openmrs.serialization.Foo>" + "<attributeString>&xxe1;</attributeString>"+ "</org.openmrs.serialization.Foo>";
+  expectedException.expect(SerializationException.class);
+  new SimpleXStreamSerializer().deserialize(xml,Foo.class);
+}

@@ -1,0 +1,5 @@
+{
+  String serialized="<dynamic-proxy>" + "<interface>org.openmrs.OpenmrsObject</interface>" + "<handler class=\"java.beans.EventHandler\">"+ "<target class=\"java.lang.ProcessBuilder\">"+ "<command>"+ "<string>someApp</string>"+ "</command></target>"+ "<action>start</action>"+ "</handler>"+ "</dynamic-proxy>";
+  expectedException.expect(SerializationException.class);
+  new SimpleXStreamSerializer().deserialize(serialized,OpenmrsObject.class);
+}
