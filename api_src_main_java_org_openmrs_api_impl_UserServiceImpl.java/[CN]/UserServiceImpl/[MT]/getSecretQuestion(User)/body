@@ -1,0 +1,9 @@
+{
+  if (user.getUserId() != null) {
+    LoginCredential loginCredential=dao.getLoginCredential(user);
+    return loginCredential.getSecretQuestion();
+  }
+ else {
+    return null;
+  }
+}
