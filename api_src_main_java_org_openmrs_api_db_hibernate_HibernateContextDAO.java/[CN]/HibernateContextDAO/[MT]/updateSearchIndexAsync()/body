@@ -1,0 +1,9 @@
+{
+  try {
+    log.info("Started asynchronously updating the search index...");
+    return Search.getFullTextSession(sessionFactory.getCurrentSession()).createIndexer().start();
+  }
+ catch (  Exception e) {
+    throw new RuntimeException("Failed to start asynchronous search index update",e);
+  }
+}
