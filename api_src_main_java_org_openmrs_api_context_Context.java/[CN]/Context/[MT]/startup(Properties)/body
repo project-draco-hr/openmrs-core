@@ -2,7 +2,8 @@
   getContextDAO().startup(props);
   checkForDatabaseUpdates(props);
   OpenmrsUtil.startup(props);
-  ModuleUtil.startup(props);
+  openSession();
   checkCoreDataset();
   getContextDAO().setupSearchIndex();
+  ModuleUtil.startup(props);
 }
