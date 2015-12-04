@@ -1,3 +1,5 @@
 {
-  HandlerUtil.getPreferredHandler(Validator.class,Patient.class);
+  thrown.expect(APIException.class);
+  thrown.expectMessage("handler.type.not.found");
+  HandlerUtil.getPreferredHandler(Validator.class,Integer.class);
 }
