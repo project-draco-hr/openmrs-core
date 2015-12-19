@@ -1,5 +1,5 @@
 {
-  String[] invalids=new String[]{"mkyong","mkyong@.com.my","mkyong123@gmail.a","mkyong123@.com","mkyong123@.com.com",".mkyong@mkyong.com","mkyong()*@gmail.com","mkyong@%*.com","mkyong..2002@gmail.com","mkyong.@gmail.com","mkyong@mkyong@gmail.com","mkyong@gmail.com.1a"};
+  String[] invalids=new String[]{"mkyong","mkyong123@.com","my@kong","my.kong","my.@kong","@kong.my"};
   for (  String email : invalids) {
     Assert.assertFalse(validator.isUserNameAsEmailValid(email));
   }
