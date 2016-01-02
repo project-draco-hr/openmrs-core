@@ -1,0 +1,7 @@
+{
+  Order order=new Order(21);
+  DrugOrder type=new DrugOrder(21);
+  type.setUuid(order.getUuid());
+  Assert.assertTrue(type.equals(order));
+  Assert.assertTrue(order.equals(type));
+}

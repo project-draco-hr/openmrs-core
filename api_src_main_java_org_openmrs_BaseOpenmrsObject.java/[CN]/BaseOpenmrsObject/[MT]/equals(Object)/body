@@ -9,5 +9,10 @@
   if (getUuid() == null) {
     return false;
   }
+  Class<?> thisClass=Hibernate.getClass(this);
+  Class<?> objClass=Hibernate.getClass(obj);
+  if (!(thisClass.isAssignableFrom(objClass) || objClass.isAssignableFrom(thisClass))) {
+    return false;
+  }
   return getUuid().equals(other.getUuid());
 }

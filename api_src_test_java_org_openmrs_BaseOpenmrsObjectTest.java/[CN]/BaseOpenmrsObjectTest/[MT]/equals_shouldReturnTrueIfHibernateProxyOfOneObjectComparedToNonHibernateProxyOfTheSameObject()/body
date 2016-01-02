@@ -1,0 +1,7 @@
+{
+  SessionFactory sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
+  Session session=sessionFactory.getCurrentSession();
+  Patient patient=(Patient)session.get(Patient.class,2);
+  Patient patientproxyobject=(Patient)session.load(Patient.class,2);
+  Assert.assertTrue(patient.equals(patientproxyobject));
+}
