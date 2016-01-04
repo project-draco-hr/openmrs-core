@@ -4,7 +4,7 @@
   }
   Order previousOrder=order.getPreviousOrder();
   if (previousOrder != null) {
-    stopOrder(previousOrder,aMomentBefore(order.getDateActivated()));
+    stopOrder(previousOrder,aMomentBefore(order.getDateActivated()),false);
     return;
   }
   List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
@@ -36,6 +36,6 @@
   }
   if (orderToBeDiscontinued != null) {
     order.setPreviousOrder(orderToBeDiscontinued);
-    stopOrder(orderToBeDiscontinued,aMomentBefore(order.getDateActivated()));
+    stopOrder(orderToBeDiscontinued,aMomentBefore(order.getDateActivated()),false);
   }
 }
