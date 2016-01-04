@@ -2,6 +2,7 @@
   Concept c=new Concept();
   ConceptName fullySpecifiedName=new ConceptName("requires one name min",new Locale("fr","CA"));
   c.addName(fullySpecifiedName);
+  c.addDescription(new ConceptDescription("some description",null));
   Concept savedC=Context.getConceptService().saveConcept(c);
   assertNotNull(savedC);
   Concept updatedC=Context.getConceptService().saveConcept(c);

@@ -4,6 +4,7 @@
   ConceptName cn=new ConceptName("new name",Context.getLocale());
   concept.setConceptClass(cs.getConceptClass(19));
   concept.addName(cn);
+  concept.addDescription(new ConceptDescription("some description",null));
   cs.saveConcept(concept);
   OrderFrequency orderFrequency=new OrderFrequency();
   orderFrequency.setConcept(concept);

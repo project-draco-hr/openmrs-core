@@ -9,6 +9,7 @@
   concept.addName(new ConceptName("name4",Locale.FRENCH));
   concept.addName(new ConceptName("name5",Locale.JAPANESE));
   concept.addName(new ConceptName("name6",Locale.JAPANESE));
+  concept.addDescription(new ConceptDescription("some description",null));
   concept=Context.getConceptService().saveConcept(concept);
   Assert.assertNotNull(concept.getPreferredName(Locale.ENGLISH));
   Assert.assertNotNull(concept.getPreferredName(Locale.FRENCH));

@@ -7,12 +7,14 @@
   Concept c1=new Concept();
   ConceptName cn1a=new ConceptName("ONE TERM",locale);
   c1.addName(cn1a);
+  c1.addDescription(new ConceptDescription("some description",null));
   c1.setConceptClass(cc1);
   c1.setDatatype(dt);
   cs.saveConcept(c1);
   Concept c2=new Concept();
   ConceptName cn2a=new ConceptName("ONE TO MANY",locale);
   c2.addName(cn2a);
+  c2.addDescription(new ConceptDescription("some description",null));
   c2.setConceptClass(cc3);
   c2.setDatatype(dt);
   cs.saveConcept(c2);
