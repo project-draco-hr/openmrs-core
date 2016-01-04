@@ -8,7 +8,10 @@
   if (DISCONTINUE == orderToStop.getAction()) {
     throw new APIException("Order.action.cannot.discontinued",new Object[]{DISCONTINUE});
   }
-  if (!orderToStop.isActive()) {
+  if (isRetrospective && !orderToStop.isActive(orderToStop.getDateActivated())) {
+    throw new APIException("Order.retrospective.stopped.cannot.discontinued");
+  }
+ else   if (!isRetrospective && !orderToStop.isActive()) {
     throw new APIException("Order.stopped.cannot.discontinued");
   }
   setProperty(orderToStop,"dateStopped",discontinueDate);

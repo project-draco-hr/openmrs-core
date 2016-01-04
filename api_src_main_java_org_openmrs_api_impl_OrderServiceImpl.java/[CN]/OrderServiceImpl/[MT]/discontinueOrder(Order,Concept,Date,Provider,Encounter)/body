@@ -2,7 +2,7 @@
   if (discontinueDate == null) {
     discontinueDate=aMomentBefore(new Date());
   }
-  stopOrder(orderToDiscontinue,discontinueDate);
+  stopOrder(orderToDiscontinue,discontinueDate,false);
   Order newOrder=orderToDiscontinue.cloneForDiscontinuing();
   newOrder.setOrderReason(reasonCoded);
   newOrder.setOrderer(orderer);
