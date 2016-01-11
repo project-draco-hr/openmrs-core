@@ -60,7 +60,7 @@
     stopOrder(previousOrder,aMomentBefore(order.getDateActivated()),isRetrospective);
   }
  else   if (DISCONTINUE == order.getAction()) {
-    discontinueExistingOrdersIfNecessary(order);
+    discontinueExistingOrdersIfNecessary(order,isRetrospective);
   }
   if (previousOrder != null) {
     boolean isPreviousDrugOrder=DrugOrder.class.isAssignableFrom(previousOrder.getClass());
