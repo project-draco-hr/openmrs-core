@@ -1,0 +1,13 @@
+{
+  if (isDaemonThread()) {
+    User user=daemonThreadUser.get();
+    if (user == null) {
+      user=Context.getContextDAO().getUserByUuid(DAEMON_USER_UUID);
+      daemonThreadUser.set(user);
+    }
+    return user;
+  }
+ else {
+    return null;
+  }
+}
