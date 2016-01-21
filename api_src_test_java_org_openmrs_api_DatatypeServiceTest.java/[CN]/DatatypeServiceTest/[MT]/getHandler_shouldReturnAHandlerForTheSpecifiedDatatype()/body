@@ -1,0 +1,5 @@
+{
+  DatatypeService service=Context.getDatatypeService();
+  CustomDatatype dateDatatype=CustomDatatypeUtil.getDatatype(DateDatatype.class.getName(),null);
+  Assert.assertEquals(DateDatatypeHandler.class,service.getHandler(dateDatatype,null).getClass());
+}
