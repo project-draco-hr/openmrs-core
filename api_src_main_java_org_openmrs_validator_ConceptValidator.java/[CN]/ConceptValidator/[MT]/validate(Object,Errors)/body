@@ -109,5 +109,12 @@
       index++;
     }
   }
+  if (CollectionUtils.isNotEmpty(conceptToValidate.getAnswers())) {
+    for (    ConceptAnswer conceptAnswer : conceptToValidate.getAnswers()) {
+      if (conceptAnswer.getAnswerConcept().equals(conceptToValidate)) {
+        errors.reject("Concept.contains.itself.as.answer");
+      }
+    }
+  }
   ValidateUtil.validateFieldLengths(errors,obj.getClass(),"version","retireReason");
 }

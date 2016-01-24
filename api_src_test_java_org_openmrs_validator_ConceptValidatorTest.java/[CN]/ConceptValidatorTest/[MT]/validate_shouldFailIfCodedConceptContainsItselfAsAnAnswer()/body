@@ -1,0 +1,8 @@
+{
+  Concept concept=Context.getConceptService().getConcept(30);
+  ConceptAnswer conceptAnswer=new ConceptAnswer(concept);
+  concept.addAnswer(conceptAnswer);
+  Errors errors=new BindException(concept,"concept");
+  new ConceptValidator().validate(concept,errors);
+  Assert.assertEquals(true,errors.hasErrors());
+}
