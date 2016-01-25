@@ -7,7 +7,11 @@
     stopOrder(previousOrder,aMomentBefore(order.getDateActivated()),isRetrospective);
     return;
   }
-  List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),null);
+  Date asOfDate=null;
+  if (isRetrospective) {
+    asOfDate=order.getDateActivated();
+  }
+  List<? extends Order> orders=getActiveOrders(order.getPatient(),order.getOrderType(),order.getCareSetting(),asOfDate);
   boolean isDrugOrderAndHasADrug=DrugOrder.class.isAssignableFrom(getActualType(order)) && (((DrugOrder)order).getDrug() != null || ((DrugOrder)order).isNonCodedDrug());
   Order orderToBeDiscontinued=null;
   for (  Order activeOrder : orders) {

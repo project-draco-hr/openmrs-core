@@ -1,0 +1,27 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-ordersWithAutoExpireDate.xml");
+  Date newOrderDateActivated=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2008-11-19 13:00:10");
+  final Patient patient=patientService.getPatient(12);
+  final Concept orderConcept=conceptService.getConcept(88);
+  DrugOrder duplicateOrder=(DrugOrder)orderService.getOrder(202);
+  assertTrue(duplicateOrder.isActive(newOrderDateActivated));
+  assertEquals(orderConcept,duplicateOrder.getConcept());
+  DrugOrder order=new DrugOrder();
+  order.setPatient(patient);
+  order.setConcept(orderConcept);
+  order.setEncounter(encounterService.getEncounter(17));
+  order.setOrderer(providerService.getProvider(1));
+  order.setCareSetting(duplicateOrder.getCareSetting());
+  order.setDateActivated(newOrderDateActivated);
+  order.setDrug(duplicateOrder.getDrug());
+  order.setDose(duplicateOrder.getDose());
+  order.setDoseUnits(duplicateOrder.getDoseUnits());
+  order.setRoute(duplicateOrder.getRoute());
+  order.setFrequency(duplicateOrder.getFrequency());
+  order.setQuantity(duplicateOrder.getQuantity());
+  order.setQuantityUnits(duplicateOrder.getQuantityUnits());
+  order.setNumRefills(duplicateOrder.getNumRefills());
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot have more than one active order for the same orderable and care setting");
+  orderService.saveRetrospectiveOrder(order,null);
+}

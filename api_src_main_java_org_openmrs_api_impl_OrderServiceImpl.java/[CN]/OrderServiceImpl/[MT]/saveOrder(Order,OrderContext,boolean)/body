@@ -98,7 +98,11 @@
     }
   }
   if (DISCONTINUE != order.getAction()) {
-    List<Order> activeOrders=getActiveOrders(order.getPatient(),null,order.getCareSetting(),null);
+    Date asOfDate=new Date();
+    if (isRetrospective) {
+      asOfDate=order.getDateActivated();
+    }
+    List<Order> activeOrders=getActiveOrders(order.getPatient(),null,order.getCareSetting(),asOfDate);
     List<String> parallelOrders=Collections.emptyList();
     if (orderContext != null && orderContext.getAttribute(PARALLEL_ORDERS) != null) {
       parallelOrders=Arrays.asList((String[])orderContext.getAttribute(PARALLEL_ORDERS));

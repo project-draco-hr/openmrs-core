@@ -1,0 +1,13 @@
+{
+  executeDataSet("org/openmrs/api/include/OrderServiceTest-ordersWithAutoExpireDate.xml");
+  Order previousOrder=orderService.getOrder(203);
+  Date dateActivated=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse("2008-10-19 13:00:00");
+  Order order=previousOrder.cloneForRevision();
+  order.setDateActivated(dateActivated);
+  order.setOrderer(providerService.getProvider(1));
+  order.setEncounter(encounterService.getEncounter(18));
+  order.setPreviousOrder(previousOrder);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Order.retrospective.stopped.cannot.discontinued");
+  orderService.saveRetrospectiveOrder(order,null);
+}
