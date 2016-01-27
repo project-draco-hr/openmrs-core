@@ -1,5 +1,6 @@
 {
   List<URL> result=new LinkedList<URL>();
+  List<String> devFolderNames=new ArrayList<String>();
   File devDir=ModuleUtil.getDevelopmentDirectory(module.getModuleId());
   try {
     if (devDir != null) {
@@ -11,6 +12,7 @@
         File dir=new File(devDir,file.getName() + File.separator + "target"+ File.separator+ "classes"+ File.separator);
         if (dir.exists()) {
           result.add(dir.toURI().toURL());
+          devFolderNames.add(file.getName());
         }
       }
     }
@@ -77,7 +79,14 @@
       Collection<File> files=(Collection<File>)FileUtils.listFiles(libdir,new String[]{"jar"},true);
       for (      File file : files) {
         if (devDir != null) {
-          if (file.getName().equals(module.getModuleId() + "-api-" + module.getVersion()+ ".jar")) {
+          boolean jarForDevFolder=false;
+          for (          String folderName : devFolderNames) {
+            if (file.getName().startsWith(module.getModuleId() + "-" + folderName+ "-")) {
+              jarForDevFolder=true;
+              break;
+            }
+          }
+          if (jarForDevFolder) {
             continue;
           }
         }
