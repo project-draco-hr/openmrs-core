@@ -3,6 +3,7 @@
   ConceptNumeric cn=new ConceptNumeric(1);
   cn.setDatatype(new ConceptDatatype(1));
   cn.addName(new ConceptName("a new conceptnumeric",Locale.US));
+  cn.addDescription(new ConceptDescription("some description",null));
   cn.setHiAbsolute(20.0);
   conceptService.saveConcept(cn);
   Concept firstConcept=conceptService.getConceptNumeric(1);
@@ -13,6 +14,7 @@
   ConceptComplex cn2=new ConceptComplex(1);
   cn2.setDatatype(new ConceptDatatype(13));
   cn2.addName(new ConceptName("a new conceptComplex",Locale.US));
+  cn2.addDescription(new ConceptDescription("some description",null));
   cn2.setHandler("SomeHandler");
   conceptService.saveConcept(cn2);
   firstConcept=conceptService.getConceptComplex(1);
@@ -25,6 +27,7 @@
   dt.setName("Numeric");
   cn.setDatatype(dt);
   cn.addName(new ConceptName("a new conceptnumeric",Locale.US));
+  cn.addDescription(new ConceptDescription("some description",null));
   cn.setHiAbsolute(20.0);
   conceptService.saveConcept(cn);
   firstConcept=conceptService.getConceptNumeric(1);
@@ -35,6 +38,7 @@
   cn2=new ConceptComplex(1);
   cn2.setDatatype(new ConceptDatatype(13));
   cn2.addName(new ConceptName("a new conceptComplex",Locale.US));
+  cn2.addDescription(new ConceptDescription("some description",null));
   cn2.setHandler("SomeHandler");
   conceptService.saveConcept(cn2);
   firstConcept=conceptService.getConceptComplex(1);

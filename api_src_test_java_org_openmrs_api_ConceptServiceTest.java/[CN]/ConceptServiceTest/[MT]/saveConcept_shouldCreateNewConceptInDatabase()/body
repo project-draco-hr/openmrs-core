@@ -3,6 +3,7 @@
   Concept conceptToAdd=new Concept();
   ConceptName cn=new ConceptName("new name",Context.getLocale());
   conceptToAdd.addName(cn);
+  conceptToAdd.addDescription(new ConceptDescription("some description",null));
   assertFalse(conceptService.getAllConcepts().contains(conceptToAdd));
   conceptService.saveConcept(conceptToAdd);
   assertTrue(conceptService.getAllConcepts().contains(conceptToAdd));

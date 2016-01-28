@@ -9,6 +9,7 @@
   Concept frequencyConcept=expectedOrderFrequency.getConcept();
   final String newConceptName=searchPhrase + " A Day";
   frequencyConcept.addName(new ConceptName(newConceptName,locale));
+  frequencyConcept.addDescription(new ConceptDescription("some description",null));
   conceptService.saveConcept(frequencyConcept);
   orderFrequencies=orderService.getOrderFrequencies(searchPhrase,locale,true,false);
   assertEquals(1,orderFrequencies.size());

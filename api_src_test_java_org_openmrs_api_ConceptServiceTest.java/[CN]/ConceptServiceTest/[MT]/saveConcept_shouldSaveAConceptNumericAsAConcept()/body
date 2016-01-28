@@ -4,6 +4,7 @@
   Concept c2=new Concept(2);
   ConceptName cn=new ConceptName("not a numeric anymore",Locale.US);
   c2.addName(cn);
+  c2.addDescription(new ConceptDescription("some description",null));
   c2.setDatatype(new ConceptDatatype(3));
   conceptService.saveConcept(c2);
   Concept secondConcept=conceptService.getConcept(2);

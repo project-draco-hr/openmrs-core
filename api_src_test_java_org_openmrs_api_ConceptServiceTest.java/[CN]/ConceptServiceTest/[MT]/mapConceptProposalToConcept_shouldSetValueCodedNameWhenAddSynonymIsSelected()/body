@@ -6,6 +6,7 @@
   final String finalText="Weight synonym";
   Assert.assertTrue(Context.getObsService().getObservationsByPersonAndConcept(cp.getEncounter().getPatient(),civilStatusConcept).isEmpty());
   Concept mappedConcept=conceptService.getConcept(mappedConceptId);
+  mappedConcept.addDescription(new ConceptDescription("some description",Context.getLocale()));
   cp.setFinalText(finalText);
   cp.setObsConcept(civilStatusConcept);
   cp.setState(OpenmrsConstants.CONCEPT_PROPOSAL_SYNONYM);

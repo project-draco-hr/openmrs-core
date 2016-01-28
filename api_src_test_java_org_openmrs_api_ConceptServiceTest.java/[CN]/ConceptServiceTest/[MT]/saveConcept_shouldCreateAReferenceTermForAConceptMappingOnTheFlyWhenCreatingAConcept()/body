@@ -5,6 +5,7 @@
   ConceptMap map=new ConceptMap();
   map.getConceptReferenceTerm().setCode("unique code");
   map.getConceptReferenceTerm().setConceptSource(conceptService.getConceptSource(1));
+  concept.addDescription(new ConceptDescription("some description",null));
   concept.addConceptMapping(map);
   conceptService.saveConcept(concept);
   Assert.assertNotNull(concept.getId());

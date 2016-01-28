@@ -2,10 +2,16 @@
   Concept concept=conceptService.getConcept(3);
   Assert.assertNull(concept.getDateChanged());
   Assert.assertNull(concept.getChangedBy());
-  ConceptDescription description=concept.getDescription();
-  Assert.assertNotNull(description);
-  Assert.assertTrue(concept.removeDescription(description));
+  Concept concept1=conceptService.getConcept(5);
+  ConceptAnswer conceptanswer=new ConceptAnswer(concept1);
+  concept.addAnswer(conceptanswer);
   conceptService.saveConcept(concept);
   Assert.assertNotNull(concept.getDateChanged());
+  Date date=concept.getDateChanged();
+  Assert.assertTrue(concept.removeAnswer(conceptanswer));
+  conceptService.saveConcept(concept);
+  Assert.assertNotNull(concept.getDateChanged());
+  Date date1=concept.getDateChanged();
+  Assert.assertFalse(date.equals(date1));
   Assert.assertNotNull(concept.getChangedBy());
 }

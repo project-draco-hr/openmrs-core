@@ -1,6 +1,7 @@
 {
   executeDataSet("org/openmrs/api/include/ConceptServiceTest-names.xml");
   Concept concept=conceptService.getConcept(3000);
+  concept.addDescription(new ConceptDescription("some description",null));
   Assert.assertFalse(concept.getSynonyms().isEmpty());
   concept.removeName(concept.getSynonyms().iterator().next());
   conceptService.saveConcept(concept);

@@ -2,6 +2,7 @@
   Concept concept=new Concept();
   ConceptService cs=Context.getConceptService();
   concept.addName(new ConceptName("my name",Context.getLocale()));
+  concept.addDescription(new ConceptDescription("some description",null));
   ConceptMap map1=new ConceptMap(cs.getConceptReferenceTerm(1),cs.getConceptMapType(1));
   concept.addConceptMapping(map1);
   ConceptMap map2=new ConceptMap(cs.getConceptReferenceTerm(1),cs.getConceptMapType(1));
