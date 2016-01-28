@@ -1,0 +1,5 @@
+{
+  SessionFactory sessionFactory=(SessionFactory)applicationContext.getBean("sessionFactory");
+  Session session=sessionFactory.getCurrentSession();
+  Assert.assertFalse((session.load(Patient.class,2)).equals((session.load(Concept.class,11))));
+}

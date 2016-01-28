@@ -1,0 +1,7 @@
+{
+  Order order=new Order(21);
+  OrderFrequency type=new OrderFrequency();
+  type.setUuid(order.getUuid());
+  Assert.assertFalse(type.equals(order));
+  Assert.assertFalse(order.equals(type));
+}

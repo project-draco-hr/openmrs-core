@@ -1,0 +1,7 @@
+{
+  Encounter encounter=new Encounter();
+  Concept concept=new Concept(5);
+  concept.setUuid(encounter.getUuid());
+  Assert.assertFalse(encounter.equals(concept));
+  Assert.assertFalse(concept.equals(encounter));
+}
