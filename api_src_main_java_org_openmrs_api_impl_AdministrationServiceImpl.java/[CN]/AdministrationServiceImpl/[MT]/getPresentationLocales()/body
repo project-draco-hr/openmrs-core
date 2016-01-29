@@ -1,6 +1,6 @@
 {
   if (presentationLocales == null) {
-    presentationLocales=new HashSet<Locale>();
+    presentationLocales=new LinkedHashSet<Locale>();
     Collection<Locale> messageLocales=Context.getMessageSourceService().getLocales();
     List<Locale> allowedLocales=getAllowedLocales();
     for (    Locale locale : allowedLocales) {
