@@ -1,5 +1,5 @@
 {
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("ConceptSource.is.required");
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("ConceptSource.is.required"));
   conceptService.getDrugByMapping("random",null,null);
 }

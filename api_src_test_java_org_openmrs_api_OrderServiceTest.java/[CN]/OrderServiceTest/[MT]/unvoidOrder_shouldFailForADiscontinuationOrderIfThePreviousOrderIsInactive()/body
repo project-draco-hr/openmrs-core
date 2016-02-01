@@ -10,6 +10,6 @@
   orderService.discontinueOrder(previousOrder,"Testing",null,previousOrder.getOrderer(),previousOrder.getEncounter());
   Thread.sleep(10);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Order.action.cannot.unvoid");
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("Order.action.cannot.unvoid",new Object[]{"discontinuation"},null));
   orderService.unvoidOrder(order);
 }

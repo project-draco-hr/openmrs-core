@@ -5,6 +5,6 @@
   assertFalse(user.hasPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS));
   Context.authenticate(user.getUsername(),"userServiceTest");
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("secret.answer.not.correct");
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("secret.answer.not.correct"));
   userService.changePasswordUsingSecretAnswer("wrong answer","userServiceTest2");
 }

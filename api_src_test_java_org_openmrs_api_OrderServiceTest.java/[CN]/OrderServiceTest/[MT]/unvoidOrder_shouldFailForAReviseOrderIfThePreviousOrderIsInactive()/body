@@ -13,6 +13,6 @@
   orderService.saveOrder(revise,null);
   Thread.sleep(10);
   expectedException.expect(APIException.class);
-  expectedException.expectMessage("Order.action.cannot.unvoid");
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("Order.action.cannot.unvoid",new Object[]{"revision"},null));
   orderService.unvoidOrder(order);
 }

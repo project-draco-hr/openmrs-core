@@ -1,5 +1,5 @@
 {
   thrown.expect(APIException.class);
-  thrown.expectMessage("handler.type.not.found");
+  thrown.expectMessage(Context.getMessageSourceService().getMessage("handler.type.not.found",new Object[]{Validator.class.toString(),Integer.class},null));
   HandlerUtil.getPreferredHandler(Validator.class,Integer.class);
 }

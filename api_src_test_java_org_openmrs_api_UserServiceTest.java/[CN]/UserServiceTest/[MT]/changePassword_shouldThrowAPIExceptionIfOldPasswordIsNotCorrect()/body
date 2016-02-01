@@ -6,6 +6,6 @@
   String newPassword="newPasswordString";
   Context.authenticate(user6001.getUsername(),"userServiceTest");
   expectedException.expect(APIAuthenticationException.class);
-  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.privilegesRequired"));
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.privilegesRequired",new Object[]{PrivilegeConstants.EDIT_USER_PASSWORDS},null));
   userService.changePassword(user6001,wrongPassword,newPassword);
 }

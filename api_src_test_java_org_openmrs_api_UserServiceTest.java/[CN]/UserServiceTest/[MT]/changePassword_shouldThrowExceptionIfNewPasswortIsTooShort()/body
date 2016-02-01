@@ -4,6 +4,6 @@
   User user6001=userService.getUser(6001);
   String oldPassword="userServiceTest";
   String weakPassword="weak";
-  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.password.length"));
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.password.length",new Object[]{"8"},null));
   userService.changePassword(user6001,oldPassword,weakPassword);
 }

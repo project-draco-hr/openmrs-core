@@ -5,6 +5,6 @@
   assertFalse(user.hasPrivilege(PrivilegeConstants.EDIT_USER_PASSWORDS));
   Context.authenticate(user.getUsername(),"userServiceTest");
   expectedException.expect(APIAuthenticationException.class);
-  expectedException.expectMessage("error.privilegesRequired");
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("error.privilegesRequired",new Object[]{PrivilegeConstants.EDIT_USER_PASSWORDS},null));
   userService.changePassword(user,"testTest123");
 }

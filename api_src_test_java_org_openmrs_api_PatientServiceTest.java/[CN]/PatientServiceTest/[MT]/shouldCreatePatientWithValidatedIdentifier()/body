@@ -16,7 +16,7 @@
  catch (  InvalidCheckDigitException ex) {
   }
 catch (  APIException e) {
-    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: PatientIdentifier.error.checkDigitWithParameter"))) {
+    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: " + Context.getMessageSourceService().getMessage("PatientIdentifier.error.checkDigitWithParameter",new Object[]{ident1.getIdentifier()},null)))) {
       fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
     }
   }
@@ -30,8 +30,8 @@ catch (  APIException e) {
  catch (  InvalidCheckDigitException ex) {
   }
 catch (  APIException e) {
-    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: PatientIdentifier.error.unallowedIdentifier"))) {
-      fail("Patient creation should have failed with identifier " + ident1.getIdentifier());
+    if (!(e.getMessage() != null && e.getMessage().contains("failed to validate with reason: " + Context.getMessageSourceService().getMessage("PatientIdentifier.error.unallowedIdentifier",new Object[]{ident2.getIdentifier(),new LuhnIdentifierValidator().getName()},null)))) {
+      fail("Patient creation should have failed with identifier " + ident2.getIdentifier());
     }
   }
   patient.removeIdentifier(ident2);
