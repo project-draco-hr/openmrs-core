@@ -1,16 +1,17 @@
 {
   this.resources=new HashMap<Locale,ResourceBundle>();
   this.availablelocales=new HashSet<Locale>();
-  String basePath=null;
-  if (httpRequest != null) {
-    basePath=httpRequest.getSession().getServletContext().getRealPath("/WEB-INF");
+  try {
+    PathMatchingResourcePatternResolver patternResolver=new PathMatchingResourcePatternResolver();
+    Resource[] localResources=patternResolver.getResources("classpath*:messages*.properties");
+    for (    Resource localeResource : localResources) {
+      Locale locale=parseLocaleFrom(localeResource.getFilename(),PREFIX);
+      ResourceBundle rb=new PropertyResourceBundle(new InputStreamReader(localeResource.getInputStream(),"UTF-8"));
+      getResource().put(locale,rb);
+      getAvailablelocales().add(locale);
+    }
   }
-  File basedir=null;
-  if (StringUtils.isBlank(basePath)) {
-    basedir=new File(getClass().getClassLoader().getResource("").getPath()).getParentFile();
+ catch (  IOException ex) {
+    log.error(ex.getMessage(),ex);
   }
- else {
-    basedir=new File(basePath);
-  }
-  loadResources(basedir.getAbsolutePath());
 }
