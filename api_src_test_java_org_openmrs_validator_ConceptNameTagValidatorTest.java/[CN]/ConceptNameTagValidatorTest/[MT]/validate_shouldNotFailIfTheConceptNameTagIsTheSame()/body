@@ -1,0 +1,9 @@
+{
+  String objectName="duplicate concept name tag";
+  ConceptNameTag existing=Context.getConceptService().getConceptNameTag(1);
+  ConceptNameTag cnt=existing;
+  Errors errors=new BindException(cnt,objectName);
+  new ConceptNameTagValidator().validate(cnt,errors);
+  Assert.assertFalse(errors.hasErrors());
+  Assert.assertEquals(false,errors.hasFieldErrors("tag"));
+}
