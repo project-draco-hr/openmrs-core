@@ -1,6 +1,6 @@
 {
   Allergy allergy=new Allergy();
-  allergy.setAllergen(new Allergen(null,createMockConcept(Allergen.OTHER_NON_CODED_UUID),null));
+  allergy.setAllergen(new Allergen(null,createMockConcept(getOtherNonCodedConceptUuid()),null));
   Errors errors=new BindException(allergy,"allergy");
   validator.validate(allergy,errors);
   assertTrue(errors.hasFieldErrors("allergen"));
