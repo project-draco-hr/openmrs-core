@@ -34,10 +34,10 @@
   assertEquals(comment,obsSaved.getComment());
   assertEquals(concept,obsSaved.getConcept());
   assertEquals(encounter,obsSaved.getEncounter());
-  assertEquals(datetime,obsSaved.getObsDatetime());
+  assertEquals(DateUtil.truncateToSeconds(datetime),obsSaved.getObsDatetime());
   assertEquals(location,obsSaved.getLocation());
   assertEquals(valueGroupId,obsSaved.getValueGroupId());
-  assertEquals(valueDatetime,obsSaved.getValueDatetime());
+  assertEquals(DateUtil.truncateToSeconds(valueDatetime),obsSaved.getValueDatetime());
   assertEquals(valueCoded,obsSaved.getValueCoded());
   assertEquals(valueNumeric,obsSaved.getValueNumeric());
   assertEquals(valueModifier,obsSaved.getValueModifier());

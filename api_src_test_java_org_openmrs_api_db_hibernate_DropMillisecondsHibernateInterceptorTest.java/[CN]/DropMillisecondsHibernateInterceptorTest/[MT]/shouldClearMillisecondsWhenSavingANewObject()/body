@@ -1,0 +1,11 @@
+{
+  Date dateWithMillisecond=new Date(567l);
+  Date dateWithoutMillisecond=new Date(0l);
+  Person person=new Person();
+  person.addName(new PersonName("Alice",null,"Paul"));
+  person.setGender("F");
+  person.setBirthdate(dateWithMillisecond);
+  personService.savePerson(person);
+  Context.flushSession();
+  assertThat(person.getBirthdate(),is(dateWithoutMillisecond));
+}

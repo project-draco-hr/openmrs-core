@@ -15,7 +15,7 @@
   order=orderService.saveOrder(order,null);
   Order newOrder=orderService.getOrder(order.getOrderId());
   assertNotNull(order);
-  assertEquals(scheduledDate,order.getScheduledDate());
+  assertEquals(DateUtil.truncateToSeconds(scheduledDate),order.getScheduledDate());
   assertNotNull(newOrder);
-  assertEquals(scheduledDate,newOrder.getScheduledDate());
+  assertEquals(DateUtil.truncateToSeconds(scheduledDate),newOrder.getScheduledDate());
 }

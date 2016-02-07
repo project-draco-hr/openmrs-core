@@ -10,5 +10,5 @@
   order.setAutoExpireDate(dateformat.parse("18/08/2014"));
   orderService.saveOrder(order,null);
   dateformat=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.S");
-  assertEquals(dateformat.parse("18/08/2014 23:59:59.999"),order.getAutoExpireDate());
+  assertEquals(dateformat.parse("18/08/2014 23:59:59.000"),order.getAutoExpireDate());
 }
