@@ -27,9 +27,9 @@
   assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
   encounterService.saveEncounter(encounter);
   Obs createdObs=Context.getObsService().getObs(obs.getObsId());
-  assertEquals(date,createdObs.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),createdObs.getDateCreated());
   assertEquals(creator,createdObs.getCreator());
   Order createdOrder=os.getOrder(order.getOrderId());
-  assertEquals(date,createdOrder.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),createdOrder.getDateCreated());
   assertEquals(creator,createdOrder.getCreator());
 }

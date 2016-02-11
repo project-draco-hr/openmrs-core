@@ -6,5 +6,5 @@
   newConceptSource.setHl7Code("hl7Code");
   newConceptSource.setDateCreated(expectedDate);
   Context.getConceptService().saveConceptSource(newConceptSource);
-  Assert.assertEquals(newConceptSource.getDateCreated(),expectedDate);
+  Assert.assertEquals(DateUtil.truncateToSeconds(expectedDate),newConceptSource.getDateCreated());
 }

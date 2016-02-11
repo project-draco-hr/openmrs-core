@@ -7,8 +7,8 @@
   encounterService.saveEncounter(encounter);
   assertEquals(4,encounter.getCreator().getId().intValue());
   assertNotSame(encounter.getCreator(),Context.getAuthenticatedUser());
-  assertEquals(date,encounter.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),encounter.getDateCreated());
   Encounter newEncounter=encounterService.getEncounter(encounter.getEncounterId());
   assertNotNull(newEncounter);
-  assertEquals(date,encounter.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),encounter.getDateCreated());
 }

@@ -6,8 +6,8 @@
   Date date=new Date(System.currentTimeMillis() - 5000);
   encounterType.setDateCreated(date);
   encounterService.saveEncounterType(encounterType);
-  assertEquals(date,encounterType.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),encounterType.getDateCreated());
   EncounterType newEncounterType=encounterService.getEncounterType(encounterType.getEncounterTypeId());
   assertNotNull(newEncounterType);
-  assertEquals(date,encounterType.getDateCreated());
+  assertEquals(DateUtil.truncateToSeconds(date),encounterType.getDateCreated());
 }

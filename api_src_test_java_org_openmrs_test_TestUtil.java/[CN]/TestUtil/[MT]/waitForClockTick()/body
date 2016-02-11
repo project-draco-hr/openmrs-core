@@ -1,8 +1,8 @@
 {
-  long t=System.currentTimeMillis();
-  while (System.currentTimeMillis() == t) {
+  long t=System.currentTimeMillis() / 1000;
+  while (System.currentTimeMillis() / 1000 == t) {
     try {
-      Thread.sleep(1);
+      Thread.sleep(100);
     }
  catch (    InterruptedException ex) {
     }

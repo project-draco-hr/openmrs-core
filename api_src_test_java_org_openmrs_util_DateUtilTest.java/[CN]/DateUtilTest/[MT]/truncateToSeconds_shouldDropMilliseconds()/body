@@ -1,0 +1,6 @@
+{
+  Date withMilliseconds=new Date(123l);
+  Date withoutMilliseconds=new Date(0l);
+  assertThat(DateUtil.truncateToSeconds(withMilliseconds),is(withoutMilliseconds));
+  assertThat(DateUtil.truncateToSeconds(withoutMilliseconds),is(withoutMilliseconds));
+}
