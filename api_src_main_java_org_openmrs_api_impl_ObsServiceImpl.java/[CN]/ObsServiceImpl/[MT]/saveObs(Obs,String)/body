@@ -35,6 +35,10 @@
       Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
       Context.evictFromSession(obs);
       obs=Context.getObsService().getObs(obs.getObsId());
+      if (newObs.hasPreviousVersion() && newObs.isComplex()) {
+        File previousFile=new AbstractHandler().getComplexDataFile(obs);
+        previousFile.delete();
+      }
       Context.getObsService().voidObs(obs,changeMessage);
     }
   finally {
