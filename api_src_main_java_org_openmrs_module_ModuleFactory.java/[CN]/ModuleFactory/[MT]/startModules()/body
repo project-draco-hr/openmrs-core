@@ -7,13 +7,6 @@
         if (mod.isStarted()) {
           continue;
         }
-        if (!requiredModulesStarted(mod)) {
-          String message=getFailedToStartModuleMessage(mod);
-          log.error(message);
-          mod.setStartupErrorMessage(message);
-          notifySuperUsersAboutModuleFailure(mod);
-          continue;
-        }
         try {
           if (log.isDebugEnabled()) {
             log.debug("starting module: " + mod.getModuleId());

@@ -1,0 +1,9 @@
+{
+  Module test1=loadModule(MODULE1_PATH,MODULE1,true);
+  Module test2=loadModule(MODULE2_PATH,MODULE2,true);
+  ModuleFactory.startModule(test2);
+  Assert.assertNotNull(ModuleFactory.getStartedModuleById("test1"));
+  Assert.assertNotNull(ModuleFactory.getStartedModuleById("test2"));
+  Assert.assertTrue(test1.isStarted());
+  Assert.assertTrue(test2.isStarted());
+}
