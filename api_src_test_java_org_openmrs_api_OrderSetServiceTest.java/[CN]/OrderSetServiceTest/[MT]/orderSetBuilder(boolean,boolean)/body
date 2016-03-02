@@ -1,0 +1,20 @@
+{
+  OrderSet orderSet=new OrderSet();
+  orderSet.setName("Test Order Set");
+  orderSet.setDescription("Test Order Set Description");
+  orderSet.setOperator(OrderSet.Operator.ALL);
+  OrderSetMember orderSetMember=new OrderSetMember();
+  orderSetMember.setOrderType(orderService.getOrderType(100));
+  orderSetMember.setConcept(conceptService.getConcept(1000));
+  orderSetMember.setCreator(new User(1));
+  orderSetMember.setDateCreated(new Date());
+  orderSetMember.setRetired(orderSetMemberRetired);
+  orderSetMember.setOrderSet(orderSet);
+  List<OrderSetMember> orderSetMembers=new ArrayList<OrderSetMember>();
+  orderSetMembers.addAll(Arrays.asList(orderSetMember));
+  orderSet.setOrderSetMembers(orderSetMembers);
+  orderSet.setCreator(new User(1));
+  orderSet.setDateCreated(new Date());
+  orderSet.setRetired(orderSetRetired);
+  return orderSet;
+}

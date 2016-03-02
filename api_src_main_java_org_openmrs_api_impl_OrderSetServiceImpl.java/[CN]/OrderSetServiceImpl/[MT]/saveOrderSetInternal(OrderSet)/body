@@ -1,0 +1,12 @@
+{
+  if (CollectionUtils.isEmpty(orderSet.getOrderSetMembers())) {
+    return dao.save(orderSet);
+  }
+  for (  OrderSetMember orderSetMember : orderSet.getOrderSetMembers()) {
+    if (orderSetMember.isRetired()) {
+      orderSetMember.setRetiredBy(Context.getAuthenticatedUser());
+      orderSetMember.setDateRetired(new Date());
+    }
+  }
+  return dao.save(orderSet);
+}

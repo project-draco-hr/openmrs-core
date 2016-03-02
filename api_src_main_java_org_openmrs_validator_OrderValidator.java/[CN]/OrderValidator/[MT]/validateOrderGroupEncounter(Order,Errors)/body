@@ -1,0 +1,5 @@
+{
+  if (order.getOrderGroup() != null && !(order.getEncounter().equals(order.getOrderGroup().getEncounter()))) {
+    errors.rejectValue("encounter","Order.error.orderEncounterAndOrderGroupEncounterMismatch");
+  }
+}

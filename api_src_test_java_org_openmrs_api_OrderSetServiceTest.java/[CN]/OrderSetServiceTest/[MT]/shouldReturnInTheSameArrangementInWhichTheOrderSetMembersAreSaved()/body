@@ -1,0 +1,32 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet newOrderSet=new OrderSet();
+  newOrderSet.setOperator(OrderSet.Operator.ALL);
+  newOrderSet.setName("NewOrderSet");
+  newOrderSet.setDescription("New Order Set");
+  OrderSetMember firstOrderSetMember=new OrderSetMember();
+  firstOrderSetMember.setOrderType(orderService.getOrderType(100));
+  firstOrderSetMember.setConcept(conceptService.getConcept(1000));
+  firstOrderSetMember.setCreator(new User(1));
+  firstOrderSetMember.setDateCreated(new Date());
+  firstOrderSetMember.setRetired(false);
+  OrderSetMember secondOrderSetMember=new OrderSetMember();
+  secondOrderSetMember.setOrderType(orderService.getOrderType(100));
+  secondOrderSetMember.setConcept(conceptService.getConcept(1001));
+  secondOrderSetMember.setCreator(new User(1));
+  secondOrderSetMember.setDateCreated(new Date());
+  secondOrderSetMember.setRetired(false);
+  OrderSetMember thirdOrderSetMember=new OrderSetMember();
+  thirdOrderSetMember.setOrderType(orderService.getOrderType(100));
+  thirdOrderSetMember.setConcept(conceptService.getConcept(1001));
+  thirdOrderSetMember.setCreator(new User(1));
+  thirdOrderSetMember.setDateCreated(new Date());
+  thirdOrderSetMember.setRetired(false);
+  List<OrderSetMember> orderSetMembers=new ArrayList<OrderSetMember>(Arrays.asList(firstOrderSetMember,thirdOrderSetMember,secondOrderSetMember));
+  newOrderSet.setOrderSetMembers(orderSetMembers);
+  OrderSet savedOrderSet=orderSetService.saveOrderSet(newOrderSet);
+  Context.flushSession();
+  assertEquals(firstOrderSetMember.getUuid(),savedOrderSet.getOrderSetMembers().get(0).getUuid());
+  assertEquals(thirdOrderSetMember.getUuid(),savedOrderSet.getOrderSetMembers().get(1).getUuid());
+  assertEquals(secondOrderSetMember.getUuid(),savedOrderSet.getOrderSetMembers().get(2).getUuid());
+}

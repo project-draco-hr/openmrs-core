@@ -47,7 +47,10 @@
     }
   }
   dao.saveEncounter(encounter);
-  for (  Order o : encounter.getOrders()) {
+  for (  OrderGroup orderGroup : encounter.getOrderGroups()) {
+    Context.getOrderService().saveOrderGroup(orderGroup);
+  }
+  for (  Order o : encounter.getOrdersWithoutOrderGroups()) {
     if (o.getOrderId() == null) {
       Context.getOrderService().saveOrder(o,null);
     }

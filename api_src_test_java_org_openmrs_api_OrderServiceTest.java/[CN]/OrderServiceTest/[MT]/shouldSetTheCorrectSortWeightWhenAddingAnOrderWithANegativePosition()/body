@@ -1,0 +1,34 @@
+{
+  executeDataSet(ORDER_SET);
+  Encounter encounter=encounterService.getEncounter(3);
+  OrderSet orderSet=Context.getOrderSetService().getOrderSet(2000);
+  OrderGroup orderGroup=new OrderGroup();
+  orderGroup.setOrderSet(orderSet);
+  orderGroup.setPatient(encounter.getPatient());
+  orderGroup.setEncounter(encounter);
+  Order firstOrderWithOrderGroup=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Order secondOrderWithOrderGroup=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1001).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Set<Order> orders=new LinkedHashSet<Order>();
+  orders.add(firstOrderWithOrderGroup);
+  orders.add(secondOrderWithOrderGroup);
+  encounter.setOrders(orders);
+  for (  OrderGroup og : encounter.getOrderGroups()) {
+    if (og.getId() == null) {
+      Context.getOrderService().saveOrderGroup(og);
+    }
+  }
+  Context.flushSession();
+  OrderGroup savedOrderGroup=Context.getOrderService().getOrderGroupByUuid(orderGroup.getUuid());
+  Order newOrderWithNegativePosition=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(savedOrderGroup).build();
+  savedOrderGroup.addOrder(newOrderWithNegativePosition,-1);
+  Context.getOrderService().saveOrderGroup(savedOrderGroup);
+  Context.flushSession();
+  OrderGroup secondSavedOrderGroup=Context.getOrderService().getOrderGroupByUuid(orderGroup.getUuid());
+  assertEquals(3,secondSavedOrderGroup.getOrders().size());
+  assertEquals("The new order gets added at the last position",newOrderWithNegativePosition.getUuid(),secondSavedOrderGroup.getOrders().get(2).getUuid());
+  assertThat("The new order has a higher sortWeight than the second",secondSavedOrderGroup.getOrders().get(2).getSortWeight().compareTo(secondSavedOrderGroup.getOrders().get(1).getSortWeight()),is(1));
+  Order newOrderWithInvalidPosition=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(savedOrderGroup).build();
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot add a member which is out of range of the list");
+  secondSavedOrderGroup.addOrder(newOrderWithInvalidPosition,secondSavedOrderGroup.getOrders().size() + 1);
+}
