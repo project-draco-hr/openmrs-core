@@ -1,0 +1,34 @@
+{
+  Object fieldValue;
+  if (field.getType().equals(Boolean.class)) {
+    fieldValue=setAlternateValue ? true : false;
+  }
+ else   if (field.getType().equals(Integer.class)) {
+    fieldValue=setAlternateValue ? 10 : 17;
+  }
+ else   if (field.getType().equals(Double.class)) {
+    fieldValue=setAlternateValue ? 5.0 : 7.0;
+  }
+ else   if (field.getType().equals(Date.class)) {
+    fieldValue=new Date();
+    if (setAlternateValue) {
+      Calendar c=Calendar.getInstance();
+      c.add(Calendar.MINUTE,2);
+      fieldValue=c.getTime();
+    }
+  }
+ else   if (field.getType().equals(String.class)) {
+    fieldValue=setAlternateValue ? "old" : "new";
+  }
+ else   if (field.getType().equals(Person.class)) {
+    fieldValue=new Person(setAlternateValue ? 10 : 17);
+  }
+ else   if (field.getType().equals(ComplexData.class)) {
+    fieldValue=new ComplexData(setAlternateValue ? "some complex data" : "Some other value",new Object());
+  }
+ else {
+    fieldValue=field.getType().newInstance();
+  }
+  assertNotNull("Failed to generate a value for field: Obs." + field.getName());
+  return fieldValue;
+}

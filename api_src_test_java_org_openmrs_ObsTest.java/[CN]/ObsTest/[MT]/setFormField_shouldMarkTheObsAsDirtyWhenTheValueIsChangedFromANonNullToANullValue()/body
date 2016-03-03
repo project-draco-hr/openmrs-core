@@ -1,0 +1,10 @@
+{
+  Obs obs=new Obs();
+  obs.setFormField("someNameSpace","somePath");
+  resetObs(obs);
+  assertFalse(obs.isDirty());
+  assertNotNull(obs.getFormFieldNamespace());
+  assertNotNull(obs.getFormFieldPath());
+  obs.setFormField(null,null);
+  assertTrue(obs.isDirty());
+}

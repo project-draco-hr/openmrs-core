@@ -27,6 +27,7 @@
     mappedConcept.setChangedBy(Context.getAuthenticatedUser());
     mappedConcept.setDateChanged(new Date());
     ValidateUtil.validate(mappedConcept);
+    Context.getConceptService().saveConcept(mappedConcept);
   }
   cp.setMappedConcept(mappedConcept);
   if (cp.getObsConcept() != null) {
@@ -45,6 +46,7 @@
     if (ob.getUuid() == null) {
       ob.setUuid(UUID.randomUUID().toString());
     }
+    Context.getObsService().saveObs(ob,null);
     cp.setObs(ob);
   }
   return mappedConcept;

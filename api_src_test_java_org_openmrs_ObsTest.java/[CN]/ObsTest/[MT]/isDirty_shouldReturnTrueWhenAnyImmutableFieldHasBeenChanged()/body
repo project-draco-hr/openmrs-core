@@ -1,0 +1,24 @@
+{
+  List<Field> fields=Reflect.getAllFields(Obs.class);
+  Obs obs=createObs();
+  assertFalse(obs.isDirty());
+  final Integer originalPersonId=obs.getPersonId();
+  for (  Field field : fields) {
+    String fieldName=field.getName();
+    if (IGNORED_FIELDS.contains(fieldName)) {
+      continue;
+    }
+    if ("personId".equals(fieldName)) {
+      obs.setPersonId((Integer)generateValue(field,true));
+    }
+ else {
+      BeanUtils.setProperty(obs,fieldName,generateValue(field,true));
+    }
+    assertTrue("Obs was not marked as dirty after changing: " + fieldName,obs.isDirty());
+    if ("person".equals(fieldName)) {
+      obs.setPersonId(originalPersonId);
+    }
+    resetObs(obs);
+    assertFalse("Failed to rest Obs.dirty after testing field: " + fieldName,obs.isDirty());
+  }
+}
