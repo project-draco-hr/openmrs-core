@@ -10,6 +10,6 @@
   obs.setVoidReason("VoidReason");
   obs.setComment("comment");
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasErrors());
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasErrors());
 }

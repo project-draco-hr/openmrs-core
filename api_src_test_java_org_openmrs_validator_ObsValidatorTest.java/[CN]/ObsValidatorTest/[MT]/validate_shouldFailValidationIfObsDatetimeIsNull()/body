@@ -4,9 +4,9 @@
   obs.setConcept(Context.getConceptService().getConcept(5089));
   obs.setValueNumeric(1.0);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasFieldErrors("person"));
-  Assert.assertFalse(errors.hasFieldErrors("concept"));
-  Assert.assertTrue(errors.hasFieldErrors("obsDatetime"));
-  Assert.assertFalse(errors.hasFieldErrors("valueNumeric"));
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasFieldErrors("person"));
+  assertFalse(errors.hasFieldErrors("concept"));
+  assertTrue(errors.hasFieldErrors("obsDatetime"));
+  assertFalse(errors.hasFieldErrors("valueNumeric"));
 }

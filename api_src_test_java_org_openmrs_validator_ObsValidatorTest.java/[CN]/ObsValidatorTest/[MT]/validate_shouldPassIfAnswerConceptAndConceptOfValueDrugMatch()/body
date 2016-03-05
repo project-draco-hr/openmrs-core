@@ -13,6 +13,6 @@
   drug.setConcept(answerConcept);
   obs.setValueDrug(drug);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasFieldErrors());
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasFieldErrors());
 }
