@@ -1,5 +1,5 @@
 {
-  sessionFactory.getCurrentSession().createSQLQuery("update Patient set allergy_status = :allergyStatus where patient_id = :patientId").setInteger("patientId",patient.getPatientId()).setString("allergyStatus",allergies.getAllergyStatus()).executeUpdate();
+  sessionFactory.getCurrentSession().createSQLQuery("update patient set allergy_status = :allergyStatus where patient_id = :patientId").setInteger("patientId",patient.getPatientId()).setString("allergyStatus",allergies.getAllergyStatus()).executeUpdate();
   for (  Allergy allergy : allergies) {
     sessionFactory.getCurrentSession().save(allergy);
   }
