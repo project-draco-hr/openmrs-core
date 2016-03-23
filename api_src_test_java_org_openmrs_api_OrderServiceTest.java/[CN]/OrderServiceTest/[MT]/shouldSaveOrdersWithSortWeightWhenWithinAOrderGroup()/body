@@ -1,0 +1,34 @@
+{
+  executeDataSet(ORDER_SET);
+  Encounter encounter=encounterService.getEncounter(3);
+  OrderSet orderSet=Context.getOrderSetService().getOrderSet(2000);
+  OrderGroup orderGroup=new OrderGroup();
+  orderGroup.setOrderSet(orderSet);
+  orderGroup.setPatient(encounter.getPatient());
+  orderGroup.setEncounter(encounter);
+  Order firstOrderWithOrderGroup=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Order secondOrderWithOrderGroup=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1001).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Order orderWithoutOrderGroup=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
+  Set<Order> orders=new LinkedHashSet<Order>();
+  orders.add(firstOrderWithOrderGroup);
+  orders.add(secondOrderWithOrderGroup);
+  orders.add(orderWithoutOrderGroup);
+  encounter.setOrders(orders);
+  for (  OrderGroup og : encounter.getOrderGroups()) {
+    if (og.getId() == null) {
+      Context.getOrderService().saveOrderGroup(og);
+    }
+  }
+  for (  Order o : encounter.getOrdersWithoutOrderGroups()) {
+    if (o.getId() == null) {
+      Context.getOrderService().saveOrder(o,null);
+    }
+  }
+  Context.flushSession();
+  OrderGroup savedOrderGroup=Context.getOrderService().getOrderGroupByUuid(orderGroup.getUuid());
+  Order savedOrder=Context.getOrderService().getOrderByUuid(orderWithoutOrderGroup.getUuid());
+  assertEquals("The first order in  savedOrderGroup is the same which is sent first in the List",firstOrderWithOrderGroup.getUuid(),savedOrderGroup.getOrders().get(0).getUuid());
+  assertEquals("The second order in  savedOrderGroup is the same which is sent second in the List",secondOrderWithOrderGroup.getUuid(),savedOrderGroup.getOrders().get(1).getUuid());
+  assertNull("The order which doesn't belong to an orderGroup has no sortWeight",savedOrder.getSortWeight());
+  assertThat("The first order has a lower sortWeight than the second",savedOrderGroup.getOrders().get(0).getSortWeight().compareTo(savedOrderGroup.getOrders().get(1).getSortWeight()),is(-1));
+}

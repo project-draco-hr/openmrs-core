@@ -1,0 +1,15 @@
+{
+  OrderGroup newOrderGroup=new OrderGroup();
+  final Order order=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
+  newOrderGroup.setOrders(new ArrayList<Order>(){
+{
+      add(order);
+    }
+  }
+);
+  OrderGroup savedOrderGroup=dao.saveOrderGroup(newOrderGroup);
+  assertNotNull("OrderGroup gets saved",savedOrderGroup.getOrderGroupId());
+  for (  Order savedOrder : savedOrderGroup.getOrders()) {
+    assertNull("Order is not saved as a part of Order Group",savedOrder.getOrderId());
+  }
+}

@@ -1,0 +1,9 @@
+{
+  executeDataSet(ORDER_SET);
+  List<OrderSet> orderSets=orderSetService.getOrderSets(false);
+  Integer numberOfOrderSetMembers=0;
+  for (  OrderSet oS : orderSets) {
+    numberOfOrderSetMembers=numberOfOrderSetMembers + oS.getOrderSetMembers().size();
+  }
+  assertEquals(new Integer(4),numberOfOrderSetMembers);
+}

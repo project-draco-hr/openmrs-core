@@ -1,0 +1,10 @@
+{
+  executeDataSet(ORDER_SET);
+  Integer initialNumberOfOrderSets=orderSetService.getOrderSets(false).size();
+  OrderSet orderSet=orderSetBuilder(false,false);
+  OrderSet orderSetObj=orderSetService.saveOrderSet(orderSet);
+  Context.flushSession();
+  List<OrderSet> orderSets=orderSetService.getOrderSets(false);
+  assertEquals("A new order set was saved to the exisiting list of order sets",initialNumberOfOrderSets + 1,orderSets.size());
+  assertNotNull("OrderSet has a order_set_id",orderSetObj.getId());
+}

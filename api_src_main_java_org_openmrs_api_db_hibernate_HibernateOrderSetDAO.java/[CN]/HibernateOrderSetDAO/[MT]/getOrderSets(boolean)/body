@@ -1,0 +1,7 @@
+{
+  Criteria crit=sessionFactory.getCurrentSession().createCriteria(OrderSet.class,"orderSet");
+  if (!includeRetired) {
+    crit.add(Restrictions.eq("retired",Boolean.FALSE));
+  }
+  return crit.list();
+}

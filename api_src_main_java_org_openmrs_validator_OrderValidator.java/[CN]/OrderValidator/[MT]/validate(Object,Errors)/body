@@ -18,5 +18,7 @@
     validateDateActivated(order,errors);
     validateScheduledDate(order,errors);
     ValidateUtil.validateFieldLengths(errors,obj.getClass(),"orderReasonNonCoded","accessionNumber","commentToFulfiller","voidReason");
+    validateOrderGroupEncounter(order,errors);
+    validateOrderGroupPatient(order,errors);
   }
 }

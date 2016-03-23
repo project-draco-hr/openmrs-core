@@ -1,0 +1,11 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderGroup orderGroup=new OrderGroup();
+  orderGroup.setEncounter(Context.getEncounterService().getEncounter(5));
+  orderGroup.setPatient(Context.getPatientService().getPatient(2));
+  Order order=new OrderBuilder().withAction(Order.Action.NEW).withPatient(7).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(3).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Errors errors=new BindException(order,"order");
+  new OrderValidator().validate(order,errors);
+  Assert.assertTrue(errors.hasFieldErrors("patient"));
+  Assert.assertEquals("Order.error.orderPatientAndOrderGroupPatientMismatch",errors.getFieldError("patient").getCode());
+}
