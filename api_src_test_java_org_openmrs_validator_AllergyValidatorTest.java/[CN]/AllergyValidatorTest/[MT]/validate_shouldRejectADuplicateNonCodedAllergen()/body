@@ -3,7 +3,7 @@
   MessageSourceService ms=mock(MessageSourceService.class);
   when(Context.getMessageSourceService()).thenReturn(ms);
   Allergies allergies=new Allergies();
-  Concept nonCodedConcept=createMockConcept(Allergen.OTHER_NON_CODED_UUID);
+  Concept nonCodedConcept=createMockConcept(getOtherNonCodedConceptUuid());
   final String freeText="some text";
   Allergen allergen1=new Allergen(AllergenType.DRUG,nonCodedConcept,freeText);
   allergies.add(new Allergy(null,allergen1,null,null,null));
