@@ -1,0 +1,15 @@
+{
+  executeDataSet(ORDER_SET);
+  int initialNumberOfOrderSets=orderSetService.getOrderSets(false).size();
+  OrderSet orderSet=orderSetService.getOrderSet(2001);
+  orderSetService.retireOrderSet(orderSet,"Testing");
+  Context.flushSession();
+  int numberOfOrderSetsAfterRetire=orderSetService.getOrderSets(false).size();
+  assertEquals(initialNumberOfOrderSets - 1,numberOfOrderSetsAfterRetire);
+  OrderSet retiredOrderSet=orderSetService.getOrderSet(2001);
+  assertEquals(true,retiredOrderSet.getRetired());
+  List<OrderSetMember> orderSetMembers=retiredOrderSet.getOrderSetMembers();
+  for (  OrderSetMember orderSetMember : orderSetMembers) {
+    assertTrue(orderSetMember.getRetired());
+  }
+}

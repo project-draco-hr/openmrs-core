@@ -1,6 +1,9 @@
 {
   if (!StringUtils.hasLength(retireReason)) {
-    throw new IllegalArgumentException("reitreReason cannot be empty or null");
+    throw new IllegalArgumentException("retire reason cannot be empty or null");
+  }
+  for (  OrderSetMember orderSetMember : orderSet.getOrderSetMembers()) {
+    orderSet.retireOrderSetMember(orderSetMember);
   }
   return saveOrderSetInternal(orderSet);
 }

@@ -3,6 +3,11 @@
     return dao.save(orderSet);
   }
   for (  OrderSetMember orderSetMember : orderSet.getOrderSetMembers()) {
+    if (null == orderSetMember.getOrderSet()) {
+      orderSetMember.setOrderSet(orderSet);
+    }
+  }
+  for (  OrderSetMember orderSetMember : orderSet.getOrderSetMembers()) {
     if (orderSetMember.isRetired()) {
       orderSetMember.setRetiredBy(Context.getAuthenticatedUser());
       orderSetMember.setDateRetired(new Date());

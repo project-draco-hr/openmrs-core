@@ -1,0 +1,9 @@
+{
+  List<OrderSetMember> osm=new ArrayList<OrderSetMember>();
+  for (  OrderSetMember orderSetMember : getOrderSetMembers()) {
+    if (!orderSetMember.isRetired()) {
+      osm.add(orderSetMember);
+    }
+  }
+  return osm;
+}
