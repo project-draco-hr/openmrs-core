@@ -1,36 +1,16 @@
 {
   EncounterService es=Context.getEncounterService();
   Encounter enc=es.getEncounter(1);
-  assertEquals(3,enc.getAllObs(false).size());
-  List<Obs> obsWithSameDateBefore=new ArrayList<>();
-  Obs obsWithDifferentDateBefore=null;
-  for (  Obs o : enc.getAllObs(false)) {
-    if (enc.getEncounterDatetime().equals(o.getObsDatetime())) {
-      obsWithSameDateBefore.add(o);
-    }
- else     if (obsWithDifferentDateBefore == null) {
-      obsWithDifferentDateBefore=o;
-    }
-  }
-  assertNotNull(obsWithDifferentDateBefore);
-  assertEquals(2,obsWithSameDateBefore.size());
   Date newDate=new Date();
   enc.setEncounterDatetime(newDate);
   es.saveEncounter(enc);
-  Context.flushSession();
-  List<Obs> obsWithSameDateAfter=new ArrayList<>();
-  Obs obsWithDifferentDateAfter=null;
-  for (  Obs o : enc.getAllObs(false)) {
-    if (enc.getEncounterDatetime().equals(o.getObsDatetime())) {
-      obsWithSameDateAfter.add(o);
-      assertTrue(obsWithSameDateBefore.contains(o.getPreviousVersion()));
+  boolean foundObs3=false;
+  for (  Obs obs : enc.getAllObs()) {
+    if (obs.getObsId().equals(3)) {
+      assertNotSame(newDate,obs.getObsDatetime());
+      foundObs3=true;
     }
- else     if (obsWithDifferentDateAfter == null) {
-      obsWithDifferentDateAfter=o;
-    }
+ else     assertEquals(newDate,obs.getObsDatetime());
   }
-  assertNotNull(obsWithDifferentDateAfter);
-  assertEquals(2,obsWithSameDateAfter.size());
-  assertNull(obsWithDifferentDateAfter.getPreviousVersion());
-  assertSame(obsWithDifferentDateBefore,obsWithDifferentDateAfter);
+  assertTrue(foundObs3);
 }
