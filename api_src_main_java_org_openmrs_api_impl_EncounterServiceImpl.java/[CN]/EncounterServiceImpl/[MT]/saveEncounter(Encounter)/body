@@ -55,26 +55,5 @@
       Context.getOrderService().saveOrder(o,null);
     }
   }
-  String changeMessage=Context.getMessageSourceService().getMessage("Obs.void.reason.default");
-  ObsService os=Context.getObsService();
-  List<Obs> toRemove=new ArrayList<>();
-  List<Obs> toAdd=new ArrayList<>();
-  for (  Obs o : encounter.getAllObs(true)) {
-    if (o.getId() == null) {
-      os.saveObs(o,null);
-    }
- else {
-      Obs newObs=os.saveObs(o,changeMessage);
-      toRemove.add(o);
-      toAdd.add(os.getObs(o.getId()));
-      toAdd.add(newObs);
-    }
-  }
-  for (  Obs o : toRemove) {
-    encounter.removeObs(o);
-  }
-  for (  Obs o : toAdd) {
-    encounter.addObs(o);
-  }
   return encounter;
 }

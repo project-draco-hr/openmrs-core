@@ -8,10 +8,10 @@
       }
       boolean isVoidedOrRetired=false;
       if (Voidable.class.isAssignableFrom(entity.getClass())) {
-        isVoidedOrRetired=((Voidable)entity).getVoided();
+        isVoidedOrRetired=((Voidable)entity).isVoided();
       }
  else       if (Retireable.class.isAssignableFrom(entity.getClass())) {
-        isVoidedOrRetired=((Retireable)entity).getRetired();
+        isVoidedOrRetired=((Retireable)entity).isRetired();
       }
       if (isVoidedOrRetired && ignoreVoidedOrRetiredObjects()) {
         continue;
@@ -29,8 +29,8 @@
       if (log.isDebugEnabled()) {
         log.debug("The following fields cannot be changed for " + getSupportedType() + ":"+ changedProperties);
       }
-      throw new APIException("Editing some fields on " + getSupportedType().getSimpleName() + " is not allowed");
+      throw new APIException("editing.fields.not.allowed",new Object[]{getSupportedType().getSimpleName()});
     }
   }
-  return false;
+  return super.onFlushDirty(entity,id,currentState,previousState,propertyNames,types);
 }

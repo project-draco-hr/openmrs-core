@@ -2,10 +2,10 @@
   EncounterService es=Context.getEncounterService();
   Encounter enc=buildEncounter();
   Obs groupObs=new Obs();
-  Concept c=Context.getConceptService().getConcept(1);
-  groupObs.setConcept(c);
+  groupObs.setConcept(new Concept(1));
+  groupObs.setValueNumeric(50d);
   Obs childObs=new Obs();
-  childObs.setConcept(c);
+  childObs.setConcept(new Concept(1));
   childObs.setValueNumeric(50d);
   groupObs.addGroupMember(childObs);
   enc.addObs(groupObs);
