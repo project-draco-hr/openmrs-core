@@ -1,0 +1,8 @@
+{
+  Obs obs=new Obs();
+  obs.setVoided(true);
+  obs.setVoidedBy(new User(1000));
+  obs.setVoidReason("some other reason");
+  obs.setDateVoided(new Date());
+  assertFalse(obs.isDirty());
+}

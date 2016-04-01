@@ -1,5 +1,7 @@
 {
   if (namespace == null && formFieldPath == null) {
+    markAsDirty(formNamespaceAndPath,null);
+    formNamespaceAndPath=null;
     return;
   }
   String nsAndPathTemp="";
@@ -18,5 +20,6 @@
   if (StringUtils.countMatches(nsAndPathTemp,FORM_NAMESPACE_PATH_SEPARATOR) > 1) {
     throw new APIException("Obs.namespaceAndPathNotContainSeparator",(Object[])null);
   }
+  markAsDirty(this.formNamespaceAndPath,nsAndPathTemp);
   formNamespaceAndPath=nsAndPathTemp;
 }
