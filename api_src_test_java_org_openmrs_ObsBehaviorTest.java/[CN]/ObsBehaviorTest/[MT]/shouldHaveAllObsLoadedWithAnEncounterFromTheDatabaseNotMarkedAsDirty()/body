@@ -1,0 +1,8 @@
+{
+  Encounter e=encounterService.getEncounter(3);
+  Collection<Obs> allObs=e.getAllObs(true);
+  assertFalse(allObs.isEmpty());
+  for (  Obs o : allObs) {
+    assertFalse(o.isDirty());
+  }
+}
