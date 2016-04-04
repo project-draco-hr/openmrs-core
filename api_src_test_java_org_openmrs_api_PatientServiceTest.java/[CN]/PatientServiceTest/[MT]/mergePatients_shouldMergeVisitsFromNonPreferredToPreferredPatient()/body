@@ -17,6 +17,7 @@
       encounterUuidsThatShouldBeMoved.add(e.getUuid());
     }
   }
+  List<Obs> originalUnvoidedObs=Context.getObsService().getObservationsByPerson(notPreferred);
   PersonMergeLog mergeLog=mergeAndRetrieveAudit(preferred,notPreferred);
   Patient merged=patientService.getPatient(preferred.getId());
   List<Visit> mergedVisits=visitService.getVisitsByPatient(merged,true,true);
@@ -26,7 +27,9 @@
     for (    Encounter e : v.getEncounters()) {
       assertThat(e.getPatient(),is(v.getPatient()));
       for (      Obs o : e.getAllObs(true)) {
-        assertThat(o.getPerson().getId(),is(v.getPatient().getId()));
+        if (!originalUnvoidedObs.contains(o)) {
+          assertThat(o.getPerson().getId(),is(v.getPatient().getId()));
+        }
       }
     }
   }

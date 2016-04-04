@@ -1,0 +1,9 @@
+{
+  assertFalse(new Obs().isDirty());
+  Obs obs=createObs();
+  obs.setGroupMembers(new LinkedHashSet<>());
+  obs.getConcept().setDatatype(new ConceptDatatype());
+  assertFalse(obs.isDirty());
+  BeanUtils.copyProperties(obs,BeanUtils.cloneBean(obs));
+  assertFalse(obs.isDirty());
+}
