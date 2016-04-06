@@ -16,10 +16,13 @@
     }
   }
   Form form=null;
+  if (uuid == null && id == null) {
+    return form;
+  }
   if (uuid != null) {
     form=Context.getFormService().getFormByUuid(uuid);
   }
-  if (form == null) {
+  if (id != null) {
     try {
       Integer formId=Integer.parseInt(id);
       form=Context.getFormService().getForm(formId);
