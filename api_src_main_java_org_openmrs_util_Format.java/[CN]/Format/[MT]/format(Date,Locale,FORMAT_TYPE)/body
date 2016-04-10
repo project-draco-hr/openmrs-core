@@ -1,4 +1,7 @@
 {
+  if (date == null || locale == null || type == null) {
+    return "";
+  }
   log.debug("Formatting date: " + date + " with locale "+ locale);
   DateFormat dateFormat=null;
   if (type == FORMAT_TYPE.TIMESTAMP) {
@@ -10,5 +13,5 @@
  else {
     dateFormat=DateFormat.getDateInstance(DateFormat.SHORT,locale);
   }
-  return date == null ? "" : dateFormat.format(date);
+  return dateFormat.format(date);
 }
