@@ -1,0 +1,5 @@
+{
+  String moduleLocation=ModuleUtil.class.getClassLoader().getResource(location).getPath();
+  Module newModule=ModuleFactory.loadModule(new File(moduleLocation),replace);
+  return newModule;
+}
