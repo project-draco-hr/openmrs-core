@@ -1,0 +1,12 @@
+{
+  ArrayList<Extension> extensions=new ArrayList<Extension>();
+  IdentityHashMap<String,String> extensionNames=new IdentityHashMap<String,String>();
+  Extension mockExtension=new MockExtension();
+  mockExtension.setPointId("1");
+  extensions.add(mockExtension);
+  extensionNames.put("2",mockExtension.getClass().getName());
+  mockModule.setExtensions(extensions);
+  mockModule.setExtensionNames(extensionNames);
+  ArrayList<Extension> ret=new ArrayList<Extension>(mockModule.getExtensions());
+  verifyPrivate(mockModule).invoke("expandExtensionNames");
+}
