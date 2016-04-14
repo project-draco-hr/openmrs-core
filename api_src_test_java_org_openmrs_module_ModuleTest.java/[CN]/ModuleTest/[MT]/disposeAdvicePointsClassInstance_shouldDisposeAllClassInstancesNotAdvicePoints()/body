@@ -1,0 +1,19 @@
+{
+  ArrayList<AdvicePoint> points=new ArrayList<AdvicePoint>();
+  String obj1="string";
+  ArrayList<String> obj2=new ArrayList<String>();
+  AdvicePoint point1=new AdvicePoint("point1",obj1.getClass());
+  AdvicePoint point2=new AdvicePoint("point2",obj2.getClass());
+  points.add(point1);
+  points.add(point2);
+  testModule.setAdvicePoints(null);
+  testModule.disposeAdvicePointsClassInstance();
+  assertEquals(obj1.getClass(),point1.getClassInstance().getClass());
+  assertEquals(obj2.getClass(),point2.getClassInstance().getClass());
+  testModule.setAdvicePoints(points);
+  testModule.disposeAdvicePointsClassInstance();
+  assertNotNull(point1);
+  assertNotNull(point2);
+  assertNull(point1.getClassInstance());
+  assertNull(point2.getClassInstance());
+}
