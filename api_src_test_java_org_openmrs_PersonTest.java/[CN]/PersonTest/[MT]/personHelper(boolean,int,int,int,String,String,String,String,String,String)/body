@@ -1,0 +1,19 @@
+{
+  Person person=new Person();
+  PersonAttributeType type1=new PersonAttributeType(new Integer(attributeType1));
+  PersonAttributeType type2=new PersonAttributeType(new Integer(attributeType2));
+  PersonAttributeType type3=new PersonAttributeType(new Integer(attributeType3));
+  type1.setName(attributeName1);
+  type2.setName(attributeName2);
+  type3.setName(attributeName3);
+  PersonAttribute personAttribute1=new PersonAttribute(type1,attributeValue1);
+  PersonAttribute personAttribute2=new PersonAttribute(type2,attributeValue2);
+  PersonAttribute personAttribute3=new PersonAttribute(type3,attributeValue3);
+  personAttribute1.setVoided(isVoid);
+  personAttribute2.setVoided(isVoid);
+  personAttribute3.setVoided(isVoid);
+  person.addAttribute(personAttribute1);
+  person.addAttribute(personAttribute2);
+  person.addAttribute(personAttribute3);
+  return person;
+}
