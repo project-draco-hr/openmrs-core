@@ -1,0 +1,8 @@
+{
+  DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+  Cohort cohort=null;
+  cohort=service.getPatientsByCharacteristics("m",df.parse("1969-12-31"),df.parse("2010-01-02"));
+  Assert.assertEquals(2,cohort.size());
+  Cohort cohort1=service.getPatientsByCharacteristics("f",df.parse("1969-12-31"),df.parse("2010-01-02"));
+  Assert.assertEquals(1,cohort1.size());
+}

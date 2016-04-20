@@ -1,0 +1,8 @@
+{
+  Cohort cohort=Mockito.mock(Cohort.class);
+  Mockito.when(cohort.size()).thenReturn(0);
+  Map<Integer,List<Obs>> result=service.getObservations(cohort,new Concept());
+  assertEquals(0,result.size());
+  result=service.getObservations(null,new Concept());
+  assertEquals(0,result.size());
+}
