@@ -18,6 +18,9 @@
   }
  else {
     if (groupMethod == GroupMethod.NONE) {
+      if (patientIds == null) {
+        patientIds=getAllPatients().getMemberIds();
+      }
       ret.addAll(patientIds);
       ret.removeAll(activeDrugs.keySet());
       for (      Map.Entry<Integer,Collection<Integer>> e : activeDrugs.entrySet()) {
