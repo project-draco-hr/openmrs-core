@@ -1,5 +1,0 @@
-{
-  Cohort cohort=new Cohort("2,3,4,5,6,7");
-  Map<Integer,PatientProgram> map=Context.getPatientSetService().getCurrentPatientPrograms(cohort,new Program(2));
-  TestUtil.assertCollectionContentsEquals(Arrays.asList(2,7),map.keySet());
-}

@@ -1,9 +1,0 @@
-{
-  List<Integer> drugIds=new ArrayList<Integer>();
-  drugIds.add(2);
-  drugIds.add(3);
-  Cohort cohort=service.getPatientsHavingDrugOrder(null,drugIds,GroupMethod.ANY,null,null);
-  Assert.assertEquals(2,cohort.size());
-  Assert.assertTrue(cohort.contains(2));
-  Assert.assertTrue(cohort.contains(7));
-}
