@@ -1,0 +1,11 @@
+{
+  ObjectMapper mapper=new ObjectMapper();
+  mapper.getJsonFactory().setCharacterEscapes(new OpenmrsCharacterEscapes());
+  try {
+    return mapper.writeValueAsString(object);
+  }
+ catch (  IOException e) {
+    log.error("Failed to convert object to JSON");
+    throw new APIException(e);
+  }
+}
