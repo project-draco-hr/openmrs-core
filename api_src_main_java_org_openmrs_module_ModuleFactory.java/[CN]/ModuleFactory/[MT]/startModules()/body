@@ -21,9 +21,9 @@
       }
     }
  catch (    CycleException e) {
-      String message=getCyclicDependenciesMessage();
-      log.error(message);
-      notifySuperUsersAboutCyclicDependencies();
+      String message=getCyclicDependenciesMessage(e.getMessage());
+      log.error(message,e);
+      notifySuperUsersAboutCyclicDependencies(e);
     }
   }
 }
