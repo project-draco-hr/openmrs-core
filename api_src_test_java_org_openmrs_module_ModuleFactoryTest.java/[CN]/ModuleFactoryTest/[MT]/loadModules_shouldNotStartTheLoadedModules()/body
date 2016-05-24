@@ -1,0 +1,12 @@
+{
+  ModuleFactory.unloadModule(ModuleFactory.getModuleById(MODULE1));
+  List<File> modulesToLoad=getModuleFiles();
+  ModuleFactory.loadModules(modulesToLoad);
+  Assert.assertEquals(3,ModuleFactory.getLoadedModules().size());
+  Module test1=ModuleFactory.getModuleById(MODULE1);
+  Module test2=ModuleFactory.getModuleById(MODULE2);
+  Module test3=ModuleFactory.getModuleById(MODULE3);
+  Assert.assertFalse(test1.isStarted());
+  Assert.assertFalse(test2.isStarted());
+  Assert.assertFalse(test3.isStarted());
+}
