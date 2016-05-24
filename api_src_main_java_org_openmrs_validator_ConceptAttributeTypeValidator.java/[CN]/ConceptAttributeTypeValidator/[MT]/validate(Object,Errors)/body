@@ -1,0 +1,15 @@
+{
+  super.validate(obj,errors);
+  ConceptAttributeType conceptAttributeType=(ConceptAttributeType)obj;
+  ConceptService conceptService=Context.getConceptService();
+  if (conceptAttributeType.getName() != null && !conceptAttributeType.getName().isEmpty()) {
+    ConceptAttributeType attributeType=conceptService.getConceptAttributeTypeByName(conceptAttributeType.getName());
+    if (attributeType != null && !attributeType.getUuid().equals(conceptAttributeType.getUuid())) {
+      errors.rejectValue("name","ConceptAttributeType.error.nameAlreadyInUse");
+    }
+  }
+ else {
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","ConceptAttributeType.error.nameEmpty");
+  }
+  ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","description","datatypeClassname","preferredHandlerClassname","retireReason");
+}

@@ -1,0 +1,3 @@
+{
+  return (ConceptAttribute)sessionFactory.getCurrentSession().createCriteria(ConceptAttribute.class).add(Restrictions.eq("uuid",uuid)).uniqueResult();
+}

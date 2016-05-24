@@ -1,0 +1,7 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptService conceptService=Context.getConceptService();
+  Assert.assertEquals(2,conceptService.getAllConceptAttributeTypes().size());
+  conceptService.purgeConceptAttributeType(conceptService.getConceptAttributeType(2));
+  Assert.assertEquals(1,conceptService.getAllConceptAttributeTypes().size());
+}

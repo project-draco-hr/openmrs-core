@@ -1,0 +1,7 @@
+{
+  ConceptAttributeType et=Context.getConceptService().getConceptAttributeTypeByName("Audit Date");
+  Assert.assertNotNull(et);
+  Errors errors=new BindException(et,"conceptAttributeType");
+  new ConceptAttributeTypeValidator().validate(et,errors);
+  Assert.assertFalse(errors.hasErrors());
+}

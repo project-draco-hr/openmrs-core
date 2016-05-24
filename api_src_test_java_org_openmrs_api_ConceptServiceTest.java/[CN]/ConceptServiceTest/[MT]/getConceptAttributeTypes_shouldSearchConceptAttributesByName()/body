@@ -1,0 +1,6 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptService conceptService=Context.getConceptService();
+  Assert.assertEquals(1,conceptService.getConceptAttributeTypes("we").size());
+  Assert.assertEquals(0,conceptService.getConceptAttributeTypes("attr type").size());
+}

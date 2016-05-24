@@ -1,0 +1,11 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptService conceptService=Context.getConceptService();
+  Assert.assertEquals(2,conceptService.getAllConceptAttributeTypes().size());
+  ConceptAttributeType conceptAttributeType=new ConceptAttributeType();
+  conceptAttributeType.setName("Another one");
+  conceptAttributeType.setDatatypeClassname(FreeTextDatatype.class.getName());
+  conceptService.saveConceptAttributeType(conceptAttributeType);
+  Assert.assertNotNull(conceptAttributeType.getId());
+  Assert.assertEquals(3,conceptService.getAllConceptAttributeTypes().size());
+}

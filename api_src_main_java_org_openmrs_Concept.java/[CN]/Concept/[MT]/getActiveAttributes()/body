@@ -1,0 +1,12 @@
+{
+  List<ConceptAttribute> activeConceptAttributes=new ArrayList<>();
+  Collection<ConceptAttribute> allConceptAttributes=getAttributes();
+  if (allConceptAttributes != null) {
+    for (    ConceptAttribute attr : allConceptAttributes) {
+      if (!attr.isVoided()) {
+        activeConceptAttributes.add(attr);
+      }
+    }
+  }
+  return activeConceptAttributes;
+}

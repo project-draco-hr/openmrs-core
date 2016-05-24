@@ -1,0 +1,18 @@
+{
+  ConceptService conceptService=Context.getConceptService();
+  if (Context.isAuthenticated() && StringUtils.hasText(text)) {
+    try {
+      setValue(conceptService.getConceptAttributeType(Integer.valueOf(text)));
+    }
+ catch (    Exception ex) {
+      ConceptAttributeType conceptAttributeType=conceptService.getConceptAttributeTypeByUuid(text);
+      setValue(conceptAttributeType);
+      if (conceptAttributeType == null) {
+        throw new IllegalArgumentException("ConceptAttributeType not found for " + text,ex);
+      }
+    }
+  }
+ else {
+    setValue(null);
+  }
+}

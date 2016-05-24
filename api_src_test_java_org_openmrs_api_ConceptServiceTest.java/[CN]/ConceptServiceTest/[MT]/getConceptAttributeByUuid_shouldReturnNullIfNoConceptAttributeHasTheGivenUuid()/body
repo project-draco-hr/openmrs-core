@@ -1,0 +1,5 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptService service=Context.getConceptService();
+  Assert.assertNull(service.getConceptAttributeByUuid("not-a-uuid"));
+}
