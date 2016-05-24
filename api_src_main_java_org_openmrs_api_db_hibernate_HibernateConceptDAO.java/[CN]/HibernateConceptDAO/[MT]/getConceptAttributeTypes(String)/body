@@ -1,0 +1,7 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptAttributeType.class);
+  if (name != null) {
+    criteria.add(Restrictions.ilike("name",name,MatchMode.ANYWHERE));
+  }
+  return criteria.list();
+}

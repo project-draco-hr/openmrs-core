@@ -1,0 +1,14 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptAttributeType vat=Context.getConceptService().getConceptAttributeType(1);
+  Assert.assertFalse(vat.isRetired());
+  Assert.assertNull(vat.getRetiredBy());
+  Assert.assertNull(vat.getDateRetired());
+  Assert.assertNull(vat.getRetireReason());
+  Context.getConceptService().retireConceptAttributeType(vat,"for testing");
+  vat=Context.getConceptService().getConceptAttributeType(1);
+  Assert.assertTrue(vat.isRetired());
+  Assert.assertNotNull(vat.getRetiredBy());
+  Assert.assertNotNull(vat.getDateRetired());
+  Assert.assertEquals("for testing",vat.getRetireReason());
+}

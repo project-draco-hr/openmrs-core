@@ -1,0 +1,6 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptAttributeType conceptAttributeType=Context.getConceptService().getConceptAttributeType(1);
+  Assert.assertEquals(1,dao.getConceptAttributeCount(conceptAttributeType));
+  Assert.assertEquals(0,dao.getConceptAttributeCount(null));
+}

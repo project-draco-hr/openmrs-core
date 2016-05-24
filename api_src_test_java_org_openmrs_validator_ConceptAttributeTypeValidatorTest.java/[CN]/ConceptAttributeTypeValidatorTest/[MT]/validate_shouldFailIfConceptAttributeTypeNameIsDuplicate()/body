@@ -1,0 +1,9 @@
+{
+  Assert.assertNotNull(Context.getConceptService().getConceptAttributeTypeByName("Audit Date"));
+  ConceptAttributeType type=new ConceptAttributeType();
+  type.setName("Audit Date");
+  type.setDatatypeClassname("org.openmrs.customdatatype.datatype.FreeTextDatatype");
+  Errors errors=new BindException(type,"conceptAttributeType");
+  new ConceptAttributeTypeValidator().validate(type,errors);
+  Assert.assertTrue(errors.hasFieldErrors("name"));
+}
