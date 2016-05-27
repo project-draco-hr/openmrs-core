@@ -1,5 +1,5 @@
 {
-  final String escapedName=LuceneQuery.escapeQuery(name);
+  final String escapedName=LuceneQuery.escapeQuery(name).replace("AND","and").replace("OR","or").replace("NOT","not");
   final List<String> tokenizedName=tokenizeConceptName(escapedName,locales);
   final StringBuilder query=new StringBuilder();
   query.append("(concept.conceptMappings.conceptReferenceTerm.code:(").append(escapedName).append(")^0.4 OR (");
