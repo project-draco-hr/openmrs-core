@@ -8,6 +8,7 @@
   Provider provider=(Provider)obj;
   if (provider.getPerson() == null && StringUtils.isBlank(provider.getName())) {
     errors.rejectValue("name","Provider.error.personOrName.required");
+    errors.rejectValue("person","Provider.error.personOrName.required");
   }
   if (provider.isRetired() && StringUtils.isEmpty(provider.getRetireReason())) {
     errors.rejectValue("retireReason","Provider.error.retireReason.required");
