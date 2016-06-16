@@ -15,18 +15,18 @@
   }
  else {
     try {
-      StringBuilder username=new StringBuilder();
-      if (familyName != null) {
-        username.append(familyName);
+      List<User> users=Context.getUserService().getUsersByName(givenName,familyName,true);
+      if (users == null) {
+        log.error("Error resolving user with id '" + idNumber + "' family name '"+ familyName+ "' and given name '"+ givenName+ "': User not found");
+        return null;
       }
-      if (givenName != null) {
-        if (username.length() > 0) {
-          username.append(" ");
-        }
-        username.append(givenName);
+ else       if (users.size() == 1) {
+        return users.get(0).getUserId();
       }
-      User user=Context.getUserService().getUserByUsername(username.toString());
-      return user.getUserId();
+ else {
+        log.error("Error resolving user with id '" + idNumber + "' family name '"+ familyName+ "' and given name '"+ givenName+ "': Found "+ users.size()+ " ambiguous users.");
+        return null;
+      }
     }
  catch (    Exception e) {
       log.error("Error resolving user with id '" + idNumber + "' family name '"+ familyName+ "' and given name '"+ givenName+ "'",e);
