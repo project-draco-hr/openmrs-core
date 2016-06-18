@@ -10,10 +10,10 @@
   obs.setVoidReason("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
   obs.setComment("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertTrue(errors.hasFieldErrors("accessionNumber"));
-  Assert.assertTrue(errors.hasFieldErrors("valueModifier"));
-  Assert.assertTrue(errors.hasFieldErrors("valueComplex"));
-  Assert.assertTrue(errors.hasFieldErrors("comment"));
-  Assert.assertTrue(errors.hasFieldErrors("voidReason"));
+  obsValidator.validate(obs,errors);
+  assertTrue(errors.hasFieldErrors("accessionNumber"));
+  assertTrue(errors.hasFieldErrors("valueModifier"));
+  assertTrue(errors.hasFieldErrors("valueComplex"));
+  assertTrue(errors.hasFieldErrors("comment"));
+  assertTrue(errors.hasFieldErrors("voidReason"));
 }

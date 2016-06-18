@@ -1,0 +1,13 @@
+{
+  int size=getOrders().size();
+  if (size == 1) {
+    return 10.0;
+  }
+  if (index == 0) {
+    return getOrders().get(1).getSortWeight() / 2;
+  }
+  if (index == size - 1) {
+    return getOrders().get(index - 1).getSortWeight() + 10.0;
+  }
+  return (getOrders().get(index - 1).getSortWeight() + getOrders().get(index + 1).getSortWeight()) / 2;
+}

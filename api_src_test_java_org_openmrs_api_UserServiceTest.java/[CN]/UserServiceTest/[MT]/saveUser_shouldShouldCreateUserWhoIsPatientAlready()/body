@@ -29,6 +29,6 @@
   Context.clearSession();
   List<User> allUsers=userService.getAllUsers();
   assertEquals(11,allUsers.size());
-  Cohort allPatientsSet=Context.getPatientSetService().getAllPatients();
-  assertEquals(1,allPatientsSet.getSize());
+  List<Patient> allPatientsSet=Context.getPatientService().getAllPatients();
+  assertEquals(1,allPatientsSet.size());
 }

@@ -1,0 +1,7 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet orderSet=orderSetService.getOrderSet(2001);
+  assertEquals("OrderSet should contain orderSetmembers",2,orderSet.getOrderSetMembers().size());
+  OrderSet orderSet1=orderSetService.getOrderSet(2000);
+  assertEquals("OrderSet should not contain retired orderSetMembers",2,orderSet1.getOrderSetMembers().size());
+}

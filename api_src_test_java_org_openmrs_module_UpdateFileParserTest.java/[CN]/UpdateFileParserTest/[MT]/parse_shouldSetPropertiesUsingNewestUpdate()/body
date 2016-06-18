@@ -1,0 +1,8 @@
+{
+  String xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<updates configVersion=\"1.1\" moduleId=\"formEntry\">" + "<update>"+ "<currentVersion>1.2</currentVersion>"+ "<requireOpenMRSVersion/>"+ "<downloadURL>https://modules.openmrs.org/modulus/api/releases/169/download/formentry-1.2.omod</downloadURL>"+ "</update>"+ "<update>"+ "<currentVersion>1.1</currentVersion>"+ "<requireOpenMRSVersion/>"+ "<downloadURL>https://modules.openmrs.org/modulus/api/releases/168/download/formentry-1.1.omod</downloadURL>"+ "</update>"+ "<update>"+ "<moduleId>formEntry</moduleId>"+ "<currentVersion>1.0</currentVersion>"+ "<requireOpenMRSVersion/>"+ "<downloadURL>https://modules.openmrs.org/modulus/api/releases/167/download/formentry-1.0.omod</downloadURL>"+ "</update>"+ "</updates>";
+  UpdateFileParser parser=new UpdateFileParser(xml);
+  parser.parse();
+  assertEquals("formEntry",parser.getModuleId());
+  assertEquals("1.2",parser.getCurrentVersion());
+  assertEquals("https://modules.openmrs.org/modulus/api/releases/169/download/formentry-1.2.omod",parser.getDownloadURL());
+}

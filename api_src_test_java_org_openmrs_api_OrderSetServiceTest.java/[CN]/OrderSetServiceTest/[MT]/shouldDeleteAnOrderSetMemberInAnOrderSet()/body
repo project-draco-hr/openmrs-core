@@ -1,0 +1,11 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet orderSet=orderSetService.getOrderSet(2001);
+  int initialCountOfMembers=orderSet.getOrderSetMembers().size();
+  OrderSetMember orderSetMember=orderSet.getOrderSetMembers().get(0);
+  orderSet.removeOrderSetMember(orderSetMember);
+  orderSetService.saveOrderSet(orderSet);
+  Context.flushSession();
+  OrderSet savedOrderSet=orderSetService.getOrderSetByUuid(orderSet.getUuid());
+  assertEquals("Count of orderSetMembers changes after removing a member from the orderSet",initialCountOfMembers - 1,savedOrderSet.getOrderSetMembers().size());
+}

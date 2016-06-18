@@ -16,7 +16,7 @@
     }
   }
   if (!edges.isEmpty()) {
-    throw new CycleException();
+    throw new CycleException(edges.toString(),result);
   }
   edges.addAll(initialEdges);
   return result;

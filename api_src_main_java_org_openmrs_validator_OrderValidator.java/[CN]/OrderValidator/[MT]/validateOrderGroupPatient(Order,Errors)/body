@@ -1,0 +1,5 @@
+{
+  if (order.getOrderGroup() != null && !(order.getPatient().equals(order.getOrderGroup().getPatient()))) {
+    errors.rejectValue("patient","Order.error.orderPatientAndOrderGroupPatientMismatch");
+  }
+}

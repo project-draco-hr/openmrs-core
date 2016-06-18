@@ -4,6 +4,6 @@
   obs.setConcept(Context.getConceptService().getConcept(19));
   obs.setObsDatetime(new Date());
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertTrue(errors.hasFieldErrors("valueText"));
+  obsValidator.validate(obs,errors);
+  assertTrue(errors.hasFieldErrors("valueText"));
 }

@@ -1,0 +1,6 @@
+{
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptAttribute.class);
+  criteria.add(Restrictions.eq("attributeType",conceptAttributeType));
+  criteria.setProjection(Projections.rowCount());
+  return (Long)criteria.list().get(0);
+}

@@ -1,0 +1,13 @@
+{
+  if (extensionNames != null && extensionNames.size() != 0) {
+    for (    Extension ext : extensions) {
+      if (extensionNames.get(ext.getPointId()) != ext.getClass().getName()) {
+        return false;
+      }
+    }
+    if (extensions.size() != extensionNames.size()) {
+      return false;
+    }
+  }
+  return true;
+}

@@ -1,0 +1,3 @@
+{
+  return (OrderSetMember)sessionFactory.getCurrentSession().createQuery("from OrderSetMember osm where osm.uuid = :uuid").setString("uuid",uuid).uniqueResult();
+}

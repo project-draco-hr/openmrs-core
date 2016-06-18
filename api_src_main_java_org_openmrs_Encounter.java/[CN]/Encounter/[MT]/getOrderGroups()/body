@@ -1,0 +1,14 @@
+{
+  Map<String,OrderGroup> orderGroups=new HashMap<String,OrderGroup>();
+  for (  Order order : orders) {
+    if (order.getOrderGroup() != null) {
+      if (null == orderGroups.get(order.getOrderGroup().getUuid())) {
+        orderGroups.put(order.getOrderGroup().getUuid(),order.getOrderGroup());
+      }
+      order.getOrderGroup().addOrder(order,null);
+    }
+  }
+  List<OrderGroup> orderGroupList=new ArrayList<OrderGroup>();
+  orderGroupList.addAll(orderGroups.values());
+  return orderGroupList;
+}

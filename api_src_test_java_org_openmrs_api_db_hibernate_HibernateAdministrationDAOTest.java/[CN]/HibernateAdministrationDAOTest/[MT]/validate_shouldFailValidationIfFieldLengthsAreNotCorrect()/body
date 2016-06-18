@@ -1,0 +1,13 @@
+{
+  String errorCode="error.exceededMaxLengthOfField";
+  String[] RoleFeilds=new String[]{"role","description"};
+  Role role=new Role();
+  role.setRole("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  role.setDescription("too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text too long text");
+  Errors errors=new BindException(role,"type");
+  dao.validate(role,errors);
+  for (  String feilds : RoleFeilds) {
+    FieldError fielderror=errors.getFieldError(feilds);
+    Assert.assertTrue(errorCode.equals(fielderror.getCode()));
+  }
+}

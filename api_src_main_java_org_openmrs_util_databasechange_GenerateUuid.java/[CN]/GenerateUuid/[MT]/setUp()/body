@@ -1,4 +1,7 @@
 {
+  if (StringUtils.isBlank(tableNames)) {
+    throw new SetupException("At least one table name in the 'tableNames' parameter is required");
+  }
   tableNamesArray=StringUtils.split(tableNames);
   idExceptionsMap=OpenmrsUtil.parseParameterList(idExceptions);
   genericIdSql="select tablename_id from tablename where columnName is null";

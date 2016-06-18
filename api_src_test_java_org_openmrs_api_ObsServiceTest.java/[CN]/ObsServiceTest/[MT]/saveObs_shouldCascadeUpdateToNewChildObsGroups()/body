@@ -1,17 +1,30 @@
 {
   executeDataSet(INITIAL_OBS_XML);
   ObsService obsService=Context.getObsService();
-  Obs parentObs=obsService.getObs(2);
-  parentObs.setValueNumeric(null);
+  Obs origParentObs=obsService.getObs(2);
+  Set<Obs> originalMembers=new HashSet<>(origParentObs.getGroupMembers(true));
+  assertEquals(2,originalMembers.size());
   Obs groupMember=new Obs();
   groupMember.setConcept(Context.getConceptService().getConcept(3));
   groupMember.setObsDatetime(new Date());
   groupMember.setPerson(new Patient(2));
   groupMember.setLocation(new Location(2));
   groupMember.setValueNumeric(50d);
-  parentObs.addGroupMember(groupMember);
+  origParentObs.addGroupMember(groupMember);
   assertNotNull(groupMember.getObsGroup());
-  obsService.saveObs(parentObs,"Updating obs group");
+  Obs newParentObs=obsService.saveObs(origParentObs,"Updating obs group");
+  assertNotEquals(origParentObs,newParentObs);
+  assertEquals(3,newParentObs.getGroupMembers(true).size());
   assertNotNull(groupMember.getObsId());
-  Assert.assertEquals(9,parentObs.getGroupMembers().toArray(new Obs[]{})[0].getObsId().intValue());
+  for (  Obs o : originalMembers) {
+    assertTrue(o.getVoided());
+    assertFalse(newParentObs.getGroupMembers(true).contains(o));
+  }
+  for (  Obs o : newParentObs.getGroupMembers(true)) {
+    if (groupMember.equals(o)) {
+      continue;
+    }
+    assertTrue(o.hasPreviousVersion());
+    assertFalse(origParentObs.getGroupMembers(true).contains(o));
+  }
 }

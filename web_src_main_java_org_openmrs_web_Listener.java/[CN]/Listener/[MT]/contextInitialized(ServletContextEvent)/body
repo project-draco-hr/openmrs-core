@@ -10,6 +10,8 @@
     if (props != null) {
       setRuntimePropertiesFound(true);
       Context.setRuntimeProperties(props);
+      Logger.getLogger(getClass()).setLevel(Level.INFO);
+      log.info("Using runtime properties file: " + OpenmrsUtil.getRuntimePropertiesFilePathName(WebConstants.WEBAPP_NAME));
     }
     Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
     if (!setupNeeded()) {

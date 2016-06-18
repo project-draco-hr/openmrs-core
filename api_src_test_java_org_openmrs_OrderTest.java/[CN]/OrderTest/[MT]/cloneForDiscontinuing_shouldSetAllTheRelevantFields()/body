@@ -11,4 +11,5 @@
   assertEquals("should set new order action to new",orderThatCanDiscontinueTheOrder.getAction(),Order.Action.DISCONTINUE);
   assertEquals(anOrder.getCareSetting(),orderThatCanDiscontinueTheOrder.getCareSetting());
   assertEquals(anOrder.getOrderType(),orderThatCanDiscontinueTheOrder.getOrderType());
+  assertNull("Discontinued order should not have orderGroup",orderThatCanDiscontinueTheOrder.getOrderGroup());
 }

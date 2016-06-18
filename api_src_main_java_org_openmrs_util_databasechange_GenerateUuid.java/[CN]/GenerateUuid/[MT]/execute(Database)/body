@@ -1,45 +1,102 @@
 {
-  if (Context.getRuntimeProperties().size() == 0) {
-    return;
-  }
-  if (tableNamesArray == null || tableNamesArray.length == 0) {
-    throw new CustomChangeException("At least one table name in the 'tableNames' parameter is required",null);
-  }
   JdbcConnection connection=(JdbcConnection)database.getConnection();
-  for (  String tableName : tableNamesArray) {
-    try {
-      Statement idStatement=null;
-      PreparedStatement updateStatement=null;
-      try {
-        String idSql=genericIdSql.replaceAll("tablename",tableName);
-        String updateSql=genericUpdateSql.replaceAll("tablename",tableName);
-        for (        Map.Entry<String,String> idException : idExceptionsMap.entrySet()) {
-          idSql=idSql.replaceFirst(idException.getKey(),idException.getValue());
-          updateSql=updateSql.replaceFirst(idException.getKey(),idException.getValue());
+  boolean initialAutoCommit=true;
+  try {
+    initialAutoCommit=connection.getAutoCommit();
+    connection.setAutoCommit(false);
+    if (database.getTypeName().equals("mysql")) {
+      String updateSql="update %s set " + columnName + " = uuid() where "+ columnName+ " is null";
+      for (      String tablename : tableNamesArray) {
+        String rawSql=String.format(updateSql,tablename);
+        Statement statement=null;
+        try {
+          statement=connection.createStatement();
+          statement.execute(rawSql);
+          statement.close();
+          connection.commit();
         }
-        idStatement=connection.createStatement();
-        updateStatement=connection.prepareStatement(updateSql);
-        ResultSet ids=idStatement.executeQuery(idSql);
-        while (ids.next()) {
-          updateStatement.setObject(2,ids.getObject(1));
-          updateStatement.setString(1,UUID.randomUUID().toString());
-          updateStatement.executeUpdate();
+ catch (        SQLException e) {
+          throw new CustomChangeException(e);
+        }
+ finally {
+          if (statement != null) {
+            try {
+              statement.close();
+            }
+ catch (            SQLException e) {
+              log.warn(e);
+            }
+          }
         }
       }
+    }
+ else {
+      int transactionBatchSize=0;
+      for (      String tableName : tableNamesArray) {
+        try {
+          Statement idStatement=null;
+          PreparedStatement updateStatement=null;
+          try {
+            String idSql=genericIdSql.replaceAll("tablename",tableName);
+            String updateSql=genericUpdateSql.replaceAll("tablename",tableName);
+            for (            Map.Entry<String,String> idException : idExceptionsMap.entrySet()) {
+              idSql=idSql.replaceFirst(idException.getKey(),idException.getValue());
+              updateSql=updateSql.replaceFirst(idException.getKey(),idException.getValue());
+            }
+            idStatement=connection.createStatement();
+            updateStatement=connection.prepareStatement(updateSql);
+            ResultSet ids=idStatement.executeQuery(idSql);
+            while (ids.next()) {
+              updateStatement.setObject(2,ids.getObject(1));
+              updateStatement.setString(1,UUID.randomUUID().toString());
+              updateStatement.executeUpdate();
+              transactionBatchSize++;
+              if (transactionBatchSize > TRANSACTION_BATCH_SIZE_LIMIT) {
+                transactionBatchSize=0;
+                connection.commit();
+              }
+            }
+            idStatement.close();
+            updateStatement.close();
+          }
   finally {
-        if (idStatement != null) {
-          idStatement.close();
+            if (idStatement != null) {
+              try {
+                idStatement.close();
+              }
+ catch (              SQLException e) {
+                log.warn(e);
+              }
+            }
+            if (updateStatement != null) {
+              try {
+                updateStatement.close();
+              }
+ catch (              SQLException e) {
+                log.warn(e);
+              }
+            }
+          }
         }
-        if (updateStatement != null) {
-          updateStatement.close();
+ catch (        DatabaseException e) {
+          throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
+        }
+catch (        SQLException e) {
+          throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
         }
       }
+      connection.commit();
+    }
+    connection.setAutoCommit(initialAutoCommit);
+  }
+ catch (  DatabaseException e) {
+    throw new CustomChangeException(e);
+  }
+ finally {
+    try {
+      connection.setAutoCommit(initialAutoCommit);
     }
  catch (    DatabaseException e) {
-      throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
-    }
-catch (    SQLException e) {
-      throw new CustomChangeException("Unable to set uuid on table: " + tableName,e);
     }
   }
 }

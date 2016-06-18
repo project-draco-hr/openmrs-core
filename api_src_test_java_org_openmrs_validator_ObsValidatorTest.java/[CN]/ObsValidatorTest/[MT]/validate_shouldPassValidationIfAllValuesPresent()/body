@@ -5,6 +5,6 @@
   obs.setObsDatetime(new Date());
   obs.setValueNumeric(1.0);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasErrors());
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasErrors());
 }

@@ -1,0 +1,17 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet orderSet=orderSetService.getOrderSet(2001);
+  Integer initialSize=orderSet.getOrderSetMembers().size();
+  OrderSetMember newOrderSetMember=new OrderSetMember();
+  newOrderSetMember.setOrderType(orderService.getOrderType(100));
+  newOrderSetMember.setConcept(conceptService.getConcept(1002));
+  newOrderSetMember.setCreator(new User(1));
+  newOrderSetMember.setDateCreated(new Date());
+  newOrderSetMember.setRetired(false);
+  orderSet.addOrderSetMember(newOrderSetMember,null);
+  Context.getOrderSetService().saveOrderSet(orderSet);
+  Context.flushSession();
+  OrderSet savedOrderSet=Context.getOrderSetService().getOrderSetByUuid(orderSet.getUuid());
+  assertEquals("Size of the orderSetMembers got updated",initialSize + 1,savedOrderSet.getOrderSetMembers().size());
+  assertEquals("New OrderSetMember got added at last position",newOrderSetMember.getUuid(),savedOrderSet.getOrderSetMembers().get(initialSize).getUuid());
+}

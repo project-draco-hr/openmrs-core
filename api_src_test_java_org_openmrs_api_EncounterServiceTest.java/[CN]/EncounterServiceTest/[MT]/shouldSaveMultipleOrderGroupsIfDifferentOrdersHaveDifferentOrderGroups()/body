@@ -1,0 +1,38 @@
+{
+  executeDataSet(ORDER_SET);
+  Encounter encounter=new Encounter();
+  encounter.setPatient(Context.getPatientService().getPatient(3));
+  encounter.setEncounterType(Context.getEncounterService().getEncounterType(1));
+  encounter.setEncounterDatetime(new Date());
+  Context.getEncounterService().saveEncounter(encounter);
+  Integer encounterId=Context.getEncounterService().getEncounterByUuid(encounter.getUuid()).getId();
+  OrderSet orderSet=Context.getOrderSetService().getOrderSet(2000);
+  OrderGroup orderGroup=new OrderGroup();
+  orderGroup.setOrderSet(orderSet);
+  orderGroup.setPatient(encounter.getPatient());
+  orderGroup.setEncounter(Context.getEncounterService().getEncounter(encounterId));
+  OrderGroup orderGroup2=new OrderGroup();
+  orderGroup2.setEncounter(Context.getEncounterService().getEncounter(encounterId));
+  orderGroup2.setPatient(encounter.getPatient());
+  Order newOrder1=new OrderBuilder().withAction(Order.Action.NEW).withPatient(3).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(encounterId).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Order newOrder2=new OrderBuilder().withAction(Order.Action.NEW).withPatient(3).withConcept(1001).withCareSetting(1).withOrderer(1).withEncounter(encounterId).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup).build();
+  Order newOrder3=new OrderBuilder().withAction(Order.Action.NEW).withPatient(3).withConcept(1002).withCareSetting(1).withOrderer(1).withEncounter(encounterId).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup2).build();
+  Order newOrder4=new OrderBuilder().withAction(Order.Action.NEW).withPatient(3).withConcept(1000).withCareSetting(1).withOrderer(1).withEncounter(encounterId).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).build();
+  Order newOrder5=new OrderBuilder().withAction(Order.Action.NEW).withPatient(3).withConcept(1001).withCareSetting(1).withOrderer(1).withEncounter(encounterId).withDateActivated(new Date()).withOrderType(17).withUrgency(Order.Urgency.ON_SCHEDULED_DATE).withScheduledDate(new Date()).withOrderGroup(orderGroup2).build();
+  encounter.addOrder(newOrder1);
+  encounter.addOrder(newOrder2);
+  encounter.addOrder(newOrder3);
+  encounter.addOrder(newOrder4);
+  encounter.addOrder(newOrder5);
+  Context.getEncounterService().saveEncounter(encounter);
+  Context.flushSession();
+  List<Order> orders=new ArrayList<>();
+  orders.addAll(Context.getEncounterService().getEncounterByUuid(encounter.getUuid()).getOrders());
+  HashMap<Integer,OrderGroup> orderGroups=new HashMap<>();
+  for (  Order order : orders) {
+    if (order.getOrderGroup() != null) {
+      orderGroups.put(order.getOrderGroup().getId(),order.getOrderGroup());
+    }
+  }
+  assertEquals("Two New Order Groups Get Saved",2,orderGroups.size());
+}

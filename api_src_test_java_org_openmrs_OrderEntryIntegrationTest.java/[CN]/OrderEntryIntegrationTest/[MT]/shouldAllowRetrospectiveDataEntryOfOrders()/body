@@ -12,6 +12,7 @@
   cal.add(Calendar.HOUR_OF_DAY,-1);
   Date stopDate=cal.getTime();
   Order dcOrder=orderService.discontinueOrder(order,"Testing",stopDate,order.getOrderer(),order.getEncounter());
-  assertEquals(stopDate,order.getDateStopped());
-  assertEquals(stopDate,dcOrder.getAutoExpireDate());
+  Context.flushSession();
+  assertEquals(DateUtil.truncateToSeconds(stopDate),order.getDateStopped());
+  assertEquals(DateUtil.truncateToSeconds(stopDate),dcOrder.getAutoExpireDate());
 }

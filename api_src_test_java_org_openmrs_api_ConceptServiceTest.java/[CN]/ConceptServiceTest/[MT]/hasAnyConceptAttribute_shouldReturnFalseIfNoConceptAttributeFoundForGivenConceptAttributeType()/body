@@ -1,0 +1,6 @@
+{
+  executeDataSet(CONCEPT_ATTRIBUTE_TYPE_XML);
+  ConceptService conceptService=Context.getConceptService();
+  ConceptAttributeType conceptAttributeType=conceptService.getConceptAttributeType(2);
+  Assert.assertFalse(conceptService.hasAnyConceptAttribute(conceptAttributeType));
+}

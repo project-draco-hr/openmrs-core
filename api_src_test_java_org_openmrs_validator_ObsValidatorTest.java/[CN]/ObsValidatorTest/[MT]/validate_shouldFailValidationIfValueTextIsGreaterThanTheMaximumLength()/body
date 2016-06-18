@@ -9,9 +9,9 @@
   }
   obs.setValueText(valueText);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasFieldErrors("person"));
-  Assert.assertFalse(errors.hasFieldErrors("concept"));
-  Assert.assertFalse(errors.hasFieldErrors("obsDatetime"));
-  Assert.assertTrue(errors.hasFieldErrors("valueText"));
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasFieldErrors("person"));
+  assertFalse(errors.hasFieldErrors("concept"));
+  assertFalse(errors.hasFieldErrors("obsDatetime"));
+  assertTrue(errors.hasFieldErrors("valueText"));
 }

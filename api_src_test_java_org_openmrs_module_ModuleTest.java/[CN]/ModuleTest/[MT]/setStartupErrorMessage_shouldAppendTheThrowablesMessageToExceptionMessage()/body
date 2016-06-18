@@ -1,0 +1,6 @@
+{
+  ModuleException modException=new ModuleException("error2");
+  assertNull(testModule.getStartupErrorMessage());
+  testModule.setStartupErrorMessage("error1",modException);
+  assertEquals("error1\nerror2\n",testModule.getStartupErrorMessage());
+}

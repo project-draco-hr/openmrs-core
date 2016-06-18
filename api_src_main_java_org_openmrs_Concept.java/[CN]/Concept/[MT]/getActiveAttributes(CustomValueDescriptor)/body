@@ -1,0 +1,12 @@
+{
+  List<ConceptAttribute> conceptAttributesOfGivenType=new ArrayList<>();
+  Collection<ConceptAttribute> allConceptAttributes=getAttributes();
+  if (allConceptAttributes != null) {
+    for (    ConceptAttribute attr : allConceptAttributes) {
+      if (attr.getAttributeType().equals(ofType) && !attr.isVoided()) {
+        conceptAttributesOfGivenType.add(attr);
+      }
+    }
+  }
+  return conceptAttributesOfGivenType;
+}

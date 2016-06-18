@@ -1,0 +1,8 @@
+{
+  Module test1=ModuleFactory.getModuleById(MODULE1);
+  Module newModule=loadModule(MODULE1_UPDATE_PATH,MODULE1,true);
+  Assert.assertNotNull(ModuleFactory.getLoadedModules().contains(newModule));
+  Module oldModule=loadModule(MODULE1_PATH,MODULE1,true);
+  Assert.assertEquals(newModule,oldModule);
+  Assert.assertNotNull(ModuleFactory.getLoadedModules().contains(oldModule));
+}

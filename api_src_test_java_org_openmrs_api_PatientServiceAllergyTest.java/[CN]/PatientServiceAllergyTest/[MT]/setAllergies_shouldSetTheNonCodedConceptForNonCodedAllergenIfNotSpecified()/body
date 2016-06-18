@@ -1,0 +1,9 @@
+{
+  Patient patient=allergyService.getPatient(2);
+  Allergen allergen=new Allergen(AllergenType.DRUG,null,"Some allergy name");
+  Allergy allergy=new Allergy(patient,allergen,null,null,null);
+  Allergies allergies=allergyService.getAllergies(patient);
+  allergies.add(allergy);
+  allergyService.setAllergies(patient,allergies);
+  Assert.assertFalse(allergy.getAllergen().isCoded());
+}

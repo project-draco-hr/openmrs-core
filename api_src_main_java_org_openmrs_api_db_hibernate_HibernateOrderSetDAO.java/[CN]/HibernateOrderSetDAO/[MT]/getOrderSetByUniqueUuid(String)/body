@@ -1,0 +1,3 @@
+{
+  return (OrderSet)sessionFactory.getCurrentSession().createQuery("from OrderSet o where o.uuid = :uuid").setString("uuid",orderSetUuid).uniqueResult();
+}

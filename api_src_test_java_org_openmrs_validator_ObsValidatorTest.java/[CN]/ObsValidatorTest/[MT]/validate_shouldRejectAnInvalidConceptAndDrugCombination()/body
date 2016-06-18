@@ -12,6 +12,6 @@
   drug.setConcept(new Concept(102));
   obs.setValueDrug(drug);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertTrue(errors.hasFieldErrors("valueDrug"));
+  obsValidator.validate(obs,errors);
+  assertTrue(errors.hasFieldErrors("valueDrug"));
 }

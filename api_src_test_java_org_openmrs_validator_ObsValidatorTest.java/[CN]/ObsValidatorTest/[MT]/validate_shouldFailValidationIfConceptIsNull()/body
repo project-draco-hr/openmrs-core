@@ -4,9 +4,9 @@
   obs.setObsDatetime(new Date());
   obs.setValueNumeric(1.0);
   Errors errors=new BindException(obs,"obs");
-  new ObsValidator().validate(obs,errors);
-  Assert.assertFalse(errors.hasFieldErrors("person"));
-  Assert.assertTrue(errors.hasFieldErrors("concept"));
-  Assert.assertFalse(errors.hasFieldErrors("obsDatetime"));
-  Assert.assertFalse(errors.hasFieldErrors("valueNumeric"));
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasFieldErrors("person"));
+  assertTrue(errors.hasFieldErrors("concept"));
+  assertFalse(errors.hasFieldErrors("obsDatetime"));
+  assertFalse(errors.hasFieldErrors("valueNumeric"));
 }

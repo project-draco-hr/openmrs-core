@@ -1,0 +1,7 @@
+{
+  IdentityHashMap<String,String> requiredModules=new IdentityHashMap<String,String>();
+  requiredModules.put("mod1","1.0");
+  testModule.setRequiredModulesMap(requiredModules);
+  assertEquals("1.0",testModule.getRequiredModuleVersion("mod1"));
+  assertNull(testModule.getRequiredModuleVersion("mod2"));
+}

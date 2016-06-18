@@ -1,0 +1,28 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet orderSet=orderSetService.getOrderSet(2001);
+  Integer initialSize=orderSet.getOrderSetMembers().size();
+  OrderSetMember newOrderSetMember=new OrderSetMember();
+  newOrderSetMember.setOrderType(orderService.getOrderType(100));
+  newOrderSetMember.setConcept(conceptService.getConcept(1002));
+  newOrderSetMember.setCreator(new User(1));
+  newOrderSetMember.setDateCreated(new Date());
+  newOrderSetMember.setRetired(false);
+  Integer position=2;
+  orderSet.addOrderSetMember(newOrderSetMember,position);
+  Context.getOrderSetService().saveOrderSet(orderSet);
+  Context.flushSession();
+  OrderSet savedOrderSet=Context.getOrderSetService().getOrderSetByUuid(orderSet.getUuid());
+  assertEquals("Size of the orderSetMembers got updated",initialSize + 1,savedOrderSet.getOrderSetMembers().size());
+  assertEquals("New OrderSetMember got added at given position",newOrderSetMember.getUuid(),savedOrderSet.getOrderSetMembers().get(position).getUuid());
+  Integer newPosition=savedOrderSet.getOrderSetMembers().size() + 1;
+  OrderSetMember orderSetMemberToBeAddedAtPosition=new OrderSetMember();
+  orderSetMemberToBeAddedAtPosition.setOrderType(orderService.getOrderType(100));
+  orderSetMemberToBeAddedAtPosition.setConcept(conceptService.getConcept(1002));
+  orderSetMemberToBeAddedAtPosition.setCreator(new User(1));
+  orderSetMemberToBeAddedAtPosition.setDateCreated(new Date());
+  orderSetMemberToBeAddedAtPosition.setRetired(false);
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage("Cannot add a member which is out of range of the list");
+  orderSet.addOrderSetMember(orderSetMemberToBeAddedAtPosition,newPosition);
+}

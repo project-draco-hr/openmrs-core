@@ -1,0 +1,7 @@
+{
+  PersonName personName=new PersonName("","reb","feb");
+  MapBindingResult errors=new MapBindingResult(new HashMap<String,Object>(),"personName");
+  PersonNameValidator personNameValidator=new PersonNameValidator();
+  personNameValidator.validatePersonName(personName,errors,true,false);
+  Assert.assertTrue(errors.hasFieldErrors("names[0]." + "givenName"));
+}

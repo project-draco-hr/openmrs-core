@@ -21,9 +21,9 @@
   }
   for (  Allergy allergy : allergies) {
     if (allergy.getAllergyId() == null && allergy.getAllergen().getCodedAllergen() == null && StringUtils.isNotBlank(allergy.getAllergen().getNonCodedAllergen())) {
-      Concept otherNonCoded=Context.getConceptService().getConceptByUuid(Allergen.OTHER_NON_CODED_UUID);
+      Concept otherNonCoded=Context.getConceptService().getConceptByUuid(Allergen.getOtherNonCodedConceptUuid());
       if (otherNonCoded == null) {
-        throw new APIException("Can't find concept with uuid:" + Allergen.OTHER_NON_CODED_UUID);
+        throw new APIException("Can't find concept with uuid:" + Allergen.getOtherNonCodedConceptUuid());
       }
       allergy.getAllergen().setCodedAllergen(otherNonCoded);
     }

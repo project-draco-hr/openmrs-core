@@ -1,0 +1,13 @@
+{
+  executeDataSet(ORDER_SET);
+  OrderSet orderSet=orderSetService.getOrderSet(2000);
+  int initialCountOfMembers=orderSet.getOrderSetMembers().size();
+  OrderSetMember orderSetMember=orderSet.getOrderSetMembers().get(0);
+  orderSet.retireOrderSetMember(orderSetMember);
+  orderSetService.saveOrderSet(orderSet);
+  Context.flushSession();
+  OrderSet savedOrderSet=orderSetService.getOrderSetByUuid(orderSet.getUuid());
+  assertEquals("Count of orderSetMembers are not changed if we get all members",initialCountOfMembers,savedOrderSet.getOrderSetMembers().size());
+  int finalSize=savedOrderSet.getUnRetiredOrderSetMembers().size();
+  assertEquals("Count of orderSetMembers gets modified if we filter out the retired members",initialCountOfMembers - 1,finalSize);
+}
