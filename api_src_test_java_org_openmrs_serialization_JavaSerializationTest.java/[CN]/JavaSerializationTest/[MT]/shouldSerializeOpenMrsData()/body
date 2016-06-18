@@ -1,0 +1,31 @@
+{
+  Date date=new Date();
+  User user=new User(1);
+  Person originalPerson=new Person();
+  originalPerson.setGender("M");
+  originalPerson.setBirthdate(date);
+  originalPerson.setBirthdateEstimated(false);
+  originalPerson.setUuid("abc123");
+  originalPerson.setDateCreated(date);
+  originalPerson.setCreator(user);
+  originalPerson.setDateChanged(date);
+  originalPerson.setChangedBy(user);
+  originalPerson.setVoided(true);
+  originalPerson.setVoidedBy(user);
+  originalPerson.setDateVoided(date);
+  originalPerson.setVoidReason("test");
+  byte[] serialized=SerializationUtils.serialize(originalPerson);
+  Person copyPerson=(Person)SerializationUtils.deserialize(serialized);
+  assertThat(copyPerson.getGender(),is(originalPerson.getGender()));
+  assertThat(copyPerson.getBirthdate(),is(originalPerson.getBirthdate()));
+  assertThat(copyPerson.getBirthdateEstimated(),is(originalPerson.getBirthdateEstimated()));
+  assertThat(copyPerson.getDateCreated(),is(originalPerson.getDateCreated()));
+  assertThat(copyPerson.getCreator(),is(originalPerson.getCreator()));
+  assertThat(copyPerson.getDateChanged(),is(originalPerson.getDateChanged()));
+  assertThat(copyPerson.getChangedBy(),is(originalPerson.getChangedBy()));
+  assertThat(copyPerson.getVoided(),is(originalPerson.getVoided()));
+  assertThat(copyPerson.getVoidedBy(),is(originalPerson.getVoidedBy()));
+  assertThat(copyPerson.getDateVoided(),is(originalPerson.getDateVoided()));
+  assertThat(copyPerson.getVoidReason(),is(originalPerson.getVoidReason()));
+  assertThat(copyPerson.getUuid(),is(originalPerson.getUuid()));
+}
