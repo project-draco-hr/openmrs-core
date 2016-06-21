@@ -248,6 +248,7 @@ class PrintingChangeSetExecutorCallback implements ChangeSetExecutorCallback {
           }
         }
         try {
+          UpdateFilter.setUpdatesRequired(false);
           WebDaemon.startOpenmrs(filterConfig.getServletContext());
         }
  catch (        DatabaseUpdateException updateEx) {
