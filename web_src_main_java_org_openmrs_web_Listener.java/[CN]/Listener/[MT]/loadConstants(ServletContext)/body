@@ -2,11 +2,4 @@
   WebConstants.BUILD_TIMESTAMP=servletContext.getInitParameter("build.timestamp");
   WebConstants.WEBAPP_NAME=getContextPath(servletContext);
   WebConstants.MODULE_REPOSITORY_URL=servletContext.getInitParameter("module.repository.url");
-  String appDataDir=servletContext.getInitParameter("application.data.directory");
-  if (StringUtils.hasLength(appDataDir)) {
-    OpenmrsUtil.setApplicationDataDirectory(appDataDir);
-  }
- else   if (!"openmrs".equalsIgnoreCase(WebConstants.WEBAPP_NAME)) {
-    OpenmrsUtil.setApplicationDataDirectory(OpenmrsUtil.getApplicationDataDirectory() + File.separator + WebConstants.WEBAPP_NAME);
-  }
 }

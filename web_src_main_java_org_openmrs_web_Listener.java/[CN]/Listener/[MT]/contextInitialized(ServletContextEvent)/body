@@ -6,13 +6,16 @@
     ServletContext servletContext=event.getServletContext();
     loadConstants(servletContext);
     clearDWRFile(servletContext);
+    String appDataRuntimeProperty=null;
     Properties props=getRuntimeProperties();
     if (props != null) {
       setRuntimePropertiesFound(true);
       Context.setRuntimeProperties(props);
+      appDataRuntimeProperty=props.getProperty(OpenmrsConstants.APPLICATION_DATA_DIRECTORY_RUNTIME_PROPERTY,null);
       Logger.getLogger(getClass()).setLevel(Level.INFO);
       log.info("Using runtime properties file: " + OpenmrsUtil.getRuntimePropertiesFilePathName(WebConstants.WEBAPP_NAME));
     }
+    setApplicationDataDirectory(servletContext,appDataRuntimeProperty);
     Thread.currentThread().setContextClassLoader(OpenmrsClassLoader.getInstance());
     if (!setupNeeded()) {
       copyCustomizationIntoWebapp(servletContext,props);
