@@ -1,0 +1,4 @@
+{
+  final String query="select * from role_privilege where role='" + role + "' and privilege ='"+ privilege+ "'";
+  return DatabaseUtil.executeSQL(upgradeTestUtil.getConnection(),query,true).size() == 1;
+}
