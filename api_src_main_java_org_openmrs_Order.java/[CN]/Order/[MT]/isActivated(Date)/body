@@ -1,0 +1,9 @@
+{
+  if (dateActivated == null) {
+    return false;
+  }
+  if (checkDate == null) {
+    checkDate=new Date();
+  }
+  return OpenmrsUtil.compare(dateActivated,checkDate) <= 0;
+}

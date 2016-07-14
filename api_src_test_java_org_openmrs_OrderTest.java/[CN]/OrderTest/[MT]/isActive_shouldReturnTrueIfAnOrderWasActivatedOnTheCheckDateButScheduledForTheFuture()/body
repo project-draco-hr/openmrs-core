@@ -1,0 +1,11 @@
+{
+  Order order=new Order();
+  order.setUrgency(Urgency.ON_SCHEDULED_DATE);
+  Date scheduledDateInFuture=DateUtils.addMonths(new Date(),2);
+  order.setScheduledDate(scheduledDateInFuture);
+  Date activationDate=DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT);
+  order.setDateActivated(activationDate);
+  assertNull(order.getDateStopped());
+  assertNull(order.getAutoExpireDate());
+  assertTrue(order.isActive(activationDate));
+}

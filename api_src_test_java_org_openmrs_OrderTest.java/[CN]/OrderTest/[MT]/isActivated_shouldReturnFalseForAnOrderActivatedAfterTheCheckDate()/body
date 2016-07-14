@@ -1,0 +1,7 @@
+{
+  Order order=new Order();
+  order.setDateActivated(DateUtils.parseDate("2014-11-01 11:11:10",DATE_FORMAT));
+  assertNull(order.getDateStopped());
+  assertNull(order.getAutoExpireDate());
+  assertFalse(order.isActivated(DateUtils.addMonths(order.getDateActivated(),-2)));
+}

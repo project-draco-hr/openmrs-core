@@ -1,0 +1,15 @@
+{
+  Order order=new Order();
+  order.setUrgency(Urgency.ON_SCHEDULED_DATE);
+  Date today=new Date();
+  Date scheduledDateInFuture=DateUtils.addMonths(today,2);
+  order.setScheduledDate(scheduledDateInFuture);
+  Date activationDate=DateUtils.addDays(today,-2);
+  order.setDateActivated(activationDate);
+  Date stopDate=new Date();
+  OrderUtilTest.setDateStopped(order,stopDate);
+  assertNotNull(order.getDateActivated());
+  assertNotNull(order.getDateStopped());
+  assertNull(order.getAutoExpireDate());
+  assertTrue(order.isDiscontinued(DateUtils.addSeconds(stopDate,1)));
+}

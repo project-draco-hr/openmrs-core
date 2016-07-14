@@ -8,7 +8,7 @@
   if (checkDate == null) {
     checkDate=new Date();
   }
-  if (dateActivated == null || !isStarted(checkDate)) {
+  if (!isActivated(checkDate)) {
     return false;
   }
   if (isDiscontinued(checkDate) || autoExpireDate == null) {
