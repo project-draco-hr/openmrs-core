@@ -1,8 +1,0 @@
-{
-  String globalProperty=Context.getAdministrationService().getGlobalProperty(globalPropertyName);
-  Concept concept=Context.getConceptService().getConceptByUuid(globalProperty);
-  if (concept == null) {
-    throw new IllegalStateException("Configuration required: " + globalPropertyName);
-  }
-  return concept;
-}
