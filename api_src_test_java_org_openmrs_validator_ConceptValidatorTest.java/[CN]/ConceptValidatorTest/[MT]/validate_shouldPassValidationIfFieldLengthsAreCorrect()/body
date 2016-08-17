@@ -4,6 +4,8 @@
   concept.addDescription(new ConceptDescription("some description",null));
   concept.setVersion("version");
   concept.setRetireReason("retireReason");
+  concept.setConceptClass(new ConceptClass());
+  concept.setDatatype(new ConceptDatatype());
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
   Assert.assertFalse(errors.hasErrors());

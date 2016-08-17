@@ -4,6 +4,8 @@
   Assert.assertEquals(1,concepts.size());
   Assert.assertEquals(true,concepts.get(0).getShortNameInLocale(Context.getLocale()).getName().equalsIgnoreCase("HSM"));
   Concept concept=new Concept();
+  concept.setConceptClass(new ConceptClass());
+  concept.setDatatype(new ConceptDatatype());
   ConceptName conceptFullySpecifiedName=new ConceptName("holosystolic murmur",Context.getLocale());
   conceptFullySpecifiedName.setConceptNameType(ConceptNameType.FULLY_SPECIFIED);
   ConceptName conceptShortName=new ConceptName("HSM",Context.getLocale());

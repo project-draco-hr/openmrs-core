@@ -2,6 +2,7 @@
   Concept concept=new Concept();
   concept.addName(new ConceptName("new name",Context.getLocale()));
   concept.addDescription(new ConceptDescription("some description",null));
+  concept.setDatatype(new ConceptDatatype(1));
   concept.setConceptClass(conceptService.getConceptClassByName("Frequency"));
   concept=conceptService.saveConcept(concept);
   Integer originalSize=orderService.getOrderFrequencies(true).size();

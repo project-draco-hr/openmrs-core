@@ -6,6 +6,7 @@
   c2.addName(cn);
   c2.addDescription(new ConceptDescription("some description",null));
   c2.setDatatype(new ConceptDatatype(3));
+  c2.setConceptClass(new ConceptClass(1));
   conceptService.saveConcept(c2);
   Concept secondConcept=conceptService.getConcept(2);
   assertFalse(secondConcept.isNumeric());

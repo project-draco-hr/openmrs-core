@@ -16,6 +16,8 @@
   allNames.add(synonym);
   c.setNames(allNames);
   c.addDescription(new ConceptDescription("some description",null));
+  c.setDatatype(new ConceptDatatype(1));
+  c.setConceptClass(new ConceptClass(1));
   assertNull("check test assumption - the API hasn't promoted a name to a fully specified name",c.getFullySpecifiedName(loc));
   Context.getConceptService().saveConcept(c);
   assertNotNull("there's a preferred name",c.getPreferredName(loc));
