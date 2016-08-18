@@ -7,6 +7,8 @@
   concept.addName(conceptFullySpecifiedName);
   concept.addName(conceptShortName);
   concept.addDescription(new ConceptDescription("some description",null));
+  concept.setConceptClass(new ConceptClass());
+  concept.setDatatype(new ConceptDatatype());
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
   Assert.assertEquals(false,errors.hasErrors());

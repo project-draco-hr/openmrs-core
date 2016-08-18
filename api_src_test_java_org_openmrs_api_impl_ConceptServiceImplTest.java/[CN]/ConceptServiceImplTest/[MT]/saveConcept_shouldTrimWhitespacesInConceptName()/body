@@ -3,6 +3,8 @@
   String nameWithSpaces="  jwm  ";
   concept.addName(new ConceptName(nameWithSpaces,new Locale("en","US")));
   concept.addDescription(new ConceptDescription("some description",null));
+  concept.setDatatype(new ConceptDatatype(1));
+  concept.setConceptClass(new ConceptClass(1));
   Context.getConceptService().saveConcept(concept);
   assertNotEquals(concept.getName().getName(),nameWithSpaces);
   assertEquals(concept.getName().getName(),"jwm");

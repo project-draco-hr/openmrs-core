@@ -2,9 +2,8 @@
   Concept concept=new Concept();
   concept.addName(new ConceptName("some name",Context.getLocale()));
   concept.addDescription(new ConceptDescription("some description",null));
-  concept.setConceptClass(new ConceptClass());
-  concept.setDatatype(new ConceptDatatype());
+  concept.setDatatype(new ConceptDatatype(1));
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
-  Assert.assertFalse(errors.hasErrors());
+  Assert.assertEquals(errors.getFieldError("conceptClass").getCode(),"Concept.conceptClass.empty");
 }

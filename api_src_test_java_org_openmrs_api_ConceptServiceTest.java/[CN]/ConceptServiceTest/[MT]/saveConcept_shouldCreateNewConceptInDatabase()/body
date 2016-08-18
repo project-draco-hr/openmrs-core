@@ -4,6 +4,8 @@
   ConceptName cn=new ConceptName("new name",Context.getLocale());
   conceptToAdd.addName(cn);
   conceptToAdd.addDescription(new ConceptDescription("some description",null));
+  conceptToAdd.setDatatype(new ConceptDatatype(1));
+  conceptToAdd.setConceptClass(new ConceptClass(1));
   assertFalse(conceptService.getAllConcepts().contains(conceptToAdd));
   conceptService.saveConcept(conceptToAdd);
   assertTrue(conceptService.getAllConcepts().contains(conceptToAdd));

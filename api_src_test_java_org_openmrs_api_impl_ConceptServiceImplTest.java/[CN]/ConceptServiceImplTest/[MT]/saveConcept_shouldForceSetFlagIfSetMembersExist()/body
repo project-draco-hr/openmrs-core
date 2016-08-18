@@ -2,9 +2,13 @@
   Concept concept=new Concept();
   concept.addName(new ConceptName("Concept",new Locale("en","US")));
   concept.addDescription(new ConceptDescription("some description",null));
+  concept.setDatatype(new ConceptDatatype(1));
+  concept.setConceptClass(new ConceptClass(1));
   Concept conceptSetMember=new Concept();
   conceptSetMember.addName(new ConceptName("Set Member",new Locale("en","US")));
   conceptSetMember.addDescription(new ConceptDescription("some description",null));
+  conceptSetMember.setConceptClass(new ConceptClass(1));
+  conceptSetMember.setDatatype(new ConceptDatatype(1));
   Context.getConceptService().saveConcept(conceptSetMember);
   concept.addSetMember(conceptSetMember);
   concept.setSet(false);

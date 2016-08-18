@@ -14,6 +14,8 @@
   c.addName(indexTerm);
   c.addName(shortName);
   c.addDescription(new ConceptDescription("some description",null));
+  c.setDatatype(new ConceptDatatype(1));
+  c.setConceptClass(new ConceptClass(1));
   assertFalse("check test assumption - the API didn't automatically set preferred vlag",c.getFullySpecifiedName(loc).isPreferred());
   assertNotNull("Concept is legit, save succeeds",Context.getConceptService().saveConcept(c));
   Context.getConceptService().saveConcept(c);

@@ -3,6 +3,8 @@
   Concept concept=new Concept();
   concept.addName(new ConceptName("test name",Context.getLocale()));
   concept.addDescription(new ConceptDescription("some description",null));
+  concept.setConceptClass(new ConceptClass());
+  concept.setDatatype(new ConceptDatatype());
   ConceptMap map=new ConceptMap();
   map.getConceptReferenceTerm().setCode("unique code");
   map.getConceptReferenceTerm().setConceptSource(cs.getConceptSource(1));
