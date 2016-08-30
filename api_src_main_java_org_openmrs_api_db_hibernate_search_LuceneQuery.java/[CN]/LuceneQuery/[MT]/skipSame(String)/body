@@ -13,8 +13,8 @@
     }
     termsFilter=new TermsFilter(terms);
   }
-  buildQuery();
   if (termsFilter != null) {
+    buildQuery();
     fullTextQuery.setFilter(termsFilter);
   }
   return this;
