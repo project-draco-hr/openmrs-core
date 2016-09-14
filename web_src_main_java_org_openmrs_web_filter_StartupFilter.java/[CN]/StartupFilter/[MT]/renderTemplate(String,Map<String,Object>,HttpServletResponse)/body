@@ -11,6 +11,7 @@
   Object model=getModel();
   for (  Field field : model.getClass().getDeclaredFields()) {
     try {
+      field.setAccessible(true);
       velocityContext.put(field.getName(),field.get(model));
     }
  catch (    IllegalArgumentException e) {
