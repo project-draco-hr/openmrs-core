@@ -5,7 +5,7 @@
   if (obs.getObsDatetime() == null) {
     errors.rejectValue("obsDatetime","error.null");
   }
-  if (obs.hasGroupMembers()) {
+  if (obs.hasGroupMembers(obs.getVoided())) {
     if (obs.getValueCoded() != null) {
       errors.rejectValue("valueCoded","error.not.null");
     }
