@@ -38,7 +38,7 @@
   if (c == null) {
     errors.rejectValue("concept","error.null");
   }
- else   if (!obs.hasGroupMembers()) {
+ else   if (!obs.hasGroupMembers(obs.getVoided())) {
     ConceptDatatype dt=c.getDatatype();
     if (dt != null) {
       if (dt.isBoolean() && obs.getValueBoolean() == null) {
