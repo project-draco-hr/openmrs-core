@@ -1,0 +1,21 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(5089));
+  obs.setObsDatetime(new Date());
+  Obs validChild=new Obs();
+  validChild.setPerson(Context.getPersonService().getPerson(2));
+  validChild.setConcept(Context.getConceptService().getConcept(5089));
+  validChild.setObsDatetime(new Date());
+  validChild.setValueNumeric(80.0);
+  obs.addGroupMember(validChild);
+  Obs inValidChild=new Obs();
+  obs.addGroupMember(inValidChild);
+  Errors errors=new BindException(obs,"obs");
+  obsValidator.validate(obs,errors);
+  assertTrue(errors.hasErrors());
+  inValidChild.setVoided(true);
+  errors=new BindException(obs,"obs");
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasErrors());
+}

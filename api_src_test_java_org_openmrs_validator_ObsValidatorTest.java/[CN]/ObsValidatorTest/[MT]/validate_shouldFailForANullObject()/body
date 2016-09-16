@@ -1,0 +1,5 @@
+{
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage(CoreMatchers.equalTo("Obs can't be null"));
+  obsValidator.validate(null,null);
+}

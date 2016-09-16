@@ -1,0 +1,14 @@
+{
+  Obs obs=new Obs();
+  obs.setPerson(Context.getPersonService().getPerson(2));
+  obs.setConcept(Context.getConceptService().getConcept(5089));
+  obs.setObsDatetime(new Date());
+  obs.setValueNumeric(null);
+  Errors errors=new BindException(obs,"obs");
+  obsValidator.validate(obs,errors);
+  assertTrue(errors.hasFieldErrors("valueNumeric"));
+  obs.setVoided(true);
+  errors=new BindException(obs,"obs");
+  obsValidator.validate(obs,errors);
+  assertFalse(errors.hasErrors());
+}
