@@ -1,0 +1,13 @@
+{
+  if (versions == null || versions.length == 0) {
+    return false;
+  }
+  boolean result=false;
+  for (  String version : versions) {
+    if (matchRequiredVersions(OpenmrsConstants.OPENMRS_VERSION_SHORT,version)) {
+      result=true;
+      break;
+    }
+  }
+  return result;
+}

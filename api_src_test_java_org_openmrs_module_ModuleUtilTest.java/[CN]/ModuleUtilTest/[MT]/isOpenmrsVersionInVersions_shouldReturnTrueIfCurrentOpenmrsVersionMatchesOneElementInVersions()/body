@@ -1,0 +1,9 @@
+{
+  Field versionField=OpenmrsConstants.class.getDeclaredField("OPENMRS_VERSION_SHORT");
+  Field modifiersField=Field.class.getDeclaredField("modifiers");
+  modifiersField.setAccessible(true);
+  modifiersField.setInt(versionField,versionField.getModifiers() & ~Modifier.FINAL);
+  final String currentVersion="1.9.8";
+  versionField.set(null,currentVersion);
+  Assert.assertTrue(ModuleUtil.isOpenmrsVersionInVersions(currentVersion,"1.10.*"));
+}
