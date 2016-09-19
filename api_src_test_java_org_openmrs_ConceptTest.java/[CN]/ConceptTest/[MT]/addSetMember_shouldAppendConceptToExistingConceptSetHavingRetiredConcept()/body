@@ -1,0 +1,14 @@
+{
+  Concept concept=new Concept();
+  Concept setMember1=new Concept(1);
+  setMember1.setRetired(true);
+  concept.addSetMember(setMember1);
+  Concept setMember2=new Concept(2);
+  concept.addSetMember(setMember2);
+  Concept setMember3=new Concept(3);
+  concept.addSetMember(setMember3);
+  assertThat(concept.getSetMembers(),hasItem(setMember1));
+  assertThat(concept.getSetMembers(),hasItem(setMember2));
+  assertThat(concept.getSetMembers(),hasItem(setMember3));
+  assertThat(concept.getSetMembers().size(),is(3));
+}
