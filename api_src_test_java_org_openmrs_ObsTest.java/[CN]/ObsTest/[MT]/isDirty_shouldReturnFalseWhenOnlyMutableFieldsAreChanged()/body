@@ -5,4 +5,10 @@
   obs.setVoidReason("some other reason");
   obs.setDateVoided(new Date());
   assertFalse(obs.isDirty());
+  Obs obsEdited=new Obs(5);
+  obsEdited.setVoided(true);
+  obsEdited.setVoidedBy(new User(1000));
+  obsEdited.setVoidReason("some other reason");
+  obsEdited.setDateVoided(new Date());
+  assertFalse(obsEdited.isDirty());
 }

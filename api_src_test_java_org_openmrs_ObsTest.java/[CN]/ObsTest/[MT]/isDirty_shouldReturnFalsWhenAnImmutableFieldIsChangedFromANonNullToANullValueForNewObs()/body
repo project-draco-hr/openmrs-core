@@ -1,6 +1,6 @@
 {
-  Obs obs=createObs();
+  Obs obs=createObs(null);
   assertNotNull(obs.getComment());
   obs.setComment(null);
-  assertTrue(obs.isDirty());
+  assertFalse(obs.isDirty());
 }

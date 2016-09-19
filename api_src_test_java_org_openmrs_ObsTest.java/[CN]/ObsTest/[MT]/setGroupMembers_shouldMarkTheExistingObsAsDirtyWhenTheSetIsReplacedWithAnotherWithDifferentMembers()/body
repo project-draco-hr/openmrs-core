@@ -1,0 +1,11 @@
+{
+  Obs obs=new Obs(2);
+  Set members1=new HashSet<>();
+  members1.add(new Obs());
+  obs.setGroupMembers(members1);
+  resetObs(obs);
+  Set members2=new HashSet<>();
+  members2.add(new Obs());
+  obs.setGroupMembers(members2);
+  assertTrue(obs.isDirty());
+}
