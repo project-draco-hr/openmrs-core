@@ -1,3 +1,8 @@
 {
-  System.setProperty("OPENMRS_APPLICATION_DATA_DIRECTORY",path);
+  if (StringUtils.isBlank(path)) {
+    System.clearProperty(OpenmrsConstants.KEY_OPENMRS_APPLICATION_DATA_DIRECTORY);
+  }
+ else {
+    System.setProperty(OpenmrsConstants.KEY_OPENMRS_APPLICATION_DATA_DIRECTORY,path);
+  }
 }
