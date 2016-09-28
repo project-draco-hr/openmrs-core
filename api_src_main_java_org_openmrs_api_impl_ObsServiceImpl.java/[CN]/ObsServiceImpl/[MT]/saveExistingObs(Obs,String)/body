@@ -1,0 +1,15 @@
+{
+  Obs newObs=Obs.newInstance(obs);
+  newObs.setVoided(false);
+  newObs.setVoidReason(null);
+  newObs.setDateVoided(null);
+  newObs.setVoidedBy(null);
+  newObs.setCreator(null);
+  newObs.setDateCreated(null);
+  newObs.setPreviousVersion(obs);
+  RequiredDataAdvice.recursivelyHandle(SaveHandler.class,newObs,changeMessage);
+  dao.saveObs(newObs);
+  saveObsGroup(newObs,null);
+  voidExistingObs(obs,changeMessage,newObs);
+  return newObs;
+}

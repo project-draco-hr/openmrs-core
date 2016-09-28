@@ -1,0 +1,7 @@
+{
+  if (obs.isObsGrouping()) {
+    for (    Obs o : obs.getGroupMembers(true)) {
+      Context.getObsService().saveObs(o,changeMessage);
+    }
+  }
+}

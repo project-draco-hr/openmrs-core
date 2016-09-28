@@ -1,0 +1,6 @@
+{
+  expectedException.expect(APIException.class);
+  expectedException.expectMessage(Context.getMessageSourceService().getMessage("Obs.error.cannot.be.null"));
+  ObsService os=Context.getObsService();
+  Obs o=os.saveObs(null,"Null Obs");
+}

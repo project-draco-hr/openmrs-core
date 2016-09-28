@@ -1,90 +1,21 @@
 {
-  if (null != obs && null != obs.getConcept() && obs.getConcept().isComplex() && null != obs.getComplexData().getData()) {
-    ComplexObsHandler handler=getHandler(obs);
-    if (null != handler) {
-      handler.saveObs(obs);
-    }
- else {
-      throw new APIException("unknown.handler",new Object[]{obs.getConcept()});
-    }
+  if (obs == null) {
+    throw new APIException("Obs.error.cannot.be.null",(Object[])null);
   }
-  if (obs != null && (obs.getObsId() == null || obs.getVoided())) {
-    if (obs.getObsId() == null) {
-      Context.requirePrivilege(PrivilegeConstants.ADD_OBS);
-    }
- else {
-      Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
-    }
-    Obs ret=dao.saveObs(obs);
-    if (obs.isObsGrouping()) {
-      for (      Obs o : obs.getGroupMembers(true)) {
-        Context.getObsService().saveObs(o,changeMessage);
-      }
-    }
-    return ret;
+  if (obs.getId() != null && changeMessage == null) {
+    throw new APIException("Obs.error.ChangeMessage.required",(Object[])null);
+  }
+  handleExistingObsWithComplexConcept(obs);
+  ensureRequirePrivilege(obs);
+  if (obs.getObsId() == null || obs.getVoided()) {
+    return saveNewOrVoidedObs(obs,changeMessage);
+  }
+ else   if (!obs.isDirty()) {
+    setPersonFromEncounter(obs);
+    return saveObsNotDirty(obs,changeMessage);
   }
  else {
-    Context.requirePrivilege(PrivilegeConstants.EDIT_OBS);
-    if (changeMessage == null) {
-      throw new APIException("Obs.error.ChangeMessage.required",(Object[])null);
-    }
-    Encounter encounter=obs.getEncounter();
-    if (encounter != null) {
-      obs.setPerson(encounter.getPatient());
-    }
-    if (!obs.isDirty()) {
-      if (obs.isObsGrouping()) {
-        ObsService os=Context.getObsService();
-        List<Obs> toRemove=new ArrayList<>();
-        List<Obs> toAdd=new ArrayList<>();
-        for (        Obs o : obs.getGroupMembers(true)) {
-          if (o.getId() == null) {
-            os.saveObs(o,null);
-          }
- else {
-            Obs replacement=os.saveObs(o,changeMessage);
-            toRemove.add(o);
-            toAdd.add(os.getObs(o.getId()));
-            toAdd.add(replacement);
-          }
-        }
-        for (        Obs o : toRemove) {
-          obs.removeGroupMember(o);
-        }
-        for (        Obs o : toAdd) {
-          obs.addGroupMember(o);
-        }
-      }
-      return obs;
-    }
-    Obs newObs=Obs.newInstance(obs);
-    newObs.setVoided(false);
-    newObs.setVoidReason(null);
-    newObs.setDateVoided(null);
-    newObs.setVoidedBy(null);
-    newObs.setCreator(null);
-    newObs.setDateCreated(null);
-    newObs.setPreviousVersion(obs);
-    RequiredDataAdvice.recursivelyHandle(SaveHandler.class,newObs,changeMessage);
-    dao.saveObs(newObs);
-    if (newObs.isObsGrouping()) {
-      for (      Obs o : newObs.getGroupMembers(true)) {
-        Context.getObsService().saveObs(o,null);
-      }
-    }
-    try {
-      Context.addProxyPrivilege(PrivilegeConstants.DELETE_OBS);
-      Context.evictFromSession(obs);
-      obs=Context.getObsService().getObs(obs.getObsId());
-      if (newObs.hasPreviousVersion() && newObs.getPreviousVersion().isComplex()) {
-        File previousFile=new AbstractHandler().getComplexDataFile(obs);
-        previousFile.delete();
-      }
-      Context.getObsService().voidObs(obs,changeMessage);
-    }
-  finally {
-      Context.removeProxyPrivilege(PrivilegeConstants.DELETE_OBS);
-    }
-    return newObs;
+    setPersonFromEncounter(obs);
+    return saveExistingObs(obs,changeMessage);
   }
 }

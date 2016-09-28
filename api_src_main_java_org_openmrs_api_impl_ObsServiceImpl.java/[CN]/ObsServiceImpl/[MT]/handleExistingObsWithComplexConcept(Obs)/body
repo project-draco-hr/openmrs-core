@@ -1,0 +1,11 @@
+{
+  if (null != obs.getConcept() && obs.getConcept().isComplex() && null != obs.getComplexData().getData()) {
+    ComplexObsHandler handler=getHandler(obs);
+    if (null != handler) {
+      handler.saveObs(obs);
+    }
+ else {
+      throw new APIException("unknown.handler",new Object[]{obs.getConcept()});
+    }
+  }
+}
