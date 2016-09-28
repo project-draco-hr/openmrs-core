@@ -5,7 +5,7 @@
   if (obs.getObsDatetime() == null) {
     errors.rejectValue("obsDatetime","error.null");
   }
-  if (obs.hasGroupMembers(obs.getVoided())) {
+  if (obs.hasGroupMembers()) {
     if (obs.getValueCoded() != null) {
       errors.rejectValue("valueCoded","error.not.null");
     }
@@ -38,7 +38,7 @@
   if (c == null) {
     errors.rejectValue("concept","error.null");
   }
- else   if (!obs.hasGroupMembers(obs.getVoided())) {
+ else   if (!obs.hasGroupMembers()) {
     ConceptDatatype dt=c.getDatatype();
     if (dt != null) {
       if (dt.isBoolean() && obs.getValueBoolean() == null) {
