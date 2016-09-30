@@ -1,0 +1,6 @@
+{
+  String existingUniqueId="2.16.840.1.113883.6.96";
+  ConceptSource conceptSource=conceptService.getConceptSourceByUniqueId(existingUniqueId);
+  assertThat(conceptSource,is(not(nullValue())));
+  assertThat(conceptSource.getUniqueId(),is(existingUniqueId));
+}
