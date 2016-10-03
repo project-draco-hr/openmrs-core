@@ -4,6 +4,7 @@
   }
  else {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors,"name","error.name");
+    ValidationUtils.rejectIfEmptyOrWhitespace(errors,"description","error.null");
     ValidateUtil.validateFieldLengths(errors,obj.getClass(),"name","hl7Code","uniqueId","description","retireReason");
   }
 }
