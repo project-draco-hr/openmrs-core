@@ -1,0 +1,8 @@
+{
+  if (StringUtils.isBlank(uniqueId)) {
+    return null;
+  }
+  Criteria criteria=sessionFactory.getCurrentSession().createCriteria(ConceptSource.class);
+  criteria.add(Restrictions.eq("uniqueId",uniqueId));
+  return (ConceptSource)criteria.uniqueResult();
+}
