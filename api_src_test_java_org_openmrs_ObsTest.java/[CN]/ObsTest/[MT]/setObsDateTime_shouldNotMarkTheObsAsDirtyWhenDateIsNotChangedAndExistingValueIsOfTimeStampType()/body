@@ -1,0 +1,10 @@
+{
+  Obs obs=new Obs();
+  Date date=new Date();
+  Timestamp timestamp=new Timestamp(date.getTime());
+  obs.setObsDatetime(timestamp);
+  obs.setId(1);
+  assertFalse(obs.isDirty());
+  obs.setObsDatetime(date);
+  assertFalse(obs.isDirty());
+}
