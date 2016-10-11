@@ -59,7 +59,7 @@
   ObsService os=Context.getObsService();
   List<Obs> toRemove=new ArrayList<>();
   List<Obs> toAdd=new ArrayList<>();
-  for (  Obs o : encounter.getAllObs(true)) {
+  for (  Obs o : encounter.getObsAtTopLevel(true)) {
     if (o.getId() == null) {
       os.saveObs(o,null);
     }

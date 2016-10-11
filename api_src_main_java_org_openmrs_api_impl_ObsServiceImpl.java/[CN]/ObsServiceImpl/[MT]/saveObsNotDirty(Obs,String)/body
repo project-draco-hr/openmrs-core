@@ -11,9 +11,11 @@
     }
  else {
       Obs replacement=os.saveObs(o,changeMessage);
-      toRemove.add(o);
-      toAdd.add(os.getObs(o.getId()));
-      toAdd.add(replacement);
+      if (!replacement.equals(o)) {
+        toRemove.add(o);
+        toAdd.add(os.getObs(o.getId()));
+        toAdd.add(replacement);
+      }
     }
   }
   for (  Obs o : toRemove) {

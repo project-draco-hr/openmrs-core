@@ -1,0 +1,8 @@
+{
+  for (  Obs childObs : parentObs.getGroupMembers()) {
+    if (originalObs.equals(childObs.getPreviousVersion())) {
+      return childObs;
+    }
+  }
+  return null;
+}

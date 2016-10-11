@@ -4,6 +4,8 @@
   Obs origParentObs=obsService.getObs(2);
   Set<Obs> originalMembers=new HashSet<>(origParentObs.getGroupMembers(true));
   assertEquals(2,originalMembers.size());
+  assertTrue(originalMembers.contains(obsService.getObs(9)));
+  assertTrue(originalMembers.contains(obsService.getObs(10)));
   Obs groupMember=new Obs();
   groupMember.setConcept(Context.getConceptService().getConcept(3));
   groupMember.setObsDatetime(new Date());
@@ -13,18 +15,10 @@
   origParentObs.addGroupMember(groupMember);
   assertNotNull(groupMember.getObsGroup());
   Obs newParentObs=obsService.saveObs(origParentObs,"Updating obs group");
-  assertNotEquals(origParentObs,newParentObs);
+  assertEquals(origParentObs,newParentObs);
   assertEquals(3,newParentObs.getGroupMembers(true).size());
   assertNotNull(groupMember.getObsId());
-  for (  Obs o : originalMembers) {
-    assertTrue(o.getVoided());
-    assertFalse(newParentObs.getGroupMembers(true).contains(o));
-  }
-  for (  Obs o : newParentObs.getGroupMembers(true)) {
-    if (groupMember.equals(o)) {
-      continue;
-    }
-    assertTrue(o.hasPreviousVersion());
-    assertFalse(origParentObs.getGroupMembers(true).contains(o));
-  }
+  assertTrue(newParentObs.getGroupMembers(true).contains(obsService.getObs(9)));
+  assertTrue(newParentObs.getGroupMembers(true).contains(obsService.getObs(10)));
+  assertTrue(newParentObs.getGroupMembers(true).contains(obsService.getObs(groupMember.getObsId())));
 }

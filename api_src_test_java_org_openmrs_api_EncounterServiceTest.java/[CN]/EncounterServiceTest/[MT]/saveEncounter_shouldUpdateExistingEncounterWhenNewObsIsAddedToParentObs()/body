@@ -1,0 +1,29 @@
+{
+  executeDataSet(ENC_OBS_HIERARCHY_DATA_XML);
+  ConceptService cs=Context.getConceptService();
+  EncounterService es=Context.getEncounterService();
+  ObsService os=Context.getObsService();
+  Encounter enc=es.getEncounter(100);
+  Obs o3=new Obs();
+  o3.setConcept(cs.getConcept(3));
+  o3.setDateCreated(new Date());
+  o3.setCreator(Context.getAuthenticatedUser());
+  o3.setLocation(new Location(1));
+  o3.setObsDatetime(new Date());
+  o3.setPerson(Context.getPersonService().getPerson(3));
+  o3.setValueText("third obs value text");
+  o3.setEncounter(enc);
+  Obs oParent=os.getObs(100);
+  oParent.addGroupMember(o3);
+  es.saveEncounter(enc);
+  Context.flushSession();
+  Context.clearSession();
+  enc=es.getEncounter(100);
+  Set<Obs> obsAtTopLevelUpdated=enc.getObsAtTopLevel(true);
+  assertEquals(1,obsAtTopLevelUpdated.size());
+  assertEquals(3,obsAtTopLevelUpdated.iterator().next().getGroupMembers(true).size());
+  oParent=os.getObs(100);
+  assertTrue(oParent.getGroupMembers(true).contains(os.getObs(101)));
+  assertTrue(oParent.getGroupMembers(true).contains(os.getObs(102)));
+  assertTrue(oParent.getGroupMembers(true).contains(os.getObs(o3.getObsId())));
+}

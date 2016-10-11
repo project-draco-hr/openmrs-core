@@ -1,7 +1,7 @@
 {
-  executeDataSet(INITIAL_OBS_XML);
+  executeDataSet(ENCOUNTER_OBS_XML);
   ObsService os=Context.getObsService();
-  Obs obs=os.getObs(2);
+  Obs obs=os.getObs(14);
   assertFalse(obs.getGroupMembers(true).isEmpty());
   assertFalse(obs.getGroupMembers(false).isEmpty());
   assertFalse(obs.isDirty());
@@ -12,4 +12,9 @@
   Obs saveObs=os.saveObs(obs,"no change");
   assertEquals(obs,saveObs);
   assertFalse(saveObs.getVoided());
+  Set<Obs> savedMembers=new HashSet<>(saveObs.getGroupMembers());
+  assertFalse(saveObs.isDirty());
+  for (  Obs o : savedMembers) {
+    assertFalse("obs" + o.getId(),o.isDirty());
+  }
 }
