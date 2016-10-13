@@ -3,26 +3,18 @@
     return obs;
   }
   ObsService os=Context.getObsService();
-  List<Obs> toRemove=new ArrayList<>();
-  List<Obs> toAdd=new ArrayList<>();
+  boolean refreshNeeded=false;
   for (  Obs o : obs.getGroupMembers(true)) {
     if (o.getId() == null) {
       os.saveObs(o,null);
     }
  else {
-      Obs replacement=os.saveObs(o,changeMessage);
-      if (!replacement.equals(o)) {
-        toRemove.add(o);
-        toAdd.add(os.getObs(o.getId()));
-        toAdd.add(replacement);
-      }
+      Obs newObs=os.saveObs(o,changeMessage);
+      refreshNeeded=!newObs.equals(o) || refreshNeeded;
     }
   }
-  for (  Obs o : toRemove) {
-    obs.removeGroupMember(o);
-  }
-  for (  Obs o : toAdd) {
-    obs.addGroupMember(o);
+  if (refreshNeeded) {
+    Context.refreshEntity(obs);
   }
   return obs;
 }
