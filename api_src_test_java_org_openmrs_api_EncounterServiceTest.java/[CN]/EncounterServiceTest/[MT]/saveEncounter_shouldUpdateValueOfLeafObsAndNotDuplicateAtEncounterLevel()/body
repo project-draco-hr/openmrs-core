@@ -1,0 +1,10 @@
+{
+  executeDataSet(ENC_OBS_HIERARCHY_DATA_XML);
+  Encounter encounter=Context.getEncounterService().getEncounter(100);
+  assertEquals(1,encounter.getObsAtTopLevel(true).size());
+  Obs topLevelObs=encounter.getObsAtTopLevel(true).iterator().next();
+  topLevelObs.getGroupMembers().iterator().next().setValueText("editing first obs");
+  encounter.addObs(topLevelObs);
+  Encounter savedEncounter=Context.getEncounterService().saveEncounter(encounter);
+  assertEquals(1,savedEncounter.getObsAtTopLevel(true).size());
+}
