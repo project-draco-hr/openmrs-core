@@ -1,15 +1,7 @@
 {
-  if (birthDate != null) {
-    if (birthDate.after(new Date())) {
-      errors.rejectValue("birthdate","error.date.future");
-    }
- else {
-      Calendar c=Calendar.getInstance();
-      c.setTime(new Date());
-      c.add(Calendar.YEAR,-120);
-      if (birthDate.before(c.getTime())) {
-        errors.rejectValue("birthdate","error.date.nonsensical");
-      }
-    }
+  if (birthDate == null) {
+    return;
   }
+  rejectIfFutureDate(errors,birthDate,"birthdate");
+  rejectDateIfBefore120YearsAgo(errors,birthDate,"birthdate");
 }
