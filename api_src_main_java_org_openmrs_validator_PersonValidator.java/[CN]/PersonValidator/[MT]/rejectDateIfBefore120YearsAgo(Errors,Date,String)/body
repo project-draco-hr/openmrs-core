@@ -1,0 +1,8 @@
+{
+  Calendar c=Calendar.getInstance();
+  c.setTime(new Date());
+  c.add(Calendar.YEAR,-120);
+  if (date.before(c.getTime())) {
+    errors.rejectValue(dateField,"error.date.nonsensical");
+  }
+}
