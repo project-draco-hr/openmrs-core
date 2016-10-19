@@ -1,0 +1,25 @@
+{
+  Map<Integer,Integer> patientIdOrder=new HashMap<Integer,Integer>();
+  int startPos=0;
+  for (  Integer id : patientIds) {
+    patientIdOrder.put(id,startPos++);
+  }
+class PatientIdComparator implements Comparator<Patient> {
+    private Map<Integer,Integer> sortOrder;
+    public PatientIdComparator(    Map<Integer,Integer> sortOrder){
+      this.sortOrder=sortOrder;
+    }
+    @Override public int compare(    Patient patient1,    Patient patient2){
+      Integer patPos1=sortOrder.get(patient1.getPatientId());
+      if (patPos1 == null) {
+        throw new IllegalArgumentException("Bad patient encountered: " + patient1.getPatientId());
+      }
+      Integer patPos2=sortOrder.get(patient2.getPatientId());
+      if (patPos2 == null) {
+        throw new IllegalArgumentException("Bad patient encountered: " + patient2.getPatientId());
+      }
+      return patPos1.compareTo(patPos2);
+    }
+  }
+  Collections.sort(patients,new PatientIdComparator(patientIdOrder));
+}

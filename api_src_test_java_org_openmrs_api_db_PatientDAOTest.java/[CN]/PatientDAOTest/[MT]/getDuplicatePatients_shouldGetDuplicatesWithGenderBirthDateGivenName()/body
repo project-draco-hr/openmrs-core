@@ -1,0 +1,8 @@
+{
+  List<String> attributes=new ArrayList<String>();
+  attributes.add("gender");
+  attributes.add("birthdate");
+  attributes.add("givenName");
+  List<Patient> patients=dao.getDuplicatePatientsByAttributes(attributes);
+  Assert.assertEquals(22,patients.size());
+}
