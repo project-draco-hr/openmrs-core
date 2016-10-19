@@ -1,0 +1,103 @@
+{
+  String outerSelect="select distinct t1.patient_id from patient t1 ";
+  Class patient=Patient.class;
+  Set<String> patientFieldNames=new HashSet<String>(patient.getDeclaredFields().length);
+  for (  Field field : patient.getDeclaredFields()) {
+    patientFieldNames.add(field.getName());
+    log.debug(field.getName());
+  }
+  Class person=Person.class;
+  Set<String> personFieldNames=new HashSet<String>(person.getDeclaredFields().length);
+  for (  Field field : person.getDeclaredFields()) {
+    personFieldNames.add(field.getName());
+    log.debug(field.getName());
+  }
+  Class personName=PersonName.class;
+  Set<String> personNameFieldNames=new HashSet<String>(personName.getDeclaredFields().length);
+  for (  Field field : personName.getDeclaredFields()) {
+    personNameFieldNames.add(field.getName());
+    log.debug(field.getName());
+  }
+  Class identifier=PatientIdentifier.class;
+  Set<String> identifierFieldNames=new HashSet<String>(identifier.getDeclaredFields().length);
+  for (  Field field : identifier.getDeclaredFields()) {
+    identifierFieldNames.add(field.getName());
+    log.debug(field.getName());
+  }
+  List<String> whereConditions=new ArrayList<String>();
+  List<String> innerFields=new ArrayList<String>();
+  String innerSelect=" from patient p1 ";
+  for (  String attribute : attributes) {
+    if (attribute != null) {
+      attribute=attribute.trim();
+    }
+    if (patientFieldNames.contains(attribute)) {
+      AbstractEntityPersister aep=((AbstractEntityPersister)sessionFactory.getClassMetadata(Patient.class));
+      String[] properties=aep.getPropertyColumnNames(attribute);
+      if (properties.length >= 1) {
+        attribute=properties[0];
+      }
+      whereConditions.add(" t1." + attribute + " = t5."+ attribute);
+      innerFields.add("p1." + attribute);
+    }
+ else     if (personFieldNames.contains(attribute)) {
+      if (!outerSelect.contains("person")) {
+        outerSelect+="inner join person t2 on t1.patient_id = t2.person_id ";
+        innerSelect+="inner join person person1 on p1.patient_id = person1.person_id ";
+      }
+      AbstractEntityPersister aep=((AbstractEntityPersister)sessionFactory.getClassMetadata(Person.class));
+      if (aep != null) {
+        String[] properties=aep.getPropertyColumnNames(attribute);
+        if (properties != null && properties.length >= 1) {
+          attribute=properties[0];
+        }
+      }
+      whereConditions.add(" t2." + attribute + " = t5."+ attribute);
+      innerFields.add("person1." + attribute);
+    }
+ else     if (personNameFieldNames.contains(attribute)) {
+      if (!outerSelect.contains("person_name")) {
+        outerSelect+="inner join person_name t3 on t2.person_id = t3.person_id ";
+        innerSelect+="inner join person_name pn1 on person1.person_id = pn1.person_id ";
+      }
+      AbstractEntityPersister aep=((AbstractEntityPersister)sessionFactory.getClassMetadata(PersonName.class));
+      if (aep != null) {
+        String[] properties=aep.getPropertyColumnNames(attribute);
+        if (properties != null && properties.length >= 1) {
+          attribute=properties[0];
+        }
+      }
+      whereConditions.add(" t3." + attribute + " = t5."+ attribute);
+      innerFields.add("pn1." + attribute);
+    }
+ else     if (identifierFieldNames.contains(attribute)) {
+      if (!outerSelect.contains("patient_identifier")) {
+        outerSelect+="inner join patient_identifier t4 on t1.patient_id = t4.patient_id ";
+        innerSelect+="inner join patient_identifier pi1 on p1.patient_id = pi1.patient_id ";
+      }
+      AbstractEntityPersister aep=((AbstractEntityPersister)sessionFactory.getClassMetadata(PatientIdentifier.class));
+      if (aep != null) {
+        String[] properties=aep.getPropertyColumnNames(attribute);
+        if (properties != null && properties.length >= 1) {
+          attribute=properties[0];
+        }
+      }
+      whereConditions.add(" t4." + attribute + " = t5."+ attribute);
+      innerFields.add("pi1." + attribute);
+    }
+ else {
+      log.warn("Unidentified attribute: " + attribute);
+    }
+  }
+  if (innerFields.size() > 0 || whereConditions.size() > 0) {
+    String innerFieldsJoined=StringUtils.join(innerFields,", ");
+    String whereFieldsJoined=StringUtils.join(whereConditions," and ");
+    String innerWhereCondition="";
+    if (!attributes.contains("includeVoided")) {
+      innerWhereCondition=" where p1.voided = false ";
+    }
+    String innerQuery="(Select " + innerFieldsJoined + innerSelect+ innerWhereCondition+ " group by "+ innerFieldsJoined+ " having count(*) > 1"+ " order by "+ innerFieldsJoined+ ") t5";
+    return outerSelect + ", " + innerQuery+ " where "+ whereFieldsJoined+ ";";
+  }
+  return null;
+}

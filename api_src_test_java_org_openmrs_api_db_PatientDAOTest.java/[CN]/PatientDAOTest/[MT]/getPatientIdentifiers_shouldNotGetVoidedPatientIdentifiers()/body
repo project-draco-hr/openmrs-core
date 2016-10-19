@@ -1,6 +1,6 @@
 {
   List<PatientIdentifier> patientIdentifiers=dao.getPatientIdentifiers(null,new ArrayList<PatientIdentifierType>(),new ArrayList<Location>(),new ArrayList<Patient>(),null);
-  Assert.assertEquals(6,patientIdentifiers.size());
+  Assert.assertEquals(8,patientIdentifiers.size());
   for (  PatientIdentifier patientIdentifier : patientIdentifiers) {
     Assert.assertFalse(patientIdentifier.isVoided());
   }
