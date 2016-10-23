@@ -1,0 +1,7 @@
+{
+  List<Encounter> expectedEncountersForPatientOne=initializeExpectedEncounters();
+  List<Encounter> encountersByNumericIdentifier=dao.getEncounters("1234",null,null,null,true);
+  assertEquals(expectedEncountersForPatientOne,encountersByNumericIdentifier);
+  List<Encounter> encountersByStringIdentifier=dao.getEncounters("abcd",null,null,null,true);
+  assertEquals(expectedEncountersForPatientOne,encountersByStringIdentifier);
+}

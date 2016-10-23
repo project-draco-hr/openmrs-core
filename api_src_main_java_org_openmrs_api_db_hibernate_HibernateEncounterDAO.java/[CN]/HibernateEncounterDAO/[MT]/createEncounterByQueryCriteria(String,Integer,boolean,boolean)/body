@@ -38,15 +38,9 @@
     }
   }
  else {
-    String name=null;
-    String identifier=null;
-    if (query.matches(".*\\d+.*")) {
-      identifier=query;
-    }
- else {
-      name=query;
-    }
-    criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),false,orderByNames,false);
+    String name=query;
+    String identifier=query;
+    criteria=new PatientSearchCriteria(sessionFactory,criteria).prepareCriteria(name,identifier,new ArrayList<PatientIdentifierType>(),true,orderByNames,true);
   }
   return criteria;
 }
