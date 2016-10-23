@@ -1,0 +1,8 @@
+{
+  Encounter encounterOne=Context.getEncounterService().getEncounter(1);
+  Encounter encounterSix=Context.getEncounterService().getEncounter(6);
+  List<Encounter> expectedEncountersForPatientOne=new ArrayList<Encounter>();
+  expectedEncountersForPatientOne.add(encounterOne);
+  expectedEncountersForPatientOne.add(encounterSix);
+  return expectedEncountersForPatientOne;
+}

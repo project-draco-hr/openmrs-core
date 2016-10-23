@@ -1,0 +1,5 @@
+{
+  List<Encounter> expectedEncountersForPatientOne=initializeExpectedEncounters();
+  List<Encounter> encounters=dao.getEncounters("John Doe",null,null,null,true);
+  assertEquals(expectedEncountersForPatientOne,encounters);
+}
