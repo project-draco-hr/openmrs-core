@@ -12,7 +12,7 @@
   order.setEncounter(encounterService.getEncounter(6));
   order.setDrug(discontinuationOrderDrug);
   order.setOrderReasonNonCoded("Discontinue this");
-  expectedException.expect(APIException.class);
+  expectedException.expect(EditedOrderDoesNotMatchPreviousException.class);
   expectedException.expectMessage("The orderable of the previous order and the new one order don't match");
   orderService.saveOrder(order,null);
 }

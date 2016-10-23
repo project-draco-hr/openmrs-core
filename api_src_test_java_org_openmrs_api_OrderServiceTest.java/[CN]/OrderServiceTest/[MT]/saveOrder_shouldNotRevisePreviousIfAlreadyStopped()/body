@@ -7,7 +7,7 @@
   order.setOrderer(providerService.getProvider(1));
   order.setEncounter(encounterService.getEncounter(18));
   order.setPreviousOrder(previousOrder);
-  expectedException.expect(APIException.class);
+  expectedException.expect(CannotStopRetrospectiveDiscontinuedOrderException.class);
   expectedException.expectMessage("Order.retrospective.stopped.cannot.discontinued");
   orderService.saveRetrospectiveOrder(order,null);
 }

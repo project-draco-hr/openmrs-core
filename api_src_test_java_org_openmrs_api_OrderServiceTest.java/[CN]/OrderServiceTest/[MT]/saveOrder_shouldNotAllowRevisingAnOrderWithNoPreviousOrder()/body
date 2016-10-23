@@ -7,7 +7,7 @@
   revisedOrder.setPreviousOrder(null);
   revisedOrder.setOrderer(providerService.getProvider(1));
   revisedOrder.setDateActivated(new Date());
-  expectedException.expect(APIException.class);
+  expectedException.expect(PreviousOrderRequiredException.class);
   expectedException.expectMessage("Order.previous.required");
   orderService.saveOrder(revisedOrder,null);
 }

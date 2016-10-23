@@ -7,7 +7,7 @@
   Concept newConcept=conceptService.getConcept(5089);
   assertFalse(previousOrder.getConcept().equals(newConcept));
   order.setConcept(newConcept);
-  expectedException.expect(APIException.class);
+  expectedException.expect(EditedOrderDoesNotMatchPreviousException.class);
   expectedException.expectMessage("The orderable of the previous order and the new one order don't match");
   orderService.saveOrder(order,null);
 }

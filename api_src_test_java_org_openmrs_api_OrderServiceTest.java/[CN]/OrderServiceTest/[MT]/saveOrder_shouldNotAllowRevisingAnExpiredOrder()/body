@@ -8,7 +8,7 @@
   revisedOrder.setOrderer(providerService.getProvider(1));
   revisedOrder.setDateActivated(new Date());
   revisedOrder.setAutoExpireDate(new Date());
-  expectedException.expect(APIException.class);
+  expectedException.expect(CannotDiscontinueAlreadyDiscontinuedOrderException.class);
   expectedException.expectMessage("Order.stopped.cannot.discontinued");
   orderService.saveOrder(revisedOrder,null);
 }

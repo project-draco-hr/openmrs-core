@@ -1,7 +1,7 @@
 {
   OrderType orderType=orderService.getOrderType(1);
   assertNotNull(orderType);
-  expectedException.expect(APIException.class);
+  expectedException.expect(CannotDeleteOrderPropertyInUseException.class);
   expectedException.expectMessage("Order.type.cannot.delete");
   orderService.purgeOrderType(orderType);
 }

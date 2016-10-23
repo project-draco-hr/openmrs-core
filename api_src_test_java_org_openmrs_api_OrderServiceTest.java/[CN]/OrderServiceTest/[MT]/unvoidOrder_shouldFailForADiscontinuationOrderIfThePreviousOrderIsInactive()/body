@@ -9,7 +9,7 @@
   assertNull(previousOrder.getDateStopped());
   orderService.discontinueOrder(previousOrder,"Testing",null,previousOrder.getOrderer(),previousOrder.getEncounter());
   Thread.sleep(10);
-  expectedException.expect(APIException.class);
+  expectedException.expect(CannotUnvoidOrderException.class);
   expectedException.expectMessage(Context.getMessageSourceService().getMessage("Order.action.cannot.unvoid",new Object[]{"discontinuation"},null));
   orderService.unvoidOrder(order);
 }

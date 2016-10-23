@@ -6,7 +6,7 @@
   Concept newConcept=conceptService.getConcept(5089);
   assertFalse(order.getPreviousOrder().getConcept().equals(newConcept));
   order.getPreviousOrder().setConcept(newConcept);
-  expectedException.expect(APIException.class);
+  expectedException.expect(UnchangeableOrderPropertyException.class);
   expectedException.expectMessage("Order.cannot.change.concept");
   orderService.saveOrder(order,null);
 }
