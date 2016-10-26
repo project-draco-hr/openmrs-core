@@ -6,7 +6,7 @@
   CareSetting newCareSetting=orderService.getCareSetting(2);
   assertFalse(order.getPreviousOrder().getCareSetting().equals(newCareSetting));
   order.getPreviousOrder().setCareSetting(newCareSetting);
-  expectedException.expect(APIException.class);
+  expectedException.expect(UnchangeableOrderPropertyException.class);
   expectedException.expectMessage("Order.cannot.change.careSetting");
   orderService.saveOrder(order,null);
 }

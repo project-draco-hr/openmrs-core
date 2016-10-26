@@ -2,7 +2,7 @@
   OrderFrequency orderFrequency=orderService.getOrderFrequency(1);
   assertNotNull(orderFrequency);
   orderFrequency.setFrequencyPerDay(4d);
-  expectedException.expect(APIException.class);
+  expectedException.expect(CannotEditOrderPropertyInUseException.class);
   expectedException.expectMessage("Order.frequency.cannot.edit");
   orderService.saveOrderFrequency(orderFrequency);
 }

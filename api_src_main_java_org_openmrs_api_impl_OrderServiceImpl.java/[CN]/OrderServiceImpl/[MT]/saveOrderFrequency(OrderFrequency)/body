@@ -1,7 +1,7 @@
 {
   if (orderFrequency.getOrderFrequencyId() != null) {
     if (dao.isOrderFrequencyInUse(orderFrequency)) {
-      throw new APIException("Order.frequency.cannot.edit");
+      throw CannotEditOrderPropertyInUseException.withProperty("frequency");
     }
   }
   return dao.saveOrderFrequency(orderFrequency);

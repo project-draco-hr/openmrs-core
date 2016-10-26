@@ -9,7 +9,7 @@
   assertFalse(previousOrder.getDrugNonCoded().equals(drugNonCodedParacetemol));
   order.setDrugNonCoded(drugNonCodedParacetemol);
   order.setPreviousOrder(previousOrder);
-  expectedException.expect(APIException.class);
+  expectedException.expect(EditedOrderDoesNotMatchPreviousException.class);
   expectedException.expectMessage("The orderable of the previous order and the new one order don't match");
   orderService.saveOrder(order,null);
 }

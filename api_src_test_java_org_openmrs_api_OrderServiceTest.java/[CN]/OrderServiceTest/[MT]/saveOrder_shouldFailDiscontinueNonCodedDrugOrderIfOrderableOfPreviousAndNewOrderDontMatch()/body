@@ -7,7 +7,7 @@
   drugOrder.setDateActivated(new Date());
   drugOrder.setOrderer(providerService.getProvider(1));
   drugOrder.setEncounter(encounterService.getEncounter(6));
-  expectedException.expect(APIException.class);
+  expectedException.expect(EditedOrderDoesNotMatchPreviousException.class);
   expectedException.expectMessage("The orderable of the previous order and the new one order don't match");
   orderService.saveOrder(drugOrder,null);
 }

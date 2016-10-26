@@ -7,7 +7,7 @@
   order.setDateActivated(new Date());
   order.setEncounter(encounterService.getEncounter(3));
   order.setOrderer(providerService.getProvider(1));
-  expectedException.expect(APIException.class);
+  expectedException.expect(UnchangeableOrderPropertyException.class);
   expectedException.expectMessage("Order.cannot.change.patient");
   orderService.saveOrder(order,null);
 }

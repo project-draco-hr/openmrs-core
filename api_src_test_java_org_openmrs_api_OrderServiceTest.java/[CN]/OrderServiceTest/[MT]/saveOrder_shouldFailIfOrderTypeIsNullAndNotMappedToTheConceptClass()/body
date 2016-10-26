@@ -6,7 +6,7 @@
   order.setCareSetting(orderService.getCareSetting(1));
   order.setEncounter(encounterService.getEncounter(3));
   order.setDateActivated(new Date());
-  expectedException.expect(APIException.class);
+  expectedException.expect(InvalidOrderException.class);
   expectedException.expectMessage("Order.type.cannot.determine");
   orderService.saveOrder(order,null);
 }

@@ -6,16 +6,16 @@
     throw new IllegalArgumentException("Discontinue date cannot be in the future");
   }
   if (DISCONTINUE == orderToStop.getAction()) {
-    throw new APIException("Order.action.cannot.discontinued",new Object[]{DISCONTINUE});
+    throw new CannotDiscontinueOrderWithActionException();
   }
   if (isRetrospective && orderToStop.getDateStopped() != null) {
-    throw new APIException("Order.retrospective.stopped.cannot.discontinued");
+    throw new CannotStopRetrospectiveDiscontinuedOrderException();
   }
   if (!isRetrospective && !orderToStop.isActive()) {
-    throw new APIException("Order.stopped.cannot.discontinued");
+    throw new CannotDiscontinueAlreadyDiscontinuedOrderException();
   }
  else   if (isRetrospective && !orderToStop.isActive(discontinueDate)) {
-    throw new APIException("Order.retrospective.stopped.cannot.discontinued");
+    throw new CannotStopRetrospectiveDiscontinuedOrderException();
   }
   setProperty(orderToStop,"dateStopped",discontinueDate);
   saveOrderInternal(orderToStop,null);

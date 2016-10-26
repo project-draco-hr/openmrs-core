@@ -1,6 +1,6 @@
 {
   if (dao.isOrderTypeInUse(orderType)) {
-    throw new APIException("Order.type.cannot.delete");
+    throw CannotDeleteOrderPropertyInUseException.withProperty("type");
   }
   dao.purgeOrderType(orderType);
 }

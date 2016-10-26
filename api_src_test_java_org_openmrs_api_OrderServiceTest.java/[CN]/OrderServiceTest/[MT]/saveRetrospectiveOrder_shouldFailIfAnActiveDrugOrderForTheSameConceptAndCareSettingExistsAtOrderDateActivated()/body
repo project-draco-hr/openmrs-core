@@ -21,7 +21,7 @@
   order.setQuantity(duplicateOrder.getQuantity());
   order.setQuantityUnits(duplicateOrder.getQuantityUnits());
   order.setNumRefills(duplicateOrder.getNumRefills());
-  expectedException.expect(APIException.class);
+  expectedException.expect(AmbiguousOrderException.class);
   expectedException.expectMessage("Order.cannot.have.more.than.one");
   orderService.saveRetrospectiveOrder(order,null);
 }
