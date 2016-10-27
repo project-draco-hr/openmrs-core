@@ -3,5 +3,5 @@
   concept.addName(new ConceptName("some name",Context.getLocale()));
   Errors errors=new BindException(concept,"concept");
   new ConceptValidator().validate(concept,errors);
-  Assert.assertTrue(errors.hasFieldErrors("descriptions"));
+  Assert.assertFalse(errors.hasFieldErrors("descriptions"));
 }
