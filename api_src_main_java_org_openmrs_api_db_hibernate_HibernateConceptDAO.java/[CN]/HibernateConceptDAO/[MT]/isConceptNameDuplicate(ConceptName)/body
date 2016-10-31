@@ -6,7 +6,7 @@
     if (name.getConcept().isRetired()) {
       return false;
     }
-    if (!name.getConcept().getName(name.getLocale()).equals(name)) {
+    if (!name.equals(name.getConcept().getName(name.getLocale()))) {
       return false;
     }
   }
