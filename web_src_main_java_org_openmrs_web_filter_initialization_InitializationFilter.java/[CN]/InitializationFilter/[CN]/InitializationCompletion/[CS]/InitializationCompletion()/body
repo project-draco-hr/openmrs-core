@@ -302,9 +302,14 @@ catch (        OpenmrsCoreModuleException coreModEx) {
         }
         try {
           if (wizardModel.createTables) {
-            Context.authenticate("admin","test");
-            Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
-            Context.logout();
+            try {
+              Context.authenticate("admin","test");
+              Context.getUserService().changePassword("test",wizardModel.adminUserPassword);
+              Context.logout();
+            }
+ catch (            ContextAuthenticationException ex) {
+              log.info("No need to change admin password.");
+            }
           }
         }
  catch (        Exception e) {
