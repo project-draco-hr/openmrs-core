@@ -1,16 +1,16 @@
 {
   Collection<PresentationMessage> presentations=new Vector<PresentationMessage>();
-  for (  File propertiesFile : findPropertiesFiles()) {
-    Locale currentLocale=parseLocaleFrom(propertiesFile.getName());
+  for (  Resource propertiesFile : findPropertiesFiles()) {
+    Locale currentLocale=parseLocaleFrom(propertiesFile.getFilename());
     Properties props=new Properties();
     try {
-      OpenmrsUtil.loadProperties(props,propertiesFile);
+      OpenmrsUtil.loadProperties(props,propertiesFile.getInputStream());
       for (      Map.Entry<Object,Object> property : props.entrySet()) {
         presentations.add(new PresentationMessage(property.getKey().toString(),currentLocale,property.getValue().toString(),""));
       }
     }
  catch (    Exception e) {
-      log.error("Unable to load properties from file: " + propertiesFile.getAbsolutePath(),e);
+      log.error("Unable to load properties from file: " + propertiesFile.getFilename());
     }
   }
   return presentations;

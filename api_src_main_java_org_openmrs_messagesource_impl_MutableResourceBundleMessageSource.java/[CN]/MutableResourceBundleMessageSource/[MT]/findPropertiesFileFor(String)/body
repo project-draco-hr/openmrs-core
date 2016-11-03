@@ -1,10 +1,10 @@
 {
   Properties props=new Properties();
-  File foundFile=null;
-  for (  File propertiesFile : findPropertiesFiles()) {
+  Resource foundFile=null;
+  for (  Resource propertiesFile : findPropertiesFiles()) {
     props.clear();
     try {
-      OpenmrsUtil.loadProperties(props,propertiesFile);
+      OpenmrsUtil.loadProperties(props,propertiesFile.getInputStream());
     }
  catch (    Exception e) {
       log.error("Error generated",e);

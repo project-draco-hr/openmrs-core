@@ -1,31 +1,31 @@
 {
-  Collection<File> propertiesFiles=findPropertiesFiles();
-  Map<Locale,List<File>> localeToFilesMap=new HashMap<Locale,List<File>>();
-  Map<File,Properties> fileToPropertiesMap=new HashMap<File,Properties>();
-  for (  File propertiesFile : propertiesFiles) {
+  Resource[] propertiesFiles=findPropertiesFiles();
+  Map<Locale,List<Resource>> localeToFilesMap=new HashMap<Locale,List<Resource>>();
+  Map<Resource,Properties> fileToPropertiesMap=new HashMap<Resource,Properties>();
+  for (  Resource propertiesFile : propertiesFiles) {
     Properties props=new Properties();
-    Locale propsLocale=parseLocaleFrom(propertiesFile.getName());
-    List<File> propList=localeToFilesMap.get(propsLocale);
+    Locale propsLocale=parseLocaleFrom(propertiesFile.getFilename());
+    List<Resource> propList=localeToFilesMap.get(propsLocale);
     if (propList == null) {
-      propList=new ArrayList<File>();
+      propList=new ArrayList<Resource>();
       localeToFilesMap.put(propsLocale,propList);
     }
     propList.add(propertiesFile);
     try {
-      OpenmrsUtil.loadProperties(props,propertiesFile);
+      OpenmrsUtil.loadProperties(props,propertiesFile.getInputStream());
       fileToPropertiesMap.put(propertiesFile,props);
     }
  catch (    Exception e) {
-      log.error("Unable to load properties from file: " + propertiesFile.getAbsolutePath(),e);
+      log.error("Unable to load properties from file: " + propertiesFile.getFilename(),e);
     }
   }
   for (  PresentationMessage message : fromSource.getPresentations()) {
     Locale messageLocale=message.getLocale();
-    List<File> filelist=localeToFilesMap.get(messageLocale);
+    List<Resource> filelist=localeToFilesMap.get(messageLocale);
     if (filelist != null) {
       Properties propertyDestination=null;
       boolean propExists=false;
-      for (      File propertiesFile : filelist) {
+      for (      Resource propertiesFile : filelist) {
         Properties possibleDestination=fileToPropertiesMap.get(propertiesFile);
         if (possibleDestination.containsKey(message.getCode())) {
           propertyDestination=possibleDestination;
@@ -41,13 +41,6 @@
       }
     }
  else {
-      File newPropertiesFile=new File(basenames[0] + "_" + messageLocale.toString()+ ".properties");
-      Properties newProperties=new Properties();
-      fileToPropertiesMap.put(newPropertiesFile,newProperties);
-      newProperties.put(message.getCode(),message.getMessage());
-      List<File> newFilelist=new ArrayList<File>();
-      newFilelist.add(newPropertiesFile);
-      localeToFilesMap.put(messageLocale,newFilelist);
     }
     message.getCode();
   }

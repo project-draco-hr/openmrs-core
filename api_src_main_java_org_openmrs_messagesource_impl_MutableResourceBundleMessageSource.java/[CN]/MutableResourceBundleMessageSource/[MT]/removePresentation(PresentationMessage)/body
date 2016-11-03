@@ -1,11 +1,10 @@
 {
-  File propertyFile=findPropertiesFileFor(message.getCode());
+  Resource propertyFile=findPropertiesFileFor(message.getCode());
   if (propertyFile != null) {
     Properties props=new Properties();
     try {
-      OpenmrsUtil.loadProperties(props,propertyFile);
+      OpenmrsUtil.loadProperties(props,propertyFile.getInputStream());
       props.remove(message.getCode());
-      OpenmrsUtil.storeProperties(props,propertyFile,PROPERTIES_FILE_COMMENT);
     }
  catch (    Exception e) {
       log.error("Error generated",e);

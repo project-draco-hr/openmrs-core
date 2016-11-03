@@ -1,7 +1,7 @@
 {
   Collection<Locale> foundLocales=new HashSet<Locale>();
-  for (  File propertiesFile : findPropertiesFiles()) {
-    String filename=propertiesFile.getName();
+  for (  Resource propertiesFile : findPropertiesFiles()) {
+    String filename=propertiesFile.getFilename();
     Locale parsedLocale=parseLocaleFrom(filename);
     foundLocales.add(parsedLocale);
   }
