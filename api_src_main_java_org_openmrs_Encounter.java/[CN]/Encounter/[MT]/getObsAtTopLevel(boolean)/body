@@ -1,5 +1,5 @@
 {
-  Set<Obs> ret=new HashSet<Obs>();
+  Set<Obs> ret=new LinkedHashSet<>();
   for (  Obs o : getAllObs(includeVoided)) {
     if (o.getObsGroup() == null) {
       ret.add(o);

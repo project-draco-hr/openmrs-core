@@ -1,0 +1,19 @@
+{
+  Encounter encounter=new Encounter();
+  Obs obs1=new Obs();
+  obs1.setValueText("first obs");
+  encounter.addObs(obs1);
+  Obs obs2=new Obs();
+  obs2.setValueText("second obs");
+  encounter.addObs(obs2);
+  Obs obs3=new Obs();
+  obs3.setValueText("third obs");
+  encounter.addObs(obs3);
+  Set<Obs> obs=encounter.getObs();
+  assertNotNull(obs);
+  assertEquals(3,obs.size());
+  Iterator<Obs> obsIterator=obs.iterator();
+  assertEquals("first obs",obsIterator.next().getValueText());
+  assertEquals("second obs",obsIterator.next().getValueText());
+  assertEquals("third obs",obsIterator.next().getValueText());
+}

@@ -1,12 +1,12 @@
 {
   if (obs == null) {
-    obs=new HashSet<Obs>();
+    obs=new LinkedHashSet<>();
   }
   if (observation != null) {
     obs.add(observation);
     Deque<Obs> obsToUpdate=new ArrayDeque<Obs>();
     obsToUpdate.add(observation);
-    Set<Obs> seenIt=new HashSet<Obs>();
+    Set<Obs> seenIt=new LinkedHashSet<>();
     while (!obsToUpdate.isEmpty()) {
       Obs o=obsToUpdate.removeFirst();
       if (o == null || seenIt.contains(o)) {
